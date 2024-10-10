@@ -5,6 +5,7 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Trigge
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminInit as NodeTypeCoreOnAdminInit;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 
@@ -20,12 +21,19 @@ class CoreOnAdminInit implements NodeTriggerRunnerInterface
      */
     private $hooks;
 
+    /**
+     * @var RuntimeVariablesHandlerInterface
+     */
+    private $variablesHandler;
+
     public function __construct(
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
-        HookableInterface $hooks
+        HookableInterface $hooks,
+        RuntimeVariablesHandlerInterface $variablesHandler
     ) {
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->hooks = $hooks;
+        $this->variablesHandler = $variablesHandler;
     }
 
     public static function getNodeTypeName(): string
@@ -33,10 +41,10 @@ class CoreOnAdminInit implements NodeTriggerRunnerInterface
         return NodeTypeCoreOnAdminInit::getNodeTypeName();
     }
 
-    public function setup(int $workflowId, array $step, array $contextVariables = []): void
+    public function setup(int $workflowId, array $step): void
     {
-        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step, $contextVariables);
+        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step);
 
-        $this->nodeRunnerProcessor->setup($step, '__return_true', $contextVariables);
+        $this->nodeRunnerProcessor->setup($step, '__return_true');
     }
 }

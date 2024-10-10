@@ -8,7 +8,7 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\RayDebug as 
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
-
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 class RayDebug implements NodeRunnerInterface
 {
     /**
@@ -21,12 +21,19 @@ class RayDebug implements NodeRunnerInterface
      */
     private $nodeRunnerProcessor;
 
+    /**
+     * @var RuntimeVariablesHandlerInterface
+     */
+    private $variablesHandler;
+
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerProcessorInterface $nodeRunnerProcessor
+        NodeRunnerProcessorInterface $nodeRunnerProcessor,
+        RuntimeVariablesHandlerInterface $variablesHandler
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->variablesHandler = $variablesHandler;
     }
 
     public static function getNodeTypeName(): string
@@ -34,17 +41,17 @@ class RayDebug implements NodeRunnerInterface
         return NodeTypeRayDebug::getNodeTypeName();
     }
 
-    public function setup(array $step, array $contextVariables = []): void
+    public function setup(array $step): void
     {
-        $this->nodeRunnerProcessor->setup($step, [$this, 'actionCallback'], $contextVariables);
+        $this->nodeRunnerProcessor->setup($step, [$this, 'actionCallback']);
     }
 
-    public function actionCallback(array $step, array $contextVariables)
+    public function actionCallback(array $step)
     {
-        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step, $contextVariables);
+        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step);
 
         if (! function_exists('ray')) {
-            $workflowId = $contextVariables['global']['workflow']['id'];
+            $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
 
             $this->nodeRunnerProcessor->logError(
                 'Ray is not installed. Please install it from the WordPress plugins directory',
@@ -62,15 +69,12 @@ class RayDebug implements NodeRunnerInterface
             $dataToOutput = $nodeSettings['data']['dataToOutput'] ?? 'all-input';
 
             if ($dataToOutput === 'all-input') {
-                $onlyInputVariables = $contextVariables;
+                $onlyInputVariables = $this->variablesHandler->getAllVariables();
                 unset($onlyInputVariables['global']);
 
                 $output = $onlyInputVariables;
             } else {
-                $output = $this->nodeRunnerProcessor->getVariableValueFromContextVariables(
-                    $dataToOutput,
-                    $contextVariables
-                );
+                $output = $this->variablesHandler->getVariable($dataToOutput);
             }
         } catch (\Exception $e) {
             $output = 'Error: ' . $e->getMessage();

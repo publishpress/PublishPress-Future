@@ -5,7 +5,8 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunnerProcesso
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 
 class GeneralStep implements NodeRunnerProcessorInterface
@@ -16,33 +17,36 @@ class GeneralStep implements NodeRunnerProcessorInterface
     private $hooks;
 
     /**
-     * @var WorkflowVariablesHandlerInterface
+     * @var RuntimeVariablesHandlerInterface
      */
     private $variablesHandler;
 
-    public function __construct(HooksFacade $hooks, WorkflowVariablesHandlerInterface $variablesHandler)
-    {
+    public function __construct(
+        HooksFacade $hooks,
+        WorkflowEngineInterface $engine
+    ) {
         $this->hooks = $hooks;
-        $this->variablesHandler = $variablesHandler;
+        $this->variablesHandler = $engine->getVariablesHandler();
     }
 
-    public function setup(array $step, callable $actionCallback, array $contextVariables = []): void
-    {
-        call_user_func($actionCallback, $step, $contextVariables);
+    public function setup(
+        array $step,
+        callable $actionCallback
+    ): void {
+        call_user_func($actionCallback, $step);
 
-        $this->runNextSteps($step, $contextVariables);
+        $this->runNextSteps($step);
     }
 
-    public function runNextSteps(array $step, array $contextVariables): void
+    public function runNextSteps(array $step): void
     {
         $nextSteps = $this->getNextSteps($step);
 
         foreach ($nextSteps as $nextStep) {
             /**
              * @var array $nextStep
-             * @var array $contextVariables
              */
-            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $contextVariables);
+            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep);
         }
     }
 
@@ -78,13 +82,6 @@ class GeneralStep implements NodeRunnerProcessorInterface
         return $nodeSettings;
     }
 
-    public function getWorkflowIdFromContextVariables(array $contextVariables)
-    {
-        $workflowId = $this->variablesHandler->parseNestedVariableValue('global.workflow.id', $contextVariables);
-
-        return ! empty($workflowId) ? $workflowId : 0;
-    }
-
     public function logError(string $message, int $workflowId, array $step)
     {
         if (! function_exists('error_log')) {
@@ -101,47 +98,18 @@ class GeneralStep implements NodeRunnerProcessorInterface
         );
     }
 
-    public function getVariableValueFromContextVariables(string $variableName, array $contextVariables)
-    {
-        $variableName = explode('.', $variableName);
-
-        if (! array_key_exists($variableName[0], $contextVariables)) {
-            return null;
-        }
-
-        $variable = $contextVariables[$variableName[0]];
-        $variableName = array_slice($variableName, 1);
-
-        if (count($variableName) === 0) {
-            return $variable;
-        }
-
-        foreach ($variableName as $variablePart) {
-            if (is_array($variable) && isset($variable[$variablePart])) {
-                $variable = $variable[$variablePart];
-            } elseif (is_object($variable) && isset($variable->{$variablePart})) {
-                $variable = $variable->{$variablePart};
-            } else {
-                $variable = null;
-                break;
-            }
-        }
-
-        return $variable;
-    }
-
     private function isWordPressRayInstalled(): bool
     {
         return class_exists('Spatie\\WordPressRay\\Ray');
     }
 
-    private function activateGlobalRayDebug(array $contextVariables): void
+    private function activateGlobalRayDebug(): void
     {
         if (! $this->isWordPressRayInstalled()) {
             return;
         }
 
-        $workflowId = $this->getWorkflowIdFromContextVariables($contextVariables);
+        $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
 
         $workflowModel = new WorkflowModel();
         $workflowModel->load($workflowId);
@@ -162,8 +130,8 @@ class GeneralStep implements NodeRunnerProcessorInterface
         }
     }
 
-    public function triggerCallbackIsRunning(array $contextVariables): void
+    public function triggerCallbackIsRunning(): void
     {
-        $this->activateGlobalRayDebug($contextVariables);
+        $this->activateGlobalRayDebug();
     }
 }

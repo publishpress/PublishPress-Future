@@ -1,14 +1,14 @@
 <?php
 
-namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions;
+namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Advanced;
 
-use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeStatus as NodeType;
-use PublishPress\Future\Modules\Workflows\HooksAbstract;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\ConditionalSplit as NodeType;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
-class CorePostChangeStatus implements NodeRunnerInterface
+class ConditionalSplit implements NodeRunnerInterface
 {
     /**
      * @var NodeRunnerProcessorInterface
@@ -44,6 +44,18 @@ class CorePostChangeStatus implements NodeRunnerInterface
     {
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step);
 
-        $this->nodeRunnerProcessor->setup($step, '__return_true');
+        // Convert the "true" (default one) to a "next" step.
+        // A real conditional split is only handled in the Pro version.
+        $step['next']['output'] = $step['next']['true'] ?? [];
+        unset($step['next']['true']);
+        unset($step['next']['false']);
+
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+
+        $this->variablesHandler->setVariable($nodeSlug, [
+            'branch' => 'true',
+        ]);
+
+        $this->nodeRunnerProcessor->runNextSteps($step);
     }
 }

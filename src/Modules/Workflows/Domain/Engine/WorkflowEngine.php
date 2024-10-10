@@ -4,12 +4,14 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine;
 
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\SiteResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\UserResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionModel;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionsModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
@@ -17,6 +19,7 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowScheduledStepModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 use PublishPress\Future\Modules\Workflows\Module;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowModelInterface;
 
 use function PublishPress\Future\logError;
@@ -29,11 +32,6 @@ class WorkflowEngine implements WorkflowEngineInterface
     private $hooks;
 
     /**
-     * @var CronInterface
-     */
-    private $cron;
-
-    /**
      * @var NodeTypesModelInterface
      */
     private $nodeTypesModel;
@@ -44,7 +42,7 @@ class WorkflowEngine implements WorkflowEngineInterface
     private $nodeRunnerFactory;
 
     /**
-     * @var WorkflowVariablesHandlerInterface
+     * @var RuntimeVariablesHandlerInterface
      */
     private $variablesHandler;
 
@@ -58,15 +56,18 @@ class WorkflowEngine implements WorkflowEngineInterface
      */
     private $currentRunningWorkflow;
 
+    /**
+     * @var array
+     */
+    private $currentExecutionTrace;
+
     public function __construct(
         HookableInterface $hooks,
-        CronInterface $cron,
         NodeTypesModelInterface $nodeTypesModel,
         \Closure $nodeRunnerFactory,
-        WorkflowVariablesHandlerInterface $variablesHandler
+        RuntimeVariablesHandlerInterface $variablesHandler
     ) {
         $this->hooks = $hooks;
-        $this->cron = $cron;
         $this->nodeTypesModel = $nodeTypesModel;
         $this->nodeRunnerFactory = $nodeRunnerFactory;
         $this->variablesHandler = $variablesHandler;
@@ -75,9 +76,7 @@ class WorkflowEngine implements WorkflowEngineInterface
 
         $this->hooks->addAction(
             HooksAbstract::ACTION_EXECUTE_NODE,
-            [$this, 'executeNodeRoutine'],
-            10,
-            3
+            [$this, 'executeNodeRoutine']
         );
 
         $this->hooks->addAction(
@@ -107,9 +106,7 @@ class WorkflowEngine implements WorkflowEngineInterface
 
         $this->hooks->addAction(
             HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP,
-            [$this, "onRunningStep"],
-            10,
-            2
+            [$this, "onRunningStep"]
         );
     }
 
@@ -123,6 +120,8 @@ class WorkflowEngine implements WorkflowEngineInterface
 
             $nodeTypes = $this->nodeTypesModel->getAllNodeTypesByType();
 
+            $currentUser = wp_get_current_user();
+
             // Setup the workflow triggers
             foreach ($workflows as $workflowId) {
                 /** @var WorkflowModelInterface $workflow */
@@ -131,13 +130,28 @@ class WorkflowEngine implements WorkflowEngineInterface
 
                 $this->currentRunningWorkflow = $workflow;
 
-                $globalVariables = $this->variablesHandler->getGlobalVariables($workflow);
+                $this->variablesHandler->setAllVariables([]);
 
                 $triggerNodes = $workflow->getTriggerNodes();
 
                 $routineTree = $workflow->getRoutineTree($nodeTypes);
 
                 $triggerRunner = null;
+
+                $globalVariables = [
+                    'user' => new UserResolver($currentUser),
+                    'site' => new SiteResolver(),
+                    'workflow' => new WorkflowResolver(
+                        [
+                            'id' => $workflow->getId(),
+                            'title' => $workflow->getTitle(),
+                            'description' => $workflow->getDescription(),
+                            'modified_at' => $workflow->getModifiedAt(),
+                            'steps' => $workflow->getNodes(),
+                        ]
+                    ),
+                ];
+
                 foreach ($triggerNodes as $triggerNode) {
                     $triggerName = $triggerNode['data']['name'];
                     $triggerId = $triggerNode['id'];
@@ -163,7 +177,9 @@ class WorkflowEngine implements WorkflowEngineInterface
                         continue;
                     }
 
-                    // Update the trigger global variables
+                    // Reset the execution trace
+                    $this->currentExecutionTrace = [];
+
                     $globalVariables['trigger'] = new NodeResolver(
                         [
                             'id' => $triggerId,
@@ -174,12 +190,12 @@ class WorkflowEngine implements WorkflowEngineInterface
                         ]
                     );
 
-                    $contextVariables = [
+                    $this->variablesHandler->setAllVariables([
                         'global' => $globalVariables,
-                    ];
+                    ]);
 
                     // Setup the trigger
-                    $triggerRunner->setup($workflowId, $routineTree[$triggerId], $contextVariables);
+                    $triggerRunner->setup($workflowId, $routineTree[$triggerId]);
                 }
             }
         } catch (Exception $e) {
@@ -197,7 +213,7 @@ class WorkflowEngine implements WorkflowEngineInterface
         return (int) $this->currentAsyncActionId;
     }
 
-    public function executeNodeRoutine($step, $contextVariables)
+    public function executeNodeRoutine($step)
     {
         try {
             $node = $step['node'];
@@ -209,7 +225,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                 throw new \Exception("Node runner not found: $nodeName");
             }
 
-            $nodeRunner->setup($step, $contextVariables);
+            $nodeRunner->setup($step);
         } catch (Exception $e) {
             logError("Node runner error", $e);
         }
@@ -288,12 +304,12 @@ class WorkflowEngine implements WorkflowEngineInterface
         $scheduledActionsModel->cancelRecurringScheduledActions($workflowId, $stepId);
     }
 
-    public function getVariablesHandler(): WorkflowVariablesHandlerInterface
+    public function getVariablesHandler(): RuntimeVariablesHandlerInterface
     {
         return $this->variablesHandler;
     }
 
-    public function onRunningStep(array $step, array $contextVariables)
+    public function onRunningStep(array $step)
     {
         if (empty($this->currentRunningWorkflow)) {
             return;
@@ -307,8 +323,16 @@ class WorkflowEngine implements WorkflowEngineInterface
             return;
         }
 
-        // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction
         $stepSlug = $step['node']['data']['slug'];
+
+        $this->currentExecutionTrace[] = $stepSlug;
+
+        // Update the trace global variable.
+        $globalVariables = $this->variablesHandler->getVariable('global');
+        $globalVariables['trace'] = new ArrayResolver($this->currentExecutionTrace);
+        $this->variablesHandler->setVariable('global', $globalVariables);
+
+        // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction
         ray($stepSlug)->label('Current running step');
     }
 }

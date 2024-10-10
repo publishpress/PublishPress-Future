@@ -7,7 +7,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
-
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 class CorePostQuery implements NodeRunnerInterface
 {
 
@@ -21,12 +21,19 @@ class CorePostQuery implements NodeRunnerInterface
      */
     private $hooks;
 
+    /**
+     * @var RuntimeVariablesHandlerInterface
+     */
+    private $variablesHandler;
+
     public function __construct(
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
-        HookableInterface $hooks
+        HookableInterface $hooks,
+        RuntimeVariablesHandlerInterface $variablesHandler
     ) {
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->hooks = $hooks;
+        $this->variablesHandler = $variablesHandler;
     }
 
     public static function getNodeTypeName(): string
@@ -34,9 +41,9 @@ class CorePostQuery implements NodeRunnerInterface
         return NodeType::getNodeTypeName();
     }
 
-    public function setup(array $step, array $contextVariables = []): void
+    public function setup(array $step): void
     {
-        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step, $contextVariables);
-        $this->nodeRunnerProcessor->setup($step, '__return_true', $contextVariables);
+        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step);
+        $this->nodeRunnerProcessor->setup($step, '__return_true');
     }
 }

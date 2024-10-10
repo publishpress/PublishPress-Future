@@ -7,7 +7,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\AsyncNodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInterface;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
-
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 class CoreSchedule implements AsyncNodeRunnerInterface
 {
     /**
@@ -20,12 +20,19 @@ class CoreSchedule implements AsyncNodeRunnerInterface
      */
     private $hooks;
 
+    /**
+     * @var RuntimeVariablesHandlerInterface
+     */
+    private $variablesHandler;
+
     public function __construct(
         AsyncNodeRunnerProcessorInterface $nodeRunnerProcessor,
-        HookableInterface $hooks
+        HookableInterface $hooks,
+        RuntimeVariablesHandlerInterface $variablesHandler
     ) {
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->hooks = $hooks;
+        $this->variablesHandler = $variablesHandler;
     }
 
     public static function getNodeTypeName(): string
@@ -33,10 +40,10 @@ class CoreSchedule implements AsyncNodeRunnerInterface
         return NodeType::getNodeTypeName();
     }
 
-    public function setup(array $step, array $contextVariables = []): void
+    public function setup(array $step): void
     {
-        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step, $contextVariables);
-        $this->nodeRunnerProcessor->setup($step, '__return_true', $contextVariables);
+        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step);
+        $this->nodeRunnerProcessor->setup($step, '__return_true');
     }
 
     public function actionCallback(array $expandedArgs, array $originalArgs)

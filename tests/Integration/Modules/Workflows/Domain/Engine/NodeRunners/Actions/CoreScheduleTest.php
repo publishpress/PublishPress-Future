@@ -6,6 +6,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\CoreSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Models\PostModel;
 
 
@@ -42,12 +43,11 @@ class CoreScheduleTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         ]);
 
         $runner = new CoreSchedule(
-            $this->makeEmpty(
-                AsyncNodeRunnerProcessorInterface::class,
-                [
-                    'getVariableValueFromContextVariables' => new WorkflowResolver(['id' => 0])
-                ]
-            )
+            $this->makeEmpty(AsyncNodeRunnerProcessorInterface::class),
+            $this->makeEmpty(HookableInterface::class),
+            $this->makeEmpty(RuntimeVariablesHandlerInterface::class, [
+                'getVariable' => new WorkflowResolver(['id' => 0])
+            ])
         );
 
         $step = [

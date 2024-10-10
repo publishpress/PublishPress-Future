@@ -123,6 +123,15 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
         }
     });
 
+    state = setGlobalVariable(state, {
+        payload: {
+            name: 'trace',
+            label: 'Execution Trace',
+            type: 'array',
+            runtimeOnly: true,
+        }
+    });
+
     return state;
 }
 

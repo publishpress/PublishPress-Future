@@ -21914,6 +21914,14 @@ function _setInitialStateForGlobalVariables(state) {
       runtimeOnly: true
     }
   });
+  state = setGlobalVariable(state, {
+    payload: {
+      name: 'trace',
+      label: 'Execution Trace',
+      type: 'array',
+      runtimeOnly: true
+    }
+  });
   return state;
 }
 var loadWorkflowSuccess = function loadWorkflowSuccess(state, action) {

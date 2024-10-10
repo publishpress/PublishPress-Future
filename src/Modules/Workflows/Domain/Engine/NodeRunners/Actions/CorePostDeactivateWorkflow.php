@@ -8,6 +8,7 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDeact
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Models\PostModel;
 
 class CorePostDeactivateWorkflow implements NodeRunnerInterface
@@ -22,12 +23,19 @@ class CorePostDeactivateWorkflow implements NodeRunnerInterface
      */
     private $nodeRunnerProcessor;
 
+    /**
+     * @var RuntimeVariablesHandlerInterface
+     */
+    private $variablesHandler;
+
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerProcessorInterface $nodeRunnerProcessor
+        NodeRunnerProcessorInterface $nodeRunnerProcessor,
+        RuntimeVariablesHandlerInterface $variablesHandler
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->variablesHandler = $variablesHandler;
     }
 
     public static function getNodeTypeName(): string
@@ -35,22 +43,19 @@ class CorePostDeactivateWorkflow implements NodeRunnerInterface
         return NodeType::getNodeTypeName();
     }
 
-    public function setup(array $step, array $contextVariables = []): void
+    public function setup(array $step): void
     {
-        $this->nodeRunnerProcessor->setup($step, [$this, 'actionCallback'], $contextVariables);
+        $this->nodeRunnerProcessor->setup($step, [$this, 'actionCallback']);
     }
 
-    public function actionCallback(int $postId, array $nodeSettings, array $step, array $contextVariables)
+    public function actionCallback(int $postId, array $nodeSettings, array $step)
     {
-        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step, $contextVariables);
+        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step);
 
         $postModel = new PostModel();
         $postModel->load($postId);
 
-        $workflowResolver = $this->nodeRunnerProcessor->getVariableValueFromContextVariables(
-            $nodeSettings['workflow']['variable'],
-            $contextVariables
-        );
+        $workflowResolver = $this->variablesHandler->getVariable($nodeSettings['workflow']['variable']);
         $workflowId = $workflowResolver->getValue('id');
 
         $postModel->removeManuallyEnabledWorkflow($workflowId);
