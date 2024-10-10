@@ -1,12 +1,9 @@
-import { PanelRow, TextControl, TextareaControl } from '@wordpress/components';
+import { PanelRow } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as workflowStore } from '../workflow-store';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useCallback, useRef } from '@wordpress/element';
-import { WorkflowSwitchToDraftButton } from '../workflow-switch-to-draft-button';
-import { WorkflowDeleteButton } from '../workflow-delete-button';
+import { useCallback } from '@wordpress/element';
 import PersistentPanelBody from '../persistent-panel-body';
-import useScrollToTop from '../scrolled-to-top';
 import { ToggleControl } from '@wordpress/components';
 
 export const WorkflowDebugRayPanel = () => {
@@ -14,12 +11,14 @@ export const WorkflowDebugRayPanel = () => {
         showQueries,
         showEmails,
         showWordPressErrors,
+        showCurrentRunningStep,
         isLoadingWorkflow,
     } = useSelect((select) => {
         return {
             showQueries: select(workflowStore).getEditedWorkflowAttribute('debugRayShowQueries'),
             showEmails: select(workflowStore).getEditedWorkflowAttribute('debugRayShowEmails'),
             showWordPressErrors: select(workflowStore).getEditedWorkflowAttribute('debugRayShowWordPressErrors'),
+            showCurrentRunningStep: select(workflowStore).getEditedWorkflowAttribute('debugRayShowCurrentRunningStep'),
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
         }
     });
@@ -38,6 +37,10 @@ export const WorkflowDebugRayPanel = () => {
 
     const onChangeShowWordPressErrors = useCallback((selected) => {
         setEditedWorkflowAttribute('debugRayShowWordPressErrors', selected);
+    })
+
+    const onChangeShowCurrentRunningStep = useCallback((selected) => {
+        setEditedWorkflowAttribute('debugRayShowCurrentRunningStep', selected);
     })
 
     return (
@@ -70,6 +73,13 @@ export const WorkflowDebugRayPanel = () => {
                         label={__('Show WordPress Errors', 'post-expirator')}
                         checked={showWordPressErrors}
                         onChange={onChangeShowWordPressErrors}
+                    />
+                </PanelRow>
+                <PanelRow>
+                    <ToggleControl
+                        label={__('Show current running step', 'post-expirator')}
+                        checked={showCurrentRunningStep}
+                        onChange={onChangeShowCurrentRunningStep}
                     />
                 </PanelRow>
             </PersistentPanelBody>

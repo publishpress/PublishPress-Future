@@ -5,11 +5,11 @@ namespace PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
 
-class IfElse implements NodeTypeInterface
+class ConditionalSplit implements NodeTypeInterface
 {
     public static function getNodeTypeName(): string
     {
-        return "advanced/core.if-else";
+        return "advanced/core.conditional-split";
     }
 
     public function getElementaryType(): string
@@ -24,12 +24,12 @@ class IfElse implements NodeTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "simpleCondition";
+        return "conditionalSplit";
     }
 
     public function getLabel(): string
     {
-        return __("Simple condition", "post-expirator");
+        return __("Conditional Split", "post-expirator");
     }
 
     public function getDescription(): string
@@ -54,7 +54,7 @@ class IfElse implements NodeTypeInterface
 
     public function getCategory(): string
     {
-        return "conditional";
+        return "flow";
     }
 
     public function getSettingsSchema(): array
@@ -80,7 +80,18 @@ class IfElse implements NodeTypeInterface
 
     public function getValidationSchema(): array
     {
-        return [];
+        return [
+            "connections" => [
+                "rules" => [
+                    [
+                        "rule" => "hasIncomingConnection",
+                    ],
+                    [
+                        "rule" => "hasOutgoingConnection",
+                    ]
+                ],
+            ],
+        ];
     }
 
     public function getOutputSchema(): array
@@ -91,7 +102,13 @@ class IfElse implements NodeTypeInterface
                 "type" => "input",
                 "label" => __("Step input", "post-expirator"),
                 "description" => __("The input data for this step.", "post-expirator"),
-            ]
+            ],
+            [
+                "name" => "branch",
+                "type" => "string",
+                "label" => __("Branch", "post-expirator"),
+                "description" => __("The current branch on this step.", "post-expirator"),
+            ],
         ];
     }
 
@@ -126,6 +143,6 @@ class IfElse implements NodeTypeInterface
 
     public function isProFeature(): bool
     {
-        return false;
+        return true;
     }
 }

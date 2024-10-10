@@ -4,7 +4,6 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunnerProcesso
 
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
-use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\DatetimeResolver;
@@ -21,7 +20,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionModel;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionsModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
@@ -84,7 +83,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
     private $nodeTypesModel;
 
     /**
-     * @var WorkflowVariablesHandlerInterface
+     * @var RuntimeVariablesHandlerInterface
      */
     private $variablesHandler;
 
@@ -104,7 +103,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         CronInterface $cron,
         CronSchedulesModelInterface $cronSchedulesModel,
         NodeTypesModelInterface $nodeTypesModel,
-        WorkflowVariablesHandlerInterface $variablesHandler,
+        WorkflowEngineInterface $engine,
         string $pluginVersion,
         WorkflowEngineInterface $workflowEngine
     ) {
@@ -113,12 +112,12 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         $this->cron = $cron;
         $this->cronSchedulesModel = $cronSchedulesModel;
         $this->nodeTypesModel = $nodeTypesModel;
-        $this->variablesHandler = $variablesHandler;
+        $this->variablesHandler = $engine->getVariablesHandler();
         $this->pluginVersion = $pluginVersion;
         $this->workflowEngine = $workflowEngine;
     }
 
-    public function setup(array $step, callable $actionCallback, array $contextVariables = []): void
+    public function setup(array $step, callable $actionCallback): void
     {
         try {
             $node = $this->getNodeFromStep($step);
@@ -135,7 +134,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             if (self::SCHEDULE_RECURRENCE_SINGLE === $recurrence && self::WHEN_TO_RUN_NOW === $whenToRun) {
                 $timestamp = 0;
             } else {
-                $timestamp = $this->getSchedulingTimestamp($nodeSettings, $contextVariables);
+                $timestamp = $this->getSchedulingTimestamp($nodeSettings);
             }
 
             if (is_null($timestamp)) {
@@ -150,24 +149,25 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
             $isSingleAction = self::SCHEDULE_RECURRENCE_SINGLE === $recurrence;
 
-            $actionUID = $this->getScheduledActionUniqueId($node, $contextVariables);
+            $actionUID = $this->getScheduledActionUniqueId($node);
             $scheduledActionId = 0;
 
+            $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
+
             $actionArgs = [
-                'workflowId' => $this->getWorkflowIdFromContextVariables($contextVariables),
+                'workflowId' => $workflowId,
                 'stepId' => $node['id'],
                 'stepLabel' => $node['data']['label'] ?? null,
                 'stepName' => $node['data']['name'],
                 'pluginVersion' => $this->pluginVersion,
             ];
 
-            $compactedArgs = $this->compactArguments($step, $contextVariables);
+            $compactedArgs = $this->compactArguments($step);
 
 
             $actionUIDHash = md5($actionUID);
             $scheduledActionsModel = new ScheduledActionsModel();
 
-            $workflowId = $this->getWorkflowIdFromContextVariables($contextVariables);
             $hasFinished = WorkflowScheduledStepModel::getMetaIsFinished($workflowId, $actionUIDHash);
             $runCount = WorkflowScheduledStepModel::getMetaRunCount($workflowId, $actionUIDHash);
 
@@ -208,11 +208,18 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                 if (self::SCHEDULE_RECURRENCE_CUSTOM === $recurrence) {
                     $interval = (int)$nodeSettings['schedule']['repeatInterval'] ?? 0;
 
+                    /**
+                     * @param int $interval
+                     * @param array $nodeSettings
+                     * @param RuntimeVariablesHandlerInterface $variablesHandler
+                     *
+                     * @return int
+                     */
                     $interval = $this->hooks->applyFilters(
                         HooksAbstract::FILTER_INTERVAL_IN_SECONDS,
                         $interval,
                         $nodeSettings,
-                        $contextVariables
+                        $this->variablesHandler
                     );
                 } else {
                     $recurrence = preg_replace('/^cron_/', '', $recurrence);
@@ -249,7 +256,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
                 $scheduledStepModel = new WorkflowScheduledStepModel();
                 $scheduledStepModel->setActionId($scheduledActionId);
-                $scheduledStepModel->setWorkflowId($this->getWorkflowIdFromContextVariables($contextVariables));
+                $scheduledStepModel->setWorkflowId($workflowId);
                 $scheduledStepModel->setStepId($node['id']);
                 $scheduledStepModel->setActionUID($actionUID);
                 $scheduledStepModel->setArgs($compactedArgs);
@@ -265,12 +272,13 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                 $scheduledStepModel->insert();
             }
         } catch (\Exception $e) {
-            $workflowId = $this->getWorkflowIdFromContextVariables($contextVariables);
+            $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
+
             $this->logError($e->getMessage(), $workflowId, $step);
         }
     }
 
-    private function getSchedulingTimestamp(array $nodeSettings, array $contextVariables)
+    private function getSchedulingTimestamp(array $nodeSettings)
     {
         $scheduleSettings = $nodeSettings['schedule'];
 
@@ -288,17 +296,11 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                 if (self::DATE_SOURCE_CALENDAR === $dateSource) {
                     $timestamp = strtotime($scheduleSettings['specificDate']);
                 } elseif (self::DATE_SOURCE_EVENT === $dateSource) {
-                    $timestamp = $this->variablesHandler->parseNestedVariableValue(
-                        'global.trigger.activation_timestamp',
-                        $contextVariables
-                    );
+                    $timestamp = $this->variablesHandler->getVariable('global.trigger.activation_timestamp');
                 } elseif (self::DATE_SOURCE_STEP === $dateSource) {
                     $timestamp = time();
                 } else {
-                    $timestamp = $this->variablesHandler->parseNestedVariableValue(
-                        $dateSource,
-                        $contextVariables
-                    );
+                    $timestamp = $this->variablesHandler->getVariable($dateSource);
                 }
 
                 break;
@@ -328,10 +330,10 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         return $timestamp;
     }
 
-    private function getScheduledActionUniqueId(array $node, array $contextVariables)
+    private function getScheduledActionUniqueId(array $node)
     {
         $uniqueId = [
-            'workflowId' => $this->getWorkflowIdFromContextVariables($contextVariables),
+            'workflowId' => $this->variablesHandler->getVariable('global.workflow.id'),
             'stepId' => $node['id'],
             'custom' => '',
         ];
@@ -340,27 +342,24 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             $uniqueIdExpression = $node['data']['settings']['schedule']['uniqueIdExpression'];
 
             if (! empty($uniqueIdExpression)) {
-                $uniqueId['custom'] = $this->variablesHandler->replaceVariablesPlaceholdersInText(
-                    $uniqueIdExpression,
-                    $contextVariables
-                );
+                $uniqueId['custom'] = $this->variablesHandler->replacePlaceholdersInText($uniqueIdExpression);
             }
         }
 
         return wp_json_encode($uniqueId);
     }
 
-    public function compactArguments(array $step, array $contextVariables): array
+    public function compactArguments(array $step): array
     {
         $compactedArgs = [
             'pluginVersion' => $this->pluginVersion,
             'step' => [
                 'nodeId' => $step['node']['id'],
             ],
-            'contextVariables' => $contextVariables,
+            'runtimeVariables' => $this->variablesHandler->getAllVariables(),
         ];
 
-        foreach ($compactedArgs['contextVariables'] as $context => &$variables) {
+        foreach ($compactedArgs['runtimeVariables'] as $context => &$variables) {
             if (is_array($variables)) {
                 foreach ($variables as &$variableResolver) {
                     if (is_object($variableResolver)) {
@@ -406,7 +405,14 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         if (isset($compactArguments['step']['nodeId'])) {
             // New format where the step is compacted
             $nodeId = $compactArguments['step']['nodeId'];
-            $workflowId = $compactArguments['contextVariables']['global']['workflow']['value'];
+
+            // Convert legacy context variables to runtime variables
+            if (isset($compactArguments['contextVariables'])) {
+                $compactArguments['runtimeVariables'] = $compactArguments['contextVariables'];
+                unset($compactArguments['contextVariables']);
+            }
+
+            $workflowId = $compactArguments['runtimeVariables']['global']['workflow']['value'];
 
             $step = $this->getStepFromNodeId($workflowId, $nodeId);
         } else {
@@ -416,7 +422,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
         $expandedArgs = [
             'step' => $step,
-            'contextVariables' => [],
+            'runtimeVars' => [],
         ];
 
         // Before v3.4.1 the pluginVersion was not included in the compacted arguments
@@ -460,7 +466,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
          * ----------------------------------------
          * NEW compacted arguments:
          *
-         *  "contextVariables": {
+         *  "runtimeVariables": {
          *    "global": {
          *        "workflow": {
          *            "type": "workflow",
@@ -507,7 +513,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
          *}
          */
 
-        foreach ($compactArguments['contextVariables'] as $context => $variables) {
+        foreach ($compactArguments['runtimeVariables'] as $context => $variables) {
             foreach ($variables as $variableName => $value) {
                 $type = 'unknown';
 
@@ -602,14 +608,14 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                     $resolverClass = $resolversMap[$type];
 
                     if ($type === 'site') {
-                        $expandedArgs['contextVariables'][$context][$variableName] = new $resolverClass();
+                        $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass();
                     } else {
-                        $expandedArgs['contextVariables'][$context][$variableName] = new $resolverClass(
+                        $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass(
                             $resolverArgument
                         );
                     }
                 } else {
-                    $expandedArgs['contextVariables'][$context][$variableName] = $value;
+                    $expandedArgs['runtimeVariables'][$context][$variableName] = $value;
                 }
             }
         }
@@ -660,8 +666,10 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
     {
         $expandedArgs = $this->expandArguments($compactedArgs);
 
+        $this->variablesHandler->setAllVariables($expandedArgs['runtimeVariables']);
+
         // Check if the workflow is still active
-        $workflowId = $this->getWorkflowIdFromContextVariables($expandedArgs['contextVariables']);
+        $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
 
         $workflowModel = new WorkflowModel();
         $workflowModel->load($workflowId);
@@ -730,9 +738,9 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         }
     }
 
-    public function runNextSteps(array $step, array $contextVariables): void
+    public function runNextSteps(array $step): void
     {
-        $this->generalNodeRunnerProcessor->runNextSteps($step, $contextVariables);
+        $this->generalNodeRunnerProcessor->runNextSteps($step);
     }
 
     public function getNextSteps(array $step)
@@ -755,27 +763,14 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         return $this->generalNodeRunnerProcessor->getNodeSettings($node);
     }
 
-    public function getWorkflowIdFromContextVariables(array $contextVariables)
-    {
-        return $this->generalNodeRunnerProcessor->getWorkflowIdFromContextVariables($contextVariables);
-    }
-
     public function logError(string $message, int $workflowId, array $step)
     {
         $this->generalNodeRunnerProcessor->logError($message, $workflowId, $step);
     }
 
-    public function getVariableValueFromContextVariables(string $variableName, array $contextVariables)
+    public function triggerCallbackIsRunning(): void
     {
-        return $this->generalNodeRunnerProcessor->getVariableValueFromContextVariables(
-            $variableName,
-            $contextVariables
-        );
-    }
-
-    public function triggerCallbackIsRunning(array $contextVariables): void
-    {
-        $this->generalNodeRunnerProcessor->triggerCallbackIsRunning($contextVariables);
+        $this->generalNodeRunnerProcessor->triggerCallbackIsRunning();
     }
 
     public function cancelWorkflowScheduledActions(int $workflowId): void

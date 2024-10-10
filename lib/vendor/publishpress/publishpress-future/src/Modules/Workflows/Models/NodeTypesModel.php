@@ -17,6 +17,7 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CoreSendEmail
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\CorePostQuery;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\RayDebug;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\CoreSchedule;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\ConditionalSplit;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminInit;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
@@ -93,10 +94,10 @@ class NodeTypesModel implements NodeTypesModelInterface
                 ],
             ],
             [
-                "name" => "conditional",
-                "label" => __("Conditional", "post-expirator"),
+                "name" => "flow",
+                "label" => __("Flow Control", "post-expirator"),
                 "icon" => [
-                    "src" => "media-document",
+                    "src" => "route",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
                     "foreground" => self::DEFAULT_ICON_FOREGROUND,
                 ],
@@ -221,6 +222,7 @@ class NodeTypesModel implements NodeTypesModelInterface
         $nodesInstances = [
             CoreSchedule::getNodeTypeName() => new CoreSchedule(),
             CorePostQuery::getNodeTypeName() => new CorePostQuery(),
+            ConditionalSplit::getNodeTypeName() => new ConditionalSplit(),
         ];
 
         if (function_exists('ray')) {
@@ -257,6 +259,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             "outputSchema" => [],
             "className" => "react-flow__node-genericNode",
             "handleSchema" => [],
+            "isProFeature" => false,
         ];
 
         return array_merge($defaultNodeAttributes, $node);

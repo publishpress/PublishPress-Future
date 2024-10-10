@@ -150,6 +150,7 @@ class RestApiV1 implements RestApiManagerInterface
             'debugRayShowQueries' => $workflowModel->isDebugRayShowQueriesEnabled(),
             'debugRayShowEmails' => $workflowModel->isDebugRayShowEmailsEnabled(),
             'debugRayShowWordPressErrors' => $workflowModel->isDebugRayShowWordPressErrorsEnabled(),
+            'debugRayShowCurrentRunningStep' => $workflowModel->isDebugRayShowCurrentRunningStepEnabled(),
         ];
     }
 
@@ -227,6 +228,10 @@ class RestApiV1 implements RestApiManagerInterface
 
         if (isset($request['debugRayShowWordPressErrors'])) {
             $workflowModel->setDebugRayShowWordPressErrors($request['debugRayShowWordPressErrors']);
+        }
+
+        if (isset($request['debugRayShowCurrentRunningStep'])) {
+            $workflowModel->setDebugRayShowCurrentRunningStep($request['debugRayShowCurrentRunningStep']);
         }
 
         if ($isPublishing) {

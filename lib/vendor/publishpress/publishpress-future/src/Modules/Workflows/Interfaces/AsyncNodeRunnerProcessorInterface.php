@@ -6,7 +6,7 @@ interface AsyncNodeRunnerProcessorInterface extends NodeRunnerProcessorInterface
 {
     public function actionCallback(array $compactedArgs, array $originalArgs);
 
-    public function compactArguments(array $step, array $contextVariables): array;
+    public function compactArguments(array $step): array;
 
     public function expandArguments(array $compactArguments): array;
 

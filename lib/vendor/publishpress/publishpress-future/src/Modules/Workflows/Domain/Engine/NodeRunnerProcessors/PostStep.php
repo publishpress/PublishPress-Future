@@ -5,6 +5,7 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunnerProcesso
 use Exception;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 
 class PostStep implements NodeRunnerProcessorInterface
 {
@@ -18,18 +19,27 @@ class PostStep implements NodeRunnerProcessorInterface
      */
     private $generalNodeRunnerProcessor;
 
-    public function __construct(HooksFacade $hooks, NodeRunnerProcessorInterface $generalNodeRunnerProcessor)
-    {
+    /**
+     * @var RuntimeVariablesHandlerInterface
+     */
+    private $variablesHandler;
+
+    public function __construct(
+        HooksFacade $hooks,
+        NodeRunnerProcessorInterface $generalNodeRunnerProcessor,
+        RuntimeVariablesHandlerInterface $variablesHandler
+    ) {
         $this->hooks = $hooks;
         $this->generalNodeRunnerProcessor = $generalNodeRunnerProcessor;
+        $this->variablesHandler = $variablesHandler;
     }
 
-    public function setup(array $step, callable $actionCallback, array $contextVariables = []): void
+    public function setup(array $step, callable $actionCallback): void
     {
         try {
             $node = $this->getNodeFromStep($step);
             $nodeSettings = $this->getNodeSettings($node);
-            $workflowId = $this->getWorkflowIdFromContextVariables($contextVariables);
+            $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
 
             if (! isset($nodeSettings['post'])) {
                 throw new Exception('The "post" variable is not set in the node settings');
@@ -40,7 +50,7 @@ class PostStep implements NodeRunnerProcessorInterface
             }
 
             // We look for the "post" variable in the node settings
-            $posts = $this->getVariableValueFromContextVariables($nodeSettings['post']['variable'], $contextVariables);
+            $posts = $this->variablesHandler->getVariable($nodeSettings['post']['variable']);
 
             if (empty($posts)) {
                 // TODO: Log this
@@ -64,18 +74,18 @@ class PostStep implements NodeRunnerProcessorInterface
                     $postId = intval($post);
                 }
 
-                call_user_func($actionCallback, $postId, $nodeSettings, $step, $contextVariables);
+                call_user_func($actionCallback, $postId, $nodeSettings, $step);
             }
 
-            $this->runNextSteps($step, $contextVariables);
+            $this->runNextSteps($step);
         } catch (\Exception $e) {
             $this->logError($e->getMessage(), $workflowId, $step);
         }
     }
 
-    public function runNextSteps(array $step, array $contextVariables): void
+    public function runNextSteps(array $step): void
     {
-        $this->generalNodeRunnerProcessor->runNextSteps($step, $contextVariables);
+        $this->generalNodeRunnerProcessor->runNextSteps($step);
     }
 
     public function getNextSteps(array $step)
@@ -98,26 +108,13 @@ class PostStep implements NodeRunnerProcessorInterface
         return $this->generalNodeRunnerProcessor->getNodeSettings($node);
     }
 
-    public function getWorkflowIdFromContextVariables(array $contextVariables)
-    {
-        return $this->generalNodeRunnerProcessor->getWorkflowIdFromContextVariables($contextVariables);
-    }
-
     public function logError(string $message, int $workflowId, array $step)
     {
         $this->generalNodeRunnerProcessor->logError($message, $workflowId, $step);
     }
 
-    public function getVariableValueFromContextVariables(string $variableName, array $contextVariables)
+    public function triggerCallbackIsRunning(): void
     {
-        return $this->generalNodeRunnerProcessor->getVariableValueFromContextVariables(
-            $variableName,
-            $contextVariables
-        );
-    }
-
-    public function triggerCallbackIsRunning(array $contextVariables): void
-    {
-        $this->generalNodeRunnerProcessor->triggerCallbackIsRunning($contextVariables);
+        $this->generalNodeRunnerProcessor->triggerCallbackIsRunning();
     }
 }

@@ -43,6 +43,9 @@ class WorkflowResolver implements VariableResolverInterface
 
             case 'modified_at':
                 return (string)$this->workflow['modified_at'];
+
+            case 'steps':
+                return (array)$this->workflow['steps'];
         }
 
         return '';
@@ -71,7 +74,7 @@ class WorkflowResolver implements VariableResolverInterface
 
     public function __isset($name): bool
     {
-        return in_array($name, ['id', 'ID', 'title', 'description', 'modified_at']);
+        return in_array($name, ['id', 'ID', 'title', 'description', 'modified_at', 'steps']);
     }
 
     public function __get($name)

@@ -335,11 +335,13 @@ class WorkflowsList implements InitializableInterface
 
     public function addWorkflowStatusToTitle($title, $id)
     {
+        $currentScreen = get_current_screen();
+
         if (
             !is_admin() || (
                 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             (!isset($_GET['post_type']) || $_GET['post_type'] !== Module::POST_TYPE_WORKFLOW) &&
-                (get_current_screen()->id !== 'edit-' . Module::POST_TYPE_WORKFLOW)
+                ($currentScreen && $currentScreen->id !== 'edit-' . Module::POST_TYPE_WORKFLOW)
             )
         ) {
             return $title;
@@ -347,6 +349,10 @@ class WorkflowsList implements InitializableInterface
 
         $workflowModel = new WorkflowModel();
         $workflowModel->load($id);
+
+        if (empty($workflowModel)) {
+            return $title;
+        }
 
         $workflowStatus = $workflowModel->getStatus();
 
