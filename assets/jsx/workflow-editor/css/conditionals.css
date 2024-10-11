@@ -1,0 +1,13 @@
+.edit-post-sidebar__panel .condition-natural-language {
+    margin-top: 12px;
+    font-family: monospace, monospace;
+    background-color: #f0f0f1;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #e0e0e1;
+}
+
+.condition-pro-features-notice {
+    font-style: italic;
+    margin-top: 12px;
+}

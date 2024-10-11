@@ -11906,6 +11906,165 @@ function WorkflowEditorApp() {
 
 /***/ }),
 
+/***/ "./assets/jsx/workflow-editor/components/data-fields/conditional.jsx":
+/*!***************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-fields/conditional.jsx ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Conditional: () => (/* binding */ Conditional),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_querybuilder__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-querybuilder */ "./node_modules/react-querybuilder/dist/react-querybuilder.mjs");
+/* harmony import */ var react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-querybuilder/parseJsonLogic */ "./node_modules/react-querybuilder/dist/parseJsonLogic.js");
+/* harmony import */ var react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_querybuilder_dist_query_builder_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-querybuilder/dist/query-builder.css */ "./node_modules/react-querybuilder/dist/query-builder.css");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t.return || t.return(); } finally { if (u) throw o; } } }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+
+
+
+
+
+
+var Conditional = function Conditional(_ref) {
+  var name = _ref.name,
+    label = _ref.label,
+    defaultValue = _ref.defaultValue,
+    onChange = _ref.onChange,
+    variables = _ref.variables;
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    isPopoverVisible = _useState2[0],
+    setIsPopoverVisible = _useState2[1];
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_6__.parseJsonLogic)(defaultValue !== null && defaultValue !== void 0 && defaultValue.json ? defaultValue.json : '')),
+    _useState4 = _slicedToArray(_useState3, 2),
+    query = _useState4[0],
+    setQuery = _useState4[1];
+  var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(function (select) {
+      return {
+        isPro: select(_editor_store__WEBPACK_IMPORTED_MODULE_3__.store).isPro()
+      };
+    }),
+    isPro = _useSelect.isPro;
+  var allVariables = [];
+  var _iterator = _createForOfIteratorHelper(variables),
+    _step;
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var variable = _step.value;
+      if (variable.children) {
+        var _iterator2 = _createForOfIteratorHelper(variable.children),
+          _step2;
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var child = _step2.value;
+            allVariables.push({
+              name: child.id,
+              label: child.name
+            });
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+      } else {
+        allVariables.push({
+          name: variable.id,
+          label: variable.name
+        });
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+  var togglePopover = function togglePopover() {
+    return setIsPopoverVisible(function (prev) {
+      return !prev;
+    });
+  };
+  var onClose = function onClose() {
+    togglePopover();
+    var jsonCondition = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.formatQuery)(query, {
+      format: 'jsonlogic',
+      parseNumbers: true
+    });
+    var naturalLanguageCondition = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.formatQuery)(query, {
+      format: 'natural_language',
+      parseNumbers: true,
+      fields: allVariables,
+      getOperators: function getOperators() {
+        return react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.defaultOperators;
+      }
+    });
+    var newValue = _objectSpread({}, defaultValue);
+    newValue.json = jsonCondition;
+    newValue.natural = naturalLanguageCondition;
+    if (onChange) {
+      onChange(name, newValue);
+    }
+  };
+  var fields = [].concat(allVariables);
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+    onClick: togglePopover,
+    variant: "secondary"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Edit condition', 'post-expirator')), (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.natural) && /*#__PURE__*/React.createElement("div", {
+    className: "condition-natural-language"
+  }, defaultValue.natural), !isPro && /*#__PURE__*/React.createElement("div", {
+    className: "condition-pro-features-notice"
+  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('This conditional will only be evaluated in the Pro version. In the Free version, it will always return true.', 'post-expirator'))), isPopoverVisible && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Popover, {
+    onClose: onClose
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '20px',
+      minWidth: '400px'
+    }
+  }, /*#__PURE__*/React.createElement(react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.QueryBuilder, {
+    fields: fields,
+    onQueryChange: setQuery,
+    query: query,
+    addRuleToNewGroups: true,
+    parseNumbers: "strict-limited",
+    showCombinatorsBetweenRules: true,
+    showNotToggle: true,
+    controlClassnames: {
+      queryBuilder: 'queryBuilder-branches'
+    }
+  }))));
+  return /*#__PURE__*/React.createElement(react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.QueryBuilder, null);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Conditional);
+
+/***/ }),
+
 /***/ "./assets/jsx/workflow-editor/components/data-fields/date-offset.jsx":
 /*!***************************************************************************!*\
   !*** ./assets/jsx/workflow-editor/components/data-fields/date-offset.jsx ***!
@@ -17221,6 +17380,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_fields_post_input__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../data-fields/post-input */ "./assets/jsx/workflow-editor/components/data-fields/post-input.jsx");
 /* harmony import */ var _data_fields_manual_workflow_input__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../data-fields/manual-workflow-input */ "./assets/jsx/workflow-editor/components/data-fields/manual-workflow-input.jsx");
 /* harmony import */ var _data_fields_list__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../data-fields/list */ "./assets/jsx/workflow-editor/components/data-fields/list.jsx");
+/* harmony import */ var _data_fields_conditional__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../data-fields/conditional */ "./assets/jsx/workflow-editor/components/data-fields/conditional.jsx");
+
 
 
 
@@ -17260,6 +17421,8 @@ var MappedField = function MappedField(props) {
       return /*#__PURE__*/React.createElement(_data_fields_manual_workflow_input__WEBPACK_IMPORTED_MODULE_11__["default"], props);
     case "list":
       return /*#__PURE__*/React.createElement(_data_fields_list__WEBPACK_IMPORTED_MODULE_12__["default"], props);
+    case "conditional":
+      return /*#__PURE__*/React.createElement(_data_fields_conditional__WEBPACK_IMPORTED_MODULE_13__["default"], props);
   }
   return /*#__PURE__*/React.createElement("i", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Field type %s is not implemented', 'publihspress-future-pro'), props.type));
 };
@@ -17508,6 +17671,7 @@ var NodeSettingsPanel = function NodeSettingsPanel(_ref) {
     updateNode = _useDispatch.updateNode;
   var onChangeSetting = function onChangeSetting(fieldName, value) {
     var _node$data2;
+    console.log(fieldName, value);
     if (!((_node$data2 = node.data) !== null && _node$data2 !== void 0 && _node$data2.settings)) {
       node.data.settings = {};
     }
@@ -23415,6 +23579,46 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.block-editor-block-types-list > [role
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/conditionals.css":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/conditionals.css ***!
+  \***********************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.edit-post-sidebar__panel .condition-natural-language {
+    margin-top: 12px;
+    font-family: monospace, monospace;
+    background-color: #f0f0f1;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #e0e0e1;
+}
+
+.condition-pro-features-notice {
+    font-style: italic;
+    margin-top: 12px;
+}
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/conditionals.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;IAChB,iCAAiC;IACjC,yBAAyB;IACzB,aAAa;IACb,kBAAkB;IAClB,yBAAyB;AAC7B;;AAEA;IACI,kBAAkB;IAClB,gBAAgB;AACpB","sourcesContent":[".edit-post-sidebar__panel .condition-natural-language {\n    margin-top: 12px;\n    font-family: monospace, monospace;\n    background-color: #f0f0f1;\n    padding: 12px;\n    border-radius: 4px;\n    border: 1px solid #e0e0e1;\n}\n\n.condition-pro-features-notice {\n    font-style: italic;\n    margin-top: 12px;\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/custom.css":
 /*!*****************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/custom.css ***!
@@ -24573,7 +24777,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_toolbar_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! -!../../../../node_modules/css-loader/dist/cjs.js!./toolbar.css */ "./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/toolbar.css");
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_notices_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! -!../../../../node_modules/css-loader/dist/cjs.js!./notices.css */ "./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/notices.css");
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_pro_features_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! -!../../../../node_modules/css-loader/dist/cjs.js!./pro-features.css */ "./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/pro-features.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_conditionals_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! -!../../../../node_modules/css-loader/dist/cjs.js!./conditionals.css */ "./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/conditionals.css");
 // Imports
+
 
 
 
@@ -24597,6 +24803,7 @@ ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_guide_css__WEBPAC
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_toolbar_css__WEBPACK_IMPORTED_MODULE_9__["default"]);
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_notices_css__WEBPACK_IMPORTED_MODULE_10__["default"]);
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_pro_features_css__WEBPACK_IMPORTED_MODULE_11__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_conditionals_css__WEBPACK_IMPORTED_MODULE_12__["default"]);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.reactflow-wrapper {
     height: 100%;
@@ -24609,7 +24816,34 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.reactflow-wrapper {
 .components-notice-list .components-notice__dismiss {
     margin-top: 12px;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/index.css"],"names":[],"mappings":"AAWA;IACI,YAAY;AAChB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB","sourcesContent":["@import url('custom.css');\n@import url('block-types-list.css');\n@import url('inserter.css');\n@import url('inspector.css');\n@import url('node-types.css');\n@import url('dev.css');\n@import url('guide.css');\n@import url('toolbar.css');\n@import url('notices.css');\n@import url('pro-features.css');\n\n.reactflow-wrapper {\n    height: 100%;\n}\n\n.components-notice {\n    padding: 0 12px;\n}\n\n.components-notice-list .components-notice__dismiss {\n    margin-top: 12px;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/index.css"],"names":[],"mappings":"AAYA;IACI,YAAY;AAChB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB","sourcesContent":["@import url('custom.css');\n@import url('block-types-list.css');\n@import url('inserter.css');\n@import url('inspector.css');\n@import url('node-types.css');\n@import url('dev.css');\n@import url('guide.css');\n@import url('toolbar.css');\n@import url('notices.css');\n@import url('pro-features.css');\n@import url('conditionals.css');\n\n.reactflow-wrapper {\n    height: 100%;\n}\n\n.components-notice {\n    padding: 0 12px;\n}\n\n.components-notice-list .components-notice__dismiss {\n    margin-top: 12px;\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./node_modules/react-querybuilder/dist/query-builder.css":
+/*!************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./node_modules/react-querybuilder/dist/query-builder.css ***!
+  \************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.ruleGroup{display:flex;flex-direction:column;gap:.5rem;padding:.5rem;border-width:1px}.ruleGroup .ruleGroup-body{display:flex;flex-direction:column;gap:.5rem}.ruleGroup .ruleGroup-body:empty{display:none}.ruleGroup .ruleGroup-header,.ruleGroup .rule{display:flex;gap:.5rem;align-items:center}.ruleGroup .rule .rule-value:has(.rule-value-list-item){display:flex;gap:.5rem;align-items:baseline}.ruleGroup .betweenRules{display:flex}.ruleGroup .shiftActions{display:flex;flex-direction:column}.ruleGroup .shiftActions>*{padding:0}.dndOver.rule,.dndOver.ruleGroup-header{padding-bottom:.5rem}.dndOver.betweenRules{padding-top:.5rem}.queryBuilder-branches .ruleGroup-body{margin-left:calc(2*0.5rem)}.queryBuilder-branches .rule,.queryBuilder-branches .ruleGroup .ruleGroup{position:relative}.queryBuilder-branches .rule::before,.queryBuilder-branches .rule::after,.queryBuilder-branches .ruleGroup .ruleGroup::before,.queryBuilder-branches .ruleGroup .ruleGroup::after{content:"";width:.5rem;left:calc(-0.5rem - 1px);border-radius:0;position:absolute}.queryBuilder-branches .rule::before,.queryBuilder-branches .ruleGroup .ruleGroup::before{top:-0.5rem;height:calc(50% + 0.5rem);border-width:0 0 1px 1px}.queryBuilder-branches .rule::after,.queryBuilder-branches .ruleGroup .ruleGroup::after{top:50%;height:50%;border-width:0 0 0 1px}.queryBuilder-branches .rule:last-child::after,.queryBuilder-branches .ruleGroup .ruleGroup:last-child::after{display:none}.queryBuilder-branches .ruleGroup .ruleGroup::before,.queryBuilder-branches .ruleGroup .ruleGroup::after{left:calc(-0.5rem - 1px - 1px)}.queryBuilder-branches .ruleGroup .ruleGroup::before{top:calc(-0.5rem - 1px);height:calc(50% + 0.5rem + 1px)}.queryBuilder-branches .ruleGroup .ruleGroup::after{height:calc(50% + 1px)}.queryBuilder-branches .betweenRules{position:relative}.queryBuilder-branches .betweenRules::before{content:"";width:.5rem;left:calc(-0.5rem - 1px);border-radius:0;position:absolute;top:-0.5rem;height:calc(100% + 0.5rem);border-width:0 0 0 1px}.ruleGroup{border-color:#8081a2;border-style:solid;border-radius:.25rem;background:rgba(0,75,183,.2)}.ruleGroup .shiftActions>*{background-color:rgba(0,0,0,0);border:none;cursor:pointer}.dndOver.rule,.dndOver.ruleGroup-header{border-bottom-width:2px;border-bottom-style:dashed;border-bottom-color:#639}.dndOver.rule.dndCopy,.dndOver.ruleGroup-header.dndCopy{border-bottom-color:#693}.dndOver.betweenRules{border-top-width:2px;border-top-style:dashed;border-top-color:#639}.dndOver.betweenRules.dndCopy{border-top-color:#693}.ruleGroup.dndDragging,.rule.dndDragging{opacity:.5}.ruleGroup .queryBuilder-dragHandle,.rule .queryBuilder-dragHandle{cursor:move}.queryBuilder-branches .rule::before,.queryBuilder-branches .rule::after,.queryBuilder-branches .ruleGroup .ruleGroup::before,.queryBuilder-branches .ruleGroup .ruleGroup::after{border-color:#8081a2;border-style:solid}.queryBuilder-branches .rule:last-child::before,.queryBuilder-branches .ruleGroup .ruleGroup:last-child::before{border-bottom-left-radius:.25rem}.queryBuilder-branches .betweenRules{position:relative}.queryBuilder-branches .betweenRules::before{border-color:#8081a2;border-style:solid}`, "",{"version":3,"sources":["webpack://./node_modules/react-querybuilder/dist/query-builder.css"],"names":[],"mappings":"AAAA,WAAW,YAAY,CAAC,qBAAqB,CAAC,SAAS,CAAC,aAAa,CAAC,gBAAgB,CAAC,2BAA2B,YAAY,CAAC,qBAAqB,CAAC,SAAS,CAAC,iCAAiC,YAAY,CAAC,8CAA8C,YAAY,CAAC,SAAS,CAAC,kBAAkB,CAAC,wDAAwD,YAAY,CAAC,SAAS,CAAC,oBAAoB,CAAC,yBAAyB,YAAY,CAAC,yBAAyB,YAAY,CAAC,qBAAqB,CAAC,2BAA2B,SAAS,CAAC,wCAAwC,oBAAoB,CAAC,sBAAsB,iBAAiB,CAAC,uCAAuC,0BAA0B,CAAC,0EAA0E,iBAAiB,CAAC,kLAAkL,UAAU,CAAC,WAAW,CAAC,wBAAwB,CAAC,eAAe,CAAC,iBAAiB,CAAC,0FAA0F,WAAW,CAAC,yBAAyB,CAAC,wBAAwB,CAAC,wFAAwF,OAAO,CAAC,UAAU,CAAC,sBAAsB,CAAC,8GAA8G,YAAY,CAAC,yGAAyG,8BAA8B,CAAC,qDAAqD,uBAAuB,CAAC,+BAA+B,CAAC,oDAAoD,sBAAsB,CAAC,qCAAqC,iBAAiB,CAAC,6CAA6C,UAAU,CAAC,WAAW,CAAC,wBAAwB,CAAC,eAAe,CAAC,iBAAiB,CAAC,WAAW,CAAC,0BAA0B,CAAC,sBAAsB,CAAC,WAAW,oBAAoB,CAAC,kBAAkB,CAAC,oBAAoB,CAAC,4BAA4B,CAAC,2BAA2B,8BAA8B,CAAC,WAAW,CAAC,cAAc,CAAC,wCAAwC,uBAAuB,CAAC,0BAA0B,CAAC,wBAAwB,CAAC,wDAAwD,wBAAwB,CAAC,sBAAsB,oBAAoB,CAAC,uBAAuB,CAAC,qBAAqB,CAAC,8BAA8B,qBAAqB,CAAC,yCAAyC,UAAU,CAAC,mEAAmE,WAAW,CAAC,kLAAkL,oBAAoB,CAAC,kBAAkB,CAAC,gHAAgH,gCAAgC,CAAC,qCAAqC,iBAAiB,CAAC,6CAA6C,oBAAoB,CAAC,kBAAkB","sourcesContent":[".ruleGroup{display:flex;flex-direction:column;gap:.5rem;padding:.5rem;border-width:1px}.ruleGroup .ruleGroup-body{display:flex;flex-direction:column;gap:.5rem}.ruleGroup .ruleGroup-body:empty{display:none}.ruleGroup .ruleGroup-header,.ruleGroup .rule{display:flex;gap:.5rem;align-items:center}.ruleGroup .rule .rule-value:has(.rule-value-list-item){display:flex;gap:.5rem;align-items:baseline}.ruleGroup .betweenRules{display:flex}.ruleGroup .shiftActions{display:flex;flex-direction:column}.ruleGroup .shiftActions>*{padding:0}.dndOver.rule,.dndOver.ruleGroup-header{padding-bottom:.5rem}.dndOver.betweenRules{padding-top:.5rem}.queryBuilder-branches .ruleGroup-body{margin-left:calc(2*0.5rem)}.queryBuilder-branches .rule,.queryBuilder-branches .ruleGroup .ruleGroup{position:relative}.queryBuilder-branches .rule::before,.queryBuilder-branches .rule::after,.queryBuilder-branches .ruleGroup .ruleGroup::before,.queryBuilder-branches .ruleGroup .ruleGroup::after{content:\"\";width:.5rem;left:calc(-0.5rem - 1px);border-radius:0;position:absolute}.queryBuilder-branches .rule::before,.queryBuilder-branches .ruleGroup .ruleGroup::before{top:-0.5rem;height:calc(50% + 0.5rem);border-width:0 0 1px 1px}.queryBuilder-branches .rule::after,.queryBuilder-branches .ruleGroup .ruleGroup::after{top:50%;height:50%;border-width:0 0 0 1px}.queryBuilder-branches .rule:last-child::after,.queryBuilder-branches .ruleGroup .ruleGroup:last-child::after{display:none}.queryBuilder-branches .ruleGroup .ruleGroup::before,.queryBuilder-branches .ruleGroup .ruleGroup::after{left:calc(-0.5rem - 1px - 1px)}.queryBuilder-branches .ruleGroup .ruleGroup::before{top:calc(-0.5rem - 1px);height:calc(50% + 0.5rem + 1px)}.queryBuilder-branches .ruleGroup .ruleGroup::after{height:calc(50% + 1px)}.queryBuilder-branches .betweenRules{position:relative}.queryBuilder-branches .betweenRules::before{content:\"\";width:.5rem;left:calc(-0.5rem - 1px);border-radius:0;position:absolute;top:-0.5rem;height:calc(100% + 0.5rem);border-width:0 0 0 1px}.ruleGroup{border-color:#8081a2;border-style:solid;border-radius:.25rem;background:rgba(0,75,183,.2)}.ruleGroup .shiftActions>*{background-color:rgba(0,0,0,0);border:none;cursor:pointer}.dndOver.rule,.dndOver.ruleGroup-header{border-bottom-width:2px;border-bottom-style:dashed;border-bottom-color:#639}.dndOver.rule.dndCopy,.dndOver.ruleGroup-header.dndCopy{border-bottom-color:#693}.dndOver.betweenRules{border-top-width:2px;border-top-style:dashed;border-top-color:#639}.dndOver.betweenRules.dndCopy{border-top-color:#693}.ruleGroup.dndDragging,.rule.dndDragging{opacity:.5}.ruleGroup .queryBuilder-dragHandle,.rule .queryBuilder-dragHandle{cursor:move}.queryBuilder-branches .rule::before,.queryBuilder-branches .rule::after,.queryBuilder-branches .ruleGroup .ruleGroup::before,.queryBuilder-branches .ruleGroup .ruleGroup::after{border-color:#8081a2;border-style:solid}.queryBuilder-branches .rule:last-child::before,.queryBuilder-branches .ruleGroup .ruleGroup:last-child::before{border-bottom-left-radius:.25rem}.queryBuilder-branches .betweenRules{position:relative}.queryBuilder-branches .betweenRules::before{border-color:#8081a2;border-style:solid}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -26242,6 +26476,1288 @@ const isInstanceOfElement = (node, instance) => {
         isInstanceOfElement(nodePrototype, instance));
 };
 //# sourceMappingURL=util.js.map
+
+/***/ }),
+
+/***/ "./node_modules/immer/dist/cjs/immer.cjs.development.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/immer/dist/cjs/immer.cjs.development.js ***!
+  \**************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/immer.ts
+var immer_exports = {};
+__export(immer_exports, {
+  Immer: () => Immer2,
+  applyPatches: () => applyPatches,
+  castDraft: () => castDraft,
+  castImmutable: () => castImmutable,
+  createDraft: () => createDraft,
+  current: () => current,
+  enableMapSet: () => enableMapSet,
+  enablePatches: () => enablePatches,
+  finishDraft: () => finishDraft,
+  freeze: () => freeze,
+  immerable: () => DRAFTABLE,
+  isDraft: () => isDraft,
+  isDraftable: () => isDraftable,
+  nothing: () => NOTHING,
+  original: () => original,
+  produce: () => produce,
+  produceWithPatches: () => produceWithPatches,
+  setAutoFreeze: () => setAutoFreeze,
+  setUseStrictShallowCopy: () => setUseStrictShallowCopy
+});
+module.exports = __toCommonJS(immer_exports);
+
+// src/utils/env.ts
+var NOTHING = Symbol.for("immer-nothing");
+var DRAFTABLE = Symbol.for("immer-draftable");
+var DRAFT_STATE = Symbol.for("immer-state");
+
+// src/utils/errors.ts
+var errors =  true ? [
+  // All error codes, starting by 0:
+  function(plugin) {
+    return `The plugin for '${plugin}' has not been loaded into Immer. To enable the plugin, import and call \`enable${plugin}()\` when initializing your application.`;
+  },
+  function(thing) {
+    return `produce can only be called on things that are draftable: plain objects, arrays, Map, Set or classes that are marked with '[immerable]: true'. Got '${thing}'`;
+  },
+  "This object has been frozen and should not be mutated",
+  function(data) {
+    return "Cannot use a proxy that has been revoked. Did you pass an object from inside an immer function to an async process? " + data;
+  },
+  "An immer producer returned a new value *and* modified its draft. Either return a new value *or* modify the draft.",
+  "Immer forbids circular references",
+  "The first or second argument to `produce` must be a function",
+  "The third argument to `produce` must be a function or undefined",
+  "First argument to `createDraft` must be a plain object, an array, or an immerable object",
+  "First argument to `finishDraft` must be a draft returned by `createDraft`",
+  function(thing) {
+    return `'current' expects a draft, got: ${thing}`;
+  },
+  "Object.defineProperty() cannot be used on an Immer draft",
+  "Object.setPrototypeOf() cannot be used on an Immer draft",
+  "Immer only supports deleting array indices",
+  "Immer only supports setting array indices and the 'length' property",
+  function(thing) {
+    return `'original' expects a draft, got: ${thing}`;
+  }
+  // Note: if more errors are added, the errorOffset in Patches.ts should be increased
+  // See Patches.ts for additional errors
+] : 0;
+function die(error, ...args) {
+  if (true) {
+    const e = errors[error];
+    const msg = typeof e === "function" ? e.apply(null, args) : e;
+    throw new Error(`[Immer] ${msg}`);
+  }
+  throw new Error(
+    `[Immer] minified error nr: ${error}. Full error at: https://bit.ly/3cXEKWf`
+  );
+}
+
+// src/utils/common.ts
+var getPrototypeOf = Object.getPrototypeOf;
+function isDraft(value) {
+  return !!value && !!value[DRAFT_STATE];
+}
+function isDraftable(value) {
+  if (!value)
+    return false;
+  return isPlainObject(value) || Array.isArray(value) || !!value[DRAFTABLE] || !!value.constructor?.[DRAFTABLE] || isMap(value) || isSet(value);
+}
+var objectCtorString = Object.prototype.constructor.toString();
+function isPlainObject(value) {
+  if (!value || typeof value !== "object")
+    return false;
+  const proto = getPrototypeOf(value);
+  if (proto === null) {
+    return true;
+  }
+  const Ctor = Object.hasOwnProperty.call(proto, "constructor") && proto.constructor;
+  if (Ctor === Object)
+    return true;
+  return typeof Ctor == "function" && Function.toString.call(Ctor) === objectCtorString;
+}
+function original(value) {
+  if (!isDraft(value))
+    die(15, value);
+  return value[DRAFT_STATE].base_;
+}
+function each(obj, iter) {
+  if (getArchtype(obj) === 0 /* Object */) {
+    Reflect.ownKeys(obj).forEach((key) => {
+      iter(key, obj[key], obj);
+    });
+  } else {
+    obj.forEach((entry, index) => iter(index, entry, obj));
+  }
+}
+function getArchtype(thing) {
+  const state = thing[DRAFT_STATE];
+  return state ? state.type_ : Array.isArray(thing) ? 1 /* Array */ : isMap(thing) ? 2 /* Map */ : isSet(thing) ? 3 /* Set */ : 0 /* Object */;
+}
+function has(thing, prop) {
+  return getArchtype(thing) === 2 /* Map */ ? thing.has(prop) : Object.prototype.hasOwnProperty.call(thing, prop);
+}
+function get(thing, prop) {
+  return getArchtype(thing) === 2 /* Map */ ? thing.get(prop) : thing[prop];
+}
+function set(thing, propOrOldValue, value) {
+  const t = getArchtype(thing);
+  if (t === 2 /* Map */)
+    thing.set(propOrOldValue, value);
+  else if (t === 3 /* Set */) {
+    thing.add(value);
+  } else
+    thing[propOrOldValue] = value;
+}
+function is(x, y) {
+  if (x === y) {
+    return x !== 0 || 1 / x === 1 / y;
+  } else {
+    return x !== x && y !== y;
+  }
+}
+function isMap(target) {
+  return target instanceof Map;
+}
+function isSet(target) {
+  return target instanceof Set;
+}
+function latest(state) {
+  return state.copy_ || state.base_;
+}
+function shallowCopy(base, strict) {
+  if (isMap(base)) {
+    return new Map(base);
+  }
+  if (isSet(base)) {
+    return new Set(base);
+  }
+  if (Array.isArray(base))
+    return Array.prototype.slice.call(base);
+  const isPlain = isPlainObject(base);
+  if (strict === true || strict === "class_only" && !isPlain) {
+    const descriptors = Object.getOwnPropertyDescriptors(base);
+    delete descriptors[DRAFT_STATE];
+    let keys = Reflect.ownKeys(descriptors);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      const desc = descriptors[key];
+      if (desc.writable === false) {
+        desc.writable = true;
+        desc.configurable = true;
+      }
+      if (desc.get || desc.set)
+        descriptors[key] = {
+          configurable: true,
+          writable: true,
+          // could live with !!desc.set as well here...
+          enumerable: desc.enumerable,
+          value: base[key]
+        };
+    }
+    return Object.create(getPrototypeOf(base), descriptors);
+  } else {
+    const proto = getPrototypeOf(base);
+    if (proto !== null && isPlain) {
+      return { ...base };
+    }
+    const obj = Object.create(proto);
+    return Object.assign(obj, base);
+  }
+}
+function freeze(obj, deep = false) {
+  if (isFrozen(obj) || isDraft(obj) || !isDraftable(obj))
+    return obj;
+  if (getArchtype(obj) > 1) {
+    obj.set = obj.add = obj.clear = obj.delete = dontMutateFrozenCollections;
+  }
+  Object.freeze(obj);
+  if (deep)
+    Object.entries(obj).forEach(([key, value]) => freeze(value, true));
+  return obj;
+}
+function dontMutateFrozenCollections() {
+  die(2);
+}
+function isFrozen(obj) {
+  return Object.isFrozen(obj);
+}
+
+// src/utils/plugins.ts
+var plugins = {};
+function getPlugin(pluginKey) {
+  const plugin = plugins[pluginKey];
+  if (!plugin) {
+    die(0, pluginKey);
+  }
+  return plugin;
+}
+function loadPlugin(pluginKey, implementation) {
+  if (!plugins[pluginKey])
+    plugins[pluginKey] = implementation;
+}
+
+// src/core/scope.ts
+var currentScope;
+function getCurrentScope() {
+  return currentScope;
+}
+function createScope(parent_, immer_) {
+  return {
+    drafts_: [],
+    parent_,
+    immer_,
+    // Whenever the modified draft contains a draft from another scope, we
+    // need to prevent auto-freezing so the unowned draft can be finalized.
+    canAutoFreeze_: true,
+    unfinalizedDrafts_: 0
+  };
+}
+function usePatchesInScope(scope, patchListener) {
+  if (patchListener) {
+    getPlugin("Patches");
+    scope.patches_ = [];
+    scope.inversePatches_ = [];
+    scope.patchListener_ = patchListener;
+  }
+}
+function revokeScope(scope) {
+  leaveScope(scope);
+  scope.drafts_.forEach(revokeDraft);
+  scope.drafts_ = null;
+}
+function leaveScope(scope) {
+  if (scope === currentScope) {
+    currentScope = scope.parent_;
+  }
+}
+function enterScope(immer2) {
+  return currentScope = createScope(currentScope, immer2);
+}
+function revokeDraft(draft) {
+  const state = draft[DRAFT_STATE];
+  if (state.type_ === 0 /* Object */ || state.type_ === 1 /* Array */)
+    state.revoke_();
+  else
+    state.revoked_ = true;
+}
+
+// src/core/finalize.ts
+function processResult(result, scope) {
+  scope.unfinalizedDrafts_ = scope.drafts_.length;
+  const baseDraft = scope.drafts_[0];
+  const isReplaced = result !== void 0 && result !== baseDraft;
+  if (isReplaced) {
+    if (baseDraft[DRAFT_STATE].modified_) {
+      revokeScope(scope);
+      die(4);
+    }
+    if (isDraftable(result)) {
+      result = finalize(scope, result);
+      if (!scope.parent_)
+        maybeFreeze(scope, result);
+    }
+    if (scope.patches_) {
+      getPlugin("Patches").generateReplacementPatches_(
+        baseDraft[DRAFT_STATE].base_,
+        result,
+        scope.patches_,
+        scope.inversePatches_
+      );
+    }
+  } else {
+    result = finalize(scope, baseDraft, []);
+  }
+  revokeScope(scope);
+  if (scope.patches_) {
+    scope.patchListener_(scope.patches_, scope.inversePatches_);
+  }
+  return result !== NOTHING ? result : void 0;
+}
+function finalize(rootScope, value, path) {
+  if (isFrozen(value))
+    return value;
+  const state = value[DRAFT_STATE];
+  if (!state) {
+    each(
+      value,
+      (key, childValue) => finalizeProperty(rootScope, state, value, key, childValue, path)
+    );
+    return value;
+  }
+  if (state.scope_ !== rootScope)
+    return value;
+  if (!state.modified_) {
+    maybeFreeze(rootScope, state.base_, true);
+    return state.base_;
+  }
+  if (!state.finalized_) {
+    state.finalized_ = true;
+    state.scope_.unfinalizedDrafts_--;
+    const result = state.copy_;
+    let resultEach = result;
+    let isSet2 = false;
+    if (state.type_ === 3 /* Set */) {
+      resultEach = new Set(result);
+      result.clear();
+      isSet2 = true;
+    }
+    each(
+      resultEach,
+      (key, childValue) => finalizeProperty(rootScope, state, result, key, childValue, path, isSet2)
+    );
+    maybeFreeze(rootScope, result, false);
+    if (path && rootScope.patches_) {
+      getPlugin("Patches").generatePatches_(
+        state,
+        path,
+        rootScope.patches_,
+        rootScope.inversePatches_
+      );
+    }
+  }
+  return state.copy_;
+}
+function finalizeProperty(rootScope, parentState, targetObject, prop, childValue, rootPath, targetIsSet) {
+  if ( true && childValue === targetObject)
+    die(5);
+  if (isDraft(childValue)) {
+    const path = rootPath && parentState && parentState.type_ !== 3 /* Set */ && // Set objects are atomic since they have no keys.
+    !has(parentState.assigned_, prop) ? rootPath.concat(prop) : void 0;
+    const res = finalize(rootScope, childValue, path);
+    set(targetObject, prop, res);
+    if (isDraft(res)) {
+      rootScope.canAutoFreeze_ = false;
+    } else
+      return;
+  } else if (targetIsSet) {
+    targetObject.add(childValue);
+  }
+  if (isDraftable(childValue) && !isFrozen(childValue)) {
+    if (!rootScope.immer_.autoFreeze_ && rootScope.unfinalizedDrafts_ < 1) {
+      return;
+    }
+    finalize(rootScope, childValue);
+    if ((!parentState || !parentState.scope_.parent_) && typeof prop !== "symbol" && Object.prototype.propertyIsEnumerable.call(targetObject, prop))
+      maybeFreeze(rootScope, childValue);
+  }
+}
+function maybeFreeze(scope, value, deep = false) {
+  if (!scope.parent_ && scope.immer_.autoFreeze_ && scope.canAutoFreeze_) {
+    freeze(value, deep);
+  }
+}
+
+// src/core/proxy.ts
+function createProxyProxy(base, parent) {
+  const isArray = Array.isArray(base);
+  const state = {
+    type_: isArray ? 1 /* Array */ : 0 /* Object */,
+    // Track which produce call this is associated with.
+    scope_: parent ? parent.scope_ : getCurrentScope(),
+    // True for both shallow and deep changes.
+    modified_: false,
+    // Used during finalization.
+    finalized_: false,
+    // Track which properties have been assigned (true) or deleted (false).
+    assigned_: {},
+    // The parent draft state.
+    parent_: parent,
+    // The base state.
+    base_: base,
+    // The base proxy.
+    draft_: null,
+    // set below
+    // The base copy with any updated values.
+    copy_: null,
+    // Called by the `produce` function.
+    revoke_: null,
+    isManual_: false
+  };
+  let target = state;
+  let traps = objectTraps;
+  if (isArray) {
+    target = [state];
+    traps = arrayTraps;
+  }
+  const { revoke, proxy } = Proxy.revocable(target, traps);
+  state.draft_ = proxy;
+  state.revoke_ = revoke;
+  return proxy;
+}
+var objectTraps = {
+  get(state, prop) {
+    if (prop === DRAFT_STATE)
+      return state;
+    const source = latest(state);
+    if (!has(source, prop)) {
+      return readPropFromProto(state, source, prop);
+    }
+    const value = source[prop];
+    if (state.finalized_ || !isDraftable(value)) {
+      return value;
+    }
+    if (value === peek(state.base_, prop)) {
+      prepareCopy(state);
+      return state.copy_[prop] = createProxy(value, state);
+    }
+    return value;
+  },
+  has(state, prop) {
+    return prop in latest(state);
+  },
+  ownKeys(state) {
+    return Reflect.ownKeys(latest(state));
+  },
+  set(state, prop, value) {
+    const desc = getDescriptorFromProto(latest(state), prop);
+    if (desc?.set) {
+      desc.set.call(state.draft_, value);
+      return true;
+    }
+    if (!state.modified_) {
+      const current2 = peek(latest(state), prop);
+      const currentState = current2?.[DRAFT_STATE];
+      if (currentState && currentState.base_ === value) {
+        state.copy_[prop] = value;
+        state.assigned_[prop] = false;
+        return true;
+      }
+      if (is(value, current2) && (value !== void 0 || has(state.base_, prop)))
+        return true;
+      prepareCopy(state);
+      markChanged(state);
+    }
+    if (state.copy_[prop] === value && // special case: handle new props with value 'undefined'
+    (value !== void 0 || prop in state.copy_) || // special case: NaN
+    Number.isNaN(value) && Number.isNaN(state.copy_[prop]))
+      return true;
+    state.copy_[prop] = value;
+    state.assigned_[prop] = true;
+    return true;
+  },
+  deleteProperty(state, prop) {
+    if (peek(state.base_, prop) !== void 0 || prop in state.base_) {
+      state.assigned_[prop] = false;
+      prepareCopy(state);
+      markChanged(state);
+    } else {
+      delete state.assigned_[prop];
+    }
+    if (state.copy_) {
+      delete state.copy_[prop];
+    }
+    return true;
+  },
+  // Note: We never coerce `desc.value` into an Immer draft, because we can't make
+  // the same guarantee in ES5 mode.
+  getOwnPropertyDescriptor(state, prop) {
+    const owner = latest(state);
+    const desc = Reflect.getOwnPropertyDescriptor(owner, prop);
+    if (!desc)
+      return desc;
+    return {
+      writable: true,
+      configurable: state.type_ !== 1 /* Array */ || prop !== "length",
+      enumerable: desc.enumerable,
+      value: owner[prop]
+    };
+  },
+  defineProperty() {
+    die(11);
+  },
+  getPrototypeOf(state) {
+    return getPrototypeOf(state.base_);
+  },
+  setPrototypeOf() {
+    die(12);
+  }
+};
+var arrayTraps = {};
+each(objectTraps, (key, fn) => {
+  arrayTraps[key] = function() {
+    arguments[0] = arguments[0][0];
+    return fn.apply(this, arguments);
+  };
+});
+arrayTraps.deleteProperty = function(state, prop) {
+  if ( true && isNaN(parseInt(prop)))
+    die(13);
+  return arrayTraps.set.call(this, state, prop, void 0);
+};
+arrayTraps.set = function(state, prop, value) {
+  if ( true && prop !== "length" && isNaN(parseInt(prop)))
+    die(14);
+  return objectTraps.set.call(this, state[0], prop, value, state[0]);
+};
+function peek(draft, prop) {
+  const state = draft[DRAFT_STATE];
+  const source = state ? latest(state) : draft;
+  return source[prop];
+}
+function readPropFromProto(state, source, prop) {
+  const desc = getDescriptorFromProto(source, prop);
+  return desc ? `value` in desc ? desc.value : (
+    // This is a very special case, if the prop is a getter defined by the
+    // prototype, we should invoke it with the draft as context!
+    desc.get?.call(state.draft_)
+  ) : void 0;
+}
+function getDescriptorFromProto(source, prop) {
+  if (!(prop in source))
+    return void 0;
+  let proto = getPrototypeOf(source);
+  while (proto) {
+    const desc = Object.getOwnPropertyDescriptor(proto, prop);
+    if (desc)
+      return desc;
+    proto = getPrototypeOf(proto);
+  }
+  return void 0;
+}
+function markChanged(state) {
+  if (!state.modified_) {
+    state.modified_ = true;
+    if (state.parent_) {
+      markChanged(state.parent_);
+    }
+  }
+}
+function prepareCopy(state) {
+  if (!state.copy_) {
+    state.copy_ = shallowCopy(
+      state.base_,
+      state.scope_.immer_.useStrictShallowCopy_
+    );
+  }
+}
+
+// src/core/immerClass.ts
+var Immer2 = class {
+  constructor(config) {
+    this.autoFreeze_ = true;
+    this.useStrictShallowCopy_ = false;
+    /**
+     * The `produce` function takes a value and a "recipe function" (whose
+     * return value often depends on the base state). The recipe function is
+     * free to mutate its first argument however it wants. All mutations are
+     * only ever applied to a __copy__ of the base state.
+     *
+     * Pass only a function to create a "curried producer" which relieves you
+     * from passing the recipe function every time.
+     *
+     * Only plain objects and arrays are made mutable. All other objects are
+     * considered uncopyable.
+     *
+     * Note: This function is __bound__ to its `Immer` instance.
+     *
+     * @param {any} base - the initial state
+     * @param {Function} recipe - function that receives a proxy of the base state as first argument and which can be freely modified
+     * @param {Function} patchListener - optional function that will be called with all the patches produced here
+     * @returns {any} a new state, or the initial state if nothing was modified
+     */
+    this.produce = (base, recipe, patchListener) => {
+      if (typeof base === "function" && typeof recipe !== "function") {
+        const defaultBase = recipe;
+        recipe = base;
+        const self = this;
+        return function curriedProduce(base2 = defaultBase, ...args) {
+          return self.produce(base2, (draft) => recipe.call(this, draft, ...args));
+        };
+      }
+      if (typeof recipe !== "function")
+        die(6);
+      if (patchListener !== void 0 && typeof patchListener !== "function")
+        die(7);
+      let result;
+      if (isDraftable(base)) {
+        const scope = enterScope(this);
+        const proxy = createProxy(base, void 0);
+        let hasError = true;
+        try {
+          result = recipe(proxy);
+          hasError = false;
+        } finally {
+          if (hasError)
+            revokeScope(scope);
+          else
+            leaveScope(scope);
+        }
+        usePatchesInScope(scope, patchListener);
+        return processResult(result, scope);
+      } else if (!base || typeof base !== "object") {
+        result = recipe(base);
+        if (result === void 0)
+          result = base;
+        if (result === NOTHING)
+          result = void 0;
+        if (this.autoFreeze_)
+          freeze(result, true);
+        if (patchListener) {
+          const p = [];
+          const ip = [];
+          getPlugin("Patches").generateReplacementPatches_(base, result, p, ip);
+          patchListener(p, ip);
+        }
+        return result;
+      } else
+        die(1, base);
+    };
+    this.produceWithPatches = (base, recipe) => {
+      if (typeof base === "function") {
+        return (state, ...args) => this.produceWithPatches(state, (draft) => base(draft, ...args));
+      }
+      let patches, inversePatches;
+      const result = this.produce(base, recipe, (p, ip) => {
+        patches = p;
+        inversePatches = ip;
+      });
+      return [result, patches, inversePatches];
+    };
+    if (typeof config?.autoFreeze === "boolean")
+      this.setAutoFreeze(config.autoFreeze);
+    if (typeof config?.useStrictShallowCopy === "boolean")
+      this.setUseStrictShallowCopy(config.useStrictShallowCopy);
+  }
+  createDraft(base) {
+    if (!isDraftable(base))
+      die(8);
+    if (isDraft(base))
+      base = current(base);
+    const scope = enterScope(this);
+    const proxy = createProxy(base, void 0);
+    proxy[DRAFT_STATE].isManual_ = true;
+    leaveScope(scope);
+    return proxy;
+  }
+  finishDraft(draft, patchListener) {
+    const state = draft && draft[DRAFT_STATE];
+    if (!state || !state.isManual_)
+      die(9);
+    const { scope_: scope } = state;
+    usePatchesInScope(scope, patchListener);
+    return processResult(void 0, scope);
+  }
+  /**
+   * Pass true to automatically freeze all copies created by Immer.
+   *
+   * By default, auto-freezing is enabled.
+   */
+  setAutoFreeze(value) {
+    this.autoFreeze_ = value;
+  }
+  /**
+   * Pass true to enable strict shallow copy.
+   *
+   * By default, immer does not copy the object descriptors such as getter, setter and non-enumrable properties.
+   */
+  setUseStrictShallowCopy(value) {
+    this.useStrictShallowCopy_ = value;
+  }
+  applyPatches(base, patches) {
+    let i;
+    for (i = patches.length - 1; i >= 0; i--) {
+      const patch = patches[i];
+      if (patch.path.length === 0 && patch.op === "replace") {
+        base = patch.value;
+        break;
+      }
+    }
+    if (i > -1) {
+      patches = patches.slice(i + 1);
+    }
+    const applyPatchesImpl = getPlugin("Patches").applyPatches_;
+    if (isDraft(base)) {
+      return applyPatchesImpl(base, patches);
+    }
+    return this.produce(
+      base,
+      (draft) => applyPatchesImpl(draft, patches)
+    );
+  }
+};
+function createProxy(value, parent) {
+  const draft = isMap(value) ? getPlugin("MapSet").proxyMap_(value, parent) : isSet(value) ? getPlugin("MapSet").proxySet_(value, parent) : createProxyProxy(value, parent);
+  const scope = parent ? parent.scope_ : getCurrentScope();
+  scope.drafts_.push(draft);
+  return draft;
+}
+
+// src/core/current.ts
+function current(value) {
+  if (!isDraft(value))
+    die(10, value);
+  return currentImpl(value);
+}
+function currentImpl(value) {
+  if (!isDraftable(value) || isFrozen(value))
+    return value;
+  const state = value[DRAFT_STATE];
+  let copy;
+  if (state) {
+    if (!state.modified_)
+      return state.base_;
+    state.finalized_ = true;
+    copy = shallowCopy(value, state.scope_.immer_.useStrictShallowCopy_);
+  } else {
+    copy = shallowCopy(value, true);
+  }
+  each(copy, (key, childValue) => {
+    set(copy, key, currentImpl(childValue));
+  });
+  if (state) {
+    state.finalized_ = false;
+  }
+  return copy;
+}
+
+// src/plugins/patches.ts
+function enablePatches() {
+  const errorOffset = 16;
+  if (true) {
+    errors.push(
+      'Sets cannot have "replace" patches.',
+      function(op) {
+        return "Unsupported patch operation: " + op;
+      },
+      function(path) {
+        return "Cannot apply patch, path doesn't resolve: " + path;
+      },
+      "Patching reserved attributes like __proto__, prototype and constructor is not allowed"
+    );
+  }
+  const REPLACE = "replace";
+  const ADD = "add";
+  const REMOVE = "remove";
+  function generatePatches_(state, basePath, patches, inversePatches) {
+    switch (state.type_) {
+      case 0 /* Object */:
+      case 2 /* Map */:
+        return generatePatchesFromAssigned(
+          state,
+          basePath,
+          patches,
+          inversePatches
+        );
+      case 1 /* Array */:
+        return generateArrayPatches(state, basePath, patches, inversePatches);
+      case 3 /* Set */:
+        return generateSetPatches(
+          state,
+          basePath,
+          patches,
+          inversePatches
+        );
+    }
+  }
+  function generateArrayPatches(state, basePath, patches, inversePatches) {
+    let { base_, assigned_ } = state;
+    let copy_ = state.copy_;
+    if (copy_.length < base_.length) {
+      ;
+      [base_, copy_] = [copy_, base_];
+      [patches, inversePatches] = [inversePatches, patches];
+    }
+    for (let i = 0; i < base_.length; i++) {
+      if (assigned_[i] && copy_[i] !== base_[i]) {
+        const path = basePath.concat([i]);
+        patches.push({
+          op: REPLACE,
+          path,
+          // Need to maybe clone it, as it can in fact be the original value
+          // due to the base/copy inversion at the start of this function
+          value: clonePatchValueIfNeeded(copy_[i])
+        });
+        inversePatches.push({
+          op: REPLACE,
+          path,
+          value: clonePatchValueIfNeeded(base_[i])
+        });
+      }
+    }
+    for (let i = base_.length; i < copy_.length; i++) {
+      const path = basePath.concat([i]);
+      patches.push({
+        op: ADD,
+        path,
+        // Need to maybe clone it, as it can in fact be the original value
+        // due to the base/copy inversion at the start of this function
+        value: clonePatchValueIfNeeded(copy_[i])
+      });
+    }
+    for (let i = copy_.length - 1; base_.length <= i; --i) {
+      const path = basePath.concat([i]);
+      inversePatches.push({
+        op: REMOVE,
+        path
+      });
+    }
+  }
+  function generatePatchesFromAssigned(state, basePath, patches, inversePatches) {
+    const { base_, copy_ } = state;
+    each(state.assigned_, (key, assignedValue) => {
+      const origValue = get(base_, key);
+      const value = get(copy_, key);
+      const op = !assignedValue ? REMOVE : has(base_, key) ? REPLACE : ADD;
+      if (origValue === value && op === REPLACE)
+        return;
+      const path = basePath.concat(key);
+      patches.push(op === REMOVE ? { op, path } : { op, path, value });
+      inversePatches.push(
+        op === ADD ? { op: REMOVE, path } : op === REMOVE ? { op: ADD, path, value: clonePatchValueIfNeeded(origValue) } : { op: REPLACE, path, value: clonePatchValueIfNeeded(origValue) }
+      );
+    });
+  }
+  function generateSetPatches(state, basePath, patches, inversePatches) {
+    let { base_, copy_ } = state;
+    let i = 0;
+    base_.forEach((value) => {
+      if (!copy_.has(value)) {
+        const path = basePath.concat([i]);
+        patches.push({
+          op: REMOVE,
+          path,
+          value
+        });
+        inversePatches.unshift({
+          op: ADD,
+          path,
+          value
+        });
+      }
+      i++;
+    });
+    i = 0;
+    copy_.forEach((value) => {
+      if (!base_.has(value)) {
+        const path = basePath.concat([i]);
+        patches.push({
+          op: ADD,
+          path,
+          value
+        });
+        inversePatches.unshift({
+          op: REMOVE,
+          path,
+          value
+        });
+      }
+      i++;
+    });
+  }
+  function generateReplacementPatches_(baseValue, replacement, patches, inversePatches) {
+    patches.push({
+      op: REPLACE,
+      path: [],
+      value: replacement === NOTHING ? void 0 : replacement
+    });
+    inversePatches.push({
+      op: REPLACE,
+      path: [],
+      value: baseValue
+    });
+  }
+  function applyPatches_(draft, patches) {
+    patches.forEach((patch) => {
+      const { path, op } = patch;
+      let base = draft;
+      for (let i = 0; i < path.length - 1; i++) {
+        const parentType = getArchtype(base);
+        let p = path[i];
+        if (typeof p !== "string" && typeof p !== "number") {
+          p = "" + p;
+        }
+        if ((parentType === 0 /* Object */ || parentType === 1 /* Array */) && (p === "__proto__" || p === "constructor"))
+          die(errorOffset + 3);
+        if (typeof base === "function" && p === "prototype")
+          die(errorOffset + 3);
+        base = get(base, p);
+        if (typeof base !== "object")
+          die(errorOffset + 2, path.join("/"));
+      }
+      const type = getArchtype(base);
+      const value = deepClonePatchValue(patch.value);
+      const key = path[path.length - 1];
+      switch (op) {
+        case REPLACE:
+          switch (type) {
+            case 2 /* Map */:
+              return base.set(key, value);
+            case 3 /* Set */:
+              die(errorOffset);
+            default:
+              return base[key] = value;
+          }
+        case ADD:
+          switch (type) {
+            case 1 /* Array */:
+              return key === "-" ? base.push(value) : base.splice(key, 0, value);
+            case 2 /* Map */:
+              return base.set(key, value);
+            case 3 /* Set */:
+              return base.add(value);
+            default:
+              return base[key] = value;
+          }
+        case REMOVE:
+          switch (type) {
+            case 1 /* Array */:
+              return base.splice(key, 1);
+            case 2 /* Map */:
+              return base.delete(key);
+            case 3 /* Set */:
+              return base.delete(patch.value);
+            default:
+              return delete base[key];
+          }
+        default:
+          die(errorOffset + 1, op);
+      }
+    });
+    return draft;
+  }
+  function deepClonePatchValue(obj) {
+    if (!isDraftable(obj))
+      return obj;
+    if (Array.isArray(obj))
+      return obj.map(deepClonePatchValue);
+    if (isMap(obj))
+      return new Map(
+        Array.from(obj.entries()).map(([k, v]) => [k, deepClonePatchValue(v)])
+      );
+    if (isSet(obj))
+      return new Set(Array.from(obj).map(deepClonePatchValue));
+    const cloned = Object.create(getPrototypeOf(obj));
+    for (const key in obj)
+      cloned[key] = deepClonePatchValue(obj[key]);
+    if (has(obj, DRAFTABLE))
+      cloned[DRAFTABLE] = obj[DRAFTABLE];
+    return cloned;
+  }
+  function clonePatchValueIfNeeded(obj) {
+    if (isDraft(obj)) {
+      return deepClonePatchValue(obj);
+    } else
+      return obj;
+  }
+  loadPlugin("Patches", {
+    applyPatches_,
+    generatePatches_,
+    generateReplacementPatches_
+  });
+}
+
+// src/plugins/mapset.ts
+function enableMapSet() {
+  class DraftMap extends Map {
+    constructor(target, parent) {
+      super();
+      this[DRAFT_STATE] = {
+        type_: 2 /* Map */,
+        parent_: parent,
+        scope_: parent ? parent.scope_ : getCurrentScope(),
+        modified_: false,
+        finalized_: false,
+        copy_: void 0,
+        assigned_: void 0,
+        base_: target,
+        draft_: this,
+        isManual_: false,
+        revoked_: false
+      };
+    }
+    get size() {
+      return latest(this[DRAFT_STATE]).size;
+    }
+    has(key) {
+      return latest(this[DRAFT_STATE]).has(key);
+    }
+    set(key, value) {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (!latest(state).has(key) || latest(state).get(key) !== value) {
+        prepareMapCopy(state);
+        markChanged(state);
+        state.assigned_.set(key, true);
+        state.copy_.set(key, value);
+        state.assigned_.set(key, true);
+      }
+      return this;
+    }
+    delete(key) {
+      if (!this.has(key)) {
+        return false;
+      }
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      prepareMapCopy(state);
+      markChanged(state);
+      if (state.base_.has(key)) {
+        state.assigned_.set(key, false);
+      } else {
+        state.assigned_.delete(key);
+      }
+      state.copy_.delete(key);
+      return true;
+    }
+    clear() {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (latest(state).size) {
+        prepareMapCopy(state);
+        markChanged(state);
+        state.assigned_ = /* @__PURE__ */ new Map();
+        each(state.base_, (key) => {
+          state.assigned_.set(key, false);
+        });
+        state.copy_.clear();
+      }
+    }
+    forEach(cb, thisArg) {
+      const state = this[DRAFT_STATE];
+      latest(state).forEach((_value, key, _map) => {
+        cb.call(thisArg, this.get(key), key, this);
+      });
+    }
+    get(key) {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      const value = latest(state).get(key);
+      if (state.finalized_ || !isDraftable(value)) {
+        return value;
+      }
+      if (value !== state.base_.get(key)) {
+        return value;
+      }
+      const draft = createProxy(value, state);
+      prepareMapCopy(state);
+      state.copy_.set(key, draft);
+      return draft;
+    }
+    keys() {
+      return latest(this[DRAFT_STATE]).keys();
+    }
+    values() {
+      const iterator = this.keys();
+      return {
+        [Symbol.iterator]: () => this.values(),
+        next: () => {
+          const r = iterator.next();
+          if (r.done)
+            return r;
+          const value = this.get(r.value);
+          return {
+            done: false,
+            value
+          };
+        }
+      };
+    }
+    entries() {
+      const iterator = this.keys();
+      return {
+        [Symbol.iterator]: () => this.entries(),
+        next: () => {
+          const r = iterator.next();
+          if (r.done)
+            return r;
+          const value = this.get(r.value);
+          return {
+            done: false,
+            value: [r.value, value]
+          };
+        }
+      };
+    }
+    [(DRAFT_STATE, Symbol.iterator)]() {
+      return this.entries();
+    }
+  }
+  function proxyMap_(target, parent) {
+    return new DraftMap(target, parent);
+  }
+  function prepareMapCopy(state) {
+    if (!state.copy_) {
+      state.assigned_ = /* @__PURE__ */ new Map();
+      state.copy_ = new Map(state.base_);
+    }
+  }
+  class DraftSet extends Set {
+    constructor(target, parent) {
+      super();
+      this[DRAFT_STATE] = {
+        type_: 3 /* Set */,
+        parent_: parent,
+        scope_: parent ? parent.scope_ : getCurrentScope(),
+        modified_: false,
+        finalized_: false,
+        copy_: void 0,
+        base_: target,
+        draft_: this,
+        drafts_: /* @__PURE__ */ new Map(),
+        revoked_: false,
+        isManual_: false
+      };
+    }
+    get size() {
+      return latest(this[DRAFT_STATE]).size;
+    }
+    has(value) {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (!state.copy_) {
+        return state.base_.has(value);
+      }
+      if (state.copy_.has(value))
+        return true;
+      if (state.drafts_.has(value) && state.copy_.has(state.drafts_.get(value)))
+        return true;
+      return false;
+    }
+    add(value) {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (!this.has(value)) {
+        prepareSetCopy(state);
+        markChanged(state);
+        state.copy_.add(value);
+      }
+      return this;
+    }
+    delete(value) {
+      if (!this.has(value)) {
+        return false;
+      }
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      prepareSetCopy(state);
+      markChanged(state);
+      return state.copy_.delete(value) || (state.drafts_.has(value) ? state.copy_.delete(state.drafts_.get(value)) : (
+        /* istanbul ignore next */
+        false
+      ));
+    }
+    clear() {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (latest(state).size) {
+        prepareSetCopy(state);
+        markChanged(state);
+        state.copy_.clear();
+      }
+    }
+    values() {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      prepareSetCopy(state);
+      return state.copy_.values();
+    }
+    entries() {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      prepareSetCopy(state);
+      return state.copy_.entries();
+    }
+    keys() {
+      return this.values();
+    }
+    [(DRAFT_STATE, Symbol.iterator)]() {
+      return this.values();
+    }
+    forEach(cb, thisArg) {
+      const iterator = this.values();
+      let result = iterator.next();
+      while (!result.done) {
+        cb.call(thisArg, result.value, result.value, this);
+        result = iterator.next();
+      }
+    }
+  }
+  function proxySet_(target, parent) {
+    return new DraftSet(target, parent);
+  }
+  function prepareSetCopy(state) {
+    if (!state.copy_) {
+      state.copy_ = /* @__PURE__ */ new Set();
+      state.base_.forEach((value) => {
+        if (isDraftable(value)) {
+          const draft = createProxy(value, state);
+          state.drafts_.set(value, draft);
+          state.copy_.add(draft);
+        } else {
+          state.copy_.add(value);
+        }
+      });
+    }
+  }
+  function assertUnrevoked(state) {
+    if (state.revoked_)
+      die(3, JSON.stringify(latest(state)));
+  }
+  loadPlugin("MapSet", { proxyMap_, proxySet_ });
+}
+
+// src/immer.ts
+var immer = new Immer2();
+var produce = immer.produce;
+var produceWithPatches = immer.produceWithPatches.bind(
+  immer
+);
+var setAutoFreeze = immer.setAutoFreeze.bind(immer);
+var setUseStrictShallowCopy = immer.setUseStrictShallowCopy.bind(immer);
+var applyPatches = immer.applyPatches.bind(immer);
+var createDraft = immer.createDraft.bind(immer);
+var finishDraft = immer.finishDraft.bind(immer);
+function castDraft(value) {
+  return value;
+}
+function castImmutable(value) {
+  return value;
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (0);
+//# sourceMappingURL=immer.cjs.development.js.map
+
+/***/ }),
+
+/***/ "./node_modules/immer/dist/cjs/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/immer/dist/cjs/index.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+
+if (false) {} else {
+  module.exports = __webpack_require__(/*! ./immer.cjs.development.js */ "./node_modules/immer/dist/cjs/immer.cjs.development.js")
+}
 
 /***/ }),
 
@@ -34602,6 +36118,274 @@ function replace(input, re, value) {
 
 /***/ }),
 
+/***/ "./node_modules/numeric-quantity/dist/cjs/index.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/numeric-quantity/dist/cjs/index.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+if (false) {} else {
+  module.exports = __webpack_require__(/*! ./numeric-quantity.cjs.development.js */ "./node_modules/numeric-quantity/dist/cjs/numeric-quantity.cjs.development.js");
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/numeric-quantity/dist/cjs/numeric-quantity.cjs.development.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/numeric-quantity/dist/cjs/numeric-quantity.cjs.development.js ***!
+  \************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/index.ts
+var src_exports = {};
+__export(src_exports, {
+  defaultOptions: () => defaultOptions,
+  numericQuantity: () => numericQuantity,
+  numericRegex: () => numericRegex,
+  numericRegexWithTrailingInvalid: () => numericRegexWithTrailingInvalid,
+  parseRomanNumerals: () => parseRomanNumerals,
+  romanNumeralRegex: () => romanNumeralRegex,
+  romanNumeralUnicodeRegex: () => romanNumeralUnicodeRegex,
+  romanNumeralUnicodeToAsciiMap: () => romanNumeralUnicodeToAsciiMap,
+  romanNumeralValues: () => romanNumeralValues,
+  vulgarFractionToAsciiMap: () => vulgarFractionToAsciiMap,
+  vulgarFractionsRegex: () => vulgarFractionsRegex
+});
+module.exports = __toCommonJS(src_exports);
+
+// src/constants.ts
+var vulgarFractionToAsciiMap = {
+  "\xBC": "1/4",
+  "\xBD": "1/2",
+  "\xBE": "3/4",
+  "\u2150": "1/7",
+  "\u2151": "1/9",
+  "\u2152": "1/10",
+  "\u2153": "1/3",
+  "\u2154": "2/3",
+  "\u2155": "1/5",
+  "\u2156": "2/5",
+  "\u2157": "3/5",
+  "\u2158": "4/5",
+  "\u2159": "1/6",
+  "\u215A": "5/6",
+  "\u215B": "1/8",
+  "\u215C": "3/8",
+  "\u215D": "5/8",
+  "\u215E": "7/8",
+  "\u215F": "1/"
+};
+var numericRegex = /^(?=-?\s*\.\d|-?\s*\d)(-)?\s*((?:\d(?:[\d,_]*\d)?)*)(([eE][+-]?\d(?:[\d,_]*\d)?)?|\.\d(?:[\d,_]*\d)?([eE][+-]?\d(?:[\d,_]*\d)?)?|(\s+\d(?:[\d,_]*\d)?\s*)?\s*\/\s*\d(?:[\d,_]*\d)?)?$/;
+var numericRegexWithTrailingInvalid = new RegExp(
+  numericRegex.source.replace(/\$$/, "(?:\\s*[^\\.\\d\\/].*)?")
+);
+var vulgarFractionsRegex = new RegExp(
+  `(${Object.keys(vulgarFractionToAsciiMap).join("|")})`
+);
+var romanNumeralValues = {
+  MMM: 3e3,
+  MM: 2e3,
+  M: 1e3,
+  CM: 900,
+  DCCC: 800,
+  DCC: 700,
+  DC: 600,
+  D: 500,
+  CD: 400,
+  CCC: 300,
+  CC: 200,
+  C: 100,
+  XC: 90,
+  LXXX: 80,
+  LXX: 70,
+  LX: 60,
+  L: 50,
+  XL: 40,
+  XXX: 30,
+  XX: 20,
+  XII: 12,
+  // only here for tests; not used in practice
+  XI: 11,
+  // only here for tests; not used in practice
+  X: 10,
+  IX: 9,
+  VIII: 8,
+  VII: 7,
+  VI: 6,
+  V: 5,
+  IV: 4,
+  III: 3,
+  II: 2,
+  I: 1
+};
+var romanNumeralUnicodeToAsciiMap = {
+  // Roman Numeral One (U+2160)
+  "\u2160": "I",
+  // Roman Numeral Two (U+2161)
+  "\u2161": "II",
+  // Roman Numeral Three (U+2162)
+  "\u2162": "III",
+  // Roman Numeral Four (U+2163)
+  "\u2163": "IV",
+  // Roman Numeral Five (U+2164)
+  "\u2164": "V",
+  // Roman Numeral Six (U+2165)
+  "\u2165": "VI",
+  // Roman Numeral Seven (U+2166)
+  "\u2166": "VII",
+  // Roman Numeral Eight (U+2167)
+  "\u2167": "VIII",
+  // Roman Numeral Nine (U+2168)
+  "\u2168": "IX",
+  // Roman Numeral Ten (U+2169)
+  "\u2169": "X",
+  // Roman Numeral Eleven (U+216A)
+  "\u216A": "XI",
+  // Roman Numeral Twelve (U+216B)
+  "\u216B": "XII",
+  // Roman Numeral Fifty (U+216C)
+  "\u216C": "L",
+  // Roman Numeral One Hundred (U+216D)
+  "\u216D": "C",
+  // Roman Numeral Five Hundred (U+216E)
+  "\u216E": "D",
+  // Roman Numeral One Thousand (U+216F)
+  "\u216F": "M",
+  // Small Roman Numeral One (U+2170)
+  "\u2170": "I",
+  // Small Roman Numeral Two (U+2171)
+  "\u2171": "II",
+  // Small Roman Numeral Three (U+2172)
+  "\u2172": "III",
+  // Small Roman Numeral Four (U+2173)
+  "\u2173": "IV",
+  // Small Roman Numeral Five (U+2174)
+  "\u2174": "V",
+  // Small Roman Numeral Six (U+2175)
+  "\u2175": "VI",
+  // Small Roman Numeral Seven (U+2176)
+  "\u2176": "VII",
+  // Small Roman Numeral Eight (U+2177)
+  "\u2177": "VIII",
+  // Small Roman Numeral Nine (U+2178)
+  "\u2178": "IX",
+  // Small Roman Numeral Ten (U+2179)
+  "\u2179": "X",
+  // Small Roman Numeral Eleven (U+217A)
+  "\u217A": "XI",
+  // Small Roman Numeral Twelve (U+217B)
+  "\u217B": "XII",
+  // Small Roman Numeral Fifty (U+217C)
+  "\u217C": "L",
+  // Small Roman Numeral One Hundred (U+217D)
+  "\u217D": "C",
+  // Small Roman Numeral Five Hundred (U+217E)
+  "\u217E": "D",
+  // Small Roman Numeral One Thousand (U+217F)
+  "\u217F": "M"
+};
+var romanNumeralUnicodeRegex = new RegExp(
+  `(${Object.keys(romanNumeralUnicodeToAsciiMap).join("|")})`,
+  "gi"
+);
+var romanNumeralRegex = /^(?=[MDCLXVI])(M{0,3})(C[MD]|D?C{0,3})(X[CL]|L?X{0,3})(I[XV]|V?I{0,3})$/i;
+var defaultOptions = {
+  round: 3,
+  allowTrailingInvalid: false,
+  romanNumerals: false
+};
+
+// src/parseRomanNumerals.ts
+var parseRomanNumerals = (romanNumerals) => {
+  const normalized = `${romanNumerals}`.replace(
+    romanNumeralUnicodeRegex,
+    (_m, rn) => romanNumeralUnicodeToAsciiMap[rn]
+  ).toUpperCase();
+  const regexResult = romanNumeralRegex.exec(normalized);
+  if (!regexResult) {
+    return NaN;
+  }
+  const [, thousands, hundreds, tens, ones] = regexResult;
+  return (romanNumeralValues[thousands] ?? 0) + (romanNumeralValues[hundreds] ?? 0) + (romanNumeralValues[tens] ?? 0) + (romanNumeralValues[ones] ?? 0);
+};
+
+// src/numericQuantity.ts
+var spaceThenSlashRegex = /^\s*\//;
+var numericQuantity = (quantity, options = defaultOptions) => {
+  if (typeof quantity === "number" || typeof quantity === "bigint") {
+    return quantity;
+  }
+  let finalResult = NaN;
+  const quantityAsString = `${quantity}`.replace(
+    vulgarFractionsRegex,
+    (_m, vf) => ` ${vulgarFractionToAsciiMap[vf]}`
+  ).replace("\u2044", "/").trim();
+  if (quantityAsString.length === 0) {
+    return NaN;
+  }
+  const opts = {
+    ...defaultOptions,
+    ...options
+  };
+  const regexResult = (opts.allowTrailingInvalid ? numericRegexWithTrailingInvalid : numericRegex).exec(quantityAsString);
+  if (!regexResult) {
+    return opts.romanNumerals ? parseRomanNumerals(quantityAsString) : NaN;
+  }
+  const [, dash, ng1temp, ng2temp] = regexResult;
+  const numberGroup1 = ng1temp.replace(/[,_]/g, "");
+  const numberGroup2 = ng2temp == null ? void 0 : ng2temp.replace(/[,_]/g, "");
+  if (!numberGroup1 && numberGroup2 && numberGroup2.startsWith(".")) {
+    finalResult = 0;
+  } else {
+    finalResult = parseInt(numberGroup1);
+  }
+  if (!numberGroup2) {
+    return dash ? finalResult * -1 : finalResult;
+  }
+  const roundingFactor = opts.round === false ? NaN : parseFloat(`1e${Math.floor(Math.max(0, opts.round))}`);
+  if (numberGroup2.startsWith(".") || numberGroup2.startsWith("e") || numberGroup2.startsWith("E")) {
+    const decimalValue = parseFloat(`${finalResult}${numberGroup2}`);
+    finalResult = isNaN(roundingFactor) ? decimalValue : Math.round(decimalValue * roundingFactor) / roundingFactor;
+  } else if (spaceThenSlashRegex.test(numberGroup2)) {
+    const numerator = parseInt(numberGroup1);
+    const denominator = parseInt(numberGroup2.replace("/", ""));
+    finalResult = isNaN(roundingFactor) ? numerator / denominator : Math.round(numerator * roundingFactor / denominator) / roundingFactor;
+  } else {
+    const fractionArray = numberGroup2.split("/");
+    const [numerator, denominator] = fractionArray.map((v) => parseInt(v));
+    finalResult += isNaN(roundingFactor) ? numerator / denominator : Math.round(numerator * roundingFactor / denominator) / roundingFactor;
+  }
+  return dash ? finalResult * -1 : finalResult;
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (0);
+//# sourceMappingURL=numeric-quantity.cjs.development.js.map
+
+/***/ }),
+
 /***/ "./node_modules/pascal-case/dist.es2015/index.js":
 /*!*******************************************************!*\
   !*** ./node_modules/pascal-case/dist.es2015/index.js ***!
@@ -34666,6 +36450,626 @@ if (false) {} else {
       i.usingClientEntryPoint = false;
     }
   };
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/react-querybuilder/dist/parseJsonLogic.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/react-querybuilder/dist/parseJsonLogic.js ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/utils/parseJsonLogic/index.ts
+var parseJsonLogic_exports = {};
+__export(parseJsonLogic_exports, {
+  parseJsonLogic: () => parseJsonLogic
+});
+module.exports = __toCommonJS(parseJsonLogic_exports);
+
+// src/defaults.ts
+var defaultJoinChar = ",";
+var defaultOperatorNegationMap = {
+  "=": "!=",
+  "!=": "=",
+  "<": ">=",
+  "<=": ">",
+  ">": "<=",
+  ">=": "<",
+  beginsWith: "doesNotBeginWith",
+  doesNotBeginWith: "beginsWith",
+  endsWith: "doesNotEndWith",
+  doesNotEndWith: "endsWith",
+  contains: "doesNotContain",
+  doesNotContain: "contains",
+  between: "notBetween",
+  notBetween: "between",
+  in: "notIn",
+  notIn: "in",
+  notNull: "null",
+  null: "notNull"
+};
+var defaultCombinators = [
+  { name: "and", value: "and", label: "AND" },
+  { name: "or", value: "or", label: "OR" }
+];
+var defaultCombinatorsExtended = [
+  ...defaultCombinators,
+  { name: "xor", value: "xor", label: "XOR" }
+];
+
+// src/utils/arrayUtils.ts
+var joinWith = (strArr, joinChar = defaultJoinChar) => strArr.map((str) => `${str ?? ""}`.replaceAll(joinChar[0], `\\${joinChar[0]}`)).join(joinChar);
+
+// src/utils/misc.ts
+var import_numeric_quantity = __webpack_require__(/*! numeric-quantity */ "./node_modules/numeric-quantity/dist/cjs/index.js");
+var numericRegex = new RegExp(
+  import_numeric_quantity.numericRegex.source.replace(/^\^/, String.raw`^\s*`).replace(/\$$/, String.raw`\s*$`)
+);
+var isPojo = (obj) => obj === null || typeof obj !== "object" ? false : Object.getPrototypeOf(obj) === Object.prototype;
+
+// src/utils/isRuleGroup.ts
+var isRuleGroup = (rg) => isPojo(rg) && Array.isArray(rg.rules);
+var isRuleGroupType = (rg) => isRuleGroup(rg) && typeof rg.combinator === "string";
+var isRuleGroupTypeIC = (rg) => isRuleGroup(rg) && rg.combinator === void 0;
+
+// src/utils/convertQuery.ts
+var convertToIC = (rg) => {
+  if (isRuleGroupTypeIC(rg)) {
+    return rg;
+  }
+  const { combinator, ...queryWithoutCombinator } = rg;
+  const rules = [];
+  const { length } = rg.rules;
+  for (const [idx, r] of rg.rules.entries()) {
+    if (isRuleGroup(r)) {
+      rules.push(convertToIC(r));
+    } else {
+      rules.push(r);
+    }
+    if (combinator && idx < length - 1) {
+      rules.push(combinator);
+    }
+  }
+  return { ...queryWithoutCombinator, rules };
+};
+
+// src/utils/objectUtils.ts
+var objectKeys = Object.keys;
+
+// src/utils/toFullOption.ts
+var import_immer = __webpack_require__(/*! immer */ "./node_modules/immer/dist/cjs/index.js");
+var isOptionWithName = (opt) => isPojo(opt) && "name" in opt && typeof opt.name === "string";
+var isOptionWithValue = (opt) => isPojo(opt) && "value" in opt && typeof opt.value === "string";
+function toFullOption(opt, baseProperties) {
+  const recipe = (0, import_immer.produce)((draft) => {
+    const idObj = {};
+    let needsUpdating = !!baseProperties;
+    if (isOptionWithName(draft) && !isOptionWithValue(draft)) {
+      idObj.value = draft.name;
+      needsUpdating = true;
+    } else if (!isOptionWithName(draft) && isOptionWithValue(draft)) {
+      idObj.name = draft.value;
+      needsUpdating = true;
+    }
+    if (needsUpdating) {
+      return Object.assign({}, baseProperties, draft, idObj);
+    }
+  });
+  return recipe(opt);
+}
+
+// src/utils/uniq.ts
+var uniqByIdentifier = (originalArray) => {
+  const names = /* @__PURE__ */ new Set();
+  const newArray = [];
+  for (const el of originalArray) {
+    if (!names.has(el.value ?? el.name)) {
+      names.add(el.value ?? el.name);
+      newArray.push(el);
+    }
+  }
+  return originalArray.length === newArray.length ? originalArray : newArray;
+};
+
+// src/utils/optGroupUtils.ts
+var isOptionGroupArray = (arr) => Array.isArray(arr) && arr.length > 0 && isPojo(arr[0]) && "options" in arr[0] && Array.isArray(arr[0].options);
+var isFlexibleOptionGroupArray = (arr) => {
+  if (Array.isArray(arr)) {
+    for (const og of arr) {
+      if (isPojo(og) && "options" in og) {
+        for (const opt of og.options) {
+          if (isPojo(opt) && ("name" in opt || "value" in opt)) {
+            return true;
+          }
+          return false;
+        }
+      }
+    }
+  }
+  return false;
+};
+var toFlatOptionArray = (arr) => uniqByIdentifier(isOptionGroupArray(arr) ? arr.flatMap((og) => og.options) : arr);
+
+// src/utils/filterFieldsByComparator.ts
+var filterByComparator = (field, operator, fieldToCompare) => {
+  const fullField = toFullOption(field);
+  const fullFieldToCompare = toFullOption(fieldToCompare);
+  if (fullField.value === fullFieldToCompare.value) {
+    return false;
+  }
+  if (typeof fullField.comparator === "string") {
+    return fullField[fullField.comparator] === fullFieldToCompare[fullField.comparator];
+  }
+  return fullField.comparator?.(fullFieldToCompare, operator) ?? /* istanbul ignore next */
+  false;
+};
+var filterFieldsByComparator = (field, fields, operator) => {
+  if (!field.comparator) {
+    const filterOutSameField = (f) => (f.value ?? /* istanbul ignore next */
+    f.name) !== (field.value ?? /* istanbul ignore next */
+    field.name);
+    if (isFlexibleOptionGroupArray(fields)) {
+      return fields.map((og) => ({
+        ...og,
+        options: og.options.filter((v) => filterOutSameField(v))
+      }));
+    }
+    return fields.filter((v) => filterOutSameField(v));
+  }
+  if (isFlexibleOptionGroupArray(fields)) {
+    return fields.map((og) => ({
+      ...og,
+      options: og.options.filter((f) => filterByComparator(field, operator, f))
+    })).filter((og) => og.options.length > 0);
+  }
+  return fields.filter((f) => filterByComparator(field, operator, f));
+};
+
+// src/utils/getValueSourcesUtil.ts
+var defaultValueSourcesArray = ["value"];
+var dummyFD = {
+  name: "name",
+  value: "name",
+  valueSources: null,
+  label: "label"
+};
+var getValueSourcesUtil = (fieldData, operator, getValueSources) => {
+  const fd = fieldData ? toFullOption(fieldData) : (
+    /* istanbul ignore else */
+    dummyFD
+  );
+  if (fd.valueSources) {
+    if (typeof fd.valueSources === "function") {
+      return fd.valueSources(operator);
+    }
+    return fd.valueSources;
+  }
+  if (getValueSources) {
+    const vals = getValueSources(fd.value, operator, {
+      fieldData: toFullOption(fd)
+    });
+    if (vals) return vals;
+  }
+  return defaultValueSourcesArray;
+};
+
+// src/utils/parserUtils.ts
+var getFieldsArray = (fields) => {
+  const fieldsArray = fields ? Array.isArray(fields) ? fields : Object.keys(fields).map((fld) => ({ ...fields[fld], name: fld })).sort((a, b) => a.label.localeCompare(b.label)) : [];
+  return toFlatOptionArray(fieldsArray);
+};
+function fieldIsValidUtil(params) {
+  const { fieldsFlat, fieldName, operator, subordinateFieldName, getValueSources } = params;
+  if (fieldsFlat.length === 0) return true;
+  let valid = false;
+  const primaryField = toFullOption(fieldsFlat.find((ff) => ff.name === fieldName));
+  if (primaryField) {
+    valid = !subordinateFieldName && operator !== "notNull" && operator !== "null" && !getValueSourcesUtil(primaryField, operator, getValueSources).includes("value") ? false : true;
+    if (valid && !!subordinateFieldName) {
+      if (getValueSourcesUtil(primaryField, operator, getValueSources).includes("field") && fieldName !== subordinateFieldName) {
+        const validSubordinateFields = filterFieldsByComparator(
+          primaryField,
+          fieldsFlat,
+          operator
+        );
+        if (!validSubordinateFields.some((vsf) => vsf.name === subordinateFieldName)) {
+          valid = false;
+        }
+      } else {
+        valid = false;
+      }
+    }
+  }
+  return valid;
+}
+
+// src/utils/parseJsonLogic/utils.ts
+var isJsonLogicVar = (logic) => isPojo(logic) && "var" in logic;
+var isRQBJsonLogicVar = (logic) => isJsonLogicVar(logic) && typeof logic.var === "string";
+var isJsonLogicEqual = (logic) => isPojo(logic) && "==" in logic;
+var isJsonLogicStrictEqual = (logic) => isPojo(logic) && "===" in logic;
+var isJsonLogicNotEqual = (logic) => isPojo(logic) && "!=" in logic;
+var isJsonLogicStrictNotEqual = (logic) => isPojo(logic) && "!==" in logic;
+var isJsonLogicNegation = (logic) => isPojo(logic) && "!" in logic;
+var isJsonLogicDoubleNegation = (logic) => isPojo(logic) && "!!" in logic;
+var isJsonLogicOr = (logic) => isPojo(logic) && "or" in logic;
+var isJsonLogicAnd = (logic) => isPojo(logic) && "and" in logic;
+var isJsonLogicGreaterThan = (logic) => isPojo(logic) && ">" in logic;
+var isJsonLogicGreaterThanOrEqual = (logic) => isPojo(logic) && ">=" in logic;
+var isJsonLogicLessThan = (logic) => isPojo(logic) && "<" in logic && logic["<"].length === 2;
+var isJsonLogicLessThanOrEqual = (logic) => isPojo(logic) && "<=" in logic && logic["<="].length === 2;
+var isJsonLogicInArray = (logic) => isPojo(logic) && "in" in logic && Array.isArray(logic.in[1]);
+var isJsonLogicInString = (logic) => isPojo(logic) && "in" in logic && !Array.isArray(logic.in[1]);
+var isJsonLogicBetweenExclusive = (logic) => isPojo(logic) && "<" in logic && Array.isArray(logic["<"]) && logic["<"].length === 3;
+var isJsonLogicBetweenInclusive = (logic) => isPojo(logic) && "<=" in logic && Array.isArray(logic["<="]) && logic["<="].length === 3;
+var isRQBJsonLogicStartsWith = (logic) => isPojo(logic) && "startsWith" in logic;
+var isRQBJsonLogicEndsWith = (logic) => isPojo(logic) && "endsWith" in logic;
+
+// src/utils/parseJsonLogic/parseJsonLogic.ts
+var emptyRuleGroup = { combinator: "and", rules: [] };
+function parseJsonLogic(rqbJsonLogic, options = {}) {
+  const fieldsFlat = getFieldsArray(options.fields);
+  const { getValueSources, listsAsArrays, jsonLogicOperations } = options;
+  const fieldIsValid = (fieldName, operator, subordinateFieldName) => fieldIsValidUtil({
+    fieldName,
+    fieldsFlat,
+    operator,
+    subordinateFieldName,
+    getValueSources
+  });
+  function processLogic(logic, outermost) {
+    if (outermost && !isPojo(logic)) {
+      return false;
+    }
+    const [key, keyValue] = Object.entries(logic)?.[0] ?? [];
+    if (jsonLogicOperations && objectKeys(jsonLogicOperations).includes(key)) {
+      const rule2 = jsonLogicOperations[key](keyValue);
+      return rule2 ? outermost && !isRuleGroup(rule2) ? { combinator: "and", rules: [rule2] } : rule2 : false;
+    }
+    if (isJsonLogicAnd(logic)) {
+      return {
+        combinator: "and",
+        rules: logic.and.map((l) => processLogic(l)).filter(Boolean)
+      };
+    } else if (isJsonLogicOr(logic)) {
+      return {
+        combinator: "or",
+        rules: logic.or.map((l) => processLogic(l)).filter(Boolean)
+      };
+    } else if (isJsonLogicNegation(logic)) {
+      const rule2 = processLogic(logic["!"]);
+      if (rule2) {
+        if (!isRuleGroupType(rule2) && (rule2.operator === "between" || rule2.operator === "in" || rule2.operator === "contains" || rule2.operator === "beginsWith" || rule2.operator === "endsWith")) {
+          const newRule = { ...rule2, operator: defaultOperatorNegationMap[rule2.operator] };
+          if (outermost) {
+            return { combinator: "and", rules: [newRule] };
+          }
+          return newRule;
+        } else if (isJsonLogicBetweenExclusive(logic["!"]) || isRuleGroupType(rule2)) {
+          return { ...rule2, not: true };
+        }
+        return { combinator: "and", rules: [rule2], not: true };
+      }
+      return false;
+    } else if (isJsonLogicDoubleNegation(logic)) {
+      const rule2 = processLogic(logic["!!"]);
+      return rule2 || false;
+    }
+    let rule = false;
+    let field = "";
+    let operator = "=";
+    let value = "";
+    let valueSource = void 0;
+    if (
+      // Basic boolean operations
+      isJsonLogicEqual(logic) || isJsonLogicStrictEqual(logic) || isJsonLogicNotEqual(logic) || isJsonLogicStrictNotEqual(logic) || isJsonLogicGreaterThan(logic) || isJsonLogicGreaterThanOrEqual(logic) || isJsonLogicLessThan(logic) || isJsonLogicLessThanOrEqual(logic) || isJsonLogicInString(logic) || isRQBJsonLogicStartsWith(logic) || isRQBJsonLogicEndsWith(logic)
+    ) {
+      const [first, second] = keyValue;
+      if (isRQBJsonLogicVar(first) && !isPojo(second)) {
+        field = first.var;
+        value = second;
+      } else if (!isPojo(first) && isRQBJsonLogicVar(second)) {
+        field = second.var;
+        value = first;
+      } else if (isRQBJsonLogicVar(first) && isRQBJsonLogicVar(second)) {
+        field = first.var;
+        value = second.var;
+        valueSource = "field";
+      } else {
+        return false;
+      }
+      if (isJsonLogicEqual(logic) || isJsonLogicStrictEqual(logic)) {
+        operator = value === null ? "null" : "=";
+      } else if (isJsonLogicNotEqual(logic) || isJsonLogicStrictNotEqual(logic)) {
+        operator = value === null ? "notNull" : "!=";
+      } else if (isJsonLogicInString(logic)) {
+        operator = "contains";
+      } else if (isRQBJsonLogicStartsWith(logic)) {
+        operator = "beginsWith";
+      } else if (isRQBJsonLogicEndsWith(logic)) {
+        operator = "endsWith";
+      } else {
+        operator = key;
+      }
+      if (fieldIsValid(field, operator, valueSource === "field" ? value : void 0)) {
+        rule = { field, operator, value, valueSource };
+      }
+    } else if (isJsonLogicBetweenExclusive(logic) && isRQBJsonLogicVar(logic["<"][1])) {
+      field = logic["<"][1].var;
+      const values = [logic["<"][0], logic["<"][2]];
+      if (values.every((v) => isRQBJsonLogicVar(v)) || values.every((el) => typeof el === "string") || values.every((el) => typeof el === "number") || values.every((el) => typeof el === "boolean")) {
+        return processLogic({
+          and: [{ ">": [{ var: field }, values[0]] }, { "<": [{ var: field }, values[1]] }]
+        }) || /* istanbul ignore next */
+        false;
+      }
+    } else if (isJsonLogicBetweenInclusive(logic) && isRQBJsonLogicVar(logic["<="][1])) {
+      field = logic["<="][1].var;
+      operator = "between";
+      const values = [logic["<="][0], logic["<="][2]];
+      if (logic["<="].every((v) => isRQBJsonLogicVar(v))) {
+        const vars = values;
+        valueSource = "field";
+        const fieldList = vars.map((el) => el.var).filter((sf) => fieldIsValid(field, operator, sf));
+        value = listsAsArrays ? fieldList : joinWith(fieldList, ",");
+      } else {
+        if (values.every((el) => typeof el === "string") || values.every((el) => typeof el === "number") || values.every((el) => typeof el === "boolean")) {
+          value = listsAsArrays ? values : joinWith(
+            values.map((el) => `${el}`),
+            ","
+          );
+        }
+      }
+      if (fieldIsValid(field, operator) && value.length >= 2) {
+        rule = { field, operator, value, valueSource };
+      }
+    } else if (isJsonLogicInArray(logic) && isRQBJsonLogicVar(keyValue[0])) {
+      field = keyValue[0].var;
+      operator = "in";
+      if (logic.in[1].every((v) => isRQBJsonLogicVar(v))) {
+        valueSource = "field";
+        const fieldList = logic.in[1].map((el) => el.var).filter((sf) => fieldIsValid(field, operator, sf));
+        value = listsAsArrays ? fieldList : joinWith(fieldList, ",");
+      } else {
+        if (logic.in[1].every((el) => typeof el === "string") || logic.in[1].every((el) => typeof el === "number") || logic.in[1].every((el) => typeof el === "boolean")) {
+          value = listsAsArrays ? logic.in[1] : joinWith(
+            logic.in[1].map((el) => `${el}`),
+            ","
+          );
+        }
+      }
+      if (value.length > 0) {
+        rule = { field, operator, value, valueSource };
+      }
+    }
+    return rule ? outermost ? { combinator: "and", rules: [rule] } : rule : false;
+  }
+  let logicRoot = rqbJsonLogic;
+  if (typeof rqbJsonLogic === "string") {
+    try {
+      logicRoot = JSON.parse(rqbJsonLogic);
+    } catch {
+      return emptyRuleGroup;
+    }
+  }
+  const result = processLogic(logicRoot, true);
+  const finalQuery = result || emptyRuleGroup;
+  return options.independentCombinators ? convertToIC(finalQuery) : finalQuery;
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (0);
+//# sourceMappingURL=parseJsonLogic.js.map
+
+/***/ }),
+
+/***/ "./node_modules/react-redux/node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.development.js":
+/*!********************************************************************************************************************************!*\
+  !*** ./node_modules/react-redux/node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.development.js ***!
+  \********************************************************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/**
+ * @license React
+ * use-sync-external-store-with-selector.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+if (true) {
+  (function() {
+
+          'use strict';
+
+/* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+if (
+  typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' &&
+  typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart ===
+    'function'
+) {
+  __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
+}
+          var React = __webpack_require__(/*! react */ "react");
+
+/**
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */
+function is(x, y) {
+  return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y // eslint-disable-line no-self-compare
+  ;
+}
+
+var objectIs = typeof Object.is === 'function' ? Object.is : is;
+
+var useSyncExternalStore = React.useSyncExternalStore;
+
+// for CommonJS interop.
+
+var useRef = React.useRef,
+    useEffect = React.useEffect,
+    useMemo = React.useMemo,
+    useDebugValue = React.useDebugValue; // Same as useSyncExternalStore, but supports selector and isEqual arguments.
+
+function useSyncExternalStoreWithSelector(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
+  // Use this to track the rendered snapshot.
+  var instRef = useRef(null);
+  var inst;
+
+  if (instRef.current === null) {
+    inst = {
+      hasValue: false,
+      value: null
+    };
+    instRef.current = inst;
+  } else {
+    inst = instRef.current;
+  }
+
+  var _useMemo = useMemo(function () {
+    // Track the memoized state using closure variables that are local to this
+    // memoized instance of a getSnapshot function. Intentionally not using a
+    // useRef hook, because that state would be shared across all concurrent
+    // copies of the hook/component.
+    var hasMemo = false;
+    var memoizedSnapshot;
+    var memoizedSelection;
+
+    var memoizedSelector = function (nextSnapshot) {
+      if (!hasMemo) {
+        // The first time the hook is called, there is no memoized result.
+        hasMemo = true;
+        memoizedSnapshot = nextSnapshot;
+
+        var _nextSelection = selector(nextSnapshot);
+
+        if (isEqual !== undefined) {
+          // Even if the selector has changed, the currently rendered selection
+          // may be equal to the new selection. We should attempt to reuse the
+          // current value if possible, to preserve downstream memoizations.
+          if (inst.hasValue) {
+            var currentSelection = inst.value;
+
+            if (isEqual(currentSelection, _nextSelection)) {
+              memoizedSelection = currentSelection;
+              return currentSelection;
+            }
+          }
+        }
+
+        memoizedSelection = _nextSelection;
+        return _nextSelection;
+      } // We may be able to reuse the previous invocation's result.
+
+
+      // We may be able to reuse the previous invocation's result.
+      var prevSnapshot = memoizedSnapshot;
+      var prevSelection = memoizedSelection;
+
+      if (objectIs(prevSnapshot, nextSnapshot)) {
+        // The snapshot is the same as last time. Reuse the previous selection.
+        return prevSelection;
+      } // The snapshot has changed, so we need to compute a new selection.
+
+
+      // The snapshot has changed, so we need to compute a new selection.
+      var nextSelection = selector(nextSnapshot); // If a custom isEqual function is provided, use that to check if the data
+      // has changed. If it hasn't, return the previous selection. That signals
+      // to React that the selections are conceptually equal, and we can bail
+      // out of rendering.
+
+      // If a custom isEqual function is provided, use that to check if the data
+      // has changed. If it hasn't, return the previous selection. That signals
+      // to React that the selections are conceptually equal, and we can bail
+      // out of rendering.
+      if (isEqual !== undefined && isEqual(prevSelection, nextSelection)) {
+        return prevSelection;
+      }
+
+      memoizedSnapshot = nextSnapshot;
+      memoizedSelection = nextSelection;
+      return nextSelection;
+    }; // Assigning this to a constant so that Flow knows it can't change.
+
+
+    // Assigning this to a constant so that Flow knows it can't change.
+    var maybeGetServerSnapshot = getServerSnapshot === undefined ? null : getServerSnapshot;
+
+    var getSnapshotWithSelector = function () {
+      return memoizedSelector(getSnapshot());
+    };
+
+    var getServerSnapshotWithSelector = maybeGetServerSnapshot === null ? undefined : function () {
+      return memoizedSelector(maybeGetServerSnapshot());
+    };
+    return [getSnapshotWithSelector, getServerSnapshotWithSelector];
+  }, [getSnapshot, getServerSnapshot, selector, isEqual]),
+      getSelection = _useMemo[0],
+      getServerSelection = _useMemo[1];
+
+  var value = useSyncExternalStore(subscribe, getSelection, getServerSelection);
+  useEffect(function () {
+    inst.hasValue = true;
+    inst.value = value;
+  }, [value]);
+  useDebugValue(value);
+  return value;
+}
+
+exports.useSyncExternalStoreWithSelector = useSyncExternalStoreWithSelector;
+          /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+if (
+  typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' &&
+  typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop ===
+    'function'
+) {
+  __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
+}
+        
+  })();
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/react-redux/node_modules/use-sync-external-store/with-selector.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/react-redux/node_modules/use-sync-external-store/with-selector.js ***!
+  \****************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+if (false) {} else {
+  module.exports = __webpack_require__(/*! ./cjs/use-sync-external-store-with-selector.development.js */ "./node_modules/react-redux/node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.development.js");
 }
 
 
@@ -36355,6 +38759,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_index_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_index_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_index_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./node_modules/react-querybuilder/dist/query-builder.css":
+/*!****************************************************************!*\
+  !*** ./node_modules/react-querybuilder/dist/query-builder.css ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _css_loader_dist_cjs_js_postcss_loader_dist_cjs_js_query_builder_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../css-loader/dist/cjs.js!../../postcss-loader/dist/cjs.js!./query-builder.css */ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./node_modules/react-querybuilder/dist/query-builder.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+options.insert = _style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+options.domAPI = (_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_css_loader_dist_cjs_js_postcss_loader_dist_cjs_js_query_builder_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_css_loader_dist_cjs_js_postcss_loader_dist_cjs_js_query_builder_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _css_loader_dist_cjs_js_postcss_loader_dist_cjs_js_query_builder_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _css_loader_dist_cjs_js_postcss_loader_dist_cjs_js_query_builder_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -42839,6 +45296,2746 @@ var MiniMap$1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(MiniMap);
 
 /***/ }),
 
+/***/ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ReducerType: () => (/* binding */ ReducerType),
+/* harmony export */   SHOULD_AUTOBATCH: () => (/* binding */ SHOULD_AUTOBATCH),
+/* harmony export */   TaskAbortError: () => (/* binding */ TaskAbortError),
+/* harmony export */   Tuple: () => (/* binding */ Tuple),
+/* harmony export */   __DO_NOT_USE__ActionTypes: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.__DO_NOT_USE__ActionTypes),
+/* harmony export */   addListener: () => (/* binding */ addListener),
+/* harmony export */   applyMiddleware: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.applyMiddleware),
+/* harmony export */   asyncThunkCreator: () => (/* binding */ asyncThunkCreator),
+/* harmony export */   autoBatchEnhancer: () => (/* binding */ autoBatchEnhancer),
+/* harmony export */   bindActionCreators: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.bindActionCreators),
+/* harmony export */   buildCreateSlice: () => (/* binding */ buildCreateSlice),
+/* harmony export */   clearAllListeners: () => (/* binding */ clearAllListeners),
+/* harmony export */   combineReducers: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers),
+/* harmony export */   combineSlices: () => (/* binding */ combineSlices),
+/* harmony export */   compose: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.compose),
+/* harmony export */   configureStore: () => (/* binding */ configureStore),
+/* harmony export */   createAction: () => (/* binding */ createAction),
+/* harmony export */   createActionCreatorInvariantMiddleware: () => (/* binding */ createActionCreatorInvariantMiddleware),
+/* harmony export */   createAsyncThunk: () => (/* binding */ createAsyncThunk),
+/* harmony export */   createDraftSafeSelector: () => (/* binding */ createDraftSafeSelector),
+/* harmony export */   createDraftSafeSelectorCreator: () => (/* binding */ createDraftSafeSelectorCreator),
+/* harmony export */   createDynamicMiddleware: () => (/* binding */ createDynamicMiddleware),
+/* harmony export */   createEntityAdapter: () => (/* binding */ createEntityAdapter),
+/* harmony export */   createImmutableStateInvariantMiddleware: () => (/* binding */ createImmutableStateInvariantMiddleware),
+/* harmony export */   createListenerMiddleware: () => (/* binding */ createListenerMiddleware),
+/* harmony export */   createNextState: () => (/* reexport safe */ immer__WEBPACK_IMPORTED_MODULE_2__.produce),
+/* harmony export */   createReducer: () => (/* binding */ createReducer),
+/* harmony export */   createSelector: () => (/* reexport safe */ reselect__WEBPACK_IMPORTED_MODULE_1__.createSelector),
+/* harmony export */   createSelectorCreator: () => (/* reexport safe */ reselect__WEBPACK_IMPORTED_MODULE_1__.createSelectorCreator),
+/* harmony export */   createSerializableStateInvariantMiddleware: () => (/* binding */ createSerializableStateInvariantMiddleware),
+/* harmony export */   createSlice: () => (/* binding */ createSlice),
+/* harmony export */   createStore: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.createStore),
+/* harmony export */   current: () => (/* reexport safe */ immer__WEBPACK_IMPORTED_MODULE_2__.current),
+/* harmony export */   findNonSerializableValue: () => (/* binding */ findNonSerializableValue),
+/* harmony export */   formatProdErrorMessage: () => (/* binding */ formatProdErrorMessage),
+/* harmony export */   freeze: () => (/* reexport safe */ immer__WEBPACK_IMPORTED_MODULE_2__.freeze),
+/* harmony export */   isAction: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.isAction),
+/* harmony export */   isActionCreator: () => (/* binding */ isActionCreator),
+/* harmony export */   isAllOf: () => (/* binding */ isAllOf),
+/* harmony export */   isAnyOf: () => (/* binding */ isAnyOf),
+/* harmony export */   isAsyncThunkAction: () => (/* binding */ isAsyncThunkAction),
+/* harmony export */   isDraft: () => (/* reexport safe */ immer__WEBPACK_IMPORTED_MODULE_2__.isDraft),
+/* harmony export */   isFluxStandardAction: () => (/* binding */ isFSA),
+/* harmony export */   isFulfilled: () => (/* binding */ isFulfilled),
+/* harmony export */   isImmutableDefault: () => (/* binding */ isImmutableDefault),
+/* harmony export */   isPending: () => (/* binding */ isPending),
+/* harmony export */   isPlain: () => (/* binding */ isPlain),
+/* harmony export */   isPlainObject: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.isPlainObject),
+/* harmony export */   isRejected: () => (/* binding */ isRejected),
+/* harmony export */   isRejectedWithValue: () => (/* binding */ isRejectedWithValue),
+/* harmony export */   legacy_createStore: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.legacy_createStore),
+/* harmony export */   lruMemoize: () => (/* reexport safe */ reselect__WEBPACK_IMPORTED_MODULE_1__.lruMemoize),
+/* harmony export */   miniSerializeError: () => (/* binding */ miniSerializeError),
+/* harmony export */   nanoid: () => (/* binding */ nanoid),
+/* harmony export */   original: () => (/* reexport safe */ immer__WEBPACK_IMPORTED_MODULE_2__.original),
+/* harmony export */   prepareAutoBatched: () => (/* binding */ prepareAutoBatched),
+/* harmony export */   removeListener: () => (/* binding */ removeListener),
+/* harmony export */   unwrapResult: () => (/* binding */ unwrapResult),
+/* harmony export */   weakMapMemoize: () => (/* reexport safe */ reselect__WEBPACK_IMPORTED_MODULE_1__.weakMapMemoize)
+/* harmony export */ });
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/@reduxjs/toolkit/node_modules/redux/dist/redux.mjs");
+/* harmony import */ var immer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! immer */ "./node_modules/immer/dist/immer.mjs");
+/* harmony import */ var reselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! reselect */ "./node_modules/reselect/dist/reselect.mjs");
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux-thunk */ "./node_modules/@reduxjs/toolkit/node_modules/redux-thunk/dist/redux-thunk.mjs");
+// src/index.ts
+
+
+
+
+// src/createDraftSafeSelector.ts
+
+
+var createDraftSafeSelectorCreator = (...args) => {
+  const createSelector2 = (0,reselect__WEBPACK_IMPORTED_MODULE_1__.createSelectorCreator)(...args);
+  const createDraftSafeSelector2 = Object.assign((...args2) => {
+    const selector = createSelector2(...args2);
+    const wrappedSelector = (value, ...rest) => selector((0,immer__WEBPACK_IMPORTED_MODULE_2__.isDraft)(value) ? (0,immer__WEBPACK_IMPORTED_MODULE_2__.current)(value) : value, ...rest);
+    Object.assign(wrappedSelector, selector);
+    return wrappedSelector;
+  }, {
+    withTypes: () => createDraftSafeSelector2
+  });
+  return createDraftSafeSelector2;
+};
+var createDraftSafeSelector = /* @__PURE__ */ createDraftSafeSelectorCreator(reselect__WEBPACK_IMPORTED_MODULE_1__.weakMapMemoize);
+
+// src/configureStore.ts
+
+
+// src/devtoolsExtension.ts
+
+var composeWithDevTools = typeof window !== "undefined" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : function() {
+  if (arguments.length === 0) return void 0;
+  if (typeof arguments[0] === "object") return redux__WEBPACK_IMPORTED_MODULE_0__.compose;
+  return redux__WEBPACK_IMPORTED_MODULE_0__.compose.apply(null, arguments);
+};
+var devToolsEnhancer = typeof window !== "undefined" && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__ : function() {
+  return function(noop3) {
+    return noop3;
+  };
+};
+
+// src/getDefaultMiddleware.ts
+
+
+// src/createAction.ts
+
+
+// src/tsHelpers.ts
+var hasMatchFunction = (v) => {
+  return v && typeof v.match === "function";
+};
+
+// src/createAction.ts
+function createAction(type, prepareAction) {
+  function actionCreator(...args) {
+    if (prepareAction) {
+      let prepared = prepareAction(...args);
+      if (!prepared) {
+        throw new Error( false ? 0 : "prepareAction did not return an object");
+      }
+      return {
+        type,
+        payload: prepared.payload,
+        ..."meta" in prepared && {
+          meta: prepared.meta
+        },
+        ..."error" in prepared && {
+          error: prepared.error
+        }
+      };
+    }
+    return {
+      type,
+      payload: args[0]
+    };
+  }
+  actionCreator.toString = () => `${type}`;
+  actionCreator.type = type;
+  actionCreator.match = (action) => (0,redux__WEBPACK_IMPORTED_MODULE_0__.isAction)(action) && action.type === type;
+  return actionCreator;
+}
+function isActionCreator(action) {
+  return typeof action === "function" && "type" in action && // hasMatchFunction only wants Matchers but I don't see the point in rewriting it
+  hasMatchFunction(action);
+}
+function isFSA(action) {
+  return (0,redux__WEBPACK_IMPORTED_MODULE_0__.isAction)(action) && Object.keys(action).every(isValidKey);
+}
+function isValidKey(key) {
+  return ["type", "payload", "error", "meta"].indexOf(key) > -1;
+}
+
+// src/actionCreatorInvariantMiddleware.ts
+function getMessage(type) {
+  const splitType = type ? `${type}`.split("/") : [];
+  const actionName = splitType[splitType.length - 1] || "actionCreator";
+  return `Detected an action creator with type "${type || "unknown"}" being dispatched. 
+Make sure you're calling the action creator before dispatching, i.e. \`dispatch(${actionName}())\` instead of \`dispatch(${actionName})\`. This is necessary even if the action has no payload.`;
+}
+function createActionCreatorInvariantMiddleware(options = {}) {
+  if (false) {}
+  const {
+    isActionCreator: isActionCreator2 = isActionCreator
+  } = options;
+  return () => (next) => (action) => {
+    if (isActionCreator2(action)) {
+      console.warn(getMessage(action.type));
+    }
+    return next(action);
+  };
+}
+
+// src/utils.ts
+
+function getTimeMeasureUtils(maxDelay, fnName) {
+  let elapsed = 0;
+  return {
+    measureTime(fn) {
+      const started = Date.now();
+      try {
+        return fn();
+      } finally {
+        const finished = Date.now();
+        elapsed += finished - started;
+      }
+    },
+    warnIfExceeded() {
+      if (elapsed > maxDelay) {
+        console.warn(`${fnName} took ${elapsed}ms, which is more than the warning threshold of ${maxDelay}ms. 
+If your state or actions are very large, you may want to disable the middleware as it might cause too much of a slowdown in development mode. See https://redux-toolkit.js.org/api/getDefaultMiddleware for instructions.
+It is disabled in production builds, so you don't need to worry about that.`);
+      }
+    }
+  };
+}
+function find(iterable, comparator) {
+  for (const entry of iterable) {
+    if (comparator(entry)) {
+      return entry;
+    }
+  }
+  return void 0;
+}
+var Tuple = class _Tuple extends Array {
+  constructor(...items) {
+    super(...items);
+    Object.setPrototypeOf(this, _Tuple.prototype);
+  }
+  static get [Symbol.species]() {
+    return _Tuple;
+  }
+  concat(...arr) {
+    return super.concat.apply(this, arr);
+  }
+  prepend(...arr) {
+    if (arr.length === 1 && Array.isArray(arr[0])) {
+      return new _Tuple(...arr[0].concat(this));
+    }
+    return new _Tuple(...arr.concat(this));
+  }
+};
+function freezeDraftable(val) {
+  return (0,immer__WEBPACK_IMPORTED_MODULE_2__.isDraftable)(val) ? (0,immer__WEBPACK_IMPORTED_MODULE_2__.produce)(val, () => {
+  }) : val;
+}
+function emplace(map, key, handler) {
+  if (map.has(key)) {
+    let value = map.get(key);
+    if (handler.update) {
+      value = handler.update(value, key, map);
+      map.set(key, value);
+    }
+    return value;
+  }
+  if (!handler.insert) throw new Error( false ? 0 : "No insert provided for key not already in map");
+  const inserted = handler.insert(key, map);
+  map.set(key, inserted);
+  return inserted;
+}
+
+// src/immutableStateInvariantMiddleware.ts
+function isImmutableDefault(value) {
+  return typeof value !== "object" || value == null || Object.isFrozen(value);
+}
+function trackForMutations(isImmutable, ignorePaths, obj) {
+  const trackedProperties = trackProperties(isImmutable, ignorePaths, obj);
+  return {
+    detectMutations() {
+      return detectMutations(isImmutable, ignorePaths, trackedProperties, obj);
+    }
+  };
+}
+function trackProperties(isImmutable, ignorePaths = [], obj, path = "", checkedObjects = /* @__PURE__ */ new Set()) {
+  const tracked = {
+    value: obj
+  };
+  if (!isImmutable(obj) && !checkedObjects.has(obj)) {
+    checkedObjects.add(obj);
+    tracked.children = {};
+    for (const key in obj) {
+      const childPath = path ? path + "." + key : key;
+      if (ignorePaths.length && ignorePaths.indexOf(childPath) !== -1) {
+        continue;
+      }
+      tracked.children[key] = trackProperties(isImmutable, ignorePaths, obj[key], childPath);
+    }
+  }
+  return tracked;
+}
+function detectMutations(isImmutable, ignoredPaths = [], trackedProperty, obj, sameParentRef = false, path = "") {
+  const prevObj = trackedProperty ? trackedProperty.value : void 0;
+  const sameRef = prevObj === obj;
+  if (sameParentRef && !sameRef && !Number.isNaN(obj)) {
+    return {
+      wasMutated: true,
+      path
+    };
+  }
+  if (isImmutable(prevObj) || isImmutable(obj)) {
+    return {
+      wasMutated: false
+    };
+  }
+  const keysToDetect = {};
+  for (let key in trackedProperty.children) {
+    keysToDetect[key] = true;
+  }
+  for (let key in obj) {
+    keysToDetect[key] = true;
+  }
+  const hasIgnoredPaths = ignoredPaths.length > 0;
+  for (let key in keysToDetect) {
+    const nestedPath = path ? path + "." + key : key;
+    if (hasIgnoredPaths) {
+      const hasMatches = ignoredPaths.some((ignored) => {
+        if (ignored instanceof RegExp) {
+          return ignored.test(nestedPath);
+        }
+        return nestedPath === ignored;
+      });
+      if (hasMatches) {
+        continue;
+      }
+    }
+    const result = detectMutations(isImmutable, ignoredPaths, trackedProperty.children[key], obj[key], sameRef, nestedPath);
+    if (result.wasMutated) {
+      return result;
+    }
+  }
+  return {
+    wasMutated: false
+  };
+}
+function createImmutableStateInvariantMiddleware(options = {}) {
+  if (false) {} else {
+    let stringify2 = function(obj, serializer, indent, decycler) {
+      return JSON.stringify(obj, getSerialize2(serializer, decycler), indent);
+    }, getSerialize2 = function(serializer, decycler) {
+      let stack = [], keys = [];
+      if (!decycler) decycler = function(_, value) {
+        if (stack[0] === value) return "[Circular ~]";
+        return "[Circular ~." + keys.slice(0, stack.indexOf(value)).join(".") + "]";
+      };
+      return function(key, value) {
+        if (stack.length > 0) {
+          var thisPos = stack.indexOf(this);
+          ~thisPos ? stack.splice(thisPos + 1) : stack.push(this);
+          ~thisPos ? keys.splice(thisPos, Infinity, key) : keys.push(key);
+          if (~stack.indexOf(value)) value = decycler.call(this, key, value);
+        } else stack.push(value);
+        return serializer == null ? value : serializer.call(this, key, value);
+      };
+    };
+    var stringify = stringify2, getSerialize = getSerialize2;
+    let {
+      isImmutable = isImmutableDefault,
+      ignoredPaths,
+      warnAfter = 32
+    } = options;
+    const track = trackForMutations.bind(null, isImmutable, ignoredPaths);
+    return ({
+      getState
+    }) => {
+      let state = getState();
+      let tracker = track(state);
+      let result;
+      return (next) => (action) => {
+        const measureUtils = getTimeMeasureUtils(warnAfter, "ImmutableStateInvariantMiddleware");
+        measureUtils.measureTime(() => {
+          state = getState();
+          result = tracker.detectMutations();
+          tracker = track(state);
+          if (result.wasMutated) {
+            throw new Error( false ? 0 : `A state mutation was detected between dispatches, in the path '${result.path || ""}'.  This may cause incorrect behavior. (https://redux.js.org/style-guide/style-guide#do-not-mutate-state)`);
+          }
+        });
+        const dispatchedAction = next(action);
+        measureUtils.measureTime(() => {
+          state = getState();
+          result = tracker.detectMutations();
+          tracker = track(state);
+          if (result.wasMutated) {
+            throw new Error( false ? 0 : `A state mutation was detected inside a dispatch, in the path: ${result.path || ""}. Take a look at the reducer(s) handling the action ${stringify2(action)}. (https://redux.js.org/style-guide/style-guide#do-not-mutate-state)`);
+          }
+        });
+        measureUtils.warnIfExceeded();
+        return dispatchedAction;
+      };
+    };
+  }
+}
+
+// src/serializableStateInvariantMiddleware.ts
+
+function isPlain(val) {
+  const type = typeof val;
+  return val == null || type === "string" || type === "boolean" || type === "number" || Array.isArray(val) || (0,redux__WEBPACK_IMPORTED_MODULE_0__.isPlainObject)(val);
+}
+function findNonSerializableValue(value, path = "", isSerializable = isPlain, getEntries, ignoredPaths = [], cache) {
+  let foundNestedSerializable;
+  if (!isSerializable(value)) {
+    return {
+      keyPath: path || "<root>",
+      value
+    };
+  }
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+  if (cache?.has(value)) return false;
+  const entries = getEntries != null ? getEntries(value) : Object.entries(value);
+  const hasIgnoredPaths = ignoredPaths.length > 0;
+  for (const [key, nestedValue] of entries) {
+    const nestedPath = path ? path + "." + key : key;
+    if (hasIgnoredPaths) {
+      const hasMatches = ignoredPaths.some((ignored) => {
+        if (ignored instanceof RegExp) {
+          return ignored.test(nestedPath);
+        }
+        return nestedPath === ignored;
+      });
+      if (hasMatches) {
+        continue;
+      }
+    }
+    if (!isSerializable(nestedValue)) {
+      return {
+        keyPath: nestedPath,
+        value: nestedValue
+      };
+    }
+    if (typeof nestedValue === "object") {
+      foundNestedSerializable = findNonSerializableValue(nestedValue, nestedPath, isSerializable, getEntries, ignoredPaths, cache);
+      if (foundNestedSerializable) {
+        return foundNestedSerializable;
+      }
+    }
+  }
+  if (cache && isNestedFrozen(value)) cache.add(value);
+  return false;
+}
+function isNestedFrozen(value) {
+  if (!Object.isFrozen(value)) return false;
+  for (const nestedValue of Object.values(value)) {
+    if (typeof nestedValue !== "object" || nestedValue === null) continue;
+    if (!isNestedFrozen(nestedValue)) return false;
+  }
+  return true;
+}
+function createSerializableStateInvariantMiddleware(options = {}) {
+  if (false) {} else {
+    const {
+      isSerializable = isPlain,
+      getEntries,
+      ignoredActions = [],
+      ignoredActionPaths = ["meta.arg", "meta.baseQueryMeta"],
+      ignoredPaths = [],
+      warnAfter = 32,
+      ignoreState = false,
+      ignoreActions = false,
+      disableCache = false
+    } = options;
+    const cache = !disableCache && WeakSet ? /* @__PURE__ */ new WeakSet() : void 0;
+    return (storeAPI) => (next) => (action) => {
+      if (!(0,redux__WEBPACK_IMPORTED_MODULE_0__.isAction)(action)) {
+        return next(action);
+      }
+      const result = next(action);
+      const measureUtils = getTimeMeasureUtils(warnAfter, "SerializableStateInvariantMiddleware");
+      if (!ignoreActions && !(ignoredActions.length && ignoredActions.indexOf(action.type) !== -1)) {
+        measureUtils.measureTime(() => {
+          const foundActionNonSerializableValue = findNonSerializableValue(action, "", isSerializable, getEntries, ignoredActionPaths, cache);
+          if (foundActionNonSerializableValue) {
+            const {
+              keyPath,
+              value
+            } = foundActionNonSerializableValue;
+            console.error(`A non-serializable value was detected in an action, in the path: \`${keyPath}\`. Value:`, value, "\nTake a look at the logic that dispatched this action: ", action, "\n(See https://redux.js.org/faq/actions#why-should-type-be-a-string-or-at-least-serializable-why-should-my-action-types-be-constants)", "\n(To allow non-serializable values see: https://redux-toolkit.js.org/usage/usage-guide#working-with-non-serializable-data)");
+          }
+        });
+      }
+      if (!ignoreState) {
+        measureUtils.measureTime(() => {
+          const state = storeAPI.getState();
+          const foundStateNonSerializableValue = findNonSerializableValue(state, "", isSerializable, getEntries, ignoredPaths, cache);
+          if (foundStateNonSerializableValue) {
+            const {
+              keyPath,
+              value
+            } = foundStateNonSerializableValue;
+            console.error(`A non-serializable value was detected in the state, in the path: \`${keyPath}\`. Value:`, value, `
+Take a look at the reducer(s) handling this action type: ${action.type}.
+(See https://redux.js.org/faq/organizing-state#can-i-put-functions-promises-or-other-non-serializable-items-in-my-store-state)`);
+          }
+        });
+        measureUtils.warnIfExceeded();
+      }
+      return result;
+    };
+  }
+}
+
+// src/getDefaultMiddleware.ts
+function isBoolean(x) {
+  return typeof x === "boolean";
+}
+var buildGetDefaultMiddleware = () => function getDefaultMiddleware(options) {
+  const {
+    thunk = true,
+    immutableCheck = true,
+    serializableCheck = true,
+    actionCreatorCheck = true
+  } = options ?? {};
+  let middlewareArray = new Tuple();
+  if (thunk) {
+    if (isBoolean(thunk)) {
+      middlewareArray.push(redux_thunk__WEBPACK_IMPORTED_MODULE_3__.thunk);
+    } else {
+      middlewareArray.push((0,redux_thunk__WEBPACK_IMPORTED_MODULE_3__.withExtraArgument)(thunk.extraArgument));
+    }
+  }
+  if (true) {
+    if (immutableCheck) {
+      let immutableOptions = {};
+      if (!isBoolean(immutableCheck)) {
+        immutableOptions = immutableCheck;
+      }
+      middlewareArray.unshift(createImmutableStateInvariantMiddleware(immutableOptions));
+    }
+    if (serializableCheck) {
+      let serializableOptions = {};
+      if (!isBoolean(serializableCheck)) {
+        serializableOptions = serializableCheck;
+      }
+      middlewareArray.push(createSerializableStateInvariantMiddleware(serializableOptions));
+    }
+    if (actionCreatorCheck) {
+      let actionCreatorOptions = {};
+      if (!isBoolean(actionCreatorCheck)) {
+        actionCreatorOptions = actionCreatorCheck;
+      }
+      middlewareArray.unshift(createActionCreatorInvariantMiddleware(actionCreatorOptions));
+    }
+  }
+  return middlewareArray;
+};
+
+// src/autoBatchEnhancer.ts
+var SHOULD_AUTOBATCH = "RTK_autoBatch";
+var prepareAutoBatched = () => (payload) => ({
+  payload,
+  meta: {
+    [SHOULD_AUTOBATCH]: true
+  }
+});
+var createQueueWithTimer = (timeout) => {
+  return (notify) => {
+    setTimeout(notify, timeout);
+  };
+};
+var rAF = typeof window !== "undefined" && window.requestAnimationFrame ? window.requestAnimationFrame : createQueueWithTimer(10);
+var autoBatchEnhancer = (options = {
+  type: "raf"
+}) => (next) => (...args) => {
+  const store = next(...args);
+  let notifying = true;
+  let shouldNotifyAtEndOfTick = false;
+  let notificationQueued = false;
+  const listeners = /* @__PURE__ */ new Set();
+  const queueCallback = options.type === "tick" ? queueMicrotask : options.type === "raf" ? rAF : options.type === "callback" ? options.queueNotification : createQueueWithTimer(options.timeout);
+  const notifyListeners = () => {
+    notificationQueued = false;
+    if (shouldNotifyAtEndOfTick) {
+      shouldNotifyAtEndOfTick = false;
+      listeners.forEach((l) => l());
+    }
+  };
+  return Object.assign({}, store, {
+    // Override the base `store.subscribe` method to keep original listeners
+    // from running if we're delaying notifications
+    subscribe(listener2) {
+      const wrappedListener = () => notifying && listener2();
+      const unsubscribe = store.subscribe(wrappedListener);
+      listeners.add(listener2);
+      return () => {
+        unsubscribe();
+        listeners.delete(listener2);
+      };
+    },
+    // Override the base `store.dispatch` method so that we can check actions
+    // for the `shouldAutoBatch` flag and determine if batching is active
+    dispatch(action) {
+      try {
+        notifying = !action?.meta?.[SHOULD_AUTOBATCH];
+        shouldNotifyAtEndOfTick = !notifying;
+        if (shouldNotifyAtEndOfTick) {
+          if (!notificationQueued) {
+            notificationQueued = true;
+            queueCallback(notifyListeners);
+          }
+        }
+        return store.dispatch(action);
+      } finally {
+        notifying = true;
+      }
+    }
+  });
+};
+
+// src/getDefaultEnhancers.ts
+var buildGetDefaultEnhancers = (middlewareEnhancer) => function getDefaultEnhancers(options) {
+  const {
+    autoBatch = true
+  } = options ?? {};
+  let enhancerArray = new Tuple(middlewareEnhancer);
+  if (autoBatch) {
+    enhancerArray.push(autoBatchEnhancer(typeof autoBatch === "object" ? autoBatch : void 0));
+  }
+  return enhancerArray;
+};
+
+// src/configureStore.ts
+function configureStore(options) {
+  const getDefaultMiddleware = buildGetDefaultMiddleware();
+  const {
+    reducer = void 0,
+    middleware,
+    devTools = true,
+    preloadedState = void 0,
+    enhancers = void 0
+  } = options || {};
+  let rootReducer;
+  if (typeof reducer === "function") {
+    rootReducer = reducer;
+  } else if ((0,redux__WEBPACK_IMPORTED_MODULE_0__.isPlainObject)(reducer)) {
+    rootReducer = (0,redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers)(reducer);
+  } else {
+    throw new Error( false ? 0 : "`reducer` is a required argument, and must be a function or an object of functions that can be passed to combineReducers");
+  }
+  if ( true && middleware && typeof middleware !== "function") {
+    throw new Error( false ? 0 : "`middleware` field must be a callback");
+  }
+  let finalMiddleware;
+  if (typeof middleware === "function") {
+    finalMiddleware = middleware(getDefaultMiddleware);
+    if ( true && !Array.isArray(finalMiddleware)) {
+      throw new Error( false ? 0 : "when using a middleware builder function, an array of middleware must be returned");
+    }
+  } else {
+    finalMiddleware = getDefaultMiddleware();
+  }
+  if ( true && finalMiddleware.some((item) => typeof item !== "function")) {
+    throw new Error( false ? 0 : "each middleware provided to configureStore must be a function");
+  }
+  let finalCompose = redux__WEBPACK_IMPORTED_MODULE_0__.compose;
+  if (devTools) {
+    finalCompose = composeWithDevTools({
+      // Enable capture of stack traces for dispatched Redux actions
+      trace: "development" !== "production",
+      ...typeof devTools === "object" && devTools
+    });
+  }
+  const middlewareEnhancer = (0,redux__WEBPACK_IMPORTED_MODULE_0__.applyMiddleware)(...finalMiddleware);
+  const getDefaultEnhancers = buildGetDefaultEnhancers(middlewareEnhancer);
+  if ( true && enhancers && typeof enhancers !== "function") {
+    throw new Error( false ? 0 : "`enhancers` field must be a callback");
+  }
+  let storeEnhancers = typeof enhancers === "function" ? enhancers(getDefaultEnhancers) : getDefaultEnhancers();
+  if ( true && !Array.isArray(storeEnhancers)) {
+    throw new Error( false ? 0 : "`enhancers` callback must return an array");
+  }
+  if ( true && storeEnhancers.some((item) => typeof item !== "function")) {
+    throw new Error( false ? 0 : "each enhancer provided to configureStore must be a function");
+  }
+  if ( true && finalMiddleware.length && !storeEnhancers.includes(middlewareEnhancer)) {
+    console.error("middlewares were provided, but middleware enhancer was not included in final enhancers - make sure to call `getDefaultEnhancers`");
+  }
+  const composedEnhancer = finalCompose(...storeEnhancers);
+  return (0,redux__WEBPACK_IMPORTED_MODULE_0__.createStore)(rootReducer, preloadedState, composedEnhancer);
+}
+
+// src/createReducer.ts
+
+
+// src/mapBuilders.ts
+function executeReducerBuilderCallback(builderCallback) {
+  const actionsMap = {};
+  const actionMatchers = [];
+  let defaultCaseReducer;
+  const builder = {
+    addCase(typeOrActionCreator, reducer) {
+      if (true) {
+        if (actionMatchers.length > 0) {
+          throw new Error( false ? 0 : "`builder.addCase` should only be called before calling `builder.addMatcher`");
+        }
+        if (defaultCaseReducer) {
+          throw new Error( false ? 0 : "`builder.addCase` should only be called before calling `builder.addDefaultCase`");
+        }
+      }
+      const type = typeof typeOrActionCreator === "string" ? typeOrActionCreator : typeOrActionCreator.type;
+      if (!type) {
+        throw new Error( false ? 0 : "`builder.addCase` cannot be called with an empty action type");
+      }
+      if (type in actionsMap) {
+        throw new Error( false ? 0 : `\`builder.addCase\` cannot be called with two reducers for the same action type '${type}'`);
+      }
+      actionsMap[type] = reducer;
+      return builder;
+    },
+    addMatcher(matcher, reducer) {
+      if (true) {
+        if (defaultCaseReducer) {
+          throw new Error( false ? 0 : "`builder.addMatcher` should only be called before calling `builder.addDefaultCase`");
+        }
+      }
+      actionMatchers.push({
+        matcher,
+        reducer
+      });
+      return builder;
+    },
+    addDefaultCase(reducer) {
+      if (true) {
+        if (defaultCaseReducer) {
+          throw new Error( false ? 0 : "`builder.addDefaultCase` can only be called once");
+        }
+      }
+      defaultCaseReducer = reducer;
+      return builder;
+    }
+  };
+  builderCallback(builder);
+  return [actionsMap, actionMatchers, defaultCaseReducer];
+}
+
+// src/createReducer.ts
+function isStateFunction(x) {
+  return typeof x === "function";
+}
+function createReducer(initialState, mapOrBuilderCallback) {
+  if (true) {
+    if (typeof mapOrBuilderCallback === "object") {
+      throw new Error( false ? 0 : "The object notation for `createReducer` has been removed. Please use the 'builder callback' notation instead: https://redux-toolkit.js.org/api/createReducer");
+    }
+  }
+  let [actionsMap, finalActionMatchers, finalDefaultCaseReducer] = executeReducerBuilderCallback(mapOrBuilderCallback);
+  let getInitialState;
+  if (isStateFunction(initialState)) {
+    getInitialState = () => freezeDraftable(initialState());
+  } else {
+    const frozenInitialState = freezeDraftable(initialState);
+    getInitialState = () => frozenInitialState;
+  }
+  function reducer(state = getInitialState(), action) {
+    let caseReducers = [actionsMap[action.type], ...finalActionMatchers.filter(({
+      matcher
+    }) => matcher(action)).map(({
+      reducer: reducer2
+    }) => reducer2)];
+    if (caseReducers.filter((cr) => !!cr).length === 0) {
+      caseReducers = [finalDefaultCaseReducer];
+    }
+    return caseReducers.reduce((previousState, caseReducer) => {
+      if (caseReducer) {
+        if ((0,immer__WEBPACK_IMPORTED_MODULE_2__.isDraft)(previousState)) {
+          const draft = previousState;
+          const result = caseReducer(draft, action);
+          if (result === void 0) {
+            return previousState;
+          }
+          return result;
+        } else if (!(0,immer__WEBPACK_IMPORTED_MODULE_2__.isDraftable)(previousState)) {
+          const result = caseReducer(previousState, action);
+          if (result === void 0) {
+            if (previousState === null) {
+              return previousState;
+            }
+            throw Error("A case reducer on a non-draftable value must not return undefined");
+          }
+          return result;
+        } else {
+          return (0,immer__WEBPACK_IMPORTED_MODULE_2__.produce)(previousState, (draft) => {
+            return caseReducer(draft, action);
+          });
+        }
+      }
+      return previousState;
+    }, state);
+  }
+  reducer.getInitialState = getInitialState;
+  return reducer;
+}
+
+// src/matchers.ts
+var matches = (matcher, action) => {
+  if (hasMatchFunction(matcher)) {
+    return matcher.match(action);
+  } else {
+    return matcher(action);
+  }
+};
+function isAnyOf(...matchers) {
+  return (action) => {
+    return matchers.some((matcher) => matches(matcher, action));
+  };
+}
+function isAllOf(...matchers) {
+  return (action) => {
+    return matchers.every((matcher) => matches(matcher, action));
+  };
+}
+function hasExpectedRequestMetadata(action, validStatus) {
+  if (!action || !action.meta) return false;
+  const hasValidRequestId = typeof action.meta.requestId === "string";
+  const hasValidRequestStatus = validStatus.indexOf(action.meta.requestStatus) > -1;
+  return hasValidRequestId && hasValidRequestStatus;
+}
+function isAsyncThunkArray(a) {
+  return typeof a[0] === "function" && "pending" in a[0] && "fulfilled" in a[0] && "rejected" in a[0];
+}
+function isPending(...asyncThunks) {
+  if (asyncThunks.length === 0) {
+    return (action) => hasExpectedRequestMetadata(action, ["pending"]);
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isPending()(asyncThunks[0]);
+  }
+  return isAnyOf(...asyncThunks.map((asyncThunk) => asyncThunk.pending));
+}
+function isRejected(...asyncThunks) {
+  if (asyncThunks.length === 0) {
+    return (action) => hasExpectedRequestMetadata(action, ["rejected"]);
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isRejected()(asyncThunks[0]);
+  }
+  return isAnyOf(...asyncThunks.map((asyncThunk) => asyncThunk.rejected));
+}
+function isRejectedWithValue(...asyncThunks) {
+  const hasFlag = (action) => {
+    return action && action.meta && action.meta.rejectedWithValue;
+  };
+  if (asyncThunks.length === 0) {
+    return isAllOf(isRejected(...asyncThunks), hasFlag);
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isRejectedWithValue()(asyncThunks[0]);
+  }
+  return isAllOf(isRejected(...asyncThunks), hasFlag);
+}
+function isFulfilled(...asyncThunks) {
+  if (asyncThunks.length === 0) {
+    return (action) => hasExpectedRequestMetadata(action, ["fulfilled"]);
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isFulfilled()(asyncThunks[0]);
+  }
+  return isAnyOf(...asyncThunks.map((asyncThunk) => asyncThunk.fulfilled));
+}
+function isAsyncThunkAction(...asyncThunks) {
+  if (asyncThunks.length === 0) {
+    return (action) => hasExpectedRequestMetadata(action, ["pending", "fulfilled", "rejected"]);
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isAsyncThunkAction()(asyncThunks[0]);
+  }
+  return isAnyOf(...asyncThunks.flatMap((asyncThunk) => [asyncThunk.pending, asyncThunk.rejected, asyncThunk.fulfilled]));
+}
+
+// src/nanoid.ts
+var urlAlphabet = "ModuleSymbhasOwnPr-0123456789ABCDEFGHNRVfgctiUvz_KqYTJkLxpZXIjQW";
+var nanoid = (size = 21) => {
+  let id = "";
+  let i = size;
+  while (i--) {
+    id += urlAlphabet[Math.random() * 64 | 0];
+  }
+  return id;
+};
+
+// src/createAsyncThunk.ts
+var commonProperties = ["name", "message", "stack", "code"];
+var RejectWithValue = class {
+  constructor(payload, meta) {
+    this.payload = payload;
+    this.meta = meta;
+  }
+  /*
+  type-only property to distinguish between RejectWithValue and FulfillWithMeta
+  does not exist at runtime
+  */
+  _type;
+};
+var FulfillWithMeta = class {
+  constructor(payload, meta) {
+    this.payload = payload;
+    this.meta = meta;
+  }
+  /*
+  type-only property to distinguish between RejectWithValue and FulfillWithMeta
+  does not exist at runtime
+  */
+  _type;
+};
+var miniSerializeError = (value) => {
+  if (typeof value === "object" && value !== null) {
+    const simpleError = {};
+    for (const property of commonProperties) {
+      if (typeof value[property] === "string") {
+        simpleError[property] = value[property];
+      }
+    }
+    return simpleError;
+  }
+  return {
+    message: String(value)
+  };
+};
+var createAsyncThunk = /* @__PURE__ */ (() => {
+  function createAsyncThunk2(typePrefix, payloadCreator, options) {
+    const fulfilled = createAction(typePrefix + "/fulfilled", (payload, requestId, arg, meta) => ({
+      payload,
+      meta: {
+        ...meta || {},
+        arg,
+        requestId,
+        requestStatus: "fulfilled"
+      }
+    }));
+    const pending = createAction(typePrefix + "/pending", (requestId, arg, meta) => ({
+      payload: void 0,
+      meta: {
+        ...meta || {},
+        arg,
+        requestId,
+        requestStatus: "pending"
+      }
+    }));
+    const rejected = createAction(typePrefix + "/rejected", (error, requestId, arg, payload, meta) => ({
+      payload,
+      error: (options && options.serializeError || miniSerializeError)(error || "Rejected"),
+      meta: {
+        ...meta || {},
+        arg,
+        requestId,
+        rejectedWithValue: !!payload,
+        requestStatus: "rejected",
+        aborted: error?.name === "AbortError",
+        condition: error?.name === "ConditionError"
+      }
+    }));
+    function actionCreator(arg) {
+      return (dispatch, getState, extra) => {
+        const requestId = options?.idGenerator ? options.idGenerator(arg) : nanoid();
+        const abortController = new AbortController();
+        let abortHandler;
+        let abortReason;
+        function abort(reason) {
+          abortReason = reason;
+          abortController.abort();
+        }
+        const promise = async function() {
+          let finalAction;
+          try {
+            let conditionResult = options?.condition?.(arg, {
+              getState,
+              extra
+            });
+            if (isThenable(conditionResult)) {
+              conditionResult = await conditionResult;
+            }
+            if (conditionResult === false || abortController.signal.aborted) {
+              throw {
+                name: "ConditionError",
+                message: "Aborted due to condition callback returning false."
+              };
+            }
+            const abortedPromise = new Promise((_, reject) => {
+              abortHandler = () => {
+                reject({
+                  name: "AbortError",
+                  message: abortReason || "Aborted"
+                });
+              };
+              abortController.signal.addEventListener("abort", abortHandler);
+            });
+            dispatch(pending(requestId, arg, options?.getPendingMeta?.({
+              requestId,
+              arg
+            }, {
+              getState,
+              extra
+            })));
+            finalAction = await Promise.race([abortedPromise, Promise.resolve(payloadCreator(arg, {
+              dispatch,
+              getState,
+              extra,
+              requestId,
+              signal: abortController.signal,
+              abort,
+              rejectWithValue: (value, meta) => {
+                return new RejectWithValue(value, meta);
+              },
+              fulfillWithValue: (value, meta) => {
+                return new FulfillWithMeta(value, meta);
+              }
+            })).then((result) => {
+              if (result instanceof RejectWithValue) {
+                throw result;
+              }
+              if (result instanceof FulfillWithMeta) {
+                return fulfilled(result.payload, requestId, arg, result.meta);
+              }
+              return fulfilled(result, requestId, arg);
+            })]);
+          } catch (err) {
+            finalAction = err instanceof RejectWithValue ? rejected(null, requestId, arg, err.payload, err.meta) : rejected(err, requestId, arg);
+          } finally {
+            if (abortHandler) {
+              abortController.signal.removeEventListener("abort", abortHandler);
+            }
+          }
+          const skipDispatch = options && !options.dispatchConditionRejection && rejected.match(finalAction) && finalAction.meta.condition;
+          if (!skipDispatch) {
+            dispatch(finalAction);
+          }
+          return finalAction;
+        }();
+        return Object.assign(promise, {
+          abort,
+          requestId,
+          arg,
+          unwrap() {
+            return promise.then(unwrapResult);
+          }
+        });
+      };
+    }
+    return Object.assign(actionCreator, {
+      pending,
+      rejected,
+      fulfilled,
+      settled: isAnyOf(rejected, fulfilled),
+      typePrefix
+    });
+  }
+  createAsyncThunk2.withTypes = () => createAsyncThunk2;
+  return createAsyncThunk2;
+})();
+function unwrapResult(action) {
+  if (action.meta && action.meta.rejectedWithValue) {
+    throw action.payload;
+  }
+  if (action.error) {
+    throw action.error;
+  }
+  return action.payload;
+}
+function isThenable(value) {
+  return value !== null && typeof value === "object" && typeof value.then === "function";
+}
+
+// src/createSlice.ts
+var asyncThunkSymbol = /* @__PURE__ */ Symbol.for("rtk-slice-createasyncthunk");
+var asyncThunkCreator = {
+  [asyncThunkSymbol]: createAsyncThunk
+};
+var ReducerType = /* @__PURE__ */ ((ReducerType2) => {
+  ReducerType2["reducer"] = "reducer";
+  ReducerType2["reducerWithPrepare"] = "reducerWithPrepare";
+  ReducerType2["asyncThunk"] = "asyncThunk";
+  return ReducerType2;
+})(ReducerType || {});
+function getType(slice, actionKey) {
+  return `${slice}/${actionKey}`;
+}
+function buildCreateSlice({
+  creators
+} = {}) {
+  const cAT = creators?.asyncThunk?.[asyncThunkSymbol];
+  return function createSlice2(options) {
+    const {
+      name,
+      reducerPath = name
+    } = options;
+    if (!name) {
+      throw new Error( false ? 0 : "`name` is a required option for createSlice");
+    }
+    if (typeof process !== "undefined" && "development" === "development") {
+      if (options.initialState === void 0) {
+        console.error("You must provide an `initialState` value that is not `undefined`. You may have misspelled `initialState`");
+      }
+    }
+    const reducers = (typeof options.reducers === "function" ? options.reducers(buildReducerCreators()) : options.reducers) || {};
+    const reducerNames = Object.keys(reducers);
+    const context = {
+      sliceCaseReducersByName: {},
+      sliceCaseReducersByType: {},
+      actionCreators: {},
+      sliceMatchers: []
+    };
+    const contextMethods = {
+      addCase(typeOrActionCreator, reducer2) {
+        const type = typeof typeOrActionCreator === "string" ? typeOrActionCreator : typeOrActionCreator.type;
+        if (!type) {
+          throw new Error( false ? 0 : "`context.addCase` cannot be called with an empty action type");
+        }
+        if (type in context.sliceCaseReducersByType) {
+          throw new Error( false ? 0 : "`context.addCase` cannot be called with two reducers for the same action type: " + type);
+        }
+        context.sliceCaseReducersByType[type] = reducer2;
+        return contextMethods;
+      },
+      addMatcher(matcher, reducer2) {
+        context.sliceMatchers.push({
+          matcher,
+          reducer: reducer2
+        });
+        return contextMethods;
+      },
+      exposeAction(name2, actionCreator) {
+        context.actionCreators[name2] = actionCreator;
+        return contextMethods;
+      },
+      exposeCaseReducer(name2, reducer2) {
+        context.sliceCaseReducersByName[name2] = reducer2;
+        return contextMethods;
+      }
+    };
+    reducerNames.forEach((reducerName) => {
+      const reducerDefinition = reducers[reducerName];
+      const reducerDetails = {
+        reducerName,
+        type: getType(name, reducerName),
+        createNotation: typeof options.reducers === "function"
+      };
+      if (isAsyncThunkSliceReducerDefinition(reducerDefinition)) {
+        handleThunkCaseReducerDefinition(reducerDetails, reducerDefinition, contextMethods, cAT);
+      } else {
+        handleNormalReducerDefinition(reducerDetails, reducerDefinition, contextMethods);
+      }
+    });
+    function buildReducer() {
+      if (true) {
+        if (typeof options.extraReducers === "object") {
+          throw new Error( false ? 0 : "The object notation for `createSlice.extraReducers` has been removed. Please use the 'builder callback' notation instead: https://redux-toolkit.js.org/api/createSlice");
+        }
+      }
+      const [extraReducers = {}, actionMatchers = [], defaultCaseReducer = void 0] = typeof options.extraReducers === "function" ? executeReducerBuilderCallback(options.extraReducers) : [options.extraReducers];
+      const finalCaseReducers = {
+        ...extraReducers,
+        ...context.sliceCaseReducersByType
+      };
+      return createReducer(options.initialState, (builder) => {
+        for (let key in finalCaseReducers) {
+          builder.addCase(key, finalCaseReducers[key]);
+        }
+        for (let sM of context.sliceMatchers) {
+          builder.addMatcher(sM.matcher, sM.reducer);
+        }
+        for (let m of actionMatchers) {
+          builder.addMatcher(m.matcher, m.reducer);
+        }
+        if (defaultCaseReducer) {
+          builder.addDefaultCase(defaultCaseReducer);
+        }
+      });
+    }
+    const selectSelf = (state) => state;
+    const injectedSelectorCache = /* @__PURE__ */ new Map();
+    let _reducer;
+    function reducer(state, action) {
+      if (!_reducer) _reducer = buildReducer();
+      return _reducer(state, action);
+    }
+    function getInitialState() {
+      if (!_reducer) _reducer = buildReducer();
+      return _reducer.getInitialState();
+    }
+    function makeSelectorProps(reducerPath2, injected = false) {
+      function selectSlice(state) {
+        let sliceState = state[reducerPath2];
+        if (typeof sliceState === "undefined") {
+          if (injected) {
+            sliceState = getInitialState();
+          } else if (true) {
+            throw new Error( false ? 0 : "selectSlice returned undefined for an uninjected slice reducer");
+          }
+        }
+        return sliceState;
+      }
+      function getSelectors(selectState = selectSelf) {
+        const selectorCache = emplace(injectedSelectorCache, injected, {
+          insert: () => /* @__PURE__ */ new WeakMap()
+        });
+        return emplace(selectorCache, selectState, {
+          insert: () => {
+            const map = {};
+            for (const [name2, selector] of Object.entries(options.selectors ?? {})) {
+              map[name2] = wrapSelector(selector, selectState, getInitialState, injected);
+            }
+            return map;
+          }
+        });
+      }
+      return {
+        reducerPath: reducerPath2,
+        getSelectors,
+        get selectors() {
+          return getSelectors(selectSlice);
+        },
+        selectSlice
+      };
+    }
+    const slice = {
+      name,
+      reducer,
+      actions: context.actionCreators,
+      caseReducers: context.sliceCaseReducersByName,
+      getInitialState,
+      ...makeSelectorProps(reducerPath),
+      injectInto(injectable, {
+        reducerPath: pathOpt,
+        ...config
+      } = {}) {
+        const newReducerPath = pathOpt ?? reducerPath;
+        injectable.inject({
+          reducerPath: newReducerPath,
+          reducer
+        }, config);
+        return {
+          ...slice,
+          ...makeSelectorProps(newReducerPath, true)
+        };
+      }
+    };
+    return slice;
+  };
+}
+function wrapSelector(selector, selectState, getInitialState, injected) {
+  function wrapper(rootState, ...args) {
+    let sliceState = selectState(rootState);
+    if (typeof sliceState === "undefined") {
+      if (injected) {
+        sliceState = getInitialState();
+      } else if (true) {
+        throw new Error( false ? 0 : "selectState returned undefined for an uninjected slice reducer");
+      }
+    }
+    return selector(sliceState, ...args);
+  }
+  wrapper.unwrapped = selector;
+  return wrapper;
+}
+var createSlice = /* @__PURE__ */ buildCreateSlice();
+function buildReducerCreators() {
+  function asyncThunk(payloadCreator, config) {
+    return {
+      _reducerDefinitionType: "asyncThunk" /* asyncThunk */,
+      payloadCreator,
+      ...config
+    };
+  }
+  asyncThunk.withTypes = () => asyncThunk;
+  return {
+    reducer(caseReducer) {
+      return Object.assign({
+        // hack so the wrapping function has the same name as the original
+        // we need to create a wrapper so the `reducerDefinitionType` is not assigned to the original
+        [caseReducer.name](...args) {
+          return caseReducer(...args);
+        }
+      }[caseReducer.name], {
+        _reducerDefinitionType: "reducer" /* reducer */
+      });
+    },
+    preparedReducer(prepare, reducer) {
+      return {
+        _reducerDefinitionType: "reducerWithPrepare" /* reducerWithPrepare */,
+        prepare,
+        reducer
+      };
+    },
+    asyncThunk
+  };
+}
+function handleNormalReducerDefinition({
+  type,
+  reducerName,
+  createNotation
+}, maybeReducerWithPrepare, context) {
+  let caseReducer;
+  let prepareCallback;
+  if ("reducer" in maybeReducerWithPrepare) {
+    if (createNotation && !isCaseReducerWithPrepareDefinition(maybeReducerWithPrepare)) {
+      throw new Error( false ? 0 : "Please use the `create.preparedReducer` notation for prepared action creators with the `create` notation.");
+    }
+    caseReducer = maybeReducerWithPrepare.reducer;
+    prepareCallback = maybeReducerWithPrepare.prepare;
+  } else {
+    caseReducer = maybeReducerWithPrepare;
+  }
+  context.addCase(type, caseReducer).exposeCaseReducer(reducerName, caseReducer).exposeAction(reducerName, prepareCallback ? createAction(type, prepareCallback) : createAction(type));
+}
+function isAsyncThunkSliceReducerDefinition(reducerDefinition) {
+  return reducerDefinition._reducerDefinitionType === "asyncThunk" /* asyncThunk */;
+}
+function isCaseReducerWithPrepareDefinition(reducerDefinition) {
+  return reducerDefinition._reducerDefinitionType === "reducerWithPrepare" /* reducerWithPrepare */;
+}
+function handleThunkCaseReducerDefinition({
+  type,
+  reducerName
+}, reducerDefinition, context, cAT) {
+  if (!cAT) {
+    throw new Error( false ? 0 : "Cannot use `create.asyncThunk` in the built-in `createSlice`. Use `buildCreateSlice({ creators: { asyncThunk: asyncThunkCreator } })` to create a customised version of `createSlice`.");
+  }
+  const {
+    payloadCreator,
+    fulfilled,
+    pending,
+    rejected,
+    settled,
+    options
+  } = reducerDefinition;
+  const thunk = cAT(type, payloadCreator, options);
+  context.exposeAction(reducerName, thunk);
+  if (fulfilled) {
+    context.addCase(thunk.fulfilled, fulfilled);
+  }
+  if (pending) {
+    context.addCase(thunk.pending, pending);
+  }
+  if (rejected) {
+    context.addCase(thunk.rejected, rejected);
+  }
+  if (settled) {
+    context.addMatcher(thunk.settled, settled);
+  }
+  context.exposeCaseReducer(reducerName, {
+    fulfilled: fulfilled || noop,
+    pending: pending || noop,
+    rejected: rejected || noop,
+    settled: settled || noop
+  });
+}
+function noop() {
+}
+
+// src/entities/entity_state.ts
+function getInitialEntityState() {
+  return {
+    ids: [],
+    entities: {}
+  };
+}
+function createInitialStateFactory(stateAdapter) {
+  function getInitialState(additionalState = {}, entities) {
+    const state = Object.assign(getInitialEntityState(), additionalState);
+    return entities ? stateAdapter.setAll(state, entities) : state;
+  }
+  return {
+    getInitialState
+  };
+}
+
+// src/entities/state_selectors.ts
+function createSelectorsFactory() {
+  function getSelectors(selectState, options = {}) {
+    const {
+      createSelector: createSelector2 = createDraftSafeSelector
+    } = options;
+    const selectIds = (state) => state.ids;
+    const selectEntities = (state) => state.entities;
+    const selectAll = createSelector2(selectIds, selectEntities, (ids, entities) => ids.map((id) => entities[id]));
+    const selectId = (_, id) => id;
+    const selectById = (entities, id) => entities[id];
+    const selectTotal = createSelector2(selectIds, (ids) => ids.length);
+    if (!selectState) {
+      return {
+        selectIds,
+        selectEntities,
+        selectAll,
+        selectTotal,
+        selectById: createSelector2(selectEntities, selectId, selectById)
+      };
+    }
+    const selectGlobalizedEntities = createSelector2(selectState, selectEntities);
+    return {
+      selectIds: createSelector2(selectState, selectIds),
+      selectEntities: selectGlobalizedEntities,
+      selectAll: createSelector2(selectState, selectAll),
+      selectTotal: createSelector2(selectState, selectTotal),
+      selectById: createSelector2(selectGlobalizedEntities, selectId, selectById)
+    };
+  }
+  return {
+    getSelectors
+  };
+}
+
+// src/entities/state_adapter.ts
+
+var isDraftTyped = immer__WEBPACK_IMPORTED_MODULE_2__.isDraft;
+function createSingleArgumentStateOperator(mutator) {
+  const operator = createStateOperator((_, state) => mutator(state));
+  return function operation(state) {
+    return operator(state, void 0);
+  };
+}
+function createStateOperator(mutator) {
+  return function operation(state, arg) {
+    function isPayloadActionArgument(arg2) {
+      return isFSA(arg2);
+    }
+    const runMutator = (draft) => {
+      if (isPayloadActionArgument(arg)) {
+        mutator(arg.payload, draft);
+      } else {
+        mutator(arg, draft);
+      }
+    };
+    if (isDraftTyped(state)) {
+      runMutator(state);
+      return state;
+    }
+    return (0,immer__WEBPACK_IMPORTED_MODULE_2__.produce)(state, runMutator);
+  };
+}
+
+// src/entities/utils.ts
+
+function selectIdValue(entity, selectId) {
+  const key = selectId(entity);
+  if ( true && key === void 0) {
+    console.warn("The entity passed to the `selectId` implementation returned undefined.", "You should probably provide your own `selectId` implementation.", "The entity that was passed:", entity, "The `selectId` implementation:", selectId.toString());
+  }
+  return key;
+}
+function ensureEntitiesArray(entities) {
+  if (!Array.isArray(entities)) {
+    entities = Object.values(entities);
+  }
+  return entities;
+}
+function getCurrent(value) {
+  return (0,immer__WEBPACK_IMPORTED_MODULE_2__.isDraft)(value) ? (0,immer__WEBPACK_IMPORTED_MODULE_2__.current)(value) : value;
+}
+function splitAddedUpdatedEntities(newEntities, selectId, state) {
+  newEntities = ensureEntitiesArray(newEntities);
+  const existingIdsArray = getCurrent(state.ids);
+  const existingIds = new Set(existingIdsArray);
+  const added = [];
+  const updated = [];
+  for (const entity of newEntities) {
+    const id = selectIdValue(entity, selectId);
+    if (existingIds.has(id)) {
+      updated.push({
+        id,
+        changes: entity
+      });
+    } else {
+      added.push(entity);
+    }
+  }
+  return [added, updated, existingIdsArray];
+}
+
+// src/entities/unsorted_state_adapter.ts
+function createUnsortedStateAdapter(selectId) {
+  function addOneMutably(entity, state) {
+    const key = selectIdValue(entity, selectId);
+    if (key in state.entities) {
+      return;
+    }
+    state.ids.push(key);
+    state.entities[key] = entity;
+  }
+  function addManyMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    for (const entity of newEntities) {
+      addOneMutably(entity, state);
+    }
+  }
+  function setOneMutably(entity, state) {
+    const key = selectIdValue(entity, selectId);
+    if (!(key in state.entities)) {
+      state.ids.push(key);
+    }
+    ;
+    state.entities[key] = entity;
+  }
+  function setManyMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    for (const entity of newEntities) {
+      setOneMutably(entity, state);
+    }
+  }
+  function setAllMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    state.ids = [];
+    state.entities = {};
+    addManyMutably(newEntities, state);
+  }
+  function removeOneMutably(key, state) {
+    return removeManyMutably([key], state);
+  }
+  function removeManyMutably(keys, state) {
+    let didMutate = false;
+    keys.forEach((key) => {
+      if (key in state.entities) {
+        delete state.entities[key];
+        didMutate = true;
+      }
+    });
+    if (didMutate) {
+      state.ids = state.ids.filter((id) => id in state.entities);
+    }
+  }
+  function removeAllMutably(state) {
+    Object.assign(state, {
+      ids: [],
+      entities: {}
+    });
+  }
+  function takeNewKey(keys, update, state) {
+    const original3 = state.entities[update.id];
+    if (original3 === void 0) {
+      return false;
+    }
+    const updated = Object.assign({}, original3, update.changes);
+    const newKey = selectIdValue(updated, selectId);
+    const hasNewKey = newKey !== update.id;
+    if (hasNewKey) {
+      keys[update.id] = newKey;
+      delete state.entities[update.id];
+    }
+    ;
+    state.entities[newKey] = updated;
+    return hasNewKey;
+  }
+  function updateOneMutably(update, state) {
+    return updateManyMutably([update], state);
+  }
+  function updateManyMutably(updates, state) {
+    const newKeys = {};
+    const updatesPerEntity = {};
+    updates.forEach((update) => {
+      if (update.id in state.entities) {
+        updatesPerEntity[update.id] = {
+          id: update.id,
+          // Spreads ignore falsy values, so this works even if there isn't
+          // an existing update already at this key
+          changes: {
+            ...updatesPerEntity[update.id]?.changes,
+            ...update.changes
+          }
+        };
+      }
+    });
+    updates = Object.values(updatesPerEntity);
+    const didMutateEntities = updates.length > 0;
+    if (didMutateEntities) {
+      const didMutateIds = updates.filter((update) => takeNewKey(newKeys, update, state)).length > 0;
+      if (didMutateIds) {
+        state.ids = Object.values(state.entities).map((e) => selectIdValue(e, selectId));
+      }
+    }
+  }
+  function upsertOneMutably(entity, state) {
+    return upsertManyMutably([entity], state);
+  }
+  function upsertManyMutably(newEntities, state) {
+    const [added, updated] = splitAddedUpdatedEntities(newEntities, selectId, state);
+    updateManyMutably(updated, state);
+    addManyMutably(added, state);
+  }
+  return {
+    removeAll: createSingleArgumentStateOperator(removeAllMutably),
+    addOne: createStateOperator(addOneMutably),
+    addMany: createStateOperator(addManyMutably),
+    setOne: createStateOperator(setOneMutably),
+    setMany: createStateOperator(setManyMutably),
+    setAll: createStateOperator(setAllMutably),
+    updateOne: createStateOperator(updateOneMutably),
+    updateMany: createStateOperator(updateManyMutably),
+    upsertOne: createStateOperator(upsertOneMutably),
+    upsertMany: createStateOperator(upsertManyMutably),
+    removeOne: createStateOperator(removeOneMutably),
+    removeMany: createStateOperator(removeManyMutably)
+  };
+}
+
+// src/entities/sorted_state_adapter.ts
+function findInsertIndex(sortedItems, item, comparisonFunction) {
+  let lowIndex = 0;
+  let highIndex = sortedItems.length;
+  while (lowIndex < highIndex) {
+    let middleIndex = lowIndex + highIndex >>> 1;
+    const currentItem = sortedItems[middleIndex];
+    const res = comparisonFunction(item, currentItem);
+    if (res >= 0) {
+      lowIndex = middleIndex + 1;
+    } else {
+      highIndex = middleIndex;
+    }
+  }
+  return lowIndex;
+}
+function insert(sortedItems, item, comparisonFunction) {
+  const insertAtIndex = findInsertIndex(sortedItems, item, comparisonFunction);
+  sortedItems.splice(insertAtIndex, 0, item);
+  return sortedItems;
+}
+function createSortedStateAdapter(selectId, comparer) {
+  const {
+    removeOne,
+    removeMany,
+    removeAll
+  } = createUnsortedStateAdapter(selectId);
+  function addOneMutably(entity, state) {
+    return addManyMutably([entity], state);
+  }
+  function addManyMutably(newEntities, state, existingIds) {
+    newEntities = ensureEntitiesArray(newEntities);
+    const existingKeys = new Set(existingIds ?? getCurrent(state.ids));
+    const models = newEntities.filter((model) => !existingKeys.has(selectIdValue(model, selectId)));
+    if (models.length !== 0) {
+      mergeFunction(state, models);
+    }
+  }
+  function setOneMutably(entity, state) {
+    return setManyMutably([entity], state);
+  }
+  function setManyMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    if (newEntities.length !== 0) {
+      for (const item of newEntities) {
+        delete state.entities[selectId(item)];
+      }
+      mergeFunction(state, newEntities);
+    }
+  }
+  function setAllMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    state.entities = {};
+    state.ids = [];
+    addManyMutably(newEntities, state, []);
+  }
+  function updateOneMutably(update, state) {
+    return updateManyMutably([update], state);
+  }
+  function updateManyMutably(updates, state) {
+    let appliedUpdates = false;
+    let replacedIds = false;
+    for (let update of updates) {
+      const entity = state.entities[update.id];
+      if (!entity) {
+        continue;
+      }
+      appliedUpdates = true;
+      Object.assign(entity, update.changes);
+      const newId = selectId(entity);
+      if (update.id !== newId) {
+        replacedIds = true;
+        delete state.entities[update.id];
+        const oldIndex = state.ids.indexOf(update.id);
+        state.ids[oldIndex] = newId;
+        state.entities[newId] = entity;
+      }
+    }
+    if (appliedUpdates) {
+      mergeFunction(state, [], appliedUpdates, replacedIds);
+    }
+  }
+  function upsertOneMutably(entity, state) {
+    return upsertManyMutably([entity], state);
+  }
+  function upsertManyMutably(newEntities, state) {
+    const [added, updated, existingIdsArray] = splitAddedUpdatedEntities(newEntities, selectId, state);
+    if (updated.length) {
+      updateManyMutably(updated, state);
+    }
+    if (added.length) {
+      addManyMutably(added, state, existingIdsArray);
+    }
+  }
+  function areArraysEqual(a, b) {
+    if (a.length !== b.length) {
+      return false;
+    }
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] === b[i]) {
+        continue;
+      }
+      return false;
+    }
+    return true;
+  }
+  const mergeFunction = (state, addedItems, appliedUpdates, replacedIds) => {
+    const currentEntities = getCurrent(state.entities);
+    const currentIds = getCurrent(state.ids);
+    const stateEntities = state.entities;
+    let ids = currentIds;
+    if (replacedIds) {
+      ids = new Set(currentIds);
+    }
+    let sortedEntities = [];
+    for (const id of ids) {
+      const entity = currentEntities[id];
+      if (entity) {
+        sortedEntities.push(entity);
+      }
+    }
+    const wasPreviouslyEmpty = sortedEntities.length === 0;
+    for (const item of addedItems) {
+      stateEntities[selectId(item)] = item;
+      if (!wasPreviouslyEmpty) {
+        insert(sortedEntities, item, comparer);
+      }
+    }
+    if (wasPreviouslyEmpty) {
+      sortedEntities = addedItems.slice().sort(comparer);
+    } else if (appliedUpdates) {
+      sortedEntities.sort(comparer);
+    }
+    const newSortedIds = sortedEntities.map(selectId);
+    if (!areArraysEqual(currentIds, newSortedIds)) {
+      state.ids = newSortedIds;
+    }
+  };
+  return {
+    removeOne,
+    removeMany,
+    removeAll,
+    addOne: createStateOperator(addOneMutably),
+    updateOne: createStateOperator(updateOneMutably),
+    upsertOne: createStateOperator(upsertOneMutably),
+    setOne: createStateOperator(setOneMutably),
+    setMany: createStateOperator(setManyMutably),
+    setAll: createStateOperator(setAllMutably),
+    addMany: createStateOperator(addManyMutably),
+    updateMany: createStateOperator(updateManyMutably),
+    upsertMany: createStateOperator(upsertManyMutably)
+  };
+}
+
+// src/entities/create_adapter.ts
+function createEntityAdapter(options = {}) {
+  const {
+    selectId,
+    sortComparer
+  } = {
+    sortComparer: false,
+    selectId: (instance) => instance.id,
+    ...options
+  };
+  const stateAdapter = sortComparer ? createSortedStateAdapter(selectId, sortComparer) : createUnsortedStateAdapter(selectId);
+  const stateFactory = createInitialStateFactory(stateAdapter);
+  const selectorsFactory = createSelectorsFactory();
+  return {
+    selectId,
+    sortComparer,
+    ...stateFactory,
+    ...selectorsFactory,
+    ...stateAdapter
+  };
+}
+
+// src/listenerMiddleware/index.ts
+
+
+// src/listenerMiddleware/exceptions.ts
+var task = "task";
+var listener = "listener";
+var completed = "completed";
+var cancelled = "cancelled";
+var taskCancelled = `task-${cancelled}`;
+var taskCompleted = `task-${completed}`;
+var listenerCancelled = `${listener}-${cancelled}`;
+var listenerCompleted = `${listener}-${completed}`;
+var TaskAbortError = class {
+  constructor(code) {
+    this.code = code;
+    this.message = `${task} ${cancelled} (reason: ${code})`;
+  }
+  name = "TaskAbortError";
+  message;
+};
+
+// src/listenerMiddleware/utils.ts
+var assertFunction = (func, expected) => {
+  if (typeof func !== "function") {
+    throw new TypeError( false ? 0 : `${expected} is not a function`);
+  }
+};
+var noop2 = () => {
+};
+var catchRejection = (promise, onError = noop2) => {
+  promise.catch(onError);
+  return promise;
+};
+var addAbortSignalListener = (abortSignal, callback) => {
+  abortSignal.addEventListener("abort", callback, {
+    once: true
+  });
+  return () => abortSignal.removeEventListener("abort", callback);
+};
+var abortControllerWithReason = (abortController, reason) => {
+  const signal = abortController.signal;
+  if (signal.aborted) {
+    return;
+  }
+  if (!("reason" in signal)) {
+    Object.defineProperty(signal, "reason", {
+      enumerable: true,
+      value: reason,
+      configurable: true,
+      writable: true
+    });
+  }
+  ;
+  abortController.abort(reason);
+};
+
+// src/listenerMiddleware/task.ts
+var validateActive = (signal) => {
+  if (signal.aborted) {
+    const {
+      reason
+    } = signal;
+    throw new TaskAbortError(reason);
+  }
+};
+function raceWithSignal(signal, promise) {
+  let cleanup = noop2;
+  return new Promise((resolve, reject) => {
+    const notifyRejection = () => reject(new TaskAbortError(signal.reason));
+    if (signal.aborted) {
+      notifyRejection();
+      return;
+    }
+    cleanup = addAbortSignalListener(signal, notifyRejection);
+    promise.finally(() => cleanup()).then(resolve, reject);
+  }).finally(() => {
+    cleanup = noop2;
+  });
+}
+var runTask = async (task2, cleanUp) => {
+  try {
+    await Promise.resolve();
+    const value = await task2();
+    return {
+      status: "ok",
+      value
+    };
+  } catch (error) {
+    return {
+      status: error instanceof TaskAbortError ? "cancelled" : "rejected",
+      error
+    };
+  } finally {
+    cleanUp?.();
+  }
+};
+var createPause = (signal) => {
+  return (promise) => {
+    return catchRejection(raceWithSignal(signal, promise).then((output) => {
+      validateActive(signal);
+      return output;
+    }));
+  };
+};
+var createDelay = (signal) => {
+  const pause = createPause(signal);
+  return (timeoutMs) => {
+    return pause(new Promise((resolve) => setTimeout(resolve, timeoutMs)));
+  };
+};
+
+// src/listenerMiddleware/index.ts
+var {
+  assign
+} = Object;
+var INTERNAL_NIL_TOKEN = {};
+var alm = "listenerMiddleware";
+var createFork = (parentAbortSignal, parentBlockingPromises) => {
+  const linkControllers = (controller) => addAbortSignalListener(parentAbortSignal, () => abortControllerWithReason(controller, parentAbortSignal.reason));
+  return (taskExecutor, opts) => {
+    assertFunction(taskExecutor, "taskExecutor");
+    const childAbortController = new AbortController();
+    linkControllers(childAbortController);
+    const result = runTask(async () => {
+      validateActive(parentAbortSignal);
+      validateActive(childAbortController.signal);
+      const result2 = await taskExecutor({
+        pause: createPause(childAbortController.signal),
+        delay: createDelay(childAbortController.signal),
+        signal: childAbortController.signal
+      });
+      validateActive(childAbortController.signal);
+      return result2;
+    }, () => abortControllerWithReason(childAbortController, taskCompleted));
+    if (opts?.autoJoin) {
+      parentBlockingPromises.push(result.catch(noop2));
+    }
+    return {
+      result: createPause(parentAbortSignal)(result),
+      cancel() {
+        abortControllerWithReason(childAbortController, taskCancelled);
+      }
+    };
+  };
+};
+var createTakePattern = (startListening, signal) => {
+  const take = async (predicate, timeout) => {
+    validateActive(signal);
+    let unsubscribe = () => {
+    };
+    const tuplePromise = new Promise((resolve, reject) => {
+      let stopListening = startListening({
+        predicate,
+        effect: (action, listenerApi) => {
+          listenerApi.unsubscribe();
+          resolve([action, listenerApi.getState(), listenerApi.getOriginalState()]);
+        }
+      });
+      unsubscribe = () => {
+        stopListening();
+        reject();
+      };
+    });
+    const promises = [tuplePromise];
+    if (timeout != null) {
+      promises.push(new Promise((resolve) => setTimeout(resolve, timeout, null)));
+    }
+    try {
+      const output = await raceWithSignal(signal, Promise.race(promises));
+      validateActive(signal);
+      return output;
+    } finally {
+      unsubscribe();
+    }
+  };
+  return (predicate, timeout) => catchRejection(take(predicate, timeout));
+};
+var getListenerEntryPropsFrom = (options) => {
+  let {
+    type,
+    actionCreator,
+    matcher,
+    predicate,
+    effect
+  } = options;
+  if (type) {
+    predicate = createAction(type).match;
+  } else if (actionCreator) {
+    type = actionCreator.type;
+    predicate = actionCreator.match;
+  } else if (matcher) {
+    predicate = matcher;
+  } else if (predicate) {
+  } else {
+    throw new Error( false ? 0 : "Creating or removing a listener requires one of the known fields for matching an action");
+  }
+  assertFunction(effect, "options.listener");
+  return {
+    predicate,
+    type,
+    effect
+  };
+};
+var createListenerEntry = /* @__PURE__ */ assign((options) => {
+  const {
+    type,
+    predicate,
+    effect
+  } = getListenerEntryPropsFrom(options);
+  const id = nanoid();
+  const entry = {
+    id,
+    effect,
+    type,
+    predicate,
+    pending: /* @__PURE__ */ new Set(),
+    unsubscribe: () => {
+      throw new Error( false ? 0 : "Unsubscribe not initialized");
+    }
+  };
+  return entry;
+}, {
+  withTypes: () => createListenerEntry
+});
+var cancelActiveListeners = (entry) => {
+  entry.pending.forEach((controller) => {
+    abortControllerWithReason(controller, listenerCancelled);
+  });
+};
+var createClearListenerMiddleware = (listenerMap) => {
+  return () => {
+    listenerMap.forEach(cancelActiveListeners);
+    listenerMap.clear();
+  };
+};
+var safelyNotifyError = (errorHandler, errorToNotify, errorInfo) => {
+  try {
+    errorHandler(errorToNotify, errorInfo);
+  } catch (errorHandlerError) {
+    setTimeout(() => {
+      throw errorHandlerError;
+    }, 0);
+  }
+};
+var addListener = /* @__PURE__ */ assign(/* @__PURE__ */ createAction(`${alm}/add`), {
+  withTypes: () => addListener
+});
+var clearAllListeners = /* @__PURE__ */ createAction(`${alm}/removeAll`);
+var removeListener = /* @__PURE__ */ assign(/* @__PURE__ */ createAction(`${alm}/remove`), {
+  withTypes: () => removeListener
+});
+var defaultErrorHandler = (...args) => {
+  console.error(`${alm}/error`, ...args);
+};
+var createListenerMiddleware = (middlewareOptions = {}) => {
+  const listenerMap = /* @__PURE__ */ new Map();
+  const {
+    extra,
+    onError = defaultErrorHandler
+  } = middlewareOptions;
+  assertFunction(onError, "onError");
+  const insertEntry = (entry) => {
+    entry.unsubscribe = () => listenerMap.delete(entry.id);
+    listenerMap.set(entry.id, entry);
+    return (cancelOptions) => {
+      entry.unsubscribe();
+      if (cancelOptions?.cancelActive) {
+        cancelActiveListeners(entry);
+      }
+    };
+  };
+  const startListening = (options) => {
+    let entry = find(Array.from(listenerMap.values()), (existingEntry) => existingEntry.effect === options.effect);
+    if (!entry) {
+      entry = createListenerEntry(options);
+    }
+    return insertEntry(entry);
+  };
+  assign(startListening, {
+    withTypes: () => startListening
+  });
+  const stopListening = (options) => {
+    const {
+      type,
+      effect,
+      predicate
+    } = getListenerEntryPropsFrom(options);
+    const entry = find(Array.from(listenerMap.values()), (entry2) => {
+      const matchPredicateOrType = typeof type === "string" ? entry2.type === type : entry2.predicate === predicate;
+      return matchPredicateOrType && entry2.effect === effect;
+    });
+    if (entry) {
+      entry.unsubscribe();
+      if (options.cancelActive) {
+        cancelActiveListeners(entry);
+      }
+    }
+    return !!entry;
+  };
+  assign(stopListening, {
+    withTypes: () => stopListening
+  });
+  const notifyListener = async (entry, action, api, getOriginalState) => {
+    const internalTaskController = new AbortController();
+    const take = createTakePattern(startListening, internalTaskController.signal);
+    const autoJoinPromises = [];
+    try {
+      entry.pending.add(internalTaskController);
+      await Promise.resolve(entry.effect(
+        action,
+        // Use assign() rather than ... to avoid extra helper functions added to bundle
+        assign({}, api, {
+          getOriginalState,
+          condition: (predicate, timeout) => take(predicate, timeout).then(Boolean),
+          take,
+          delay: createDelay(internalTaskController.signal),
+          pause: createPause(internalTaskController.signal),
+          extra,
+          signal: internalTaskController.signal,
+          fork: createFork(internalTaskController.signal, autoJoinPromises),
+          unsubscribe: entry.unsubscribe,
+          subscribe: () => {
+            listenerMap.set(entry.id, entry);
+          },
+          cancelActiveListeners: () => {
+            entry.pending.forEach((controller, _, set) => {
+              if (controller !== internalTaskController) {
+                abortControllerWithReason(controller, listenerCancelled);
+                set.delete(controller);
+              }
+            });
+          },
+          cancel: () => {
+            abortControllerWithReason(internalTaskController, listenerCancelled);
+            entry.pending.delete(internalTaskController);
+          },
+          throwIfCancelled: () => {
+            validateActive(internalTaskController.signal);
+          }
+        })
+      ));
+    } catch (listenerError) {
+      if (!(listenerError instanceof TaskAbortError)) {
+        safelyNotifyError(onError, listenerError, {
+          raisedBy: "effect"
+        });
+      }
+    } finally {
+      await Promise.all(autoJoinPromises);
+      abortControllerWithReason(internalTaskController, listenerCompleted);
+      entry.pending.delete(internalTaskController);
+    }
+  };
+  const clearListenerMiddleware = createClearListenerMiddleware(listenerMap);
+  const middleware = (api) => (next) => (action) => {
+    if (!(0,redux__WEBPACK_IMPORTED_MODULE_0__.isAction)(action)) {
+      return next(action);
+    }
+    if (addListener.match(action)) {
+      return startListening(action.payload);
+    }
+    if (clearAllListeners.match(action)) {
+      clearListenerMiddleware();
+      return;
+    }
+    if (removeListener.match(action)) {
+      return stopListening(action.payload);
+    }
+    let originalState = api.getState();
+    const getOriginalState = () => {
+      if (originalState === INTERNAL_NIL_TOKEN) {
+        throw new Error( false ? 0 : `${alm}: getOriginalState can only be called synchronously`);
+      }
+      return originalState;
+    };
+    let result;
+    try {
+      result = next(action);
+      if (listenerMap.size > 0) {
+        const currentState = api.getState();
+        const listenerEntries = Array.from(listenerMap.values());
+        for (const entry of listenerEntries) {
+          let runListener = false;
+          try {
+            runListener = entry.predicate(action, currentState, originalState);
+          } catch (predicateError) {
+            runListener = false;
+            safelyNotifyError(onError, predicateError, {
+              raisedBy: "predicate"
+            });
+          }
+          if (!runListener) {
+            continue;
+          }
+          notifyListener(entry, action, api, getOriginalState);
+        }
+      }
+    } finally {
+      originalState = INTERNAL_NIL_TOKEN;
+    }
+    return result;
+  };
+  return {
+    middleware,
+    startListening,
+    stopListening,
+    clearListeners: clearListenerMiddleware
+  };
+};
+
+// src/dynamicMiddleware/index.ts
+
+var createMiddlewareEntry = (middleware) => ({
+  id: nanoid(),
+  middleware,
+  applied: /* @__PURE__ */ new Map()
+});
+var matchInstance = (instanceId) => (action) => action?.meta?.instanceId === instanceId;
+var createDynamicMiddleware = () => {
+  const instanceId = nanoid();
+  const middlewareMap = /* @__PURE__ */ new Map();
+  const withMiddleware = Object.assign(createAction("dynamicMiddleware/add", (...middlewares) => ({
+    payload: middlewares,
+    meta: {
+      instanceId
+    }
+  })), {
+    withTypes: () => withMiddleware
+  });
+  const addMiddleware = Object.assign(function addMiddleware2(...middlewares) {
+    middlewares.forEach((middleware2) => {
+      let entry = find(Array.from(middlewareMap.values()), (entry2) => entry2.middleware === middleware2);
+      if (!entry) {
+        entry = createMiddlewareEntry(middleware2);
+      }
+      middlewareMap.set(entry.id, entry);
+    });
+  }, {
+    withTypes: () => addMiddleware
+  });
+  const getFinalMiddleware = (api) => {
+    const appliedMiddleware = Array.from(middlewareMap.values()).map((entry) => emplace(entry.applied, api, {
+      insert: () => entry.middleware(api)
+    }));
+    return (0,redux__WEBPACK_IMPORTED_MODULE_0__.compose)(...appliedMiddleware);
+  };
+  const isWithMiddleware = isAllOf(withMiddleware, matchInstance(instanceId));
+  const middleware = (api) => (next) => (action) => {
+    if (isWithMiddleware(action)) {
+      addMiddleware(...action.payload);
+      return api.dispatch;
+    }
+    return getFinalMiddleware(api)(next)(action);
+  };
+  return {
+    middleware,
+    addMiddleware,
+    withMiddleware,
+    instanceId
+  };
+};
+
+// src/combineSlices.ts
+
+var isSliceLike = (maybeSliceLike) => "reducerPath" in maybeSliceLike && typeof maybeSliceLike.reducerPath === "string";
+var getReducers = (slices) => slices.flatMap((sliceOrMap) => isSliceLike(sliceOrMap) ? [[sliceOrMap.reducerPath, sliceOrMap.reducer]] : Object.entries(sliceOrMap));
+var ORIGINAL_STATE = Symbol.for("rtk-state-proxy-original");
+var isStateProxy = (value) => !!value && !!value[ORIGINAL_STATE];
+var stateProxyMap = /* @__PURE__ */ new WeakMap();
+var createStateProxy = (state, reducerMap) => emplace(stateProxyMap, state, {
+  insert: () => new Proxy(state, {
+    get: (target, prop, receiver) => {
+      if (prop === ORIGINAL_STATE) return target;
+      const result = Reflect.get(target, prop, receiver);
+      if (typeof result === "undefined") {
+        const reducer = reducerMap[prop.toString()];
+        if (reducer) {
+          const reducerResult = reducer(void 0, {
+            type: nanoid()
+          });
+          if (typeof reducerResult === "undefined") {
+            throw new Error( false ? 0 : `The slice reducer for key "${prop.toString()}" returned undefined when called for selector(). If the state passed to the reducer is undefined, you must explicitly return the initial state. The initial state may not be undefined. If you don't want to set a value for this reducer, you can use null instead of undefined.`);
+          }
+          return reducerResult;
+        }
+      }
+      return result;
+    }
+  })
+});
+var original = (state) => {
+  if (!isStateProxy(state)) {
+    throw new Error( false ? 0 : "original must be used on state Proxy");
+  }
+  return state[ORIGINAL_STATE];
+};
+var noopReducer = (state = {}) => state;
+function combineSlices(...slices) {
+  const reducerMap = Object.fromEntries(getReducers(slices));
+  const getReducer = () => Object.keys(reducerMap).length ? (0,redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers)(reducerMap) : noopReducer;
+  let reducer = getReducer();
+  function combinedReducer(state, action) {
+    return reducer(state, action);
+  }
+  combinedReducer.withLazyLoadedSlices = () => combinedReducer;
+  const inject = (slice, config = {}) => {
+    const {
+      reducerPath,
+      reducer: reducerToInject
+    } = slice;
+    const currentReducer = reducerMap[reducerPath];
+    if (!config.overrideExisting && currentReducer && currentReducer !== reducerToInject) {
+      if (typeof process !== "undefined" && "development" === "development") {
+        console.error(`called \`inject\` to override already-existing reducer ${reducerPath} without specifying \`overrideExisting: true\``);
+      }
+      return combinedReducer;
+    }
+    reducerMap[reducerPath] = reducerToInject;
+    reducer = getReducer();
+    return combinedReducer;
+  };
+  const selector = Object.assign(function makeSelector(selectorFn, selectState) {
+    return function selector2(state, ...args) {
+      return selectorFn(createStateProxy(selectState ? selectState(state, ...args) : state, reducerMap), ...args);
+    };
+  }, {
+    original
+  });
+  return Object.assign(combinedReducer, {
+    inject,
+    selector
+  });
+}
+
+// src/formatProdErrorMessage.ts
+function formatProdErrorMessage(code) {
+  return `Minified Redux Toolkit error #${code}; visit https://redux-toolkit.js.org/Errors?code=${code} for the full message or use the non-minified dev environment for full errors. `;
+}
+
+//# sourceMappingURL=redux-toolkit.modern.mjs.map
+
+/***/ }),
+
+/***/ "./node_modules/@reduxjs/toolkit/node_modules/redux-thunk/dist/redux-thunk.mjs":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@reduxjs/toolkit/node_modules/redux-thunk/dist/redux-thunk.mjs ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   thunk: () => (/* binding */ thunk),
+/* harmony export */   withExtraArgument: () => (/* binding */ withExtraArgument)
+/* harmony export */ });
+// src/index.ts
+function createThunkMiddleware(extraArgument) {
+  const middleware = ({ dispatch, getState }) => (next) => (action) => {
+    if (typeof action === "function") {
+      return action(dispatch, getState, extraArgument);
+    }
+    return next(action);
+  };
+  return middleware;
+}
+var thunk = createThunkMiddleware();
+var withExtraArgument = createThunkMiddleware;
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@reduxjs/toolkit/node_modules/redux/dist/redux.mjs":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@reduxjs/toolkit/node_modules/redux/dist/redux.mjs ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   __DO_NOT_USE__ActionTypes: () => (/* binding */ actionTypes_default),
+/* harmony export */   applyMiddleware: () => (/* binding */ applyMiddleware),
+/* harmony export */   bindActionCreators: () => (/* binding */ bindActionCreators),
+/* harmony export */   combineReducers: () => (/* binding */ combineReducers),
+/* harmony export */   compose: () => (/* binding */ compose),
+/* harmony export */   createStore: () => (/* binding */ createStore),
+/* harmony export */   isAction: () => (/* binding */ isAction),
+/* harmony export */   isPlainObject: () => (/* binding */ isPlainObject),
+/* harmony export */   legacy_createStore: () => (/* binding */ legacy_createStore)
+/* harmony export */ });
+// src/utils/formatProdErrorMessage.ts
+function formatProdErrorMessage(code) {
+  return `Minified Redux error #${code}; visit https://redux.js.org/Errors?code=${code} for the full message or use the non-minified dev environment for full errors. `;
+}
+
+// src/utils/symbol-observable.ts
+var $$observable = /* @__PURE__ */ (() => typeof Symbol === "function" && Symbol.observable || "@@observable")();
+var symbol_observable_default = $$observable;
+
+// src/utils/actionTypes.ts
+var randomString = () => Math.random().toString(36).substring(7).split("").join(".");
+var ActionTypes = {
+  INIT: `@@redux/INIT${/* @__PURE__ */ randomString()}`,
+  REPLACE: `@@redux/REPLACE${/* @__PURE__ */ randomString()}`,
+  PROBE_UNKNOWN_ACTION: () => `@@redux/PROBE_UNKNOWN_ACTION${randomString()}`
+};
+var actionTypes_default = ActionTypes;
+
+// src/utils/isPlainObject.ts
+function isPlainObject(obj) {
+  if (typeof obj !== "object" || obj === null)
+    return false;
+  let proto = obj;
+  while (Object.getPrototypeOf(proto) !== null) {
+    proto = Object.getPrototypeOf(proto);
+  }
+  return Object.getPrototypeOf(obj) === proto || Object.getPrototypeOf(obj) === null;
+}
+
+// src/utils/kindOf.ts
+function miniKindOf(val) {
+  if (val === void 0)
+    return "undefined";
+  if (val === null)
+    return "null";
+  const type = typeof val;
+  switch (type) {
+    case "boolean":
+    case "string":
+    case "number":
+    case "symbol":
+    case "function": {
+      return type;
+    }
+  }
+  if (Array.isArray(val))
+    return "array";
+  if (isDate(val))
+    return "date";
+  if (isError(val))
+    return "error";
+  const constructorName = ctorName(val);
+  switch (constructorName) {
+    case "Symbol":
+    case "Promise":
+    case "WeakMap":
+    case "WeakSet":
+    case "Map":
+    case "Set":
+      return constructorName;
+  }
+  return Object.prototype.toString.call(val).slice(8, -1).toLowerCase().replace(/\s/g, "");
+}
+function ctorName(val) {
+  return typeof val.constructor === "function" ? val.constructor.name : null;
+}
+function isError(val) {
+  return val instanceof Error || typeof val.message === "string" && val.constructor && typeof val.constructor.stackTraceLimit === "number";
+}
+function isDate(val) {
+  if (val instanceof Date)
+    return true;
+  return typeof val.toDateString === "function" && typeof val.getDate === "function" && typeof val.setDate === "function";
+}
+function kindOf(val) {
+  let typeOfVal = typeof val;
+  if (true) {
+    typeOfVal = miniKindOf(val);
+  }
+  return typeOfVal;
+}
+
+// src/createStore.ts
+function createStore(reducer, preloadedState, enhancer) {
+  if (typeof reducer !== "function") {
+    throw new Error( false ? 0 : `Expected the root reducer to be a function. Instead, received: '${kindOf(reducer)}'`);
+  }
+  if (typeof preloadedState === "function" && typeof enhancer === "function" || typeof enhancer === "function" && typeof arguments[3] === "function") {
+    throw new Error( false ? 0 : "It looks like you are passing several store enhancers to createStore(). This is not supported. Instead, compose them together to a single function. See https://redux.js.org/tutorials/fundamentals/part-4-store#creating-a-store-with-enhancers for an example.");
+  }
+  if (typeof preloadedState === "function" && typeof enhancer === "undefined") {
+    enhancer = preloadedState;
+    preloadedState = void 0;
+  }
+  if (typeof enhancer !== "undefined") {
+    if (typeof enhancer !== "function") {
+      throw new Error( false ? 0 : `Expected the enhancer to be a function. Instead, received: '${kindOf(enhancer)}'`);
+    }
+    return enhancer(createStore)(reducer, preloadedState);
+  }
+  let currentReducer = reducer;
+  let currentState = preloadedState;
+  let currentListeners = /* @__PURE__ */ new Map();
+  let nextListeners = currentListeners;
+  let listenerIdCounter = 0;
+  let isDispatching = false;
+  function ensureCanMutateNextListeners() {
+    if (nextListeners === currentListeners) {
+      nextListeners = /* @__PURE__ */ new Map();
+      currentListeners.forEach((listener, key) => {
+        nextListeners.set(key, listener);
+      });
+    }
+  }
+  function getState() {
+    if (isDispatching) {
+      throw new Error( false ? 0 : "You may not call store.getState() while the reducer is executing. The reducer has already received the state as an argument. Pass it down from the top reducer instead of reading it from the store.");
+    }
+    return currentState;
+  }
+  function subscribe(listener) {
+    if (typeof listener !== "function") {
+      throw new Error( false ? 0 : `Expected the listener to be a function. Instead, received: '${kindOf(listener)}'`);
+    }
+    if (isDispatching) {
+      throw new Error( false ? 0 : "You may not call store.subscribe() while the reducer is executing. If you would like to be notified after the store has been updated, subscribe from a component and invoke store.getState() in the callback to access the latest state. See https://redux.js.org/api/store#subscribelistener for more details.");
+    }
+    let isSubscribed = true;
+    ensureCanMutateNextListeners();
+    const listenerId = listenerIdCounter++;
+    nextListeners.set(listenerId, listener);
+    return function unsubscribe() {
+      if (!isSubscribed) {
+        return;
+      }
+      if (isDispatching) {
+        throw new Error( false ? 0 : "You may not unsubscribe from a store listener while the reducer is executing. See https://redux.js.org/api/store#subscribelistener for more details.");
+      }
+      isSubscribed = false;
+      ensureCanMutateNextListeners();
+      nextListeners.delete(listenerId);
+      currentListeners = null;
+    };
+  }
+  function dispatch(action) {
+    if (!isPlainObject(action)) {
+      throw new Error( false ? 0 : `Actions must be plain objects. Instead, the actual type was: '${kindOf(action)}'. You may need to add middleware to your store setup to handle dispatching other values, such as 'redux-thunk' to handle dispatching functions. See https://redux.js.org/tutorials/fundamentals/part-4-store#middleware and https://redux.js.org/tutorials/fundamentals/part-6-async-logic#using-the-redux-thunk-middleware for examples.`);
+    }
+    if (typeof action.type === "undefined") {
+      throw new Error( false ? 0 : 'Actions may not have an undefined "type" property. You may have misspelled an action type string constant.');
+    }
+    if (typeof action.type !== "string") {
+      throw new Error( false ? 0 : `Action "type" property must be a string. Instead, the actual type was: '${kindOf(action.type)}'. Value was: '${action.type}' (stringified)`);
+    }
+    if (isDispatching) {
+      throw new Error( false ? 0 : "Reducers may not dispatch actions.");
+    }
+    try {
+      isDispatching = true;
+      currentState = currentReducer(currentState, action);
+    } finally {
+      isDispatching = false;
+    }
+    const listeners = currentListeners = nextListeners;
+    listeners.forEach((listener) => {
+      listener();
+    });
+    return action;
+  }
+  function replaceReducer(nextReducer) {
+    if (typeof nextReducer !== "function") {
+      throw new Error( false ? 0 : `Expected the nextReducer to be a function. Instead, received: '${kindOf(nextReducer)}`);
+    }
+    currentReducer = nextReducer;
+    dispatch({
+      type: actionTypes_default.REPLACE
+    });
+  }
+  function observable() {
+    const outerSubscribe = subscribe;
+    return {
+      /**
+       * The minimal observable subscription method.
+       * @param observer Any object that can be used as an observer.
+       * The observer object should have a `next` method.
+       * @returns An object with an `unsubscribe` method that can
+       * be used to unsubscribe the observable from the store, and prevent further
+       * emission of values from the observable.
+       */
+      subscribe(observer) {
+        if (typeof observer !== "object" || observer === null) {
+          throw new Error( false ? 0 : `Expected the observer to be an object. Instead, received: '${kindOf(observer)}'`);
+        }
+        function observeState() {
+          const observerAsObserver = observer;
+          if (observerAsObserver.next) {
+            observerAsObserver.next(getState());
+          }
+        }
+        observeState();
+        const unsubscribe = outerSubscribe(observeState);
+        return {
+          unsubscribe
+        };
+      },
+      [symbol_observable_default]() {
+        return this;
+      }
+    };
+  }
+  dispatch({
+    type: actionTypes_default.INIT
+  });
+  const store = {
+    dispatch,
+    subscribe,
+    getState,
+    replaceReducer,
+    [symbol_observable_default]: observable
+  };
+  return store;
+}
+function legacy_createStore(reducer, preloadedState, enhancer) {
+  return createStore(reducer, preloadedState, enhancer);
+}
+
+// src/utils/warning.ts
+function warning(message) {
+  if (typeof console !== "undefined" && typeof console.error === "function") {
+    console.error(message);
+  }
+  try {
+    throw new Error(message);
+  } catch (e) {
+  }
+}
+
+// src/combineReducers.ts
+function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
+  const reducerKeys = Object.keys(reducers);
+  const argumentName = action && action.type === actionTypes_default.INIT ? "preloadedState argument passed to createStore" : "previous state received by the reducer";
+  if (reducerKeys.length === 0) {
+    return "Store does not have a valid reducer. Make sure the argument passed to combineReducers is an object whose values are reducers.";
+  }
+  if (!isPlainObject(inputState)) {
+    return `The ${argumentName} has unexpected type of "${kindOf(inputState)}". Expected argument to be an object with the following keys: "${reducerKeys.join('", "')}"`;
+  }
+  const unexpectedKeys = Object.keys(inputState).filter((key) => !reducers.hasOwnProperty(key) && !unexpectedKeyCache[key]);
+  unexpectedKeys.forEach((key) => {
+    unexpectedKeyCache[key] = true;
+  });
+  if (action && action.type === actionTypes_default.REPLACE)
+    return;
+  if (unexpectedKeys.length > 0) {
+    return `Unexpected ${unexpectedKeys.length > 1 ? "keys" : "key"} "${unexpectedKeys.join('", "')}" found in ${argumentName}. Expected to find one of the known reducer keys instead: "${reducerKeys.join('", "')}". Unexpected keys will be ignored.`;
+  }
+}
+function assertReducerShape(reducers) {
+  Object.keys(reducers).forEach((key) => {
+    const reducer = reducers[key];
+    const initialState = reducer(void 0, {
+      type: actionTypes_default.INIT
+    });
+    if (typeof initialState === "undefined") {
+      throw new Error( false ? 0 : `The slice reducer for key "${key}" returned undefined during initialization. If the state passed to the reducer is undefined, you must explicitly return the initial state. The initial state may not be undefined. If you don't want to set a value for this reducer, you can use null instead of undefined.`);
+    }
+    if (typeof reducer(void 0, {
+      type: actionTypes_default.PROBE_UNKNOWN_ACTION()
+    }) === "undefined") {
+      throw new Error( false ? 0 : `The slice reducer for key "${key}" returned undefined when probed with a random type. Don't try to handle '${actionTypes_default.INIT}' or other actions in "redux/*" namespace. They are considered private. Instead, you must return the current state for any unknown actions, unless it is undefined, in which case you must return the initial state, regardless of the action type. The initial state may not be undefined, but can be null.`);
+    }
+  });
+}
+function combineReducers(reducers) {
+  const reducerKeys = Object.keys(reducers);
+  const finalReducers = {};
+  for (let i = 0; i < reducerKeys.length; i++) {
+    const key = reducerKeys[i];
+    if (true) {
+      if (typeof reducers[key] === "undefined") {
+        warning(`No reducer provided for key "${key}"`);
+      }
+    }
+    if (typeof reducers[key] === "function") {
+      finalReducers[key] = reducers[key];
+    }
+  }
+  const finalReducerKeys = Object.keys(finalReducers);
+  let unexpectedKeyCache;
+  if (true) {
+    unexpectedKeyCache = {};
+  }
+  let shapeAssertionError;
+  try {
+    assertReducerShape(finalReducers);
+  } catch (e) {
+    shapeAssertionError = e;
+  }
+  return function combination(state = {}, action) {
+    if (shapeAssertionError) {
+      throw shapeAssertionError;
+    }
+    if (true) {
+      const warningMessage = getUnexpectedStateShapeWarningMessage(state, finalReducers, action, unexpectedKeyCache);
+      if (warningMessage) {
+        warning(warningMessage);
+      }
+    }
+    let hasChanged = false;
+    const nextState = {};
+    for (let i = 0; i < finalReducerKeys.length; i++) {
+      const key = finalReducerKeys[i];
+      const reducer = finalReducers[key];
+      const previousStateForKey = state[key];
+      const nextStateForKey = reducer(previousStateForKey, action);
+      if (typeof nextStateForKey === "undefined") {
+        const actionType = action && action.type;
+        throw new Error( false ? 0 : `When called with an action of type ${actionType ? `"${String(actionType)}"` : "(unknown type)"}, the slice reducer for key "${key}" returned undefined. To ignore an action, you must explicitly return the previous state. If you want this reducer to hold no value, you can return null instead of undefined.`);
+      }
+      nextState[key] = nextStateForKey;
+      hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
+    }
+    hasChanged = hasChanged || finalReducerKeys.length !== Object.keys(state).length;
+    return hasChanged ? nextState : state;
+  };
+}
+
+// src/bindActionCreators.ts
+function bindActionCreator(actionCreator, dispatch) {
+  return function(...args) {
+    return dispatch(actionCreator.apply(this, args));
+  };
+}
+function bindActionCreators(actionCreators, dispatch) {
+  if (typeof actionCreators === "function") {
+    return bindActionCreator(actionCreators, dispatch);
+  }
+  if (typeof actionCreators !== "object" || actionCreators === null) {
+    throw new Error( false ? 0 : `bindActionCreators expected an object or a function, but instead received: '${kindOf(actionCreators)}'. Did you write "import ActionCreators from" instead of "import * as ActionCreators from"?`);
+  }
+  const boundActionCreators = {};
+  for (const key in actionCreators) {
+    const actionCreator = actionCreators[key];
+    if (typeof actionCreator === "function") {
+      boundActionCreators[key] = bindActionCreator(actionCreator, dispatch);
+    }
+  }
+  return boundActionCreators;
+}
+
+// src/compose.ts
+function compose(...funcs) {
+  if (funcs.length === 0) {
+    return (arg) => arg;
+  }
+  if (funcs.length === 1) {
+    return funcs[0];
+  }
+  return funcs.reduce((a, b) => (...args) => a(b(...args)));
+}
+
+// src/applyMiddleware.ts
+function applyMiddleware(...middlewares) {
+  return (createStore2) => (reducer, preloadedState) => {
+    const store = createStore2(reducer, preloadedState);
+    let dispatch = () => {
+      throw new Error( false ? 0 : "Dispatching while constructing your middleware is not allowed. Other middleware would not be applied to this dispatch.");
+    };
+    const middlewareAPI = {
+      getState: store.getState,
+      dispatch: (action, ...args) => dispatch(action, ...args)
+    };
+    const chain = middlewares.map((middleware) => middleware(middlewareAPI));
+    dispatch = compose(...chain)(store.dispatch);
+    return {
+      ...store,
+      dispatch
+    };
+  };
+}
+
+// src/utils/isAction.ts
+function isAction(action) {
+  return isPlainObject(action) && "type" in action && typeof action.type === "string";
+}
+
+//# sourceMappingURL=redux.mjs.map
+
+/***/ }),
+
 /***/ "./node_modules/classcat/index.js":
 /*!****************************************!*\
   !*** ./node_modules/classcat/index.js ***!
@@ -48393,6 +53590,9229 @@ function defaultConstrain(transform, extent, translateExtent) {
   return zoom;
 }
 
+
+/***/ }),
+
+/***/ "./node_modules/immer/dist/immer.mjs":
+/*!*******************************************!*\
+  !*** ./node_modules/immer/dist/immer.mjs ***!
+  \*******************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Immer: () => (/* binding */ Immer2),
+/* harmony export */   applyPatches: () => (/* binding */ applyPatches),
+/* harmony export */   castDraft: () => (/* binding */ castDraft),
+/* harmony export */   castImmutable: () => (/* binding */ castImmutable),
+/* harmony export */   createDraft: () => (/* binding */ createDraft),
+/* harmony export */   current: () => (/* binding */ current),
+/* harmony export */   enableMapSet: () => (/* binding */ enableMapSet),
+/* harmony export */   enablePatches: () => (/* binding */ enablePatches),
+/* harmony export */   finishDraft: () => (/* binding */ finishDraft),
+/* harmony export */   freeze: () => (/* binding */ freeze),
+/* harmony export */   immerable: () => (/* binding */ DRAFTABLE),
+/* harmony export */   isDraft: () => (/* binding */ isDraft),
+/* harmony export */   isDraftable: () => (/* binding */ isDraftable),
+/* harmony export */   nothing: () => (/* binding */ NOTHING),
+/* harmony export */   original: () => (/* binding */ original),
+/* harmony export */   produce: () => (/* binding */ produce),
+/* harmony export */   produceWithPatches: () => (/* binding */ produceWithPatches),
+/* harmony export */   setAutoFreeze: () => (/* binding */ setAutoFreeze),
+/* harmony export */   setUseStrictShallowCopy: () => (/* binding */ setUseStrictShallowCopy)
+/* harmony export */ });
+// src/utils/env.ts
+var NOTHING = Symbol.for("immer-nothing");
+var DRAFTABLE = Symbol.for("immer-draftable");
+var DRAFT_STATE = Symbol.for("immer-state");
+
+// src/utils/errors.ts
+var errors =  true ? [
+  // All error codes, starting by 0:
+  function(plugin) {
+    return `The plugin for '${plugin}' has not been loaded into Immer. To enable the plugin, import and call \`enable${plugin}()\` when initializing your application.`;
+  },
+  function(thing) {
+    return `produce can only be called on things that are draftable: plain objects, arrays, Map, Set or classes that are marked with '[immerable]: true'. Got '${thing}'`;
+  },
+  "This object has been frozen and should not be mutated",
+  function(data) {
+    return "Cannot use a proxy that has been revoked. Did you pass an object from inside an immer function to an async process? " + data;
+  },
+  "An immer producer returned a new value *and* modified its draft. Either return a new value *or* modify the draft.",
+  "Immer forbids circular references",
+  "The first or second argument to `produce` must be a function",
+  "The third argument to `produce` must be a function or undefined",
+  "First argument to `createDraft` must be a plain object, an array, or an immerable object",
+  "First argument to `finishDraft` must be a draft returned by `createDraft`",
+  function(thing) {
+    return `'current' expects a draft, got: ${thing}`;
+  },
+  "Object.defineProperty() cannot be used on an Immer draft",
+  "Object.setPrototypeOf() cannot be used on an Immer draft",
+  "Immer only supports deleting array indices",
+  "Immer only supports setting array indices and the 'length' property",
+  function(thing) {
+    return `'original' expects a draft, got: ${thing}`;
+  }
+  // Note: if more errors are added, the errorOffset in Patches.ts should be increased
+  // See Patches.ts for additional errors
+] : 0;
+function die(error, ...args) {
+  if (true) {
+    const e = errors[error];
+    const msg = typeof e === "function" ? e.apply(null, args) : e;
+    throw new Error(`[Immer] ${msg}`);
+  }
+  throw new Error(
+    `[Immer] minified error nr: ${error}. Full error at: https://bit.ly/3cXEKWf`
+  );
+}
+
+// src/utils/common.ts
+var getPrototypeOf = Object.getPrototypeOf;
+function isDraft(value) {
+  return !!value && !!value[DRAFT_STATE];
+}
+function isDraftable(value) {
+  if (!value)
+    return false;
+  return isPlainObject(value) || Array.isArray(value) || !!value[DRAFTABLE] || !!value.constructor?.[DRAFTABLE] || isMap(value) || isSet(value);
+}
+var objectCtorString = Object.prototype.constructor.toString();
+function isPlainObject(value) {
+  if (!value || typeof value !== "object")
+    return false;
+  const proto = getPrototypeOf(value);
+  if (proto === null) {
+    return true;
+  }
+  const Ctor = Object.hasOwnProperty.call(proto, "constructor") && proto.constructor;
+  if (Ctor === Object)
+    return true;
+  return typeof Ctor == "function" && Function.toString.call(Ctor) === objectCtorString;
+}
+function original(value) {
+  if (!isDraft(value))
+    die(15, value);
+  return value[DRAFT_STATE].base_;
+}
+function each(obj, iter) {
+  if (getArchtype(obj) === 0 /* Object */) {
+    Reflect.ownKeys(obj).forEach((key) => {
+      iter(key, obj[key], obj);
+    });
+  } else {
+    obj.forEach((entry, index) => iter(index, entry, obj));
+  }
+}
+function getArchtype(thing) {
+  const state = thing[DRAFT_STATE];
+  return state ? state.type_ : Array.isArray(thing) ? 1 /* Array */ : isMap(thing) ? 2 /* Map */ : isSet(thing) ? 3 /* Set */ : 0 /* Object */;
+}
+function has(thing, prop) {
+  return getArchtype(thing) === 2 /* Map */ ? thing.has(prop) : Object.prototype.hasOwnProperty.call(thing, prop);
+}
+function get(thing, prop) {
+  return getArchtype(thing) === 2 /* Map */ ? thing.get(prop) : thing[prop];
+}
+function set(thing, propOrOldValue, value) {
+  const t = getArchtype(thing);
+  if (t === 2 /* Map */)
+    thing.set(propOrOldValue, value);
+  else if (t === 3 /* Set */) {
+    thing.add(value);
+  } else
+    thing[propOrOldValue] = value;
+}
+function is(x, y) {
+  if (x === y) {
+    return x !== 0 || 1 / x === 1 / y;
+  } else {
+    return x !== x && y !== y;
+  }
+}
+function isMap(target) {
+  return target instanceof Map;
+}
+function isSet(target) {
+  return target instanceof Set;
+}
+function latest(state) {
+  return state.copy_ || state.base_;
+}
+function shallowCopy(base, strict) {
+  if (isMap(base)) {
+    return new Map(base);
+  }
+  if (isSet(base)) {
+    return new Set(base);
+  }
+  if (Array.isArray(base))
+    return Array.prototype.slice.call(base);
+  const isPlain = isPlainObject(base);
+  if (strict === true || strict === "class_only" && !isPlain) {
+    const descriptors = Object.getOwnPropertyDescriptors(base);
+    delete descriptors[DRAFT_STATE];
+    let keys = Reflect.ownKeys(descriptors);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      const desc = descriptors[key];
+      if (desc.writable === false) {
+        desc.writable = true;
+        desc.configurable = true;
+      }
+      if (desc.get || desc.set)
+        descriptors[key] = {
+          configurable: true,
+          writable: true,
+          // could live with !!desc.set as well here...
+          enumerable: desc.enumerable,
+          value: base[key]
+        };
+    }
+    return Object.create(getPrototypeOf(base), descriptors);
+  } else {
+    const proto = getPrototypeOf(base);
+    if (proto !== null && isPlain) {
+      return { ...base };
+    }
+    const obj = Object.create(proto);
+    return Object.assign(obj, base);
+  }
+}
+function freeze(obj, deep = false) {
+  if (isFrozen(obj) || isDraft(obj) || !isDraftable(obj))
+    return obj;
+  if (getArchtype(obj) > 1) {
+    obj.set = obj.add = obj.clear = obj.delete = dontMutateFrozenCollections;
+  }
+  Object.freeze(obj);
+  if (deep)
+    Object.entries(obj).forEach(([key, value]) => freeze(value, true));
+  return obj;
+}
+function dontMutateFrozenCollections() {
+  die(2);
+}
+function isFrozen(obj) {
+  return Object.isFrozen(obj);
+}
+
+// src/utils/plugins.ts
+var plugins = {};
+function getPlugin(pluginKey) {
+  const plugin = plugins[pluginKey];
+  if (!plugin) {
+    die(0, pluginKey);
+  }
+  return plugin;
+}
+function loadPlugin(pluginKey, implementation) {
+  if (!plugins[pluginKey])
+    plugins[pluginKey] = implementation;
+}
+
+// src/core/scope.ts
+var currentScope;
+function getCurrentScope() {
+  return currentScope;
+}
+function createScope(parent_, immer_) {
+  return {
+    drafts_: [],
+    parent_,
+    immer_,
+    // Whenever the modified draft contains a draft from another scope, we
+    // need to prevent auto-freezing so the unowned draft can be finalized.
+    canAutoFreeze_: true,
+    unfinalizedDrafts_: 0
+  };
+}
+function usePatchesInScope(scope, patchListener) {
+  if (patchListener) {
+    getPlugin("Patches");
+    scope.patches_ = [];
+    scope.inversePatches_ = [];
+    scope.patchListener_ = patchListener;
+  }
+}
+function revokeScope(scope) {
+  leaveScope(scope);
+  scope.drafts_.forEach(revokeDraft);
+  scope.drafts_ = null;
+}
+function leaveScope(scope) {
+  if (scope === currentScope) {
+    currentScope = scope.parent_;
+  }
+}
+function enterScope(immer2) {
+  return currentScope = createScope(currentScope, immer2);
+}
+function revokeDraft(draft) {
+  const state = draft[DRAFT_STATE];
+  if (state.type_ === 0 /* Object */ || state.type_ === 1 /* Array */)
+    state.revoke_();
+  else
+    state.revoked_ = true;
+}
+
+// src/core/finalize.ts
+function processResult(result, scope) {
+  scope.unfinalizedDrafts_ = scope.drafts_.length;
+  const baseDraft = scope.drafts_[0];
+  const isReplaced = result !== void 0 && result !== baseDraft;
+  if (isReplaced) {
+    if (baseDraft[DRAFT_STATE].modified_) {
+      revokeScope(scope);
+      die(4);
+    }
+    if (isDraftable(result)) {
+      result = finalize(scope, result);
+      if (!scope.parent_)
+        maybeFreeze(scope, result);
+    }
+    if (scope.patches_) {
+      getPlugin("Patches").generateReplacementPatches_(
+        baseDraft[DRAFT_STATE].base_,
+        result,
+        scope.patches_,
+        scope.inversePatches_
+      );
+    }
+  } else {
+    result = finalize(scope, baseDraft, []);
+  }
+  revokeScope(scope);
+  if (scope.patches_) {
+    scope.patchListener_(scope.patches_, scope.inversePatches_);
+  }
+  return result !== NOTHING ? result : void 0;
+}
+function finalize(rootScope, value, path) {
+  if (isFrozen(value))
+    return value;
+  const state = value[DRAFT_STATE];
+  if (!state) {
+    each(
+      value,
+      (key, childValue) => finalizeProperty(rootScope, state, value, key, childValue, path)
+    );
+    return value;
+  }
+  if (state.scope_ !== rootScope)
+    return value;
+  if (!state.modified_) {
+    maybeFreeze(rootScope, state.base_, true);
+    return state.base_;
+  }
+  if (!state.finalized_) {
+    state.finalized_ = true;
+    state.scope_.unfinalizedDrafts_--;
+    const result = state.copy_;
+    let resultEach = result;
+    let isSet2 = false;
+    if (state.type_ === 3 /* Set */) {
+      resultEach = new Set(result);
+      result.clear();
+      isSet2 = true;
+    }
+    each(
+      resultEach,
+      (key, childValue) => finalizeProperty(rootScope, state, result, key, childValue, path, isSet2)
+    );
+    maybeFreeze(rootScope, result, false);
+    if (path && rootScope.patches_) {
+      getPlugin("Patches").generatePatches_(
+        state,
+        path,
+        rootScope.patches_,
+        rootScope.inversePatches_
+      );
+    }
+  }
+  return state.copy_;
+}
+function finalizeProperty(rootScope, parentState, targetObject, prop, childValue, rootPath, targetIsSet) {
+  if ( true && childValue === targetObject)
+    die(5);
+  if (isDraft(childValue)) {
+    const path = rootPath && parentState && parentState.type_ !== 3 /* Set */ && // Set objects are atomic since they have no keys.
+    !has(parentState.assigned_, prop) ? rootPath.concat(prop) : void 0;
+    const res = finalize(rootScope, childValue, path);
+    set(targetObject, prop, res);
+    if (isDraft(res)) {
+      rootScope.canAutoFreeze_ = false;
+    } else
+      return;
+  } else if (targetIsSet) {
+    targetObject.add(childValue);
+  }
+  if (isDraftable(childValue) && !isFrozen(childValue)) {
+    if (!rootScope.immer_.autoFreeze_ && rootScope.unfinalizedDrafts_ < 1) {
+      return;
+    }
+    finalize(rootScope, childValue);
+    if ((!parentState || !parentState.scope_.parent_) && typeof prop !== "symbol" && Object.prototype.propertyIsEnumerable.call(targetObject, prop))
+      maybeFreeze(rootScope, childValue);
+  }
+}
+function maybeFreeze(scope, value, deep = false) {
+  if (!scope.parent_ && scope.immer_.autoFreeze_ && scope.canAutoFreeze_) {
+    freeze(value, deep);
+  }
+}
+
+// src/core/proxy.ts
+function createProxyProxy(base, parent) {
+  const isArray = Array.isArray(base);
+  const state = {
+    type_: isArray ? 1 /* Array */ : 0 /* Object */,
+    // Track which produce call this is associated with.
+    scope_: parent ? parent.scope_ : getCurrentScope(),
+    // True for both shallow and deep changes.
+    modified_: false,
+    // Used during finalization.
+    finalized_: false,
+    // Track which properties have been assigned (true) or deleted (false).
+    assigned_: {},
+    // The parent draft state.
+    parent_: parent,
+    // The base state.
+    base_: base,
+    // The base proxy.
+    draft_: null,
+    // set below
+    // The base copy with any updated values.
+    copy_: null,
+    // Called by the `produce` function.
+    revoke_: null,
+    isManual_: false
+  };
+  let target = state;
+  let traps = objectTraps;
+  if (isArray) {
+    target = [state];
+    traps = arrayTraps;
+  }
+  const { revoke, proxy } = Proxy.revocable(target, traps);
+  state.draft_ = proxy;
+  state.revoke_ = revoke;
+  return proxy;
+}
+var objectTraps = {
+  get(state, prop) {
+    if (prop === DRAFT_STATE)
+      return state;
+    const source = latest(state);
+    if (!has(source, prop)) {
+      return readPropFromProto(state, source, prop);
+    }
+    const value = source[prop];
+    if (state.finalized_ || !isDraftable(value)) {
+      return value;
+    }
+    if (value === peek(state.base_, prop)) {
+      prepareCopy(state);
+      return state.copy_[prop] = createProxy(value, state);
+    }
+    return value;
+  },
+  has(state, prop) {
+    return prop in latest(state);
+  },
+  ownKeys(state) {
+    return Reflect.ownKeys(latest(state));
+  },
+  set(state, prop, value) {
+    const desc = getDescriptorFromProto(latest(state), prop);
+    if (desc?.set) {
+      desc.set.call(state.draft_, value);
+      return true;
+    }
+    if (!state.modified_) {
+      const current2 = peek(latest(state), prop);
+      const currentState = current2?.[DRAFT_STATE];
+      if (currentState && currentState.base_ === value) {
+        state.copy_[prop] = value;
+        state.assigned_[prop] = false;
+        return true;
+      }
+      if (is(value, current2) && (value !== void 0 || has(state.base_, prop)))
+        return true;
+      prepareCopy(state);
+      markChanged(state);
+    }
+    if (state.copy_[prop] === value && // special case: handle new props with value 'undefined'
+    (value !== void 0 || prop in state.copy_) || // special case: NaN
+    Number.isNaN(value) && Number.isNaN(state.copy_[prop]))
+      return true;
+    state.copy_[prop] = value;
+    state.assigned_[prop] = true;
+    return true;
+  },
+  deleteProperty(state, prop) {
+    if (peek(state.base_, prop) !== void 0 || prop in state.base_) {
+      state.assigned_[prop] = false;
+      prepareCopy(state);
+      markChanged(state);
+    } else {
+      delete state.assigned_[prop];
+    }
+    if (state.copy_) {
+      delete state.copy_[prop];
+    }
+    return true;
+  },
+  // Note: We never coerce `desc.value` into an Immer draft, because we can't make
+  // the same guarantee in ES5 mode.
+  getOwnPropertyDescriptor(state, prop) {
+    const owner = latest(state);
+    const desc = Reflect.getOwnPropertyDescriptor(owner, prop);
+    if (!desc)
+      return desc;
+    return {
+      writable: true,
+      configurable: state.type_ !== 1 /* Array */ || prop !== "length",
+      enumerable: desc.enumerable,
+      value: owner[prop]
+    };
+  },
+  defineProperty() {
+    die(11);
+  },
+  getPrototypeOf(state) {
+    return getPrototypeOf(state.base_);
+  },
+  setPrototypeOf() {
+    die(12);
+  }
+};
+var arrayTraps = {};
+each(objectTraps, (key, fn) => {
+  arrayTraps[key] = function() {
+    arguments[0] = arguments[0][0];
+    return fn.apply(this, arguments);
+  };
+});
+arrayTraps.deleteProperty = function(state, prop) {
+  if ( true && isNaN(parseInt(prop)))
+    die(13);
+  return arrayTraps.set.call(this, state, prop, void 0);
+};
+arrayTraps.set = function(state, prop, value) {
+  if ( true && prop !== "length" && isNaN(parseInt(prop)))
+    die(14);
+  return objectTraps.set.call(this, state[0], prop, value, state[0]);
+};
+function peek(draft, prop) {
+  const state = draft[DRAFT_STATE];
+  const source = state ? latest(state) : draft;
+  return source[prop];
+}
+function readPropFromProto(state, source, prop) {
+  const desc = getDescriptorFromProto(source, prop);
+  return desc ? `value` in desc ? desc.value : (
+    // This is a very special case, if the prop is a getter defined by the
+    // prototype, we should invoke it with the draft as context!
+    desc.get?.call(state.draft_)
+  ) : void 0;
+}
+function getDescriptorFromProto(source, prop) {
+  if (!(prop in source))
+    return void 0;
+  let proto = getPrototypeOf(source);
+  while (proto) {
+    const desc = Object.getOwnPropertyDescriptor(proto, prop);
+    if (desc)
+      return desc;
+    proto = getPrototypeOf(proto);
+  }
+  return void 0;
+}
+function markChanged(state) {
+  if (!state.modified_) {
+    state.modified_ = true;
+    if (state.parent_) {
+      markChanged(state.parent_);
+    }
+  }
+}
+function prepareCopy(state) {
+  if (!state.copy_) {
+    state.copy_ = shallowCopy(
+      state.base_,
+      state.scope_.immer_.useStrictShallowCopy_
+    );
+  }
+}
+
+// src/core/immerClass.ts
+var Immer2 = class {
+  constructor(config) {
+    this.autoFreeze_ = true;
+    this.useStrictShallowCopy_ = false;
+    /**
+     * The `produce` function takes a value and a "recipe function" (whose
+     * return value often depends on the base state). The recipe function is
+     * free to mutate its first argument however it wants. All mutations are
+     * only ever applied to a __copy__ of the base state.
+     *
+     * Pass only a function to create a "curried producer" which relieves you
+     * from passing the recipe function every time.
+     *
+     * Only plain objects and arrays are made mutable. All other objects are
+     * considered uncopyable.
+     *
+     * Note: This function is __bound__ to its `Immer` instance.
+     *
+     * @param {any} base - the initial state
+     * @param {Function} recipe - function that receives a proxy of the base state as first argument and which can be freely modified
+     * @param {Function} patchListener - optional function that will be called with all the patches produced here
+     * @returns {any} a new state, or the initial state if nothing was modified
+     */
+    this.produce = (base, recipe, patchListener) => {
+      if (typeof base === "function" && typeof recipe !== "function") {
+        const defaultBase = recipe;
+        recipe = base;
+        const self = this;
+        return function curriedProduce(base2 = defaultBase, ...args) {
+          return self.produce(base2, (draft) => recipe.call(this, draft, ...args));
+        };
+      }
+      if (typeof recipe !== "function")
+        die(6);
+      if (patchListener !== void 0 && typeof patchListener !== "function")
+        die(7);
+      let result;
+      if (isDraftable(base)) {
+        const scope = enterScope(this);
+        const proxy = createProxy(base, void 0);
+        let hasError = true;
+        try {
+          result = recipe(proxy);
+          hasError = false;
+        } finally {
+          if (hasError)
+            revokeScope(scope);
+          else
+            leaveScope(scope);
+        }
+        usePatchesInScope(scope, patchListener);
+        return processResult(result, scope);
+      } else if (!base || typeof base !== "object") {
+        result = recipe(base);
+        if (result === void 0)
+          result = base;
+        if (result === NOTHING)
+          result = void 0;
+        if (this.autoFreeze_)
+          freeze(result, true);
+        if (patchListener) {
+          const p = [];
+          const ip = [];
+          getPlugin("Patches").generateReplacementPatches_(base, result, p, ip);
+          patchListener(p, ip);
+        }
+        return result;
+      } else
+        die(1, base);
+    };
+    this.produceWithPatches = (base, recipe) => {
+      if (typeof base === "function") {
+        return (state, ...args) => this.produceWithPatches(state, (draft) => base(draft, ...args));
+      }
+      let patches, inversePatches;
+      const result = this.produce(base, recipe, (p, ip) => {
+        patches = p;
+        inversePatches = ip;
+      });
+      return [result, patches, inversePatches];
+    };
+    if (typeof config?.autoFreeze === "boolean")
+      this.setAutoFreeze(config.autoFreeze);
+    if (typeof config?.useStrictShallowCopy === "boolean")
+      this.setUseStrictShallowCopy(config.useStrictShallowCopy);
+  }
+  createDraft(base) {
+    if (!isDraftable(base))
+      die(8);
+    if (isDraft(base))
+      base = current(base);
+    const scope = enterScope(this);
+    const proxy = createProxy(base, void 0);
+    proxy[DRAFT_STATE].isManual_ = true;
+    leaveScope(scope);
+    return proxy;
+  }
+  finishDraft(draft, patchListener) {
+    const state = draft && draft[DRAFT_STATE];
+    if (!state || !state.isManual_)
+      die(9);
+    const { scope_: scope } = state;
+    usePatchesInScope(scope, patchListener);
+    return processResult(void 0, scope);
+  }
+  /**
+   * Pass true to automatically freeze all copies created by Immer.
+   *
+   * By default, auto-freezing is enabled.
+   */
+  setAutoFreeze(value) {
+    this.autoFreeze_ = value;
+  }
+  /**
+   * Pass true to enable strict shallow copy.
+   *
+   * By default, immer does not copy the object descriptors such as getter, setter and non-enumrable properties.
+   */
+  setUseStrictShallowCopy(value) {
+    this.useStrictShallowCopy_ = value;
+  }
+  applyPatches(base, patches) {
+    let i;
+    for (i = patches.length - 1; i >= 0; i--) {
+      const patch = patches[i];
+      if (patch.path.length === 0 && patch.op === "replace") {
+        base = patch.value;
+        break;
+      }
+    }
+    if (i > -1) {
+      patches = patches.slice(i + 1);
+    }
+    const applyPatchesImpl = getPlugin("Patches").applyPatches_;
+    if (isDraft(base)) {
+      return applyPatchesImpl(base, patches);
+    }
+    return this.produce(
+      base,
+      (draft) => applyPatchesImpl(draft, patches)
+    );
+  }
+};
+function createProxy(value, parent) {
+  const draft = isMap(value) ? getPlugin("MapSet").proxyMap_(value, parent) : isSet(value) ? getPlugin("MapSet").proxySet_(value, parent) : createProxyProxy(value, parent);
+  const scope = parent ? parent.scope_ : getCurrentScope();
+  scope.drafts_.push(draft);
+  return draft;
+}
+
+// src/core/current.ts
+function current(value) {
+  if (!isDraft(value))
+    die(10, value);
+  return currentImpl(value);
+}
+function currentImpl(value) {
+  if (!isDraftable(value) || isFrozen(value))
+    return value;
+  const state = value[DRAFT_STATE];
+  let copy;
+  if (state) {
+    if (!state.modified_)
+      return state.base_;
+    state.finalized_ = true;
+    copy = shallowCopy(value, state.scope_.immer_.useStrictShallowCopy_);
+  } else {
+    copy = shallowCopy(value, true);
+  }
+  each(copy, (key, childValue) => {
+    set(copy, key, currentImpl(childValue));
+  });
+  if (state) {
+    state.finalized_ = false;
+  }
+  return copy;
+}
+
+// src/plugins/patches.ts
+function enablePatches() {
+  const errorOffset = 16;
+  if (true) {
+    errors.push(
+      'Sets cannot have "replace" patches.',
+      function(op) {
+        return "Unsupported patch operation: " + op;
+      },
+      function(path) {
+        return "Cannot apply patch, path doesn't resolve: " + path;
+      },
+      "Patching reserved attributes like __proto__, prototype and constructor is not allowed"
+    );
+  }
+  const REPLACE = "replace";
+  const ADD = "add";
+  const REMOVE = "remove";
+  function generatePatches_(state, basePath, patches, inversePatches) {
+    switch (state.type_) {
+      case 0 /* Object */:
+      case 2 /* Map */:
+        return generatePatchesFromAssigned(
+          state,
+          basePath,
+          patches,
+          inversePatches
+        );
+      case 1 /* Array */:
+        return generateArrayPatches(state, basePath, patches, inversePatches);
+      case 3 /* Set */:
+        return generateSetPatches(
+          state,
+          basePath,
+          patches,
+          inversePatches
+        );
+    }
+  }
+  function generateArrayPatches(state, basePath, patches, inversePatches) {
+    let { base_, assigned_ } = state;
+    let copy_ = state.copy_;
+    if (copy_.length < base_.length) {
+      ;
+      [base_, copy_] = [copy_, base_];
+      [patches, inversePatches] = [inversePatches, patches];
+    }
+    for (let i = 0; i < base_.length; i++) {
+      if (assigned_[i] && copy_[i] !== base_[i]) {
+        const path = basePath.concat([i]);
+        patches.push({
+          op: REPLACE,
+          path,
+          // Need to maybe clone it, as it can in fact be the original value
+          // due to the base/copy inversion at the start of this function
+          value: clonePatchValueIfNeeded(copy_[i])
+        });
+        inversePatches.push({
+          op: REPLACE,
+          path,
+          value: clonePatchValueIfNeeded(base_[i])
+        });
+      }
+    }
+    for (let i = base_.length; i < copy_.length; i++) {
+      const path = basePath.concat([i]);
+      patches.push({
+        op: ADD,
+        path,
+        // Need to maybe clone it, as it can in fact be the original value
+        // due to the base/copy inversion at the start of this function
+        value: clonePatchValueIfNeeded(copy_[i])
+      });
+    }
+    for (let i = copy_.length - 1; base_.length <= i; --i) {
+      const path = basePath.concat([i]);
+      inversePatches.push({
+        op: REMOVE,
+        path
+      });
+    }
+  }
+  function generatePatchesFromAssigned(state, basePath, patches, inversePatches) {
+    const { base_, copy_ } = state;
+    each(state.assigned_, (key, assignedValue) => {
+      const origValue = get(base_, key);
+      const value = get(copy_, key);
+      const op = !assignedValue ? REMOVE : has(base_, key) ? REPLACE : ADD;
+      if (origValue === value && op === REPLACE)
+        return;
+      const path = basePath.concat(key);
+      patches.push(op === REMOVE ? { op, path } : { op, path, value });
+      inversePatches.push(
+        op === ADD ? { op: REMOVE, path } : op === REMOVE ? { op: ADD, path, value: clonePatchValueIfNeeded(origValue) } : { op: REPLACE, path, value: clonePatchValueIfNeeded(origValue) }
+      );
+    });
+  }
+  function generateSetPatches(state, basePath, patches, inversePatches) {
+    let { base_, copy_ } = state;
+    let i = 0;
+    base_.forEach((value) => {
+      if (!copy_.has(value)) {
+        const path = basePath.concat([i]);
+        patches.push({
+          op: REMOVE,
+          path,
+          value
+        });
+        inversePatches.unshift({
+          op: ADD,
+          path,
+          value
+        });
+      }
+      i++;
+    });
+    i = 0;
+    copy_.forEach((value) => {
+      if (!base_.has(value)) {
+        const path = basePath.concat([i]);
+        patches.push({
+          op: ADD,
+          path,
+          value
+        });
+        inversePatches.unshift({
+          op: REMOVE,
+          path,
+          value
+        });
+      }
+      i++;
+    });
+  }
+  function generateReplacementPatches_(baseValue, replacement, patches, inversePatches) {
+    patches.push({
+      op: REPLACE,
+      path: [],
+      value: replacement === NOTHING ? void 0 : replacement
+    });
+    inversePatches.push({
+      op: REPLACE,
+      path: [],
+      value: baseValue
+    });
+  }
+  function applyPatches_(draft, patches) {
+    patches.forEach((patch) => {
+      const { path, op } = patch;
+      let base = draft;
+      for (let i = 0; i < path.length - 1; i++) {
+        const parentType = getArchtype(base);
+        let p = path[i];
+        if (typeof p !== "string" && typeof p !== "number") {
+          p = "" + p;
+        }
+        if ((parentType === 0 /* Object */ || parentType === 1 /* Array */) && (p === "__proto__" || p === "constructor"))
+          die(errorOffset + 3);
+        if (typeof base === "function" && p === "prototype")
+          die(errorOffset + 3);
+        base = get(base, p);
+        if (typeof base !== "object")
+          die(errorOffset + 2, path.join("/"));
+      }
+      const type = getArchtype(base);
+      const value = deepClonePatchValue(patch.value);
+      const key = path[path.length - 1];
+      switch (op) {
+        case REPLACE:
+          switch (type) {
+            case 2 /* Map */:
+              return base.set(key, value);
+            case 3 /* Set */:
+              die(errorOffset);
+            default:
+              return base[key] = value;
+          }
+        case ADD:
+          switch (type) {
+            case 1 /* Array */:
+              return key === "-" ? base.push(value) : base.splice(key, 0, value);
+            case 2 /* Map */:
+              return base.set(key, value);
+            case 3 /* Set */:
+              return base.add(value);
+            default:
+              return base[key] = value;
+          }
+        case REMOVE:
+          switch (type) {
+            case 1 /* Array */:
+              return base.splice(key, 1);
+            case 2 /* Map */:
+              return base.delete(key);
+            case 3 /* Set */:
+              return base.delete(patch.value);
+            default:
+              return delete base[key];
+          }
+        default:
+          die(errorOffset + 1, op);
+      }
+    });
+    return draft;
+  }
+  function deepClonePatchValue(obj) {
+    if (!isDraftable(obj))
+      return obj;
+    if (Array.isArray(obj))
+      return obj.map(deepClonePatchValue);
+    if (isMap(obj))
+      return new Map(
+        Array.from(obj.entries()).map(([k, v]) => [k, deepClonePatchValue(v)])
+      );
+    if (isSet(obj))
+      return new Set(Array.from(obj).map(deepClonePatchValue));
+    const cloned = Object.create(getPrototypeOf(obj));
+    for (const key in obj)
+      cloned[key] = deepClonePatchValue(obj[key]);
+    if (has(obj, DRAFTABLE))
+      cloned[DRAFTABLE] = obj[DRAFTABLE];
+    return cloned;
+  }
+  function clonePatchValueIfNeeded(obj) {
+    if (isDraft(obj)) {
+      return deepClonePatchValue(obj);
+    } else
+      return obj;
+  }
+  loadPlugin("Patches", {
+    applyPatches_,
+    generatePatches_,
+    generateReplacementPatches_
+  });
+}
+
+// src/plugins/mapset.ts
+function enableMapSet() {
+  class DraftMap extends Map {
+    constructor(target, parent) {
+      super();
+      this[DRAFT_STATE] = {
+        type_: 2 /* Map */,
+        parent_: parent,
+        scope_: parent ? parent.scope_ : getCurrentScope(),
+        modified_: false,
+        finalized_: false,
+        copy_: void 0,
+        assigned_: void 0,
+        base_: target,
+        draft_: this,
+        isManual_: false,
+        revoked_: false
+      };
+    }
+    get size() {
+      return latest(this[DRAFT_STATE]).size;
+    }
+    has(key) {
+      return latest(this[DRAFT_STATE]).has(key);
+    }
+    set(key, value) {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (!latest(state).has(key) || latest(state).get(key) !== value) {
+        prepareMapCopy(state);
+        markChanged(state);
+        state.assigned_.set(key, true);
+        state.copy_.set(key, value);
+        state.assigned_.set(key, true);
+      }
+      return this;
+    }
+    delete(key) {
+      if (!this.has(key)) {
+        return false;
+      }
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      prepareMapCopy(state);
+      markChanged(state);
+      if (state.base_.has(key)) {
+        state.assigned_.set(key, false);
+      } else {
+        state.assigned_.delete(key);
+      }
+      state.copy_.delete(key);
+      return true;
+    }
+    clear() {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (latest(state).size) {
+        prepareMapCopy(state);
+        markChanged(state);
+        state.assigned_ = /* @__PURE__ */ new Map();
+        each(state.base_, (key) => {
+          state.assigned_.set(key, false);
+        });
+        state.copy_.clear();
+      }
+    }
+    forEach(cb, thisArg) {
+      const state = this[DRAFT_STATE];
+      latest(state).forEach((_value, key, _map) => {
+        cb.call(thisArg, this.get(key), key, this);
+      });
+    }
+    get(key) {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      const value = latest(state).get(key);
+      if (state.finalized_ || !isDraftable(value)) {
+        return value;
+      }
+      if (value !== state.base_.get(key)) {
+        return value;
+      }
+      const draft = createProxy(value, state);
+      prepareMapCopy(state);
+      state.copy_.set(key, draft);
+      return draft;
+    }
+    keys() {
+      return latest(this[DRAFT_STATE]).keys();
+    }
+    values() {
+      const iterator = this.keys();
+      return {
+        [Symbol.iterator]: () => this.values(),
+        next: () => {
+          const r = iterator.next();
+          if (r.done)
+            return r;
+          const value = this.get(r.value);
+          return {
+            done: false,
+            value
+          };
+        }
+      };
+    }
+    entries() {
+      const iterator = this.keys();
+      return {
+        [Symbol.iterator]: () => this.entries(),
+        next: () => {
+          const r = iterator.next();
+          if (r.done)
+            return r;
+          const value = this.get(r.value);
+          return {
+            done: false,
+            value: [r.value, value]
+          };
+        }
+      };
+    }
+    [(DRAFT_STATE, Symbol.iterator)]() {
+      return this.entries();
+    }
+  }
+  function proxyMap_(target, parent) {
+    return new DraftMap(target, parent);
+  }
+  function prepareMapCopy(state) {
+    if (!state.copy_) {
+      state.assigned_ = /* @__PURE__ */ new Map();
+      state.copy_ = new Map(state.base_);
+    }
+  }
+  class DraftSet extends Set {
+    constructor(target, parent) {
+      super();
+      this[DRAFT_STATE] = {
+        type_: 3 /* Set */,
+        parent_: parent,
+        scope_: parent ? parent.scope_ : getCurrentScope(),
+        modified_: false,
+        finalized_: false,
+        copy_: void 0,
+        base_: target,
+        draft_: this,
+        drafts_: /* @__PURE__ */ new Map(),
+        revoked_: false,
+        isManual_: false
+      };
+    }
+    get size() {
+      return latest(this[DRAFT_STATE]).size;
+    }
+    has(value) {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (!state.copy_) {
+        return state.base_.has(value);
+      }
+      if (state.copy_.has(value))
+        return true;
+      if (state.drafts_.has(value) && state.copy_.has(state.drafts_.get(value)))
+        return true;
+      return false;
+    }
+    add(value) {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (!this.has(value)) {
+        prepareSetCopy(state);
+        markChanged(state);
+        state.copy_.add(value);
+      }
+      return this;
+    }
+    delete(value) {
+      if (!this.has(value)) {
+        return false;
+      }
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      prepareSetCopy(state);
+      markChanged(state);
+      return state.copy_.delete(value) || (state.drafts_.has(value) ? state.copy_.delete(state.drafts_.get(value)) : (
+        /* istanbul ignore next */
+        false
+      ));
+    }
+    clear() {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (latest(state).size) {
+        prepareSetCopy(state);
+        markChanged(state);
+        state.copy_.clear();
+      }
+    }
+    values() {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      prepareSetCopy(state);
+      return state.copy_.values();
+    }
+    entries() {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      prepareSetCopy(state);
+      return state.copy_.entries();
+    }
+    keys() {
+      return this.values();
+    }
+    [(DRAFT_STATE, Symbol.iterator)]() {
+      return this.values();
+    }
+    forEach(cb, thisArg) {
+      const iterator = this.values();
+      let result = iterator.next();
+      while (!result.done) {
+        cb.call(thisArg, result.value, result.value, this);
+        result = iterator.next();
+      }
+    }
+  }
+  function proxySet_(target, parent) {
+    return new DraftSet(target, parent);
+  }
+  function prepareSetCopy(state) {
+    if (!state.copy_) {
+      state.copy_ = /* @__PURE__ */ new Set();
+      state.base_.forEach((value) => {
+        if (isDraftable(value)) {
+          const draft = createProxy(value, state);
+          state.drafts_.set(value, draft);
+          state.copy_.add(draft);
+        } else {
+          state.copy_.add(value);
+        }
+      });
+    }
+  }
+  function assertUnrevoked(state) {
+    if (state.revoked_)
+      die(3, JSON.stringify(latest(state)));
+  }
+  loadPlugin("MapSet", { proxyMap_, proxySet_ });
+}
+
+// src/immer.ts
+var immer = new Immer2();
+var produce = immer.produce;
+var produceWithPatches = immer.produceWithPatches.bind(
+  immer
+);
+var setAutoFreeze = immer.setAutoFreeze.bind(immer);
+var setUseStrictShallowCopy = immer.setUseStrictShallowCopy.bind(immer);
+var applyPatches = immer.applyPatches.bind(immer);
+var createDraft = immer.createDraft.bind(immer);
+var finishDraft = immer.finishDraft.bind(immer);
+function castDraft(value) {
+  return value;
+}
+function castImmutable(value) {
+  return value;
+}
+
+//# sourceMappingURL=immer.mjs.map
+
+/***/ }),
+
+/***/ "./node_modules/numeric-quantity/dist/numeric-quantity.mjs":
+/*!*****************************************************************!*\
+  !*** ./node_modules/numeric-quantity/dist/numeric-quantity.mjs ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   defaultOptions: () => (/* binding */ defaultOptions),
+/* harmony export */   numericQuantity: () => (/* binding */ numericQuantity),
+/* harmony export */   numericRegex: () => (/* binding */ numericRegex),
+/* harmony export */   numericRegexWithTrailingInvalid: () => (/* binding */ numericRegexWithTrailingInvalid),
+/* harmony export */   parseRomanNumerals: () => (/* binding */ parseRomanNumerals),
+/* harmony export */   romanNumeralRegex: () => (/* binding */ romanNumeralRegex),
+/* harmony export */   romanNumeralUnicodeRegex: () => (/* binding */ romanNumeralUnicodeRegex),
+/* harmony export */   romanNumeralUnicodeToAsciiMap: () => (/* binding */ romanNumeralUnicodeToAsciiMap),
+/* harmony export */   romanNumeralValues: () => (/* binding */ romanNumeralValues),
+/* harmony export */   vulgarFractionToAsciiMap: () => (/* binding */ vulgarFractionToAsciiMap),
+/* harmony export */   vulgarFractionsRegex: () => (/* binding */ vulgarFractionsRegex)
+/* harmony export */ });
+// src/constants.ts
+var vulgarFractionToAsciiMap = {
+  "\xBC": "1/4",
+  "\xBD": "1/2",
+  "\xBE": "3/4",
+  "\u2150": "1/7",
+  "\u2151": "1/9",
+  "\u2152": "1/10",
+  "\u2153": "1/3",
+  "\u2154": "2/3",
+  "\u2155": "1/5",
+  "\u2156": "2/5",
+  "\u2157": "3/5",
+  "\u2158": "4/5",
+  "\u2159": "1/6",
+  "\u215A": "5/6",
+  "\u215B": "1/8",
+  "\u215C": "3/8",
+  "\u215D": "5/8",
+  "\u215E": "7/8",
+  "\u215F": "1/"
+};
+var numericRegex = /^(?=-?\s*\.\d|-?\s*\d)(-)?\s*((?:\d(?:[\d,_]*\d)?)*)(([eE][+-]?\d(?:[\d,_]*\d)?)?|\.\d(?:[\d,_]*\d)?([eE][+-]?\d(?:[\d,_]*\d)?)?|(\s+\d(?:[\d,_]*\d)?\s*)?\s*\/\s*\d(?:[\d,_]*\d)?)?$/;
+var numericRegexWithTrailingInvalid = new RegExp(
+  numericRegex.source.replace(/\$$/, "(?:\\s*[^\\.\\d\\/].*)?")
+);
+var vulgarFractionsRegex = new RegExp(
+  `(${Object.keys(vulgarFractionToAsciiMap).join("|")})`
+);
+var romanNumeralValues = {
+  MMM: 3e3,
+  MM: 2e3,
+  M: 1e3,
+  CM: 900,
+  DCCC: 800,
+  DCC: 700,
+  DC: 600,
+  D: 500,
+  CD: 400,
+  CCC: 300,
+  CC: 200,
+  C: 100,
+  XC: 90,
+  LXXX: 80,
+  LXX: 70,
+  LX: 60,
+  L: 50,
+  XL: 40,
+  XXX: 30,
+  XX: 20,
+  XII: 12,
+  // only here for tests; not used in practice
+  XI: 11,
+  // only here for tests; not used in practice
+  X: 10,
+  IX: 9,
+  VIII: 8,
+  VII: 7,
+  VI: 6,
+  V: 5,
+  IV: 4,
+  III: 3,
+  II: 2,
+  I: 1
+};
+var romanNumeralUnicodeToAsciiMap = {
+  // Roman Numeral One (U+2160)
+  "\u2160": "I",
+  // Roman Numeral Two (U+2161)
+  "\u2161": "II",
+  // Roman Numeral Three (U+2162)
+  "\u2162": "III",
+  // Roman Numeral Four (U+2163)
+  "\u2163": "IV",
+  // Roman Numeral Five (U+2164)
+  "\u2164": "V",
+  // Roman Numeral Six (U+2165)
+  "\u2165": "VI",
+  // Roman Numeral Seven (U+2166)
+  "\u2166": "VII",
+  // Roman Numeral Eight (U+2167)
+  "\u2167": "VIII",
+  // Roman Numeral Nine (U+2168)
+  "\u2168": "IX",
+  // Roman Numeral Ten (U+2169)
+  "\u2169": "X",
+  // Roman Numeral Eleven (U+216A)
+  "\u216A": "XI",
+  // Roman Numeral Twelve (U+216B)
+  "\u216B": "XII",
+  // Roman Numeral Fifty (U+216C)
+  "\u216C": "L",
+  // Roman Numeral One Hundred (U+216D)
+  "\u216D": "C",
+  // Roman Numeral Five Hundred (U+216E)
+  "\u216E": "D",
+  // Roman Numeral One Thousand (U+216F)
+  "\u216F": "M",
+  // Small Roman Numeral One (U+2170)
+  "\u2170": "I",
+  // Small Roman Numeral Two (U+2171)
+  "\u2171": "II",
+  // Small Roman Numeral Three (U+2172)
+  "\u2172": "III",
+  // Small Roman Numeral Four (U+2173)
+  "\u2173": "IV",
+  // Small Roman Numeral Five (U+2174)
+  "\u2174": "V",
+  // Small Roman Numeral Six (U+2175)
+  "\u2175": "VI",
+  // Small Roman Numeral Seven (U+2176)
+  "\u2176": "VII",
+  // Small Roman Numeral Eight (U+2177)
+  "\u2177": "VIII",
+  // Small Roman Numeral Nine (U+2178)
+  "\u2178": "IX",
+  // Small Roman Numeral Ten (U+2179)
+  "\u2179": "X",
+  // Small Roman Numeral Eleven (U+217A)
+  "\u217A": "XI",
+  // Small Roman Numeral Twelve (U+217B)
+  "\u217B": "XII",
+  // Small Roman Numeral Fifty (U+217C)
+  "\u217C": "L",
+  // Small Roman Numeral One Hundred (U+217D)
+  "\u217D": "C",
+  // Small Roman Numeral Five Hundred (U+217E)
+  "\u217E": "D",
+  // Small Roman Numeral One Thousand (U+217F)
+  "\u217F": "M"
+};
+var romanNumeralUnicodeRegex = new RegExp(
+  `(${Object.keys(romanNumeralUnicodeToAsciiMap).join("|")})`,
+  "gi"
+);
+var romanNumeralRegex = /^(?=[MDCLXVI])(M{0,3})(C[MD]|D?C{0,3})(X[CL]|L?X{0,3})(I[XV]|V?I{0,3})$/i;
+var defaultOptions = {
+  round: 3,
+  allowTrailingInvalid: false,
+  romanNumerals: false
+};
+
+// src/parseRomanNumerals.ts
+var parseRomanNumerals = (romanNumerals) => {
+  const normalized = `${romanNumerals}`.replace(
+    romanNumeralUnicodeRegex,
+    (_m, rn) => romanNumeralUnicodeToAsciiMap[rn]
+  ).toUpperCase();
+  const regexResult = romanNumeralRegex.exec(normalized);
+  if (!regexResult) {
+    return NaN;
+  }
+  const [, thousands, hundreds, tens, ones] = regexResult;
+  return (romanNumeralValues[thousands] ?? 0) + (romanNumeralValues[hundreds] ?? 0) + (romanNumeralValues[tens] ?? 0) + (romanNumeralValues[ones] ?? 0);
+};
+
+// src/numericQuantity.ts
+var spaceThenSlashRegex = /^\s*\//;
+var numericQuantity = (quantity, options = defaultOptions) => {
+  if (typeof quantity === "number" || typeof quantity === "bigint") {
+    return quantity;
+  }
+  let finalResult = NaN;
+  const quantityAsString = `${quantity}`.replace(
+    vulgarFractionsRegex,
+    (_m, vf) => ` ${vulgarFractionToAsciiMap[vf]}`
+  ).replace("\u2044", "/").trim();
+  if (quantityAsString.length === 0) {
+    return NaN;
+  }
+  const opts = {
+    ...defaultOptions,
+    ...options
+  };
+  const regexResult = (opts.allowTrailingInvalid ? numericRegexWithTrailingInvalid : numericRegex).exec(quantityAsString);
+  if (!regexResult) {
+    return opts.romanNumerals ? parseRomanNumerals(quantityAsString) : NaN;
+  }
+  const [, dash, ng1temp, ng2temp] = regexResult;
+  const numberGroup1 = ng1temp.replace(/[,_]/g, "");
+  const numberGroup2 = ng2temp == null ? void 0 : ng2temp.replace(/[,_]/g, "");
+  if (!numberGroup1 && numberGroup2 && numberGroup2.startsWith(".")) {
+    finalResult = 0;
+  } else {
+    finalResult = parseInt(numberGroup1);
+  }
+  if (!numberGroup2) {
+    return dash ? finalResult * -1 : finalResult;
+  }
+  const roundingFactor = opts.round === false ? NaN : parseFloat(`1e${Math.floor(Math.max(0, opts.round))}`);
+  if (numberGroup2.startsWith(".") || numberGroup2.startsWith("e") || numberGroup2.startsWith("E")) {
+    const decimalValue = parseFloat(`${finalResult}${numberGroup2}`);
+    finalResult = isNaN(roundingFactor) ? decimalValue : Math.round(decimalValue * roundingFactor) / roundingFactor;
+  } else if (spaceThenSlashRegex.test(numberGroup2)) {
+    const numerator = parseInt(numberGroup1);
+    const denominator = parseInt(numberGroup2.replace("/", ""));
+    finalResult = isNaN(roundingFactor) ? numerator / denominator : Math.round(numerator * roundingFactor / denominator) / roundingFactor;
+  } else {
+    const fractionArray = numberGroup2.split("/");
+    const [numerator, denominator] = fractionArray.map((v) => parseInt(v));
+    finalResult += isNaN(roundingFactor) ? numerator / denominator : Math.round(numerator * roundingFactor / denominator) / roundingFactor;
+  }
+  return dash ? finalResult * -1 : finalResult;
+};
+
+//# sourceMappingURL=numeric-quantity.mjs.map
+
+/***/ }),
+
+/***/ "./node_modules/react-querybuilder/dist/react-querybuilder.mjs":
+/*!*********************************************************************!*\
+  !*** ./node_modules/react-querybuilder/dist/react-querybuilder.mjs ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ActionElement: () => (/* binding */ ActionElement),
+/* harmony export */   DragHandle: () => (/* binding */ DragHandle),
+/* harmony export */   InlineCombinator: () => (/* binding */ InlineCombinator),
+/* harmony export */   LogType: () => (/* binding */ LogType),
+/* harmony export */   NotToggle: () => (/* binding */ NotToggle),
+/* harmony export */   QueryBuilder: () => (/* binding */ QueryBuilder),
+/* harmony export */   QueryBuilderContext: () => (/* binding */ QueryBuilderContext),
+/* harmony export */   QueryBuilderStateContext: () => (/* binding */ QueryBuilderStateContext),
+/* harmony export */   QueryBuilderStateProvider: () => (/* binding */ QueryBuilderStateProvider),
+/* harmony export */   Rule: () => (/* binding */ Rule),
+/* harmony export */   RuleComponents: () => (/* binding */ RuleComponents),
+/* harmony export */   RuleGroup: () => (/* binding */ RuleGroup),
+/* harmony export */   RuleGroupBodyComponents: () => (/* binding */ RuleGroupBodyComponents),
+/* harmony export */   RuleGroupHeaderComponents: () => (/* binding */ RuleGroupHeaderComponents),
+/* harmony export */   ShiftActions: () => (/* binding */ ShiftActions),
+/* harmony export */   TestID: () => (/* binding */ TestID),
+/* harmony export */   ValueEditor: () => (/* binding */ ValueEditor),
+/* harmony export */   ValueSelector: () => (/* binding */ ValueSelector),
+/* harmony export */   add: () => (/* binding */ add),
+/* harmony export */   convertFromIC: () => (/* binding */ convertFromIC),
+/* harmony export */   convertQuery: () => (/* binding */ convertQuery),
+/* harmony export */   convertToIC: () => (/* binding */ convertToIC),
+/* harmony export */   "default": () => (/* binding */ QueryBuilder),
+/* harmony export */   defaultCELValueProcessor: () => (/* binding */ defaultCELValueProcessor),
+/* harmony export */   defaultCombinators: () => (/* binding */ defaultCombinators),
+/* harmony export */   defaultCombinatorsExtended: () => (/* binding */ defaultCombinatorsExtended),
+/* harmony export */   defaultControlClassnames: () => (/* binding */ defaultControlClassnames),
+/* harmony export */   defaultControlElements: () => (/* binding */ defaultControlElements),
+/* harmony export */   defaultJoinChar: () => (/* binding */ defaultJoinChar),
+/* harmony export */   defaultMongoDBValueProcessor: () => (/* binding */ defaultMongoDBValueProcessor),
+/* harmony export */   defaultOperatorNegationMap: () => (/* binding */ defaultOperatorNegationMap),
+/* harmony export */   defaultOperators: () => (/* binding */ defaultOperators),
+/* harmony export */   defaultPlaceholderFieldGroupLabel: () => (/* binding */ defaultPlaceholderFieldGroupLabel),
+/* harmony export */   defaultPlaceholderFieldLabel: () => (/* binding */ defaultPlaceholderFieldLabel),
+/* harmony export */   defaultPlaceholderFieldName: () => (/* binding */ defaultPlaceholderFieldName),
+/* harmony export */   defaultPlaceholderLabel: () => (/* binding */ defaultPlaceholderLabel),
+/* harmony export */   defaultPlaceholderName: () => (/* binding */ defaultPlaceholderName),
+/* harmony export */   defaultPlaceholderOperatorGroupLabel: () => (/* binding */ defaultPlaceholderOperatorGroupLabel),
+/* harmony export */   defaultPlaceholderOperatorLabel: () => (/* binding */ defaultPlaceholderOperatorLabel),
+/* harmony export */   defaultPlaceholderOperatorName: () => (/* binding */ defaultPlaceholderOperatorName),
+/* harmony export */   defaultRuleProcessorCEL: () => (/* binding */ defaultRuleProcessorCEL),
+/* harmony export */   defaultRuleProcessorElasticSearch: () => (/* binding */ defaultRuleProcessorElasticSearch),
+/* harmony export */   defaultRuleProcessorJSONata: () => (/* binding */ defaultRuleProcessorJSONata),
+/* harmony export */   defaultRuleProcessorJsonLogic: () => (/* binding */ defaultRuleProcessorJsonLogic),
+/* harmony export */   defaultRuleProcessorMongoDB: () => (/* binding */ defaultRuleProcessorMongoDB),
+/* harmony export */   defaultRuleProcessorParameterized: () => (/* binding */ defaultRuleProcessorParameterized),
+/* harmony export */   defaultRuleProcessorSQL: () => (/* binding */ defaultRuleProcessorSQL),
+/* harmony export */   defaultRuleProcessorSpEL: () => (/* binding */ defaultRuleProcessorSpEL),
+/* harmony export */   defaultSpELValueProcessor: () => (/* binding */ defaultSpELValueProcessor),
+/* harmony export */   defaultTranslations: () => (/* binding */ defaultTranslations),
+/* harmony export */   defaultValidator: () => (/* binding */ defaultValidator),
+/* harmony export */   defaultValueProcessor: () => (/* binding */ defaultValueProcessor),
+/* harmony export */   defaultValueProcessorByRule: () => (/* binding */ defaultValueProcessorByRule),
+/* harmony export */   defaultValueProcessorCELByRule: () => (/* binding */ defaultValueProcessorCELByRule),
+/* harmony export */   defaultValueProcessorMongoDBByRule: () => (/* binding */ defaultValueProcessorMongoDBByRule),
+/* harmony export */   defaultValueProcessorSpELByRule: () => (/* binding */ defaultValueProcessorSpELByRule),
+/* harmony export */   filterFieldsByComparator: () => (/* binding */ filterFieldsByComparator),
+/* harmony export */   findPath: () => (/* binding */ findPath),
+/* harmony export */   formatQuery: () => (/* binding */ formatQuery),
+/* harmony export */   generateAccessibleDescription: () => (/* binding */ generateAccessibleDescription),
+/* harmony export */   generateID: () => (/* binding */ generateID),
+/* harmony export */   getCommonAncestorPath: () => (/* binding */ getCommonAncestorPath),
+/* harmony export */   getCompatContextProvider: () => (/* binding */ getCompatContextProvider),
+/* harmony export */   getFirstOption: () => (/* binding */ getFirstOption),
+/* harmony export */   getOption: () => (/* binding */ getOption),
+/* harmony export */   getParentPath: () => (/* binding */ getParentPath),
+/* harmony export */   getQuerySelectorById: () => (/* binding */ getQuerySelectorById),
+/* harmony export */   getValidationClassNames: () => (/* binding */ getValidationClassNames),
+/* harmony export */   getValueSourcesUtil: () => (/* binding */ getValueSourcesUtil),
+/* harmony export */   groupInvalidReasons: () => (/* binding */ groupInvalidReasons),
+/* harmony export */   insert: () => (/* binding */ insert),
+/* harmony export */   isAncestor: () => (/* binding */ isAncestor),
+/* harmony export */   isFlexibleOptionGroupArray: () => (/* binding */ isFlexibleOptionGroupArray),
+/* harmony export */   isFullOptionGroupArray: () => (/* binding */ isFullOptionGroupArray),
+/* harmony export */   isOptionGroupArray: () => (/* binding */ isOptionGroupArray),
+/* harmony export */   isPojo: () => (/* binding */ isPojo),
+/* harmony export */   isRuleGroup: () => (/* binding */ isRuleGroup),
+/* harmony export */   isRuleGroupType: () => (/* binding */ isRuleGroupType),
+/* harmony export */   isRuleGroupTypeIC: () => (/* binding */ isRuleGroupTypeIC),
+/* harmony export */   isRuleOrGroupValid: () => (/* binding */ isRuleOrGroupValid),
+/* harmony export */   isValidationResult: () => (/* binding */ isValidationResult),
+/* harmony export */   joinWith: () => (/* binding */ joinWith),
+/* harmony export */   jsonLogicAdditionalOperators: () => (/* binding */ jsonLogicAdditionalOperators),
+/* harmony export */   mergeClassnames: () => (/* binding */ mergeClassnames),
+/* harmony export */   mergeTranslation: () => (/* binding */ mergeTranslation),
+/* harmony export */   mergeTranslations: () => (/* binding */ mergeTranslations),
+/* harmony export */   messages: () => (/* binding */ messages),
+/* harmony export */   move: () => (/* binding */ move),
+/* harmony export */   nullFreeArray: () => (/* binding */ nullFreeArray),
+/* harmony export */   numericRegex: () => (/* binding */ numericRegex),
+/* harmony export */   objectEntries: () => (/* binding */ objectEntries),
+/* harmony export */   objectKeys: () => (/* binding */ objectKeys),
+/* harmony export */   parseNumber: () => (/* binding */ parseNumber),
+/* harmony export */   pathIsDisabled: () => (/* binding */ pathIsDisabled),
+/* harmony export */   pathsAreEqual: () => (/* binding */ pathsAreEqual),
+/* harmony export */   preferProp: () => (/* binding */ preferProp),
+/* harmony export */   prepareRule: () => (/* binding */ prepareRule),
+/* harmony export */   prepareRuleGroup: () => (/* binding */ prepareRuleGroup),
+/* harmony export */   prepareRuleOrGroup: () => (/* binding */ prepareRuleOrGroup),
+/* harmony export */   queryBuilderStore: () => (/* binding */ queryBuilderStore),
+/* harmony export */   regenerateID: () => (/* binding */ regenerateID),
+/* harmony export */   regenerateIDs: () => (/* binding */ regenerateIDs),
+/* harmony export */   remove: () => (/* binding */ remove),
+/* harmony export */   rootPath: () => (/* binding */ rootPath),
+/* harmony export */   splitBy: () => (/* binding */ splitBy),
+/* harmony export */   standardClassnames: () => (/* binding */ standardClassnames),
+/* harmony export */   toArray: () => (/* binding */ toArray),
+/* harmony export */   toFlatOptionArray: () => (/* binding */ toFlatOptionArray),
+/* harmony export */   toFullOption: () => (/* binding */ toFullOption),
+/* harmony export */   toFullOptionList: () => (/* binding */ toFullOptionList),
+/* harmony export */   toFullOptionMap: () => (/* binding */ toFullOptionMap),
+/* harmony export */   toOptions: () => (/* binding */ toOptions),
+/* harmony export */   transformQuery: () => (/* binding */ transformQuery),
+/* harmony export */   trimIfString: () => (/* binding */ trimIfString),
+/* harmony export */   uniqByIdentifier: () => (/* binding */ uniqByIdentifier),
+/* harmony export */   uniqByName: () => (/* binding */ uniqByName),
+/* harmony export */   uniqOptGroups: () => (/* binding */ uniqOptGroups),
+/* harmony export */   uniqOptList: () => (/* binding */ uniqOptList),
+/* harmony export */   update: () => (/* binding */ update),
+/* harmony export */   useControlledOrUncontrolled: () => (/* binding */ useControlledOrUncontrolled),
+/* harmony export */   useDeprecatedProps: () => (/* binding */ useDeprecatedProps),
+/* harmony export */   useMergedContext: () => (/* binding */ useMergedContext),
+/* harmony export */   usePreferAnyProp: () => (/* binding */ usePreferAnyProp),
+/* harmony export */   usePreferProp: () => (/* binding */ usePreferProp),
+/* harmony export */   usePrevious: () => (/* binding */ usePrevious),
+/* harmony export */   useQueryBuilder: () => (/* binding */ useQueryBuilder),
+/* harmony export */   useQueryBuilderQuery: () => (/* binding */ useQueryBuilderQuery),
+/* harmony export */   useQueryBuilderSchema: () => (/* binding */ useQueryBuilderSchema),
+/* harmony export */   useQueryBuilderSelector: () => (/* binding */ useQueryBuilderSelector),
+/* harmony export */   useQueryBuilderSetup: () => (/* binding */ useQueryBuilderSetup),
+/* harmony export */   useReactDndWarning: () => (/* binding */ useReactDndWarning),
+/* harmony export */   useRule: () => (/* binding */ useRule),
+/* harmony export */   useRuleGroup: () => (/* binding */ useRuleGroup),
+/* harmony export */   useSelectElementChangeHandler: () => (/* binding */ useSelectElementChangeHandler),
+/* harmony export */   useStopEventPropagation: () => (/* binding */ useStopEventPropagation),
+/* harmony export */   useValueEditor: () => (/* binding */ useValueEditor),
+/* harmony export */   useValueSelector: () => (/* binding */ useValueSelector)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/dist/react-redux.mjs");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
+/* harmony import */ var numeric_quantity__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! numeric-quantity */ "./node_modules/numeric-quantity/dist/numeric-quantity.mjs");
+/* harmony import */ var immer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! immer */ "./node_modules/immer/dist/immer.mjs");
+// src/components/ActionElement.tsx
+
+var ActionElement = (props) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+  "button",
+  {
+    type: "button",
+    "data-testid": props.testID,
+    disabled: props.disabled && !props.disabledTranslation,
+    className: props.className,
+    title: props.disabledTranslation && props.disabled ? props.disabledTranslation.title : props.title,
+    onClick: (e) => props.handleOnClick(e)
+  },
+  props.disabledTranslation && props.disabled ? props.disabledTranslation.label : props.label
+);
+
+// src/components/DragHandle.tsx
+
+
+var DragHandle = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)((props, dragRef) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { "data-testid": props.testID, ref: dragRef, className: props.className, title: props.title }, props.label));
+
+// src/components/InlineCombinator.tsx
+
+
+// src/defaults.ts
+var defaultPlaceholderName = "~";
+var defaultPlaceholderLabel = "------";
+var defaultPlaceholderFieldName = defaultPlaceholderName;
+var defaultPlaceholderFieldLabel = defaultPlaceholderLabel;
+var defaultPlaceholderFieldGroupLabel = defaultPlaceholderLabel;
+var defaultPlaceholderOperatorName = defaultPlaceholderName;
+var defaultPlaceholderOperatorLabel = defaultPlaceholderLabel;
+var defaultPlaceholderOperatorGroupLabel = defaultPlaceholderLabel;
+var defaultJoinChar = ",";
+var defaultTranslations = {
+  fields: {
+    title: "Fields",
+    placeholderName: defaultPlaceholderFieldName,
+    placeholderLabel: defaultPlaceholderFieldLabel,
+    placeholderGroupLabel: defaultPlaceholderFieldGroupLabel
+  },
+  operators: {
+    title: "Operators",
+    placeholderName: defaultPlaceholderOperatorName,
+    placeholderLabel: defaultPlaceholderOperatorLabel,
+    placeholderGroupLabel: defaultPlaceholderOperatorGroupLabel
+  },
+  value: {
+    title: "Value"
+  },
+  removeRule: {
+    label: "\u2A2F",
+    title: "Remove rule"
+  },
+  removeGroup: {
+    label: "\u2A2F",
+    title: "Remove group"
+  },
+  addRule: {
+    label: "+ Rule",
+    title: "Add rule"
+  },
+  addGroup: {
+    label: "+ Group",
+    title: "Add group"
+  },
+  combinators: {
+    title: "Combinators"
+  },
+  notToggle: {
+    label: "Not",
+    title: "Invert this group"
+  },
+  cloneRule: {
+    label: "\u29C9",
+    title: "Clone rule"
+  },
+  cloneRuleGroup: {
+    label: "\u29C9",
+    title: "Clone group"
+  },
+  shiftActionUp: {
+    label: "\u02C4",
+    title: "Shift up"
+  },
+  shiftActionDown: {
+    label: "\u02C5",
+    title: "Shift down"
+  },
+  dragHandle: {
+    label: "\u205E\u205E",
+    title: "Drag handle"
+  },
+  lockRule: {
+    label: "\u{1F513}",
+    title: "Lock rule"
+  },
+  lockGroup: {
+    label: "\u{1F513}",
+    title: "Lock group"
+  },
+  lockRuleDisabled: {
+    label: "\u{1F512}",
+    title: "Unlock rule"
+  },
+  lockGroupDisabled: {
+    label: "\u{1F512}",
+    title: "Unlock group"
+  },
+  valueSourceSelector: {
+    title: "Value source"
+  }
+};
+var defaultOperators = [
+  { name: "=", value: "=", label: "=" },
+  { name: "!=", value: "!=", label: "!=" },
+  { name: "<", value: "<", label: "<" },
+  { name: ">", value: ">", label: ">" },
+  { name: "<=", value: "<=", label: "<=" },
+  { name: ">=", value: ">=", label: ">=" },
+  { name: "contains", value: "contains", label: "contains" },
+  { name: "beginsWith", value: "beginsWith", label: "begins with" },
+  { name: "endsWith", value: "endsWith", label: "ends with" },
+  { name: "doesNotContain", value: "doesNotContain", label: "does not contain" },
+  { name: "doesNotBeginWith", value: "doesNotBeginWith", label: "does not begin with" },
+  { name: "doesNotEndWith", value: "doesNotEndWith", label: "does not end with" },
+  { name: "null", value: "null", label: "is null" },
+  { name: "notNull", value: "notNull", label: "is not null" },
+  { name: "in", value: "in", label: "in" },
+  { name: "notIn", value: "notIn", label: "not in" },
+  { name: "between", value: "between", label: "between" },
+  { name: "notBetween", value: "notBetween", label: "not between" }
+];
+var defaultOperatorNegationMap = {
+  "=": "!=",
+  "!=": "=",
+  "<": ">=",
+  "<=": ">",
+  ">": "<=",
+  ">=": "<",
+  beginsWith: "doesNotBeginWith",
+  doesNotBeginWith: "beginsWith",
+  endsWith: "doesNotEndWith",
+  doesNotEndWith: "endsWith",
+  contains: "doesNotContain",
+  doesNotContain: "contains",
+  between: "notBetween",
+  notBetween: "between",
+  in: "notIn",
+  notIn: "in",
+  notNull: "null",
+  null: "notNull"
+};
+var defaultCombinators = [
+  { name: "and", value: "and", label: "AND" },
+  { name: "or", value: "or", label: "OR" }
+];
+var defaultCombinatorsExtended = [
+  ...defaultCombinators,
+  { name: "xor", value: "xor", label: "XOR" }
+];
+var standardClassnames = {
+  queryBuilder: "queryBuilder",
+  ruleGroup: "ruleGroup",
+  header: "ruleGroup-header",
+  body: "ruleGroup-body",
+  combinators: "ruleGroup-combinators",
+  addRule: "ruleGroup-addRule",
+  addGroup: "ruleGroup-addGroup",
+  cloneRule: "rule-cloneRule",
+  cloneGroup: "ruleGroup-cloneGroup",
+  removeGroup: "ruleGroup-remove",
+  notToggle: "ruleGroup-notToggle",
+  rule: "rule",
+  fields: "rule-fields",
+  operators: "rule-operators",
+  value: "rule-value",
+  removeRule: "rule-remove",
+  betweenRules: "betweenRules",
+  valid: "queryBuilder-valid",
+  invalid: "queryBuilder-invalid",
+  shiftActions: "shiftActions",
+  dndDragging: "dndDragging",
+  dndOver: "dndOver",
+  dndCopy: "dndCopy",
+  dragHandle: "queryBuilder-dragHandle",
+  disabled: "queryBuilder-disabled",
+  lockRule: "rule-lock",
+  lockGroup: "ruleGroup-lock",
+  valueSource: "rule-valueSource",
+  valueListItem: "rule-value-list-item",
+  branches: "queryBuilder-branches"
+};
+var defaultControlClassnames = {
+  queryBuilder: "",
+  ruleGroup: "",
+  header: "",
+  body: "",
+  combinators: "",
+  addRule: "",
+  addGroup: "",
+  cloneRule: "",
+  cloneGroup: "",
+  removeGroup: "",
+  notToggle: "",
+  rule: "",
+  fields: "",
+  operators: "",
+  value: "",
+  removeRule: "",
+  shiftActions: "",
+  dragHandle: "",
+  lockRule: "",
+  lockGroup: "",
+  valueSource: "",
+  actionElement: "",
+  valueSelector: "",
+  betweenRules: "",
+  valid: "",
+  invalid: "",
+  dndDragging: "",
+  dndOver: "",
+  dndCopy: "",
+  disabled: "",
+  valueListItem: "",
+  branches: ""
+};
+var groupInvalidReasons = {
+  empty: "empty",
+  invalidCombinator: "invalid combinator",
+  invalidIndependentCombinators: "invalid independent combinators"
+};
+var TestID = {
+  rule: "rule",
+  ruleGroup: "rule-group",
+  inlineCombinator: "inline-combinator",
+  addGroup: "add-group",
+  removeGroup: "remove-group",
+  cloneGroup: "clone-group",
+  cloneRule: "clone-rule",
+  addRule: "add-rule",
+  removeRule: "remove-rule",
+  combinators: "combinators",
+  fields: "fields",
+  operators: "operators",
+  valueEditor: "value-editor",
+  notToggle: "not-toggle",
+  shiftActions: "shift-actions",
+  dragHandle: "drag-handle",
+  lockRule: "lock-rule",
+  lockGroup: "lock-group",
+  valueSourceSelector: "value-source-selector"
+};
+var LogType = {
+  parentPathDisabled: "action aborted: parent path disabled",
+  pathDisabled: "action aborted: path is disabled",
+  queryUpdate: "query updated",
+  onAddRuleFalse: "onAddRule callback returned false",
+  onAddGroupFalse: "onAddGroup callback returned false",
+  onMoveRuleFalse: "onMoveRule callback returned false",
+  onMoveGroupFalse: "onMoveGroup callback returned false",
+  onRemoveFalse: "onRemove callback returned false",
+  add: "rule or group added",
+  remove: "rule or group removed",
+  update: "rule or group updated",
+  move: "rule or group moved"
+};
+
+// src/utils/clsx.ts
+function toVal(mix) {
+  let k;
+  let y;
+  let str2 = "";
+  if (typeof mix === "string" || typeof mix === "number") {
+    str2 += mix;
+  } else if (typeof mix === "object") {
+    if (Array.isArray(mix)) {
+      const len = mix.length;
+      for (k = 0; k < len; k++) {
+        if (mix[k] && (y = toVal(mix[k]))) {
+          str2 && (str2 += " ");
+          str2 += y;
+        }
+      }
+    } else {
+      for (y in mix) {
+        if (mix[y]) {
+          str2 && (str2 += " ");
+          str2 += y;
+        }
+      }
+    }
+  }
+  return str2;
+}
+function clsx(...args) {
+  let i = 0;
+  let tmp;
+  let x;
+  let str2 = "";
+  const len = args.length;
+  for (; i < len; i++) {
+    if ((tmp = args[i]) && (x = toVal(tmp))) {
+      str2 && (str2 += " ");
+      str2 += x;
+    }
+  }
+  return str2;
+}
+var clsx_default = clsx;
+
+// src/components/InlineCombinator.tsx
+var InlineCombinator = (allProps) => {
+  const { component: CombinatorSelectorComponent, ...props } = allProps;
+  const className = clsx(
+    props.schema.suppressStandardClassnames || standardClassnames.betweenRules,
+    props.schema.classNames.betweenRules
+  );
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className, "data-testid": TestID.inlineCombinator }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(CombinatorSelectorComponent, { ...props, testID: TestID.combinators }));
+};
+
+// src/components/NotToggle.tsx
+
+var NotToggle = (props) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", { "data-testid": props.testID, className: props.className, title: props.title }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+  "input",
+  {
+    type: "checkbox",
+    onChange: (e) => props.handleOnChange(e.target.checked),
+    checked: !!props.checked,
+    disabled: props.disabled
+  }
+), props.label);
+
+// src/components/QueryBuilder.tsx
+
+
+
+// src/messages.ts
+var messages = {
+  errorInvalidIndependentCombinatorsProp: "QueryBuilder was rendered with a truthy independentCombinators prop. This prop is deprecated and unnecessary. Furthermore, the initial query/defaultQuery prop was of type RuleGroupType instead of type RuleGroupIC. More info: https://react-querybuilder.js.org/docs/components/querybuilder#independent-combinators",
+  errorUnnecessaryIndependentCombinatorsProp: "QueryBuilder was rendered with the deprecated and unnecessary independentCombinators prop. To use independent combinators, make sure the query/defaultQuery prop is of type RuleGroupIC when the component mounts. More info: https://react-querybuilder.js.org/docs/components/querybuilder#independent-combinators",
+  errorDeprecatedRuleGroupProps: "A custom RuleGroup component has rendered a standard RuleGroup component with deprecated props. The combinator, not, and rules props should not be used. Instead, the full group object should be passed as the ruleGroup prop.",
+  errorDeprecatedRuleProps: "A custom RuleGroup component has rendered a standard Rule component with deprecated props. The field, operator, value, and valueSource props should not be used. Instead, the full rule object should be passed as the rule prop.",
+  errorBothQueryDefaultQuery: "QueryBuilder was rendered with both query and defaultQuery props. QueryBuilder must be either controlled or uncontrolled (specify either the query prop, or the defaultQuery prop, but not both). Decide between using a controlled or uncontrolled query builder and remove one of these props. More info: https://reactjs.org/link/controlled-components",
+  errorUncontrolledToControlled: "QueryBuilder is changing from an uncontrolled component to be controlled. This is likely caused by the query changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled query builder for the lifetime of the component. More info: https://reactjs.org/link/controlled-components",
+  errorControlledToUncontrolled: "QueryBuilder is changing from a controlled component to be uncontrolled. This is likely caused by the query changing from defined to undefined, which should not happen. Decide between using a controlled or uncontrolled query builder for the lifetime of the component. More info: https://reactjs.org/link/controlled-components",
+  errorEnabledDndWithoutReactDnD: "QueryBuilder was rendered with the enableDragAndDrop prop set to true, but either react-dnd or react-dnd-html5-backend (or both) was not installed. To enable drag-and-drop functionality, install both packages and wrap QueryBuilder in QueryBuilderDnD from @react-querybuilder/dnd."
+};
+
+// src/redux/_internal.ts
+
+
+// src/redux/index.ts
+
+
+
+
+// src/redux/queriesSlice.ts
+
+var initialState = {};
+var queriesSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
+  name: "queries",
+  initialState,
+  reducers: {
+    setQueryState: (state, { payload: { qbId, query } }) => {
+      state[qbId] = query;
+    }
+  },
+  selectors: {
+    getQuerySelectorById: (state, qbId) => state[qbId]
+  }
+});
+
+// src/redux/warningsSlice.ts
+
+var initialState2 = {
+  [messages.errorInvalidIndependentCombinatorsProp]: false,
+  [messages.errorUnnecessaryIndependentCombinatorsProp]: false,
+  [messages.errorDeprecatedRuleGroupProps]: false,
+  [messages.errorDeprecatedRuleProps]: false,
+  [messages.errorBothQueryDefaultQuery]: false,
+  [messages.errorUncontrolledToControlled]: false,
+  [messages.errorControlledToUncontrolled]: false,
+  [messages.errorEnabledDndWithoutReactDnD]: false
+};
+var warningsSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
+  name: "warnings",
+  initialState: initialState2,
+  reducers: {
+    rqbWarn: (state, { payload }) => {
+      if (!state[payload]) {
+        console.error(payload);
+        state[payload] = true;
+      }
+    }
+  }
+});
+
+// src/redux/index.ts
+var preloadedState = {
+  queries: queriesSlice.getInitialState(),
+  warnings: warningsSlice.getInitialState()
+};
+var queryBuilderStore = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.configureStore)({
+  reducer: {
+    queries: queriesSlice.reducer,
+    warnings: warningsSlice.reducer
+  },
+  preloadedState,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    // Ignore non-serializable values in setQueryState actions and rule `value`s
+    // https://redux-toolkit.js.org/usage/usage-guide#working-with-non-serializable-data
+    serializableCheck: {
+      ignoredActions: ["queries/setQueryState"],
+      ignoredPaths: [/^queries\b.*\.rules\.\d+\.value$/]
+    }
+  })
+});
+var QueryBuilderStateContext = react__WEBPACK_IMPORTED_MODULE_0__.createContext(null);
+var useRQB_INTERNAL_QueryBuilderSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.createSelectorHook)(QueryBuilderStateContext);
+var useQueryBuilderSelector = (selector, other) => {
+  const rqbContext = react__WEBPACK_IMPORTED_MODULE_0__.useContext(QueryBuilderContext);
+  const result = useRQB_INTERNAL_QueryBuilderSelector(selector, other);
+  return result ?? rqbContext?.initialQuery;
+};
+var useQueryBuilderQuery = (props) => {
+  const rqbContext = react__WEBPACK_IMPORTED_MODULE_0__.useContext(QueryBuilderContext);
+  return useRQB_INTERNAL_QueryBuilderSelector(
+    getQuerySelectorById(props?.schema.qbId ?? rqbContext.qbId ?? /* istanbul ignore next */
+    "")
+  ) ?? rqbContext?.initialQuery;
+};
+var getQuerySelectorById = (qbId) => (state) => queriesSlice.selectors.getQuerySelectorById({ queries: state.queries }, qbId);
+
+// src/redux/_internal.ts
+var _RQB_INTERNAL_dispatchThunk = ({
+  payload,
+  onQueryChange
+}) => (dispatch) => {
+  dispatch(queriesSlice.actions.setQueryState(payload));
+  if (typeof onQueryChange === "function") {
+    onQueryChange(payload.query);
+  }
+};
+var useRQB_INTERNAL_QueryBuilderDispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.createDispatchHook)(QueryBuilderStateContext);
+var useRQB_INTERNAL_QueryBuilderStore = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.createStoreHook)(QueryBuilderStateContext);
+var { rqbWarn: _SYNC_rqbWarn } = warningsSlice.actions;
+var rqbWarn = (msg) => (dispatch) => {
+  setTimeout(() => dispatch(_SYNC_rqbWarn(msg)));
+};
+
+// src/hooks/usePrevious.ts
+
+var usePrevious = (value) => {
+  const ref = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)({ value, prev: null });
+  const current = ref.current.value;
+  if (value !== current) {
+    ref.current = { value, prev: current };
+  }
+  return ref.current.prev;
+};
+
+// src/hooks/useControlledOrUncontrolled.ts
+var useControlledOrUncontrolled = (params) => {
+  const dispatch = useRQB_INTERNAL_QueryBuilderDispatch();
+  const { defaultQuery, queryProp } = params;
+  const prevQueryPresent = usePrevious(!!queryProp);
+  if (true) {
+    if (!!queryProp && !!defaultQuery) {
+      dispatch(rqbWarn(messages.errorBothQueryDefaultQuery));
+    } else if (prevQueryPresent === true && !queryProp && !!defaultQuery) {
+      dispatch(rqbWarn(messages.errorControlledToUncontrolled));
+    } else if (prevQueryPresent === false && !!queryProp && !defaultQuery) {
+      dispatch(rqbWarn(messages.errorUncontrolledToControlled));
+    }
+  }
+};
+
+// src/hooks/useDeprecatedProps.ts
+function useDeprecatedProps(type, logWarning, otherParams) {
+  const dispatch = useRQB_INTERNAL_QueryBuilderDispatch();
+  if ( true && logWarning) {
+    if (type === "independentCombinators") {
+      if (otherParams === "invalid") {
+        dispatch(rqbWarn(messages.errorInvalidIndependentCombinatorsProp));
+      }
+      if (otherParams === "unnecessary") {
+        dispatch(rqbWarn(messages.errorUnnecessaryIndependentCombinatorsProp));
+      }
+    }
+    if (type === "rule") {
+      dispatch(rqbWarn(messages.errorDeprecatedRuleProps));
+    }
+    if (type === "ruleGroup") {
+      dispatch(rqbWarn(messages.errorDeprecatedRuleGroupProps));
+    }
+  }
+}
+
+// src/hooks/useMergedContext.ts
+
+
+// src/utils/arrayUtils.ts
+var splitBy = (str2, splitChar = defaultJoinChar) => typeof str2 === "string" ? str2.split(`\\${splitChar}`).map((c) => c.split(splitChar)).reduce((prev, curr, idx) => {
+  if (idx === 0) {
+    return curr;
+  }
+  return [...prev.slice(0, -1), `${prev.at(-1)}${splitChar}${curr[0]}`, ...curr.slice(1)];
+}, []) : [];
+var joinWith = (strArr, joinChar = defaultJoinChar) => strArr.map((str2) => `${str2 ?? ""}`.replaceAll(joinChar[0], `\\${joinChar[0]}`)).join(joinChar);
+var trimIfString = (val) => typeof val === "string" ? val.trim() : val;
+var toArray = (v, { retainEmptyStrings } = {}) => Array.isArray(v) ? v.map((v2) => trimIfString(v2)) : typeof v === "string" ? splitBy(v, defaultJoinChar).filter(retainEmptyStrings ? () => true : (s) => !/^\s*$/.test(s)).map((s) => s.trim()) : typeof v === "number" ? [v] : [];
+var nullFreeArray = (arr) => arr.every((el) => el === false || (el ?? false) !== false);
+
+// src/utils/misc.ts
+
+var numericRegex = new RegExp(
+  numeric_quantity__WEBPACK_IMPORTED_MODULE_3__.numericRegex.source.replace(/^\^/, String.raw`^\s*`).replace(/\$$/, String.raw`\s*$`)
+);
+var isPojo = (obj) => obj === null || typeof obj !== "object" ? false : Object.getPrototypeOf(obj) === Object.prototype;
+
+// src/utils/isRuleGroup.ts
+var isRuleGroup = (rg) => isPojo(rg) && Array.isArray(rg.rules);
+var isRuleGroupType = (rg) => isRuleGroup(rg) && typeof rg.combinator === "string";
+var isRuleGroupTypeIC = (rg) => isRuleGroup(rg) && rg.combinator === void 0;
+
+// src/utils/convertQuery.ts
+var processRuleOrStringOrRuleGroupIC = (r) => isRuleGroup(r) ? generateRuleGroupICWithConsistentCombinators(r) : r;
+var generateRuleGroupICWithConsistentCombinators = (rg) => {
+  const returnArray = [];
+  const push = (r) => returnArray.push(processRuleOrStringOrRuleGroupIC(r));
+  let startIndex = 0;
+  for (let i = 0; i < rg.rules.length; i += 2) {
+    if (rg.rules.length === 1) {
+      push(rg.rules[0]);
+    } else if (rg.rules[i + 1] === "and") {
+      startIndex = i;
+      let j = 1;
+      while (rg.rules[startIndex + j] === "and") {
+        i += 2;
+        j += 2;
+      }
+      returnArray.push({
+        // @ts-expect-error Too complicated to keep track of odd/even indexes in TS
+        rules: rg.rules.slice(startIndex, i + 1).map((v) => processRuleOrStringOrRuleGroupIC(v))
+      });
+      i -= 2;
+    } else if (rg.rules[i + 1] === "or") {
+      if (i === 0 || i === rg.rules.length - 3) {
+        if (i === 0 || rg.rules[i - 1] === "or") {
+          push(rg.rules[i]);
+        }
+        push(rg.rules[i + 1]);
+        if (i === rg.rules.length - 3) {
+          push(rg.rules[i + 2]);
+        }
+      } else {
+        if (rg.rules[i - 1] === "and") {
+          push(rg.rules[i + 1]);
+        } else {
+          push(rg.rules[i]);
+          push(rg.rules[i + 1]);
+        }
+      }
+    }
+  }
+  if (
+    // @ts-expect-error TS still thinks returnArray has length 0
+    returnArray.length === 1 && typeof returnArray[0] === "object" && isRuleGroup(returnArray[0])
+  ) {
+    return { ...rg, ...returnArray[0] };
+  }
+  return { ...rg, rules: returnArray };
+};
+var convertFromIC = (rg) => {
+  if (isRuleGroupType(rg)) {
+    return rg;
+  }
+  const processedRG = generateRuleGroupICWithConsistentCombinators(rg);
+  const rulesAsMixedList = processedRG.rules.map(
+    (r) => typeof r === "string" || !isRuleGroup(r) ? r : convertFromIC(r)
+  );
+  const combinator = rulesAsMixedList.length < 2 ? "and" : rulesAsMixedList[1];
+  const rules = rulesAsMixedList.filter((r) => typeof r !== "string");
+  return { ...processedRG, combinator, rules };
+};
+var convertToIC = (rg) => {
+  if (isRuleGroupTypeIC(rg)) {
+    return rg;
+  }
+  const { combinator, ...queryWithoutCombinator } = rg;
+  const rules = [];
+  const { length } = rg.rules;
+  for (const [idx, r] of rg.rules.entries()) {
+    if (isRuleGroup(r)) {
+      rules.push(convertToIC(r));
+    } else {
+      rules.push(r);
+    }
+    if (combinator && idx < length - 1) {
+      rules.push(combinator);
+    }
+  }
+  return { ...queryWithoutCombinator, rules };
+};
+function convertQuery(query) {
+  return isRuleGroupTypeIC(query) ? convertFromIC(query) : convertToIC(query);
+}
+
+// src/utils/defaultValidator.ts
+var defaultValidator = (query) => {
+  const result = {};
+  const validateRule = (_rule) => {
+  };
+  const validateGroup = (rg) => {
+    const reasons = [];
+    if (rg.rules.length === 0) {
+      reasons.push(groupInvalidReasons.empty);
+    } else if (!isRuleGroupType(rg)) {
+      let invalidICs = false;
+      for (let i = 0; i < rg.rules.length && !invalidICs; i++) {
+        if (i % 2 === 0 && typeof rg.rules[i] === "string" || i % 2 === 1 && typeof rg.rules[i] !== "string" || i % 2 === 1 && typeof rg.rules[i] === "string" && !defaultCombinators.map((c) => c.name).includes(rg.rules[i])) {
+          invalidICs = true;
+        }
+      }
+      if (invalidICs) {
+        reasons.push(groupInvalidReasons.invalidIndependentCombinators);
+      }
+    }
+    if (isRuleGroupType(rg) && !defaultCombinators.map((c) => c.name).includes(rg.combinator) && rg.rules.length > 1) {
+      reasons.push(groupInvalidReasons.invalidCombinator);
+    }
+    if (rg.id) {
+      result[rg.id] = reasons.length > 0 ? { valid: false, reasons } : true;
+    }
+    for (const r of rg.rules) {
+      if (typeof r === "string") {
+      } else if (isRuleGroup(r)) {
+        validateGroup(r);
+      } else {
+        validateRule(r);
+      }
+    }
+  };
+  validateGroup(query);
+  return result;
+};
+
+// src/utils/toFullOption.ts
+
+var isOptionWithName = (opt) => isPojo(opt) && "name" in opt && typeof opt.name === "string";
+var isOptionWithValue = (opt) => isPojo(opt) && "value" in opt && typeof opt.value === "string";
+function toFullOption(opt, baseProperties) {
+  const recipe = (0,immer__WEBPACK_IMPORTED_MODULE_4__.produce)((draft) => {
+    const idObj = {};
+    let needsUpdating = !!baseProperties;
+    if (isOptionWithName(draft) && !isOptionWithValue(draft)) {
+      idObj.value = draft.name;
+      needsUpdating = true;
+    } else if (!isOptionWithName(draft) && isOptionWithValue(draft)) {
+      idObj.name = draft.value;
+      needsUpdating = true;
+    }
+    if (needsUpdating) {
+      return Object.assign({}, baseProperties, draft, idObj);
+    }
+  });
+  return recipe(opt);
+}
+function toFullOptionList(optList, baseProperties) {
+  if (!Array.isArray(optList)) {
+    return [];
+  }
+  const recipe = (0,immer__WEBPACK_IMPORTED_MODULE_4__.produce)((draft) => {
+    if (isFlexibleOptionGroupArray(draft)) {
+      for (const optGroup of draft) {
+        for (const [idx, opt] of optGroup.options.entries())
+          optGroup.options[idx] = toFullOption(opt, baseProperties);
+      }
+    } else {
+      for (const [idx, opt] of draft.entries())
+        draft[idx] = toFullOption(opt, baseProperties);
+    }
+  });
+  return recipe(optList);
+}
+function toFullOptionMap(optMap, baseProperties) {
+  return Object.fromEntries(
+    Object.entries(optMap).map(([k, v]) => [
+      k,
+      toFullOption(v, baseProperties)
+    ])
+  );
+}
+
+// src/utils/uniq.ts
+var uniqByName = (originalArray) => uniqByIdentifier(originalArray);
+var uniqByIdentifier = (originalArray) => {
+  const names = /* @__PURE__ */ new Set();
+  const newArray = [];
+  for (const el of originalArray) {
+    if (!names.has(el.value ?? el.name)) {
+      names.add(el.value ?? el.name);
+      newArray.push(el);
+    }
+  }
+  return originalArray.length === newArray.length ? originalArray : newArray;
+};
+var uniqOptGroups = (originalArray) => {
+  const labels = /* @__PURE__ */ new Set();
+  const names = /* @__PURE__ */ new Set();
+  const newArray = [];
+  for (const el of originalArray) {
+    if (!labels.has(el.label)) {
+      labels.add(el.label);
+      const optionsForThisGroup = [];
+      for (const opt of el.options) {
+        if (!names.has(opt.value ?? opt.name)) {
+          names.add(opt.value ?? opt.name);
+          optionsForThisGroup.push(toFullOption(opt));
+        }
+      }
+      newArray.push({ ...el, options: optionsForThisGroup });
+    }
+  }
+  return newArray;
+};
+var uniqOptList = (originalArray) => {
+  if (isFlexibleOptionGroupArray(originalArray)) {
+    return uniqOptGroups(originalArray);
+  }
+  return uniqByIdentifier(originalArray.map((o) => toFullOption(o)));
+};
+
+// src/utils/optGroupUtils.ts
+var isOptionGroupArray = (arr) => Array.isArray(arr) && arr.length > 0 && isPojo(arr[0]) && "options" in arr[0] && Array.isArray(arr[0].options);
+var isFlexibleOptionGroupArray = (arr) => {
+  if (Array.isArray(arr)) {
+    for (const og of arr) {
+      if (isPojo(og) && "options" in og) {
+        for (const opt of og.options) {
+          if (isPojo(opt) && ("name" in opt || "value" in opt)) {
+            return true;
+          }
+          return false;
+        }
+      }
+    }
+  }
+  return false;
+};
+var isFullOptionGroupArray = (arr) => {
+  if (Array.isArray(arr)) {
+    for (const og of arr) {
+      if (isPojo(og) && "options" in og) {
+        for (const opt of og.options) {
+          if (isPojo(opt) && "name" in opt && "value" in opt) {
+            return true;
+          }
+          return false;
+        }
+      }
+    }
+  }
+  return false;
+};
+var getOption = (arr, name) => (isOptionGroupArray(arr) ? arr.flatMap((og) => og.options) : arr).find(
+  (op) => op.value === name || op.name === name
+);
+var getFirstOption = (arr) => {
+  if (!Array.isArray(arr) || arr.length === 0) {
+    return null;
+  } else if (isFlexibleOptionGroupArray(arr)) {
+    for (const og of arr) {
+      if (og.options.length > 0) {
+        return og.options[0].value ?? og.options[0].name;
+      }
+    }
+    return null;
+  }
+  return arr[0].value ?? arr[0].name;
+};
+var toFlatOptionArray = (arr) => uniqByIdentifier(isOptionGroupArray(arr) ? arr.flatMap((og) => og.options) : arr);
+
+// src/utils/filterFieldsByComparator.ts
+var filterByComparator = (field, operator, fieldToCompare) => {
+  const fullField = toFullOption(field);
+  const fullFieldToCompare = toFullOption(fieldToCompare);
+  if (fullField.value === fullFieldToCompare.value) {
+    return false;
+  }
+  if (typeof fullField.comparator === "string") {
+    return fullField[fullField.comparator] === fullFieldToCompare[fullField.comparator];
+  }
+  return fullField.comparator?.(fullFieldToCompare, operator) ?? /* istanbul ignore next */
+  false;
+};
+var filterFieldsByComparator = (field, fields, operator) => {
+  if (!field.comparator) {
+    const filterOutSameField = (f) => (f.value ?? /* istanbul ignore next */
+    f.name) !== (field.value ?? /* istanbul ignore next */
+    field.name);
+    if (isFlexibleOptionGroupArray(fields)) {
+      return fields.map((og) => ({
+        ...og,
+        options: og.options.filter((v) => filterOutSameField(v))
+      }));
+    }
+    return fields.filter((v) => filterOutSameField(v));
+  }
+  if (isFlexibleOptionGroupArray(fields)) {
+    return fields.map((og) => ({
+      ...og,
+      options: og.options.filter((f) => filterByComparator(field, operator, f))
+    })).filter((og) => og.options.length > 0);
+  }
+  return fields.filter((f) => filterByComparator(field, operator, f));
+};
+
+// src/utils/parseNumber.ts
+
+var parseNumber = (val, { parseNumbers } = {}) => {
+  if (!parseNumbers || typeof val === "bigint" || typeof val === "number") {
+    return val;
+  }
+  if (parseNumbers === "native") {
+    return parseFloat(val);
+  }
+  const valAsNum = (
+    // TODO: Should these options be configurable?
+    (0,numeric_quantity__WEBPACK_IMPORTED_MODULE_3__.numericQuantity)(val, {
+      allowTrailingInvalid: parseNumbers === "enhanced",
+      romanNumerals: false,
+      round: false
+    })
+  );
+  return isNaN(valAsNum) ? val : valAsNum;
+};
+
+// src/utils/formatQuery/utils.ts
+var mapSQLOperator = (op) => {
+  switch (op.toLowerCase()) {
+    case "null":
+      return "is null";
+    case "notnull":
+      return "is not null";
+    case "notin":
+      return "not in";
+    case "notbetween":
+      return "not between";
+    case "contains":
+    case "beginswith":
+    case "endswith":
+      return "like";
+    case "doesnotcontain":
+    case "doesnotbeginwith":
+    case "doesnotendwith":
+      return "not like";
+    default:
+      return op;
+  }
+};
+var mongoOperators = {
+  "=": "$eq",
+  "!=": "$ne",
+  "<": "$lt",
+  "<=": "$lte",
+  ">": "$gt",
+  ">=": "$gte",
+  in: "$in",
+  notIn: "$nin"
+};
+var celCombinatorMap = {
+  and: "&&",
+  or: "||"
+};
+var jsonLogicAdditionalOperators = {
+  startsWith: (a, b) => typeof a === "string" && a.startsWith(b),
+  endsWith: (a, b) => typeof a === "string" && a.endsWith(b)
+};
+var numerifyValues = (rg) => ({
+  ...rg,
+  // @ts-expect-error TS doesn't keep track of odd/even indexes here
+  rules: rg.rules.map((r) => {
+    if (typeof r === "string") {
+      return r;
+    }
+    if (isRuleGroup(r)) {
+      return numerifyValues(r);
+    }
+    if (Array.isArray(r.value)) {
+      return { ...r, value: r.value.map((v) => parseNumber(v, { parseNumbers: true })) };
+    }
+    const valAsArray = toArray(r.value, { retainEmptyStrings: true }).map(
+      (v) => parseNumber(v, { parseNumbers: true })
+    );
+    if (valAsArray.every((v) => typeof v === "number")) {
+      if (valAsArray.length > 1) {
+        return { ...r, value: valAsArray };
+      } else if (valAsArray.length === 1) {
+        return { ...r, value: valAsArray[0] };
+      }
+    }
+    return r;
+  })
+});
+var isValidValue = (v) => typeof v === "string" && v.length > 0 || typeof v === "number" && !isNaN(v) || typeof v !== "string" && typeof v !== "number";
+var shouldRenderAsNumber = (v, parseNumbers) => parseNumbers && (typeof v === "number" || typeof v === "bigint" || typeof v === "string" && numericRegex.test(v));
+var isValueProcessorLegacy = (vp) => vp.length >= 3;
+var quoteFieldNamesWithArray = (quoteFieldNamesWith = ["", ""]) => Array.isArray(quoteFieldNamesWith) ? quoteFieldNamesWith : typeof quoteFieldNamesWith === "string" ? [quoteFieldNamesWith, quoteFieldNamesWith] : quoteFieldNamesWith ?? ["", ""];
+var quoteFieldName = (f, { quoteFieldNamesWith, fieldIdentifierSeparator }) => {
+  const [qPre, qPost] = quoteFieldNamesWithArray(quoteFieldNamesWith);
+  return typeof fieldIdentifierSeparator === "string" && fieldIdentifierSeparator.length > 0 ? joinWith(
+    splitBy(f, fieldIdentifierSeparator).map((part) => `${qPre}${part}${qPost}`),
+    fieldIdentifierSeparator
+  ) : `${qPre}${f}${qPost}`;
+};
+var nullOrUndefinedOrEmpty = (v) => v === null || v === void 0 || v === "";
+
+// src/utils/formatQuery/defaultRuleProcessorCEL.ts
+var shouldNegate = (op) => /^(does)?not/i.test(op);
+var escapeDoubleQuotes = (v, escapeQuotes) => typeof v !== "string" || !escapeQuotes ? v : v.replaceAll(`"`, `\\"`);
+var defaultRuleProcessorCEL = ({ field, operator, value, valueSource }, { escapeQuotes, parseNumbers } = {}) => {
+  const valueIsField = valueSource === "field";
+  const operatorTL = operator.replace(/^=$/, "==");
+  const useBareValue = typeof value === "number" || typeof value === "boolean" || typeof value === "bigint" || shouldRenderAsNumber(value, parseNumbers);
+  switch (operatorTL) {
+    case "<":
+    case "<=":
+    case "==":
+    case "!=":
+    case ">":
+    case ">=":
+      return `${field} ${operatorTL} ${valueIsField || useBareValue ? trimIfString(value) : `"${escapeDoubleQuotes(value, escapeQuotes)}"`}`;
+    case "contains":
+    case "doesNotContain": {
+      const negate2 = shouldNegate(operatorTL) ? "!" : "";
+      return `${negate2}${field}.contains(${valueIsField ? trimIfString(value) : `"${escapeDoubleQuotes(value, escapeQuotes)}"`})`;
+    }
+    case "beginsWith":
+    case "doesNotBeginWith": {
+      const negate2 = shouldNegate(operatorTL) ? "!" : "";
+      return `${negate2}${field}.startsWith(${valueIsField ? trimIfString(value) : `"${escapeDoubleQuotes(value, escapeQuotes)}"`})`;
+    }
+    case "endsWith":
+    case "doesNotEndWith": {
+      const negate2 = shouldNegate(operatorTL) ? "!" : "";
+      return `${negate2}${field}.endsWith(${valueIsField ? trimIfString(value) : `"${escapeDoubleQuotes(value, escapeQuotes)}"`})`;
+    }
+    case "null":
+      return `${field} == null`;
+    case "notNull":
+      return `${field} != null`;
+    case "in":
+    case "notIn": {
+      const negate2 = shouldNegate(operatorTL);
+      const valueAsArray = toArray(value);
+      return `${negate2 ? "!(" : ""}${field} in [${valueAsArray.map(
+        (val) => valueIsField || shouldRenderAsNumber(val, parseNumbers) ? `${trimIfString(val)}` : `"${escapeDoubleQuotes(val, escapeQuotes)}"`
+      ).join(", ")}]${negate2 ? ")" : ""}`;
+    }
+    case "between":
+    case "notBetween": {
+      const valueAsArray = toArray(value);
+      if (valueAsArray.length >= 2 && !nullOrUndefinedOrEmpty(valueAsArray[0]) && !nullOrUndefinedOrEmpty(valueAsArray[1])) {
+        const [first, second] = valueAsArray;
+        const firstNum = shouldRenderAsNumber(first, true) ? parseNumber(first, { parseNumbers: true }) : NaN;
+        const secondNum = shouldRenderAsNumber(second, true) ? parseNumber(second, { parseNumbers: true }) : NaN;
+        let firstValue = isNaN(firstNum) ? valueIsField ? `${first}` : `"${escapeDoubleQuotes(first, escapeQuotes)}"` : firstNum;
+        let secondValue = isNaN(secondNum) ? valueIsField ? `${second}` : `"${escapeDoubleQuotes(second, escapeQuotes)}"` : secondNum;
+        if (firstValue === firstNum && secondValue === secondNum && secondNum < firstNum) {
+          const tempNum = secondNum;
+          secondValue = firstNum;
+          firstValue = tempNum;
+        }
+        return operator === "between" ? `(${field} >= ${firstValue} && ${field} <= ${secondValue})` : `(${field} < ${firstValue} || ${field} > ${secondValue})`;
+      } else {
+        return "";
+      }
+    }
+  }
+  return "";
+};
+
+// src/utils/formatQuery/defaultRuleProcessorMongoDB.ts
+var str = JSON.stringify;
+var defaultRuleProcessorMongoDB = ({ field, operator, value, valueSource }, { parseNumbers } = {}) => {
+  const valueIsField = valueSource === "field";
+  if (operator === "=" && !valueIsField) {
+    return str({
+      [field]: shouldRenderAsNumber(value, parseNumbers) ? parseNumber(value, { parseNumbers: "strict" }) : value
+    });
+  }
+  switch (operator) {
+    case "<":
+    case "<=":
+    case "=":
+    case "!=":
+    case ">":
+    case ">=": {
+      const mongoOperator = mongoOperators[operator];
+      return valueIsField ? str({ $expr: { [mongoOperator]: [`$${field}`, `$${value}`] } }) : str({
+        [field]: {
+          [mongoOperator]: shouldRenderAsNumber(value, parseNumbers) ? parseNumber(value, { parseNumbers: "strict" }) : value
+        }
+      });
+    }
+    case "contains":
+      return valueIsField ? str({ $where: `this.${field}.includes(this.${value})` }) : str({ [field]: { $regex: value } });
+    case "beginsWith":
+      return valueIsField ? str({ $where: `this.${field}.startsWith(this.${value})` }) : str({ [field]: { $regex: `^${value}` } });
+    case "endsWith":
+      return valueIsField ? str({ $where: `this.${field}.endsWith(this.${value})` }) : str({ [field]: { $regex: `${value}$` } });
+    case "doesNotContain":
+      return valueIsField ? str({ $where: `!this.${field}.includes(this.${value})` }) : str({ [field]: { $not: { $regex: value } } });
+    case "doesNotBeginWith":
+      return valueIsField ? str({ $where: `!this.${field}.startsWith(this.${value})` }) : str({ [field]: { $not: { $regex: `^${value}` } } });
+    case "doesNotEndWith":
+      return valueIsField ? str({ $where: `!this.${field}.endsWith(this.${value})` }) : str({ [field]: { $not: { $regex: `${value}$` } } });
+    case "null":
+      return str({ [field]: null });
+    case "notNull":
+      return str({ [field]: { $ne: null } });
+    case "in":
+    case "notIn": {
+      const valueAsArray = toArray(value);
+      return valueIsField ? str({
+        $where: `${operator === "notIn" ? "!" : ""}[${valueAsArray.map((val) => `this.${val}`).join(",")}].includes(this.${field})`
+      }) : str({
+        [field]: {
+          [mongoOperators[operator]]: valueAsArray.map(
+            (val) => shouldRenderAsNumber(val, parseNumbers) ? parseNumber(val, { parseNumbers: "strict" }) : val
+          )
+        }
+      });
+    }
+    case "between":
+    case "notBetween": {
+      const valueAsArray = toArray(value);
+      if (valueAsArray.length >= 2 && isValidValue(valueAsArray[0]) && isValidValue(valueAsArray[1])) {
+        const [first, second] = valueAsArray;
+        const firstNum = shouldRenderAsNumber(first, true) ? parseNumber(first, { parseNumbers: "strict" }) : NaN;
+        const secondNum = shouldRenderAsNumber(second, true) ? parseNumber(second, { parseNumbers: "strict" }) : NaN;
+        const firstValue = valueIsField ? first : isNaN(firstNum) ? first : firstNum;
+        const secondValue = valueIsField ? second : isNaN(secondNum) ? second : secondNum;
+        if (operator === "between") {
+          return valueIsField ? str({
+            $and: [
+              { $expr: { $gte: [`$${field}`, `$${firstValue}`] } },
+              { $expr: { $lte: [`$${field}`, `$${secondValue}`] } }
+            ]
+          }) : str({ [field]: { $gte: firstValue, $lte: secondValue } });
+        } else {
+          return valueIsField ? str({
+            $or: [
+              { $expr: { $lt: [`$${field}`, `$${firstValue}`] } },
+              { $expr: { $gt: [`$${field}`, `$${secondValue}`] } }
+            ]
+          }) : str({ $or: [{ [field]: { $lt: firstValue } }, { [field]: { $gt: secondValue } }] });
+        }
+      } else {
+        return "";
+      }
+    }
+  }
+  return "";
+};
+
+// src/utils/formatQuery/defaultRuleProcessorSpEL.ts
+var shouldNegate2 = (op) => /^(does)?not/i.test(op);
+var wrapInNegation = (clause, negate2) => negate2 ? `!(${clause})` : `${clause}`;
+var escapeSingleQuotes = (v, escapeQuotes) => typeof v !== "string" || !escapeQuotes ? v : v.replaceAll(`'`, `\\'`);
+var defaultRuleProcessorSpEL = ({ field, operator, value, valueSource }, { escapeQuotes, parseNumbers } = {}) => {
+  const valueIsField = valueSource === "field";
+  const operatorTL = operator.replace(/^=$/, "==");
+  const useBareValue = typeof value === "number" || typeof value === "boolean" || typeof value === "bigint" || shouldRenderAsNumber(value, parseNumbers);
+  switch (operatorTL) {
+    case "<":
+    case "<=":
+    case "==":
+    case "!=":
+    case ">":
+    case ">=":
+      return `${field} ${operatorTL} ${valueIsField || useBareValue ? trimIfString(value) : `'${escapeSingleQuotes(value, escapeQuotes)}'`}`;
+    case "contains":
+    case "doesNotContain":
+      return wrapInNegation(
+        `${field} matches ${valueIsField || useBareValue ? trimIfString(value) : `'${escapeSingleQuotes(value, escapeQuotes)}'`}`,
+        shouldNegate2(operatorTL)
+      );
+    case "beginsWith":
+    case "doesNotBeginWith": {
+      const valueTL = valueIsField ? `'^'.concat(${trimIfString(value)})` : `'${typeof value === "string" && !value.startsWith("^") || useBareValue ? "^" : ""}${escapeSingleQuotes(value, escapeQuotes)}'`;
+      return wrapInNegation(`${field} matches ${valueTL}`, shouldNegate2(operatorTL));
+    }
+    case "endsWith":
+    case "doesNotEndWith": {
+      const valueTL = valueIsField ? `${trimIfString(value)}.concat('$')` : `'${escapeSingleQuotes(value, escapeQuotes)}${typeof value === "string" && !value.endsWith("$") || useBareValue ? "$" : ""}'`;
+      return wrapInNegation(`${field} matches ${valueTL}`, shouldNegate2(operatorTL));
+    }
+    case "null":
+      return `${field} == null`;
+    case "notNull":
+      return `${field} != null`;
+    case "in":
+    case "notIn": {
+      const negate2 = shouldNegate2(operatorTL) ? "!" : "";
+      const valueAsArray = toArray(value);
+      return valueAsArray.length > 0 ? `${negate2}(${valueAsArray.map(
+        (val) => `${field} == ${valueIsField || shouldRenderAsNumber(val, parseNumbers) ? `${trimIfString(val)}` : `'${escapeSingleQuotes(val, escapeQuotes)}'`}`
+      ).join(" or ")})` : "";
+    }
+    case "between":
+    case "notBetween": {
+      const valueAsArray = toArray(value);
+      if (valueAsArray.length >= 2 && !nullOrUndefinedOrEmpty(valueAsArray[0]) && !nullOrUndefinedOrEmpty(valueAsArray[1])) {
+        const [first, second] = valueAsArray;
+        const firstNum = shouldRenderAsNumber(first, true) ? parseNumber(first, { parseNumbers: true }) : NaN;
+        const secondNum = shouldRenderAsNumber(second, true) ? parseNumber(second, { parseNumbers: true }) : NaN;
+        let firstValue = isNaN(firstNum) ? valueIsField ? `${first}` : `'${escapeSingleQuotes(first, escapeQuotes)}'` : firstNum;
+        let secondValue = isNaN(secondNum) ? valueIsField ? `${second}` : `'${escapeSingleQuotes(second, escapeQuotes)}'` : secondNum;
+        if (firstValue === firstNum && secondValue === secondNum && secondNum < firstNum) {
+          const tempNum = secondNum;
+          secondValue = firstNum;
+          firstValue = tempNum;
+        }
+        return operator === "between" ? `(${field} >= ${firstValue} and ${field} <= ${secondValue})` : `(${field} < ${firstValue} or ${field} > ${secondValue})`;
+      } else {
+        return "";
+      }
+    }
+  }
+  return "";
+};
+
+// src/utils/formatQuery/defaultValueProcessorByRule.ts
+var escapeStringValueQuotes = (v, quoteChar, escapeQuotes) => escapeQuotes && typeof v === "string" ? v.replaceAll(`${quoteChar}`, `${quoteChar}${quoteChar}`) : v;
+var defaultValueProcessorByRule = ({ operator, value, valueSource }, {
+  escapeQuotes,
+  parseNumbers,
+  quoteFieldNamesWith,
+  quoteValuesWith,
+  concatOperator = "||",
+  fieldIdentifierSeparator
+} = {}) => {
+  const valueIsField = valueSource === "field";
+  const operatorLowerCase = operator.toLowerCase();
+  const quoteChar = quoteValuesWith || "'";
+  const quoteValue = (v) => `${quoteChar}${v}${quoteChar}`;
+  const escapeValue = (v) => escapeStringValueQuotes(v, quoteChar, escapeQuotes);
+  const wrapAndEscape = (v) => quoteValue(escapeValue(v));
+  const wrapFieldName = (v) => quoteFieldName(v, { quoteFieldNamesWith, fieldIdentifierSeparator });
+  const concat = (...values) => concatOperator.toUpperCase() === "CONCAT" ? `CONCAT(${values.join(", ")})` : values.join(` ${concatOperator} `);
+  switch (operatorLowerCase) {
+    case "null":
+    case "notnull": {
+      return "";
+    }
+    case "in":
+    case "notin": {
+      const valueAsArray = toArray(value);
+      if (valueAsArray.length > 0) {
+        return `(${valueAsArray.map(
+          (v) => valueIsField ? wrapFieldName(v) : shouldRenderAsNumber(v, parseNumbers) ? `${trimIfString(v)}` : `${wrapAndEscape(v)}`
+        ).join(", ")})`;
+      }
+      return "";
+    }
+    case "between":
+    case "notbetween": {
+      const valueAsArray = toArray(value, { retainEmptyStrings: true });
+      if (valueAsArray.length >= 2 && isValidValue(valueAsArray[0]) && isValidValue(valueAsArray[1])) {
+        const [first, second] = valueAsArray;
+        const firstNum = shouldRenderAsNumber(first, parseNumbers) ? parseNumber(first, { parseNumbers: "strict" }) : NaN;
+        const secondNum = shouldRenderAsNumber(second, parseNumbers) ? parseNumber(second, { parseNumbers: "strict" }) : NaN;
+        const firstValue = isNaN(firstNum) ? valueIsField ? `${first}` : first : firstNum;
+        const secondValue = isNaN(secondNum) ? valueIsField ? `${second}` : second : secondNum;
+        const valsOneAndTwoOnly = [firstValue, secondValue];
+        if (firstValue === firstNum && secondValue === secondNum && secondNum < firstNum) {
+          valsOneAndTwoOnly[0] = secondNum;
+          valsOneAndTwoOnly[1] = firstNum;
+        }
+        return (valueIsField ? valsOneAndTwoOnly.map((v) => wrapFieldName(v)) : valsOneAndTwoOnly.every((v) => shouldRenderAsNumber(v, parseNumbers)) ? valsOneAndTwoOnly.map((v) => parseNumber(v, { parseNumbers: "strict" })) : valsOneAndTwoOnly.map((v) => wrapAndEscape(v))).join(` and `);
+      }
+      return "";
+    }
+    case "contains":
+    case "doesnotcontain":
+      return valueIsField ? concat(quoteValue("%"), wrapFieldName(value), quoteValue("%")) : quoteValue(`%${escapeValue(value)}%`);
+    case "beginswith":
+    case "doesnotbeginwith":
+      return valueIsField ? concat(wrapFieldName(value), quoteValue("%")) : quoteValue(`${escapeValue(value)}%`);
+    case "endswith":
+    case "doesnotendwith":
+      return valueIsField ? concat(quoteValue("%"), wrapFieldName(value)) : quoteValue(`%${escapeValue(value)}`);
+  }
+  if (typeof value === "boolean") {
+    return value ? "TRUE" : "FALSE";
+  }
+  return valueIsField ? wrapFieldName(value) : shouldRenderAsNumber(value, parseNumbers) ? `${trimIfString(value)}` : `${wrapAndEscape(value)}`;
+};
+
+// src/utils/formatQuery/defaultRuleProcessorElasticSearch.ts
+var rangeOperatorMap = { "<": "lt", "<=": "lte", ">": "gt", ">=": "gte" };
+var negateIfNotOp = (op, elasticSearchRule) => /^(does)?not/i.test(op) ? { bool: { must_not: elasticSearchRule } } : elasticSearchRule;
+var escapeSQ = (s) => s?.replace(/('|\\)/g, `\\$1`);
+var textFunctionMap = {
+  beginsWith: "startsWith",
+  doesNotContain: "contains",
+  doesNotBeginWith: "startsWith",
+  doesNotEndWith: "endsWith"
+};
+var getTextScript = (f, o, v) => {
+  const script = `doc['${f}'].${textFunctionMap[o] ?? o}(doc['${v}'])`;
+  return o.startsWith("d") ? `!${script}` : script;
+};
+var valueRenderer = (v, parseNumbers) => typeof v === "boolean" ? v : shouldRenderAsNumber(v, parseNumbers) ? parseNumber(v, { parseNumbers }) : v;
+var defaultRuleProcessorElasticSearch = ({ field, operator, value, valueSource }, { parseNumbers } = {}) => {
+  if (valueSource === "field") {
+    if (toArray(value).some((v) => typeof v !== "string")) return false;
+    const fieldForScript = escapeSQ(field);
+    switch (operator) {
+      case "=":
+      case "!=":
+      case ">":
+      case ">=":
+      case "<":
+      case "<=": {
+        const operatorForScript = operator === "=" ? "==" : operator;
+        const valueForScript = escapeSQ(value);
+        return valueForScript ? {
+          bool: {
+            filter: {
+              script: {
+                script: `doc['${fieldForScript}'] ${operatorForScript} doc['${valueForScript}']`
+              }
+            }
+          }
+        } : false;
+      }
+      case "in":
+      case "notIn": {
+        const valueAsArray = toArray(value);
+        if (valueAsArray.length > 0) {
+          const arr = valueAsArray.map((v) => ({
+            bool: { filter: { script: { script: `doc['${fieldForScript}'] == doc['${v}']` } } }
+          }));
+          return { bool: operator === "in" ? { should: arr } : { must_not: arr } };
+        }
+        return false;
+      }
+      case "between":
+      case "notBetween": {
+        const valueAsArray = toArray(value);
+        if (valueAsArray.length >= 2 && valueAsArray[0] && valueAsArray[1]) {
+          const script = `doc['${fieldForScript}'] >= doc['${valueAsArray[0]}'] && doc['${fieldForScript}'] <= doc['${valueAsArray[1]}']`;
+          return {
+            bool: {
+              filter: { script: { script: operator === "notBetween" ? `!(${script})` : script } }
+            }
+          };
+        }
+        return false;
+      }
+      case "contains":
+      case "doesNotContain":
+      case "beginsWith":
+      case "doesNotBeginWith":
+      case "endsWith":
+      case "doesNotEndWith": {
+        const valueForScript = escapeSQ(value);
+        if (!valueForScript) return false;
+        const script = getTextScript(fieldForScript, operator, valueForScript);
+        return {
+          bool: {
+            filter: {
+              script: {
+                script
+              }
+            }
+          }
+        };
+      }
+    }
+  }
+  switch (operator) {
+    case "<":
+    case "<=":
+    case ">":
+    case ">=":
+      return {
+        range: {
+          [field]: {
+            [rangeOperatorMap[operator]]: valueRenderer(value, parseNumbers)
+          }
+        }
+      };
+    case "=":
+      return { term: { [field]: valueRenderer(value, parseNumbers) } };
+    case "!=":
+      return { bool: { must_not: { term: { [field]: valueRenderer(value, parseNumbers) } } } };
+    case "null":
+      return { bool: { must_not: { exists: { field } } } };
+    case "notNull":
+      return { exists: { field } };
+    case "in":
+    case "notIn": {
+      const valueAsArray = toArray(value).map((v) => valueRenderer(v, parseNumbers));
+      if (valueAsArray.length > 0) {
+        const arr = valueAsArray.map((v) => ({ term: { [field]: valueRenderer(v, parseNumbers) } }));
+        return { bool: operator === "in" ? { should: arr } : { must_not: arr } };
+      }
+      return false;
+    }
+    case "between":
+    case "notBetween": {
+      const valueAsArray = toArray(value);
+      if (valueAsArray.length >= 2 && isValidValue(valueAsArray[0]) && isValidValue(valueAsArray[1])) {
+        let [first, second] = valueAsArray;
+        if (shouldRenderAsNumber(first, true) && shouldRenderAsNumber(second, true)) {
+          const firstNum = parseNumber(first, { parseNumbers: true });
+          const secondNum = parseNumber(second, { parseNumbers: true });
+          if (secondNum < firstNum) {
+            const tempNum = secondNum;
+            second = firstNum;
+            first = tempNum;
+          } else {
+            first = firstNum;
+            second = secondNum;
+          }
+        }
+        return negateIfNotOp(operator, { range: { [field]: { gte: first, lte: second } } });
+      }
+      return false;
+    }
+    case "contains":
+    case "doesNotContain":
+      return negateIfNotOp(operator, { regexp: { [field]: { value: `.*${value}.*` } } });
+    case "beginsWith":
+    case "doesNotBeginWith":
+      return negateIfNotOp(operator, { regexp: { [field]: { value: `${value}.*` } } });
+    case "endsWith":
+    case "doesNotEndWith":
+      return negateIfNotOp(operator, { regexp: { [field]: { value: `.*${value}` } } });
+  }
+  return false;
+};
+
+// src/utils/formatQuery/defaultRuleProcessorJSONata.ts
+var shouldNegate3 = (op) => /^(does)?not/i.test(op);
+var quote = (v, escapeQuotes) => `"${typeof v !== "string" || !escapeQuotes ? v : v.replaceAll(`"`, `\\"`)}"`;
+var negate = (clause, negate2) => negate2 ? `$not(${clause})` : `${clause}`;
+var escapeStringRegex = (s) => `${s}`.replaceAll(/[$()*+.?[\\\]^{|}]/g, String.raw`\$&`).replaceAll("-", String.raw`\x2d`);
+var defaultRuleProcessorJSONata = ({ field, operator, value, valueSource }, {
+  escapeQuotes,
+  parseNumbers = true,
+  quoteFieldNamesWith = ["", ""],
+  fieldIdentifierSeparator = ""
+} = {}) => {
+  const valueIsField = valueSource === "field";
+  const useBareValue = typeof value === "number" || typeof value === "boolean" || typeof value === "bigint" || shouldRenderAsNumber(value, parseNumbers);
+  const qfn = (f) => quoteFieldName(f, { quoteFieldNamesWith, fieldIdentifierSeparator });
+  switch (operator) {
+    case "<":
+    case "<=":
+    case "=":
+    case "!=":
+    case ">":
+    case ">=":
+      return `${qfn(field)} ${operator} ${valueIsField ? qfn(trimIfString(value)) : useBareValue ? trimIfString(value) : quote(value, escapeQuotes)}`;
+    case "contains":
+    case "doesNotContain":
+      return negate(
+        `$contains(${qfn(field)}, ${valueIsField ? qfn(trimIfString(value)) : quote(value, escapeQuotes)})`,
+        shouldNegate3(operator)
+      );
+    case "beginsWith":
+    case "doesNotBeginWith":
+      return negate(
+        valueIsField ? `$substring(${qfn(field)}, 0, $length(${qfn(trimIfString(value))})) = ${qfn(trimIfString(value))}` : `$contains(${qfn(field)}, /^${escapeStringRegex(value)}/)`,
+        shouldNegate3(operator)
+      );
+    case "endsWith":
+    case "doesNotEndWith":
+      return negate(
+        valueIsField ? `$substring(${qfn(field)}, $length(${qfn(field)}) - $length(${qfn(trimIfString(value))})) = ${qfn(trimIfString(value))}` : `$contains(${qfn(field)}, /${escapeStringRegex(value)}$/)`,
+        shouldNegate3(operator)
+      );
+    case "null":
+      return `${qfn(field)} = null`;
+    case "notNull":
+      return `${qfn(field)} != null`;
+    case "in":
+    case "notIn": {
+      const valueAsArray = toArray(value);
+      return negate(
+        `${qfn(field)} in [${valueAsArray.map(
+          (val) => valueIsField ? `${qfn(trimIfString(val))}` : shouldRenderAsNumber(val, parseNumbers) ? `${trimIfString(val)}` : quote(val, escapeQuotes)
+        ).join(", ")}]`,
+        shouldNegate3(operator)
+      );
+    }
+    case "between":
+    case "notBetween": {
+      const valueAsArray = toArray(value);
+      if (valueAsArray.length >= 2 && !nullOrUndefinedOrEmpty(valueAsArray[0]) && !nullOrUndefinedOrEmpty(valueAsArray[1])) {
+        const [first, second] = valueAsArray;
+        const firstNum = shouldRenderAsNumber(first, true) ? parseNumber(first, { parseNumbers: true }) : NaN;
+        const secondNum = shouldRenderAsNumber(second, true) ? parseNumber(second, { parseNumbers: true }) : NaN;
+        let firstValue = isNaN(firstNum) ? valueIsField ? `${first}` : first : firstNum;
+        let secondValue = isNaN(secondNum) ? valueIsField ? `${second}` : second : secondNum;
+        if (firstValue === firstNum && secondValue === secondNum && secondNum < firstNum) {
+          const tempNum = secondNum;
+          secondValue = firstNum;
+          firstValue = tempNum;
+        }
+        const renderAsNumbers = shouldRenderAsNumber(first, parseNumbers) && shouldRenderAsNumber(second, parseNumbers);
+        const expression = `${qfn(field)} >= ${valueIsField ? qfn(first) : renderAsNumbers ? firstValue : quote(firstValue, escapeQuotes)} and ${qfn(field)} <= ${valueIsField ? qfn(second) : renderAsNumbers ? secondValue : quote(secondValue, escapeQuotes)}`;
+        return operator === "between" ? `(${expression})` : negate(expression, true);
+      } else {
+        return "";
+      }
+    }
+  }
+  return "";
+};
+
+// src/utils/formatQuery/defaultRuleProcessorJsonLogic.ts
+var convertOperator = (op) => op.replace(/^(=)$/, "$1=").replace(/^notnull$/i, "!=").replace(/^null$/i, "==");
+var negateIfNotOp2 = (op, jsonRule) => /^(does)?not/i.test(op) ? { "!": jsonRule } : jsonRule;
+var defaultRuleProcessorJsonLogic = ({ field, operator, value, valueSource }, { parseNumbers } = {}) => {
+  const valueIsField = valueSource === "field";
+  const fieldObject = { var: field };
+  const fieldOrNumberRenderer = (v) => valueIsField ? { var: `${v}` } : shouldRenderAsNumber(v, parseNumbers) ? parseNumber(v, { parseNumbers }) : v;
+  switch (operator) {
+    case "<":
+    case "<=":
+    case "=":
+    case "!=":
+    case ">":
+    case ">=":
+      return {
+        [convertOperator(operator)]: [fieldObject, fieldOrNumberRenderer(value)]
+      };
+    case "null":
+    case "notNull": {
+      return {
+        [`${operator === "notNull" ? "!" : "="}=`]: [fieldObject, null]
+      };
+    }
+    case "in":
+    case "notIn": {
+      const valueAsArray = toArray(value).map((v) => fieldOrNumberRenderer(v));
+      return negateIfNotOp2(operator, { in: [fieldObject, valueAsArray] });
+    }
+    case "between":
+    case "notBetween": {
+      const valueAsArray = toArray(value);
+      if (valueAsArray.length >= 2 && isValidValue(valueAsArray[0]) && isValidValue(valueAsArray[1])) {
+        let [first, second] = valueAsArray;
+        if (!valueIsField && shouldRenderAsNumber(first, true) && shouldRenderAsNumber(second, true)) {
+          const firstNum = parseNumber(first, { parseNumbers: true });
+          const secondNum = parseNumber(second, { parseNumbers: true });
+          if (secondNum < firstNum) {
+            const tempNum = secondNum;
+            second = firstNum;
+            first = tempNum;
+          } else {
+            first = firstNum;
+            second = secondNum;
+          }
+        } else if (valueIsField) {
+          first = { var: first };
+          second = { var: second };
+        }
+        const jsonRule = { "<=": [first, fieldObject, second] };
+        return negateIfNotOp2(operator, jsonRule);
+      }
+      return false;
+    }
+    case "contains":
+    case "doesNotContain": {
+      const jsonRule = {
+        in: [fieldOrNumberRenderer(value), fieldObject]
+      };
+      return negateIfNotOp2(operator, jsonRule);
+    }
+    case "beginsWith":
+    case "doesNotBeginWith": {
+      const jsonRule = {
+        startsWith: [fieldObject, fieldOrNumberRenderer(value)]
+      };
+      return negateIfNotOp2(operator, jsonRule);
+    }
+    case "endsWith":
+    case "doesNotEndWith": {
+      const jsonRule = {
+        endsWith: [fieldObject, fieldOrNumberRenderer(value)]
+      };
+      return negateIfNotOp2(operator, jsonRule);
+    }
+  }
+  return false;
+};
+
+// src/utils/formatQuery/defaultRuleProcessorParameterized.ts
+var defaultRuleProcessorParameterized = (rule, opts, meta) => {
+  const {
+    fieldData,
+    format,
+    getNextNamedParam,
+    parseNumbers,
+    paramPrefix,
+    paramsKeepPrefix,
+    numberedParams,
+    quoteFieldNamesWith = ["", ""],
+    concatOperator,
+    valueProcessor = defaultValueProcessorByRule
+  } = opts ?? {};
+  const { processedParams = [] } = meta ?? {};
+  const parameterized = format === "parameterized";
+  const params = [];
+  const paramsNamed = {};
+  const finalize = (sql) => parameterized ? { sql, params } : { sql, params: paramsNamed };
+  const value = valueProcessor(rule, {
+    parseNumbers,
+    quoteFieldNamesWith,
+    concatOperator,
+    fieldData,
+    format
+  });
+  const sqlOperator = mapSQLOperator(rule.operator);
+  const sqlOperatorLowerCase = sqlOperator.toLowerCase();
+  const [qPre, qPost] = quoteFieldNamesWith;
+  if ((sqlOperatorLowerCase === "in" || sqlOperatorLowerCase === "not in" || sqlOperatorLowerCase === "between" || sqlOperatorLowerCase === "not between") && !value) {
+    return finalize("");
+  } else if (sqlOperatorLowerCase === "is null" || sqlOperatorLowerCase === "is not null") {
+    return finalize(`${qPre}${rule.field}${qPost} ${sqlOperator}`);
+  } else if (rule.valueSource === "field") {
+    return finalize(`${qPre}${rule.field}${qPost} ${sqlOperator} ${value}`.trim());
+  } else if (sqlOperatorLowerCase === "in" || sqlOperatorLowerCase === "not in") {
+    const splitValue = toArray(rule.value);
+    if (parameterized) {
+      for (const v of splitValue) {
+        params.push(shouldRenderAsNumber(v, parseNumbers) ? parseNumber(v, { parseNumbers }) : v);
+      }
+      return finalize(
+        `${qPre}${rule.field}${qPost} ${sqlOperator} (${splitValue.map(
+          (_v, i) => numberedParams ? `${paramPrefix}${processedParams.length + 1 + splitValue.length - (splitValue.length - i)}` : "?"
+        ).join(", ")})`
+      );
+    }
+    const inParams = [];
+    for (const v of splitValue) {
+      const thisParamName = getNextNamedParam(rule.field);
+      inParams.push(`${paramPrefix}${thisParamName}`);
+      paramsNamed[`${paramsKeepPrefix ? paramPrefix : ""}${thisParamName}`] = shouldRenderAsNumber(
+        v,
+        parseNumbers
+      ) ? parseNumber(v, { parseNumbers }) : v;
+    }
+    return finalize(`${qPre}${rule.field}${qPost} ${sqlOperator} (${inParams.join(", ")})`);
+  } else if (sqlOperatorLowerCase === "between" || sqlOperatorLowerCase === "not between") {
+    const valueAsArray = toArray(rule.value, { retainEmptyStrings: true });
+    const [first, second] = valueAsArray.slice(0, 2).map((v) => shouldRenderAsNumber(v, parseNumbers) ? parseNumber(v, { parseNumbers }) : v);
+    if (parameterized) {
+      params.push(first, second);
+      return finalize(
+        `${qPre}${rule.field}${qPost} ${sqlOperator} ${numberedParams ? `${paramPrefix}${processedParams.length + 1}` : "?"} and ${numberedParams ? `${paramPrefix}${processedParams.length + 2}` : "?"}`
+      );
+    }
+    const firstParamName = getNextNamedParam(rule.field);
+    const secondParamName = getNextNamedParam(rule.field);
+    paramsNamed[`${paramsKeepPrefix ? paramPrefix : ""}${firstParamName}`] = first;
+    paramsNamed[`${paramsKeepPrefix ? paramPrefix : ""}${secondParamName}`] = second;
+    return finalize(
+      `${qPre}${rule.field}${qPost} ${sqlOperator} ${paramPrefix}${firstParamName} and ${paramPrefix}${secondParamName}`
+    );
+  }
+  let paramValue = rule.value;
+  if (typeof rule.value === "string") {
+    if (shouldRenderAsNumber(rule.value, parseNumbers)) {
+      paramValue = parseNumber(rule.value, { parseNumbers });
+    } else {
+      paramValue = /^'.*'$/g.test(value) ? value.replaceAll(/(^'|'$)/g, "") : (
+        /* istanbul ignore next */
+        value
+      );
+    }
+  }
+  let paramName = "";
+  if (parameterized) {
+    params.push(paramValue);
+  } else {
+    paramName = getNextNamedParam(rule.field);
+    paramsNamed[`${paramsKeepPrefix ? paramPrefix : ""}${paramName}`] = paramValue;
+  }
+  return finalize(
+    `${qPre}${rule.field}${qPost} ${sqlOperator} ${parameterized ? numberedParams ? `${paramPrefix}${processedParams.length + 1}` : "?" : `${paramPrefix}${paramName}`}`.trim()
+  );
+};
+
+// src/utils/formatQuery/defaultRuleProcessorSQL.ts
+var defaultRuleProcessorSQL = (rule, opts) => {
+  const {
+    parseNumbers,
+    escapeQuotes,
+    quoteFieldNamesWith = ["", ""],
+    fieldIdentifierSeparator = "",
+    quoteValuesWith = `'`,
+    valueProcessor = defaultValueProcessorByRule,
+    concatOperator = "||"
+  } = opts ?? {};
+  const value = valueProcessor(rule, {
+    parseNumbers,
+    escapeQuotes,
+    quoteFieldNamesWith,
+    fieldIdentifierSeparator,
+    quoteValuesWith,
+    concatOperator
+  });
+  const operator = mapSQLOperator(rule.operator);
+  const operatorLowerCase = operator.toLowerCase();
+  if ((operatorLowerCase === "in" || operatorLowerCase === "not in" || operatorLowerCase === "between" || operatorLowerCase === "not between") && !value) {
+    return "";
+  }
+  return `${quoteFieldName(rule.field, { quoteFieldNamesWith, fieldIdentifierSeparator })} ${operator} ${value}`.trim();
+};
+
+// src/utils/formatQuery/formatQuery.ts
+
+
+// src/utils/isRuleOrGroupValid.ts
+var isValidationResult = (vr) => isPojo(vr) && typeof vr.valid === "boolean";
+var isRuleOrGroupValid = (rg, validationResult, validator) => {
+  if (typeof validationResult === "boolean") {
+    return validationResult;
+  }
+  if (isValidationResult(validationResult)) {
+    return validationResult.valid;
+  }
+  if (typeof validator === "function" && !isRuleGroup(rg)) {
+    const vr = validator(rg);
+    if (typeof vr === "boolean") {
+      return vr;
+    }
+    if (isValidationResult(vr)) {
+      return vr.valid;
+    }
+  }
+  return true;
+};
+
+// src/utils/formatQuery/defaultValueProcessorNL.ts
+var escapeStringValueQuotes2 = (v, quoteChar, escapeQuotes) => escapeQuotes && typeof v === "string" ? v.replaceAll(`${quoteChar}`, `${quoteChar}${quoteChar}`) : (
+  /* istanbul ignore next */
+  v
+);
+var defaultValueProcessorNL = (rule, opts = {}) => {
+  const {
+    escapeQuotes,
+    fields,
+    parseNumbers,
+    quoteFieldNamesWith,
+    quoteValuesWith,
+    fieldIdentifierSeparator
+  } = opts;
+  const valueIsField = rule.valueSource === "field";
+  const operatorLowerCase = rule.operator.toLowerCase();
+  const quoteChar = quoteValuesWith || /* istanbul ignore next */
+  "'";
+  const quoteValue = (v) => `${quoteChar}${v}${quoteChar}`;
+  const escapeValue = (v) => escapeStringValueQuotes2(v, quoteChar, escapeQuotes);
+  const wrapAndEscape = (v) => quoteValue(escapeValue(v));
+  const wrapFieldName = (v) => quoteFieldName(v, { quoteFieldNamesWith, fieldIdentifierSeparator });
+  switch (operatorLowerCase) {
+    case "null":
+    case "notnull": {
+      return "";
+    }
+    case "between":
+    case "notbetween":
+      return defaultValueProcessorByRule(rule, opts);
+    case "in":
+    case "notin": {
+      const valueAsArray = toArray(rule.value);
+      if (valueAsArray.length === 0) return "";
+      const valStringArray = valueAsArray.map(
+        (v) => valueIsField ? wrapFieldName(
+          getOption(fields ?? /* istanbul ignore next */
+          [], rule.value)?.label ?? v
+        ) : shouldRenderAsNumber(v, parseNumbers) ? `${trimIfString(v)}` : `${wrapAndEscape(v)}`
+      );
+      if (valStringArray.length <= 2) {
+        return valStringArray.join(" or ");
+      }
+      return `${valStringArray.slice(0, -1).join(", ")}, or ${valStringArray.at(-1)}`;
+    }
+  }
+  if (typeof rule.value === "boolean") {
+    return rule.value ? "true" : "false";
+  }
+  return valueIsField ? wrapFieldName(
+    getOption(fields ?? /* istanbul ignore next */
+    [], rule.value)?.label ?? rule.value
+  ) : shouldRenderAsNumber(rule.value, parseNumbers) ? `${trimIfString(rule.value)}` : `${wrapAndEscape(rule.value)}`;
+};
+
+// src/utils/formatQuery/defaultRuleProcessorNL.ts
+var nlOperator = (operator, valueSource = "value") => {
+  switch (operator.value.toLowerCase()) {
+    case "=":
+      return valueSource === "field" ? "is the same as the value in" : "is";
+    case "!=":
+      return valueSource === "field" ? "is not the same as the value in" : "is not";
+    case "<":
+      return valueSource === "field" ? "is less than the value in" : "is less than";
+    case ">":
+      return valueSource === "field" ? "is greater than the value in" : "is greater than";
+    case "<=":
+      return valueSource === "field" ? "is less than or equal to the value in" : "is less than or equal to";
+    case ">=":
+      return valueSource === "field" ? "is greater than or equal to the value in" : "is greater than or equal to";
+    case "contains":
+      return valueSource === "field" ? "contains the value in" : "contains";
+    case "beginswith":
+      return valueSource === "field" ? "starts with the value in" : "starts with";
+    case "endswith":
+      return valueSource === "field" ? "ends with the value in" : "ends with";
+    case "doesnotcontain":
+      return valueSource === "field" ? "does not contain the value in" : "does not contain";
+    case "doesnotbeginwith":
+      return valueSource === "field" ? "does not start with the value in" : "does not start with";
+    case "doesnotendwith":
+      return valueSource === "field" ? "does not end with the value in" : "does not end with";
+    case "null":
+      return "is null";
+    case "notnull":
+      return "is not null";
+    case "in":
+      return valueSource === "field" ? "is the same as a value in" : "is one of the values";
+    case "notin":
+      return valueSource === "field" ? "is not the same as any value in" : "is not one of the values";
+    case "between":
+      return valueSource === "field" ? "is between the values in" : "is between";
+    case "notbetween":
+      return valueSource === "field" ? "is not between the values in" : "is not between";
+    default:
+      return operator.label;
+  }
+};
+var defaultRuleProcessorNL = (rule, opts) => {
+  const {
+    fields,
+    fieldData,
+    parseNumbers,
+    escapeQuotes,
+    quoteFieldNamesWith = ["", ""],
+    fieldIdentifierSeparator = "",
+    quoteValuesWith = `'`,
+    valueProcessor = defaultValueProcessorNL,
+    concatOperator = "||",
+    getOperators = () => []
+  } = opts ?? /* istanbul ignore next */
+  {};
+  const value = valueProcessor(rule, {
+    fields,
+    parseNumbers,
+    escapeQuotes,
+    quoteFieldNamesWith,
+    fieldIdentifierSeparator,
+    quoteValuesWith,
+    concatOperator
+  });
+  const operatorLC = rule.operator.toLowerCase();
+  if ((operatorLC === "in" || operatorLC === "notin" || operatorLC === "between" || operatorLC === "notbetween") && !value) {
+    return "";
+  }
+  const processedField = quoteFieldName(fieldData?.label ?? rule.field, {
+    quoteFieldNamesWith,
+    fieldIdentifierSeparator
+  });
+  const processedOperator = nlOperator(
+    getOption(
+      toFullOptionList(
+        getOperators(rule.field, {
+          fieldData: fieldData ?? {
+            name: rule.field,
+            value: rule.field,
+            label: rule.field
+          }
+        }) ?? /* istanbul ignore next */
+        []
+      ),
+      rule.operator
+    ) ?? {
+      name: rule.operator,
+      value: rule.operator,
+      label: rule.operator
+    },
+    rule.valueSource
+  );
+  return `${processedField} ${processedOperator} ${value}`.trim();
+};
+
+// src/utils/formatQuery/formatQuery.ts
+var sqlDialectPresets = {
+  ansi: {},
+  sqlite: {
+    paramsKeepPrefix: true
+  },
+  oracle: {},
+  mssql: {
+    concatOperator: "+",
+    quoteFieldNamesWith: ["[", "]"],
+    fieldIdentifierSeparator: "."
+  },
+  mysql: {
+    concatOperator: "CONCAT"
+  },
+  postgresql: {
+    quoteFieldNamesWith: '"',
+    numberedParams: true,
+    paramPrefix: "$"
+  }
+};
+function formatQuery(ruleGroup, options = {}) {
+  let format = "json";
+  let valueProcessorInternal = defaultValueProcessorByRule;
+  let ruleProcessorInternal = null;
+  let quoteFieldNamesWith = ["", ""];
+  let fieldIdentifierSeparator = "";
+  let validator = () => true;
+  let fields = [];
+  let getOperators = () => [];
+  let validationMap = {};
+  let fallbackExpression = "";
+  let paramPrefix = ":";
+  let paramsKeepPrefix = false;
+  let numberedParams = false;
+  let parseNumbers = false;
+  let placeholderFieldName = defaultPlaceholderFieldName;
+  let placeholderOperatorName = defaultPlaceholderOperatorName;
+  let quoteValuesWith = "'";
+  let concatOperator = "||";
+  if (typeof options === "string") {
+    format = options.toLowerCase();
+    switch (format) {
+      case "natural_language":
+        ruleProcessorInternal = defaultRuleProcessorNL;
+        break;
+      case "mongodb":
+        ruleProcessorInternal = defaultRuleProcessorMongoDB;
+        break;
+      case "parameterized":
+        ruleProcessorInternal = defaultRuleProcessorParameterized;
+        break;
+      case "parameterized_named":
+        ruleProcessorInternal = defaultRuleProcessorParameterized;
+        break;
+      case "cel":
+        ruleProcessorInternal = defaultRuleProcessorCEL;
+        break;
+      case "spel":
+        ruleProcessorInternal = defaultRuleProcessorSpEL;
+        break;
+      case "jsonlogic":
+        ruleProcessorInternal = defaultRuleProcessorJsonLogic;
+        break;
+      case "elasticsearch":
+        ruleProcessorInternal = defaultRuleProcessorElasticSearch;
+        break;
+      case "jsonata":
+        ruleProcessorInternal = defaultRuleProcessorJSONata;
+        break;
+      default:
+    }
+  } else {
+    const optionsWithPresets = {
+      ...sqlDialectPresets[options.preset ?? "ansi"] ?? null,
+      ...options
+    };
+    format = (optionsWithPresets.format ?? "json").toLowerCase();
+    const { valueProcessor = null, ruleProcessor = null } = optionsWithPresets;
+    if (typeof ruleProcessor === "function") {
+      ruleProcessorInternal = ruleProcessor;
+    }
+    valueProcessorInternal = typeof valueProcessor === "function" ? (r, opts) => isValueProcessorLegacy(valueProcessor) ? valueProcessor(r.field, r.operator, r.value, r.valueSource) : valueProcessor(r, opts) : format === "natural_language" ? defaultValueProcessorNL : format === "mongodb" ? ruleProcessorInternal ?? defaultRuleProcessorMongoDB : format === "cel" ? ruleProcessorInternal ?? defaultRuleProcessorCEL : format === "spel" ? ruleProcessorInternal ?? defaultRuleProcessorSpEL : format === "jsonlogic" ? ruleProcessorInternal ?? defaultRuleProcessorJsonLogic : format === "elasticsearch" ? ruleProcessorInternal ?? defaultRuleProcessorElasticSearch : format === "jsonata" ? ruleProcessorInternal ?? defaultRuleProcessorJSONata : defaultValueProcessorByRule;
+    quoteFieldNamesWith = quoteFieldNamesWithArray(optionsWithPresets.quoteFieldNamesWith);
+    fieldIdentifierSeparator = optionsWithPresets.fieldIdentifierSeparator ?? "";
+    validator = optionsWithPresets.validator ?? (() => true);
+    fields = toFullOptionList(optionsWithPresets.fields ?? []);
+    getOperators = (f, m) => toFullOptionList(optionsWithPresets.getOperators?.(f, m) ?? []);
+    fallbackExpression = optionsWithPresets.fallbackExpression ?? "";
+    paramPrefix = optionsWithPresets.paramPrefix ?? ":";
+    paramsKeepPrefix = !!optionsWithPresets.paramsKeepPrefix;
+    numberedParams = !!optionsWithPresets.numberedParams;
+    parseNumbers = !!optionsWithPresets.parseNumbers;
+    placeholderFieldName = optionsWithPresets.placeholderFieldName ?? defaultPlaceholderFieldName;
+    placeholderOperatorName = optionsWithPresets.placeholderOperatorName ?? defaultPlaceholderOperatorName;
+    quoteValuesWith = optionsWithPresets.quoteValuesWith ?? "'";
+    concatOperator = optionsWithPresets.concatOperator ?? "||";
+  }
+  if (!fallbackExpression) {
+    fallbackExpression = format === "mongodb" ? '"$and":[{"$expr":true}]' : format === "cel" || format === "spel" ? "1 == 1" : format === "natural_language" ? "1 is 1" : "(1 = 1)";
+  }
+  if (format === "json" || format === "json_without_ids") {
+    const rg = parseNumbers ? (0,immer__WEBPACK_IMPORTED_MODULE_4__.produce)(ruleGroup, numerifyValues) : ruleGroup;
+    if (format === "json_without_ids") {
+      return JSON.stringify(
+        rg,
+        (key, value) => (
+          // Remove `id` and `path` keys; leave everything else unchanged.
+          key === "id" || key === "path" ? void 0 : value
+        )
+      );
+    }
+    return JSON.stringify(rg, null, 2);
+  }
+  if (typeof validator === "function") {
+    const validationResult = validator(ruleGroup);
+    if (typeof validationResult === "boolean") {
+      if (validationResult === false) {
+        return format === "parameterized" ? { sql: fallbackExpression, params: [] } : format === "parameterized_named" ? { sql: fallbackExpression, params: {} } : format === "mongodb" ? `{${fallbackExpression}}` : format === "jsonlogic" ? false : format === "elasticsearch" ? {} : fallbackExpression;
+      }
+    } else {
+      validationMap = validationResult;
+    }
+  }
+  const validatorMap = {};
+  const uniqueFields = toFlatOptionArray(fields);
+  for (const f of uniqueFields) {
+    if (typeof f.validator === "function") {
+      validatorMap[f.value ?? /* istanbul ignore next */
+      f.name] = f.validator;
+    }
+  }
+  const validateRule = (rule) => {
+    let validationResult;
+    let fieldValidator;
+    if (rule.id) {
+      validationResult = validationMap[rule.id];
+    }
+    if (uniqueFields.length > 0) {
+      const fieldArr = uniqueFields.filter((f) => f.name === rule.field);
+      if (fieldArr.length > 0) {
+        const field = fieldArr[0];
+        if (typeof field.validator === "function") {
+          fieldValidator = field.validator;
+        }
+      }
+    }
+    return [validationResult, fieldValidator];
+  };
+  if (format === "sql") {
+    const processRuleGroup = (rg, outermostOrLonelyInGroup) => {
+      if (!isRuleOrGroupValid(rg, validationMap[rg.id ?? /* istanbul ignore next */
+      ""])) {
+        return outermostOrLonelyInGroup ? fallbackExpression : (
+          /* istanbul ignore next */
+          ""
+        );
+      }
+      const processedRules = rg.rules.map((rule) => {
+        if (typeof rule === "string") {
+          return rule;
+        }
+        if (isRuleGroup(rule)) {
+          return processRuleGroup(rule, rg.rules.length === 1);
+        }
+        const [validationResult, fieldValidator] = validateRule(rule);
+        if (!isRuleOrGroupValid(rule, validationResult, fieldValidator) || rule.field === placeholderFieldName || rule.operator === placeholderOperatorName) {
+          return "";
+        }
+        const escapeQuotes = (rule.valueSource ?? "value") === "value";
+        const fieldData = getOption(fields, rule.field);
+        if (typeof ruleProcessorInternal === "function") {
+          return ruleProcessorInternal(rule, {
+            parseNumbers,
+            escapeQuotes,
+            quoteFieldNamesWith,
+            fieldIdentifierSeparator,
+            fieldData,
+            format,
+            quoteValuesWith,
+            concatOperator
+          });
+        }
+        return defaultRuleProcessorSQL(rule, {
+          parseNumbers,
+          escapeQuotes,
+          valueProcessor: valueProcessorInternal,
+          quoteFieldNamesWith,
+          fieldIdentifierSeparator,
+          fieldData,
+          format,
+          quoteValuesWith,
+          concatOperator
+        });
+      });
+      if (processedRules.length === 0) {
+        return fallbackExpression;
+      }
+      return `${rg.not ? "NOT " : ""}(${processedRules.filter(Boolean).join(isRuleGroupType(rg) ? ` ${rg.combinator} ` : " ")})`;
+    };
+    return processRuleGroup(ruleGroup, true);
+  }
+  if (format === "parameterized" || format === "parameterized_named") {
+    const parameterized = format === "parameterized";
+    const params = [];
+    const paramsNamed = {};
+    const fieldParams = /* @__PURE__ */ new Map();
+    const getNextNamedParam = (field) => {
+      if (!fieldParams.has(field)) {
+        fieldParams.set(field, /* @__PURE__ */ new Set());
+      }
+      const nextNamedParam = `${field}_${fieldParams.get(field).size + 1}`;
+      fieldParams.get(field).add(nextNamedParam);
+      return nextNamedParam;
+    };
+    const processRule = (rule) => {
+      const [validationResult, fieldValidator] = validateRule(rule);
+      if (!isRuleOrGroupValid(rule, validationResult, fieldValidator) || rule.field === placeholderFieldName || rule.operator === placeholderOperatorName) {
+        return "";
+      }
+      const fieldData = getOption(fields, rule.field);
+      const fieldParamNames = Object.fromEntries(
+        [...fieldParams.entries()].map(([f, s]) => [f, [...s]])
+      );
+      const processedRule = (typeof ruleProcessorInternal === "function" ? ruleProcessorInternal : defaultRuleProcessorParameterized)(
+        rule,
+        {
+          getNextNamedParam,
+          fieldParamNames,
+          parseNumbers,
+          quoteFieldNamesWith,
+          concatOperator,
+          fieldIdentifierSeparator,
+          fieldData,
+          format,
+          paramPrefix,
+          paramsKeepPrefix,
+          numberedParams,
+          fallbackExpression,
+          valueProcessor: valueProcessorInternal,
+          fields,
+          placeholderFieldName,
+          placeholderOperatorName,
+          validator
+        },
+        {
+          processedParams: params
+        }
+      );
+      if (!isPojo(processedRule)) {
+        return "";
+      }
+      const { sql, params: customParams } = processedRule;
+      if (typeof sql !== "string" || !sql) {
+        return "";
+      }
+      if (format === "parameterized" && Array.isArray(customParams)) {
+        params.push(...customParams);
+      } else if (format === "parameterized_named" && isPojo(customParams)) {
+        Object.assign(paramsNamed, customParams);
+        for (const p of Object.keys(customParams)) fieldParams.get(rule.field)?.add(p);
+      }
+      return sql;
+    };
+    const processRuleGroup = (rg, outermostOrLonelyInGroup) => {
+      if (!isRuleOrGroupValid(rg, validationMap[rg.id ?? /* istanbul ignore next */
+      ""])) {
+        return outermostOrLonelyInGroup ? fallbackExpression : (
+          /* istanbul ignore next */
+          ""
+        );
+      }
+      const processedRules = rg.rules.map((rule) => {
+        if (typeof rule === "string") {
+          return rule;
+        }
+        if (isRuleGroup(rule)) {
+          return processRuleGroup(rule, rg.rules.length === 1);
+        }
+        return processRule(rule);
+      });
+      if (processedRules.length === 0) {
+        return fallbackExpression;
+      }
+      return `${rg.not ? "NOT " : ""}(${processedRules.filter(Boolean).join(isRuleGroupType(rg) ? ` ${rg.combinator} ` : " ")})`;
+    };
+    if (parameterized) {
+      return { sql: processRuleGroup(ruleGroup, true), params };
+    }
+    return { sql: processRuleGroup(ruleGroup, true), params: paramsNamed };
+  }
+  if (format === "mongodb") {
+    const processRuleGroup = (rg, outermost) => {
+      if (!isRuleOrGroupValid(rg, validationMap[rg.id ?? /* istanbul ignore next */
+      ""])) {
+        return outermost ? fallbackExpression : "";
+      }
+      const combinator = `"$${rg.combinator.toLowerCase()}"`;
+      let hasChildRules = false;
+      const expressions = rg.rules.map((rule) => {
+        if (isRuleGroup(rule)) {
+          const processedRuleGroup = processRuleGroup(rule);
+          if (processedRuleGroup) {
+            hasChildRules = true;
+            return /^{.+}$/.test(processedRuleGroup) ? processedRuleGroup : `{${processedRuleGroup}}`;
+          }
+          return "";
+        }
+        const [validationResult, fieldValidator] = validateRule(rule);
+        if (!isRuleOrGroupValid(rule, validationResult, fieldValidator) || rule.field === placeholderFieldName || rule.operator === placeholderOperatorName) {
+          return "";
+        }
+        const fieldData = getOption(fields, rule.field);
+        return (ruleProcessorInternal ?? valueProcessorInternal)(rule, {
+          parseNumbers,
+          fieldData,
+          format
+        });
+      }).filter(Boolean);
+      return expressions.length > 0 ? expressions.length === 1 && !hasChildRules ? expressions[0] : `${combinator}:[${expressions.join(",")}]` : fallbackExpression;
+    };
+    const rgStandard = isRuleGroupType(ruleGroup) ? ruleGroup : convertFromIC(ruleGroup);
+    const processedQuery = processRuleGroup(rgStandard, true);
+    return /^{.+}$/.test(processedQuery) ? processedQuery : `{${processedQuery}}`;
+  }
+  if (format === "cel") {
+    const processRuleGroup = (rg, outermost) => {
+      if (!isRuleOrGroupValid(rg, validationMap[rg.id ?? /* istanbul ignore next */
+      ""])) {
+        return outermost ? fallbackExpression : "";
+      }
+      const expression = rg.rules.map((rule) => {
+        if (typeof rule === "string") {
+          return celCombinatorMap[rule];
+        }
+        if (isRuleGroup(rule)) {
+          return processRuleGroup(rule);
+        }
+        const [validationResult, fieldValidator] = validateRule(rule);
+        if (!isRuleOrGroupValid(rule, validationResult, fieldValidator) || rule.field === placeholderFieldName || rule.operator === placeholderOperatorName) {
+          return "";
+        }
+        const fieldData = getOption(fields, rule.field);
+        return (ruleProcessorInternal ?? valueProcessorInternal)(rule, {
+          parseNumbers,
+          escapeQuotes: (rule.valueSource ?? "value") === "value",
+          fieldData,
+          format
+        });
+      }).filter(Boolean).join(
+        isRuleGroupType(rg) ? ` ${celCombinatorMap[rg.combinator]} ` : " "
+      );
+      const [prefix, suffix] = rg.not || !outermost ? [`${rg.not ? "!" : ""}(`, ")"] : ["", ""];
+      return expression ? `${prefix}${expression}${suffix}` : fallbackExpression;
+    };
+    return processRuleGroup(ruleGroup, true);
+  }
+  if (format === "spel") {
+    const processRuleGroup = (rg, outermost) => {
+      if (!isRuleOrGroupValid(rg, validationMap[rg.id ?? /* istanbul ignore next */
+      ""])) {
+        return outermost ? fallbackExpression : "";
+      }
+      const expression = rg.rules.map((rule) => {
+        if (typeof rule === "string") {
+          return rule;
+        }
+        if (isRuleGroup(rule)) {
+          return processRuleGroup(rule);
+        }
+        const [validationResult, fieldValidator] = validateRule(rule);
+        if (!isRuleOrGroupValid(rule, validationResult, fieldValidator) || rule.field === placeholderFieldName || rule.operator === placeholderOperatorName) {
+          return "";
+        }
+        const fieldData = getOption(fields, rule.field);
+        return (ruleProcessorInternal ?? valueProcessorInternal)(rule, {
+          parseNumbers,
+          escapeQuotes: (rule.valueSource ?? "value") === "value",
+          fieldData,
+          format
+        });
+      }).filter(Boolean).join(isRuleGroupType(rg) ? ` ${rg.combinator} ` : " ");
+      const [prefix, suffix] = rg.not || !outermost ? [`${rg.not ? "!" : ""}(`, ")"] : ["", ""];
+      return expression ? `${prefix}${expression}${suffix}` : fallbackExpression;
+    };
+    return processRuleGroup(ruleGroup, true);
+  }
+  if (format === "jsonata") {
+    const processRuleGroup = (rg, outermost) => {
+      if (!isRuleOrGroupValid(rg, validationMap[rg.id ?? /* istanbul ignore next */
+      ""])) {
+        return outermost ? fallbackExpression : "";
+      }
+      const expression = rg.rules.map((rule) => {
+        if (typeof rule === "string") {
+          return rule;
+        }
+        if (isRuleGroup(rule)) {
+          return processRuleGroup(rule);
+        }
+        const [validationResult, fieldValidator] = validateRule(rule);
+        if (!isRuleOrGroupValid(rule, validationResult, fieldValidator) || rule.field === placeholderFieldName || rule.operator === placeholderOperatorName) {
+          return "";
+        }
+        const fieldData = getOption(fields, rule.field);
+        return (ruleProcessorInternal ?? valueProcessorInternal)(rule, {
+          parseNumbers,
+          escapeQuotes: (rule.valueSource ?? "value") === "value",
+          fieldData,
+          format,
+          quoteFieldNamesWith,
+          fieldIdentifierSeparator
+        });
+      }).filter(Boolean).join(isRuleGroupType(rg) ? ` ${rg.combinator} ` : " ");
+      const [prefix, suffix] = rg.not || !outermost ? [`${rg.not ? "$not" : ""}(`, ")"] : ["", ""];
+      return expression ? `${prefix}${expression}${suffix}` : fallbackExpression;
+    };
+    return processRuleGroup(ruleGroup, true);
+  }
+  if (format === "jsonlogic") {
+    const query = isRuleGroupType(ruleGroup) ? ruleGroup : convertFromIC(ruleGroup);
+    const processRuleGroup = (rg, _outermost) => {
+      if (!isRuleOrGroupValid(rg, validationMap[rg.id ?? /* istanbul ignore next */
+      ""])) {
+        return false;
+      }
+      const processedRules = rg.rules.map((rule) => {
+        if (isRuleGroup(rule)) {
+          return processRuleGroup(rule);
+        }
+        const [validationResult, fieldValidator] = validateRule(rule);
+        if (!isRuleOrGroupValid(rule, validationResult, fieldValidator) || rule.field === placeholderFieldName || rule.operator === placeholderOperatorName) {
+          return false;
+        }
+        const fieldData = getOption(fields, rule.field);
+        return (ruleProcessorInternal ?? valueProcessorInternal)(rule, {
+          parseNumbers,
+          fieldData,
+          format
+        });
+      }).filter(Boolean);
+      if (processedRules.length === 0) {
+        return false;
+      }
+      const jsonRuleGroup = { [rg.combinator]: processedRules };
+      return rg.not ? { "!": jsonRuleGroup } : jsonRuleGroup;
+    };
+    return processRuleGroup(query, true);
+  }
+  if (format === "elasticsearch") {
+    const query = isRuleGroupType(ruleGroup) ? ruleGroup : convertFromIC(ruleGroup);
+    const processRuleGroup = (rg) => {
+      if (!isRuleOrGroupValid(rg, validationMap[rg.id ?? /* istanbul ignore next */
+      ""])) {
+        return false;
+      }
+      const processedRules = rg.rules.map((rule) => {
+        if (isRuleGroup(rule)) {
+          return processRuleGroup(rule);
+        }
+        const [validationResult, fieldValidator] = validateRule(rule);
+        if (!isRuleOrGroupValid(rule, validationResult, fieldValidator) || rule.field === placeholderFieldName || rule.operator === placeholderOperatorName) {
+          return false;
+        }
+        const fieldData = getOption(fields, rule.field);
+        return (ruleProcessorInternal ?? valueProcessorInternal)(rule, {
+          parseNumbers,
+          fieldData,
+          format
+        });
+      }).filter(Boolean);
+      if (processedRules.length === 0) {
+        return false;
+      }
+      return {
+        bool: rg.not ? {
+          must_not: rg.combinator === "or" ? { bool: { should: processedRules } } : processedRules
+        } : { [rg.combinator === "or" ? "should" : "must"]: processedRules }
+      };
+    };
+    const processedRuleGroup = processRuleGroup(query);
+    return processedRuleGroup === false ? {} : processedRuleGroup;
+  }
+  if (format === "natural_language") {
+    const processRuleGroup = (rg, outermostOrLonelyInGroup) => {
+      if (!isRuleOrGroupValid(rg, validationMap[rg.id ?? /* istanbul ignore next */
+      ""])) {
+        return outermostOrLonelyInGroup ? fallbackExpression : (
+          /* istanbul ignore next */
+          ""
+        );
+      }
+      const processedRules = rg.rules.map((rule) => {
+        if (typeof rule === "string") {
+          return `, ${rule} `;
+        }
+        if (isRuleGroup(rule)) {
+          return processRuleGroup(rule, rg.rules.length === 1);
+        }
+        const [validationResult, fieldValidator] = validateRule(rule);
+        if (!isRuleOrGroupValid(rule, validationResult, fieldValidator) || rule.field === placeholderFieldName || rule.operator === placeholderOperatorName) {
+          return "";
+        }
+        const escapeQuotes = (rule.valueSource ?? "value") === "value";
+        const fieldData = getOption(fields, rule.field);
+        if (typeof ruleProcessorInternal === "function") {
+          return ruleProcessorInternal(rule, {
+            fields,
+            parseNumbers,
+            escapeQuotes,
+            quoteFieldNamesWith,
+            fieldIdentifierSeparator,
+            fieldData,
+            format,
+            quoteValuesWith,
+            concatOperator,
+            getOperators
+          });
+        }
+        return defaultRuleProcessorNL(rule, {
+          fields,
+          parseNumbers,
+          escapeQuotes,
+          valueProcessor: valueProcessorInternal,
+          quoteFieldNamesWith,
+          fieldIdentifierSeparator,
+          fieldData,
+          format,
+          quoteValuesWith,
+          concatOperator,
+          getOperators
+        });
+      });
+      if (processedRules.length === 0) {
+        return fallbackExpression;
+      }
+      const prefix = rg.not || !outermostOrLonelyInGroup ? "(" : "";
+      const suffix = rg.not || !outermostOrLonelyInGroup ? `) is${rg.not ? " not" : ""} true` : "";
+      return `${prefix}${processedRules.filter(Boolean).join(isRuleGroupType(rg) ? `, ${rg.combinator} ` : "")}${suffix}`;
+    };
+    return processRuleGroup(ruleGroup, true);
+  }
+  return "";
+}
+
+// src/utils/formatQuery/index.ts
+var internalValueProcessors = {
+  default: defaultValueProcessorByRule,
+  mongodb: defaultRuleProcessorMongoDB,
+  cel: defaultRuleProcessorCEL,
+  spel: defaultRuleProcessorSpEL
+};
+var generateValueProcessor = (format) => (field, operator, value, valueSource) => internalValueProcessors[format](
+  { field, operator, value, valueSource },
+  { parseNumbers: false }
+);
+var defaultValueProcessor = generateValueProcessor("default");
+var defaultMongoDBValueProcessor = generateValueProcessor("mongodb");
+var defaultCELValueProcessor = generateValueProcessor("cel");
+var defaultSpELValueProcessor = generateValueProcessor("spel");
+var defaultValueProcessorCELByRule = defaultRuleProcessorCEL;
+var defaultValueProcessorMongoDBByRule = defaultRuleProcessorMongoDB;
+var defaultValueProcessorSpELByRule = defaultRuleProcessorSpEL;
+
+// src/utils/pathUtils.ts
+var findPath = (path, query) => {
+  let target = query;
+  let level = 0;
+  while (level < path.length && target && isRuleGroup(target)) {
+    const t = target.rules[path[level]];
+    target = typeof t === "string" ? null : t;
+    level++;
+  }
+  return target;
+};
+var getParentPath = (path) => path.slice(0, -1);
+var pathsAreEqual = (path1, path2) => path1.length === path2.length && path1.every((val, idx) => val === path2[idx]);
+var isAncestor = (maybeAncestor, path) => maybeAncestor.length < path.length && new RegExp(`^${maybeAncestor.join("-")}`).test(path.join("-"));
+var getCommonAncestorPath = (path1, path2) => {
+  const commonAncestorPath = [];
+  const parentPath1 = getParentPath(path1);
+  const parentPath2 = getParentPath(path2);
+  let i = 0;
+  while (i < parentPath1.length && i < parentPath2.length && parentPath1[i] === parentPath2[i]) {
+    commonAncestorPath.push(parentPath2[i]);
+    i++;
+  }
+  return commonAncestorPath;
+};
+var pathIsDisabled = (path, query) => {
+  let disabled = !!query.disabled;
+  let target = query;
+  let level = 0;
+  while (level < path.length && !disabled && isRuleGroup(target)) {
+    const t = target.rules[path[level]];
+    if (isPojo(t) && (isRuleGroup(t) || "field" in t && !!t.field)) {
+      disabled = !!t.disabled;
+      target = t;
+    }
+    level++;
+  }
+  return disabled;
+};
+
+// src/utils/generateAccessibleDescription.ts
+var generateAccessibleDescription = (params) => pathsAreEqual([], params.path) ? `Query builder` : `Rule group at path ${params.path.join("-")}`;
+
+// src/utils/generateID.ts
+var cryptoModule = globalThis.crypto;
+var generateID = () => "00-0-4-2-000".replaceAll(
+  /[^-]/g,
+  (s) => ((Math.random() + Math.trunc(s)) * 65536 >> parseInt(s)).toString(16).padStart(4, "0")
+);
+if (cryptoModule) {
+  if (typeof cryptoModule.randomUUID === "function") {
+    generateID = () => cryptoModule.randomUUID();
+  } else if (typeof cryptoModule.getRandomValues === "function") {
+    const position19vals = "89ab";
+    const container = new Uint32Array(32);
+    generateID = () => {
+      cryptoModule.getRandomValues(container);
+      let id = (container[0] % 16).toString(16);
+      for (let i = 1; i < 32; i++) {
+        if (i === 12) {
+          id = `${id}${"4"}`;
+        } else if (i === 16) {
+          id = `${id}${position19vals[container[17] % 4]}`;
+        } else {
+          id = `${id}${(container[i] % 16).toString(16)}`;
+        }
+        if (i === 7 || i === 11 || i === 15 || i === 19) {
+          id = `${id}${"-"}`;
+        }
+      }
+      return id;
+    };
+  }
+}
+
+// src/utils/getCompatContextProvider.tsx
+
+var getCompatContextProvider = (gccpProps) => {
+  const QBContextWrapper = (props) => {
+    const rqbContext = useMergedContext(gccpProps);
+    return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(QueryBuilderContext.Provider, { value: rqbContext }, props.children);
+  };
+  const QBContextInner = (props) => {
+    const rqbContext = useMergedContext(props);
+    return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(QueryBuilderContext.Provider, { value: rqbContext }, props.children);
+  };
+  return (props) => {
+    return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(QBContextWrapper, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(QBContextInner, { ...props }, props.children));
+  };
+};
+
+// src/utils/getValidationClassNames.ts
+var getValidationClassNames = (validationResult) => {
+  const valid = typeof validationResult === "boolean" ? validationResult : typeof validationResult === "object" && validationResult !== null ? validationResult.valid : null;
+  return typeof valid === "boolean" ? valid ? standardClassnames.valid : standardClassnames.invalid : "";
+};
+
+// src/utils/getValueSourcesUtil.ts
+var defaultValueSourcesArray = ["value"];
+var dummyFD = {
+  name: "name",
+  value: "name",
+  valueSources: null,
+  label: "label"
+};
+var getValueSourcesUtil = (fieldData, operator, getValueSources) => {
+  const fd = fieldData ? toFullOption(fieldData) : (
+    /* istanbul ignore else */
+    dummyFD
+  );
+  if (fd.valueSources) {
+    if (typeof fd.valueSources === "function") {
+      return fd.valueSources(operator);
+    }
+    return fd.valueSources;
+  }
+  if (getValueSources) {
+    const vals = getValueSources(fd.value, operator, {
+      fieldData: toFullOption(fd)
+    });
+    if (vals) return vals;
+  }
+  return defaultValueSourcesArray;
+};
+
+// src/utils/mergeClassnames.ts
+var joinClassnamesByName = (name, args) => clsx(args.map((c) => clsx(c?.[name])));
+var mergeClassnames = (...args) => {
+  return {
+    queryBuilder: joinClassnamesByName("queryBuilder", args),
+    ruleGroup: joinClassnamesByName("ruleGroup", args),
+    header: joinClassnamesByName("header", args),
+    body: joinClassnamesByName("body", args),
+    combinators: joinClassnamesByName("combinators", args),
+    addRule: joinClassnamesByName("addRule", args),
+    addGroup: joinClassnamesByName("addGroup", args),
+    cloneRule: joinClassnamesByName("cloneRule", args),
+    cloneGroup: joinClassnamesByName("cloneGroup", args),
+    removeGroup: joinClassnamesByName("removeGroup", args),
+    rule: joinClassnamesByName("rule", args),
+    fields: joinClassnamesByName("fields", args),
+    operators: joinClassnamesByName("operators", args),
+    value: joinClassnamesByName("value", args),
+    removeRule: joinClassnamesByName("removeRule", args),
+    notToggle: joinClassnamesByName("notToggle", args),
+    shiftActions: joinClassnamesByName("shiftActions", args),
+    dragHandle: joinClassnamesByName("dragHandle", args),
+    lockRule: joinClassnamesByName("lockRule", args),
+    lockGroup: joinClassnamesByName("lockGroup", args),
+    valueSource: joinClassnamesByName("valueSource", args),
+    actionElement: joinClassnamesByName("actionElement", args),
+    valueSelector: joinClassnamesByName("valueSelector", args),
+    betweenRules: joinClassnamesByName("betweenRules", args),
+    valid: joinClassnamesByName("valid", args),
+    invalid: joinClassnamesByName("invalid", args),
+    dndDragging: joinClassnamesByName("dndDragging", args),
+    dndOver: joinClassnamesByName("dndOver", args),
+    dndCopy: joinClassnamesByName("dndCopy", args),
+    disabled: joinClassnamesByName("disabled", args),
+    valueListItem: joinClassnamesByName("valueListItem", args),
+    branches: joinClassnamesByName("branches", args)
+  };
+};
+
+// src/utils/mergeTranslations.ts
+
+
+// src/utils/objectUtils.ts
+var objectKeys = Object.keys;
+var objectEntries = Object.entries;
+
+// src/utils/mergeTranslations.ts
+var mergeTranslations = (base, ...otherTranslations) => (0,immer__WEBPACK_IMPORTED_MODULE_4__.produce)(base, (draft) => {
+  for (const translations of otherTranslations) {
+    if (translations) {
+      for (const t of objectKeys(translations)) {
+        if (draft[t]) {
+          Object.assign(draft[t], translations[t]);
+        } else {
+          Object.assign(draft, { [t]: translations[t] });
+        }
+      }
+    }
+  }
+});
+var mergeTranslation = (el, keyPropContextMap, finalize) => {
+  const finalKeys = objectEntries(keyPropContextMap).map(([key, [pT, cT]]) => [
+    key,
+    pT ?? cT ?? (finalize ? defaultTranslations : {})[el]?.[key]
+  ]).filter((k) => !!k[1]);
+  return finalKeys.length > 0 ? { [el]: Object.fromEntries(finalKeys) } : void 0;
+};
+
+// src/utils/prepareQueryObjects.ts
+
+var prepareRule = (rule, { idGenerator = generateID } = {}) => (0,immer__WEBPACK_IMPORTED_MODULE_4__.produce)(rule, (draft) => {
+  if (!draft.id) {
+    draft.id = idGenerator();
+  }
+});
+var prepareRuleGroup = (queryObject, { idGenerator = generateID } = {}) => (0,immer__WEBPACK_IMPORTED_MODULE_4__.produce)(queryObject, (draft) => {
+  if (!draft.id) {
+    draft.id = idGenerator();
+  }
+  draft.rules = draft.rules.map(
+    (r) => typeof r === "string" ? r : isRuleGroup(r) ? prepareRuleGroup(r, { idGenerator }) : prepareRule(r, { idGenerator })
+  );
+});
+var prepareRuleOrGroup = (rg, { idGenerator = generateID } = {}) => isRuleGroup(rg) ? prepareRuleGroup(rg, { idGenerator }) : prepareRule(rg, { idGenerator });
+
+// src/utils/queryTools.ts
+
+
+// src/utils/regenerateIDs.ts
+var regenerateID = (rule, { idGenerator = generateID } = {}) => structuredClone({ ...rule, id: idGenerator() });
+var regenerateIDs = (ruleOrGroup, { idGenerator = generateID } = {}) => {
+  if (!isPojo(ruleOrGroup)) return ruleOrGroup;
+  if (!isRuleGroup(ruleOrGroup)) {
+    return structuredClone({
+      ...ruleOrGroup,
+      id: idGenerator()
+    });
+  }
+  if (isRuleGroupType(ruleOrGroup)) {
+    const rules2 = ruleOrGroup.rules.map(
+      (r) => isRuleGroup(r) ? regenerateIDs(r, { idGenerator }) : regenerateID(r, { idGenerator })
+    );
+    return { ...ruleOrGroup, id: idGenerator(), rules: rules2 };
+  }
+  const rules = ruleOrGroup.rules.map(
+    (r) => typeof r === "string" ? r : isRuleGroup(r) ? regenerateIDs(r, { idGenerator }) : regenerateID(r, { idGenerator })
+  );
+  return { ...ruleOrGroup, id: idGenerator(), rules };
+};
+
+// src/utils/queryTools.ts
+var add = (query, ruleOrGroup, parentPath, {
+  combinators = defaultCombinators,
+  combinatorPreceding,
+  idGenerator = generateID
+} = {}) => (0,immer__WEBPACK_IMPORTED_MODULE_4__.produce)(query, (draft) => {
+  const parent = findPath(parentPath, draft);
+  if (!parent || !isRuleGroup(parent)) return;
+  if (isRuleGroupTypeIC(parent) && parent.rules.length > 0) {
+    const prevCombinator = parent.rules.at(-2);
+    parent.rules.push(
+      // @ts-expect-error This is technically a type violation until the next push
+      // to the rules array, but that happens immediately and unconditionally so
+      // there's no significant risk.
+      combinatorPreceding ?? (typeof prevCombinator === "string" ? prevCombinator : getFirstOption(combinators))
+    );
+  }
+  parent.rules.push(prepareRuleOrGroup(ruleOrGroup, { idGenerator }));
+});
+var update = (query, prop, value, path, {
+  resetOnFieldChange = true,
+  resetOnOperatorChange = false,
+  getRuleDefaultOperator = () => "=",
+  getValueSources = () => ["value"],
+  getRuleDefaultValue = () => ""
+} = {}) => (0,immer__WEBPACK_IMPORTED_MODULE_4__.produce)(query, (draft) => {
+  if (prop === "combinator" && !isRuleGroupType(draft)) {
+    const parentRules = findPath(getParentPath(path), draft).rules;
+    if (path.at(-1) % 2 === 1) {
+      parentRules[path.at(-1)] = value;
+    }
+    return;
+  }
+  const ruleOrGroup = findPath(path, draft);
+  if (!ruleOrGroup) return;
+  const isGroup = isRuleGroup(ruleOrGroup);
+  if (ruleOrGroup[prop] === value) return;
+  if (prop !== "valueSource") {
+    ruleOrGroup[prop] = value;
+  }
+  if (isGroup) return;
+  let resetValueSource = false;
+  let resetValue = false;
+  if (resetOnFieldChange && prop === "field") {
+    ruleOrGroup.operator = getRuleDefaultOperator(value);
+    resetValueSource = true;
+    resetValue = true;
+  }
+  if (resetOnOperatorChange && prop === "operator") {
+    resetValueSource = true;
+    resetValue = true;
+  }
+  const defaultValueSource = getValueSources(ruleOrGroup.field, ruleOrGroup.operator)[0];
+  if (resetValueSource && ruleOrGroup.valueSource && defaultValueSource !== ruleOrGroup.valueSource || prop === "valueSource" && value !== ruleOrGroup.valueSource) {
+    resetValue = !!ruleOrGroup.valueSource || !ruleOrGroup.valueSource && value !== defaultValueSource;
+    ruleOrGroup.valueSource = resetValueSource ? defaultValueSource : value;
+  }
+  if (resetValue) {
+    ruleOrGroup.value = getRuleDefaultValue(ruleOrGroup);
+  }
+});
+var remove = (query, path) => {
+  if (
+    // Can't remove the root group
+    path.length === 0 || // Can't independently remove independent combinators
+    !isRuleGroupType(query) && !findPath(path, query)
+  ) {
+    return query;
+  }
+  return (0,immer__WEBPACK_IMPORTED_MODULE_4__.produce)(query, (draft) => {
+    const index = path.at(-1);
+    const parent = findPath(getParentPath(path), draft);
+    if (parent && isRuleGroup(parent)) {
+      if (!isRuleGroupType(parent) && parent.rules.length > 1) {
+        const idxStartDelete = index === 0 ? 0 : index - 1;
+        parent.rules.splice(idxStartDelete, 2);
+      } else {
+        parent.rules.splice(index, 1);
+      }
+    }
+  });
+};
+var getNextPath = (query, currentPath, newPathOrShiftDirection) => {
+  if (Array.isArray(newPathOrShiftDirection)) {
+    return newPathOrShiftDirection;
+  }
+  const ic = isRuleGroupTypeIC(query);
+  if (newPathOrShiftDirection === "up") {
+    if (pathsAreEqual(currentPath, [0])) {
+      return currentPath;
+    } else if (currentPath.at(-1) === 0) {
+      const parentPath = getParentPath(currentPath);
+      return [...getParentPath(parentPath), Math.max(0, parentPath.at(-1) - (ic ? 1 : 0))];
+    } else {
+      const evaluationPath = [
+        ...getParentPath(currentPath),
+        Math.max(0, currentPath.at(-1) - (ic ? 2 : 1))
+      ];
+      const entityAtTarget = findPath(evaluationPath, query);
+      if (isRuleGroup(entityAtTarget)) {
+        return [...evaluationPath, entityAtTarget.rules.length];
+      } else {
+        const targetPath = [
+          ...getParentPath(currentPath),
+          Math.max(0, currentPath.at(-1) - (ic ? 3 : 1))
+        ];
+        return targetPath;
+      }
+    }
+  } else if (newPathOrShiftDirection === "down") {
+    if (pathsAreEqual([query.rules.length - 1], currentPath)) {
+      return currentPath;
+    } else if (currentPath.at(-1) === findPath(getParentPath(currentPath), query).rules.length - 1) {
+      const parentPath = getParentPath(currentPath);
+      return [...getParentPath(parentPath), parentPath.at(-1) + 1];
+    } else {
+      const evaluationPath = [...getParentPath(currentPath), currentPath.at(-1) + (ic ? 2 : 1)];
+      const entityToEvaluate = findPath(evaluationPath, query);
+      if (isRuleGroup(entityToEvaluate)) {
+        return [...evaluationPath, 0];
+      } else {
+        const targetPath = [...getParentPath(currentPath), currentPath.at(-1) + (ic ? 3 : 2)];
+        return targetPath;
+      }
+    }
+  }
+  return currentPath;
+};
+var move = (query, oldPath, newPath, { clone = false, combinators = defaultCombinators, idGenerator = generateID } = {}) => {
+  const nextPath = getNextPath(query, oldPath, newPath);
+  if (oldPath.length === 0 || pathsAreEqual(oldPath, nextPath) || !findPath(getParentPath(nextPath), query)) {
+    return query;
+  }
+  const ruleOrGroupOriginal = findPath(oldPath, query);
+  if (!ruleOrGroupOriginal) {
+    return query;
+  }
+  const ruleOrGroup = clone ? regenerateIDs(ruleOrGroupOriginal, { idGenerator }) : ruleOrGroupOriginal;
+  return (0,immer__WEBPACK_IMPORTED_MODULE_4__.produce)(query, (draft) => {
+    const independentCombinators = isRuleGroupTypeIC(draft);
+    const parentOfRuleToRemove = findPath(getParentPath(oldPath), draft);
+    const ruleToRemoveIndex = oldPath.at(-1);
+    const oldPrevCombinator = independentCombinators && ruleToRemoveIndex > 0 ? parentOfRuleToRemove.rules[ruleToRemoveIndex - 1] : null;
+    const oldNextCombinator = independentCombinators && ruleToRemoveIndex < parentOfRuleToRemove.rules.length - 1 ? parentOfRuleToRemove.rules[ruleToRemoveIndex + 1] : null;
+    if (!clone) {
+      const idxStartDelete = independentCombinators ? Math.max(0, ruleToRemoveIndex - 1) : ruleToRemoveIndex;
+      const deleteLength = independentCombinators ? 2 : 1;
+      parentOfRuleToRemove.rules.splice(idxStartDelete, deleteLength);
+    }
+    const newNewPath = [...nextPath];
+    const commonAncestorPath = getCommonAncestorPath(oldPath, nextPath);
+    if (!clone && oldPath.length === commonAncestorPath.length + 1 && nextPath[commonAncestorPath.length] > oldPath[commonAncestorPath.length]) {
+      newNewPath[commonAncestorPath.length] -= independentCombinators ? 2 : 1;
+    }
+    const newNewParentPath = getParentPath(newNewPath);
+    const parentToInsertInto = findPath(newNewParentPath, draft);
+    const newIndex = newNewPath.at(-1);
+    const insertRuleOrGroup = (...args) => parentToInsertInto.rules.splice(newIndex, 0, ...args);
+    if (parentToInsertInto.rules.length === 0 || !independentCombinators) {
+      insertRuleOrGroup(ruleOrGroup);
+    } else {
+      if (newIndex === 0) {
+        if (ruleToRemoveIndex === 0 && oldNextCombinator) {
+          insertRuleOrGroup(ruleOrGroup, oldNextCombinator);
+        } else {
+          const newNextCombinator = parentToInsertInto.rules[1] ?? oldPrevCombinator ?? getFirstOption(combinators);
+          insertRuleOrGroup(ruleOrGroup, newNextCombinator);
+        }
+      } else {
+        if (oldPrevCombinator) {
+          insertRuleOrGroup(oldPrevCombinator, ruleOrGroup);
+        } else {
+          const newPrevCombinator = parentToInsertInto.rules[newIndex - 2] ?? oldNextCombinator ?? getFirstOption(combinators);
+          insertRuleOrGroup(newPrevCombinator, ruleOrGroup);
+        }
+      }
+    }
+  });
+};
+var insert = (query, ruleOrGroup, path, {
+  combinators = defaultCombinators,
+  combinatorPreceding,
+  combinatorSucceeding,
+  idGenerator = generateID,
+  replace = false
+} = {}) => (0,immer__WEBPACK_IMPORTED_MODULE_4__.produce)(query, (draft) => {
+  const parentToInsertInto = findPath(getParentPath(path), draft);
+  if (!parentToInsertInto || !isRuleGroup(parentToInsertInto)) return;
+  const rorg = regenerateIDs(ruleOrGroup, { idGenerator });
+  const independentCombinators = isRuleGroupTypeIC(draft);
+  const newIndex = path.at(-1);
+  const insertRuleOrGroup = (idx, ...args) => parentToInsertInto.rules.splice(idx, replace ? args.length : 0, ...args);
+  if (parentToInsertInto.rules.length === 0 || !independentCombinators) {
+    insertRuleOrGroup(newIndex, rorg);
+  } else if (replace && independentCombinators) {
+    insertRuleOrGroup(newIndex + newIndex % 2, rorg);
+  } else {
+    if (newIndex === 0) {
+      if (rorg.path?.at(-1) === 0 && combinatorSucceeding) {
+        insertRuleOrGroup(newIndex, rorg, combinatorSucceeding);
+      } else {
+        const newNextCombinator = parentToInsertInto.rules[1] ?? combinatorPreceding ?? getFirstOption(combinators);
+        insertRuleOrGroup(newIndex, rorg, newNextCombinator);
+      }
+    } else {
+      const normalizedNewIndex = newIndex % 2 === 0 ? newIndex - 1 : newIndex;
+      if (combinatorPreceding) {
+        insertRuleOrGroup(normalizedNewIndex, combinatorPreceding, rorg);
+      } else {
+        const newPrevCombinator = parentToInsertInto.rules[normalizedNewIndex - 2] ?? combinatorSucceeding ?? getFirstOption(combinators);
+        insertRuleOrGroup(normalizedNewIndex, newPrevCombinator, rorg);
+      }
+    }
+  }
+});
+
+// src/utils/toOptions.tsx
+
+var toOptions = (arr) => isOptionGroupArray(arr) ? arr.map((og) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("optgroup", { key: og.label, label: og.label }, og.options.map((opt) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", { key: opt.name, value: opt.name, disabled: opt.disabled }, opt.label)))) : Array.isArray(arr) ? arr.map((opt) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", { key: opt.name, value: opt.name, disabled: opt.disabled }, opt.label)) : null;
+
+// src/utils/transformQuery.ts
+
+var remapProperties = (obj, propertyMap, deleteRemappedProperties) => (0,immer__WEBPACK_IMPORTED_MODULE_4__.produce)(obj, (draft) => {
+  for (const [k, v] of Object.entries(propertyMap)) {
+    if (v === false) {
+      delete draft[k];
+    } else if (!!v && k !== v && k in draft) {
+      draft[v] = draft[k];
+      if (deleteRemappedProperties) {
+        delete draft[k];
+      }
+    }
+  }
+});
+function transformQuery(query, options = {}) {
+  const {
+    ruleProcessor = (r) => r,
+    ruleGroupProcessor = (rg) => rg,
+    propertyMap = {},
+    combinatorMap = {},
+    operatorMap = {},
+    omitPath = false,
+    deleteRemappedProperties = true
+  } = options;
+  const processGroup = (rg) => ({
+    ...ruleGroupProcessor(
+      remapProperties(
+        {
+          ...rg,
+          ...isRuleGroupType(rg) ? { combinator: combinatorMap[rg.combinator] ?? rg.combinator } : {}
+        },
+        propertyMap,
+        deleteRemappedProperties
+      )
+    ),
+    ...propertyMap["rules"] === false ? null : {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      [propertyMap["rules"] ?? "rules"]: rg.rules.map((r, idx) => {
+        const pathObject = omitPath ? null : { path: [...rg.path, idx] };
+        if (typeof r === "string") {
+          return combinatorMap[r] ?? r;
+        } else if (isRuleGroup(r)) {
+          return processGroup({ ...r, ...pathObject });
+        }
+        return ruleProcessor(
+          remapProperties(
+            {
+              ...r,
+              ...pathObject,
+              ..."operator" in r ? { operator: operatorMap[r.operator] ?? r.operator } : {}
+            },
+            propertyMap,
+            deleteRemappedProperties
+          )
+        );
+      })
+    }
+  });
+  return processGroup({ ...query, ...omitPath ? null : { path: [] } });
+}
+
+// src/hooks/usePreferProp.ts
+var preferPropDefaultTrue = (prop, context) => prop === false ? false : prop ? true : context === false ? false : true;
+var preferPropDefaultFalse = (prop, context) => prop ? true : prop === false ? false : context ? true : false;
+var preferProp = (def, prop, context) => def ? preferPropDefaultTrue(prop, context) : preferPropDefaultFalse(prop, context);
+var usePreferProp = (def, prop, context) => preferProp(def, prop, context);
+var usePreferAnyProp = (def, prop, context) => prop !== void 0 && prop != null ? prop : context !== void 0 && context != null ? context : def;
+
+// src/hooks/useMergedContext.ts
+var nullComp = () => null;
+var nullFwdComp = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(nullComp);
+var emptyObject = {};
+var useMergedContext = ({
+  finalize,
+  ...props
+}) => {
+  const rqbContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(QueryBuilderContext);
+  const debugModePreferred = usePreferProp(false, props.debugMode, rqbContext.debugMode);
+  const debugMode = finalize ? debugModePreferred : props.debugMode ?? rqbContext.debugMode;
+  const enableMountQueryChangePreferred = usePreferProp(
+    true,
+    props.enableMountQueryChange,
+    rqbContext.enableMountQueryChange
+  );
+  const enableMountQueryChange = finalize ? enableMountQueryChangePreferred : props.enableMountQueryChange ?? rqbContext.enableMountQueryChange;
+  const enableDragAndDropPreferred = usePreferProp(false, props.enableDragAndDrop, rqbContext.enableDragAndDrop) && rqbContext.enableDragAndDrop !== false;
+  const enableDragAndDrop = finalize ? enableDragAndDropPreferred : props.enableDragAndDrop ?? rqbContext.enableDragAndDrop;
+  const cc = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => mergeClassnames(
+      finalize ? Object.assign({}, defaultControlClassnames) : emptyObject,
+      rqbContext.controlClassnames,
+      props.controlClassnames
+    ),
+    [rqbContext.controlClassnames, props.controlClassnames, finalize]
+  );
+  const controlClassnames = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => ({
+      actionElement: cc.actionElement,
+      addGroup: cc.addGroup,
+      addRule: cc.addRule,
+      body: cc.body,
+      cloneGroup: cc.cloneGroup,
+      cloneRule: cc.cloneRule,
+      combinators: cc.combinators,
+      dragHandle: cc.dragHandle,
+      fields: cc.fields,
+      header: cc.header,
+      lockGroup: cc.lockGroup,
+      lockRule: cc.lockRule,
+      notToggle: cc.notToggle,
+      operators: cc.operators,
+      queryBuilder: cc.queryBuilder,
+      removeGroup: cc.removeGroup,
+      removeRule: cc.removeRule,
+      rule: cc.rule,
+      ruleGroup: cc.ruleGroup,
+      shiftActions: cc.shiftActions,
+      value: cc.value,
+      valueSelector: cc.valueSelector,
+      valueSource: cc.valueSource,
+      betweenRules: cc.betweenRules,
+      valid: cc.valid,
+      invalid: cc.invalid,
+      dndDragging: cc.dndDragging,
+      dndOver: cc.dndOver,
+      dndCopy: cc.dndCopy,
+      disabled: cc.disabled,
+      valueListItem: cc.valueListItem,
+      branches: cc.branches
+    }),
+    [
+      cc.actionElement,
+      cc.addGroup,
+      cc.addRule,
+      cc.betweenRules,
+      cc.body,
+      cc.branches,
+      cc.cloneGroup,
+      cc.cloneRule,
+      cc.combinators,
+      cc.disabled,
+      cc.dndCopy,
+      cc.dndDragging,
+      cc.dndOver,
+      cc.dragHandle,
+      cc.fields,
+      cc.header,
+      cc.invalid,
+      cc.lockGroup,
+      cc.lockRule,
+      cc.notToggle,
+      cc.operators,
+      cc.queryBuilder,
+      cc.removeGroup,
+      cc.removeRule,
+      cc.rule,
+      cc.ruleGroup,
+      cc.shiftActions,
+      cc.valid,
+      cc.value,
+      cc.valueListItem,
+      cc.valueSelector,
+      cc.valueSource
+    ]
+  );
+  const contextCE = rqbContext.controlElements ?? emptyObject;
+  const propsCE = props.controlElements ?? emptyObject;
+  const mergeControlElement = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (name, propComp, contextComp) => {
+      const nc = name === "dragHandle" ? nullFwdComp : nullComp;
+      const propBulkOverride = (name.endsWith("Action") && propsCE.actionElement ? propsCE.actionElement : void 0) ?? (name.endsWith("Selector") && propsCE.valueSelector ? propsCE.valueSelector : void 0);
+      const contextBulkOverride = (name.endsWith("Action") && contextCE.actionElement ? contextCE.actionElement : void 0) ?? (name.endsWith("Selector") && contextCE.valueSelector ? contextCE.valueSelector : void 0);
+      const comp = propComp === null ? nc : propComp ?? (finalize ? propBulkOverride : void 0) ?? (contextComp === null ? nc : contextComp ?? (finalize ? contextBulkOverride : void 0));
+      return comp ? { [name]: comp } : finalize ? { [name]: defaultControlElements[name] } : emptyObject;
+    },
+    [
+      contextCE.actionElement,
+      contextCE.valueSelector,
+      finalize,
+      propsCE.actionElement,
+      propsCE.valueSelector
+    ]
+  );
+  const controlElements = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => (
+      // For some reason TypeScript doesn't like the object spread syntax here.
+      // Something about a union type being too complex to represent.
+      Object.assign(
+        {},
+        mergeControlElement("addGroupAction", propsCE.addGroupAction, contextCE.addGroupAction),
+        mergeControlElement("addRuleAction", propsCE.addRuleAction, contextCE.addRuleAction),
+        mergeControlElement(
+          "cloneGroupAction",
+          propsCE.cloneGroupAction,
+          contextCE.cloneGroupAction
+        ),
+        mergeControlElement("cloneRuleAction", propsCE.cloneRuleAction, contextCE.cloneRuleAction),
+        mergeControlElement(
+          "combinatorSelector",
+          propsCE.combinatorSelector,
+          contextCE.combinatorSelector
+        ),
+        mergeControlElement("dragHandle", propsCE.dragHandle, contextCE.dragHandle),
+        mergeControlElement("fieldSelector", propsCE.fieldSelector, contextCE.fieldSelector),
+        mergeControlElement(
+          "inlineCombinator",
+          propsCE.inlineCombinator,
+          contextCE.inlineCombinator
+        ),
+        mergeControlElement("lockGroupAction", propsCE.lockGroupAction, contextCE.lockGroupAction),
+        mergeControlElement("lockRuleAction", propsCE.lockRuleAction, contextCE.lockRuleAction),
+        mergeControlElement("notToggle", propsCE.notToggle, contextCE.notToggle),
+        mergeControlElement(
+          "operatorSelector",
+          propsCE.operatorSelector,
+          contextCE.operatorSelector
+        ),
+        mergeControlElement(
+          "removeGroupAction",
+          propsCE.removeGroupAction,
+          contextCE.removeGroupAction
+        ),
+        mergeControlElement(
+          "removeRuleAction",
+          propsCE.removeRuleAction,
+          contextCE.removeRuleAction
+        ),
+        mergeControlElement("shiftActions", propsCE.shiftActions, contextCE.shiftActions),
+        {
+          valueEditor: propsCE.valueEditor === null ? nullComp : propsCE.valueEditor ?? (contextCE.valueEditor === null ? nullComp : contextCE.valueEditor) ?? defaultControlElements.valueEditor
+        },
+        mergeControlElement(
+          "valueSourceSelector",
+          propsCE.valueSourceSelector,
+          contextCE.valueSourceSelector
+        ),
+        mergeControlElement("rule", propsCE.rule, contextCE.rule),
+        mergeControlElement("ruleGroup", propsCE.ruleGroup, contextCE.ruleGroup),
+        mergeControlElement(
+          "ruleGroupBodyElements",
+          propsCE.ruleGroupBodyElements,
+          contextCE.ruleGroupBodyElements
+        ),
+        mergeControlElement(
+          "ruleGroupHeaderElements",
+          propsCE.ruleGroupHeaderElements,
+          contextCE.ruleGroupHeaderElements
+        ),
+        {
+          actionElement: propsCE.actionElement ?? contextCE.actionElement ?? (finalize ? defaultControlElements.actionElement : void 0)
+        },
+        {
+          valueSelector: propsCE.valueSelector ?? contextCE.valueSelector ?? (finalize ? defaultControlElements.valueSelector : void 0)
+        }
+        // TODO: this type should probably depend on `finalize`
+      )
+    ),
+    [
+      contextCE.actionElement,
+      contextCE.addGroupAction,
+      contextCE.addRuleAction,
+      contextCE.cloneGroupAction,
+      contextCE.cloneRuleAction,
+      contextCE.combinatorSelector,
+      contextCE.dragHandle,
+      contextCE.fieldSelector,
+      contextCE.inlineCombinator,
+      contextCE.lockGroupAction,
+      contextCE.lockRuleAction,
+      contextCE.notToggle,
+      contextCE.operatorSelector,
+      contextCE.removeGroupAction,
+      contextCE.removeRuleAction,
+      contextCE.rule,
+      contextCE.ruleGroup,
+      contextCE.ruleGroupBodyElements,
+      contextCE.ruleGroupHeaderElements,
+      contextCE.shiftActions,
+      contextCE.valueEditor,
+      contextCE.valueSelector,
+      contextCE.valueSourceSelector,
+      mergeControlElement,
+      finalize,
+      propsCE.actionElement,
+      propsCE.addGroupAction,
+      propsCE.addRuleAction,
+      propsCE.cloneGroupAction,
+      propsCE.cloneRuleAction,
+      propsCE.combinatorSelector,
+      propsCE.dragHandle,
+      propsCE.fieldSelector,
+      propsCE.inlineCombinator,
+      propsCE.lockGroupAction,
+      propsCE.lockRuleAction,
+      propsCE.notToggle,
+      propsCE.operatorSelector,
+      propsCE.removeGroupAction,
+      propsCE.removeRuleAction,
+      propsCE.rule,
+      propsCE.ruleGroup,
+      propsCE.ruleGroupBodyElements,
+      propsCE.ruleGroupHeaderElements,
+      propsCE.shiftActions,
+      propsCE.valueEditor,
+      propsCE.valueSelector,
+      propsCE.valueSourceSelector
+    ]
+    // TODO: this type should probably depend on `finalize`
+  );
+  const propsT = props.translations ?? emptyObject;
+  const contextT = rqbContext.translations ?? emptyObject;
+  const translations = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => Object.assign(
+      finalize ? Object.assign({}, defaultTranslations) : {},
+      mergeTranslation(
+        "addGroup",
+        {
+          label: [propsT.addGroup?.label, contextT.addGroup?.label],
+          title: [propsT.addGroup?.title, contextT.addGroup?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "addRule",
+        {
+          label: [propsT.addRule?.label, contextT.addRule?.label],
+          title: [propsT.addRule?.title, contextT.addRule?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "cloneRule",
+        {
+          label: [propsT.cloneRule?.label, contextT.cloneRule?.label],
+          title: [propsT.cloneRule?.title, contextT.cloneRule?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "cloneRuleGroup",
+        {
+          label: [propsT.cloneRuleGroup?.label, contextT.cloneRuleGroup?.label],
+          title: [propsT.cloneRuleGroup?.title, contextT.cloneRuleGroup?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "combinators",
+        { title: [propsT.combinators?.title, contextT.combinators?.title] },
+        finalize
+      ),
+      mergeTranslation(
+        "dragHandle",
+        {
+          label: [propsT.dragHandle?.label, contextT.dragHandle?.label],
+          title: [propsT.dragHandle?.title, contextT.dragHandle?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "fields",
+        {
+          placeholderGroupLabel: [
+            propsT.fields?.placeholderGroupLabel,
+            contextT.fields?.placeholderGroupLabel
+          ],
+          placeholderLabel: [propsT.fields?.placeholderLabel, contextT.fields?.placeholderLabel],
+          placeholderName: [propsT.fields?.placeholderName, contextT.fields?.placeholderName],
+          title: [propsT.fields?.title, contextT.fields?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "lockGroup",
+        {
+          label: [propsT.lockGroup?.label, contextT.lockGroup?.label],
+          title: [propsT.lockGroup?.title, contextT.lockGroup?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "lockGroupDisabled",
+        {
+          label: [propsT.lockGroupDisabled?.label, contextT.lockGroupDisabled?.label],
+          title: [propsT.lockGroupDisabled?.title, contextT.lockGroupDisabled?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "lockRule",
+        {
+          label: [propsT.lockRule?.label, contextT.lockRule?.label],
+          title: [propsT.lockRule?.title, contextT.lockRule?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "lockRuleDisabled",
+        {
+          label: [propsT.lockRuleDisabled?.label, contextT.lockRuleDisabled?.label],
+          title: [propsT.lockRuleDisabled?.title, contextT.lockRuleDisabled?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "notToggle",
+        {
+          label: [propsT.notToggle?.label, contextT.notToggle?.label],
+          title: [propsT.notToggle?.title, contextT.notToggle?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "operators",
+        {
+          placeholderGroupLabel: [
+            propsT.operators?.placeholderGroupLabel,
+            contextT.operators?.placeholderGroupLabel
+          ],
+          placeholderLabel: [
+            propsT.operators?.placeholderLabel,
+            contextT.operators?.placeholderLabel
+          ],
+          placeholderName: [
+            propsT.operators?.placeholderName,
+            contextT.operators?.placeholderName
+          ],
+          title: [propsT.operators?.title, contextT.operators?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "removeGroup",
+        {
+          label: [propsT.removeGroup?.label, contextT.removeGroup?.label],
+          title: [propsT.removeGroup?.title, contextT.removeGroup?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "removeRule",
+        {
+          label: [propsT.removeRule?.label, contextT.removeRule?.label],
+          title: [propsT.removeRule?.title, contextT.removeRule?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "shiftActionDown",
+        {
+          label: [propsT.shiftActionDown?.label, contextT.shiftActionDown?.label],
+          title: [propsT.shiftActionDown?.title, contextT.shiftActionDown?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "shiftActionUp",
+        {
+          label: [propsT.shiftActionUp?.label, contextT.shiftActionUp?.label],
+          title: [propsT.shiftActionUp?.title, contextT.shiftActionUp?.title]
+        },
+        finalize
+      ),
+      mergeTranslation(
+        "value",
+        { title: [propsT.value?.title, contextT.value?.title] },
+        finalize
+      ),
+      mergeTranslation(
+        "valueSourceSelector",
+        { title: [propsT.valueSourceSelector?.title, contextT.valueSourceSelector?.title] },
+        finalize
+      )
+    ),
+    [
+      propsT.addGroup?.label,
+      propsT.addGroup?.title,
+      propsT.addRule?.label,
+      propsT.addRule?.title,
+      propsT.cloneRule?.label,
+      propsT.cloneRule?.title,
+      propsT.cloneRuleGroup?.label,
+      propsT.cloneRuleGroup?.title,
+      propsT.combinators?.title,
+      propsT.dragHandle?.label,
+      propsT.dragHandle?.title,
+      propsT.fields?.placeholderGroupLabel,
+      propsT.fields?.placeholderLabel,
+      propsT.fields?.placeholderName,
+      propsT.fields?.title,
+      propsT.lockGroup?.label,
+      propsT.lockGroup?.title,
+      propsT.lockGroupDisabled?.label,
+      propsT.lockGroupDisabled?.title,
+      propsT.lockRule?.label,
+      propsT.lockRule?.title,
+      propsT.lockRuleDisabled?.label,
+      propsT.lockRuleDisabled?.title,
+      propsT.notToggle?.label,
+      propsT.notToggle?.title,
+      propsT.operators?.placeholderGroupLabel,
+      propsT.operators?.placeholderLabel,
+      propsT.operators?.placeholderName,
+      propsT.operators?.title,
+      propsT.removeGroup?.label,
+      propsT.removeGroup?.title,
+      propsT.removeRule?.label,
+      propsT.removeRule?.title,
+      propsT.shiftActionDown?.label,
+      propsT.shiftActionDown?.title,
+      propsT.shiftActionUp?.label,
+      propsT.shiftActionUp?.title,
+      propsT.value?.title,
+      propsT.valueSourceSelector?.title,
+      finalize,
+      contextT.addGroup?.label,
+      contextT.addGroup?.title,
+      contextT.addRule?.label,
+      contextT.addRule?.title,
+      contextT.cloneRule?.label,
+      contextT.cloneRule?.title,
+      contextT.cloneRuleGroup?.label,
+      contextT.cloneRuleGroup?.title,
+      contextT.combinators?.title,
+      contextT.dragHandle?.label,
+      contextT.dragHandle?.title,
+      contextT.fields?.placeholderGroupLabel,
+      contextT.fields?.placeholderLabel,
+      contextT.fields?.placeholderName,
+      contextT.fields?.title,
+      contextT.lockGroup?.label,
+      contextT.lockGroup?.title,
+      contextT.lockGroupDisabled?.label,
+      contextT.lockGroupDisabled?.title,
+      contextT.lockRule?.label,
+      contextT.lockRule?.title,
+      contextT.lockRuleDisabled?.label,
+      contextT.lockRuleDisabled?.title,
+      contextT.notToggle?.label,
+      contextT.notToggle?.title,
+      contextT.operators?.placeholderGroupLabel,
+      contextT.operators?.placeholderLabel,
+      contextT.operators?.placeholderName,
+      contextT.operators?.title,
+      contextT.removeGroup?.label,
+      contextT.removeGroup?.title,
+      contextT.removeRule?.label,
+      contextT.removeRule?.title,
+      contextT.shiftActionDown?.label,
+      contextT.shiftActionDown?.title,
+      contextT.shiftActionUp?.label,
+      contextT.shiftActionUp?.title,
+      contextT.value?.title,
+      contextT.valueSourceSelector?.title
+    ]
+    // TODO: this type should probably depend on `finalize`
+  );
+  return {
+    controlClassnames,
+    controlElements,
+    debugMode,
+    enableDragAndDrop,
+    enableMountQueryChange,
+    translations,
+    initialQuery: props.initialQuery,
+    qbId: props.qbId
+  };
+};
+
+// src/hooks/useQueryBuilderSchema.ts
+
+var defaultValidationResult = {};
+var defaultValidationMap = {};
+var defaultDisabledPaths = [];
+var icCombinatorPropObject = {};
+var defaultGetValueEditorSeparator = () => null;
+var defaultGetRuleOrGroupClassname = () => "";
+var defaultOnAddMoveRemove = () => true;
+var defaultOnLog = (...params) => {
+  console.log(...params);
+};
+function useQueryBuilderSchema(props, setup) {
+  const {
+    query: queryProp,
+    defaultQuery: defaultQueryProp,
+    getValueEditorSeparator = defaultGetValueEditorSeparator,
+    getRuleClassname = defaultGetRuleOrGroupClassname,
+    getRuleGroupClassname = defaultGetRuleOrGroupClassname,
+    onAddRule = defaultOnAddMoveRemove,
+    onAddGroup = defaultOnAddMoveRemove,
+    onMoveRule = defaultOnAddMoveRemove,
+    onMoveGroup = defaultOnAddMoveRemove,
+    onRemove = defaultOnAddMoveRemove,
+    onQueryChange,
+    showCombinatorsBetweenRules: showCombinatorsBetweenRulesProp = false,
+    showNotToggle: showNotToggleProp = false,
+    showShiftActions: showShiftActionsProp = false,
+    showCloneButtons: showCloneButtonsProp = false,
+    showLockButtons: showLockButtonsProp = false,
+    suppressStandardClassnames: suppressStandardClassnamesProp = false,
+    resetOnFieldChange: resetOnFieldChangeProp = true,
+    resetOnOperatorChange: resetOnOperatorChangeProp = false,
+    autoSelectField: autoSelectFieldProp = true,
+    autoSelectOperator: autoSelectOperatorProp = true,
+    addRuleToNewGroups: addRuleToNewGroupsProp = false,
+    listsAsArrays: listsAsArraysProp = false,
+    parseNumbers = false,
+    disabled = false,
+    validator,
+    onLog = defaultOnLog,
+    idGenerator,
+    accessibleDescriptionGenerator = generateAccessibleDescription
+  } = props;
+  const {
+    qbId,
+    rqbContext: incomingRqbContext,
+    fields,
+    fieldMap,
+    combinators,
+    getOperatorsMain,
+    getRuleDefaultOperator,
+    getValueEditorTypeMain,
+    getValueSourcesMain,
+    getValuesMain,
+    getRuleDefaultValue,
+    getInputTypeMain,
+    createRule,
+    createRuleGroup
+  } = setup;
+  const {
+    controlClassnames,
+    controlElements: controls,
+    debugMode,
+    enableDragAndDrop,
+    enableMountQueryChange,
+    translations
+  } = incomingRqbContext;
+  const showCombinatorsBetweenRules = !!showCombinatorsBetweenRulesProp;
+  const showNotToggle = !!showNotToggleProp;
+  const showShiftActions = !!showShiftActionsProp;
+  const showCloneButtons = !!showCloneButtonsProp;
+  const showLockButtons = !!showLockButtonsProp;
+  const resetOnFieldChange = !!resetOnFieldChangeProp;
+  const resetOnOperatorChange = !!resetOnOperatorChangeProp;
+  const autoSelectField = !!autoSelectFieldProp;
+  const autoSelectOperator = !!autoSelectOperatorProp;
+  const addRuleToNewGroups = !!addRuleToNewGroupsProp;
+  const listsAsArrays = !!listsAsArraysProp;
+  const suppressStandardClassnames = !!suppressStandardClassnamesProp;
+  const log = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (...params) => {
+      if (debugMode) {
+        onLog(...params);
+      }
+    },
+    [debugMode, onLog]
+  );
+  useControlledOrUncontrolled({
+    defaultQuery: defaultQueryProp,
+    queryProp
+  });
+  const queryBuilderStore2 = useRQB_INTERNAL_QueryBuilderStore();
+  const queryBuilderDispatch = useRQB_INTERNAL_QueryBuilderDispatch();
+  const querySelector = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => getQuerySelectorById(qbId), [qbId]);
+  const storeQuery = useQueryBuilderSelector(querySelector);
+  const getQuery = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    () => querySelector(queryBuilderStore2.getState()),
+    [queryBuilderStore2, querySelector]
+  );
+  const fallbackQuery = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => createRuleGroup(), [createRuleGroup]);
+  const candidateQuery = queryProp ?? storeQuery ?? defaultQueryProp ?? fallbackQuery;
+  const rootGroup = candidateQuery.id ? candidateQuery : prepareRuleGroup(candidateQuery, { idGenerator });
+  const [initialQuery] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(rootGroup);
+  const rqbContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => ({ ...incomingRqbContext, initialQuery }),
+    [incomingRqbContext, initialQuery]
+  );
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!!queryProp && !Object.is(queryProp, storeQuery)) {
+      queryBuilderDispatch(
+        _RQB_INTERNAL_dispatchThunk({
+          payload: { qbId, query: queryProp },
+          onQueryChange: void 0
+        })
+      );
+    }
+  }, [queryProp, qbId, storeQuery, queryBuilderDispatch]);
+  const independentCombinators = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => isRuleGroupTypeIC(rootGroup), [rootGroup]);
+  const invalidIC = !!props.independentCombinators && !independentCombinators;
+  useDeprecatedProps(
+    "independentCombinators",
+    invalidIC || !invalidIC && (props.independentCombinators ?? "not present") !== "not present",
+    invalidIC ? "invalid" : "unnecessary"
+  );
+  const hasRunMountQueryChange = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(false);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (hasRunMountQueryChange.current) return;
+    hasRunMountQueryChange.current = true;
+    queryBuilderDispatch(
+      _RQB_INTERNAL_dispatchThunk({
+        payload: { qbId, query: rootGroup },
+        onQueryChange: (
+          // Leave `onQueryChange` undefined if `enableMountQueryChange` is disabled
+          enableMountQueryChange && typeof onQueryChange === "function" ? onQueryChange : void 0
+        )
+      })
+    );
+  }, [enableMountQueryChange, onQueryChange, qbId, queryBuilderDispatch, rootGroup]);
+  const dispatchQuery = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (newQuery) => {
+      queryBuilderDispatch(
+        _RQB_INTERNAL_dispatchThunk({ payload: { qbId, query: newQuery }, onQueryChange })
+      );
+    },
+    [onQueryChange, qbId, queryBuilderDispatch]
+  );
+  const disabledPaths = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => Array.isArray(disabled) && disabled || defaultDisabledPaths,
+    [disabled]
+  );
+  const queryDisabled = disabled === true;
+  const rootGroupDisabled = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => rootGroup.disabled || disabledPaths.some((p) => p.length === 0),
+    [disabledPaths, rootGroup.disabled]
+  );
+  const onRuleAdd = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (rule, parentPath, context) => {
+      const queryLocal = getQuerySelectorById(qbId)(queryBuilderStore2.getState());
+      if (!queryLocal) return;
+      if (pathIsDisabled(parentPath, queryLocal) || queryDisabled) {
+        log({ qbId, type: LogType.parentPathDisabled, rule, parentPath, query: queryLocal });
+        return;
+      }
+      const nextRule = onAddRule(rule, parentPath, queryLocal, context);
+      if (!nextRule) {
+        log({ qbId, type: LogType.onAddRuleFalse, rule, parentPath, query: queryLocal });
+        return;
+      }
+      const newRule = nextRule === true ? rule : nextRule;
+      const newQuery = add(queryLocal, newRule, parentPath, {
+        combinators,
+        combinatorPreceding: newRule.combinatorPreceding ?? void 0
+      });
+      log({ qbId, type: LogType.add, query: queryLocal, newQuery, newRule, parentPath });
+      dispatchQuery(newQuery);
+    },
+    [qbId, queryBuilderStore2, queryDisabled, onAddRule, combinators, dispatchQuery, log]
+  );
+  const onGroupAdd = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (ruleGroup, parentPath, context) => {
+      const queryLocal = getQuerySelectorById(qbId)(queryBuilderStore2.getState());
+      if (!queryLocal) return;
+      if (pathIsDisabled(parentPath, queryLocal) || queryDisabled) {
+        log({
+          qbId,
+          type: LogType.parentPathDisabled,
+          ruleGroup,
+          parentPath,
+          query: queryLocal
+        });
+        return;
+      }
+      const nextGroup = onAddGroup(ruleGroup, parentPath, queryLocal, context);
+      if (!nextGroup) {
+        log({ qbId, type: LogType.onAddGroupFalse, ruleGroup, parentPath, query: queryLocal });
+        return;
+      }
+      const newGroup = nextGroup === true ? ruleGroup : nextGroup;
+      const newQuery = add(queryLocal, newGroup, parentPath, {
+        combinators,
+        combinatorPreceding: newGroup.combinatorPreceding ?? void 0
+      });
+      log({ qbId, type: LogType.add, query: queryLocal, newQuery, newGroup, parentPath });
+      dispatchQuery(newQuery);
+    },
+    [qbId, queryBuilderStore2, queryDisabled, onAddGroup, combinators, log, dispatchQuery]
+  );
+  const onPropChange = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (prop, value, path) => {
+      const queryLocal = getQuerySelectorById(qbId)(queryBuilderStore2.getState());
+      if (!queryLocal) return;
+      if (pathIsDisabled(path, queryLocal) && prop !== "disabled" || queryDisabled) {
+        log({ qbId, type: LogType.pathDisabled, path, prop, value, query: queryLocal });
+        return;
+      }
+      const newQuery = update(queryLocal, prop, value, path, {
+        resetOnFieldChange,
+        resetOnOperatorChange,
+        getRuleDefaultOperator,
+        getValueSources: getValueSourcesMain,
+        getRuleDefaultValue
+      });
+      log({ qbId, type: LogType.update, query: queryLocal, newQuery, prop, value, path });
+      dispatchQuery(newQuery);
+    },
+    [
+      qbId,
+      queryBuilderStore2,
+      queryDisabled,
+      resetOnFieldChange,
+      resetOnOperatorChange,
+      getRuleDefaultOperator,
+      getValueSourcesMain,
+      getRuleDefaultValue,
+      log,
+      dispatchQuery
+    ]
+  );
+  const onRuleOrGroupRemove = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (path, context) => {
+      const queryLocal = getQuerySelectorById(qbId)(queryBuilderStore2.getState());
+      if (!queryLocal) return;
+      if (pathIsDisabled(path, queryLocal) || queryDisabled) {
+        log({ qbId, type: LogType.pathDisabled, path, query: queryLocal });
+        return;
+      }
+      const ruleOrGroup = findPath(path, queryLocal);
+      if (ruleOrGroup) {
+        if (onRemove(ruleOrGroup, path, queryLocal, context)) {
+          const newQuery = remove(queryLocal, path);
+          log({ qbId, type: LogType.remove, query: queryLocal, newQuery, path, ruleOrGroup });
+          dispatchQuery(newQuery);
+        } else {
+          log({ qbId, type: LogType.onRemoveFalse, ruleOrGroup, path, query: queryLocal });
+        }
+      }
+    },
+    [qbId, queryBuilderStore2, queryDisabled, log, onRemove, dispatchQuery]
+  );
+  const moveRule = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (oldPath, newPath, clone, context) => {
+      const queryLocal = getQuerySelectorById(qbId)(queryBuilderStore2.getState());
+      if (!queryLocal) return;
+      if (pathIsDisabled(oldPath, queryLocal) || queryDisabled) {
+        log({ qbId, type: LogType.pathDisabled, oldPath, newPath, query: queryLocal });
+        return;
+      }
+      const nextQuery = move(queryLocal, oldPath, newPath, { clone, combinators });
+      const ruleOrGroup = findPath(oldPath, queryLocal);
+      const isGroup = isRuleGroup(ruleOrGroup);
+      const callbackResult = (isGroup ? onMoveGroup : onMoveRule)(ruleOrGroup, oldPath, newPath, queryLocal, nextQuery, { clone, combinators }, context);
+      if (!callbackResult) {
+        log({
+          qbId,
+          type: isGroup ? LogType.onMoveGroupFalse : LogType.onMoveRuleFalse,
+          ruleOrGroup,
+          oldPath,
+          newPath,
+          clone,
+          query: queryLocal,
+          nextQuery
+        });
+        return;
+      }
+      const newQuery = isRuleGroup(callbackResult) ? callbackResult : nextQuery;
+      log({ qbId, type: LogType.move, query: queryLocal, newQuery, oldPath, newPath, clone });
+      dispatchQuery(newQuery);
+    },
+    [
+      qbId,
+      queryBuilderStore2,
+      queryDisabled,
+      combinators,
+      onMoveGroup,
+      onMoveRule,
+      log,
+      dispatchQuery
+    ]
+  );
+  const { validationResult, validationMap } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
+    const validationResult2 = typeof validator === "function" && rootGroup ? validator(rootGroup) : defaultValidationResult;
+    const validationMap2 = typeof validationResult2 === "boolean" ? defaultValidationMap : validationResult2;
+    return { validationResult: validationResult2, validationMap: validationMap2 };
+  }, [rootGroup, validator]);
+  const dndEnabledAttr = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => enableDragAndDrop ? "enabled" : "disabled",
+    [enableDragAndDrop]
+  );
+  const inlineCombinatorsAttr = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => independentCombinators || showCombinatorsBetweenRules ? "enabled" : "disabled",
+    [independentCombinators, showCombinatorsBetweenRules]
+  );
+  const combinatorPropObject = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => typeof rootGroup.combinator === "string" ? { combinator: rootGroup.combinator } : icCombinatorPropObject,
+    [rootGroup.combinator]
+  );
+  const wrapperClassName = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => clsx(
+      suppressStandardClassnames || standardClassnames.queryBuilder,
+      clsx(controlClassnames.queryBuilder),
+      // custom conditional classes
+      queryDisabled && controlClassnames.disabled,
+      typeof validationResult === "boolean" && validationResult && controlClassnames.valid,
+      typeof validationResult === "boolean" && !validationResult && controlClassnames.invalid,
+      // standard conditional classes
+      suppressStandardClassnames || {
+        [standardClassnames.disabled]: queryDisabled,
+        [standardClassnames.valid]: typeof validationResult === "boolean" && validationResult,
+        [standardClassnames.invalid]: typeof validationResult === "boolean" && !validationResult
+      }
+    ),
+    [
+      controlClassnames.disabled,
+      controlClassnames.invalid,
+      controlClassnames.queryBuilder,
+      controlClassnames.valid,
+      queryDisabled,
+      suppressStandardClassnames,
+      validationResult
+    ]
+  );
+  const schema = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => ({
+      addRuleToNewGroups,
+      accessibleDescriptionGenerator,
+      autoSelectField,
+      autoSelectOperator,
+      classNames: controlClassnames,
+      combinators,
+      controls,
+      createRule,
+      createRuleGroup,
+      disabledPaths,
+      enableDragAndDrop,
+      fieldMap,
+      fields,
+      dispatchQuery,
+      getQuery,
+      getInputType: getInputTypeMain,
+      getOperators: getOperatorsMain,
+      getRuleClassname,
+      getRuleGroupClassname,
+      getValueEditorSeparator,
+      getValueEditorType: getValueEditorTypeMain,
+      getValues: getValuesMain,
+      getValueSources: getValueSourcesMain,
+      independentCombinators,
+      listsAsArrays,
+      parseNumbers,
+      qbId,
+      showCloneButtons,
+      showCombinatorsBetweenRules,
+      showLockButtons,
+      showNotToggle,
+      showShiftActions,
+      suppressStandardClassnames,
+      validationMap
+    }),
+    [
+      accessibleDescriptionGenerator,
+      addRuleToNewGroups,
+      autoSelectField,
+      autoSelectOperator,
+      combinators,
+      controlClassnames,
+      controls,
+      createRule,
+      createRuleGroup,
+      disabledPaths,
+      dispatchQuery,
+      enableDragAndDrop,
+      fieldMap,
+      fields,
+      getInputTypeMain,
+      getOperatorsMain,
+      getQuery,
+      getRuleClassname,
+      getRuleGroupClassname,
+      getValueEditorSeparator,
+      getValueEditorTypeMain,
+      getValuesMain,
+      getValueSourcesMain,
+      independentCombinators,
+      listsAsArrays,
+      parseNumbers,
+      qbId,
+      showCloneButtons,
+      showCombinatorsBetweenRules,
+      showLockButtons,
+      showNotToggle,
+      showShiftActions,
+      suppressStandardClassnames,
+      validationMap
+    ]
+  );
+  const actions = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => ({
+      moveRule,
+      onGroupAdd,
+      onGroupRemove: onRuleOrGroupRemove,
+      onPropChange,
+      onRuleAdd,
+      onRuleRemove: onRuleOrGroupRemove
+    }),
+    [moveRule, onGroupAdd, onPropChange, onRuleAdd, onRuleOrGroupRemove]
+  );
+  return {
+    actions,
+    rootGroup,
+    rootGroupDisabled,
+    queryDisabled,
+    rqbContext,
+    schema,
+    translations,
+    wrapperClassName,
+    dndEnabledAttr,
+    inlineCombinatorsAttr,
+    combinatorPropObject
+  };
+}
+
+// src/hooks/useQueryBuilderSetup.ts
+
+var getFirstOptionsFrom = (opts, r, listsAsArrays) => {
+  const firstOption = getFirstOption(opts);
+  if (r.operator === "between" || r.operator === "notBetween") {
+    const valueAsArray = [firstOption, firstOption];
+    return listsAsArrays ? valueAsArray : joinWith(
+      valueAsArray.map((v) => v ?? /* istanbul ignore next */
+      ""),
+      ","
+    );
+  }
+  return firstOption;
+};
+var useQueryBuilderSetup = (props) => {
+  const [qbId] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(generateID);
+  const {
+    fields: fieldsPropOriginal,
+    baseField,
+    operators: operatorsProp,
+    baseOperator,
+    combinators: combinatorsProp = defaultCombinators,
+    baseCombinator,
+    translations: translationsProp,
+    enableMountQueryChange: enableMountQueryChangeProp = true,
+    controlClassnames: controlClassnamesProp,
+    controlElements: controlElementsProp,
+    getDefaultField,
+    getDefaultOperator,
+    getDefaultValue,
+    getOperators,
+    getValueEditorType,
+    getValueSources,
+    getInputType,
+    getValues,
+    autoSelectField = true,
+    autoSelectOperator = true,
+    addRuleToNewGroups = false,
+    enableDragAndDrop: enableDragAndDropProp,
+    listsAsArrays = false,
+    debugMode: debugModeProp = false,
+    idGenerator = generateID
+  } = props;
+  const operators = operatorsProp ?? defaultOperators;
+  const [initialQueryProp] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(props.query ?? props.defaultQuery);
+  const rqbContext = useMergedContext({
+    controlClassnames: controlClassnamesProp,
+    controlElements: controlElementsProp,
+    debugMode: debugModeProp,
+    enableDragAndDrop: enableDragAndDropProp,
+    enableMountQueryChange: enableMountQueryChangeProp,
+    translations: translationsProp,
+    initialQuery: initialQueryProp,
+    qbId,
+    finalize: true
+  });
+  const { translations } = rqbContext;
+  const defaultField = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => ({
+      id: translations.fields.placeholderName,
+      name: translations.fields.placeholderName,
+      value: translations.fields.placeholderName,
+      label: translations.fields.placeholderLabel
+    }),
+    [translations.fields.placeholderLabel, translations.fields.placeholderName]
+  );
+  const fieldsProp = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => fieldsPropOriginal ?? [defaultField],
+    [defaultField, fieldsPropOriginal]
+  );
+  const fields = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
+    const flds = Array.isArray(fieldsProp) ? toFullOptionList(fieldsProp, baseField) : objectKeys(toFullOptionMap(fieldsProp, baseField)).map((fld) => ({ ...fieldsProp[fld], name: fld, value: fld })).sort((a, b) => a.label.localeCompare(b.label));
+    if (isFlexibleOptionGroupArray(flds)) {
+      return autoSelectField ? uniqOptGroups(flds) : uniqOptGroups([
+        {
+          label: translations.fields.placeholderGroupLabel,
+          options: [defaultField]
+        },
+        ...flds
+      ]);
+    } else {
+      return autoSelectField ? uniqByIdentifier(flds) : uniqByIdentifier([defaultField, ...flds]);
+    }
+  }, [
+    autoSelectField,
+    baseField,
+    defaultField,
+    fieldsProp,
+    translations.fields.placeholderGroupLabel
+  ]);
+  const fieldMap = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
+    if (!Array.isArray(fieldsProp)) {
+      const fp = toFullOptionMap(fieldsProp, baseField);
+      return autoSelectField ? fp : { ...fp, [translations.fields.placeholderName]: defaultField };
+    }
+    const fm = {};
+    if (isFlexibleOptionGroupArray(fields)) {
+      for (const f of fields) {
+        for (const opt of f.options) {
+          fm[opt.value ?? /* istanbul ignore next */
+          opt.name] = toFullOption(
+            opt,
+            baseField
+          );
+        }
+      }
+    } else {
+      for (const f of fields) {
+        fm[f.value ?? /* istanbul ignore next */
+        f.name] = toFullOption(
+          f,
+          baseField
+        );
+      }
+    }
+    return fm;
+  }, [
+    autoSelectField,
+    baseField,
+    defaultField,
+    fields,
+    fieldsProp,
+    translations.fields.placeholderName
+  ]);
+  const combinators = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => toFullOptionList(combinatorsProp, baseCombinator),
+    [baseCombinator, combinatorsProp]
+  );
+  const defaultOperator = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => ({
+      id: translations.operators.placeholderName,
+      name: translations.operators.placeholderName,
+      value: translations.operators.placeholderName,
+      label: translations.operators.placeholderLabel
+    }),
+    [translations.operators.placeholderLabel, translations.operators.placeholderName]
+  );
+  const getOperatorsMain = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (field, { fieldData }) => {
+      let opsFinal = toFullOptionList(operators, baseOperator);
+      if (fieldData?.operators) {
+        opsFinal = toFullOptionList(fieldData.operators, baseOperator);
+      } else if (getOperators) {
+        const ops = getOperators(field, { fieldData });
+        if (ops) {
+          opsFinal = toFullOptionList(ops, baseOperator);
+        }
+      }
+      if (!autoSelectOperator) {
+        opsFinal = isFlexibleOptionGroupArray(opsFinal) ? [
+          {
+            label: translations.operators.placeholderGroupLabel,
+            options: [defaultOperator]
+          },
+          ...opsFinal
+        ] : [defaultOperator, ...opsFinal];
+      }
+      return uniqOptList(opsFinal);
+    },
+    [
+      autoSelectOperator,
+      baseOperator,
+      defaultOperator,
+      getOperators,
+      operators,
+      translations.operators.placeholderGroupLabel
+    ]
+  );
+  const getRuleDefaultOperator = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (field) => {
+      const fieldData = fieldMap[field];
+      if (fieldData?.defaultOperator) {
+        return fieldData.defaultOperator;
+      }
+      if (getDefaultOperator) {
+        return typeof getDefaultOperator === "function" ? getDefaultOperator(field, { fieldData }) : getDefaultOperator;
+      }
+      const ops = getOperatorsMain(field, { fieldData }) ?? /* istanbul ignore next */
+      [];
+      return getFirstOption(ops) ?? /* istanbul ignore next */
+      "";
+    },
+    [fieldMap, getDefaultOperator, getOperatorsMain]
+  );
+  const getValueEditorTypeMain = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (field, operator, { fieldData }) => {
+      if (fieldData.valueEditorType) {
+        if (typeof fieldData.valueEditorType === "function") {
+          return fieldData.valueEditorType(operator);
+        }
+        return fieldData.valueEditorType;
+      }
+      return getValueEditorType?.(field, operator, { fieldData }) ?? "text";
+    },
+    [getValueEditorType]
+  );
+  const getValueSourcesMain = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (field, operator) => getValueSourcesUtil(fieldMap[field], operator, getValueSources),
+    [fieldMap, getValueSources]
+  );
+  const getValuesMain = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (field, operator, { fieldData }) => {
+      if (fieldData?.values) {
+        return toFullOptionList(fieldData.values);
+      }
+      if (getValues) {
+        return toFullOptionList(getValues(field, operator, { fieldData }));
+      }
+      return [];
+    },
+    [getValues]
+  );
+  const getRuleDefaultValue = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (r) => {
+      const fieldData = fieldMap[r.field] ?? {};
+      if (fieldData?.defaultValue !== void 0 && fieldData.defaultValue !== null) {
+        return fieldData.defaultValue;
+      } else if (getDefaultValue) {
+        return getDefaultValue(r, { fieldData });
+      }
+      let value = "";
+      const values = getValuesMain(r.field, r.operator, {
+        fieldData
+      });
+      if (r.valueSource === "field") {
+        const filteredFields = filterFieldsByComparator(fieldData, fields, r.operator);
+        value = filteredFields.length > 0 ? getFirstOptionsFrom(filteredFields, r, listsAsArrays) : "";
+      } else if (values.length > 0) {
+        const editorType = getValueEditorTypeMain(
+          r.field,
+          r.operator,
+          { fieldData }
+        );
+        if (editorType === "multiselect") {
+          value = listsAsArrays ? [] : "";
+        } else if (editorType === "select" || editorType === "radio") {
+          value = getFirstOptionsFrom(values, r, listsAsArrays);
+        }
+      } else {
+        const editorType = getValueEditorTypeMain(
+          r.field,
+          r.operator,
+          { fieldData }
+        );
+        if (editorType === "checkbox") {
+          value = false;
+        }
+      }
+      return value;
+    },
+    [fieldMap, fields, getDefaultValue, getValueEditorTypeMain, getValuesMain, listsAsArrays]
+  );
+  const getInputTypeMain = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (field, operator, { fieldData }) => {
+      if (getInputType) {
+        const inputType = getInputType(field, operator, { fieldData });
+        if (inputType) return inputType;
+      }
+      return "text";
+    },
+    [getInputType]
+  );
+  const createRule = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
+    let field = "";
+    const flds = fields;
+    if (flds?.length > 0 && flds[0]) {
+      const fo = getFirstOption(flds);
+      if (fo) field = fo;
+    }
+    if (getDefaultField) {
+      if (typeof getDefaultField === "function") {
+        const df = getDefaultField(flds);
+        if (df) field = df;
+      } else {
+        field = getDefaultField;
+      }
+    }
+    const operator = getRuleDefaultOperator(field);
+    const valueSource = getValueSourcesMain(field, operator)[0] ?? "value";
+    const newRule = {
+      id: idGenerator(),
+      field,
+      operator,
+      valueSource,
+      value: ""
+    };
+    const value = getRuleDefaultValue(newRule);
+    return { ...newRule, value };
+  }, [
+    fields,
+    getDefaultField,
+    getRuleDefaultOperator,
+    getRuleDefaultValue,
+    getValueSourcesMain,
+    idGenerator
+  ]);
+  const createRuleGroup = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (independentCombinators) => {
+      if (independentCombinators) {
+        return {
+          id: idGenerator(),
+          rules: addRuleToNewGroups ? [createRule()] : [],
+          not: false
+        };
+      }
+      return {
+        id: idGenerator(),
+        rules: addRuleToNewGroups ? [createRule()] : [],
+        combinator: getFirstOption(combinators) ?? /* istanbul ignore next */
+        "",
+        not: false
+      };
+    },
+    [addRuleToNewGroups, combinators, createRule, idGenerator]
+  );
+  return {
+    qbId,
+    rqbContext,
+    fields,
+    fieldMap,
+    combinators,
+    getOperatorsMain,
+    getRuleDefaultOperator,
+    getValueEditorTypeMain,
+    getValueSourcesMain,
+    getValuesMain,
+    getRuleDefaultValue,
+    getInputTypeMain,
+    createRule,
+    createRuleGroup
+  };
+};
+
+// src/hooks/useQueryBuilder.ts
+var useQueryBuilder = (props) => useQueryBuilderSchema(props, useQueryBuilderSetup(props));
+
+// src/hooks/useReactDndWarning.ts
+var didWarnEnabledDndWithoutReactDnD = false;
+var useReactDndWarning = (enableDragAndDrop, dndRefs) => {
+  if ( true && !didWarnEnabledDndWithoutReactDnD && enableDragAndDrop && !dndRefs) {
+    console.error(messages.errorEnabledDndWithoutReactDnD);
+    didWarnEnabledDndWithoutReactDnD = true;
+  }
+};
+
+// src/hooks/useRule.ts
+
+var useRule = (props) => {
+  const {
+    id,
+    path,
+    rule: ruleProp,
+    schema: {
+      classNames: classNamesProp,
+      fields,
+      fieldMap,
+      getInputType,
+      getOperators,
+      getValueEditorType,
+      getValueEditorSeparator,
+      getValueSources,
+      getValues,
+      validationMap,
+      enableDragAndDrop,
+      getRuleClassname,
+      suppressStandardClassnames
+    },
+    actions: { moveRule, onPropChange, onRuleRemove },
+    disabled: disabledProp,
+    parentDisabled,
+    shiftUpDisabled,
+    shiftDownDisabled,
+    field: fieldProp,
+    operator: operatorProp,
+    value: valueProp,
+    valueSource: valueSourceProp,
+    // Drag-and-drop
+    dropEffect = "move",
+    dragMonitorId = "",
+    dropMonitorId = "",
+    dndRef = null,
+    dragRef = null,
+    isDragging = false,
+    isOver = false
+  } = props;
+  useDeprecatedProps("rule", !ruleProp);
+  useReactDndWarning(enableDragAndDrop, !!(dragMonitorId || dropMonitorId || dndRef || dragRef));
+  const disabled = !!parentDisabled || !!disabledProp;
+  const rule = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => ruleProp ?? {
+      id,
+      field: fieldProp ?? /* istanbul ignore next */
+      "",
+      operator: operatorProp ?? /* istanbul ignore next */
+      "",
+      value: valueProp,
+      valueSource: valueSourceProp
+    },
+    [fieldProp, id, operatorProp, ruleProp, valueProp, valueSourceProp]
+  );
+  const classNames = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => ({
+      shiftActions: clsx(
+        suppressStandardClassnames || standardClassnames.shiftActions,
+        classNamesProp.shiftActions
+      ),
+      dragHandle: clsx(
+        suppressStandardClassnames || standardClassnames.dragHandle,
+        classNamesProp.dragHandle
+      ),
+      fields: clsx(
+        suppressStandardClassnames || standardClassnames.fields,
+        classNamesProp.valueSelector,
+        classNamesProp.fields
+      ),
+      operators: clsx(
+        suppressStandardClassnames || standardClassnames.operators,
+        classNamesProp.valueSelector,
+        classNamesProp.operators
+      ),
+      valueSource: clsx(
+        suppressStandardClassnames || standardClassnames.valueSource,
+        classNamesProp.valueSelector,
+        classNamesProp.valueSource
+      ),
+      value: clsx(suppressStandardClassnames || standardClassnames.value, classNamesProp.value),
+      cloneRule: clsx(
+        suppressStandardClassnames || standardClassnames.cloneRule,
+        classNamesProp.actionElement,
+        classNamesProp.cloneRule
+      ),
+      lockRule: clsx(
+        suppressStandardClassnames || standardClassnames.lockRule,
+        classNamesProp.actionElement,
+        classNamesProp.lockRule
+      ),
+      removeRule: clsx(
+        suppressStandardClassnames || standardClassnames.removeRule,
+        classNamesProp.actionElement,
+        classNamesProp.removeRule
+      ),
+      valueListItem: clsx(
+        suppressStandardClassnames || standardClassnames.valueListItem,
+        classNamesProp.valueListItem
+      )
+    }),
+    [
+      classNamesProp.shiftActions,
+      classNamesProp.dragHandle,
+      classNamesProp.valueSelector,
+      classNamesProp.fields,
+      classNamesProp.operators,
+      classNamesProp.valueSource,
+      classNamesProp.value,
+      classNamesProp.actionElement,
+      classNamesProp.cloneRule,
+      classNamesProp.lockRule,
+      classNamesProp.removeRule,
+      classNamesProp.valueListItem,
+      suppressStandardClassnames
+    ]
+  );
+  const generateOnChangeHandler = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (prop) => (value, _context) => {
+      if (!disabled) {
+        onPropChange(prop, value, path);
+      }
+    },
+    [disabled, onPropChange, path]
+  );
+  const cloneRule = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
+    if (!disabled) {
+      const newPath = [...getParentPath(path), path.at(-1) + 1];
+      moveRule(path, newPath, true);
+    }
+  }, [disabled, moveRule, path]);
+  const toggleLockRule = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (_event, _context) => {
+      onPropChange("disabled", !disabled, path);
+    },
+    [disabled, onPropChange, path]
+  );
+  const removeRule = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (_event, _context) => {
+      if (!disabled) {
+        onRuleRemove(path);
+      }
+    },
+    [disabled, onRuleRemove, path]
+  );
+  const shiftRuleUp = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (event, _context) => {
+      if (!disabled && !shiftUpDisabled) {
+        moveRule(path, "up", event?.altKey);
+      }
+    },
+    [disabled, moveRule, path, shiftUpDisabled]
+  );
+  const shiftRuleDown = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (event, _context) => {
+      if (!disabled && !shiftDownDisabled) {
+        moveRule(path, "down", event?.altKey);
+      }
+    },
+    [disabled, moveRule, path, shiftDownDisabled]
+  );
+  const fieldData = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => fieldMap?.[rule.field] ?? { name: rule.field, value: rule.field, label: rule.field },
+    [fieldMap, rule.field]
+  );
+  const inputType = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => fieldData.inputType ?? getInputType(rule.field, rule.operator, { fieldData }),
+    [fieldData, getInputType, rule.field, rule.operator]
+  );
+  const operators = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => getOperators(rule.field, { fieldData }),
+    [fieldData, getOperators, rule.field]
+  );
+  const operatorObject = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => getOption(operators, rule.operator),
+    [operators, rule.operator]
+  );
+  const arity = operatorObject?.arity;
+  const hideValueControls = typeof arity === "string" && arity === "unary" || typeof arity === "number" && arity < 2;
+  const valueSources = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => typeof fieldData.valueSources === "function" ? fieldData.valueSources(rule.operator) : fieldData.valueSources ?? getValueSources(rule.field, rule.operator, { fieldData }),
+    [fieldData, getValueSources, rule.field, rule.operator]
+  );
+  const valueEditorType = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => rule.valueSource === "field" ? "select" : getValueEditorType(rule.field, rule.operator, { fieldData }),
+    [fieldData, getValueEditorType, rule.field, rule.operator, rule.valueSource]
+  );
+  const valueEditorSeparator = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => getValueEditorSeparator(rule.field, rule.operator, { fieldData }),
+    [fieldData, getValueEditorSeparator, rule.field, rule.operator]
+  );
+  const values = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => rule.valueSource === "field" ? filterFieldsByComparator(fieldData, fields, rule.operator) : fieldData.values ?? getValues(rule.field, rule.operator, { fieldData }),
+    [fieldData, fields, getValues, rule.field, rule.operator, rule.valueSource]
+  );
+  const valueSourceOptions = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => valueSources.map((vs) => ({ name: vs, value: vs, label: vs })),
+    [valueSources]
+  );
+  const validationResult = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => validationMap[id ?? /* istanbul ignore next */
+    ""] ?? (typeof fieldData.validator === "function" ? fieldData.validator(rule) : null),
+    [fieldData, id, rule, validationMap]
+  );
+  const validationClassName = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => getValidationClassNames(validationResult),
+    [validationResult]
+  );
+  const fieldBasedClassName = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => fieldData?.className ?? "", [fieldData?.className]);
+  const operatorBasedClassName = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => operatorObject?.className ?? "",
+    [operatorObject?.className]
+  );
+  const outerClassName = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => clsx(
+      getRuleClassname(rule, { fieldData }),
+      fieldBasedClassName,
+      operatorBasedClassName,
+      suppressStandardClassnames || standardClassnames.rule,
+      classNamesProp.rule,
+      // custom conditional classes
+      disabled && classNamesProp.disabled,
+      isDragging && classNamesProp.dndDragging,
+      isOver && classNamesProp.dndOver,
+      isOver && dropEffect === "copy" && classNamesProp.dndCopy,
+      // standard conditional classes
+      suppressStandardClassnames || {
+        [standardClassnames.disabled]: disabled,
+        [standardClassnames.dndDragging]: isDragging,
+        [standardClassnames.dndOver]: isOver,
+        [standardClassnames.dndCopy]: isOver && dropEffect === "copy"
+      },
+      validationClassName
+    ),
+    [
+      classNamesProp.disabled,
+      classNamesProp.dndCopy,
+      classNamesProp.dndDragging,
+      classNamesProp.dndOver,
+      classNamesProp.rule,
+      disabled,
+      dropEffect,
+      fieldBasedClassName,
+      fieldData,
+      getRuleClassname,
+      isDragging,
+      isOver,
+      operatorBasedClassName,
+      rule,
+      suppressStandardClassnames,
+      validationClassName
+    ]
+  );
+  return {
+    ...props,
+    classNames,
+    cloneRule,
+    disabled,
+    dndRef,
+    dragMonitorId,
+    dragRef,
+    dropMonitorId,
+    fieldData,
+    generateOnChangeHandler,
+    hideValueControls,
+    inputType,
+    operators,
+    outerClassName,
+    removeRule,
+    rule,
+    shiftRuleUp,
+    shiftRuleDown,
+    toggleLockRule,
+    validationResult,
+    valueEditorSeparator,
+    valueEditorType,
+    values,
+    valueSourceOptions,
+    valueSources
+  };
+};
+
+// src/hooks/useRuleGroup.ts
+
+var useRuleGroup = (props) => {
+  const {
+    id,
+    path,
+    ruleGroup: ruleGroupProp,
+    schema: {
+      qbId,
+      accessibleDescriptionGenerator,
+      classNames: classNamesProp,
+      combinators,
+      createRule,
+      createRuleGroup,
+      disabledPaths,
+      independentCombinators,
+      validationMap,
+      enableDragAndDrop,
+      getRuleGroupClassname,
+      suppressStandardClassnames
+    },
+    actions: { onGroupAdd, onGroupRemove, onPropChange, onRuleAdd, moveRule },
+    disabled: disabledProp,
+    parentDisabled,
+    shiftUpDisabled,
+    shiftDownDisabled,
+    combinator: combinatorProp,
+    rules: rulesProp,
+    not: notProp,
+    // Drag-and-drop
+    dropEffect = "move",
+    dragMonitorId = "",
+    dropMonitorId = "",
+    previewRef = null,
+    dragRef = null,
+    dropRef = null,
+    isDragging = false,
+    isOver = false
+  } = props;
+  useDeprecatedProps("ruleGroup", !ruleGroupProp);
+  useReactDndWarning(
+    enableDragAndDrop,
+    !!(dragMonitorId || dropMonitorId || previewRef || dragRef || dropRef)
+  );
+  const disabled = !!parentDisabled || !!disabledProp;
+  const combinator = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => ruleGroupProp && isRuleGroupType(ruleGroupProp) ? ruleGroupProp.combinator : ruleGroupProp ? getFirstOption(combinators) : combinatorProp ?? getFirstOption(combinators),
+    [combinatorProp, combinators, ruleGroupProp]
+  );
+  const ruleGroup = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
+    if (ruleGroupProp) {
+      if (ruleGroupProp.combinator === combinator || independentCombinators) {
+        return ruleGroupProp;
+      }
+      const newRG = structuredClone(ruleGroupProp);
+      newRG.combinator = combinator;
+      return newRG;
+    }
+    return { rules: rulesProp, not: notProp };
+  }, [combinator, independentCombinators, notProp, ruleGroupProp, rulesProp]);
+  const classNames = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => ({
+      header: clsx(
+        suppressStandardClassnames || standardClassnames.header,
+        classNamesProp.header,
+        isOver && dropEffect === "copy" && classNamesProp.dndCopy,
+        suppressStandardClassnames || {
+          [standardClassnames.dndOver]: isOver,
+          [standardClassnames.dndCopy]: isOver && dropEffect === "copy"
+        }
+      ),
+      shiftActions: clsx(
+        suppressStandardClassnames || standardClassnames.shiftActions,
+        classNamesProp.shiftActions
+      ),
+      dragHandle: clsx(
+        suppressStandardClassnames || standardClassnames.dragHandle,
+        classNamesProp.dragHandle
+      ),
+      combinators: clsx(
+        suppressStandardClassnames || standardClassnames.combinators,
+        classNamesProp.valueSelector,
+        classNamesProp.combinators
+      ),
+      // betweenRules: clsx(
+      //   suppressStandardClassnames || standardClassnames.betweenRules,
+      //   classNamesProp.betweenRules
+      // ),
+      notToggle: clsx(
+        suppressStandardClassnames || standardClassnames.notToggle,
+        classNamesProp.notToggle
+      ),
+      addRule: clsx(
+        suppressStandardClassnames || standardClassnames.addRule,
+        classNamesProp.actionElement,
+        classNamesProp.addRule
+      ),
+      addGroup: clsx(
+        suppressStandardClassnames || standardClassnames.addGroup,
+        classNamesProp.actionElement,
+        classNamesProp.addGroup
+      ),
+      cloneGroup: clsx(
+        suppressStandardClassnames || standardClassnames.cloneGroup,
+        classNamesProp.actionElement,
+        classNamesProp.cloneGroup
+      ),
+      lockGroup: clsx(
+        suppressStandardClassnames || standardClassnames.lockGroup,
+        classNamesProp.actionElement,
+        classNamesProp.lockGroup
+      ),
+      removeGroup: clsx(
+        suppressStandardClassnames || standardClassnames.removeGroup,
+        classNamesProp.actionElement,
+        classNamesProp.removeGroup
+      ),
+      body: clsx(suppressStandardClassnames || standardClassnames.body, classNamesProp.body)
+    }),
+    [
+      classNamesProp.actionElement,
+      classNamesProp.addGroup,
+      classNamesProp.addRule,
+      classNamesProp.body,
+      classNamesProp.cloneGroup,
+      classNamesProp.combinators,
+      classNamesProp.dndCopy,
+      classNamesProp.dragHandle,
+      classNamesProp.header,
+      classNamesProp.lockGroup,
+      classNamesProp.notToggle,
+      classNamesProp.removeGroup,
+      classNamesProp.shiftActions,
+      classNamesProp.valueSelector,
+      dropEffect,
+      isOver,
+      suppressStandardClassnames
+    ]
+  );
+  const onCombinatorChange = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (value) => {
+      if (!disabled) {
+        onPropChange("combinator", value, path);
+      }
+    },
+    [disabled, onPropChange, path]
+  );
+  const onIndependentCombinatorChange = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (value, index, _context) => {
+      if (!disabled) {
+        onPropChange("combinator", value, [...path, index]);
+      }
+    },
+    [disabled, onPropChange, path]
+  );
+  const onNotToggleChange = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (checked, _context) => {
+      if (!disabled) {
+        onPropChange("not", checked, path);
+      }
+    },
+    [disabled, onPropChange, path]
+  );
+  const addRule = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (_e, context) => {
+      if (!disabled) {
+        const newRule = createRule();
+        onRuleAdd(newRule, path, context);
+      }
+    },
+    [createRule, disabled, onRuleAdd, path]
+  );
+  const addGroup = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (_e, context) => {
+      if (!disabled) {
+        const newGroup = createRuleGroup(independentCombinators);
+        onGroupAdd(newGroup, path, context);
+      }
+    },
+    [createRuleGroup, disabled, independentCombinators, onGroupAdd, path]
+  );
+  const cloneGroup = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
+    if (!disabled) {
+      const newPath = [...getParentPath(path), path.at(-1) + 1];
+      moveRule(path, newPath, true);
+    }
+  }, [disabled, moveRule, path]);
+  const shiftGroupUp = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (event, _context) => {
+      if (!disabled && !shiftUpDisabled) {
+        moveRule(path, "up", event?.altKey);
+      }
+    },
+    [disabled, moveRule, path, shiftUpDisabled]
+  );
+  const shiftGroupDown = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (event, _context) => {
+      if (!disabled && !shiftDownDisabled) {
+        moveRule(path, "down", event?.altKey);
+      }
+    },
+    [disabled, moveRule, path, shiftDownDisabled]
+  );
+  const toggleLockGroup = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
+    onPropChange("disabled", !disabled, path);
+  }, [disabled, onPropChange, path]);
+  const removeGroup = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
+    if (!disabled) {
+      onGroupRemove(path);
+    }
+  }, [disabled, onGroupRemove, path]);
+  const validationResult = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => validationMap[id ?? /* istanbul ignore next */
+    ""],
+    [id, validationMap]
+  );
+  const validationClassName = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => getValidationClassNames(validationResult),
+    [validationResult]
+  );
+  const combinatorBasedClassName = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => independentCombinators ? null : getOption(combinators, combinator)?.className ?? "",
+    [combinator, combinators, independentCombinators]
+  );
+  const ruleGroupClassname = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => getRuleGroupClassname(ruleGroup),
+    [getRuleGroupClassname, ruleGroup]
+  );
+  const outerClassName = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => clsx(
+      ruleGroupClassname,
+      combinatorBasedClassName,
+      suppressStandardClassnames || standardClassnames.ruleGroup,
+      classNamesProp.ruleGroup,
+      disabled && classNamesProp.disabled,
+      isDragging && classNamesProp.dndDragging,
+      suppressStandardClassnames || {
+        [standardClassnames.disabled]: disabled,
+        [standardClassnames.dndDragging]: isDragging
+      },
+      validationClassName
+    ),
+    [
+      classNamesProp.disabled,
+      classNamesProp.dndDragging,
+      classNamesProp.ruleGroup,
+      combinatorBasedClassName,
+      disabled,
+      isDragging,
+      ruleGroupClassname,
+      suppressStandardClassnames,
+      validationClassName
+    ]
+  );
+  const pathsMemo = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
+    const paths = [];
+    for (let i = 0; i < ruleGroup.rules.length; i++) {
+      const thisPath = [...path, i];
+      paths[i] = {
+        path: thisPath,
+        disabled: disabled || disabledPaths.some((p) => pathsAreEqual(thisPath, p))
+      };
+    }
+    return paths;
+  }, [disabled, path, ruleGroup.rules.length, disabledPaths]);
+  const accessibleDescription = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => accessibleDescriptionGenerator({ path, qbId }),
+    [accessibleDescriptionGenerator, path, qbId]
+  );
+  return {
+    ...props,
+    addGroup,
+    addRule,
+    accessibleDescription,
+    classNames,
+    cloneGroup,
+    combinator,
+    disabled,
+    dragMonitorId,
+    dragRef,
+    dropMonitorId,
+    dropRef,
+    isDragging,
+    isOver,
+    onCombinatorChange,
+    onGroupAdd,
+    onIndependentCombinatorChange,
+    onNotToggleChange,
+    outerClassName,
+    parentDisabled,
+    pathsMemo,
+    previewRef,
+    removeGroup,
+    ruleGroup,
+    shiftGroupUp,
+    shiftGroupDown,
+    toggleLockGroup,
+    validationClassName,
+    validationResult
+  };
+};
+
+// src/hooks/useSelectElementChangeHandler.ts
+
+var useSelectElementChangeHandler = (params) => {
+  const { multiple, onChange } = params;
+  const selectElementChangeHandler = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
+    () => multiple ? (e) => (
+      // eslint-disable-next-line unicorn/prefer-spread
+      onChange(Array.from(e.target.selectedOptions).map((o) => o.value))
+    ) : (e) => onChange(e.target.value),
+    [multiple, onChange]
+  );
+  return selectElementChangeHandler;
+};
+
+// src/hooks/useStopEventPropagation.ts
+
+var useStopEventPropagation = (method) => (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+  (event, context) => {
+    event?.preventDefault();
+    event?.stopPropagation();
+    method(event, context);
+  },
+  [method]
+);
+
+// src/hooks/useValueEditor.ts
+
+
+var useValueEditor = (props) => {
+  const {
+    handleOnChange,
+    inputType,
+    operator,
+    value,
+    listsAsArrays,
+    parseNumbers,
+    values,
+    type,
+    skipHook,
+    schema: { classNames: classNamesProp, suppressStandardClassnames }
+  } = props;
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!skipHook && type !== "multiselect" && !["between", "notBetween", "in", "notIn"].includes(operator) && (Array.isArray(value) || inputType === "number" && typeof value === "string" && value.includes(","))) {
+      handleOnChange(toArray(value, { retainEmptyStrings: true })[0] ?? "");
+    }
+  }, [handleOnChange, inputType, operator, skipHook, type, value]);
+  const valueAsArray = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => toArray(value, { retainEmptyStrings: true }), [value]);
+  const parseNumberMethod = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
+    if (typeof parseNumbers === "string") {
+      const [method, level] = parseNumbers.split("-");
+      if (level === "limited") {
+        return inputType === "number" ? method : false;
+      }
+      return method;
+    }
+    return parseNumbers ? "strict" : false;
+  }, [inputType, parseNumbers]);
+  const multiValueHandler = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (val, idx) => {
+      const v = (0,immer__WEBPACK_IMPORTED_MODULE_4__.produce)(valueAsArray, (va) => {
+        va[idx] = parseNumber(val, { parseNumbers: parseNumberMethod });
+        if (idx === 0 && (operator === "between" || operator === "notBetween") && (va.length < 2 || va[1] === void 0)) {
+          va[1] = getFirstOption(values);
+        }
+      });
+      handleOnChange(listsAsArrays ? v : joinWith(v, ","));
+    },
+    [handleOnChange, listsAsArrays, operator, parseNumberMethod, valueAsArray, values]
+  );
+  const valueListItemClassName = clsx_default(
+    suppressStandardClassnames || standardClassnames.valueListItem,
+    // Optional chaining is necessary for QueryBuilderNative
+    classNamesProp?.valueListItem
+  );
+  return {
+    valueAsArray,
+    multiValueHandler,
+    parseNumberMethod,
+    valueListItemClassName
+  };
+};
+
+// src/hooks/useValueSelector.ts
+
+var useValueSelector = (props) => {
+  const { handleOnChange, listsAsArrays = false, multiple = false, value } = props;
+  const onChange = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(
+    (v) => {
+      if (multiple) {
+        const valueAsArray = toArray(v);
+        handleOnChange(listsAsArrays ? valueAsArray : joinWith(valueAsArray, ","));
+      } else {
+        handleOnChange(v);
+      }
+    },
+    [handleOnChange, listsAsArrays, multiple]
+  );
+  const val = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => multiple ? toArray(value) : value, [multiple, value]);
+  return {
+    onChange,
+    val
+  };
+};
+
+// src/components/QueryBuilderContext.ts
+
+var QueryBuilderContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)({});
+
+// src/components/QueryBuilder.tsx
+var rootPath = [];
+var QueryBuilderStateProvider = (props) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, { context: QueryBuilderStateContext, store: queryBuilderStore }, props.children);
+var QueryBuilderInternal = ({
+  props
+}) => {
+  const qb = useQueryBuilder(props);
+  const RuleGroupControlElement = qb.schema.controls.ruleGroup;
+  const QueryBuilderContext2 = QueryBuilderContext;
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(QueryBuilderContext2.Provider, { key: qb.dndEnabledAttr, value: qb.rqbContext }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    "div",
+    {
+      role: "form",
+      className: qb.wrapperClassName,
+      "data-dnd": qb.dndEnabledAttr,
+      "data-inlinecombinators": qb.inlineCombinatorsAttr
+    },
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+      RuleGroupControlElement,
+      {
+        translations: qb.translations,
+        ruleGroup: qb.rootGroup,
+        rules: qb.rootGroup.rules,
+        ...qb.combinatorPropObject,
+        not: !!qb.rootGroup.not,
+        schema: qb.schema,
+        actions: qb.actions,
+        id: qb.rootGroup.id,
+        path: rootPath,
+        disabled: qb.rootGroupDisabled,
+        shiftUpDisabled: true,
+        shiftDownDisabled: true,
+        parentDisabled: qb.queryDisabled,
+        context: props.context
+      }
+    )
+  ));
+};
+var QueryBuilder = (props) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(QueryBuilderStateProvider, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(QueryBuilderInternal, { props }));
+
+// src/components/Rule.tsx
+
+var Rule = react__WEBPACK_IMPORTED_MODULE_0__.memo(
+  (props) => {
+    const r = useRule(props);
+    const cloneRule = useStopEventPropagation(r.cloneRule);
+    const toggleLockRule = useStopEventPropagation(r.toggleLockRule);
+    const removeRule = useStopEventPropagation(r.removeRule);
+    const shiftRuleUp = useStopEventPropagation(r.shiftRuleUp);
+    const shiftRuleDown = useStopEventPropagation(r.shiftRuleDown);
+    return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+      "div",
+      {
+        ref: r.dndRef,
+        "data-testid": TestID.rule,
+        "data-dragmonitorid": r.dragMonitorId,
+        "data-dropmonitorid": r.dropMonitorId,
+        className: r.outerClassName,
+        "data-rule-id": r.id,
+        "data-level": r.path.length,
+        "data-path": JSON.stringify(r.path)
+      },
+      /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+        RuleComponents,
+        {
+          ...r,
+          cloneRule,
+          toggleLockRule,
+          removeRule,
+          shiftRuleUp,
+          shiftRuleDown
+        }
+      )
+    );
+  }
+);
+var RuleComponents = react__WEBPACK_IMPORTED_MODULE_0__.memo((r) => {
+  const {
+    schema: {
+      controls: {
+        shiftActions: ShiftActionsControlElement,
+        dragHandle: DragHandleControlElement,
+        fieldSelector: FieldSelectorControlElement,
+        operatorSelector: OperatorSelectorControlElement,
+        valueSourceSelector: ValueSourceSelectorControlElement,
+        valueEditor: ValueEditorControlElement,
+        cloneRuleAction: CloneRuleActionControlElement,
+        lockRuleAction: LockRuleActionControlElement,
+        removeRuleAction: RemoveRuleActionControlElement
+      }
+    }
+  } = r;
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, r.schema.showShiftActions && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    ShiftActionsControlElement,
+    {
+      testID: TestID.shiftActions,
+      level: r.path.length,
+      path: r.path,
+      titles: {
+        shiftUp: r.translations.shiftActionUp.title,
+        shiftDown: r.translations.shiftActionDown.title
+      },
+      labels: {
+        shiftUp: r.translations.shiftActionUp.label,
+        shiftDown: r.translations.shiftActionDown.label
+      },
+      className: r.classNames.shiftActions,
+      disabled: r.disabled,
+      shiftUp: r.shiftRuleUp,
+      shiftDown: r.shiftRuleDown,
+      shiftUpDisabled: r.shiftUpDisabled,
+      shiftDownDisabled: r.shiftDownDisabled,
+      context: r.context,
+      validation: r.validationResult,
+      schema: r.schema,
+      ruleOrGroup: r.rule
+    }
+  ), r.schema.enableDragAndDrop && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    DragHandleControlElement,
+    {
+      testID: TestID.dragHandle,
+      ref: r.dragRef,
+      level: r.path.length,
+      path: r.path,
+      title: r.translations.dragHandle.title,
+      label: r.translations.dragHandle.label,
+      className: r.classNames.dragHandle,
+      disabled: r.disabled,
+      context: r.context,
+      validation: r.validationResult,
+      schema: r.schema,
+      ruleOrGroup: r.rule
+    }
+  ), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    FieldSelectorControlElement,
+    {
+      testID: TestID.fields,
+      options: r.schema.fields,
+      title: r.translations.fields.title,
+      value: r.rule.field,
+      operator: r.rule.operator,
+      className: r.classNames.fields,
+      handleOnChange: r.generateOnChangeHandler("field"),
+      level: r.path.length,
+      path: r.path,
+      disabled: r.disabled,
+      context: r.context,
+      validation: r.validationResult,
+      schema: r.schema,
+      rule: r.rule
+    }
+  ), (r.schema.autoSelectField || r.rule.field !== r.translations.fields.placeholderName) && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    OperatorSelectorControlElement,
+    {
+      testID: TestID.operators,
+      field: r.rule.field,
+      fieldData: r.fieldData,
+      title: r.translations.operators.title,
+      options: r.operators,
+      value: r.rule.operator,
+      className: r.classNames.operators,
+      handleOnChange: r.generateOnChangeHandler("operator"),
+      level: r.path.length,
+      path: r.path,
+      disabled: r.disabled,
+      context: r.context,
+      validation: r.validationResult,
+      schema: r.schema,
+      rule: r.rule
+    }
+  ), (r.schema.autoSelectOperator || r.rule.operator !== r.translations.operators.placeholderName) && !r.hideValueControls && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !["null", "notNull"].includes(r.rule.operator) && r.valueSources.length > 1 && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    ValueSourceSelectorControlElement,
+    {
+      testID: TestID.valueSourceSelector,
+      field: r.rule.field,
+      fieldData: r.fieldData,
+      title: r.translations.valueSourceSelector.title,
+      options: r.valueSourceOptions,
+      value: r.rule.valueSource ?? "value",
+      className: r.classNames.valueSource,
+      handleOnChange: r.generateOnChangeHandler("valueSource"),
+      level: r.path.length,
+      path: r.path,
+      disabled: r.disabled,
+      context: r.context,
+      validation: r.validationResult,
+      schema: r.schema,
+      rule: r.rule
+    }
+  ), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    ValueEditorControlElement,
+    {
+      testID: TestID.valueEditor,
+      field: r.rule.field,
+      fieldData: r.fieldData,
+      title: r.translations.value.title,
+      operator: r.rule.operator,
+      value: r.rule.value,
+      valueSource: r.rule.valueSource ?? "value",
+      type: r.valueEditorType,
+      inputType: r.inputType,
+      values: r.values,
+      listsAsArrays: r.schema.listsAsArrays,
+      parseNumbers: r.schema.parseNumbers,
+      separator: r.valueEditorSeparator,
+      className: r.classNames.value,
+      handleOnChange: r.generateOnChangeHandler("value"),
+      level: r.path.length,
+      path: r.path,
+      disabled: r.disabled,
+      context: r.context,
+      validation: r.validationResult,
+      schema: r.schema,
+      rule: r.rule
+    }
+  ))), r.schema.showCloneButtons && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    CloneRuleActionControlElement,
+    {
+      testID: TestID.cloneRule,
+      label: r.translations.cloneRule.label,
+      title: r.translations.cloneRule.title,
+      className: r.classNames.cloneRule,
+      handleOnClick: r.cloneRule,
+      level: r.path.length,
+      path: r.path,
+      disabled: r.disabled,
+      context: r.context,
+      validation: r.validationResult,
+      ruleOrGroup: r.rule,
+      schema: r.schema
+    }
+  ), r.schema.showLockButtons && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    LockRuleActionControlElement,
+    {
+      testID: TestID.lockRule,
+      label: r.translations.lockRule.label,
+      title: r.translations.lockRule.title,
+      className: r.classNames.lockRule,
+      handleOnClick: r.toggleLockRule,
+      level: r.path.length,
+      path: r.path,
+      disabled: r.disabled,
+      disabledTranslation: r.parentDisabled ? void 0 : r.translations.lockRuleDisabled,
+      context: r.context,
+      validation: r.validationResult,
+      ruleOrGroup: r.rule,
+      schema: r.schema
+    }
+  ), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    RemoveRuleActionControlElement,
+    {
+      testID: TestID.removeRule,
+      label: r.translations.removeRule.label,
+      title: r.translations.removeRule.title,
+      className: r.classNames.removeRule,
+      handleOnClick: r.removeRule,
+      level: r.path.length,
+      path: r.path,
+      disabled: r.disabled,
+      context: r.context,
+      validation: r.validationResult,
+      ruleOrGroup: r.rule,
+      schema: r.schema
+    }
+  ));
+});
+
+// src/components/RuleGroup.tsx
+
+
+var RuleGroup = react__WEBPACK_IMPORTED_MODULE_0__.memo((props) => {
+  const rg = useRuleGroup(props);
+  const {
+    schema: {
+      controls: {
+        ruleGroupBodyElements: RuleGroupBodyElements,
+        ruleGroupHeaderElements: RuleGroupHeaderElements
+      }
+    }
+  } = rg;
+  const addRule = useStopEventPropagation(rg.addRule);
+  const addGroup = useStopEventPropagation(rg.addGroup);
+  const cloneGroup = useStopEventPropagation(rg.cloneGroup);
+  const toggleLockGroup = useStopEventPropagation(rg.toggleLockGroup);
+  const removeGroup = useStopEventPropagation(rg.removeGroup);
+  const shiftGroupUp = useStopEventPropagation(rg.shiftGroupUp);
+  const shiftGroupDown = useStopEventPropagation(rg.shiftGroupDown);
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    "div",
+    {
+      ref: rg.previewRef,
+      title: rg.accessibleDescription,
+      className: rg.outerClassName,
+      "data-testid": TestID.ruleGroup,
+      "data-dragmonitorid": rg.dragMonitorId,
+      "data-dropmonitorid": rg.dropMonitorId,
+      "data-rule-group-id": rg.id,
+      "data-level": rg.path.length,
+      "data-path": JSON.stringify(rg.path)
+    },
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: rg.dropRef, className: rg.classNames.header }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+      RuleGroupHeaderElements,
+      {
+        ...rg,
+        addRule,
+        addGroup,
+        cloneGroup,
+        toggleLockGroup,
+        removeGroup,
+        shiftGroupUp,
+        shiftGroupDown
+      }
+    )),
+    /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: rg.classNames.body }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+      RuleGroupBodyElements,
+      {
+        ...rg,
+        addRule,
+        addGroup,
+        cloneGroup,
+        toggleLockGroup,
+        removeGroup,
+        shiftGroupUp,
+        shiftGroupDown
+      }
+    ))
+  );
+});
+var RuleGroupHeaderComponents = react__WEBPACK_IMPORTED_MODULE_0__.memo((rg) => {
+  const {
+    schema: {
+      controls: {
+        shiftActions: ShiftActionsControlElement,
+        dragHandle: DragHandleControlElement,
+        combinatorSelector: CombinatorSelectorControlElement,
+        notToggle: NotToggleControlElement,
+        addRuleAction: AddRuleActionControlElement,
+        addGroupAction: AddGroupActionControlElement,
+        cloneGroupAction: CloneGroupActionControlElement,
+        lockGroupAction: LockGroupActionControlElement,
+        removeGroupAction: RemoveGroupActionControlElement
+      }
+    }
+  } = rg;
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, rg.schema.showShiftActions && rg.path.length > 0 && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    ShiftActionsControlElement,
+    {
+      key: TestID.shiftActions,
+      testID: TestID.shiftActions,
+      level: rg.path.length,
+      path: rg.path,
+      titles: {
+        shiftUp: rg.translations.shiftActionUp.title,
+        shiftDown: rg.translations.shiftActionDown.title
+      },
+      labels: {
+        shiftUp: rg.translations.shiftActionUp.label,
+        shiftDown: rg.translations.shiftActionDown.label
+      },
+      className: rg.classNames.shiftActions,
+      disabled: rg.disabled,
+      shiftUp: rg.shiftGroupUp,
+      shiftDown: rg.shiftGroupDown,
+      shiftUpDisabled: rg.shiftUpDisabled,
+      shiftDownDisabled: rg.shiftDownDisabled,
+      context: rg.context,
+      validation: rg.validationResult,
+      schema: rg.schema,
+      ruleOrGroup: rg.ruleGroup
+    }
+  ), rg.path.length > 0 && rg.schema.enableDragAndDrop && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    DragHandleControlElement,
+    {
+      key: TestID.dragHandle,
+      testID: TestID.dragHandle,
+      ref: rg.dragRef,
+      level: rg.path.length,
+      path: rg.path,
+      title: rg.translations.dragHandle.title,
+      label: rg.translations.dragHandle.label,
+      className: rg.classNames.dragHandle,
+      disabled: rg.disabled,
+      context: rg.context,
+      validation: rg.validationResult,
+      schema: rg.schema,
+      ruleOrGroup: rg.ruleGroup
+    }
+  ), !rg.schema.showCombinatorsBetweenRules && !rg.schema.independentCombinators && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    CombinatorSelectorControlElement,
+    {
+      key: TestID.combinators,
+      testID: TestID.combinators,
+      options: rg.schema.combinators,
+      value: rg.combinator,
+      title: rg.translations.combinators.title,
+      className: rg.classNames.combinators,
+      handleOnChange: rg.onCombinatorChange,
+      rules: rg.ruleGroup.rules,
+      level: rg.path.length,
+      path: rg.path,
+      disabled: rg.disabled,
+      context: rg.context,
+      validation: rg.validationResult,
+      schema: rg.schema
+    }
+  ), rg.schema.showNotToggle && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    NotToggleControlElement,
+    {
+      key: TestID.notToggle,
+      testID: TestID.notToggle,
+      className: rg.classNames.notToggle,
+      title: rg.translations.notToggle.title,
+      label: rg.translations.notToggle.label,
+      checked: rg.ruleGroup.not,
+      handleOnChange: rg.onNotToggleChange,
+      level: rg.path.length,
+      disabled: rg.disabled,
+      path: rg.path,
+      context: rg.context,
+      validation: rg.validationResult,
+      schema: rg.schema,
+      ruleGroup: rg.ruleGroup
+    }
+  ), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    AddRuleActionControlElement,
+    {
+      key: TestID.addRule,
+      testID: TestID.addRule,
+      label: rg.translations.addRule.label,
+      title: rg.translations.addRule.title,
+      className: rg.classNames.addRule,
+      handleOnClick: rg.addRule,
+      rules: rg.ruleGroup.rules,
+      level: rg.path.length,
+      path: rg.path,
+      disabled: rg.disabled,
+      context: rg.context,
+      validation: rg.validationResult,
+      ruleOrGroup: rg.ruleGroup,
+      schema: rg.schema
+    }
+  ), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    AddGroupActionControlElement,
+    {
+      key: TestID.addGroup,
+      testID: TestID.addGroup,
+      label: rg.translations.addGroup.label,
+      title: rg.translations.addGroup.title,
+      className: rg.classNames.addGroup,
+      handleOnClick: rg.addGroup,
+      rules: rg.ruleGroup.rules,
+      level: rg.path.length,
+      path: rg.path,
+      disabled: rg.disabled,
+      context: rg.context,
+      validation: rg.validationResult,
+      ruleOrGroup: rg.ruleGroup,
+      schema: rg.schema
+    }
+  ), rg.schema.showCloneButtons && rg.path.length > 0 && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    CloneGroupActionControlElement,
+    {
+      key: TestID.cloneGroup,
+      testID: TestID.cloneGroup,
+      label: rg.translations.cloneRuleGroup.label,
+      title: rg.translations.cloneRuleGroup.title,
+      className: rg.classNames.cloneGroup,
+      handleOnClick: rg.cloneGroup,
+      rules: rg.ruleGroup.rules,
+      level: rg.path.length,
+      path: rg.path,
+      disabled: rg.disabled,
+      context: rg.context,
+      validation: rg.validationResult,
+      ruleOrGroup: rg.ruleGroup,
+      schema: rg.schema
+    }
+  ), rg.schema.showLockButtons && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    LockGroupActionControlElement,
+    {
+      key: TestID.lockGroup,
+      testID: TestID.lockGroup,
+      label: rg.translations.lockGroup.label,
+      title: rg.translations.lockGroup.title,
+      className: rg.classNames.lockGroup,
+      handleOnClick: rg.toggleLockGroup,
+      rules: rg.ruleGroup.rules,
+      level: rg.path.length,
+      path: rg.path,
+      disabled: rg.disabled,
+      disabledTranslation: rg.parentDisabled ? void 0 : rg.translations.lockGroupDisabled,
+      context: rg.context,
+      validation: rg.validationResult,
+      ruleOrGroup: rg.ruleGroup,
+      schema: rg.schema
+    }
+  ), rg.path.length > 0 && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    RemoveGroupActionControlElement,
+    {
+      key: TestID.removeGroup,
+      testID: TestID.removeGroup,
+      label: rg.translations.removeGroup.label,
+      title: rg.translations.removeGroup.title,
+      className: rg.classNames.removeGroup,
+      handleOnClick: rg.removeGroup,
+      rules: rg.ruleGroup.rules,
+      level: rg.path.length,
+      path: rg.path,
+      disabled: rg.disabled,
+      context: rg.context,
+      validation: rg.validationResult,
+      ruleOrGroup: rg.ruleGroup,
+      schema: rg.schema
+    }
+  ));
+});
+var RuleGroupBodyComponents = react__WEBPACK_IMPORTED_MODULE_0__.memo((rg) => {
+  const {
+    schema: {
+      controls: {
+        combinatorSelector: CombinatorSelectorControlElement,
+        inlineCombinator: InlineCombinatorControlElement,
+        ruleGroup: RuleGroupControlElement,
+        rule: RuleControlElement
+      }
+    }
+  } = rg;
+  return rg.ruleGroup.rules.map(
+    (r, idx, { length: ruleArrayLength }) => {
+      const thisPathMemo = rg.pathsMemo[idx];
+      const thisPath = thisPathMemo.path;
+      const thisPathDisabled = thisPathMemo.disabled || typeof r !== "string" && r.disabled;
+      const shiftUpDisabled = pathsAreEqual([0], thisPath);
+      const shiftDownDisabled = rg.path.length === 0 && idx === ruleArrayLength - 1;
+      const key = typeof r === "string" ? [...thisPath, r].join("-") : r.id;
+      return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, { key }, idx > 0 && !rg.schema.independentCombinators && rg.schema.showCombinatorsBetweenRules && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+        InlineCombinatorControlElement,
+        {
+          key: TestID.inlineCombinator,
+          options: rg.schema.combinators,
+          value: rg.combinator,
+          title: rg.translations.combinators.title,
+          className: rg.classNames.combinators,
+          handleOnChange: rg.onCombinatorChange,
+          rules: rg.ruleGroup.rules,
+          level: rg.path.length,
+          context: rg.context,
+          validation: rg.validationResult,
+          component: CombinatorSelectorControlElement,
+          path: thisPath,
+          disabled: rg.disabled,
+          schema: rg.schema
+        }
+      ), typeof r === "string" ? /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+        InlineCombinatorControlElement,
+        {
+          key: `${TestID.inlineCombinator}-independent`,
+          options: rg.schema.combinators,
+          value: r,
+          title: rg.translations.combinators.title,
+          className: rg.classNames.combinators,
+          handleOnChange: (val) => rg.onIndependentCombinatorChange(val, idx),
+          rules: rg.ruleGroup.rules,
+          level: rg.path.length,
+          context: rg.context,
+          validation: rg.validationResult,
+          component: CombinatorSelectorControlElement,
+          path: thisPath,
+          disabled: thisPathDisabled,
+          schema: rg.schema
+        }
+      ) : isRuleGroup(r) ? /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+        RuleGroupControlElement,
+        {
+          key: TestID.ruleGroup,
+          id: r.id,
+          schema: rg.schema,
+          actions: rg.actions,
+          path: thisPath,
+          translations: rg.translations,
+          ruleGroup: r,
+          rules: r.rules,
+          combinator: isRuleGroupType(r) ? r.combinator : void 0,
+          not: !!r.not,
+          disabled: thisPathDisabled,
+          parentDisabled: rg.parentDisabled || rg.disabled,
+          shiftUpDisabled,
+          shiftDownDisabled,
+          context: rg.context
+        }
+      ) : /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+        RuleControlElement,
+        {
+          key: TestID.rule,
+          id: r.id,
+          rule: r,
+          field: r.field,
+          operator: r.operator,
+          value: r.value,
+          valueSource: r.valueSource,
+          schema: rg.schema,
+          actions: rg.actions,
+          path: thisPath,
+          disabled: thisPathDisabled,
+          parentDisabled: rg.parentDisabled || rg.disabled,
+          translations: rg.translations,
+          shiftUpDisabled,
+          shiftDownDisabled,
+          context: rg.context
+        }
+      ));
+    }
+  );
+});
+
+// src/components/ShiftActions.tsx
+
+var ShiftActions = (props) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { "data-testid": props.testID, className: props.className }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+  "button",
+  {
+    disabled: props.disabled || props.shiftUpDisabled,
+    onClick: props.shiftUp,
+    title: props.titles?.shiftUp
+  },
+  props.labels?.shiftUp
+), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+  "button",
+  {
+    disabled: props.disabled || props.shiftDownDisabled,
+    onClick: props.shiftDown,
+    title: props.titles?.shiftDown
+  },
+  props.labels?.shiftDown
+));
+
+// src/components/ValueEditor.tsx
+
+var ValueEditor = (allProps) => {
+  const {
+    operator,
+    value,
+    handleOnChange,
+    title,
+    className,
+    type = "text",
+    inputType = "text",
+    values = [],
+    listsAsArrays,
+    fieldData,
+    disabled,
+    separator = null,
+    testID,
+    selectorComponent: SelectorComponent = allProps.schema.controls.valueSelector,
+    ...props
+  } = allProps;
+  const { valueAsArray, multiValueHandler, parseNumberMethod, valueListItemClassName } = useValueEditor(allProps);
+  if (operator === "null" || operator === "notNull") {
+    return null;
+  }
+  const placeHolderText = fieldData?.placeholder ?? "";
+  const inputTypeCoerced = ["in", "notIn"].includes(operator) ? "text" : inputType || "text";
+  if ((operator === "between" || operator === "notBetween") && (type === "select" || type === "text")) {
+    const editors = ["from", "to"].map((key, i) => {
+      if (type === "text") {
+        return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+          "input",
+          {
+            key,
+            type: inputTypeCoerced,
+            placeholder: placeHolderText,
+            value: valueAsArray[i] ?? "",
+            className: valueListItemClassName,
+            disabled,
+            onChange: (e) => multiValueHandler(e.target.value, i)
+          }
+        );
+      }
+      return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+        SelectorComponent,
+        {
+          key,
+          ...props,
+          schema: allProps.schema,
+          className: valueListItemClassName,
+          handleOnChange: (v) => multiValueHandler(v, i),
+          disabled,
+          value: valueAsArray[i] ?? getFirstOption(values),
+          options: values,
+          listsAsArrays
+        }
+      );
+    });
+    return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { "data-testid": testID, className, title }, editors[0], separator, editors[1]);
+  }
+  switch (type) {
+    case "select":
+    case "multiselect":
+      return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+        SelectorComponent,
+        {
+          ...props,
+          schema: allProps.schema,
+          testID,
+          className,
+          title,
+          handleOnChange,
+          disabled,
+          value,
+          options: values,
+          multiple: type === "multiselect",
+          listsAsArrays
+        }
+      );
+    case "textarea":
+      return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+        "textarea",
+        {
+          "data-testid": testID,
+          placeholder: placeHolderText,
+          value,
+          title,
+          className,
+          disabled,
+          onChange: (e) => handleOnChange(e.target.value)
+        }
+      );
+    case "switch":
+    case "checkbox":
+      return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+        "input",
+        {
+          "data-testid": testID,
+          type: "checkbox",
+          className,
+          title,
+          onChange: (e) => handleOnChange(e.target.checked),
+          checked: !!value,
+          disabled
+        }
+      );
+    case "radio":
+      return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", { "data-testid": testID, className, title }, values.map((v) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", { key: v.name }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+        "input",
+        {
+          type: "radio",
+          value: v.name,
+          disabled,
+          checked: value === v.name,
+          onChange: (e) => handleOnChange(e.target.value)
+        }
+      ), v.label)));
+  }
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    "input",
+    {
+      "data-testid": testID,
+      type: inputTypeCoerced,
+      placeholder: placeHolderText,
+      value,
+      title,
+      className,
+      disabled,
+      onChange: (e) => handleOnChange(parseNumber(e.target.value, { parseNumbers: parseNumberMethod }))
+    }
+  );
+};
+
+// src/components/ValueSelector.tsx
+
+var ValueSelector = (props) => {
+  const { onChange, val } = useValueSelector(props);
+  const selectElementChangeHandler = useSelectElementChangeHandler({
+    multiple: props.multiple,
+    onChange
+  });
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0__.createElement(
+    "select",
+    {
+      "data-testid": props.testID,
+      className: props.className,
+      value: val,
+      title: props.title,
+      disabled: props.disabled,
+      multiple: !!props.multiple,
+      onChange: selectElementChangeHandler
+    },
+    toOptions(props.options)
+  );
+};
+
+// src/components/defaults.ts
+var defaultControlElements = {
+  actionElement: ActionElement,
+  addGroupAction: ActionElement,
+  addRuleAction: ActionElement,
+  cloneGroupAction: ActionElement,
+  cloneRuleAction: ActionElement,
+  combinatorSelector: ValueSelector,
+  dragHandle: DragHandle,
+  fieldSelector: ValueSelector,
+  inlineCombinator: InlineCombinator,
+  lockGroupAction: ActionElement,
+  lockRuleAction: ActionElement,
+  notToggle: NotToggle,
+  operatorSelector: ValueSelector,
+  removeGroupAction: ActionElement,
+  removeRuleAction: ActionElement,
+  rule: Rule,
+  ruleGroup: RuleGroup,
+  ruleGroupBodyElements: RuleGroupBodyComponents,
+  ruleGroupHeaderElements: RuleGroupHeaderComponents,
+  shiftActions: ShiftActions,
+  valueEditor: ValueEditor,
+  valueSelector: ValueSelector,
+  valueSourceSelector: ValueSelector
+};
+
+//# sourceMappingURL=react-querybuilder.mjs.map
+
+/***/ }),
+
+/***/ "./node_modules/react-redux/dist/react-redux.mjs":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-redux/dist/react-redux.mjs ***!
+  \*******************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+var react__WEBPACK_IMPORTED_MODULE_0___namespace_cache;
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Provider: () => (/* binding */ Provider_default),
+/* harmony export */   ReactReduxContext: () => (/* binding */ ReactReduxContext),
+/* harmony export */   batch: () => (/* binding */ batch),
+/* harmony export */   connect: () => (/* binding */ connect_default),
+/* harmony export */   createDispatchHook: () => (/* binding */ createDispatchHook),
+/* harmony export */   createSelectorHook: () => (/* binding */ createSelectorHook),
+/* harmony export */   createStoreHook: () => (/* binding */ createStoreHook),
+/* harmony export */   shallowEqual: () => (/* binding */ shallowEqual),
+/* harmony export */   useDispatch: () => (/* binding */ useDispatch),
+/* harmony export */   useSelector: () => (/* binding */ useSelector),
+/* harmony export */   useStore: () => (/* binding */ useStore)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var use_sync_external_store_with_selector_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! use-sync-external-store/with-selector.js */ "./node_modules/react-redux/node_modules/use-sync-external-store/with-selector.js");
+// src/index.ts
+
+
+
+// src/utils/react.ts
+
+var React = (
+  // prettier-ignore
+  // @ts-ignore
+   true ? react__WEBPACK_IMPORTED_MODULE_0__ : /*#__PURE__*/ (react__WEBPACK_IMPORTED_MODULE_0___namespace_cache || (react__WEBPACK_IMPORTED_MODULE_0___namespace_cache = __webpack_require__.t(react__WEBPACK_IMPORTED_MODULE_0__, 2)))
+);
+
+// src/components/Context.ts
+var ContextKey = Symbol.for(`react-redux-context`);
+var gT = typeof globalThis !== "undefined" ? globalThis : (
+  /* fall back to a per-module scope (pre-8.1 behaviour) if `globalThis` is not available */
+  {}
+);
+function getContext() {
+  if (!React.createContext)
+    return {};
+  const contextMap = gT[ContextKey] ?? (gT[ContextKey] = /* @__PURE__ */ new Map());
+  let realContext = contextMap.get(React.createContext);
+  if (!realContext) {
+    realContext = React.createContext(
+      null
+    );
+    if (true) {
+      realContext.displayName = "ReactRedux";
+    }
+    contextMap.set(React.createContext, realContext);
+  }
+  return realContext;
+}
+var ReactReduxContext = /* @__PURE__ */ getContext();
+
+// src/utils/useSyncExternalStore.ts
+var notInitialized = () => {
+  throw new Error("uSES not initialized!");
+};
+
+// src/hooks/useReduxContext.ts
+function createReduxContextHook(context = ReactReduxContext) {
+  return function useReduxContext2() {
+    const contextValue = React.useContext(context);
+    if ( true && !contextValue) {
+      throw new Error(
+        "could not find react-redux context value; please ensure the component is wrapped in a <Provider>"
+      );
+    }
+    return contextValue;
+  };
+}
+var useReduxContext = /* @__PURE__ */ createReduxContextHook();
+
+// src/hooks/useSelector.ts
+var useSyncExternalStoreWithSelector = notInitialized;
+var initializeUseSelector = (fn) => {
+  useSyncExternalStoreWithSelector = fn;
+};
+var refEquality = (a, b) => a === b;
+function createSelectorHook(context = ReactReduxContext) {
+  const useReduxContext2 = context === ReactReduxContext ? useReduxContext : createReduxContextHook(context);
+  const useSelector2 = (selector, equalityFnOrOptions = {}) => {
+    const { equalityFn = refEquality, devModeChecks = {} } = typeof equalityFnOrOptions === "function" ? { equalityFn: equalityFnOrOptions } : equalityFnOrOptions;
+    if (true) {
+      if (!selector) {
+        throw new Error(`You must pass a selector to useSelector`);
+      }
+      if (typeof selector !== "function") {
+        throw new Error(`You must pass a function as a selector to useSelector`);
+      }
+      if (typeof equalityFn !== "function") {
+        throw new Error(
+          `You must pass a function as an equality function to useSelector`
+        );
+      }
+    }
+    const {
+      store,
+      subscription,
+      getServerState,
+      stabilityCheck,
+      identityFunctionCheck
+    } = useReduxContext2();
+    const firstRun = React.useRef(true);
+    const wrappedSelector = React.useCallback(
+      {
+        [selector.name](state) {
+          const selected = selector(state);
+          if (true) {
+            const {
+              identityFunctionCheck: finalIdentityFunctionCheck,
+              stabilityCheck: finalStabilityCheck
+            } = {
+              stabilityCheck,
+              identityFunctionCheck,
+              ...devModeChecks
+            };
+            if (finalStabilityCheck === "always" || finalStabilityCheck === "once" && firstRun.current) {
+              const toCompare = selector(state);
+              if (!equalityFn(selected, toCompare)) {
+                let stack = void 0;
+                try {
+                  throw new Error();
+                } catch (e) {
+                  ;
+                  ({ stack } = e);
+                }
+                console.warn(
+                  "Selector " + (selector.name || "unknown") + " returned a different result when called with the same parameters. This can lead to unnecessary rerenders.\nSelectors that return a new reference (such as an object or an array) should be memoized: https://redux.js.org/usage/deriving-data-selectors#optimizing-selectors-with-memoization",
+                  {
+                    state,
+                    selected,
+                    selected2: toCompare,
+                    stack
+                  }
+                );
+              }
+            }
+            if (finalIdentityFunctionCheck === "always" || finalIdentityFunctionCheck === "once" && firstRun.current) {
+              if (selected === state) {
+                let stack = void 0;
+                try {
+                  throw new Error();
+                } catch (e) {
+                  ;
+                  ({ stack } = e);
+                }
+                console.warn(
+                  "Selector " + (selector.name || "unknown") + " returned the root state when called. This can lead to unnecessary rerenders.\nSelectors that return the entire state are almost certainly a mistake, as they will cause a rerender whenever *anything* in state changes.",
+                  { stack }
+                );
+              }
+            }
+            if (firstRun.current)
+              firstRun.current = false;
+          }
+          return selected;
+        }
+      }[selector.name],
+      [selector, stabilityCheck, devModeChecks.stabilityCheck]
+    );
+    const selectedState = useSyncExternalStoreWithSelector(
+      subscription.addNestedSub,
+      store.getState,
+      getServerState || store.getState,
+      wrappedSelector,
+      equalityFn
+    );
+    React.useDebugValue(selectedState);
+    return selectedState;
+  };
+  Object.assign(useSelector2, {
+    withTypes: () => useSelector2
+  });
+  return useSelector2;
+}
+var useSelector = /* @__PURE__ */ createSelectorHook();
+
+// src/utils/react-is.ts
+var REACT_ELEMENT_TYPE = Symbol.for("react.element");
+var REACT_PORTAL_TYPE = Symbol.for("react.portal");
+var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
+var REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode");
+var REACT_PROFILER_TYPE = Symbol.for("react.profiler");
+var REACT_PROVIDER_TYPE = Symbol.for("react.provider");
+var REACT_CONTEXT_TYPE = Symbol.for("react.context");
+var REACT_SERVER_CONTEXT_TYPE = Symbol.for("react.server_context");
+var REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref");
+var REACT_SUSPENSE_TYPE = Symbol.for("react.suspense");
+var REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list");
+var REACT_MEMO_TYPE = Symbol.for("react.memo");
+var REACT_LAZY_TYPE = Symbol.for("react.lazy");
+var REACT_OFFSCREEN_TYPE = Symbol.for("react.offscreen");
+var REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference");
+var ForwardRef = REACT_FORWARD_REF_TYPE;
+var Memo = REACT_MEMO_TYPE;
+function isValidElementType(type) {
+  if (typeof type === "string" || typeof type === "function") {
+    return true;
+  }
+  if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || type === REACT_OFFSCREEN_TYPE) {
+    return true;
+  }
+  if (typeof type === "object" && type !== null) {
+    if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || // This needs to include all possible module reference object
+    // types supported by any Flight configuration anywhere since
+    // we don't know which Flight build this will end up being used
+    // with.
+    type.$$typeof === REACT_CLIENT_REFERENCE || type.getModuleId !== void 0) {
+      return true;
+    }
+  }
+  return false;
+}
+function typeOf(object) {
+  if (typeof object === "object" && object !== null) {
+    const $$typeof = object.$$typeof;
+    switch ($$typeof) {
+      case REACT_ELEMENT_TYPE: {
+        const type = object.type;
+        switch (type) {
+          case REACT_FRAGMENT_TYPE:
+          case REACT_PROFILER_TYPE:
+          case REACT_STRICT_MODE_TYPE:
+          case REACT_SUSPENSE_TYPE:
+          case REACT_SUSPENSE_LIST_TYPE:
+            return type;
+          default: {
+            const $$typeofType = type && type.$$typeof;
+            switch ($$typeofType) {
+              case REACT_SERVER_CONTEXT_TYPE:
+              case REACT_CONTEXT_TYPE:
+              case REACT_FORWARD_REF_TYPE:
+              case REACT_LAZY_TYPE:
+              case REACT_MEMO_TYPE:
+              case REACT_PROVIDER_TYPE:
+                return $$typeofType;
+              default:
+                return $$typeof;
+            }
+          }
+        }
+      }
+      case REACT_PORTAL_TYPE: {
+        return $$typeof;
+      }
+    }
+  }
+  return void 0;
+}
+function isContextConsumer(object) {
+  return typeOf(object) === REACT_CONTEXT_TYPE;
+}
+function isMemo(object) {
+  return typeOf(object) === REACT_MEMO_TYPE;
+}
+
+// src/utils/warning.ts
+function warning(message) {
+  if (typeof console !== "undefined" && typeof console.error === "function") {
+    console.error(message);
+  }
+  try {
+    throw new Error(message);
+  } catch (e) {
+  }
+}
+
+// src/connect/verifySubselectors.ts
+function verify(selector, methodName) {
+  if (!selector) {
+    throw new Error(`Unexpected value for ${methodName} in connect.`);
+  } else if (methodName === "mapStateToProps" || methodName === "mapDispatchToProps") {
+    if (!Object.prototype.hasOwnProperty.call(selector, "dependsOnOwnProps")) {
+      warning(
+        `The selector for ${methodName} of connect did not specify a value for dependsOnOwnProps.`
+      );
+    }
+  }
+}
+function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps) {
+  verify(mapStateToProps, "mapStateToProps");
+  verify(mapDispatchToProps, "mapDispatchToProps");
+  verify(mergeProps, "mergeProps");
+}
+
+// src/connect/selectorFactory.ts
+function pureFinalPropsSelectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, {
+  areStatesEqual,
+  areOwnPropsEqual,
+  areStatePropsEqual
+}) {
+  let hasRunAtLeastOnce = false;
+  let state;
+  let ownProps;
+  let stateProps;
+  let dispatchProps;
+  let mergedProps;
+  function handleFirstCall(firstState, firstOwnProps) {
+    state = firstState;
+    ownProps = firstOwnProps;
+    stateProps = mapStateToProps(state, ownProps);
+    dispatchProps = mapDispatchToProps(dispatch, ownProps);
+    mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+    hasRunAtLeastOnce = true;
+    return mergedProps;
+  }
+  function handleNewPropsAndNewState() {
+    stateProps = mapStateToProps(state, ownProps);
+    if (mapDispatchToProps.dependsOnOwnProps)
+      dispatchProps = mapDispatchToProps(dispatch, ownProps);
+    mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+    return mergedProps;
+  }
+  function handleNewProps() {
+    if (mapStateToProps.dependsOnOwnProps)
+      stateProps = mapStateToProps(state, ownProps);
+    if (mapDispatchToProps.dependsOnOwnProps)
+      dispatchProps = mapDispatchToProps(dispatch, ownProps);
+    mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+    return mergedProps;
+  }
+  function handleNewState() {
+    const nextStateProps = mapStateToProps(state, ownProps);
+    const statePropsChanged = !areStatePropsEqual(nextStateProps, stateProps);
+    stateProps = nextStateProps;
+    if (statePropsChanged)
+      mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+    return mergedProps;
+  }
+  function handleSubsequentCalls(nextState, nextOwnProps) {
+    const propsChanged = !areOwnPropsEqual(nextOwnProps, ownProps);
+    const stateChanged = !areStatesEqual(
+      nextState,
+      state,
+      nextOwnProps,
+      ownProps
+    );
+    state = nextState;
+    ownProps = nextOwnProps;
+    if (propsChanged && stateChanged)
+      return handleNewPropsAndNewState();
+    if (propsChanged)
+      return handleNewProps();
+    if (stateChanged)
+      return handleNewState();
+    return mergedProps;
+  }
+  return function pureFinalPropsSelector(nextState, nextOwnProps) {
+    return hasRunAtLeastOnce ? handleSubsequentCalls(nextState, nextOwnProps) : handleFirstCall(nextState, nextOwnProps);
+  };
+}
+function finalPropsSelectorFactory(dispatch, {
+  initMapStateToProps,
+  initMapDispatchToProps,
+  initMergeProps,
+  ...options
+}) {
+  const mapStateToProps = initMapStateToProps(dispatch, options);
+  const mapDispatchToProps = initMapDispatchToProps(dispatch, options);
+  const mergeProps = initMergeProps(dispatch, options);
+  if (true) {
+    verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps);
+  }
+  return pureFinalPropsSelectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, options);
+}
+
+// src/utils/bindActionCreators.ts
+function bindActionCreators(actionCreators, dispatch) {
+  const boundActionCreators = {};
+  for (const key in actionCreators) {
+    const actionCreator = actionCreators[key];
+    if (typeof actionCreator === "function") {
+      boundActionCreators[key] = (...args) => dispatch(actionCreator(...args));
+    }
+  }
+  return boundActionCreators;
+}
+
+// src/utils/isPlainObject.ts
+function isPlainObject(obj) {
+  if (typeof obj !== "object" || obj === null)
+    return false;
+  const proto = Object.getPrototypeOf(obj);
+  if (proto === null)
+    return true;
+  let baseProto = proto;
+  while (Object.getPrototypeOf(baseProto) !== null) {
+    baseProto = Object.getPrototypeOf(baseProto);
+  }
+  return proto === baseProto;
+}
+
+// src/utils/verifyPlainObject.ts
+function verifyPlainObject(value, displayName, methodName) {
+  if (!isPlainObject(value)) {
+    warning(
+      `${methodName}() in ${displayName} must return a plain object. Instead received ${value}.`
+    );
+  }
+}
+
+// src/connect/wrapMapToProps.ts
+function wrapMapToPropsConstant(getConstant) {
+  return function initConstantSelector(dispatch) {
+    const constant = getConstant(dispatch);
+    function constantSelector() {
+      return constant;
+    }
+    constantSelector.dependsOnOwnProps = false;
+    return constantSelector;
+  };
+}
+function getDependsOnOwnProps(mapToProps) {
+  return mapToProps.dependsOnOwnProps ? Boolean(mapToProps.dependsOnOwnProps) : mapToProps.length !== 1;
+}
+function wrapMapToPropsFunc(mapToProps, methodName) {
+  return function initProxySelector(dispatch, { displayName }) {
+    const proxy = function mapToPropsProxy(stateOrDispatch, ownProps) {
+      return proxy.dependsOnOwnProps ? proxy.mapToProps(stateOrDispatch, ownProps) : proxy.mapToProps(stateOrDispatch, void 0);
+    };
+    proxy.dependsOnOwnProps = true;
+    proxy.mapToProps = function detectFactoryAndVerify(stateOrDispatch, ownProps) {
+      proxy.mapToProps = mapToProps;
+      proxy.dependsOnOwnProps = getDependsOnOwnProps(mapToProps);
+      let props = proxy(stateOrDispatch, ownProps);
+      if (typeof props === "function") {
+        proxy.mapToProps = props;
+        proxy.dependsOnOwnProps = getDependsOnOwnProps(props);
+        props = proxy(stateOrDispatch, ownProps);
+      }
+      if (true)
+        verifyPlainObject(props, displayName, methodName);
+      return props;
+    };
+    return proxy;
+  };
+}
+
+// src/connect/invalidArgFactory.ts
+function createInvalidArgFactory(arg, name) {
+  return (dispatch, options) => {
+    throw new Error(
+      `Invalid value of type ${typeof arg} for ${name} argument when connecting component ${options.wrappedComponentName}.`
+    );
+  };
+}
+
+// src/connect/mapDispatchToProps.ts
+function mapDispatchToPropsFactory(mapDispatchToProps) {
+  return mapDispatchToProps && typeof mapDispatchToProps === "object" ? wrapMapToPropsConstant(
+    (dispatch) => (
+      // @ts-ignore
+      bindActionCreators(mapDispatchToProps, dispatch)
+    )
+  ) : !mapDispatchToProps ? wrapMapToPropsConstant((dispatch) => ({
+    dispatch
+  })) : typeof mapDispatchToProps === "function" ? (
+    // @ts-ignore
+    wrapMapToPropsFunc(mapDispatchToProps, "mapDispatchToProps")
+  ) : createInvalidArgFactory(mapDispatchToProps, "mapDispatchToProps");
+}
+
+// src/connect/mapStateToProps.ts
+function mapStateToPropsFactory(mapStateToProps) {
+  return !mapStateToProps ? wrapMapToPropsConstant(() => ({})) : typeof mapStateToProps === "function" ? (
+    // @ts-ignore
+    wrapMapToPropsFunc(mapStateToProps, "mapStateToProps")
+  ) : createInvalidArgFactory(mapStateToProps, "mapStateToProps");
+}
+
+// src/connect/mergeProps.ts
+function defaultMergeProps(stateProps, dispatchProps, ownProps) {
+  return { ...ownProps, ...stateProps, ...dispatchProps };
+}
+function wrapMergePropsFunc(mergeProps) {
+  return function initMergePropsProxy(dispatch, { displayName, areMergedPropsEqual }) {
+    let hasRunOnce = false;
+    let mergedProps;
+    return function mergePropsProxy(stateProps, dispatchProps, ownProps) {
+      const nextMergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+      if (hasRunOnce) {
+        if (!areMergedPropsEqual(nextMergedProps, mergedProps))
+          mergedProps = nextMergedProps;
+      } else {
+        hasRunOnce = true;
+        mergedProps = nextMergedProps;
+        if (true)
+          verifyPlainObject(mergedProps, displayName, "mergeProps");
+      }
+      return mergedProps;
+    };
+  };
+}
+function mergePropsFactory(mergeProps) {
+  return !mergeProps ? () => defaultMergeProps : typeof mergeProps === "function" ? wrapMergePropsFunc(mergeProps) : createInvalidArgFactory(mergeProps, "mergeProps");
+}
+
+// src/utils/batch.ts
+function defaultNoopBatch(callback) {
+  callback();
+}
+
+// src/utils/Subscription.ts
+function createListenerCollection() {
+  let first = null;
+  let last = null;
+  return {
+    clear() {
+      first = null;
+      last = null;
+    },
+    notify() {
+      defaultNoopBatch(() => {
+        let listener = first;
+        while (listener) {
+          listener.callback();
+          listener = listener.next;
+        }
+      });
+    },
+    get() {
+      const listeners = [];
+      let listener = first;
+      while (listener) {
+        listeners.push(listener);
+        listener = listener.next;
+      }
+      return listeners;
+    },
+    subscribe(callback) {
+      let isSubscribed = true;
+      const listener = last = {
+        callback,
+        next: null,
+        prev: last
+      };
+      if (listener.prev) {
+        listener.prev.next = listener;
+      } else {
+        first = listener;
+      }
+      return function unsubscribe() {
+        if (!isSubscribed || first === null)
+          return;
+        isSubscribed = false;
+        if (listener.next) {
+          listener.next.prev = listener.prev;
+        } else {
+          last = listener.prev;
+        }
+        if (listener.prev) {
+          listener.prev.next = listener.next;
+        } else {
+          first = listener.next;
+        }
+      };
+    }
+  };
+}
+var nullListeners = {
+  notify() {
+  },
+  get: () => []
+};
+function createSubscription(store, parentSub) {
+  let unsubscribe;
+  let listeners = nullListeners;
+  let subscriptionsAmount = 0;
+  let selfSubscribed = false;
+  function addNestedSub(listener) {
+    trySubscribe();
+    const cleanupListener = listeners.subscribe(listener);
+    let removed = false;
+    return () => {
+      if (!removed) {
+        removed = true;
+        cleanupListener();
+        tryUnsubscribe();
+      }
+    };
+  }
+  function notifyNestedSubs() {
+    listeners.notify();
+  }
+  function handleChangeWrapper() {
+    if (subscription.onStateChange) {
+      subscription.onStateChange();
+    }
+  }
+  function isSubscribed() {
+    return selfSubscribed;
+  }
+  function trySubscribe() {
+    subscriptionsAmount++;
+    if (!unsubscribe) {
+      unsubscribe = parentSub ? parentSub.addNestedSub(handleChangeWrapper) : store.subscribe(handleChangeWrapper);
+      listeners = createListenerCollection();
+    }
+  }
+  function tryUnsubscribe() {
+    subscriptionsAmount--;
+    if (unsubscribe && subscriptionsAmount === 0) {
+      unsubscribe();
+      unsubscribe = void 0;
+      listeners.clear();
+      listeners = nullListeners;
+    }
+  }
+  function trySubscribeSelf() {
+    if (!selfSubscribed) {
+      selfSubscribed = true;
+      trySubscribe();
+    }
+  }
+  function tryUnsubscribeSelf() {
+    if (selfSubscribed) {
+      selfSubscribed = false;
+      tryUnsubscribe();
+    }
+  }
+  const subscription = {
+    addNestedSub,
+    notifyNestedSubs,
+    handleChangeWrapper,
+    isSubscribed,
+    trySubscribe: trySubscribeSelf,
+    tryUnsubscribe: tryUnsubscribeSelf,
+    getListeners: () => listeners
+  };
+  return subscription;
+}
+
+// src/utils/useIsomorphicLayoutEffect.ts
+var canUseDOM = !!(typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined");
+var isReactNative = typeof navigator !== "undefined" && navigator.product === "ReactNative";
+var useIsomorphicLayoutEffect = canUseDOM || isReactNative ? React.useLayoutEffect : React.useEffect;
+
+// src/utils/shallowEqual.ts
+function is(x, y) {
+  if (x === y) {
+    return x !== 0 || y !== 0 || 1 / x === 1 / y;
+  } else {
+    return x !== x && y !== y;
+  }
+}
+function shallowEqual(objA, objB) {
+  if (is(objA, objB))
+    return true;
+  if (typeof objA !== "object" || objA === null || typeof objB !== "object" || objB === null) {
+    return false;
+  }
+  const keysA = Object.keys(objA);
+  const keysB = Object.keys(objB);
+  if (keysA.length !== keysB.length)
+    return false;
+  for (let i = 0; i < keysA.length; i++) {
+    if (!Object.prototype.hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// src/utils/hoistStatics.ts
+var REACT_STATICS = {
+  childContextTypes: true,
+  contextType: true,
+  contextTypes: true,
+  defaultProps: true,
+  displayName: true,
+  getDefaultProps: true,
+  getDerivedStateFromError: true,
+  getDerivedStateFromProps: true,
+  mixins: true,
+  propTypes: true,
+  type: true
+};
+var KNOWN_STATICS = {
+  name: true,
+  length: true,
+  prototype: true,
+  caller: true,
+  callee: true,
+  arguments: true,
+  arity: true
+};
+var FORWARD_REF_STATICS = {
+  $$typeof: true,
+  render: true,
+  defaultProps: true,
+  displayName: true,
+  propTypes: true
+};
+var MEMO_STATICS = {
+  $$typeof: true,
+  compare: true,
+  defaultProps: true,
+  displayName: true,
+  propTypes: true,
+  type: true
+};
+var TYPE_STATICS = {
+  [ForwardRef]: FORWARD_REF_STATICS,
+  [Memo]: MEMO_STATICS
+};
+function getStatics(component) {
+  if (isMemo(component)) {
+    return MEMO_STATICS;
+  }
+  return TYPE_STATICS[component["$$typeof"]] || REACT_STATICS;
+}
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = Object.prototype;
+function hoistNonReactStatics(targetComponent, sourceComponent) {
+  if (typeof sourceComponent !== "string") {
+    if (objectPrototype) {
+      const inheritedComponent = getPrototypeOf(sourceComponent);
+      if (inheritedComponent && inheritedComponent !== objectPrototype) {
+        hoistNonReactStatics(targetComponent, inheritedComponent);
+      }
+    }
+    let keys = getOwnPropertyNames(sourceComponent);
+    if (getOwnPropertySymbols) {
+      keys = keys.concat(getOwnPropertySymbols(sourceComponent));
+    }
+    const targetStatics = getStatics(targetComponent);
+    const sourceStatics = getStatics(sourceComponent);
+    for (let i = 0; i < keys.length; ++i) {
+      const key = keys[i];
+      if (!KNOWN_STATICS[key] && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
+        const descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+        try {
+          defineProperty(targetComponent, key, descriptor);
+        } catch (e) {
+        }
+      }
+    }
+  }
+  return targetComponent;
+}
+
+// src/components/connect.tsx
+var useSyncExternalStore = notInitialized;
+var initializeConnect = (fn) => {
+  useSyncExternalStore = fn;
+};
+var NO_SUBSCRIPTION_ARRAY = [null, null];
+var stringifyComponent = (Comp) => {
+  try {
+    return JSON.stringify(Comp);
+  } catch (err) {
+    return String(Comp);
+  }
+};
+function useIsomorphicLayoutEffectWithArgs(effectFunc, effectArgs, dependencies) {
+  useIsomorphicLayoutEffect(() => effectFunc(...effectArgs), dependencies);
+}
+function captureWrapperProps(lastWrapperProps, lastChildProps, renderIsScheduled, wrapperProps, childPropsFromStoreUpdate, notifyNestedSubs) {
+  lastWrapperProps.current = wrapperProps;
+  renderIsScheduled.current = false;
+  if (childPropsFromStoreUpdate.current) {
+    childPropsFromStoreUpdate.current = null;
+    notifyNestedSubs();
+  }
+}
+function subscribeUpdates(shouldHandleStateChanges, store, subscription, childPropsSelector, lastWrapperProps, lastChildProps, renderIsScheduled, isMounted, childPropsFromStoreUpdate, notifyNestedSubs, additionalSubscribeListener) {
+  if (!shouldHandleStateChanges)
+    return () => {
+    };
+  let didUnsubscribe = false;
+  let lastThrownError = null;
+  const checkForUpdates = () => {
+    if (didUnsubscribe || !isMounted.current) {
+      return;
+    }
+    const latestStoreState = store.getState();
+    let newChildProps, error;
+    try {
+      newChildProps = childPropsSelector(
+        latestStoreState,
+        lastWrapperProps.current
+      );
+    } catch (e) {
+      error = e;
+      lastThrownError = e;
+    }
+    if (!error) {
+      lastThrownError = null;
+    }
+    if (newChildProps === lastChildProps.current) {
+      if (!renderIsScheduled.current) {
+        notifyNestedSubs();
+      }
+    } else {
+      lastChildProps.current = newChildProps;
+      childPropsFromStoreUpdate.current = newChildProps;
+      renderIsScheduled.current = true;
+      additionalSubscribeListener();
+    }
+  };
+  subscription.onStateChange = checkForUpdates;
+  subscription.trySubscribe();
+  checkForUpdates();
+  const unsubscribeWrapper = () => {
+    didUnsubscribe = true;
+    subscription.tryUnsubscribe();
+    subscription.onStateChange = null;
+    if (lastThrownError) {
+      throw lastThrownError;
+    }
+  };
+  return unsubscribeWrapper;
+}
+function strictEqual(a, b) {
+  return a === b;
+}
+var hasWarnedAboutDeprecatedPureOption = false;
+function connect(mapStateToProps, mapDispatchToProps, mergeProps, {
+  // The `pure` option has been removed, so TS doesn't like us destructuring this to check its existence.
+  // @ts-ignore
+  pure,
+  areStatesEqual = strictEqual,
+  areOwnPropsEqual = shallowEqual,
+  areStatePropsEqual = shallowEqual,
+  areMergedPropsEqual = shallowEqual,
+  // use React's forwardRef to expose a ref of the wrapped component
+  forwardRef = false,
+  // the context consumer to use
+  context = ReactReduxContext
+} = {}) {
+  if (true) {
+    if (pure !== void 0 && !hasWarnedAboutDeprecatedPureOption) {
+      hasWarnedAboutDeprecatedPureOption = true;
+      warning(
+        'The `pure` option has been removed. `connect` is now always a "pure/memoized" component'
+      );
+    }
+  }
+  const Context = context;
+  const initMapStateToProps = mapStateToPropsFactory(mapStateToProps);
+  const initMapDispatchToProps = mapDispatchToPropsFactory(mapDispatchToProps);
+  const initMergeProps = mergePropsFactory(mergeProps);
+  const shouldHandleStateChanges = Boolean(mapStateToProps);
+  const wrapWithConnect = (WrappedComponent) => {
+    if (true) {
+      const isValid = /* @__PURE__ */ isValidElementType(WrappedComponent);
+      if (!isValid)
+        throw new Error(
+          `You must pass a component to the function returned by connect. Instead received ${stringifyComponent(
+            WrappedComponent
+          )}`
+        );
+    }
+    const wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || "Component";
+    const displayName = `Connect(${wrappedComponentName})`;
+    const selectorFactoryOptions = {
+      shouldHandleStateChanges,
+      displayName,
+      wrappedComponentName,
+      WrappedComponent,
+      // @ts-ignore
+      initMapStateToProps,
+      // @ts-ignore
+      initMapDispatchToProps,
+      initMergeProps,
+      areStatesEqual,
+      areStatePropsEqual,
+      areOwnPropsEqual,
+      areMergedPropsEqual
+    };
+    function ConnectFunction(props) {
+      const [propsContext, reactReduxForwardedRef, wrapperProps] = React.useMemo(() => {
+        const { reactReduxForwardedRef: reactReduxForwardedRef2, ...wrapperProps2 } = props;
+        return [props.context, reactReduxForwardedRef2, wrapperProps2];
+      }, [props]);
+      const ContextToUse = React.useMemo(() => {
+        let ResultContext = Context;
+        if (propsContext?.Consumer) {
+          if (true) {
+            const isValid = /* @__PURE__ */ isContextConsumer(
+              // @ts-ignore
+              /* @__PURE__ */ React.createElement(propsContext.Consumer, null)
+            );
+            if (!isValid) {
+              throw new Error(
+                "You must pass a valid React context consumer as `props.context`"
+              );
+            }
+            ResultContext = propsContext;
+          }
+        }
+        return ResultContext;
+      }, [propsContext, Context]);
+      const contextValue = React.useContext(ContextToUse);
+      const didStoreComeFromProps = Boolean(props.store) && Boolean(props.store.getState) && Boolean(props.store.dispatch);
+      const didStoreComeFromContext = Boolean(contextValue) && Boolean(contextValue.store);
+      if ( true && !didStoreComeFromProps && !didStoreComeFromContext) {
+        throw new Error(
+          `Could not find "store" in the context of "${displayName}". Either wrap the root component in a <Provider>, or pass a custom React context provider to <Provider> and the corresponding React context consumer to ${displayName} in connect options.`
+        );
+      }
+      const store = didStoreComeFromProps ? props.store : contextValue.store;
+      const getServerState = didStoreComeFromContext ? contextValue.getServerState : store.getState;
+      const childPropsSelector = React.useMemo(() => {
+        return finalPropsSelectorFactory(store.dispatch, selectorFactoryOptions);
+      }, [store]);
+      const [subscription, notifyNestedSubs] = React.useMemo(() => {
+        if (!shouldHandleStateChanges)
+          return NO_SUBSCRIPTION_ARRAY;
+        const subscription2 = createSubscription(
+          store,
+          didStoreComeFromProps ? void 0 : contextValue.subscription
+        );
+        const notifyNestedSubs2 = subscription2.notifyNestedSubs.bind(subscription2);
+        return [subscription2, notifyNestedSubs2];
+      }, [store, didStoreComeFromProps, contextValue]);
+      const overriddenContextValue = React.useMemo(() => {
+        if (didStoreComeFromProps) {
+          return contextValue;
+        }
+        return {
+          ...contextValue,
+          subscription
+        };
+      }, [didStoreComeFromProps, contextValue, subscription]);
+      const lastChildProps = React.useRef(void 0);
+      const lastWrapperProps = React.useRef(wrapperProps);
+      const childPropsFromStoreUpdate = React.useRef(void 0);
+      const renderIsScheduled = React.useRef(false);
+      const isMounted = React.useRef(false);
+      const latestSubscriptionCallbackError = React.useRef(
+        void 0
+      );
+      useIsomorphicLayoutEffect(() => {
+        isMounted.current = true;
+        return () => {
+          isMounted.current = false;
+        };
+      }, []);
+      const actualChildPropsSelector = React.useMemo(() => {
+        const selector = () => {
+          if (childPropsFromStoreUpdate.current && wrapperProps === lastWrapperProps.current) {
+            return childPropsFromStoreUpdate.current;
+          }
+          return childPropsSelector(store.getState(), wrapperProps);
+        };
+        return selector;
+      }, [store, wrapperProps]);
+      const subscribeForReact = React.useMemo(() => {
+        const subscribe = (reactListener) => {
+          if (!subscription) {
+            return () => {
+            };
+          }
+          return subscribeUpdates(
+            shouldHandleStateChanges,
+            store,
+            subscription,
+            // @ts-ignore
+            childPropsSelector,
+            lastWrapperProps,
+            lastChildProps,
+            renderIsScheduled,
+            isMounted,
+            childPropsFromStoreUpdate,
+            notifyNestedSubs,
+            reactListener
+          );
+        };
+        return subscribe;
+      }, [subscription]);
+      useIsomorphicLayoutEffectWithArgs(captureWrapperProps, [
+        lastWrapperProps,
+        lastChildProps,
+        renderIsScheduled,
+        wrapperProps,
+        childPropsFromStoreUpdate,
+        notifyNestedSubs
+      ]);
+      let actualChildProps;
+      try {
+        actualChildProps = useSyncExternalStore(
+          // TODO We're passing through a big wrapper that does a bunch of extra side effects besides subscribing
+          subscribeForReact,
+          // TODO This is incredibly hacky. We've already processed the store update and calculated new child props,
+          // TODO and we're just passing that through so it triggers a re-render for us rather than relying on `uSES`.
+          actualChildPropsSelector,
+          getServerState ? () => childPropsSelector(getServerState(), wrapperProps) : actualChildPropsSelector
+        );
+      } catch (err) {
+        if (latestSubscriptionCallbackError.current) {
+          ;
+          err.message += `
+The error may be correlated with this previous error:
+${latestSubscriptionCallbackError.current.stack}
+
+`;
+        }
+        throw err;
+      }
+      useIsomorphicLayoutEffect(() => {
+        latestSubscriptionCallbackError.current = void 0;
+        childPropsFromStoreUpdate.current = void 0;
+        lastChildProps.current = actualChildProps;
+      });
+      const renderedWrappedComponent = React.useMemo(() => {
+        return (
+          // @ts-ignore
+          /* @__PURE__ */ React.createElement(
+            WrappedComponent,
+            {
+              ...actualChildProps,
+              ref: reactReduxForwardedRef
+            }
+          )
+        );
+      }, [reactReduxForwardedRef, WrappedComponent, actualChildProps]);
+      const renderedChild = React.useMemo(() => {
+        if (shouldHandleStateChanges) {
+          return /* @__PURE__ */ React.createElement(ContextToUse.Provider, { value: overriddenContextValue }, renderedWrappedComponent);
+        }
+        return renderedWrappedComponent;
+      }, [ContextToUse, renderedWrappedComponent, overriddenContextValue]);
+      return renderedChild;
+    }
+    const _Connect = React.memo(ConnectFunction);
+    const Connect = _Connect;
+    Connect.WrappedComponent = WrappedComponent;
+    Connect.displayName = ConnectFunction.displayName = displayName;
+    if (forwardRef) {
+      const _forwarded = React.forwardRef(
+        function forwardConnectRef(props, ref) {
+          return /* @__PURE__ */ React.createElement(Connect, { ...props, reactReduxForwardedRef: ref });
+        }
+      );
+      const forwarded = _forwarded;
+      forwarded.displayName = displayName;
+      forwarded.WrappedComponent = WrappedComponent;
+      return /* @__PURE__ */ hoistNonReactStatics(forwarded, WrappedComponent);
+    }
+    return /* @__PURE__ */ hoistNonReactStatics(Connect, WrappedComponent);
+  };
+  return wrapWithConnect;
+}
+var connect_default = connect;
+
+// src/components/Provider.tsx
+function Provider({
+  store,
+  context,
+  children,
+  serverState,
+  stabilityCheck = "once",
+  identityFunctionCheck = "once"
+}) {
+  const contextValue = React.useMemo(() => {
+    const subscription = createSubscription(store);
+    return {
+      store,
+      subscription,
+      getServerState: serverState ? () => serverState : void 0,
+      stabilityCheck,
+      identityFunctionCheck
+    };
+  }, [store, serverState, stabilityCheck, identityFunctionCheck]);
+  const previousState = React.useMemo(() => store.getState(), [store]);
+  useIsomorphicLayoutEffect(() => {
+    const { subscription } = contextValue;
+    subscription.onStateChange = subscription.notifyNestedSubs;
+    subscription.trySubscribe();
+    if (previousState !== store.getState()) {
+      subscription.notifyNestedSubs();
+    }
+    return () => {
+      subscription.tryUnsubscribe();
+      subscription.onStateChange = void 0;
+    };
+  }, [contextValue, previousState]);
+  const Context = context || ReactReduxContext;
+  return /* @__PURE__ */ React.createElement(Context.Provider, { value: contextValue }, children);
+}
+var Provider_default = Provider;
+
+// src/hooks/useStore.ts
+function createStoreHook(context = ReactReduxContext) {
+  const useReduxContext2 = context === ReactReduxContext ? useReduxContext : (
+    // @ts-ignore
+    createReduxContextHook(context)
+  );
+  const useStore2 = () => {
+    const { store } = useReduxContext2();
+    return store;
+  };
+  Object.assign(useStore2, {
+    withTypes: () => useStore2
+  });
+  return useStore2;
+}
+var useStore = /* @__PURE__ */ createStoreHook();
+
+// src/hooks/useDispatch.ts
+function createDispatchHook(context = ReactReduxContext) {
+  const useStore2 = context === ReactReduxContext ? useStore : createStoreHook(context);
+  const useDispatch2 = () => {
+    const store = useStore2();
+    return store.dispatch;
+  };
+  Object.assign(useDispatch2, {
+    withTypes: () => useDispatch2
+  });
+  return useDispatch2;
+}
+var useDispatch = /* @__PURE__ */ createDispatchHook();
+
+// src/exports.ts
+var batch = defaultNoopBatch;
+
+// src/index.ts
+initializeUseSelector(use_sync_external_store_with_selector_js__WEBPACK_IMPORTED_MODULE_1__.useSyncExternalStoreWithSelector);
+initializeConnect(react__WEBPACK_IMPORTED_MODULE_0__.useSyncExternalStore);
+
+//# sourceMappingURL=react-redux.mjs.map
+
+/***/ }),
+
+/***/ "./node_modules/reselect/dist/reselect.mjs":
+/*!*************************************************!*\
+  !*** ./node_modules/reselect/dist/reselect.mjs ***!
+  \*************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createSelector: () => (/* binding */ createSelector),
+/* harmony export */   createSelectorCreator: () => (/* binding */ createSelectorCreator),
+/* harmony export */   createStructuredSelector: () => (/* binding */ createStructuredSelector),
+/* harmony export */   lruMemoize: () => (/* binding */ lruMemoize),
+/* harmony export */   referenceEqualityCheck: () => (/* binding */ referenceEqualityCheck),
+/* harmony export */   setGlobalDevModeChecks: () => (/* binding */ setGlobalDevModeChecks),
+/* harmony export */   unstable_autotrackMemoize: () => (/* binding */ autotrackMemoize),
+/* harmony export */   weakMapMemoize: () => (/* binding */ weakMapMemoize)
+/* harmony export */ });
+// src/devModeChecks/identityFunctionCheck.ts
+var runIdentityFunctionCheck = (resultFunc, inputSelectorsResults, outputSelectorResult) => {
+  if (inputSelectorsResults.length === 1 && inputSelectorsResults[0] === outputSelectorResult) {
+    let isInputSameAsOutput = false;
+    try {
+      const emptyObject = {};
+      if (resultFunc(emptyObject) === emptyObject)
+        isInputSameAsOutput = true;
+    } catch {
+    }
+    if (isInputSameAsOutput) {
+      let stack = void 0;
+      try {
+        throw new Error();
+      } catch (e) {
+        ;
+        ({ stack } = e);
+      }
+      console.warn(
+        "The result function returned its own inputs without modification. e.g\n`createSelector([state => state.todos], todos => todos)`\nThis could lead to inefficient memoization and unnecessary re-renders.\nEnsure transformation logic is in the result function, and extraction logic is in the input selectors.",
+        { stack }
+      );
+    }
+  }
+};
+
+// src/devModeChecks/inputStabilityCheck.ts
+var runInputStabilityCheck = (inputSelectorResultsObject, options, inputSelectorArgs) => {
+  const { memoize, memoizeOptions } = options;
+  const { inputSelectorResults, inputSelectorResultsCopy } = inputSelectorResultsObject;
+  const createAnEmptyObject = memoize(() => ({}), ...memoizeOptions);
+  const areInputSelectorResultsEqual = createAnEmptyObject.apply(null, inputSelectorResults) === createAnEmptyObject.apply(null, inputSelectorResultsCopy);
+  if (!areInputSelectorResultsEqual) {
+    let stack = void 0;
+    try {
+      throw new Error();
+    } catch (e) {
+      ;
+      ({ stack } = e);
+    }
+    console.warn(
+      "An input selector returned a different result when passed same arguments.\nThis means your output selector will likely run more frequently than intended.\nAvoid returning a new reference inside your input selector, e.g.\n`createSelector([state => state.todos.map(todo => todo.id)], todoIds => todoIds.length)`",
+      {
+        arguments: inputSelectorArgs,
+        firstInputs: inputSelectorResults,
+        secondInputs: inputSelectorResultsCopy,
+        stack
+      }
+    );
+  }
+};
+
+// src/devModeChecks/setGlobalDevModeChecks.ts
+var globalDevModeChecks = {
+  inputStabilityCheck: "once",
+  identityFunctionCheck: "once"
+};
+var setGlobalDevModeChecks = (devModeChecks) => {
+  Object.assign(globalDevModeChecks, devModeChecks);
+};
+
+// src/utils.ts
+var NOT_FOUND = /* @__PURE__ */ Symbol("NOT_FOUND");
+function assertIsFunction(func, errorMessage = `expected a function, instead received ${typeof func}`) {
+  if (typeof func !== "function") {
+    throw new TypeError(errorMessage);
+  }
+}
+function assertIsObject(object, errorMessage = `expected an object, instead received ${typeof object}`) {
+  if (typeof object !== "object") {
+    throw new TypeError(errorMessage);
+  }
+}
+function assertIsArrayOfFunctions(array, errorMessage = `expected all items to be functions, instead received the following types: `) {
+  if (!array.every((item) => typeof item === "function")) {
+    const itemTypes = array.map(
+      (item) => typeof item === "function" ? `function ${item.name || "unnamed"}()` : typeof item
+    ).join(", ");
+    throw new TypeError(`${errorMessage}[${itemTypes}]`);
+  }
+}
+var ensureIsArray = (item) => {
+  return Array.isArray(item) ? item : [item];
+};
+function getDependencies(createSelectorArgs) {
+  const dependencies = Array.isArray(createSelectorArgs[0]) ? createSelectorArgs[0] : createSelectorArgs;
+  assertIsArrayOfFunctions(
+    dependencies,
+    `createSelector expects all input-selectors to be functions, but received the following types: `
+  );
+  return dependencies;
+}
+function collectInputSelectorResults(dependencies, inputSelectorArgs) {
+  const inputSelectorResults = [];
+  const { length } = dependencies;
+  for (let i = 0; i < length; i++) {
+    inputSelectorResults.push(dependencies[i].apply(null, inputSelectorArgs));
+  }
+  return inputSelectorResults;
+}
+var getDevModeChecksExecutionInfo = (firstRun, devModeChecks) => {
+  const { identityFunctionCheck, inputStabilityCheck } = {
+    ...globalDevModeChecks,
+    ...devModeChecks
+  };
+  return {
+    identityFunctionCheck: {
+      shouldRun: identityFunctionCheck === "always" || identityFunctionCheck === "once" && firstRun,
+      run: runIdentityFunctionCheck
+    },
+    inputStabilityCheck: {
+      shouldRun: inputStabilityCheck === "always" || inputStabilityCheck === "once" && firstRun,
+      run: runInputStabilityCheck
+    }
+  };
+};
+
+// src/autotrackMemoize/autotracking.ts
+var $REVISION = 0;
+var CURRENT_TRACKER = null;
+var Cell = class {
+  revision = $REVISION;
+  _value;
+  _lastValue;
+  _isEqual = tripleEq;
+  constructor(initialValue, isEqual = tripleEq) {
+    this._value = this._lastValue = initialValue;
+    this._isEqual = isEqual;
+  }
+  // Whenever a storage value is read, it'll add itself to the current tracker if
+  // one exists, entangling its state with that cache.
+  get value() {
+    CURRENT_TRACKER?.add(this);
+    return this._value;
+  }
+  // Whenever a storage value is updated, we bump the global revision clock,
+  // assign the revision for this storage to the new value, _and_ we schedule a
+  // rerender. This is important, and it's what makes autotracking  _pull_
+  // based. We don't actively tell the caches which depend on the storage that
+  // anything has happened. Instead, we recompute the caches when needed.
+  set value(newValue) {
+    if (this.value === newValue)
+      return;
+    this._value = newValue;
+    this.revision = ++$REVISION;
+  }
+};
+function tripleEq(a, b) {
+  return a === b;
+}
+var TrackingCache = class {
+  _cachedValue;
+  _cachedRevision = -1;
+  _deps = [];
+  hits = 0;
+  fn;
+  constructor(fn) {
+    this.fn = fn;
+  }
+  clear() {
+    this._cachedValue = void 0;
+    this._cachedRevision = -1;
+    this._deps = [];
+    this.hits = 0;
+  }
+  get value() {
+    if (this.revision > this._cachedRevision) {
+      const { fn } = this;
+      const currentTracker = /* @__PURE__ */ new Set();
+      const prevTracker = CURRENT_TRACKER;
+      CURRENT_TRACKER = currentTracker;
+      this._cachedValue = fn();
+      CURRENT_TRACKER = prevTracker;
+      this.hits++;
+      this._deps = Array.from(currentTracker);
+      this._cachedRevision = this.revision;
+    }
+    CURRENT_TRACKER?.add(this);
+    return this._cachedValue;
+  }
+  get revision() {
+    return Math.max(...this._deps.map((d) => d.revision), 0);
+  }
+};
+function getValue(cell) {
+  if (!(cell instanceof Cell)) {
+    console.warn("Not a valid cell! ", cell);
+  }
+  return cell.value;
+}
+function setValue(storage, value) {
+  if (!(storage instanceof Cell)) {
+    throw new TypeError(
+      "setValue must be passed a tracked store created with `createStorage`."
+    );
+  }
+  storage.value = storage._lastValue = value;
+}
+function createCell(initialValue, isEqual = tripleEq) {
+  return new Cell(initialValue, isEqual);
+}
+function createCache(fn) {
+  assertIsFunction(
+    fn,
+    "the first parameter to `createCache` must be a function"
+  );
+  return new TrackingCache(fn);
+}
+
+// src/autotrackMemoize/tracking.ts
+var neverEq = (a, b) => false;
+function createTag() {
+  return createCell(null, neverEq);
+}
+function dirtyTag(tag, value) {
+  setValue(tag, value);
+}
+var consumeCollection = (node) => {
+  let tag = node.collectionTag;
+  if (tag === null) {
+    tag = node.collectionTag = createTag();
+  }
+  getValue(tag);
+};
+var dirtyCollection = (node) => {
+  const tag = node.collectionTag;
+  if (tag !== null) {
+    dirtyTag(tag, null);
+  }
+};
+
+// src/autotrackMemoize/proxy.ts
+var REDUX_PROXY_LABEL = Symbol();
+var nextId = 0;
+var proto = Object.getPrototypeOf({});
+var ObjectTreeNode = class {
+  constructor(value) {
+    this.value = value;
+    this.value = value;
+    this.tag.value = value;
+  }
+  proxy = new Proxy(this, objectProxyHandler);
+  tag = createTag();
+  tags = {};
+  children = {};
+  collectionTag = null;
+  id = nextId++;
+};
+var objectProxyHandler = {
+  get(node, key) {
+    function calculateResult() {
+      const { value } = node;
+      const childValue = Reflect.get(value, key);
+      if (typeof key === "symbol") {
+        return childValue;
+      }
+      if (key in proto) {
+        return childValue;
+      }
+      if (typeof childValue === "object" && childValue !== null) {
+        let childNode = node.children[key];
+        if (childNode === void 0) {
+          childNode = node.children[key] = createNode(childValue);
+        }
+        if (childNode.tag) {
+          getValue(childNode.tag);
+        }
+        return childNode.proxy;
+      } else {
+        let tag = node.tags[key];
+        if (tag === void 0) {
+          tag = node.tags[key] = createTag();
+          tag.value = childValue;
+        }
+        getValue(tag);
+        return childValue;
+      }
+    }
+    const res = calculateResult();
+    return res;
+  },
+  ownKeys(node) {
+    consumeCollection(node);
+    return Reflect.ownKeys(node.value);
+  },
+  getOwnPropertyDescriptor(node, prop) {
+    return Reflect.getOwnPropertyDescriptor(node.value, prop);
+  },
+  has(node, prop) {
+    return Reflect.has(node.value, prop);
+  }
+};
+var ArrayTreeNode = class {
+  constructor(value) {
+    this.value = value;
+    this.value = value;
+    this.tag.value = value;
+  }
+  proxy = new Proxy([this], arrayProxyHandler);
+  tag = createTag();
+  tags = {};
+  children = {};
+  collectionTag = null;
+  id = nextId++;
+};
+var arrayProxyHandler = {
+  get([node], key) {
+    if (key === "length") {
+      consumeCollection(node);
+    }
+    return objectProxyHandler.get(node, key);
+  },
+  ownKeys([node]) {
+    return objectProxyHandler.ownKeys(node);
+  },
+  getOwnPropertyDescriptor([node], prop) {
+    return objectProxyHandler.getOwnPropertyDescriptor(node, prop);
+  },
+  has([node], prop) {
+    return objectProxyHandler.has(node, prop);
+  }
+};
+function createNode(value) {
+  if (Array.isArray(value)) {
+    return new ArrayTreeNode(value);
+  }
+  return new ObjectTreeNode(value);
+}
+function updateNode(node, newValue) {
+  const { value, tags, children } = node;
+  node.value = newValue;
+  if (Array.isArray(value) && Array.isArray(newValue) && value.length !== newValue.length) {
+    dirtyCollection(node);
+  } else {
+    if (value !== newValue) {
+      let oldKeysSize = 0;
+      let newKeysSize = 0;
+      let anyKeysAdded = false;
+      for (const _key in value) {
+        oldKeysSize++;
+      }
+      for (const key in newValue) {
+        newKeysSize++;
+        if (!(key in value)) {
+          anyKeysAdded = true;
+          break;
+        }
+      }
+      const isDifferent = anyKeysAdded || oldKeysSize !== newKeysSize;
+      if (isDifferent) {
+        dirtyCollection(node);
+      }
+    }
+  }
+  for (const key in tags) {
+    const childValue = value[key];
+    const newChildValue = newValue[key];
+    if (childValue !== newChildValue) {
+      dirtyCollection(node);
+      dirtyTag(tags[key], newChildValue);
+    }
+    if (typeof newChildValue === "object" && newChildValue !== null) {
+      delete tags[key];
+    }
+  }
+  for (const key in children) {
+    const childNode = children[key];
+    const newChildValue = newValue[key];
+    const childValue = childNode.value;
+    if (childValue === newChildValue) {
+      continue;
+    } else if (typeof newChildValue === "object" && newChildValue !== null) {
+      updateNode(childNode, newChildValue);
+    } else {
+      deleteNode(childNode);
+      delete children[key];
+    }
+  }
+}
+function deleteNode(node) {
+  if (node.tag) {
+    dirtyTag(node.tag, null);
+  }
+  dirtyCollection(node);
+  for (const key in node.tags) {
+    dirtyTag(node.tags[key], null);
+  }
+  for (const key in node.children) {
+    deleteNode(node.children[key]);
+  }
+}
+
+// src/lruMemoize.ts
+function createSingletonCache(equals) {
+  let entry;
+  return {
+    get(key) {
+      if (entry && equals(entry.key, key)) {
+        return entry.value;
+      }
+      return NOT_FOUND;
+    },
+    put(key, value) {
+      entry = { key, value };
+    },
+    getEntries() {
+      return entry ? [entry] : [];
+    },
+    clear() {
+      entry = void 0;
+    }
+  };
+}
+function createLruCache(maxSize, equals) {
+  let entries = [];
+  function get(key) {
+    const cacheIndex = entries.findIndex((entry) => equals(key, entry.key));
+    if (cacheIndex > -1) {
+      const entry = entries[cacheIndex];
+      if (cacheIndex > 0) {
+        entries.splice(cacheIndex, 1);
+        entries.unshift(entry);
+      }
+      return entry.value;
+    }
+    return NOT_FOUND;
+  }
+  function put(key, value) {
+    if (get(key) === NOT_FOUND) {
+      entries.unshift({ key, value });
+      if (entries.length > maxSize) {
+        entries.pop();
+      }
+    }
+  }
+  function getEntries() {
+    return entries;
+  }
+  function clear() {
+    entries = [];
+  }
+  return { get, put, getEntries, clear };
+}
+var referenceEqualityCheck = (a, b) => a === b;
+function createCacheKeyComparator(equalityCheck) {
+  return function areArgumentsShallowlyEqual(prev, next) {
+    if (prev === null || next === null || prev.length !== next.length) {
+      return false;
+    }
+    const { length } = prev;
+    for (let i = 0; i < length; i++) {
+      if (!equalityCheck(prev[i], next[i])) {
+        return false;
+      }
+    }
+    return true;
+  };
+}
+function lruMemoize(func, equalityCheckOrOptions) {
+  const providedOptions = typeof equalityCheckOrOptions === "object" ? equalityCheckOrOptions : { equalityCheck: equalityCheckOrOptions };
+  const {
+    equalityCheck = referenceEqualityCheck,
+    maxSize = 1,
+    resultEqualityCheck
+  } = providedOptions;
+  const comparator = createCacheKeyComparator(equalityCheck);
+  let resultsCount = 0;
+  const cache = maxSize <= 1 ? createSingletonCache(comparator) : createLruCache(maxSize, comparator);
+  function memoized() {
+    let value = cache.get(arguments);
+    if (value === NOT_FOUND) {
+      value = func.apply(null, arguments);
+      resultsCount++;
+      if (resultEqualityCheck) {
+        const entries = cache.getEntries();
+        const matchingEntry = entries.find(
+          (entry) => resultEqualityCheck(entry.value, value)
+        );
+        if (matchingEntry) {
+          value = matchingEntry.value;
+          resultsCount !== 0 && resultsCount--;
+        }
+      }
+      cache.put(arguments, value);
+    }
+    return value;
+  }
+  memoized.clearCache = () => {
+    cache.clear();
+    memoized.resetResultsCount();
+  };
+  memoized.resultsCount = () => resultsCount;
+  memoized.resetResultsCount = () => {
+    resultsCount = 0;
+  };
+  return memoized;
+}
+
+// src/autotrackMemoize/autotrackMemoize.ts
+function autotrackMemoize(func) {
+  const node = createNode(
+    []
+  );
+  let lastArgs = null;
+  const shallowEqual = createCacheKeyComparator(referenceEqualityCheck);
+  const cache = createCache(() => {
+    const res = func.apply(null, node.proxy);
+    return res;
+  });
+  function memoized() {
+    if (!shallowEqual(lastArgs, arguments)) {
+      updateNode(node, arguments);
+      lastArgs = arguments;
+    }
+    return cache.value;
+  }
+  memoized.clearCache = () => {
+    return cache.clear();
+  };
+  return memoized;
+}
+
+// src/weakMapMemoize.ts
+var StrongRef = class {
+  constructor(value) {
+    this.value = value;
+  }
+  deref() {
+    return this.value;
+  }
+};
+var Ref = typeof WeakRef !== "undefined" ? WeakRef : StrongRef;
+var UNTERMINATED = 0;
+var TERMINATED = 1;
+function createCacheNode() {
+  return {
+    s: UNTERMINATED,
+    v: void 0,
+    o: null,
+    p: null
+  };
+}
+function weakMapMemoize(func, options = {}) {
+  let fnNode = createCacheNode();
+  const { resultEqualityCheck } = options;
+  let lastResult;
+  let resultsCount = 0;
+  function memoized() {
+    let cacheNode = fnNode;
+    const { length } = arguments;
+    for (let i = 0, l = length; i < l; i++) {
+      const arg = arguments[i];
+      if (typeof arg === "function" || typeof arg === "object" && arg !== null) {
+        let objectCache = cacheNode.o;
+        if (objectCache === null) {
+          cacheNode.o = objectCache = /* @__PURE__ */ new WeakMap();
+        }
+        const objectNode = objectCache.get(arg);
+        if (objectNode === void 0) {
+          cacheNode = createCacheNode();
+          objectCache.set(arg, cacheNode);
+        } else {
+          cacheNode = objectNode;
+        }
+      } else {
+        let primitiveCache = cacheNode.p;
+        if (primitiveCache === null) {
+          cacheNode.p = primitiveCache = /* @__PURE__ */ new Map();
+        }
+        const primitiveNode = primitiveCache.get(arg);
+        if (primitiveNode === void 0) {
+          cacheNode = createCacheNode();
+          primitiveCache.set(arg, cacheNode);
+        } else {
+          cacheNode = primitiveNode;
+        }
+      }
+    }
+    const terminatedNode = cacheNode;
+    let result;
+    if (cacheNode.s === TERMINATED) {
+      result = cacheNode.v;
+    } else {
+      result = func.apply(null, arguments);
+      resultsCount++;
+      if (resultEqualityCheck) {
+        const lastResultValue = lastResult?.deref?.() ?? lastResult;
+        if (lastResultValue != null && resultEqualityCheck(lastResultValue, result)) {
+          result = lastResultValue;
+          resultsCount !== 0 && resultsCount--;
+        }
+        const needsWeakRef = typeof result === "object" && result !== null || typeof result === "function";
+        lastResult = needsWeakRef ? new Ref(result) : result;
+      }
+    }
+    terminatedNode.s = TERMINATED;
+    terminatedNode.v = result;
+    return result;
+  }
+  memoized.clearCache = () => {
+    fnNode = createCacheNode();
+    memoized.resetResultsCount();
+  };
+  memoized.resultsCount = () => resultsCount;
+  memoized.resetResultsCount = () => {
+    resultsCount = 0;
+  };
+  return memoized;
+}
+
+// src/createSelectorCreator.ts
+function createSelectorCreator(memoizeOrOptions, ...memoizeOptionsFromArgs) {
+  const createSelectorCreatorOptions = typeof memoizeOrOptions === "function" ? {
+    memoize: memoizeOrOptions,
+    memoizeOptions: memoizeOptionsFromArgs
+  } : memoizeOrOptions;
+  const createSelector2 = (...createSelectorArgs) => {
+    let recomputations = 0;
+    let dependencyRecomputations = 0;
+    let lastResult;
+    let directlyPassedOptions = {};
+    let resultFunc = createSelectorArgs.pop();
+    if (typeof resultFunc === "object") {
+      directlyPassedOptions = resultFunc;
+      resultFunc = createSelectorArgs.pop();
+    }
+    assertIsFunction(
+      resultFunc,
+      `createSelector expects an output function after the inputs, but received: [${typeof resultFunc}]`
+    );
+    const combinedOptions = {
+      ...createSelectorCreatorOptions,
+      ...directlyPassedOptions
+    };
+    const {
+      memoize,
+      memoizeOptions = [],
+      argsMemoize = weakMapMemoize,
+      argsMemoizeOptions = [],
+      devModeChecks = {}
+    } = combinedOptions;
+    const finalMemoizeOptions = ensureIsArray(memoizeOptions);
+    const finalArgsMemoizeOptions = ensureIsArray(argsMemoizeOptions);
+    const dependencies = getDependencies(createSelectorArgs);
+    const memoizedResultFunc = memoize(function recomputationWrapper() {
+      recomputations++;
+      return resultFunc.apply(
+        null,
+        arguments
+      );
+    }, ...finalMemoizeOptions);
+    let firstRun = true;
+    const selector = argsMemoize(function dependenciesChecker() {
+      dependencyRecomputations++;
+      const inputSelectorResults = collectInputSelectorResults(
+        dependencies,
+        arguments
+      );
+      lastResult = memoizedResultFunc.apply(null, inputSelectorResults);
+      if (true) {
+        const { identityFunctionCheck, inputStabilityCheck } = getDevModeChecksExecutionInfo(firstRun, devModeChecks);
+        if (identityFunctionCheck.shouldRun) {
+          identityFunctionCheck.run(
+            resultFunc,
+            inputSelectorResults,
+            lastResult
+          );
+        }
+        if (inputStabilityCheck.shouldRun) {
+          const inputSelectorResultsCopy = collectInputSelectorResults(
+            dependencies,
+            arguments
+          );
+          inputStabilityCheck.run(
+            { inputSelectorResults, inputSelectorResultsCopy },
+            { memoize, memoizeOptions: finalMemoizeOptions },
+            arguments
+          );
+        }
+        if (firstRun)
+          firstRun = false;
+      }
+      return lastResult;
+    }, ...finalArgsMemoizeOptions);
+    return Object.assign(selector, {
+      resultFunc,
+      memoizedResultFunc,
+      dependencies,
+      dependencyRecomputations: () => dependencyRecomputations,
+      resetDependencyRecomputations: () => {
+        dependencyRecomputations = 0;
+      },
+      lastResult: () => lastResult,
+      recomputations: () => recomputations,
+      resetRecomputations: () => {
+        recomputations = 0;
+      },
+      memoize,
+      argsMemoize
+    });
+  };
+  Object.assign(createSelector2, {
+    withTypes: () => createSelector2
+  });
+  return createSelector2;
+}
+var createSelector = /* @__PURE__ */ createSelectorCreator(weakMapMemoize);
+
+// src/createStructuredSelector.ts
+var createStructuredSelector = Object.assign(
+  (inputSelectorsObject, selectorCreator = createSelector) => {
+    assertIsObject(
+      inputSelectorsObject,
+      `createStructuredSelector expects first argument to be an object where each property is a selector, instead received a ${typeof inputSelectorsObject}`
+    );
+    const inputSelectorKeys = Object.keys(inputSelectorsObject);
+    const dependencies = inputSelectorKeys.map(
+      (key) => inputSelectorsObject[key]
+    );
+    const structuredSelector = selectorCreator(
+      dependencies,
+      (...inputSelectorResults) => {
+        return inputSelectorResults.reduce((composition, value, index) => {
+          composition[inputSelectorKeys[index]] = value;
+          return composition;
+        }, {});
+      }
+    );
+    return structuredSelector;
+  },
+  { withTypes: () => createStructuredSelector }
+);
+
+//# sourceMappingURL=reselect.mjs.map
 
 /***/ }),
 
