@@ -8,6 +8,7 @@
 @import url('toolbar.css');
 @import url('notices.css');
 @import url('pro-features.css');
+@import url('conditionals.css');
 
 .reactflow-wrapper {
     height: 100%;

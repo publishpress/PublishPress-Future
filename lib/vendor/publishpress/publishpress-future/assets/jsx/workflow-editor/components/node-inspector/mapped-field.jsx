@@ -11,6 +11,7 @@ import Textarea from "../data-fields/textarea";
 import PostInput from "../data-fields/post-input";
 import ManualWorkflowInput from "../data-fields/manual-workflow-input";
 import List from "../data-fields/list";
+import Conditional from "../data-fields/conditional";
 
 export const MappedField = (props) => {
     switch (props.type) {
@@ -61,6 +62,10 @@ export const MappedField = (props) => {
         case "list":
             return (
                 <List {...props} />
+            );
+        case "conditional":
+            return (
+                <Conditional {...props} />
             );
     }
 

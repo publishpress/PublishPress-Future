@@ -63,15 +63,15 @@ class ConditionalSplit implements NodeTypeInterface
             [
                 "label" => __("Conditions", "post-expirator"),
                 "description" => __(
-                    "THIS STEP IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the True handle is implemented. False will not run the next actions for now.", // phpcs:ignore Generic.Files.LineLength.TooLong
+                    "", // phpcs:ignore Generic.Files.LineLength.TooLong
                     "post-expirator"
                 ),
                 "fields" => [
                     [
-                        "name" => "test",
-                        "type" => "text",
-                        "label" => __("NOT IMPLEMENTED YET!", "post-expirator"),
-                        "description" => __("Still not implemented", "post-expirator"),
+                        "name" => "conditions",
+                        "type" => "conditional",
+                        "label" => __("Conditions", "post-expirator"),
+                        "description" => __("The conditions that must be met for deciding which branch to take.", "post-expirator"),
                     ],
                 ]
             ]
