@@ -12011,8 +12011,7 @@ var Conditional = function Conditional(_ref) {
       return !prev;
     });
   };
-  var onClose = function onClose() {
-    togglePopover();
+  var onSave = function onSave() {
     var jsonCondition = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.formatQuery)(query, {
       format: 'jsonlogic',
       parseNumbers: true
@@ -12031,6 +12030,13 @@ var Conditional = function Conditional(_ref) {
     if (onChange) {
       onChange(name, newValue);
     }
+    onClose();
+  };
+  var onClose = function onClose() {
+    togglePopover();
+  };
+  var onCancel = function onCancel() {
+    onClose();
   };
   var fields = [].concat(allVariables);
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
@@ -12058,7 +12064,11 @@ var Conditional = function Conditional(_ref) {
     controlClassnames: {
       queryBuilder: 'queryBuilder-branches'
     }
-  }))));
+  })), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+    onClick: onSave
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Save', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+    onClick: onCancel
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Cancel', 'post-expirator'))));
   return /*#__PURE__*/React.createElement(react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.QueryBuilder, null);
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Conditional);

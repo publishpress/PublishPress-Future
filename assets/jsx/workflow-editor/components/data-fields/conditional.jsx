@@ -44,9 +44,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
 
     const togglePopover = () => setIsPopoverVisible((prev) => !prev);
 
-    const onClose = () => {
-        togglePopover();
-
+    const onSave = () => {
         const jsonCondition = formatQuery(
             query,
             {
@@ -72,6 +70,16 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         if (onChange) {
             onChange(name, newValue);
         }
+
+        onClose();
+    }
+
+    const onClose = () => {
+        togglePopover();
+    }
+
+    const onCancel = () => {
+        onClose();
     }
 
     const fields = [
@@ -110,6 +118,8 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                             }}
                         />
                     </div>
+                    <Button onClick={onSave}>{__('Save', 'post-expirator')}</Button>
+                    <Button onClick={onCancel}>{__('Cancel', 'post-expirator')}</Button>
                 </Popover>
             )}
         </div>
