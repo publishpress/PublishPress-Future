@@ -11952,6 +11952,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 var Conditional = function Conditional(_ref) {
   var name = _ref.name,
     label = _ref.label,
@@ -11972,46 +11973,49 @@ var Conditional = function Conditional(_ref) {
       };
     }),
     isPro = _useSelect.isPro;
-  var allVariables = [];
-  var _iterator = _createForOfIteratorHelper(variables),
-    _step;
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var variable = _step.value;
-      if (variable.children) {
-        var _iterator2 = _createForOfIteratorHelper(variable.children),
-          _step2;
-        try {
-          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-            var child = _step2.value;
-            allVariables.push({
-              name: child.id,
-              label: child.name
-            });
+  var allVariables = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    var allVariables = [];
+    var _iterator = _createForOfIteratorHelper(variables),
+      _step;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var variable = _step.value;
+        if (variable.children) {
+          var _iterator2 = _createForOfIteratorHelper(variable.children),
+            _step2;
+          try {
+            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+              var child = _step2.value;
+              allVariables.push({
+                name: child.id,
+                label: child.name
+              });
+            }
+          } catch (err) {
+            _iterator2.e(err);
+          } finally {
+            _iterator2.f();
           }
-        } catch (err) {
-          _iterator2.e(err);
-        } finally {
-          _iterator2.f();
+        } else {
+          allVariables.push({
+            name: variable.id,
+            label: variable.name
+          });
         }
-      } else {
-        allVariables.push({
-          name: variable.id,
-          label: variable.name
-        });
       }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
     }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
-  }
-  var togglePopover = function togglePopover() {
+    return allVariables;
+  }, [variables]);
+  var togglePopover = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
     return setIsPopoverVisible(function (prev) {
       return !prev;
     });
-  };
-  var onSave = function onSave() {
+  }, []);
+  var onClose = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
     var jsonCondition = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.formatQuery)(query, {
       format: 'jsonlogic',
       parseNumbers: true
@@ -12030,15 +12034,8 @@ var Conditional = function Conditional(_ref) {
     if (onChange) {
       onChange(name, newValue);
     }
-    onClose();
-  };
-  var onClose = function onClose() {
     togglePopover();
-  };
-  var onCancel = function onCancel() {
-    onClose();
-  };
-  var fields = [].concat(allVariables);
+  }, [query, allVariables, onChange, name, defaultValue]);
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
     onClick: togglePopover,
     variant: "secondary"
@@ -12052,9 +12049,21 @@ var Conditional = function Conditional(_ref) {
     style: {
       padding: '20px',
       minWidth: '400px'
+    },
+    onKeyUp: function onKeyUp(e) {
+      if (e.key === 'Enter') {
+        onClose();
+      }
     }
-  }, /*#__PURE__*/React.createElement(react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.QueryBuilder, {
-    fields: fields,
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalHStack, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalHeading, {
+    level: 2,
+    className: "block-editor-inspector-popover-header__heading"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Condition', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+    onClick: onClose,
+    icon: "no-alt",
+    className: "block-editor-inspector-popover-header__action"
+  })), /*#__PURE__*/React.createElement(react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.QueryBuilder, {
+    fields: allVariables,
     onQueryChange: setQuery,
     query: query,
     addRuleToNewGroups: true,
@@ -12063,12 +12072,16 @@ var Conditional = function Conditional(_ref) {
     showNotToggle: true,
     controlClassnames: {
       queryBuilder: 'queryBuilder-branches'
+    },
+    translations: {
+      addGroup: {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Add Group', 'post-expirator')
+      },
+      addRule: {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Add Rule', 'post-expirator')
+      }
     }
-  })), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-    onClick: onSave
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Save', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-    onClick: onCancel
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Cancel', 'post-expirator'))));
+  }))));
   return /*#__PURE__*/React.createElement(react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.QueryBuilder, null);
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Conditional);
@@ -17681,7 +17694,6 @@ var NodeSettingsPanel = function NodeSettingsPanel(_ref) {
     updateNode = _useDispatch.updateNode;
   var onChangeSetting = function onChangeSetting(fieldName, value) {
     var _node$data2;
-    console.log(fieldName, value);
     if (!((_node$data2 = node.data) !== null && _node$data2 !== void 0 && _node$data2.settings)) {
       node.data.settings = {};
     }
@@ -20789,7 +20801,7 @@ var WorkflowDebugRayPanel = function WorkflowDebugRayPanel() {
     setEditedWorkflowAttribute('debugRayShowCurrentRunningStep', selected);
   });
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_persistent_panel_body__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    className: "edit-post-post-status",
+    className: "edit-post-post-status workflow-editor-dev-panel",
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Ray Debug', 'post-expirator'),
     initialOpen: true,
     disabled: isLoadingWorkflow
@@ -23622,7 +23634,18 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.edit-post-sidebar__panel .condition-n
     font-style: italic;
     margin-top: 12px;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/conditionals.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;IAChB,iCAAiC;IACjC,yBAAyB;IACzB,aAAa;IACb,kBAAkB;IAClB,yBAAyB;AAC7B;;AAEA;IACI,kBAAkB;IAClB,gBAAgB;AACpB","sourcesContent":[".edit-post-sidebar__panel .condition-natural-language {\n    margin-top: 12px;\n    font-family: monospace, monospace;\n    background-color: #f0f0f1;\n    padding: 12px;\n    border-radius: 4px;\n    border: 1px solid #e0e0e1;\n}\n\n.condition-pro-features-notice {\n    font-style: italic;\n    margin-top: 12px;\n}\n"],"sourceRoot":""}]);
+
+.ruleGroup {
+    margin: none;
+    background: none;
+    border: none;
+}
+
+.block-editor-inspector-popover-header__heading {
+    font-size: 13px !important;
+    margin-bottom: 16px !important;
+}
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/conditionals.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;IAChB,iCAAiC;IACjC,yBAAyB;IACzB,aAAa;IACb,kBAAkB;IAClB,yBAAyB;AAC7B;;AAEA;IACI,kBAAkB;IAClB,gBAAgB;AACpB;;AAEA;IACI,YAAY;IACZ,gBAAgB;IAChB,YAAY;AAChB;;AAEA;IACI,0BAA0B;IAC1B,8BAA8B;AAClC","sourcesContent":[".edit-post-sidebar__panel .condition-natural-language {\n    margin-top: 12px;\n    font-family: monospace, monospace;\n    background-color: #f0f0f1;\n    padding: 12px;\n    border-radius: 4px;\n    border: 1px solid #e0e0e1;\n}\n\n.condition-pro-features-notice {\n    font-style: italic;\n    margin-top: 12px;\n}\n\n.ruleGroup {\n    margin: none;\n    background: none;\n    border: none;\n}\n\n.block-editor-inspector-popover-header__heading {\n    font-size: 13px !important;\n    margin-bottom: 16px !important;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

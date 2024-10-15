@@ -1,12 +1,13 @@
 import { QueryBuilder, formatQuery, defaultOperators } from 'react-querybuilder';
 import { parseJsonLogic } from 'react-querybuilder/parseJsonLogic';
-import { useState } from '@wordpress/element';
+import { useState, useMemo, useCallback } from '@wordpress/element';
 import { Button, Popover } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as editorStore } from '../editor-store';
 import { useSelect } from '@wordpress/data';
 
 import 'react-querybuilder/dist/query-builder.css';
+import { __experimentalHStack as HStack, __experimentalHeading as Heading } from '@wordpress/components';
 
 export const Conditional = ({ name, label, defaultValue, onChange, variables }) => {
     const [isPopoverVisible, setIsPopoverVisible] = useState(false);
@@ -24,27 +25,31 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         isPro: select(editorStore).isPro(),
     }));
 
-    let allVariables = [];
+    const allVariables = useMemo(() => {
+        let allVariables = [];
 
-    for (const variable of variables) {
-        if (variable.children) {
-            for (const child of variable.children) {
+        for (const variable of variables) {
+            if (variable.children) {
+                for (const child of variable.children) {
+                    allVariables.push({
+                        name: child.id,
+                        label: child.name,
+                    });
+                }
+            } else {
                 allVariables.push({
-                    name: child.id,
-                    label: child.name,
+                    name: variable.id,
+                    label: variable.name,
                 });
             }
-        } else {
-            allVariables.push({
-                name: variable.id,
-                label: variable.name,
-            });
         }
-    }
 
-    const togglePopover = () => setIsPopoverVisible((prev) => !prev);
+        return allVariables;
+    }, [variables]);
 
-    const onSave = () => {
+    const togglePopover = useCallback(() => setIsPopoverVisible((prev) => !prev), []);
+
+    const onClose = useCallback(() => {
         const jsonCondition = formatQuery(
             query,
             {
@@ -71,20 +76,8 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
             onChange(name, newValue);
         }
 
-        onClose();
-    }
-
-    const onClose = () => {
         togglePopover();
-    }
-
-    const onCancel = () => {
-        onClose();
-    }
-
-    const fields = [
-        ...allVariables,
-    ];
+    }, [query, allVariables, onChange, name, defaultValue]);
 
     return (
         <div>
@@ -104,9 +97,18 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
 
             {isPopoverVisible && (
                 <Popover onClose={onClose}>
-                    <div style={{ padding: '20px', minWidth: '400px' }}>
+                    <div style={{ padding: '20px', minWidth: '400px' }} onKeyUp={(e) => {
+                        if (e.key === 'Enter') {
+                            onClose();
+                        }
+                    }}>
+                        <HStack>
+                            <Heading level={2} className="block-editor-inspector-popover-header__heading">{__('Condition', 'post-expirator')}</Heading>
+                            <Button onClick={onClose} icon="no-alt" className='block-editor-inspector-popover-header__action' />
+                        </HStack>
+
                         <QueryBuilder
-                            fields={fields}
+                            fields={allVariables}
                             onQueryChange={setQuery}
                             query={query}
                             addRuleToNewGroups
@@ -116,10 +118,12 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                             controlClassnames={{
                                 queryBuilder: 'queryBuilder-branches',
                             }}
+                            translations={{
+                                addGroup: { label: __('Add Group', 'post-expirator') },
+                                addRule: { label: __('Add Rule', 'post-expirator') }
+                            }}
                         />
                     </div>
-                    <Button onClick={onSave}>{__('Save', 'post-expirator')}</Button>
-                    <Button onClick={onCancel}>{__('Cancel', 'post-expirator')}</Button>
                 </Popover>
             )}
         </div>

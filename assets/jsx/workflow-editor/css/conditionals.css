@@ -11,3 +11,14 @@
     font-style: italic;
     margin-top: 12px;
 }
+
+.ruleGroup {
+    margin: none;
+    background: none;
+    border: none;
+}
+
+.block-editor-inspector-popover-header__heading {
+    font-size: 13px !important;
+    margin-bottom: 16px !important;
+}
