@@ -261,7 +261,9 @@ class ScheduledActionsController implements InitializableInterface
             return $html;
         }
 
-        if ($action->get_hook() === WorkflowsHooksAbstract::ACTION_WORKFLOW_SAVED) {
+        $hook = $action->get_hook();
+
+        if ($hook === WorkflowsHooksAbstract::ACTION_WORKFLOW_SAVED) {
             $args = $action->get_args();
 
             if (isset($args['postId']) && isset($args['workflow']) && 'expire' === $args['workflow']) {
@@ -278,11 +280,11 @@ class ScheduledActionsController implements InitializableInterface
             }
         }
 
-        if ($action->get_hook() === WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_NODE) {
+        if ($hook === WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_NODE) {
             $html = __('Executed workflow scheduled step', 'post-expirator');
         }
 
-        if ($action->get_hook() === WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS) {
+        if ($hook === WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS) {
             $days = $this->settingsFacade->getScheduledWorkflowStepsCleanupRetention();
 
             $html = sprintf(
@@ -291,7 +293,7 @@ class ScheduledActionsController implements InitializableInterface
             );
         }
 
-        if ($action->get_hook() === WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS) {
+        if ($hook === WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS) {
             $html = __('Cleaned up orphan workflow scheduled step arguments', 'post-expirator');
         }
 

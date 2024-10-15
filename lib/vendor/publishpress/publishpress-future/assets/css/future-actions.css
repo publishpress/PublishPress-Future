@@ -1,0 +1,26 @@
+.future_page_publishpress-future-scheduled-actions .future-workflows-outputs,
+.future_page_publishpress-future-scheduled-actions .future-workflows-outputs ul {
+    margin-left: 5px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.future_page_publishpress-future-scheduled-actions .future-workflows-outputs .future-workflow-step-handler {
+    font-style: italic;
+}
+
+.future_page_publishpress-future-scheduled-actions .future-workflows-outputs li,
+.future_page_publishpress-future-scheduled-actions .future-workflows-outputs ul li {
+    margin-bottom: 0;
+}
+
+#action-scheduler-filter .action-scheduler code {
+    display: block;
+    color: #6f6f6f;
+    font-size: 12px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin: 0;
+}

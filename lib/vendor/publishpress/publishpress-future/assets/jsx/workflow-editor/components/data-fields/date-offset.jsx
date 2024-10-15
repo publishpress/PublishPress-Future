@@ -228,7 +228,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                             <PanelRow>
                                 <TextControl
                                     label={__("Unique ID Expression", "post-expirator")}
-                                    value={defaultValue.uniqueIdExpression}
+                                    value={defaultValue.uniqueIdExpression ?? ''}
                                     onChange={(value) => onChangeSetting({ settingName: "uniqueIdExpression", value })}
                                     help={__("Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}} or {{global.user.ID}} to make sure the ID is unique.", "post-expirator")}
                                 />
@@ -237,7 +237,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
                         <TextControl
                             label={__("Priority", "post-expirator")}
-                            value={defaultValue.priority}
+                            value={defaultValue.priority || 10}
                             onChange={(value) => onChangeSetting({ settingName: "priority", value })}
                             help={__("Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first.", "post-expirator")} // phpcs:ignore Generic.Files.LineLength.TooLong
                         />
