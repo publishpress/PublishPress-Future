@@ -17,7 +17,8 @@ module.exports = {
         legacyAction: "./assets/jsx/legacy-action/index.jsx",
         workflowManualSelectionQuickEdit: "./assets/jsx/workflow-manual-selection/quick-edit/index.jsx",
         workflowManualSelectionClassicEditor: "./assets/jsx/workflow-manual-selection/classic-editor/index.jsx",
-        workflowManualSelectionBlockEditor: "./assets/jsx/workflow-manual-selection/block-editor/index.jsx"
+        workflowManualSelectionBlockEditor: "./assets/jsx/workflow-manual-selection/block-editor/index.jsx",
+        futureActions: "./assets/jsx/future-actions.jsx"
     },
     output: {
         path: path.join(__dirname, "assets", "js"),
