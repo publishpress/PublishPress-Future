@@ -140,6 +140,8 @@ class PostModel implements PostModelInterface
                 FROM {$wpdb->prefix}actionscheduler_actions
                 WHERE (JSON_EXTRACT(extended_args, '$[0].contextVariables.global.trigger.value.name') = %s)
                     OR (JSON_EXTRACT(args, '$[0].contextVariables.global.trigger.value.name') = %s)
+                    OR (JSON_EXTRACT(extended_args, '$[0].runtimeVariables.global.trigger.value.name') = %s)
+                    OR (JSON_EXTRACT(args, '$[0].runtimeVariables.global.trigger.value.name') = %s)
                 AND status = 'pending'
                 AND hook = %s
             ";
@@ -163,17 +165,17 @@ class PostModel implements PostModelInterface
         foreach ($actionsForWorkflows as $action) {
             $args = json_decode($action['extended_args'], true);
 
-            if (! isset($args[0]['contextVariables']['global']['trigger']['value']['slug'])) {
+            if (! isset($args[0]['runtimeVariables']['global']['trigger']['value']['slug'])) {
                 continue;
             }
 
-            $triggerSlug = $args[0]['contextVariables']['global']['trigger']['value']['slug'];
+            $triggerSlug = $args[0]['runtimeVariables']['global']['trigger']['value']['slug'];
 
-            if (! isset($args[0]['contextVariables'][$triggerSlug]['postId'])) {
+            if (! isset($args[0]['runtimeVariables'][$triggerSlug]['postId'])) {
                 continue;
             }
 
-            $postId = $args[0]['contextVariables'][$triggerSlug]['postId']['value'];
+            $postId = $args[0]['runtimeVariables'][$triggerSlug]['postId']['value'];
 
             if ($postId !== $this->post->ID) {
                 continue;

@@ -245,7 +245,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                 /*
                  * Setting the action ID is crucial for retrieving scheduled step arguments
                  * from the wp_ppfuture_workflow_scheduled_steps table, specifically for recurring actions.
-                 * This step ensures that runtime data in the contextVariables field is properly
+                 * This step ensures that runtime data in the runtimeVariables field is properly
                  * passed from the just-executed action to any new recurring instances.
                  * Without this, we would lose important context between recurring executions.
                  */
@@ -724,7 +724,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         }
 
         if ($shouldExecute) {
-            $this->runNextSteps($expandedArgs['step'], $expandedArgs['contextVariables']);
+            $this->runNextSteps($expandedArgs['step'], $expandedArgs['runtimeVariables']);
 
             $scheduledStepModel->incrementRunCount();
             $scheduledStepModel->updateLastRunAt();
