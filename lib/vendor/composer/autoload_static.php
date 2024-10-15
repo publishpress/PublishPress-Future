@@ -35,6 +35,16 @@ class ComposerStaticInitPublishPressFuturePro
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'J' => 
+        array (
+            'JWadhams' => 
+            array (
+                0 => __DIR__ . '/..' . '/jwadhams/json-logic-php/src',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
@@ -44,6 +54,7 @@ class ComposerStaticInitPublishPressFuturePro
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitPublishPressFuturePro::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitPublishPressFuturePro::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitPublishPressFuturePro::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitPublishPressFuturePro::$classMap;
 
         }, null, ClassLoader::class);

@@ -34,6 +34,7 @@
         "publishpress/wordpress-edd-license": "^3.0",
         "publishpress/wordpress-reviews": "^1.1",
         "publishpress/wordpress-version-notices": "^2.1",
+        "jwadhams/json-logic-php": "^1.5",
         "woocommerce/action-scheduler": "3.7.0"
     },
     "scripts": {

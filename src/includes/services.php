@@ -20,6 +20,7 @@ use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostChangeStatus;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreSendEmail;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\ConditionalSplit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\CorePostQuery;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnCronSchedule;
@@ -292,6 +293,13 @@ return [
                 // Advanced
                 case CorePostQuery::getNodeTypeName():
                     return new CorePostQuery(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(FreeServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
+                    );
+
+                case ConditionalSplit::getNodeTypeName():
+                    return new ConditionalSplit(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(FreeServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(FreeServicesAbstract::WORKFLOW_VARIABLES_HANDLER)

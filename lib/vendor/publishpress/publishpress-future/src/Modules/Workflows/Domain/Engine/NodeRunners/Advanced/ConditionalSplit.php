@@ -8,6 +8,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterfac
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+
 class ConditionalSplit implements NodeRunnerInterface
 {
     /**

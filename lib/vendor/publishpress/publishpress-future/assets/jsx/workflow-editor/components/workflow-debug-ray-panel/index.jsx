@@ -46,7 +46,7 @@ export const WorkflowDebugRayPanel = () => {
     return (
         <div>
             <PersistentPanelBody
-                className='edit-post-post-status'
+                className='edit-post-post-status workflow-editor-dev-panel'
                 title={__('Ray Debug', 'post-expirator')}
                 initialOpen={true}
                 disabled={isLoadingWorkflow}
