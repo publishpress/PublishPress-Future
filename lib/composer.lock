@@ -345,12 +345,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "23c10044cd89ff7b61e821fc1bcbb048beb59c5c"
+                "reference": "7eb93a2aafbbe2f09dc860ba0154947fc3d1b01a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/23c10044cd89ff7b61e821fc1bcbb048beb59c5c",
-                "reference": "23c10044cd89ff7b61e821fc1bcbb048beb59c5c",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/7eb93a2aafbbe2f09dc860ba0154947fc3d1b01a",
+                "reference": "7eb93a2aafbbe2f09dc860ba0154947fc3d1b01a",
                 "shasum": ""
             },
             "require": {
@@ -638,7 +638,7 @@
                 "source": "https://github.com/publishpress/PublishPress-Future/tree/release-4.0.0",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2024-10-15T21:20:28+00:00"
+            "time": "2024-10-15T22:25:52+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
