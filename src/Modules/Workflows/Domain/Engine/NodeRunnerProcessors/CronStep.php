@@ -120,6 +120,14 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
     public function setup(array $step, callable $actionCallback): void
     {
         try {
+            $this->logger->debug(
+                sprintf(
+                    // translators: %s is the step slug
+                    __('Setting up step [%s]', 'post-expirator'),
+                    $step['node']['data']['slug']
+                )
+            );
+
             $node = $this->getNodeFromStep($step);
             $nodeSettings = $this->getNodeSettings($node);
 
@@ -157,8 +165,8 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             $actionArgs = [
                 'workflowId' => $workflowId,
                 'stepId' => $node['id'],
-                'stepLabel' => $node['data']['label'] ?? null,
-                'stepName' => $node['data']['name'],
+                'stepLabel' => $node['node']['data']['label'] ?? null,
+                'stepName' => $node['node']['data']['name'],
                 'pluginVersion' => $this->pluginVersion,
             ];
 
@@ -173,16 +181,37 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
             // Do not run single actions that have already run
             if ($isSingleAction && $runCount > 0) {
+                $this->logger->debug(
+                    sprintf(
+                        // translators: %s is the step slug
+                        __('Step [%s] is already finished, skipping', 'post-expirator'),
+                        $step['node']['data']['slug']
+                    )
+                );
                 return;
             }
 
             // If the action is already finished, we don't need to schedule it again.
             if ($hasFinished) {
+                $this->logger->debug(
+                    sprintf(
+                        // translators: %s is the step slug
+                        __('Step [%s] is already finished, skipping', 'post-expirator'),
+                        $step['node']['data']['slug']
+                    )
+                );
                 return;
             }
 
             if ($scheduledActionsModel->hasRowWithActionUIDHash($actionUIDHash)) {
                 // It should be unique, so if the action is already scheduled, we don't need to schedule it again.
+                $this->logger->debug(
+                    sprintf(
+                        // translators: %s is the step slug
+                        __('Step [%s] is already scheduled, skipping', 'post-expirator'),
+                        $step['node']['data']['slug']
+                    )
+                );
                 return;
             }
 
@@ -270,6 +299,14 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                 }
 
                 $scheduledStepModel->insert();
+
+                $this->logger->debug(
+                    sprintf(
+                        // translators: %s is the step slug
+                        __('Step [%s] scheduled', 'post-expirator'),
+                        $step['node']['data']['slug']
+                    )
+                );
             }
         } catch (\Exception $e) {
             $workflowId = $this->variablesHandler->getVariable('global.workflow.id');

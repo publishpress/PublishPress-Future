@@ -78,6 +78,14 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
         $this->step = $step;
         $this->workflowId = $workflowId;
 
+        $this->logger->debug(
+            sprintf(
+                // translators: %s is the step slug
+                __('Setting up step [%s]', 'post-expirator'),
+                $step['node']['data']['slug']
+            )
+        );
+
         $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'triggerCallback'], 10, 3);
     }
 
@@ -91,10 +99,14 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
                 $this->step
             )
         ) {
+            $this->logger->debug('Ignoring save post event');
+
             return;
         }
 
         if ($this->isInfinityLoopDetected($this->workflowId, $this->step)) {
+            $this->logger->debug('Infinity loop detected');
+
             return;
         }
 
@@ -104,6 +116,8 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
         ];
 
         if (! $this->postQueryValidator->validate($postQueryArgs)) {
+            $this->logger->debug('Post query validation failed');
+
             return false;
         }
 
@@ -116,6 +130,8 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
             'post' => new PostResolver($post),
             'update' => new BooleanResolver($update),
         ]);
+
+        $this->logger->debug('Post query validation passed');
 
         $this->nodeRunnerProcessor->triggerCallbackIsRunning();
         $this->nodeRunnerProcessor->runNextSteps($this->step);

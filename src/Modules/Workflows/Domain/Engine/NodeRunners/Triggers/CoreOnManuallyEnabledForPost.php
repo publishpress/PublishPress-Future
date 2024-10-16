@@ -75,6 +75,14 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 
     public function setup(int $workflowId, array $step): void
     {
+        $this->logger->debug(
+            sprintf(
+                // translators: %s is the step slug
+                __('Setting up step [%s]', 'post-expirator'),
+                $step['node']['data']['slug']
+            )
+        );
+
         $this->step = $step;
         $this->workflowId = $workflowId;
 

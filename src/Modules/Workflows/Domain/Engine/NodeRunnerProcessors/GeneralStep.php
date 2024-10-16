@@ -2,6 +2,7 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunnerProcessors;
 
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
@@ -21,18 +22,33 @@ class GeneralStep implements NodeRunnerProcessorInterface
      */
     private $variablesHandler;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         HooksFacade $hooks,
-        WorkflowEngineInterface $engine
+        WorkflowEngineInterface $engine,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->variablesHandler = $engine->getVariablesHandler();
+        $this->logger = $logger;
     }
 
     public function setup(
         array $step,
         callable $actionCallback
     ): void {
+        $this->logger->debug(
+            sprintf(
+                // translators: %s is the step slug
+                __('Setting up step [%s]', 'post-expirator'),
+                $step['node']['data']['slug']
+            )
+        );
+
         call_user_func($actionCallback, $step);
 
         $this->runNextSteps($step);
@@ -41,6 +57,14 @@ class GeneralStep implements NodeRunnerProcessorInterface
     public function runNextSteps(array $step): void
     {
         $nextSteps = $this->getNextSteps($step);
+
+        $this->logger->debug(
+            sprintf(
+                // translators: %s is the step slug
+                __('Running next steps after %s', 'post-expirator'),
+                $step['node']['data']['slug']
+            )
+        );
 
         foreach ($nextSteps as $nextStep) {
             /**
@@ -87,6 +111,16 @@ class GeneralStep implements NodeRunnerProcessorInterface
         if (! function_exists('error_log')) {
             return;
         }
+
+        $this->logger->error(
+            sprintf(
+                // translators: %1$s is the step slug, %2$d is the workflow ID, %3$s is the error message
+                __('Error in step %1$s, workflowId: %2$d: %3$s', 'post-expirator'),
+                $step['node']['data']['slug'],
+                $workflowId,
+                $message
+            )
+        );
 
         error_log(
             sprintf(

@@ -6,6 +6,7 @@ use Exception;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 
 class PostStep implements NodeRunnerProcessorInterface
 {
@@ -24,19 +25,34 @@ class PostStep implements NodeRunnerProcessorInterface
      */
     private $variablesHandler;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         HooksFacade $hooks,
         NodeRunnerProcessorInterface $generalNodeRunnerProcessor,
-        RuntimeVariablesHandlerInterface $variablesHandler
+        RuntimeVariablesHandlerInterface $variablesHandler,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->generalNodeRunnerProcessor = $generalNodeRunnerProcessor;
         $this->variablesHandler = $variablesHandler;
+        $this->logger = $logger;
     }
 
     public function setup(array $step, callable $actionCallback): void
     {
         try {
+            $this->logger->debug(
+                sprintf(
+                    // translators: %s is the step slug
+                    __('Setting up step [%s]', 'post-expirator'),
+                    $step['node']['data']['slug']
+                )
+            );
+
             $node = $this->getNodeFromStep($step);
             $nodeSettings = $this->getNodeSettings($node);
             $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
@@ -53,7 +69,14 @@ class PostStep implements NodeRunnerProcessorInterface
             $posts = $this->variablesHandler->getVariable($nodeSettings['post']['variable']);
 
             if (empty($posts)) {
-                // TODO: Log this
+                $this->logger->debug(
+                    sprintf(
+                        // translators: %s is the step slug
+                        __('Step [%s] didn\'t find any posts, skipping', 'post-expirator'),
+                        $step['node']['data']['slug']
+                    )
+                );
+
                 return;
             }
 
@@ -62,6 +85,14 @@ class PostStep implements NodeRunnerProcessorInterface
             }
 
             foreach ($posts as $post) {
+                $this->logger->debug(
+                    sprintf(
+                        // translators: %s is the step slug
+                        __('Processing post [%s]', 'post-expirator'),
+                        $post
+                    )
+                );
+
                 if (is_array($post)) {
                     if (isset($post['post_id'])) {
                         $postId = $post['post_id'];

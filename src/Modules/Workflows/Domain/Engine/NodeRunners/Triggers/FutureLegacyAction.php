@@ -65,6 +65,14 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
         $this->step = $step;
         $this->workflowId = $workflowId;
 
+        $this->logger->debug(
+            sprintf(
+                // translators: %s is the step slug
+                __('Setting up step [%s]', 'post-expirator'),
+                $step['node']['data']['slug']
+            )
+        );
+
         $this->hooks->addAction(HooksAbstract::ACTION_LEGACY_ACTION, [$this, 'triggerCallback'], 10, 3);
     }
 

@@ -53,6 +53,14 @@ class ConditionalSplit implements NodeRunnerInterface
     {
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step);
 
+        $this->logger->debug(
+            sprintf(
+                // translators: %s is the step slug
+                __('Setting up step [%s]', 'post-expirator'),
+                $step['node']['data']['slug']
+            )
+        );
+
         // Convert the "true" (default one) to a "next" step.
         // A real conditional split is only handled in the Pro version.
         $step['next']['output'] = $step['next']['true'] ?? [];

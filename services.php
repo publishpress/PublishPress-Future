@@ -729,7 +729,8 @@ return [
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::NODE_TYPES_MODEL),
             $container->get(ServicesAbstract::NODE_RUNNER_FACTORY),
-            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
+            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
+            $container->get(ServicesAbstract::LOGGER)
         );
     },
 
@@ -737,7 +738,8 @@ return [
     static function (ContainerInterface $container): NodeRunnerProcessorInterface {
         return new GeneralStep(
             $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::WORKFLOW_ENGINE)
+            $container->get(ServicesAbstract::WORKFLOW_ENGINE),
+            $container->get(ServicesAbstract::LOGGER)
         );
     },
 
@@ -746,7 +748,8 @@ return [
         return new PostStep(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
-            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
+            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
+            $container->get(ServicesAbstract::LOGGER)
         );
     },
 
@@ -760,7 +763,8 @@ return [
             $container->get(ServicesAbstract::NODE_TYPES_MODEL),
             $container->get(ServicesAbstract::WORKFLOW_ENGINE),
             $container->get(ServicesAbstract::PLUGIN_VERSION),
-            $container->get(ServicesAbstract::WORKFLOW_ENGINE)
+            $container->get(ServicesAbstract::WORKFLOW_ENGINE),
+            $container->get(ServicesAbstract::LOGGER)
         );
     },
 

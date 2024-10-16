@@ -4,6 +4,7 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine;
 
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\SiteResolver;
@@ -47,6 +48,11 @@ class WorkflowEngine implements WorkflowEngineInterface
     private $variablesHandler;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @var int
      */
     private $currentAsyncActionId;
@@ -65,12 +71,14 @@ class WorkflowEngine implements WorkflowEngineInterface
         HookableInterface $hooks,
         NodeTypesModelInterface $nodeTypesModel,
         \Closure $nodeRunnerFactory,
-        RuntimeVariablesHandlerInterface $variablesHandler
+        RuntimeVariablesHandlerInterface $variablesHandler,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->nodeTypesModel = $nodeTypesModel;
         $this->nodeRunnerFactory = $nodeRunnerFactory;
         $this->variablesHandler = $variablesHandler;
+        $this->logger = $logger;
 
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_LOAD);
 
@@ -115,6 +123,8 @@ class WorkflowEngine implements WorkflowEngineInterface
         try {
             $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_START);
 
+            $this->logger->debug('Starting workflow engine');
+
             $workflowsModel = new WorkflowsModel();
             $workflows = $workflowsModel->getPublishedWorkflowsIds();
 
@@ -127,6 +137,15 @@ class WorkflowEngine implements WorkflowEngineInterface
                 /** @var WorkflowModelInterface $workflow */
                 $workflow = new WorkflowModel();
                 $workflow->load($workflowId);
+
+                $this->logger->debug(
+                    sprintf(
+                        // translators: %d is the workflow ID, %s is the workflow title
+                        __('Starting workflow [%d] %s', 'post-expirator'),
+                        $workflowId,
+                        $workflow->getTitle()
+                    )
+                );
 
                 $this->currentRunningWorkflow = $workflow;
 
