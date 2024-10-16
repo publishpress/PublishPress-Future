@@ -119,6 +119,9 @@ const SettingsFormPanel = (props) => {
 };
 
 const container = document.getElementById("publishpress-future-settings-post-types");
-const component = (<SettingsFormPanel />);
 
-createRoot(container).render(component);
+if (container) {
+    const component = (<SettingsFormPanel />);
+
+    createRoot(container).render(component);
+}

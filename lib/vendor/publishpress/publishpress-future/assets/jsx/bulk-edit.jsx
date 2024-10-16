@@ -71,6 +71,11 @@ inlineEditPost.setBulk = function (id) {
     }
 
     const container = document.getElementById("publishpress-future-bulk-edit");
+
+    if (! container) {
+        return;
+    }
+
     const root = createRoot(container);
 
     const saveButton = document.querySelector('#bulk_edit');

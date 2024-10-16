@@ -355,12 +355,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "7eb93a2aafbbe2f09dc860ba0154947fc3d1b01a"
+                "reference": "b8d5108264e4dbbb2c77ab47e5a654183c0a5b4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/7eb93a2aafbbe2f09dc860ba0154947fc3d1b01a",
-                "reference": "7eb93a2aafbbe2f09dc860ba0154947fc3d1b01a",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/b8d5108264e4dbbb2c77ab47e5a654183c0a5b4d",
+                "reference": "b8d5108264e4dbbb2c77ab47e5a654183c0a5b4d",
                 "shasum": ""
             },
             "require": {
@@ -396,7 +396,7 @@
                 "wp-cli/wp-cli-bundle": "^2.10",
                 "wp-coding-standards/wpcs": "^3"
             },
-            "time": "2024-10-15T22:25:52+00:00",
+            "time": "2024-10-16T21:30:20+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",
@@ -420,10 +420,10 @@
                     "pbuild clean"
                 ],
                 "build:js-prod": [
-                    "cross-env NODE_ENV=production npx webpack"
+                    "cross-env NODE_ENV=production npx webpack --progress"
                 ],
                 "build:js-dev": [
-                    "cross-env NODE_ENV=development npx webpack"
+                    "cross-env NODE_ENV=development npx webpack --progress"
                 ],
                 "build:js": [
                     "@build:js-prod",

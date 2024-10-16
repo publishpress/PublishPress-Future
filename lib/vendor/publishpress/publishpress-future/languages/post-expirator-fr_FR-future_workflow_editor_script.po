@@ -14,63 +14,39 @@ msgstr ""
 "X-Generator: Poedit 3.4.4\n"
 "X-Domain: publishpress-future-pro\n"
 
-#: components/data-fields/date-offset.jsx:72
+#: components/data-fields/date-offset.jsx:75
 msgid "As soon as possible"
 msgstr "Dès que possible"
 
-#: components/data-fields/date-offset.jsx:73
+#: components/data-fields/date-offset.jsx:76
 msgid "On a specific date"
 msgstr "À une date précise"
 
-#: components/data-fields/date-offset.jsx:100
+#: components/data-fields/recurrence.jsx:15
 msgid "Non-repeating"
 msgstr "Pas de répétition"
 
-#: components/data-fields/date-offset.jsx:101
+#: components/data-fields/recurrence.jsx:16
 msgid "Custom interval in seconds"
 msgstr "Intervalle personnalisé en secondes"
 
-#: components/data-fields/date-offset.jsx:106
-msgid "Forever"
-msgstr "Toujours"
-
-#: components/data-fields/date-offset.jsx:107
-msgid "Specific date"
-msgstr "Date spécifique"
-
-#: components/data-fields/date-offset.jsx:108
-msgid "For a number of times"
-msgstr "Pour un certain nombre de fois"
-
-#: components/data-fields/date-offset.jsx:155
+#: components/data-fields/date-offset.jsx:138
 msgid "When to run"
 msgstr "Quand exécuter"
 
-#: components/data-fields/date-offset.jsx:164
+#: components/data-fields/date-offset.jsx:147
 msgid "Date source"
 msgstr "Source de la date"
 
-#: components/data-fields/date-offset.jsx:180
+#: components/data-fields/date-offset.jsx:163
 msgid "Offset"
 msgstr "Décalage"
 
-#: components/data-fields/date-offset.jsx:232
+#: components/data-fields/date-offset.jsx:216
 msgid "Repeating Action"
 msgstr "Répétition de l’action"
 
-#: components/data-fields/date-offset.jsx:240
-msgid "Interval in seconds"
-msgstr "Intervalle in secondes"
-
-#: components/data-fields/date-offset.jsx:249
-msgid "Repeat until"
-msgstr "Répéter jusqu’à"
-
-#: components/data-fields/date-offset.jsx:257
-msgid "Times to repeat"
-msgstr "Nombre de répétitions"
-
-#: components/data-fields/date-offset.jsx:286
+#: components/data-fields/date-offset.jsx:239
 msgid "Priority"
 msgstr "Priorité"
 
@@ -163,17 +139,17 @@ msgstr "Termes"
 msgid "Back"
 msgstr "Retour"
 
-#: components/layout/header.jsx:132
+#: components/layout/header.jsx:133
 msgid "Add"
 msgstr "Ajouter"
 
-#: components/layout/header.jsx:132
+#: components/layout/header.jsx:133
 msgid "Close"
 msgstr "Fermer"
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/layout/header.jsx:143
-#: components/layout/header.jsx:148
+#: components/layout/header.jsx:144
+#: components/layout/header.jsx:149
 msgid "Auto Layout"
 msgstr "Mise en page automatique"
 
@@ -324,19 +300,19 @@ msgstr "Nœud"
 msgid "No description"
 msgstr "Aucune description"
 
-#: components/node-inspector/node-data-flow-panel.jsx:65
+#: components/node-inspector/node-data-flow-panel.jsx:85
 msgid "Inputs"
 msgstr "Entrées"
 
-#: components/node-inspector/node-data-flow-panel.jsx:69
+#: components/node-inspector/node-data-flow-panel.jsx:89
 msgid "This step receives the following input from previous step:"
 msgstr "Cette étape reçoit les données suivantes de l’étape précédente :"
 
-#: components/node-inspector/node-data-flow-panel.jsx:85
+#: components/node-inspector/node-data-flow-panel.jsx:105
 msgid "Outputs"
 msgstr "Sorties"
 
-#: components/node-inspector/node-data-flow-panel.jsx:89
+#: components/node-inspector/node-data-flow-panel.jsx:109
 msgid "This step outputs the following data:"
 msgstr "Cette étape affiche les données suivantes :"
 
@@ -405,7 +381,7 @@ msgstr "Actions"
 msgid "Select multiple steps by pressing <kbd>cmd</kbd> and clicking on each step in the workflow."
 msgstr "Sélectionner plusieurs étapes en appuyant sur <kbd>cmd ou ctrl</kbd> et en cliquant sur chaque étape du flux de travail."
 
-#: components/settings-sidebar/plugin-sidebar.jsx:34
+#: components/settings-sidebar/plugin-sidebar.jsx:39
 msgid "(no name)"
 msgstr "(sans nom)"
 
@@ -440,7 +416,7 @@ msgstr "Confirmez-vous vouloir supprimer ce flux de travail ?"
 msgid "Move to trash"
 msgstr "Déplacer dans la corbeille"
 
-#: components/node-inspector/node-data-flow-panel.jsx:105
+#: components/node-inspector/node-data-flow-panel.jsx:125
 msgid "Global Variables"
 msgstr "Variables globales"
 
@@ -448,7 +424,7 @@ msgstr "Variables globales"
 msgid "Loading..."
 msgstr "Chargement en cours…"
 
-#: components/node-inspector/node-data-flow-panel.jsx:109
+#: components/node-inspector/node-data-flow-panel.jsx:129
 msgid "No global variables are declared"
 msgstr "Aucune variable globale n’est déclarée"
 
@@ -519,15 +495,15 @@ msgstr "Brouillon"
 msgid "Switch to draft"
 msgstr "Passer en brouillon"
 
-#: components/data-fields/date-offset.jsx:74
+#: components/data-fields/date-offset.jsx:77
 msgid "Relative to a specific date"
 msgstr "Relatif à une date spécifique"
 
-#: components/data-fields/date-offset.jsx:78
+#: components/data-fields/date-offset.jsx:81
 msgid "Selected in the calendar"
 msgstr "Sélectionné dans le calendrier"
 
-#: components/data-fields/date-offset.jsx:79
+#: components/data-fields/date-offset.jsx:82
 msgid "When the trigger is activated"
 msgstr "Lorsque le déclencheur est activé"
 
@@ -618,19 +594,19 @@ msgstr "Connection"
 msgid "The connection between nodes in the workflow. Signifies the path along which data or control flow one node to another."
 msgstr "La connexion entre les nœuds du flux de travail. Signifie le chemin le long duquel les données ou le contrôle circulent d’un nœud à l’autre."
 
-#: components/node-inspector/node-data-flow-panel.jsx:63
+#: components/node-inspector/node-data-flow-panel.jsx:83
 msgid "Step Data Flow"
 msgstr "Flux de données par étape"
 
-#: components/node-inspector/node-data-flow-panel.jsx:80
+#: components/node-inspector/node-data-flow-panel.jsx:100
 msgid "This step does not receive any input from previous step."
 msgstr "Cette étape ne reçoit aucune donnée de l’étape précédente."
 
-#: components/node-inspector/node-data-flow-panel.jsx:100
+#: components/node-inspector/node-data-flow-panel.jsx:120
 msgid "This step does not output any data."
 msgstr "Cette étape ne génère aucune donnée."
 
-#: components/data-fields/date-offset.jsx:289
+#: components/data-fields/date-offset.jsx:242
 msgid "Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first."
 msgstr "Définit la priorité d’exécution de l’étape planifiée. Les nombres inférieurs indiquent une priorité plus élevée et sont exécutés en premier."
 
@@ -642,52 +618,52 @@ msgstr "Mise en page automatique appliquée."
 msgid "Welcome to the workflow editor"
 msgstr "Bienvenue dans l’éditeur de flux de travail"
 
-#: components/workflow-store/actions.jsx:29
+#: components/workflow-store/actions.jsx:30
 msgid "Unable to create a new workflow. Please try again."
 msgstr "Impossible de créer un nouveau flux de travail. Veuillez réessayer."
 
-#: components/workflow-store/actions.jsx:48
+#: components/workflow-store/actions.jsx:49
 msgid "Unable to load the workflow. Please try again."
 msgstr "Impossible de charger le flux de travail. Veuillez réessayer."
 
-#: components/workflow-store/actions.jsx:86
+#: components/workflow-store/actions.jsx:87
 msgid "Workflow saved as draft."
 msgstr "Workflow enregistré comme brouillon."
 
-#: components/workflow-store/actions.jsx:94
-#: components/workflow-store/actions.jsx:131
+#: components/workflow-store/actions.jsx:95
+#: components/workflow-store/actions.jsx:132
 msgid "Unable to save workflow. Please, try again."
 msgstr "Impossible de enregistrer le flux de travail. Veuillez réessayer."
 
-#: components/workflow-store/actions.jsx:123
+#: components/workflow-store/actions.jsx:124
 msgid "Workflow saved."
 msgstr "Workflow enregistré."
 
-#: components/workflow-store/actions.jsx:168
+#: components/workflow-store/actions.jsx:169
 msgid "Workflow published."
 msgstr "Flux de travail publié."
 
-#: components/workflow-store/actions.jsx:176
+#: components/workflow-store/actions.jsx:177
 msgid "Unable to publish the workflow. Please, try again."
 msgstr "Impossible de publier le flux de travail. Veuillez réessayer."
 
-#: components/workflow-store/actions.jsx:213
+#: components/workflow-store/actions.jsx:214
 msgid "Workflow switched to draft."
 msgstr "Le flux de travail est passé à l’état de brouillon."
 
-#: components/workflow-store/actions.jsx:221
+#: components/workflow-store/actions.jsx:222
 msgid "Unable to switch workflow to draft. Please, try again."
 msgstr "Impossible de basculer le flux de travail en brouillon. Veuillez réessayer."
 
-#: components/workflow-store/actions.jsx:311
+#: components/workflow-store/actions.jsx:312
 msgid "Workflow deleted. Redirecting..."
 msgstr "Flux de travail supprimé. Redirection…"
 
-#: components/workflow-store/actions.jsx:322
+#: components/workflow-store/actions.jsx:323
 msgid "Unable to delete the workflow. Please, try again."
 msgstr "Impossible de supprimer le flux de travail. Veuillez réessayer."
 
-#: components/data-fields/date-offset.jsx:211
+#: components/data-fields/date-offset.jsx:194
 msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
 msgstr "Pour plus d’informations sur le formatage, voir la fonction %sPHP strtotime%s. Par exemple, vous pouvez saisir %s+1 mois%s ou %s+1 semaine 2 jours 4 heures 2 secondes%s ou %sprochain jeudi%s. Veuillez utiliser uniquement des phrases en anglais."
 
@@ -711,27 +687,27 @@ msgstr ""
 msgid "Easily add new steps by clicking on a step's handle and dragging it. Drop it in the workflow pane to see a floating inserter where you can type and search for the step you need."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:80
+#: components/data-fields/date-offset.jsx:83
 msgid "When the step is activated"
 msgstr ""
 
-#: components/workflow-debug-ray-panel/index.jsx:47
+#: components/workflow-debug-ray-panel/index.jsx:50
 msgid "Ray Debug"
 msgstr ""
 
-#: components/workflow-debug-ray-panel/index.jsx:52
+#: components/workflow-debug-ray-panel/index.jsx:55
 msgid "Enable or disable the different types of debug information that is shown in Ray when this workflow is activated."
 msgstr ""
 
-#: components/workflow-debug-ray-panel/index.jsx:56
+#: components/workflow-debug-ray-panel/index.jsx:59
 msgid "Show Queries"
 msgstr ""
 
-#: components/workflow-debug-ray-panel/index.jsx:63
+#: components/workflow-debug-ray-panel/index.jsx:66
 msgid "Show Emails"
 msgstr ""
 
-#: components/workflow-debug-ray-panel/index.jsx:70
+#: components/workflow-debug-ray-panel/index.jsx:73
 msgid "Show WordPress Errors"
 msgstr ""
 
@@ -739,31 +715,31 @@ msgstr ""
 msgid "Applying auto layout."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:187
+#: components/data-fields/date-offset.jsx:170
 msgid "Date Preview"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:188
+#: components/data-fields/date-offset.jsx:171
 msgid "Current Date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:189
+#: components/data-fields/date-offset.jsx:172
 msgid "Computed Date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:198
+#: components/data-fields/date-offset.jsx:181
 msgid "Error: "
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:203
+#: components/data-fields/date-offset.jsx:186
 msgid "Click for more information"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:277
+#: components/data-fields/date-offset.jsx:230
 msgid "Unique ID Expression"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:280
+#: components/data-fields/date-offset.jsx:233
 msgid "Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}} or {{global.user.ID}} to make sure the ID is unique."
 msgstr ""
 
@@ -773,15 +749,15 @@ msgid "Pro"
 msgstr ""
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/layout/header.jsx:160
+#: components/layout/header.jsx:161
 msgid "Upgrade to Pro and unlock more features"
 msgstr ""
 
-#: components/layout/header.jsx:163
+#: components/layout/header.jsx:164
 msgid "Upgrade to Pro"
 msgstr ""
 
-#: components/node-types/generic.jsx:170
+#: components/node-types/generic.jsx:172
 msgid "This node has errors"
 msgstr ""
 
@@ -790,7 +766,35 @@ msgid "Drag this node to preview its options in your workflow."
 msgstr ""
 
 #: components/inspector-card/index.jsx:59
-#: components/node-types/generic.jsx:162
+#: components/node-types/generic.jsx:164
 #: components/secondary-sidebar/node-card.jsx:35
 msgid "Currently this step is being skipped. Upgrade to Pro to unlock this feature."
+msgstr ""
+
+#: components/data-fields/conditional.jsx:85
+msgid "Edit condition"
+msgstr ""
+
+#: components/data-fields/conditional.jsx:94
+msgid "This conditional will only be evaluated in the Pro version. In the Free version, it will always return true."
+msgstr ""
+
+#: components/data-fields/conditional.jsx:106
+msgid "Condition"
+msgstr ""
+
+#: components/data-fields/conditional.jsx:122
+msgid "Add Group"
+msgstr ""
+
+#: components/data-fields/conditional.jsx:123
+msgid "Add Rule"
+msgstr ""
+
+#: components/pro-feature-button/index.jsx:26
+msgid "Upgrade to Pro to unlock this feature."
+msgstr ""
+
+#: components/workflow-debug-ray-panel/index.jsx:80
+msgid "Show current running step"
 msgstr ""
