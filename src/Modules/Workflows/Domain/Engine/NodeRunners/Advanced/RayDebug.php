@@ -9,6 +9,8 @@ use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
+
 class RayDebug implements NodeRunnerInterface
 {
     /**
@@ -26,14 +28,21 @@ class RayDebug implements NodeRunnerInterface
      */
     private $variablesHandler;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
-        RuntimeVariablesHandlerInterface $variablesHandler
+        RuntimeVariablesHandlerInterface $variablesHandler,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->variablesHandler = $variablesHandler;
+        $this->logger = $logger;
     }
 
     public static function getNodeTypeName(): string

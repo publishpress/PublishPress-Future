@@ -13,6 +13,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 
 class CoreOnSavePost implements NodeTriggerRunnerInterface
 {
@@ -48,17 +49,23 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
      */
     private $variablesHandler;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         InputValidatorsInterface $postQueryValidator,
-        RuntimeVariablesHandlerInterface $variablesHandler
+        RuntimeVariablesHandlerInterface $variablesHandler,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->postQueryValidator = $postQueryValidator;
         $this->variablesHandler = $variablesHandler;
+        $this->logger = $logger;
     }
 
     public static function getNodeTypeName(): string

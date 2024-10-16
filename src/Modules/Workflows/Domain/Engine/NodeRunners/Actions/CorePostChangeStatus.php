@@ -3,11 +3,13 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions;
 
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeStatus as NodeType;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+
 class CorePostChangeStatus implements NodeRunnerInterface
 {
     /**
@@ -25,14 +27,21 @@ class CorePostChangeStatus implements NodeRunnerInterface
      */
     private $variablesHandler;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         HookableInterface $hooks,
-        RuntimeVariablesHandlerInterface $variablesHandler
+        RuntimeVariablesHandlerInterface $variablesHandler,
+        LoggerInterface $logger
     ) {
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->hooks = $hooks;
         $this->variablesHandler = $variablesHandler;
+        $this->logger = $logger;
     }
 
     public static function getNodeTypeName(): string

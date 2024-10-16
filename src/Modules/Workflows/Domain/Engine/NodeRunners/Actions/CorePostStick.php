@@ -8,6 +8,8 @@ use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
+
 class CorePostStick implements NodeRunnerInterface
 {
     /**
@@ -30,16 +32,23 @@ class CorePostStick implements NodeRunnerInterface
      */
     private $variablesHandler;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         \Closure $expirablePostModelFactory,
-        RuntimeVariablesHandlerInterface $variablesHandler
+        RuntimeVariablesHandlerInterface $variablesHandler,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->variablesHandler = $variablesHandler;
+        $this->logger = $logger;
     }
 
     public static function getNodeTypeName(): string

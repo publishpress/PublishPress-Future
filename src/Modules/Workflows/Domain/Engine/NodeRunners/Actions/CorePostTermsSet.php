@@ -10,6 +10,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 
 class CorePostTermsSet implements NodeRunnerInterface
 {
@@ -38,18 +39,25 @@ class CorePostTermsSet implements NodeRunnerInterface
      */
     private $errorFacade;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         \Closure $expirablePostModelFactory,
         ErrorFacade $errorFacade,
-        RuntimeVariablesHandlerInterface $variablesHandler
+        RuntimeVariablesHandlerInterface $variablesHandler,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->errorFacade = $errorFacade;
         $this->variablesHandler = $variablesHandler;
+        $this->logger = $logger;
     }
 
     public static function getNodeTypeName(): string

@@ -8,6 +8,8 @@ use PublishPress\Future\Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInt
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
+
 class CoreSchedule implements AsyncNodeRunnerInterface
 {
     /**
@@ -25,14 +27,21 @@ class CoreSchedule implements AsyncNodeRunnerInterface
      */
     private $variablesHandler;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         AsyncNodeRunnerProcessorInterface $nodeRunnerProcessor,
         HookableInterface $hooks,
-        RuntimeVariablesHandlerInterface $variablesHandler
+        RuntimeVariablesHandlerInterface $variablesHandler,
+        LoggerInterface $logger
     ) {
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->hooks = $hooks;
         $this->variablesHandler = $variablesHandler;
+        $this->logger = $logger;
     }
 
     public static function getNodeTypeName(): string
@@ -43,6 +52,21 @@ class CoreSchedule implements AsyncNodeRunnerInterface
     public function setup(array $step): void
     {
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step);
+
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+
+        $this->variablesHandler->setVariable($nodeSlug, [
+            'schedule_date' => 0,
+            'is_recurring' => false,
+            'recurring_type' => '',
+            'recurring_interval' => '',
+            'recurring_interval_unit' => '',
+            'recurring_count' => '',
+            'repeat_until' => '',
+            'repeat_until_date' => '',
+            'repeat_until_times' => '',
+        ]);
+
         $this->nodeRunnerProcessor->setup($step, '__return_true');
     }
 
