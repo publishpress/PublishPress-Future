@@ -8,6 +8,7 @@ export const createStore = (props) => {
     }
 
     let defaultState = {
+        postId: props.defaultState.postId ? props.defaultState.postId : 0,
         action: props.defaultState.action,
         date: props.defaultState.date ? props.defaultState.date : getCurrentTimeAsTimestamp(),
         enabled: props.defaultState.autoEnable,
@@ -27,6 +28,11 @@ export const createStore = (props) => {
     const store = createReduxStore(props.name, {
         reducer(state = defaultState, action) {
             switch (action.type) {
+                case 'SET_POST_ID':
+                    return {
+                        ...state,
+                        postId: action.postId,
+                    };
                 case 'SET_ACTION':
                     return {
                         ...state,
@@ -127,6 +133,12 @@ export const createStore = (props) => {
             return state;
         },
         actions: {
+            setPostId(postId) {
+                return {
+                    type: 'SET_POST_ID',
+                    postId: postId
+                };
+            },
             setAction(action) {
                 return {
                     type: 'SET_ACTION',
@@ -220,6 +232,9 @@ export const createStore = (props) => {
             }
         },
         selectors: {
+            getPostId(state) {
+                return state.postId;
+            },
             getAction(state) {
                 return state.action;
             },

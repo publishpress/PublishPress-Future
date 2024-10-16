@@ -2196,6 +2196,7 @@ var createStore = function createStore(props) {
     });
   }
   var defaultState = {
+    postId: props.defaultState.postId ? props.defaultState.postId : 0,
     action: props.defaultState.action,
     date: props.defaultState.date ? props.defaultState.date : (0,_time__WEBPACK_IMPORTED_MODULE_0__.getCurrentTimeAsTimestamp)(),
     enabled: props.defaultState.autoEnable,
@@ -2216,6 +2217,10 @@ var createStore = function createStore(props) {
       var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
       var action = arguments.length > 1 ? arguments[1] : undefined;
       switch (action.type) {
+        case 'SET_POST_ID':
+          return _objectSpread(_objectSpread({}, state), {}, {
+            postId: action.postId
+          });
         case 'SET_ACTION':
           return _objectSpread(_objectSpread({}, state), {}, {
             action: action.action
@@ -2292,6 +2297,12 @@ var createStore = function createStore(props) {
       return state;
     },
     actions: {
+      setPostId: function setPostId(postId) {
+        return {
+          type: 'SET_POST_ID',
+          postId: postId
+        };
+      },
       setAction: function setAction(action) {
         return {
           type: 'SET_ACTION',
@@ -2385,6 +2396,9 @@ var createStore = function createStore(props) {
       }
     },
     selectors: {
+      getPostId: function getPostId(state) {
+        return state.postId;
+      },
       getAction: function getAction(state) {
         return state.action;
       },
@@ -3299,18 +3313,6 @@ var delayToUnmountAfterSaving = 1000;
 // We create a copy of the WP inline set bulk function
 var wpInlineSetBulk = inlineEditPost.setBulk;
 var wpInlineEditRevert = inlineEditPost.revert;
-var getPostId = function getPostId(id) {
-  // If id is a string or a number, return it directly
-  if (typeof id === 'string' || typeof id === 'number') {
-    return id;
-  }
-
-  // Otherwise, assume it's an HTML element and extract the post ID
-  var trElement = id.closest('tr');
-  var trId = trElement.id;
-  var postId = trId.split('-')[1];
-  return postId;
-};
 
 /**
  * We override the function with our own code so we can detect when
@@ -3320,6 +3322,7 @@ inlineEditPost.setBulk = function (id) {
   // Call the original WP edit function.
   wpInlineSetBulk.apply(this, arguments);
   if ((0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.select)(storeName)) {
+    (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.dispatch)(storeName).setPostId(0);
     (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.dispatch)(storeName).setAction(postTypeDefaultConfig.expireType);
     (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.dispatch)(storeName).setDate(postTypeDefaultConfig.defaultDate);
     (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.dispatch)(storeName).setTaxonomy(postTypeDefaultConfig.taxonomy);
