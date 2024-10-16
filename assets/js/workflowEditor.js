@@ -63340,7 +63340,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(document.getElementById(_constants__WEBPACK_IMPORTED_MODULE_0__.HTML_ELEMENT_ID)).render(/*#__PURE__*/React.createElement(_components_app__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+var container = document.getElementById(_constants__WEBPACK_IMPORTED_MODULE_0__.HTML_ELEMENT_ID);
+if (container) {
+  (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(container).render(/*#__PURE__*/React.createElement(_components_app__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+}
 })();
 
 /******/ })()
