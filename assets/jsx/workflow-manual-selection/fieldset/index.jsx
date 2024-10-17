@@ -26,7 +26,7 @@ export function Fieldset({context, postId, apiUrl, nonce, onChange}) {
         setWorkflowsEnabledForPost([]);
 
         apiFetch({
-            path: `${apiUrl}/posts/workflow-settings/${postId}`,
+            url: `${apiUrl}/posts/workflow-settings/${postId}`,
             headers: {
                 'X-WP-Nonce': nonce,
             },

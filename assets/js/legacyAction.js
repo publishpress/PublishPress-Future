@@ -161,7 +161,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _futureWorkflows = futureWorkflows,
-  restApiNamespace = _futureWorkflows.restApiNamespace,
+  apiUrl = _futureWorkflows.apiUrl,
   nonce = _futureWorkflows.nonce,
   workflows = _futureWorkflows.workflows;
 var Fields = function Fields(_ref) {
@@ -193,22 +193,21 @@ var Fields = function Fields(_ref) {
   var handleActionChange = function handleActionChange(value) {
     setExtraDataByName('workflowId', value);
   };
-  if (postId) {
-    try {
-      wp.apiFetch({
-        path: "".concat(restApiNamespace, "/post-expiration/").concat(postId),
-        headers: {
-          'X-WP-Nonce': nonce
-        }
-      }).then(function (data) {
-        setExtraDataByName('workflowId', data.extraData.workflowId);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
-    handleActionChange(defaultWorkflow);
+    if (postId) {
+      try {
+        wp.apiFetch({
+          url: "".concat(apiUrl, "/post-expiration/").concat(postId),
+          headers: {
+            'X-WP-Nonce': nonce
+          }
+        }).then(function (data) {
+          setExtraDataByName('workflowId', data.extraData.workflowId);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
   }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, workflows.length > 0 && action === 'trigger-workflow' && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, {
     className: "future-action-panel-content future-action-full-width"

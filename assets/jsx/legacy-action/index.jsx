@@ -5,7 +5,7 @@ import { useEffect } from '@wordpress/element';
 
 import { FutureActionPanelAfterActionField } from '../components/FutureActionPanelAfterActionField';
 
-const { restApiNamespace, nonce, workflows } = futureWorkflows;
+const { apiUrl, nonce, workflows } = futureWorkflows;
 
 const Fields = ({ storeName }) => {
     const defaultWorkflow = workflows.length > 0 ? workflows[0].value : 0;
@@ -44,23 +44,21 @@ const Fields = ({ storeName }) => {
         setExtraDataByName('workflowId', value);
     }
 
-    if (postId) {
-        try {
-            wp.apiFetch({
-                path: `${restApiNamespace}/post-expiration/${postId}`,
-                headers: {
-                    'X-WP-Nonce': nonce,
-                },
-            }).then((data) => {
-                setExtraDataByName('workflowId', data.extraData.workflowId);
-            });
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
     useEffect(() => {
-        handleActionChange(defaultWorkflow);
+        if (postId) {
+            try {
+                wp.apiFetch({
+                    url: `${apiUrl}/post-expiration/${postId}`,
+                    headers: {
+                        'X-WP-Nonce': nonce,
+                    },
+                }).then((data) => {
+                    setExtraDataByName('workflowId', data.extraData.workflowId);
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
     }, []);
 
     return (
