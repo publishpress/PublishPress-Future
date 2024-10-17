@@ -69,6 +69,9 @@ const SettingsFormPanel = (props) => {
 };
 
 const container = document.getElementById("expiration-date-preview");
-const component = (<SettingsFormPanel />);
 
-createRoot(container).render(component);
+if (container) {
+    const component = (<SettingsFormPanel />);
+
+    createRoot(container).render(component);
+}
