@@ -288,7 +288,7 @@ class QuickEditController implements InitializableInterface
                 'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
                 'strings' => [
                     'category' => __('Categories', 'post-expirator'),
-                    'panelTitle' => __('PublishPress Future', 'post-expirator'),
+                    'panelTitle' => __('Future Actions', 'post-expirator'),
                     'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
                     'futureActions' => __('Future Actions', 'post-expirator'),
                     'action' => __('Action', 'post-expirator'),
