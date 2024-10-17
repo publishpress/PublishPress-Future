@@ -576,7 +576,12 @@ var FutureActionPanel = function FutureActionPanel(props) {
     type: "hidden",
     name: 'future_action_enabled',
     value: 1
-  }), /*#__PURE__*/React.createElement(_FutureActionPanelTop__WEBPACK_IMPORTED_MODULE_5__.FutureActionPanelTop.Slot, {
+  }), props.showTitle && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontWeight: 'bold',
+      marginBottom: '10px'
+    }
+  }, props.strings.futureActions), /*#__PURE__*/React.createElement(_FutureActionPanelTop__WEBPACK_IMPORTED_MODULE_5__.FutureActionPanelTop.Slot, {
     fillProps: {
       storeName: props.storeName
     }
@@ -779,6 +784,7 @@ var FutureActionPanelBlockEditor = function FutureActionPanelBlockEditor(props) 
     strings: props.strings,
     onDataIsValid: onDataIsValid,
     hideCalendarByDefault: props.hideCalendarByDefault,
+    showTitle: false,
     onDataIsInvalid: onDataIsInvalid
   })));
 };
@@ -902,6 +908,7 @@ var FutureActionPanelBulkEdit = function FutureActionPanelBulkEdit(props) {
     startOfWeek: props.startOfWeek,
     storeName: props.storeName,
     hideCalendarByDefault: props.hideCalendarByDefault,
+    showTitle: false,
     strings: props.strings
   }), /*#__PURE__*/React.createElement("input", {
     type: "hidden",
@@ -1030,6 +1037,7 @@ var FutureActionPanelClassicEditor = function FutureActionPanelClassicEditor(pro
     strings: props.strings,
     onDataIsValid: onDataIsValid,
     hideCalendarByDefault: props.hideCalendarByDefault,
+    showTitle: false,
     onDataIsInvalid: onDataIsInvalid
   }));
 };
@@ -1112,6 +1120,7 @@ var FutureActionPanelQuickEdit = function FutureActionPanelQuickEdit(props) {
     strings: props.strings,
     onDataIsValid: onDataIsValid,
     hideCalendarByDefault: props.hideCalendarByDefault,
+    showTitle: true,
     onDataIsInvalid: onDataIsInvalid
   }), /*#__PURE__*/React.createElement("input", {
     type: "hidden",

@@ -290,6 +290,7 @@ class QuickEditController implements InitializableInterface
                     'category' => __('Categories', 'post-expirator'),
                     'panelTitle' => __('PublishPress Future', 'post-expirator'),
                     'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
+                    'futureActions' => __('Future Actions', 'post-expirator'),
                     'action' => __('Action', 'post-expirator'),
                     'showCalendar' => __('Show Calendar', 'post-expirator'),
                     'hideCalendar' => __('Hide Calendar', 'post-expirator'),

@@ -142,6 +142,7 @@ class BlockEditorController implements InitializableInterface
                         'category' => __('Categories', 'post-expirator'),
                         'panelTitle' => __('PublishPress Future', 'post-expirator'),
                         'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
+                        'futureActions' => __('Future Actions', 'post-expirator'),
                         'action' => __('Action', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
                         'showCalendar' => __('Show Calendar', 'post-expirator'),

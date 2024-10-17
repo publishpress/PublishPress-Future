@@ -356,6 +356,10 @@ export const FutureActionPanel = (props) => {
                     <input type="hidden" name={'future_action_enabled'} value={1} />
                 )}
 
+                {props.showTitle && (
+                    <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>{props.strings.futureActions}</div>
+                )}
+
                 <FutureActionPanelTop.Slot fillProps={{ storeName: props.storeName }} />
 
                 {!props.autoEnableAndHideCheckbox && (
