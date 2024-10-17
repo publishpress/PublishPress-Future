@@ -11,7 +11,6 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
-use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Settings\Models\TaxonomiesModel;
@@ -415,6 +414,8 @@ class RestAPIController implements InitializableInterface
         $expirablePostModel = $factory($postId);
 
         $data = $expirablePostModel->getExpirationDataAsArray();
+
+        $data['extraData']['workflowId'] = $expirablePostModel->getExtraData('workflowId');
 
         // return the data as a JSON response
         return rest_ensure_response($data);

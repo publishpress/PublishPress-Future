@@ -85,6 +85,7 @@ export const FutureActionPanelClassicEditor = (props) => {
                 strings={props.strings}
                 onDataIsValid={onDataIsValid}
                 hideCalendarByDefault={props.hideCalendarByDefault}
+                showTitle={false}
                 onDataIsInvalid={onDataIsInvalid} />
         </div>
     );
