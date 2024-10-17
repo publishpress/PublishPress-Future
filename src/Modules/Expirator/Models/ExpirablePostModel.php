@@ -160,14 +160,23 @@ class ExpirablePostModel extends PostModel
 
     public function getExpirationDataAsArray()
     {
-        return [
+        $data = [
             'expireType' => $this->getExpirationType(),
             'newStatus' => $this->getExpirationNewStatus(),
             'category' => $this->getExpirationCategoryIDs(),
             'categoryTaxonomy' => $this->getExpirationTaxonomy(),
             'enabled' => $this->isExpirationEnabled(),
             'date' => $this->getExpirationDateAsUnixTime(),
+            'extraData' => [],
         ];
+
+        $data = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_EXPIRATION_DATA_AS_ARRAY,
+            $data,
+            $this->postId
+        );
+
+        return $data;
     }
 
     /**
@@ -925,6 +934,16 @@ class ExpirablePostModel extends PostModel
         }
 
         return $hash;
+    }
+
+    public function getExtraData($key = null) {
+        $args = $this->actionArgsModel->getArgs();
+
+        if (is_null($key)) {
+            return $args;
+        }
+
+        return $args[$key];
     }
 
     private function removeLegacyMetadataHash()

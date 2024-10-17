@@ -1203,7 +1203,7 @@ function Fieldset(_ref) {
     setWorkflowsWithManualTrigger([]);
     setWorkflowsEnabledForPost([]);
     (0,_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_4__["default"])({
-      path: "".concat(apiUrl, "/posts/workflow-settings/").concat(postId),
+      url: "".concat(apiUrl, "/posts/workflow-settings/").concat(postId),
       headers: {
         'X-WP-Nonce': nonce
       }
@@ -1654,7 +1654,7 @@ if (container) {
   (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.dispatch)(_store__WEBPACK_IMPORTED_MODULE_2__.store).setWorkflowsWithManualTrigger([]);
   (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.dispatch)(_store__WEBPACK_IMPORTED_MODULE_2__.store).setWorkflowsEnabledForPost([]);
   (0,_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_4__["default"])({
-    path: "".concat(apiUrl, "/posts/workflow-settings/").concat(postId),
+    url: "".concat(apiUrl, "/posts/workflow-settings/").concat(postId),
     headers: {
       'X-WP-Nonce': nonce
     }

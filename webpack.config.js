@@ -45,12 +45,12 @@ module.exports = {
     optimization: {
         minimize: NODE_ENV === 'production',
     },
-    plugins: [
-        new BundleAnalyzerPlugin({
-            analyzerMode: 'static',
-            reportFilename: 'webpack-bundle-stats.html',
-        }),
-    ],
+    // plugins: [
+    //     new BundleAnalyzerPlugin({
+    //         analyzerMode: 'static',
+    //         reportFilename: 'webpack-bundle-stats.html',
+    //     }),
+    // ],
     externals: {
         "react": "React",
         "react-dom": "ReactDOM",

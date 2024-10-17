@@ -30,7 +30,7 @@ if (container) {
     dispatch(store).setWorkflowsEnabledForPost([]);
 
     apiFetch({
-        path: `${apiUrl}/posts/workflow-settings/${postId}`,
+        url: `${apiUrl}/posts/workflow-settings/${postId}`,
         headers: {
             'X-WP-Nonce': nonce,
         },

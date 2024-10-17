@@ -26,6 +26,7 @@ if (! isGutenbergEnabled()) {
         createStore({
             name: storeName,
             defaultState: {
+                postId: document.getElementById('post_ID') ? parseInt(document.getElementById('post_ID').value, 10) : 0,
                 autoEnable: postTypeDefaultConfig.autoEnable,
                 action: postTypeDefaultConfig.expireType,
                 newStatus: postTypeDefaultConfig.newStatus,

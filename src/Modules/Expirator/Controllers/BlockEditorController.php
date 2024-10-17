@@ -127,6 +127,7 @@ class BlockEditorController implements InitializableInterface
                 'publishpressFutureBlockEditorConfig',
                 [
                     'postTypeDefaultConfig' => $postTypeDefaultConfig,
+                    'postId' => $post->ID,
                     'defaultDate' => $defaultExpirationDate['iso'],
                     'is12Hour' => $options->getOption('time_format') !== 'H:i',
                     'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
