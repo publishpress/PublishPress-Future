@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.0.0] - 01 Oct, 2024
+## [4.0.0] - 17 Oct, 2024
 
 ### Added
 
@@ -16,8 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changes
 
-- The list of scheduled actions now displays the repetition count/date limits (#928).
+- The list of scheduled actions now displays the repetition count/date limits (Issue #928).
 - Update language files.
+- Updated the UI in the advanced settings page.
+- Move some advanced settings to the "Display" tab (Issue #952)
+- Add title to the future action panel for UI consistency (Issue #965)
+- Renamed the PublishPress Future metabox to Future Actions for UI consistency (Issue #965)
 
 ### Code changes
 

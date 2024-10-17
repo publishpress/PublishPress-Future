@@ -173,7 +173,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
 
-## [4.0.0] - 01 Oct, 2024
+## [4.0.0] - 17 Oct, 2024
 
 ### Added
 
@@ -186,8 +186,12 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 
 ### Changes
 
-- The list of scheduled actions now displays the repetition count/date limits (#928).
+- The list of scheduled actions now displays the repetition count/date limits (Issue #928).
 - Update language files.
+- Updated the UI in the advanced settings page.
+- Move some advanced settings to the "Display" tab (Issue #952)
+- Add title to the future action panel for UI consistency (Issue #965)
+- Renamed the PublishPress Future metabox to Future Actions for UI consistency (Issue #965)
 
 ### Code changes
 
@@ -278,54 +282,3 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 - Improve the exception message when the date/time offset is invalid
 - Update composer files for dev dependencies
 
-## [3.4.0.1] - 20 Jun, 2024
-
-### Fixed
-
-- Fix fatal error for low level users when PublishPress menu is not available, #803
-- Fix wrong action date on the future action panel, #802
-
-### Changed
-
-- The interface `PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface` has changed:
-  - Method `setCronActionId` now returns void instead of `ActionArgsModelInterface`
-  - Method `setPostId` now returns void instead of `ActionArgsModelInterface`
-  - Method `setArgs` now returns void instead of `ActionArgsModelInterface`
-  - Method `setArg` now returns void instead of `ActionArgsModelInterface`
-  - Method `setCreatedAt` now returns void instead of `ActionArgsModelInterface`
-  - Method `setEnabled` now returns void instead of `ActionArgsModelInterface`
-  - Method `setScheduledDate` now returns void instead of `ActionArgsModelInterface`
-  - Method `setScheduledDateFromISO8601` now returns void instead of `ActionArgsModelInterface`
-  - Method `setScheduledDateFromUnixTime` now returns void instead of `ActionArgsModelInterface`
-  - Method `convertUnixTimeDateToISO8601` is now public
-  - Method `convertISO8601DateToUnixTime` is now public
-- Improve exception message when the date/time offset is invalid
-
-## [3.4.0] - 20 Jun, 2024
-
-### Added
-
-- In the JS context, implemented a way to extend the future action panel using SlotFill `FutureActionPanelAfterActionField` and setting extra fields to the panel, right after the action field
-- Add a new filter to allow filtering the options of the future action being scheduled: `publishpressfuture_prepare_post_expiration_opts`
-- Add method `scheduleRecurringAction` to the `CronToWooActionSchedulerAdapter` to schedule recurring action
-- Add method `scheduleAsyncAction` to the `CronToWooActionSchedulerAdapter` to schedule async action
-- In the JS context, added the slot `FutureActionPanelTop` to the beginning of the future panel
-
-### Changed
-
-- Added `$unique` and `$priority` arguments to the `scheduleSingleAction` method in the `CronToWooActionSchedulerAdapter` class
-- Method `scheduleRecurringAction` renamed to `scheduleRecurringActionInSeconds` in the `CronToWooActionSchedulerAdapter` class
-- Added argument `$clearOnlyPendingActions` to the method signature `clearScheduledAction` to the `CronInterface` interface
-- Changed the method `clearScheduledAction` in the class `CronToWooActionSchedulerAdapter` adding new argument `$clearOnlyPendingActions`, allowing to remove running actions
-- The plugin activation and deactivation callback functions were moved from the main file to independent files
-- Change the admin menu names for clarity
-- Update the promo sidebar for mentioning the Actions Workflow feature
-
-### Fixed
-
-- Fix error when quick-edit data is not available, #730
-- Fix dependency of the enqueued scripts for the future action box. Add 'wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins' as dependencies
-- Updated ES, FR and IT translations, #698
-- Redirects to the settings page after activating the plugin, #764
-- Fix access to the View Debug settings tab when debug is disabled
-- Fix the position of the "Upgrade to Pro" and "Settings" menu items in the admin bar
