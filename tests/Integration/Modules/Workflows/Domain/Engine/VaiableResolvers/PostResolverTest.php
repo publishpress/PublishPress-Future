@@ -150,4 +150,15 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $this->assertEquals(['type' => 'post', 'value' => 23], $resolver->compact());
     }
+
+    public function testGetPostContentValueWithBlocks(): void
+    {
+        $post = new stdClass();
+        $post->ID = 23;
+        $post->post_content = '<!-- wp:block {"ref": 123} /-->asd';
+
+        $resolver = new PostResolver($post);
+
+        $this->assertEquals('asd', $resolver->getValue('post_content'));
+    }
 }
