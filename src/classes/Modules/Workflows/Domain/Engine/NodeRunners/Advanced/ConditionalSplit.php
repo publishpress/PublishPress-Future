@@ -9,6 +9,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterfac
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\JsonLogicEngineInterface;
 
 class ConditionalSplit implements NodeRunnerInterface
 {
@@ -27,14 +28,21 @@ class ConditionalSplit implements NodeRunnerInterface
      */
     private $variablesHandler;
 
+    /**
+     * @var JsonLogicEngineInterface
+     */
+    private $jsonLogicEngine;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
-        RuntimeVariablesHandlerInterface $variablesHandler
+        RuntimeVariablesHandlerInterface $variablesHandler,
+        JsonLogicEngineInterface $jsonLogicEngine
     ) {
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->hooks = $hooks;
         $this->variablesHandler = $variablesHandler;
+        $this->jsonLogicEngine = $jsonLogicEngine;
     }
 
     public static function getNodeTypeName(): string
@@ -59,7 +67,7 @@ class ConditionalSplit implements NodeRunnerInterface
 
         $variablesValues = $this->expandVariables($variablesValues);
 
-        $conditionResult = JsonLogic::apply($expression, $variablesValues);
+        $conditionResult = $this->jsonLogicEngine->apply($expression, $variablesValues);
 
         $branch = $conditionResult ? 'true' : 'false';
 
@@ -99,7 +107,7 @@ class ConditionalSplit implements NodeRunnerInterface
 
         foreach ($runtimeVariables as $runtimeVariable) {
             if (strpos($expression, '"' . $runtimeVariable) !== false) {
-                preg_match_all('/"(' . $runtimeVariable . '\.[a-z0-9\._]*)"/', $expression, $matches);
+                preg_match_all('/"(' . $runtimeVariable . '\.[a-zA-Z0-9\._]*)"/', $expression, $matches);
 
                 $variables = array_merge($variables, $matches[1]);
             }
@@ -117,7 +125,9 @@ class ConditionalSplit implements NodeRunnerInterface
             $currentLevel = &$expandedVariables;
 
             foreach ($variableParts as $variablePart) {
-                $currentLevel[$variablePart] = [];
+                if (!isset($currentLevel[$variablePart])) {
+                    $currentLevel[$variablePart] = [];
+                }
 
                 $currentLevel = &$currentLevel[$variablePart];
             }

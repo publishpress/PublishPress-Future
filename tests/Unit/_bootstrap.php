@@ -23,3 +23,6 @@ class Autoloader
 }
 
 spl_autoload_register([new Autoloader(), 'autoload']);
+
+
+require __DIR__ . '/../../lib/vendor/autoload.php';

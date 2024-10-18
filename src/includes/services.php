@@ -18,6 +18,7 @@ use PublishPress\FuturePro\Core\PluginInitializator;
 use PublishPress\FuturePro\Core\ServicesAbstract;
 use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\JsonLogicEngine;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostChangeStatus;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreSendEmail;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\ConditionalSplit;
@@ -302,11 +303,16 @@ return [
                     return new ConditionalSplit(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(FreeServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
-                        $container->get(FreeServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
+                        $container->get(FreeServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
+                        $container->get(ServicesAbstract::JSON_LOGIC_ENGINE)
                     );
             }
 
             return null;
         };
+    },
+
+    ServicesAbstract::JSON_LOGIC_ENGINE => static function (ContainerInterface $container) {
+        return new JsonLogicEngine();
     },
 ];

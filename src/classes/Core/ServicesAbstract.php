@@ -76,6 +76,8 @@ abstract class ServicesAbstract
 
     public const NODE_RUNNER_FACTORY = 'future.pro/node-runner-factory';
 
+    public const JSON_LOGIC_ENGINE = 'future.pro/json-logic-engine';
+
     /**
      * @deprecated 4.0.0
      */
