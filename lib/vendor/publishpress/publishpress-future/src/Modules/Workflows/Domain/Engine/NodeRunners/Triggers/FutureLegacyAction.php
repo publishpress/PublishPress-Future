@@ -71,7 +71,7 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
         $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
 
         $this->variablesHandler->setVariable($nodeSlug, [
-            'post' => new PostResolver($post, $this->hooks),
+            'post' => new PostResolver($post),
         ]);
 
         $this->nodeRunnerProcessor->triggerCallbackIsRunning();

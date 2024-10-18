@@ -101,7 +101,7 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 
         $this->variablesHandler->setVariable($nodeSlug, [
             'postId' => new IntegerResolver($postId),
-            'post' => new PostResolver($post, $this->hooks),
+            'post' => new PostResolver($post),
         ]);
 
         $this->nodeRunnerProcessor->triggerCallbackIsRunning();

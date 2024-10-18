@@ -16,6 +16,11 @@ export function PostData() {
                 label: "Content",
             },
             {
+                name: "post_content_text",
+                type: "string",
+                label: "Content (Plain Text)",
+            },
+            {
                 name: "post_excerpt",
                 type: "string",
                 label: "Excerpt",

@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-develop',
         'version' => 'dev-develop',
-        'reference' => '569bf7093303211b0b5f240f78b747b55f3e3a6e',
+        'reference' => '3e622124e18087e8c5f0734909b0aec571f94d18',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-develop',
             'version' => 'dev-develop',
-            'reference' => '569bf7093303211b0b5f240f78b747b55f3e3a6e',
+            'reference' => '3e622124e18087e8c5f0734909b0aec571f94d18',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -67,7 +67,7 @@
         'publishpress/publishpress-future' => array(
             'pretty_version' => 'dev-release-4.0.0',
             'version' => 'dev-release-4.0.0',
-            'reference' => 'a6feb6eb46a70e424d1b26c5ecb5378d0938e3da',
+            'reference' => 'ecacd89e9a59dd001d9278f3cc95c20622829ec0',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../publishpress/publishpress-future',
             'aliases' => array(),
