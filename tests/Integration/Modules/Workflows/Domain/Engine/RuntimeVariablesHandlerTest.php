@@ -3,6 +3,7 @@
 namespace Tests\Modules\Workflows\Domain\Engine;
 
 use Codeception\Stub;
+use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHandler;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
@@ -200,6 +201,8 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
         ]);
         $post = get_post($postId);
 
+        $hooks = $this->makeEmpty(HookableInterface::class);
+
         $handler->setAllVariables([
             'global' => [
                 'workflow' => new WorkflowResolver([
@@ -211,7 +214,7 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             ],
             'onSavePost1' => [
                 'postId' => new IntegerResolver(235),
-                'post' => new PostResolver($post),
+                'post' => new PostResolver($post, $hooks),
                 'update' => new BooleanResolver(true),
             ],
         ]);
