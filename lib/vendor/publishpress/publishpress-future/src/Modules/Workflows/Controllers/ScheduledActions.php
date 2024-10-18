@@ -175,7 +175,6 @@ class ScheduledActions implements InitializableInterface
                 $step = $this->getStepFromActionId($row['ID']);
 
                 if (empty($step)) {
-                    $title = __('Workflow scheduled step', 'post-expirator');
                     break;
                 }
 
