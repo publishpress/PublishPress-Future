@@ -106,7 +106,7 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
 
         $this->variablesHandler->setVariable($nodeSlug, [
             'postId' => new IntegerResolver($postId),
-            'post' => new PostResolver($post),
+            'post' => new PostResolver($post, $this->hooks),
             'update' => new BooleanResolver($update),
         ]);
 

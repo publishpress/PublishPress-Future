@@ -51,6 +51,17 @@ class PostResolver implements VariableResolverInterface
                     $this->post->post_content
                 );
 
+            case 'post_content_text':
+                case 'content_text':
+                    return wp_strip_all_tags(
+                        strip_shortcodes(
+                        $this->hooks->applyFilters(
+                                HooksAbstract::FILTER_THE_CONTENT,
+                                $this->post->post_content
+                            )
+                        )
+                    );
+
             case 'post_excerpt':
             case 'excerpt':
                 return $this->post->post_excerpt;
@@ -113,6 +124,7 @@ class PostResolver implements VariableResolverInterface
                 'ID',
                 'post_title',
                 'post_content',
+                'post_content_text',
                 'post_excerpt',
                 'post_type',
                 'post_status',
