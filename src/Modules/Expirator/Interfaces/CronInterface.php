@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @copyright (c) 2022. PublishPress, All rights reserved.
+ * @Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator\Interfaces;
@@ -69,7 +69,7 @@ interface CronInterface
      * @param array $args
      * @param boolean $unique
      * @param integer $priority
-     * @return void
+     * @return int
      */
     public function scheduleRecurringAction(
         $timestamp,
@@ -85,7 +85,7 @@ interface CronInterface
      * @param array $args
      * @param boolean $unique
      * @param integer $priority
-     * @return void
+     * @return int
      */
     public function scheduleAsyncAction(
         $hook,

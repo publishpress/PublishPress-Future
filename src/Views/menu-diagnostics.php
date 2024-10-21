@@ -4,6 +4,7 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Debug\HooksAbstract;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
+use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -23,10 +24,20 @@ $actionArgsSchema = $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEM
  */
 $debugLogSchema = $container->get(ServicesAbstract::DB_TABLE_DEBUG_LOG_SCHEMA);
 
-$isSchemaHealthOk = $actionArgsSchema->isTableHealthy() && $debugLogSchema->isTableHealthy();
+/**
+ * @var DBTableSchemaInterface $workflowScheduledStepsSchema
+ */
+$workflowScheduledStepsSchema = $container->get(ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA);
+
+$isSchemaHealthOk = $actionArgsSchema->isTableHealthy()
+    && $debugLogSchema->isTableHealthy();
+
+$isSchemaHealthOk = $hooks->applyFilters(SettingsHooksAbstract::FILTER_SCHEMA_IS_HEALTHY, $isSchemaHealthOk);
+
 $schemaHealthErrors = [
     $actionArgsSchema->getTableName() => $actionArgsSchema->getErrors(),
     $debugLogSchema->getTableName() => $debugLogSchema->getErrors(),
+    $workflowScheduledStepsSchema->getTableName() => $workflowScheduledStepsSchema->getErrors(),
 ];
 ?>
 

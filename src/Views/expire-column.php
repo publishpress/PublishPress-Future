@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 use PublishPress\Future\Core\DI\Container;
@@ -34,7 +34,7 @@ $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
     data-action-taxonomy="<?php echo esc_attr($actionTaxonomy); ?>"
     data-action-type="<?php echo esc_attr($actionType); ?>"
     data-action-terms="<?php echo esc_attr($actionTerms); ?>"
-    >
+>
     <?php
     $iconClass = '';
     $iconTitle = '';
@@ -48,46 +48,46 @@ $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
         if (is_object($action)) {
             ?><span class="dashicons dashicons-clock icon-scheduled" aria-hidden="true"></span> <?php
 
-if ($columnStyle === 'simple') {
-    echo esc_html($formatedDate);
-} else {
-    echo sprintf(
-    // phpcs:ignore Generic.Files.LineLength.TooLong
-    // translators: %1$s opens a span tag, %2$s is the action name, %3$s ends a span tag, %4$s is the a span tag, %5$s is the a span tag, %6$s is the a span tag
-        esc_html__('%1$s%2$s%3$s on %5$s%4$s%6$s', 'post-expirator'),
-        '<span class="future-action-action-name">',
-        esc_html($action->getDynamicLabel($postModel->getPostType())),
-        '</span>',
-        esc_html($formatedDate),
-        '<span class="future-action-action-date">',
-        '</span>'
-    );
+            if ($columnStyle === 'simple') {
+                echo esc_html($formatedDate);
+            } else {
+                echo sprintf(
+                    // phpcs:ignore Generic.Files.LineLength.TooLong
+                    // translators: %1$s opens a span tag, %2$s is the action name, %3$s ends a span tag, %4$s is the a span tag, %5$s is the a span tag, %6$s is the a span tag
+                    esc_html__('%1$s%2$s%3$s on %5$s%4$s%6$s', 'post-expirator'),
+                    '<span class="future-action-action-name">',
+                    esc_html($action->getDynamicLabel($postModel->getPostType())),
+                    '</span>',
+                    esc_html($formatedDate),
+                    '<span class="future-action-action-date">',
+                    '</span>'
+                );
 
-    $categoryActions = [
-    ExpirationActionsAbstract::POST_CATEGORY_ADD,
-    ExpirationActionsAbstract::POST_CATEGORY_SET,
-    ExpirationActionsAbstract::POST_CATEGORY_REMOVE,
-    ];
+                $categoryActions = [
+                    ExpirationActionsAbstract::POST_CATEGORY_ADD,
+                    ExpirationActionsAbstract::POST_CATEGORY_SET,
+                    ExpirationActionsAbstract::POST_CATEGORY_REMOVE,
+                ];
 
-    if (in_array($action, $categoryActions)) {
-        $actionTerms = $postModel->getExpirationCategoryNames();
-        if (!empty($actionTerms)) {
-            ?>
+                if (in_array($action, $categoryActions)) {
+                    $actionTerms = $postModel->getExpirationCategoryNames();
+                    if (!empty($actionTerms)) {
+                        ?>
                         <div class="future-action-gray">[<?php echo esc_html(implode(', ', $actionTerms)); ?>]</div>
                         <?php
-        }
-    }
+                    }
+                }
 
-    if ($actionType === ExpirationActionsAbstract::CHANGE_POST_STATUS) {
-        $newStatus = $postModel->getExpirationNewStatus();
-        $newStatus = get_post_status_object($newStatus);
-        if ($newStatus) {
-            ?>
+                if ($actionType === ExpirationActionsAbstract::CHANGE_POST_STATUS) {
+                    $newStatus = $postModel->getExpirationNewStatus();
+                    $newStatus = get_post_status_object($newStatus);
+                    if ($newStatus) {
+                        ?>
                         <div class="future-action-gray">[<?php echo esc_html($newStatus->label); ?>]</div>
                         <?php
-        }
-    }
-}
+                    }
+                }
+            }
         } else {
             ?>
             <span class="dashicons dashicons-warning icon-missed" aria-hidden="true"></span>

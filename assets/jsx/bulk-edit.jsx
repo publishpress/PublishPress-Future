@@ -2,8 +2,10 @@ import { FutureActionPanelBulkEdit } from './components';
 import { createStore } from './data';
 import { createRoot } from 'react-dom/client';
 import { select, dispatch } from '@wordpress/data';
-import { inlineEditPost } from "&window";
-import {
+
+const { inlineEditPost } = window;
+
+const {
     postTypeDefaultConfig,
     defaultDate,
     postType,
@@ -17,7 +19,7 @@ import {
     nonce,
     statusesSelectOptions,
     hideCalendarByDefault
-} from "&config.bulk-edit";
+} = window.publishpressFutureBulkEditConfig;
 
 const storeName = 'publishpress-future/future-action-bulk-edit';
 const delayToUnmountAfterSaving = 1000;
@@ -26,19 +28,6 @@ const delayToUnmountAfterSaving = 1000;
 const wpInlineSetBulk = inlineEditPost.setBulk;
 const wpInlineEditRevert = inlineEditPost.revert;
 
-const getPostId = (id) => {
-    // If id is a string or a number, return it directly
-    if (typeof id === 'string' || typeof id === 'number') {
-        return id;
-    }
-
-    // Otherwise, assume it's an HTML element and extract the post ID
-    const trElement = id.closest('tr');
-    const trId = trElement.id;
-    const postId = trId.split('-')[1];
-
-    return postId;
-}
 
 /**
  * We override the function with our own code so we can detect when
@@ -49,6 +38,7 @@ inlineEditPost.setBulk = function (id) {
     wpInlineSetBulk.apply(this, arguments);
 
     if (select(storeName)) {
+        dispatch(storeName).setPostId(0);
         dispatch(storeName).setAction(postTypeDefaultConfig.expireType);
         dispatch(storeName).setDate(postTypeDefaultConfig.defaultDate);
         dispatch(storeName).setTaxonomy(postTypeDefaultConfig.taxonomy);
@@ -69,6 +59,11 @@ inlineEditPost.setBulk = function (id) {
     }
 
     const container = document.getElementById("publishpress-future-bulk-edit");
+
+    if (! container) {
+        return;
+    }
+
     const root = createRoot(container);
 
     const saveButton = document.querySelector('#bulk_edit');

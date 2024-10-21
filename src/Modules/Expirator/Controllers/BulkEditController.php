@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator\Controllers;
@@ -12,6 +12,7 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
@@ -101,9 +102,19 @@ class BulkEditController implements InitializableInterface
 
         wp_enqueue_script(
             'postexpirator-bulk-edit',
-            POSTEXPIRATOR_BASEURL . '/assets/js/bulk-edit.js',
-            ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins'],
-            POSTEXPIRATOR_VERSION,
+            Plugin::getScriptUrl('bulkEdit'),
+            [
+                'wp-i18n',
+                'wp-components',
+                'wp-url',
+                'wp-data',
+                'wp-api-fetch',
+                'wp-element',
+                'inline-edit-post',
+                'wp-html-entities',
+                'wp-plugins',
+            ],
+            PUBLISHPRESS_FUTURE_VERSION,
             true
         );
 
@@ -163,8 +174,9 @@ class BulkEditController implements InitializableInterface
                 'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
                 'strings' => [
                     'category' => __('Categories', 'post-expirator'),
-                    'panelTitle' => __('PublishPress Future', 'post-expirator'),
+                    'panelTitle' => __('Future Actions', 'post-expirator'),
                     'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
+                    'futureActions' => __('Future Actions', 'post-expirator'),
                     'action' => __('Action', 'post-expirator'),
                     'showCalendar' => __('Show Calendar', 'post-expirator'),
                     'hideCalendar' => __('Hide Calendar', 'post-expirator'),

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 import {
@@ -13,8 +13,9 @@ import {
 import { useEffect, useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 import { applyFilters } from '@wordpress/hooks';
-import { apiFetch } from '&wp';
 import DateOffsetPreview from './DateOffsetPreview';
+
+const { apiFetch } = wp;
 
 const { PanelRow } = wp.components;
 

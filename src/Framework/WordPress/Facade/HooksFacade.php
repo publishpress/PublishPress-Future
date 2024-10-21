@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Framework\WordPress\Facade;
@@ -25,6 +25,19 @@ class HooksFacade implements HookableInterface
     public function addFilter($filterName, $callback, $priority = 10, $acceptedArgs = 1)
     {
         return \add_filter($filterName, $callback, $priority, $acceptedArgs);
+    }
+
+    /**
+     * Removes a filter.
+     *
+     * @param string $filterName
+     * @param callable $callback
+     * @param integer $priority
+     * @return void
+     */
+    public function removeFilter($filterName, $callback, $priority = 10)
+    {
+        return \remove_filter($filterName, $callback, $priority);
     }
 
     /**
@@ -58,6 +71,19 @@ class HooksFacade implements HookableInterface
     public function addAction($actionName, $callback, $priority = 10, $acceptedArgs = 1)
     {
         return \add_action($actionName, $callback, $priority, $acceptedArgs);
+    }
+
+    /**
+     * Removes an action.
+     *
+     * @param string $actionName
+     * @param callable $callback
+     * @param integer $priority
+     * @return void
+     */
+    public function removeAction($actionName, $callback, $priority = 10)
+    {
+        return \remove_action($actionName, $callback, $priority);
     }
 
     /**

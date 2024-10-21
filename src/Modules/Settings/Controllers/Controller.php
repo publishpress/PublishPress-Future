@@ -1,16 +1,18 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Settings\Controllers;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreAbstractHooks;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
+use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
@@ -149,25 +151,25 @@ class Controller implements InitializableInterface
             'pe-footer',
             POSTEXPIRATOR_BASEURL . 'assets/css/footer.css',
             false,
-            POSTEXPIRATOR_VERSION
+            PUBLISHPRESS_FUTURE_VERSION
         );
         wp_enqueue_style(
             'pe-settings',
             POSTEXPIRATOR_BASEURL . 'assets/css/settings.css',
             ['pe-footer'],
-            POSTEXPIRATOR_VERSION
+            PUBLISHPRESS_FUTURE_VERSION
         );
         wp_enqueue_style(
             'pe-jquery-ui',
             POSTEXPIRATOR_BASEURL . 'assets/css/lib/jquery-ui/jquery-ui.min.css',
             ['pe-settings'],
-            POSTEXPIRATOR_VERSION
+            PUBLISHPRESS_FUTURE_VERSION
         );
         wp_enqueue_style(
             'pp-wordpress-banners-style',
             POSTEXPIRATOR_BASEURL . 'assets/vendor/wordpress-banners/css/style.css',
             false,
-            POSTEXPIRATOR_VERSION
+            PUBLISHPRESS_FUTURE_VERSION
         );
 
         // phpcs:disable WordPress.Security.NonceVerification.Recommended
@@ -181,9 +183,18 @@ class Controller implements InitializableInterface
             //phpcs:enable WordPress.Security.NonceVerification.Recommended
             wp_enqueue_script(
                 'publishpressfuture-settings-panel',
-                POSTEXPIRATOR_BASEURL . 'assets/js/settings-post-types.js',
-                ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-element', 'wp-hooks', 'wp-api-fetch', 'wp-html-entities'],
-                POSTEXPIRATOR_VERSION,
+                Plugin::getScriptUrl('settingsPostTypes'),
+                [
+                    'wp-i18n',
+                    'wp-components',
+                    'wp-url',
+                    'wp-data',
+                    'wp-element',
+                    'wp-hooks',
+                    'wp-api-fetch',
+                    'wp-html-entities',
+                ],
+                PUBLISHPRESS_FUTURE_VERSION,
                 true
             );
 
@@ -269,7 +280,7 @@ class Controller implements InitializableInterface
             //phpcs:enable WordPress.Security.NonceVerification.Recommended
             wp_enqueue_script(
                 'publishpressfuture-settings-general-panel',
-                POSTEXPIRATOR_BASEURL . 'assets/js/settings-general.js',
+                Plugin::getScriptUrl('settingsGeneral'),
                 [
                     'wp-i18n',
                     'wp-components',
@@ -280,7 +291,7 @@ class Controller implements InitializableInterface
                     'wp-api-fetch',
                     'wp-html-entities'
                 ],
-                POSTEXPIRATOR_VERSION,
+                PUBLISHPRESS_FUTURE_VERSION,
                 true
             );
 
@@ -296,6 +307,64 @@ class Controller implements InitializableInterface
                         'datePreviewComputed' => __('Computed Date', 'post-expirator'),
                         'error' => __('Error', 'post-expirator'),
                     ],
+                ]
+            );
+        }
+
+        if (! isset($_GET['tab']) || $_GET['tab'] === 'advanced') {
+            wp_enqueue_script(
+                'publishpress-future-settings-advanced-panel',
+                Plugin::getScriptUrl('settingsAdvanced'),
+                [
+                    'wp-components',
+                    'wp-url',
+                    'wp-data',
+                    'wp-element',
+                    'wp-api-fetch',
+                ],
+                PUBLISHPRESS_FUTURE_VERSION,
+                true
+            );
+
+            wp_enqueue_script('wp-url');
+            wp_enqueue_script('wp-element');
+            wp_enqueue_script('wp-api-fetch');
+            wp_enqueue_script('wp-data');
+
+            wp_localize_script(
+                'publishpress-future-settings-advanced-panel',
+                'publishpressFutureSettingsAdvanced',
+                [
+                    'text' => [
+                        'scheduledStepsCleanup' => __('Scheduled Workflow Steps Cleanup', 'post-expirator'),
+                        'scheduledStepsCleanupEnable' => __(
+                            'Automatically remove scheduled workflow steps',
+                            'post-expirator'
+                        ),
+                        'scheduledStepsCleanupEnableDesc' => __(
+                            'Automatically remove scheduled workflow steps that have been marked as failed, completed, or cancelled.',
+                            'post-expirator'
+                        ),
+                        'scheduledStepsCleanupDisable' => __(
+                            'Retain all scheduled workflow steps',
+                            'post-expirator'
+                        ),
+                        'scheduledStepsCleanupDisableDesc' => __(
+                            'Retain all scheduled workflow steps indefinitely, including those marked as failed, completed, or cancelled. This may impact database performance over time.',
+                            'post-expirator'
+                        ),
+                        'scheduledStepsCleanupRetention' => __('Retention', 'post-expirator'),
+                        'scheduledStepsCleanupRetentionDesc' => __(
+                            'The duration, in days, for which completed, failed, and canceled scheduled workflow steps will be preserved before automatic removal.',
+                            'post-expirator'
+                        ),
+                        'days' => __('days', 'post-expirator'),
+                    ],
+                    'settings' => [
+                        'scheduledStepsCleanupStatus' => $this->settings->getScheduledWorkflowStepsCleanupStatus(),
+                        'scheduledStepsCleanupRetention' => $this->settings->getScheduledWorkflowStepsCleanupRetention(),
+                    ],
+                    'settingsTab' => $_GET['tab'] ?? 'defaults',
                 ]
             );
         }
@@ -467,5 +536,41 @@ class Controller implements InitializableInterface
         }
 
         $this->hooks->doAction(CoreAbstractHooks::ACTION_PURGE_PLUGIN_CACHE);
+    }
+
+    public function saveTabAdvanced()
+    {
+         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+         $experimentalFeaturesStatus = isset($_POST['future-experimental-features'])
+         // phpcs:ignore WordPress.Security.NonceVerification.Missing
+         ? (int) $_POST['future-experimental-features']
+         : 0;
+        $this->settings->setExperimentalFeaturesStatus($experimentalFeaturesStatus);
+
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $stepScheduleCompressedArgsStatus = isset($_POST['future-step-schedule-compressed-args'])
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            ? (int) $_POST['future-step-schedule-compressed-args']
+            : 0;
+        $this->settings->setStepScheduleCompressedArgsStatus($stepScheduleCompressedArgsStatus);
+
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $stepScheduleCleanupStatus = isset($_POST['future-step-schedule-cleanup'])
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            ? (bool) $_POST['future-step-schedule-cleanup']
+            : false;
+        $this->settings->setScheduledWorkflowStepsCleanupStatus($stepScheduleCleanupStatus);
+
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $stepScheduleCleanupRetention = isset($_POST['future-step-schedule-cleanup-retention'])
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            ? (int) $_POST['future-step-schedule-cleanup-retention']
+            : 30;
+
+        if ($stepScheduleCleanupRetention < 1) {
+            $stepScheduleCleanupRetention = 30;
+        }
+
+        $this->settings->setScheduledWorkflowStepsCleanupRetention($stepScheduleCleanupRetention);
     }
 }

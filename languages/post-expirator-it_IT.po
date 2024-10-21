@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Plugins - PublishPress Future: Automatically Unpublish "
 "WordPress Posts - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
-"POT-Creation-Date: 2024-08-05T20:36:02+00:00\n"
-"PO-Revision-Date: 2024-08-06 20:25+0200\n"
+"POT-Creation-Date: 2024-08-21T02:08:19+00:00\n"
+"PO-Revision-Date: 2024-08-23 01:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -18,12 +18,12 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: post-expirator.php
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:129
-#: src/Modules/Expirator/Controllers/BulkEditController.php:165
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:130
+#: src/Modules/Expirator/Controllers/BulkEditController.php:166
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:144
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:362
-#: src/Modules/Expirator/Controllers/QuickEditController.php:270
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:85
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:367
+#: src/Modules/Expirator/Controllers/QuickEditController.php:280
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:93
 msgid "PublishPress Future"
 msgstr "PublishPress Future"
 
@@ -98,36 +98,36 @@ msgstr ""
 "Non è stato possibile correggere lo schema del database. Contattare il team "
 "di assistenza."
 
-#: legacy/classes/Display.class.php:339 legacy/classes/Display.class.php:397
+#: legacy/classes/Display.class.php:342 legacy/classes/Display.class.php:400
 msgid "Saved Options!"
 msgstr "Opzioni salvate!"
 
 #. translators: %1$s is the plugin name, %2$s is the star rating markup
-#: legacy/classes/Display.class.php:483
+#: legacy/classes/Display.class.php:486
 msgid "If you like %1$s, please leave us a %2$s rating. Thank you!"
 msgstr "Se ti piace %1$s, lasciaci una valutazione di %2$s. Grazie!"
 
-#: legacy/classes/Display.class.php:498
+#: legacy/classes/Display.class.php:501
 msgid "About PublishPress Future"
 msgstr "Informazioni su PublishPress Future"
 
-#: legacy/classes/Display.class.php:500
+#: legacy/classes/Display.class.php:503
 msgid "About"
 msgstr "Chi siamo"
 
-#: legacy/classes/Display.class.php:506
+#: legacy/classes/Display.class.php:509
 msgid "Future Documentation"
 msgstr "Documentazione di Future"
 
-#: legacy/classes/Display.class.php:508
+#: legacy/classes/Display.class.php:511
 msgid "Documentation"
 msgstr "Documentazione"
 
-#: legacy/classes/Display.class.php:514
+#: legacy/classes/Display.class.php:517
 msgid "Contact the PublishPress team"
 msgstr "Contatta il team di PublishPress"
 
-#: legacy/classes/Display.class.php:516
+#: legacy/classes/Display.class.php:519
 msgid "Contact"
 msgstr "Contatto"
 
@@ -157,140 +157,140 @@ msgstr "La tabella %s non esiste."
 msgid "The table indexes are invalid: "
 msgstr "Gli indici della tabella non sono validi: "
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:128
-#: src/Modules/Expirator/Controllers/BulkEditController.php:164
-#: src/Modules/Expirator/Controllers/QuickEditController.php:269
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:129
+#: src/Modules/Expirator/Controllers/BulkEditController.php:165
+#: src/Modules/Expirator/Controllers/QuickEditController.php:279
 msgid "Categories"
 msgstr "Categorie"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:130
-#: src/Modules/Expirator/Controllers/BulkEditController.php:166
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:363
-#: src/Modules/Expirator/Controllers/QuickEditController.php:271
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:131
+#: src/Modules/Expirator/Controllers/BulkEditController.php:167
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:368
+#: src/Modules/Expirator/Controllers/QuickEditController.php:281
 msgid "Enable Future Action"
 msgstr "Abilita scadenza articolo"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:131
-#: src/Modules/Expirator/Controllers/BulkEditController.php:167
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:364
-#: src/Modules/Expirator/Controllers/QuickEditController.php:272
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:132
+#: src/Modules/Expirator/Controllers/BulkEditController.php:168
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:369
+#: src/Modules/Expirator/Controllers/QuickEditController.php:282
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:46
 msgid "Action"
 msgstr "Come applicare la scadenza"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:132
-#: src/Modules/Expirator/Controllers/BulkEditController.php:170
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:367
-#: src/Modules/Expirator/Controllers/QuickEditController.php:275
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:133
+#: src/Modules/Expirator/Controllers/BulkEditController.php:171
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:372
+#: src/Modules/Expirator/Controllers/QuickEditController.php:285
 msgid "Loading"
 msgstr "Caricamento in corso"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:133
-#: src/Modules/Expirator/Controllers/BulkEditController.php:168
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:365
-#: src/Modules/Expirator/Controllers/QuickEditController.php:273
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:134
+#: src/Modules/Expirator/Controllers/BulkEditController.php:169
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:370
+#: src/Modules/Expirator/Controllers/QuickEditController.php:283
 msgid "Show Calendar"
 msgstr "Mostra il calendario"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:134
-#: src/Modules/Expirator/Controllers/BulkEditController.php:169
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:366
-#: src/Modules/Expirator/Controllers/QuickEditController.php:274
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:135
+#: src/Modules/Expirator/Controllers/BulkEditController.php:170
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:371
+#: src/Modules/Expirator/Controllers/QuickEditController.php:284
 msgid "Hide Calendar"
 msgstr "Nascondi il calendario"
 
 #. translators: the text between {} is the link to the settings page.
 #. translators: the text between {{}} is the link to the settings page.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:136
-#: src/Modules/Expirator/Controllers/BulkEditController.php:172
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:369
-#: src/Modules/Expirator/Controllers/QuickEditController.php:277
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:137
+#: src/Modules/Expirator/Controllers/BulkEditController.php:173
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:374
+#: src/Modules/Expirator/Controllers/QuickEditController.php:287
 msgid "Timezone is controlled by the {WordPress Settings}."
 msgstr "Il fuso orario è controllato dalle {Impostazioni di WordPress}."
 
 #. translators: %s is the name of the taxonomy in plural form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:140
-#: src/Modules/Expirator/Controllers/BulkEditController.php:176
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:376
-#: src/Modules/Expirator/Controllers/QuickEditController.php:281
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:141
+#: src/Modules/Expirator/Controllers/BulkEditController.php:177
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:381
+#: src/Modules/Expirator/Controllers/QuickEditController.php:291
 msgid "No %s found."
 msgstr "Nessun %s trovato."
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:143
-#: src/Modules/Expirator/Controllers/BulkEditController.php:180
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:379
-#: src/Modules/Expirator/Controllers/QuickEditController.php:284
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:144
+#: src/Modules/Expirator/Controllers/BulkEditController.php:181
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:384
+#: src/Modules/Expirator/Controllers/QuickEditController.php:294
 msgid "You must assign a taxonomy to this post type to use this feature."
 msgstr ""
 "Devi assegnare una tassonomia a questo tipo di contenuto per usare questa "
 "caratteristica."
 
 #. translators: %s is the name of the taxonomy in plural form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:145
-#: src/Modules/Expirator/Controllers/BulkEditController.php:187
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:384
-#: src/Modules/Expirator/Controllers/QuickEditController.php:286
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:146
+#: src/Modules/Expirator/Controllers/BulkEditController.php:188
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:389
+#: src/Modules/Expirator/Controllers/QuickEditController.php:296
 msgid "New %s"
 msgstr "Nuovo %s"
 
 #. translators: %s is the name of the taxonomy in plural form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:147
-#: src/Modules/Expirator/Controllers/BulkEditController.php:189
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:386
-#: src/Modules/Expirator/Controllers/QuickEditController.php:288
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:148
+#: src/Modules/Expirator/Controllers/BulkEditController.php:190
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:391
+#: src/Modules/Expirator/Controllers/QuickEditController.php:298
 msgid "%s to remove"
 msgstr "%s da rimuovere"
 
 #. translators: %s is the name of the taxonomy in plural form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:149
-#: src/Modules/Expirator/Controllers/BulkEditController.php:191
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:388
-#: src/Modules/Expirator/Controllers/QuickEditController.php:290
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:150
+#: src/Modules/Expirator/Controllers/BulkEditController.php:192
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:393
+#: src/Modules/Expirator/Controllers/QuickEditController.php:300
 msgid "%s to add"
 msgstr "%s da aggiungere"
 
 #. translators: %s is the name of the taxonomy in singular form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:151
-#: src/Modules/Expirator/Controllers/BulkEditController.php:193
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:391
-#: src/Modules/Expirator/Controllers/QuickEditController.php:292
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:152
+#: src/Modules/Expirator/Controllers/BulkEditController.php:194
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:396
+#: src/Modules/Expirator/Controllers/QuickEditController.php:302
 msgid "Search for %s"
 msgstr "Ricerca per %s"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:152
-#: src/Modules/Expirator/Controllers/BulkEditController.php:194
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:394
-#: src/Modules/Expirator/Controllers/QuickEditController.php:293
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:153
+#: src/Modules/Expirator/Controllers/BulkEditController.php:195
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:399
+#: src/Modules/Expirator/Controllers/QuickEditController.php:303
 msgid "Select an action"
 msgstr "Seleziona un'azione"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:153
-#: src/Modules/Expirator/Controllers/BulkEditController.php:195
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:395
-#: src/Modules/Expirator/Controllers/QuickEditController.php:294
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:154
+#: src/Modules/Expirator/Controllers/BulkEditController.php:196
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:400
+#: src/Modules/Expirator/Controllers/QuickEditController.php:304
 msgid "Select a date"
 msgstr "Seleziona una data"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:154
-#: src/Modules/Expirator/Controllers/BulkEditController.php:196
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:396
-#: src/Modules/Expirator/Controllers/QuickEditController.php:295
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:155
+#: src/Modules/Expirator/Controllers/BulkEditController.php:197
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:401
+#: src/Modules/Expirator/Controllers/QuickEditController.php:305
 msgid "Date cannot be in the past"
 msgstr "La data non può essere già passata"
 
 #. translators: %s is the name of the taxonomy in singular form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:157
-#: src/Modules/Expirator/Controllers/BulkEditController.php:199
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:399
-#: src/Modules/Expirator/Controllers/QuickEditController.php:298
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:158
+#: src/Modules/Expirator/Controllers/BulkEditController.php:200
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:404
+#: src/Modules/Expirator/Controllers/QuickEditController.php:308
 #: src/Modules/Settings/Controllers/Controller.php:246
 msgid "Please select one or more %s"
 msgstr "Seleziona uno o più %s"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:160
-#: src/Modules/Expirator/Controllers/BulkEditController.php:202
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:402
-#: src/Modules/Expirator/Controllers/QuickEditController.php:301
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:161
+#: src/Modules/Expirator/Controllers/BulkEditController.php:203
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:407
+#: src/Modules/Expirator/Controllers/QuickEditController.php:311
 msgid "New status"
 msgstr "Nuovo stato"
 
@@ -307,31 +307,31 @@ msgstr "Azioni di Future sincronizzate correttamente con metadati articoli."
 msgid "Update Future Actions from Post Metadata"
 msgstr "Aggiorna le azioni di Future dai metadati degli articoli"
 
-#: src/Modules/Expirator/Controllers/BulkEditController.php:179
+#: src/Modules/Expirator/Controllers/BulkEditController.php:180
 msgid "Future Action Update"
 msgstr "Aggiornamento azioni Future"
 
-#: src/Modules/Expirator/Controllers/BulkEditController.php:181
+#: src/Modules/Expirator/Controllers/BulkEditController.php:182
 msgid "— No Change —"
 msgstr "— Non cambiare —"
 
-#: src/Modules/Expirator/Controllers/BulkEditController.php:182
+#: src/Modules/Expirator/Controllers/BulkEditController.php:183
 msgid "Add or update action for posts"
 msgstr "Aggiungi o aggiorna azione per gli articoli"
 
-#: src/Modules/Expirator/Controllers/BulkEditController.php:183
+#: src/Modules/Expirator/Controllers/BulkEditController.php:184
 msgid "Add action if none exists for posts"
 msgstr "Aggiungi un'azione se non ne esistono per gli articoli"
 
-#: src/Modules/Expirator/Controllers/BulkEditController.php:184
+#: src/Modules/Expirator/Controllers/BulkEditController.php:185
 msgid "Update the existing actions for posts"
 msgstr "Aggiorna le azioni esistenti per gli articoli"
 
-#: src/Modules/Expirator/Controllers/BulkEditController.php:185
+#: src/Modules/Expirator/Controllers/BulkEditController.php:186
 msgid "Remove action from posts"
 msgstr "Rimuovi l'azione dagli articoli"
 
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:361
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:366
 msgid "Category"
 msgstr "Categoria"
 
@@ -348,33 +348,37 @@ msgstr "Azione Future"
 msgid "Invalid date time offset."
 msgstr "Offset della data non valido."
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:86
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:94
 msgid "Future"
 msgstr "Future"
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:95
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:96
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:103
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:104
 #: src/Views/tabs.php:59
 msgid "Action Settings"
 msgstr "Impostazioni delle azioni"
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:104
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:105
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:112
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:113
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:43
 msgid "Scheduled Actions"
 msgstr "Azioni programmate"
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:174
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:182
 msgid "Log format"
 msgstr "Formato del registro"
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:181
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:189
 msgid "List"
 msgstr "Elenco"
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:190
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:198
 msgid "Popup"
 msgstr "Popup"
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:266
+msgid "Successfully executed action: %s"
+msgstr "L'azione è stata eseguita con successo: %s"
 
 #: src/Modules/Expirator/Controllers/ShortcodeController.php:79
 msgid ""
@@ -522,29 +526,29 @@ msgid "Unstick"
 msgstr "Rimuovi in evidenza"
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:464
-msgid "Email is disabled"
+msgid "Email is disabled."
 msgstr "L'email è disabilitata"
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:468
-msgid "Email sent"
-msgstr "Email inviata"
+msgid "Email sent."
+msgstr "Email inviata."
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:468
-msgid "Email not sent"
-msgstr "Email non inviata"
+msgid "Email not sent."
+msgstr "Email non inviata."
 
 #. translators: %1$s: post title placeholder, %2$s: notification text, %3$s: action date placeholder, %4$s: post link placeholder
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:618
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:619
 msgid "%1$s. %2$s on %3$s. The post link is %4$s"
 msgstr "%1$s. %2$s il %3$s. Il link dell'articolo è %4$s"
 
 #. translators: %s is the post title
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:636
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:637
 msgid "Future Action Complete \"%s\""
 msgstr "Scadenza articolo completata \"%s\""
 
 #. translators: 1: is the blog name, 2: the email subject
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:640
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:641
 msgid "[%1$s] %2$s"
 msgstr "[%1$s] %2$s"
 
@@ -850,7 +854,7 @@ msgstr ""
 "della tassonomia non saranno disponibili."
 
 #: src/Modules/Settings/Controllers/Controller.php:230
-#: src/Views/menu-general.php:158
+#: src/Views/menu-general.php:182
 msgid "Who to Notify"
 msgstr "Chi avvisare"
 
@@ -863,12 +867,12 @@ msgstr ""
 "notifica quando l'azione è in esecuzione."
 
 #: src/Modules/Settings/Controllers/Controller.php:235
-#: src/Views/menu-general.php:66
+#: src/Views/menu-general.php:68
 msgid "Default Date/Time Offset"
 msgstr "Offset data/ora predefinito"
 
 #: src/Modules/Settings/Controllers/Controller.php:238
-#: src/Views/menu-general.php:82
+#: src/Views/menu-general.php:84
 msgid "PHP strtotime function"
 msgstr "Funzione PHP strtotime"
 
@@ -885,22 +889,26 @@ msgid "Wait for the validation..."
 msgstr "Aspetta, validazione in corso…"
 
 #: src/Modules/Settings/Controllers/Controller.php:247
+#: src/Modules/Settings/Controllers/Controller.php:294
 msgid "Date Preview"
 msgstr "Anteprima della data"
 
 #: src/Modules/Settings/Controllers/Controller.php:248
+#: src/Modules/Settings/Controllers/Controller.php:295
 msgid "Current Date"
 msgstr "Data attuale"
 
 #: src/Modules/Settings/Controllers/Controller.php:249
+#: src/Modules/Settings/Controllers/Controller.php:296
 msgid "Computed Date"
 msgstr "Data calcolata"
 
 #: src/Modules/Settings/Controllers/Controller.php:250
+#: src/Modules/Settings/Controllers/Controller.php:297
 msgid "Error"
 msgstr "Errore"
 
-#: src/Modules/Settings/Controllers/Controller.php:352
+#: src/Modules/Settings/Controllers/Controller.php:391
 msgid "Form Validation Failure: Sorry, your nonce did not verify."
 msgstr "Errore di convalida del modulo: il nonce non è stato verificato."
 
@@ -987,14 +995,6 @@ msgstr "Nessuna azione Future"
 msgid "Advanced Options"
 msgstr "Opzioni avanzate"
 
-#: src/Views/menu-advanced.php:29
-msgid ""
-"Please do not update anything here unless you know what it entails. For "
-"advanced users only."
-msgstr ""
-"Si raccomanda di non aggiornare nulla qui se non se ne conoscono le "
-"conseguenze. Solo per utenti avanzati."
-
 #: src/Views/menu-advanced.php:40
 msgid "Future Action Column Style"
 msgstr "Stile colonna delle azioni Future"
@@ -1055,7 +1055,7 @@ msgstr ""
 "disattivazione del plugin."
 
 #: src/Views/menu-advanced.php:182 src/Views/menu-display.php:185
-#: src/Views/menu-general.php:176
+#: src/Views/menu-general.php:200
 msgid "Save Changes"
 msgstr "Salva modifiche"
 
@@ -1110,7 +1110,7 @@ msgid "Debug Logging"
 msgstr "Registrazione di debug"
 
 #: src/Views/menu-diagnostics.php:99 src/Views/menu-display.php:95
-#: src/Views/menu-general.php:109 src/Views/menu-general.php:137
+#: src/Views/menu-general.php:133 src/Views/menu-general.php:161
 msgid "Enabled"
 msgstr "Abilitato"
 
@@ -1127,7 +1127,7 @@ msgid "View Debug Logs"
 msgstr "Visualizza i log di debug"
 
 #: src/Views/menu-diagnostics.php:119 src/Views/menu-display.php:101
-#: src/Views/menu-general.php:117 src/Views/menu-general.php:146
+#: src/Views/menu-general.php:141 src/Views/menu-general.php:170
 msgid "Disabled"
 msgstr "Disabilitato"
 
@@ -1311,12 +1311,12 @@ msgstr ""
 "%s - il formato impostato qui sovrascrive il valore configurato nella pagina "
 "delle impostazioni"
 
-#: src/Views/menu-general.php:62
+#: src/Views/menu-general.php:64
 msgid "Defaults"
 msgstr "Valori predefiniti"
 
 #. translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
-#: src/Views/menu-general.php:74
+#: src/Views/menu-general.php:76
 msgid ""
 "Set the offset to use for the default action date and time. For information "
 "on formatting, see %1$s\n"
@@ -1330,39 +1330,61 @@ msgstr ""
 "month%3$s o %2$s+1 week 2 days 4 hours 2 seconds%3$s o %2$snext "
 "Thursday%3$s. Comunque ricordati che puoi inserire solo valori in inglese."
 
-#: src/Views/menu-general.php:92
+#: src/Views/menu-general.php:95
+msgid "Calendar Visibility"
+msgstr "Visibilità del calendario"
+
+#: src/Views/menu-general.php:101
+msgid "Remember last state"
+msgstr "Ricorda l'ultimo stato"
+
+#: src/Views/menu-general.php:103
+msgid "Shows or hides the calendar based on the last user interaction."
+msgstr ""
+"Mostra o nasconde il calendario in funzione dell'ultima interazione "
+"dell'utente."
+
+#: src/Views/menu-general.php:108
+msgid "Always hidden"
+msgstr "Sempre nascosto"
+
+#: src/Views/menu-general.php:110
+msgid "The calendar is always hidden by default."
+msgstr "Il calendario è sempre nascosto per impostazione predefinita."
+
+#: src/Views/menu-general.php:116
 msgid "Email Notification"
 msgstr "Email di notifica scadenza"
 
-#: src/Views/menu-general.php:94
+#: src/Views/menu-general.php:118
 msgid "Whenever an action runs, an email can be sent to alert users."
 msgstr ""
 "Ogni volta che un articolo scade, un'email può essere spedita per avvisare "
 "gli utenti della scadenza."
 
-#: src/Views/menu-general.php:101
+#: src/Views/menu-general.php:125
 msgid "Enable Email Notification?"
 msgstr "Abilita notifica email?"
 
-#: src/Views/menu-general.php:120
+#: src/Views/menu-general.php:144
 msgid ""
 "This will enable or disable the send of email notification on future action."
 msgstr ""
 "Questo abiliterà o disabiliterà l'invio della notifica via email alla "
 "scadenza dell'articolo."
 
-#: src/Views/menu-general.php:128
+#: src/Views/menu-general.php:152
 msgid "Include Blog Administrators?"
 msgstr "Includere gli amministratori del blog?"
 
-#: src/Views/menu-general.php:149
+#: src/Views/menu-general.php:173
 msgid ""
 "This will include all users with the role of \"Administrator\" in the email."
 msgstr ""
 "Ciò includerà tutti gli utenti con il ruolo di \"Amministratore\" nell'email "
 "di scadenza dell'articolo."
 
-#: src/Views/menu-general.php:165
+#: src/Views/menu-general.php:189
 msgid ""
 "Enter a comma separate list of emails that you would like to be notified "
 "when the action runs.  This will be applied to ALL post types.  You can set "

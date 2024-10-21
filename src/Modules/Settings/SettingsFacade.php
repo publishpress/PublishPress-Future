@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Settings;
@@ -16,6 +16,14 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class SettingsFacade
 {
+    public const OPTION_STEP_SCHEDULE_COMPRESSED_ARGS = 'ppfuture_scheduled_step_args_compression_status';
+
+    public const OPTION_SCHEDULED_STEP_CLEANUP_STATUS = 'ppfuture_scheduled_step_cleanup_status';
+
+    public const OPTION_FINISHED_SCHEDULED_STEP_RETENTION = 'ppfuture_finished_scheduled_step_retention';
+
+    public const OPTION_EXPERIMENTAL_ENABLED = 'ppfuture_experimental_status';
+
     /**
      * @var HookableInterface
      */
@@ -75,6 +83,15 @@ class SettingsFacade
         $allOptions = array_merge(
             $allOptions,
             $this->options->getOptionsWithPrefix('postexpirator')
+        );
+
+        $allOptions = array_merge(
+            $allOptions,
+            [
+                self::OPTION_STEP_SCHEDULE_COMPRESSED_ARGS,
+                self::OPTION_SCHEDULED_STEP_CLEANUP_STATUS,
+                self::OPTION_FINISHED_SCHEDULED_STEP_RETENTION,
+            ]
         );
 
         $allOptions = array_keys($allOptions);
@@ -278,5 +295,47 @@ class SettingsFacade
     public function getHideCalendarByDefault()
     {
         return (bool)$this->options->getOption('expirationdateHideCalendarByDefault', false);
+    }
+
+    public function getStepScheduleCompressedArgsStatus(): bool
+    {
+        return (bool)$this->options->getOption(self::OPTION_STEP_SCHEDULE_COMPRESSED_ARGS, false);
+    }
+
+    public function getScheduledWorkflowStepsCleanupStatus(): bool
+    {
+        return (bool)$this->options->getOption(self::OPTION_SCHEDULED_STEP_CLEANUP_STATUS, true);
+    }
+
+    public function getScheduledWorkflowStepsCleanupRetention(): int
+    {
+        return (int)$this->options->getOption(self::OPTION_FINISHED_SCHEDULED_STEP_RETENTION, 30);
+    }
+
+    public function getExperimentalFeaturesStatus(): bool
+    {
+        $value = (bool)$this->options->getOption(self::OPTION_EXPERIMENTAL_ENABLED, false);
+        return $value && PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL;
+    }
+
+    public function setExperimentalFeaturesStatus(bool $value): void
+    {
+        $value = $value && PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL;
+        $this->options->updateOption(self::OPTION_EXPERIMENTAL_ENABLED, $value);
+    }
+
+    public function setStepScheduleCompressedArgsStatus(bool $value): void
+    {
+        $this->options->updateOption(self::OPTION_STEP_SCHEDULE_COMPRESSED_ARGS, $value);
+    }
+
+    public function setScheduledWorkflowStepsCleanupStatus(bool $value): void
+    {
+        $this->options->updateOption(self::OPTION_SCHEDULED_STEP_CLEANUP_STATUS, $value);
+    }
+
+    public function setScheduledWorkflowStepsCleanupRetention(int $value): void
+    {
+        $this->options->updateOption(self::OPTION_FINISHED_SCHEDULED_STEP_RETENTION, $value);
     }
 }

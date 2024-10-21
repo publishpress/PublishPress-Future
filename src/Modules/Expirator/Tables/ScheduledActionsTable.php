@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator\Tables;
@@ -9,6 +9,7 @@ namespace PublishPress\Future\Modules\Expirator\Tables;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
@@ -116,8 +117,11 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         wp_enqueue_script('jquery-ui-dialog');
         wp_enqueue_script(
             'publishpress-future-future-actions',
-            Container::getInstance()->get(ServicesAbstract::BASE_URL) . '/assets/js/future-actions.js',
-            ['jquery', 'jquery-ui-dialog'],
+            Plugin::getScriptUrl('futureActions'),
+            [
+                'jquery',
+                'jquery-ui-dialog',
+            ],
             PUBLISHPRESS_FUTURE_VERSION,
             true
         );
@@ -438,6 +442,13 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         }
 
         return $this->hooks->applyFilters('action_scheduler_list_table_column_args', $columnHtml, $row);
+    }
+
+    public function column_recurrence( $row ) {
+        $action = $this->store->fetch_action( $row['ID'] );
+        $html = $this->get_recurrence( $action );
+
+        return $this->hooks->applyFilters('action_scheduler_list_table_column_recurrence', $html, $row);
     }
 
     private function render_expiration_hook_args(array $row)
