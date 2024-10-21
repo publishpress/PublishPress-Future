@@ -25,6 +25,11 @@ export function WorkflowData() {
                 type: "datetime",
                 label: "Modification Date",
             },
+            {
+                name: "steps",
+                type: "node",
+                label: "Steps",
+            }
         ],
     };
 }

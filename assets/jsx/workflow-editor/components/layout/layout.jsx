@@ -2,6 +2,7 @@ import { FullscreenMode } from "@wordpress/interface";
 import { WorkflowEditorInterface } from "./interface";
 import { useSelect } from "@wordpress/data";
 import { useEffect } from "@wordpress/element";
+import { PluginArea } from '@wordpress/plugins';
 import { addBodyClasses, removeBodyClasses } from "../../utils";
 import { store as editorStore } from "../editor-store";
 import { ReactFlowProvider } from "reactflow";
@@ -22,11 +23,13 @@ export function WorkflowEditorLayout() {
         isFullscreenActive,
         isInserterOpened,
         isWelcomeGuideActive,
+        isPro,
     } = useSelect((select) => {
         return {
             isFullscreenActive: select(editorStore).isFeatureActive(FEATURE_FULLSCREEN_MODE),
             isInserterOpened: select(editorStore).isFeatureActive(FEATURE_INSERTER),
             isWelcomeGuideActive: select(editorStore).isFeatureActive(FEATURE_WELCOME_GUIDE),
+            isPro: select(editorStore).isPro(),
         }
     });
 
@@ -36,6 +39,10 @@ export function WorkflowEditorLayout() {
 
     useEffect(() => {
         const bodyClasses = ['workflow-editor'];
+
+        bodyClasses.push(
+            isPro ? 'is-pro' : 'is-free'
+        );
 
         addBodyClasses(bodyClasses);
 
@@ -68,6 +75,8 @@ export function WorkflowEditorLayout() {
                 )}
 
             </ReactFlowProvider>
+
+            <PluginArea scope="future-workflow-editor" />
         </SlotFillProvider>
     );
 }

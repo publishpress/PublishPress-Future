@@ -23,7 +23,7 @@ import ExclamationIcon from './icons/exclamation';
 import LockIcon from './icons/lock';
 import ShopIcon from './icons/shop';
 
-export function NodeIcon({ icon, showColors = false, className, size = 20}) {
+export function NodeIcon({ icon, showColors = false, className, size = 20, onClick = () => {}, style = {} }) {
 	const iconSrc = icon?.src || icon;
 
 	switch (iconSrc) {
@@ -125,15 +125,16 @@ export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 	});
 
 	const renderedIcon = <Icon icon={icon && icon.src ? icon.src : icon} size={size} />;
-	const style = showColors
+	const spanStyle = showColors
 		? {
+			...style,
 			backgroundColor: icon && icon.background,
 			color: icon && icon.foreground,
 		}
-		: {};
+		: style;
 
 	return (
-		<span style={style} className={mergedClassName}>
+		<span style={spanStyle} className={mergedClassName} onClick={onClick}>
 			{renderedIcon}
 		</span>
 	);

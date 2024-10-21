@@ -12,6 +12,7 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
@@ -141,7 +142,7 @@ class ClassicEditorController implements InitializableInterface
         ) {
             add_meta_box(
                 'expirationdatediv',
-                __('PublishPress Future', 'post-expirator'),
+                __('Future Actions', 'post-expirator'),
                 [$this, 'renderClassicEditorMetabox'],
                 $postType,
                 'side',
@@ -301,7 +302,7 @@ class ClassicEditorController implements InitializableInterface
 
         wp_enqueue_script(
             'publishpress-future-classic-editor',
-            POSTEXPIRATOR_BASEURL . 'assets/js/classic-editor.js',
+            Plugin::getScriptUrl('classicEditor'),
             [
                 'wp-i18n',
                 'wp-components',
@@ -364,8 +365,9 @@ class ClassicEditorController implements InitializableInterface
                 'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
                 'strings' => [
                     'category' => __('Category', 'post-expirator'),
-                    'panelTitle' => __('PublishPress Future', 'post-expirator'),
+                    'panelTitle' => __('Future Actions', 'post-expirator'),
                     'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
+                    'futureActions' => __('Future Actions', 'post-expirator'),
                     'action' => __('Action', 'post-expirator'),
                     'showCalendar' => __('Show Calendar', 'post-expirator'),
                     'hideCalendar' => __('Hide Calendar', 'post-expirator'),

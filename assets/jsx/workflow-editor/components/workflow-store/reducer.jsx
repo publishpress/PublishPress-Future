@@ -24,6 +24,7 @@ export const DEFAULT_STATE = {
         debugRayShowQueries: false,
         debugRayShowEmails: false,
         debugRayShowWordPressErrors: false,
+        debugRayShowCurrentRunningStep: false,
     },
     editedWorkflowAttributes: {},
     nodes: [],
@@ -118,6 +119,15 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
             name: 'trigger',
             label: 'Activating Trigger',
             type: 'node',
+            runtimeOnly: true,
+        }
+    });
+
+    state = setGlobalVariable(state, {
+        payload: {
+            name: 'trace',
+            label: 'Execution Trace',
+            type: 'array',
             runtimeOnly: true,
         }
     });

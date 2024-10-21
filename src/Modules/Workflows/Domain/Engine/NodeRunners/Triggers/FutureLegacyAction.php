@@ -8,7 +8,7 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacy
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
-
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 class FutureLegacyAction implements NodeTriggerRunnerInterface
 {
     /**
@@ -27,21 +27,23 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
     private $workflowId;
 
     /**
-     * @var array
-     */
-    private $contextVariables;
-
-    /**
      * @var NodeRunnerProcessorInterface
      */
     private $nodeRunnerProcessor;
 
+    /**
+     * @var RuntimeVariablesHandlerInterface
+     */
+    private $variablesHandler;
+
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerProcessorInterface $nodeRunnerProcessor
+        NodeRunnerProcessorInterface $nodeRunnerProcessor,
+        RuntimeVariablesHandlerInterface $variablesHandler
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->variablesHandler = $variablesHandler;
     }
 
     public static function getNodeTypeName(): string
@@ -49,11 +51,10 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
         return NodeTypeFutureLegacyAction::getNodeTypeName();
     }
 
-    public function setup(int $workflowId, array $step, array $contextVariables = []): void
+    public function setup(int $workflowId, array $step): void
     {
         $this->step = $step;
         $this->workflowId = $workflowId;
-        $this->contextVariables = $contextVariables;
 
         $this->hooks->addAction(HooksAbstract::ACTION_LEGACY_ACTION, [$this, 'triggerCallback'], 10, 3);
     }
@@ -65,15 +66,15 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
             return false;
         }
 
+        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $this->step);
+
         $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
 
-        $contextVariables = $this->contextVariables;
+        $this->variablesHandler->setVariable($nodeSlug, [
+            'post' => new PostResolver($post, $this->hooks),
+        ]);
 
-        $contextVariables[$nodeSlug] = [
-            'post' => new PostResolver($post),
-        ];
-
-        $this->nodeRunnerProcessor->triggerCallbackIsRunning($this->contextVariables);
-        $this->nodeRunnerProcessor->runNextSteps($this->step, $contextVariables);
+        $this->nodeRunnerProcessor->triggerCallbackIsRunning();
+        $this->nodeRunnerProcessor->runNextSteps($this->step);
     }
 }

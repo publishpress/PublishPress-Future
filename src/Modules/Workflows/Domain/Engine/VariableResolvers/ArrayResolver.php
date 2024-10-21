@@ -25,6 +25,10 @@ class ArrayResolver implements VariableResolverInterface
 
     public function getValue(string $propertyName = '')
     {
+        if (empty($propertyName)) {
+            return $this->variable;
+        }
+
         if (isset($this->variable[$propertyName])) {
             return $this->variable[$propertyName];
         }

@@ -56,6 +56,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                         id={handle.id}
                         style={{ left: handle.left}}
                         isConnectable={isConnectable}
+                        className={'handle-target-' + handle.id}
                     />
                 );
             });
@@ -75,6 +76,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                         id={handle.id}
                         style={{ left: handle.left }}
                         isConnectable={isConnectable}
+                        className={'handle-source-' + handle.id}
                     />
                 );
             });
@@ -83,7 +85,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                 return (
                     <div
                         key={handle.id + 'handleArea'}
-                        className='react-flow__node-handle-name'
+                        className={'react-flow__node-handle-name handle-area-source-' + handle.id}
                     >
                         {handle.label}
                     </div>
@@ -159,7 +161,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                         <div className='react-flow__node-marker-wrapper'>
                             {nodeType.isProFeature && !isPro && (
                                 <div className='react-flow__node-pro-badge'
-                                    title={__('Upgrade to Pro to unlock this feature', 'post-expirator')}
+                                    title={__('Currently this step is being skipped. Upgrade to Pro to unlock this feature.', 'post-expirator')}
                                 >
                                     <NodeIcon icon={'lock'} size={8} />
                                 </div>

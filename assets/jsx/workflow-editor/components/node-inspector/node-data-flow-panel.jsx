@@ -35,14 +35,34 @@ export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
         const dataType = getDataTypeByName(schemaItem.type);
         let properties = null;
 
-        if (dataType.propertiesSchema) {
-            properties = dataType.propertiesSchema.map(property => <li key={`${schemaItem.name}${property.name}`}><code>{property.name}</code></li>);
+        if (dataType && dataType.propertiesSchema) {
+            properties = dataType.propertiesSchema.map((property) => {
+                const propertyDataType = getDataTypeByName(property.type);
+
+                if (! propertyDataType || ! propertyDataType.propertiesSchema) {
+                    return (
+                        <li key={`${schemaItem.name}${property.name}-li`}>
+                            <code>{property.name}</code>
+                        </li>
+                    );
+                }
+
+                return (
+                    <li key={`${schemaItem.name}${property.name}-li`}>
+                        <Variable schemaItem={property} />
+                    </li>
+                );
+            });
         }
 
         return (
             <>
-                <div onClick={togglePopover} className="workflow-editor-data-flow-variable">
-                    <NodeIcon icon={isOpen ? 'arrow-down' : 'arrow-right'} />
+                <div className="workflow-editor-data-flow-variable">
+                    <NodeIcon
+                        icon={isOpen ? 'arrow-down' : 'arrow-right'}
+                        onClick={togglePopover}
+                        style={{cursor: 'pointer'}}
+                    />
                     <code>{prefix}{schemaItem.name}</code>
 
                     {isOpen && properties && (

@@ -3,6 +3,7 @@
 
 namespace Tests\Modules\Workflows\Domain\Engine\VariableResolvers;
 
+use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
 use stdClass;
 use Tests\Support\UnitTester;
@@ -32,7 +33,9 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
     public function testGetTypeReturnsCorrectType(): void
     {
-        $resolver = new PostResolver(new stdClass);
+        $hooks = new HooksFacade();
+
+        $resolver = new PostResolver(new stdClass, $hooks);
 
         $this->assertEquals('post', $resolver->getType());
     }
@@ -42,7 +45,9 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $post = new stdClass();
         $post->ID = 23;
 
-        $resolver = new PostResolver($post);
+        $hooks = new HooksFacade();
+
+        $resolver = new PostResolver($post, $hooks);
 
         $this->assertEquals('23', $resolver->getValueAsString('ID'));
         $this->assertEquals('23', $resolver->getValueAsString('id'));
@@ -52,7 +57,9 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
     {
         $post = new stdClass();
 
-        $resolver = new PostResolver($post);
+        $hooks = new HooksFacade();
+
+        $resolver = new PostResolver($post, $hooks);
 
         $this->assertEquals('', $resolver->getValueAsString('non_existent_key'));
     }
@@ -62,7 +69,9 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $post = new stdClass();
         $post->ID = null;
 
-        $resolver = new PostResolver($post);
+        $hooks = new HooksFacade();
+
+        $resolver = new PostResolver($post, $hooks);
 
         $this->assertEquals('', $resolver->getValueAsString('ID'));
     }
@@ -72,7 +81,9 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $post = new stdClass();
         $post->ID = '';
 
-        $resolver = new PostResolver($post);
+        $hooks = new HooksFacade();
+
+        $resolver = new PostResolver($post, $hooks);
 
         $this->assertEquals('', $resolver->getValueAsString('ID'));
     }
@@ -82,7 +93,9 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $post = new stdClass();
         $post->ID = false;
 
-        $resolver = new PostResolver($post);
+        $hooks = new HooksFacade();
+
+        $resolver = new PostResolver($post, $hooks);
 
         $this->assertEquals('', $resolver->getValueAsString('ID'));
     }
@@ -92,7 +105,9 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $post = new stdClass();
         $post->ID = 23;
 
-        $resolver = new PostResolver($post);
+        $hooks = new HooksFacade();
+
+        $resolver = new PostResolver($post, $hooks);
 
         $this->assertTrue(isset($resolver->ID));
         $this->assertTrue(isset($resolver->id));
@@ -102,7 +117,9 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
     {
         $post = new stdClass();
 
-        $resolver = new PostResolver($post);
+        $hooks = new HooksFacade();
+
+        $resolver = new PostResolver($post, $hooks);
 
         $this->assertFalse(isset($resolver->non_existent_key));
     }
@@ -112,7 +129,9 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $post = new stdClass();
         $post->ID = 23;
 
-        $resolver = new PostResolver($post);
+        $hooks = new HooksFacade();
+
+        $resolver = new PostResolver($post, $hooks);
 
         $resolver->ID = 24;
 
@@ -124,7 +143,9 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $post = new stdClass();
         $post->ID = 23;
 
-        $resolver = new PostResolver($post);
+        $hooks = new HooksFacade();
+
+        $resolver = new PostResolver($post, $hooks);
 
         unset($resolver->ID);
 
@@ -136,7 +157,9 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $post = new stdClass();
         $post->ID = 23;
 
-        $resolver = new PostResolver($post);
+        $hooks = new HooksFacade();
+
+        $resolver = new PostResolver($post, $hooks);
 
         $this->assertEquals('23', (string)$resolver);
     }
@@ -146,8 +169,24 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $post = new stdClass();
         $post->ID = 23;
 
-        $resolver = new PostResolver($post);
+        $hooks = new HooksFacade();
+
+        $resolver = new PostResolver($post, $hooks);
 
         $this->assertEquals(['type' => 'post', 'value' => 23], $resolver->compact());
+    }
+
+    public function testGetContentReturnsCorrectValue(): void
+    {
+        $post = new stdClass();
+        $post->ID = 23;
+        $post->post_content = '<p>Test content</p>';
+
+        $hooks = new HooksFacade();
+
+        $resolver = new PostResolver($post, $hooks);
+
+        $this->assertEquals('Test content', $resolver->getValue('post_content_text'));
+        $this->assertEquals("<p>Test content</p>\n", $resolver->getValue('post_content'));
     }
 }

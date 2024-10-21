@@ -138,13 +138,18 @@ class PostModel implements PostModelInterface
             // FIXME: Fix this for the new args table
             $query = "SELECT scheduled_date_gmt, args, extended_args
                 FROM {$wpdb->prefix}actionscheduler_actions
-                WHERE (extended_args->'$[0].contextVariables.global.trigger.value.name' = %s)
-                    OR (args->'$[0].contextVariables.global.trigger.value.name' = %s)
+                WHERE (JSON_EXTRACT(extended_args, '$[0].contextVariables.global.trigger.value.name') = %s)
+                    OR (JSON_EXTRACT(args, '$[0].contextVariables.global.trigger.value.name') = %s)
+                    OR (JSON_EXTRACT(extended_args, '$[0].runtimeVariables.global.trigger.value.name') = %s)
+                    OR (JSON_EXTRACT(args, '$[0].runtimeVariables.global.trigger.value.name') = %s)
                 AND status = 'pending'
                 AND hook = %s
             ";
             $query = $wpdb->prepare(
                 $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                'trigger/core.manually-enabled-for-post',
+                'trigger/core.manually-enabled-for-post',
+                'trigger/core.manually-enabled-for-post',
                 'trigger/core.manually-enabled-for-post',
                 HooksAbstract::ACTION_ASYNC_EXECUTE_NODE
             );
@@ -162,17 +167,17 @@ class PostModel implements PostModelInterface
         foreach ($actionsForWorkflows as $action) {
             $args = json_decode($action['extended_args'], true);
 
-            if (! isset($args[0]['contextVariables']['global']['trigger']['value']['slug'])) {
+            if (! isset($args[0]['runtimeVariables']['global']['trigger']['value']['slug'])) {
                 continue;
             }
 
-            $triggerSlug = $args[0]['contextVariables']['global']['trigger']['value']['slug'];
+            $triggerSlug = $args[0]['runtimeVariables']['global']['trigger']['value']['slug'];
 
-            if (! isset($args[0]['contextVariables'][$triggerSlug]['postId'])) {
+            if (! isset($args[0]['runtimeVariables'][$triggerSlug]['postId'])) {
                 continue;
             }
 
-            $postId = $args[0]['contextVariables'][$triggerSlug]['postId']['value'];
+            $postId = $args[0]['runtimeVariables'][$triggerSlug]['postId']['value'];
 
             if ($postId !== $this->post->ID) {
                 continue;

@@ -6,7 +6,7 @@ interface WorkflowEngineInterface
 {
     public function start();
 
-    public function getVariablesHandler(): WorkflowVariablesHandlerInterface;
+    public function getVariablesHandler(): RuntimeVariablesHandlerInterface;
 
     public function setCurrentAsyncActionId($actionId);
 

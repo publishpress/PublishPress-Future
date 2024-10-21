@@ -12,6 +12,7 @@ use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 
 class CoreOnSavePost implements NodeTriggerRunnerInterface
 {
@@ -28,11 +29,6 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
     private $step;
 
     /**
-     * @var array
-     */
-    private $contextVariables;
-
-    /**
      * @var NodeRunnerProcessorInterface
      */
     private $nodeRunnerProcessor;
@@ -47,15 +43,22 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
      */
     private $workflowId;
 
+    /**
+     * @var RuntimeVariablesHandlerInterface
+     */
+    private $variablesHandler;
+
 
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
-        InputValidatorsInterface $postQueryValidator
+        InputValidatorsInterface $postQueryValidator,
+        RuntimeVariablesHandlerInterface $variablesHandler
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->postQueryValidator = $postQueryValidator;
+        $this->variablesHandler = $variablesHandler;
     }
 
     public static function getNodeTypeName(): string
@@ -63,10 +66,9 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
         return NodeTypeCoreOnSavePost::getNodeTypeName();
     }
 
-    public function setup(int $workflowId, array $step, array $contextVariables = []): void
+    public function setup(int $workflowId, array $step): void
     {
         $this->step = $step;
-        $this->contextVariables = $contextVariables;
         $this->workflowId = $workflowId;
 
         $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'triggerCallback'], 10, 3);
@@ -98,17 +100,17 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
             return false;
         }
 
+        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $this->step);
+
         $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
 
-        $contextVariables = $this->contextVariables;
-
-        $contextVariables[$nodeSlug] = [
+        $this->variablesHandler->setVariable($nodeSlug, [
             'postId' => new IntegerResolver($postId),
-            'post' => new PostResolver($post),
+            'post' => new PostResolver($post, $this->hooks),
             'update' => new BooleanResolver($update),
-        ];
+        ]);
 
-        $this->nodeRunnerProcessor->triggerCallbackIsRunning($this->contextVariables);
-        $this->nodeRunnerProcessor->runNextSteps($this->step, $contextVariables);
+        $this->nodeRunnerProcessor->triggerCallbackIsRunning();
+        $this->nodeRunnerProcessor->runNextSteps($this->step);
     }
 }

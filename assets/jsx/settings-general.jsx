@@ -12,9 +12,7 @@ import {
 
 import { createRoot } from 'react-dom/client';
 
-import {
-    text,
-} from "&config.settings-general";
+const { text } = window.publishpressFutureSettingsGeneralConfig;
 
 const SettingsFormPanel = (props) => {
     const [isValidForm, setIsValidForm] = useState(true);
@@ -71,6 +69,9 @@ const SettingsFormPanel = (props) => {
 };
 
 const container = document.getElementById("expiration-date-preview");
-const component = (<SettingsFormPanel />);
 
-createRoot(container).render(component);
+if (container) {
+    const component = (<SettingsFormPanel />);
+
+    createRoot(container).render(component);
+}

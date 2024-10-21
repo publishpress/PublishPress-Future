@@ -10,7 +10,6 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\ModuleInterface as ModuleInterface;
-use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\NoticeInterface;
 use PublishPress\Future\Modules\Expirator\Controllers\PluginsListController;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
@@ -22,7 +21,6 @@ use PublishPress\Future\Modules\Expirator\Migrations\V30104ArgsColumnLength;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\Migrations\V40000WorkflowScheduledStepsSchema;
-use WpOrg\Requests\Hooks;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -359,5 +357,15 @@ class Plugin implements InitializableInterface
         }
 
         $submenu['publishpress-future'] = $futureMenu;
+    }
+
+    public static function getScriptUrl($script)
+    {
+        $extension = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '.js' : '.min.js';
+
+        $container = Container::getInstance();
+        $baseUrl = $container->get(ServicesAbstract::BASE_URL);
+
+        return $baseUrl . 'assets/js/' . $script . $extension;
     }
 }

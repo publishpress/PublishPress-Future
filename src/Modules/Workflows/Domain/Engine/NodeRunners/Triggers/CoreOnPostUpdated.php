@@ -11,7 +11,7 @@ use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
-
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 class CoreOnPostUpdated implements NodeTriggerRunnerInterface
 {
     use InfiniteLoopPreventer;
@@ -25,11 +25,6 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
      * @var array
      */
     private $step;
-
-    /**
-     * @var array
-     */
-    private $contextVariables;
 
     /**
      * @var NodeRunnerProcessorInterface
@@ -46,14 +41,21 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
      */
     private $workflowId;
 
+    /**
+     * @var RuntimeVariablesHandlerInterface
+     */
+    private $variablesHandler;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
-        InputValidatorsInterface $postQueryValidator
+        InputValidatorsInterface $postQueryValidator,
+        RuntimeVariablesHandlerInterface $variablesHandler
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->postQueryValidator = $postQueryValidator;
+        $this->variablesHandler = $variablesHandler;
     }
 
     public static function getNodeTypeName(): string
@@ -61,10 +63,9 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
         return NodeTypeCoreOnPostUpdated::getNodeTypeName();
     }
 
-    public function setup(int $workflowId, array $step, array $contextVariables = []): void
+    public function setup(int $workflowId, array $step): void
     {
         $this->step = $step;
-        $this->contextVariables = $contextVariables;
         $this->workflowId = $workflowId;
 
         $this->hooks->addAction(HooksAbstract::ACTION_POST_UPDATED, [$this, 'triggerCallback'], 10, 3);
@@ -87,6 +88,8 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
             return;
         }
 
+        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $this->step);
+
         $postQueryArgs = [
             'post' => $postBefore,
             'node' => $this->step['node'],
@@ -98,15 +101,13 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
 
         $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
 
-        $contextVariables = $this->contextVariables;
-
-        $contextVariables[$nodeSlug] = [
+        $this->variablesHandler->setVariable($nodeSlug, [
             'postId' => new IntegerResolver($postId),
-            'postBefore' => new PostResolver($postBefore),
-            'postAfter' => new PostResolver($postAfter),
-        ];
+            'postBefore' => new PostResolver($postBefore, $this->hooks),
+            'postAfter' => new PostResolver($postAfter, $this->hooks),
+        ]);
 
-        $this->nodeRunnerProcessor->triggerCallbackIsRunning($this->contextVariables);
-        $this->nodeRunnerProcessor->runNextSteps($this->step, $contextVariables);
+        $this->nodeRunnerProcessor->triggerCallbackIsRunning();
+        $this->nodeRunnerProcessor->runNextSteps($this->step);
     }
 }

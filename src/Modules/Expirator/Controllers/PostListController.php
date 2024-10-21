@@ -189,7 +189,7 @@ class PostListController implements InitializableInterface
                 'postexpirator-edit',
                 POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
                 false,
-                POSTEXPIRATOR_VERSION
+                PUBLISHPRESS_FUTURE_VERSION
             );
         }
     }

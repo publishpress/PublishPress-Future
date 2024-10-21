@@ -8,6 +8,7 @@ namespace PublishPress\Future\Modules\Settings\Controllers;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreAbstractHooks;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
@@ -150,25 +151,25 @@ class Controller implements InitializableInterface
             'pe-footer',
             POSTEXPIRATOR_BASEURL . 'assets/css/footer.css',
             false,
-            POSTEXPIRATOR_VERSION
+            PUBLISHPRESS_FUTURE_VERSION
         );
         wp_enqueue_style(
             'pe-settings',
             POSTEXPIRATOR_BASEURL . 'assets/css/settings.css',
             ['pe-footer'],
-            POSTEXPIRATOR_VERSION
+            PUBLISHPRESS_FUTURE_VERSION
         );
         wp_enqueue_style(
             'pe-jquery-ui',
             POSTEXPIRATOR_BASEURL . 'assets/css/lib/jquery-ui/jquery-ui.min.css',
             ['pe-settings'],
-            POSTEXPIRATOR_VERSION
+            PUBLISHPRESS_FUTURE_VERSION
         );
         wp_enqueue_style(
             'pp-wordpress-banners-style',
             POSTEXPIRATOR_BASEURL . 'assets/vendor/wordpress-banners/css/style.css',
             false,
-            POSTEXPIRATOR_VERSION
+            PUBLISHPRESS_FUTURE_VERSION
         );
 
         // phpcs:disable WordPress.Security.NonceVerification.Recommended
@@ -182,9 +183,18 @@ class Controller implements InitializableInterface
             //phpcs:enable WordPress.Security.NonceVerification.Recommended
             wp_enqueue_script(
                 'publishpressfuture-settings-panel',
-                POSTEXPIRATOR_BASEURL . 'assets/js/settings-post-types.js',
-                ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-element', 'wp-hooks', 'wp-api-fetch', 'wp-html-entities'],
-                POSTEXPIRATOR_VERSION,
+                Plugin::getScriptUrl('settingsPostTypes'),
+                [
+                    'wp-i18n',
+                    'wp-components',
+                    'wp-url',
+                    'wp-data',
+                    'wp-element',
+                    'wp-hooks',
+                    'wp-api-fetch',
+                    'wp-html-entities',
+                ],
+                PUBLISHPRESS_FUTURE_VERSION,
                 true
             );
 
@@ -270,7 +280,7 @@ class Controller implements InitializableInterface
             //phpcs:enable WordPress.Security.NonceVerification.Recommended
             wp_enqueue_script(
                 'publishpressfuture-settings-general-panel',
-                POSTEXPIRATOR_BASEURL . 'assets/js/settings-general.js',
+                Plugin::getScriptUrl('settingsGeneral'),
                 [
                     'wp-i18n',
                     'wp-components',
@@ -281,7 +291,7 @@ class Controller implements InitializableInterface
                     'wp-api-fetch',
                     'wp-html-entities'
                 ],
-                POSTEXPIRATOR_VERSION,
+                PUBLISHPRESS_FUTURE_VERSION,
                 true
             );
 
@@ -304,9 +314,15 @@ class Controller implements InitializableInterface
         if (! isset($_GET['tab']) || $_GET['tab'] === 'advanced') {
             wp_enqueue_script(
                 'publishpress-future-settings-advanced-panel',
-                POSTEXPIRATOR_BASEURL . 'assets/js/settings-advanced.js',
-                ['wp-components', 'wp-url', 'wp-data', 'wp-element', 'wp-api-fetch'],
-                POSTEXPIRATOR_VERSION,
+                Plugin::getScriptUrl('settingsAdvanced'),
+                [
+                    'wp-components',
+                    'wp-url',
+                    'wp-data',
+                    'wp-element',
+                    'wp-api-fetch',
+                ],
+                PUBLISHPRESS_FUTURE_VERSION,
                 true
             );
 

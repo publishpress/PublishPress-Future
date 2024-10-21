@@ -11,115 +11,91 @@ msgstr ""
 "PO-Revision-Date: 2024-09-16T16:18:09+00:00\n"
 "Language: \n"
 
-#: components/data-fields/date-offset.jsx:72
+#: components/data-fields/date-offset.jsx:75
 msgid "As soon as possible"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:73
+#: components/data-fields/date-offset.jsx:76
 msgid "On a specific date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:74
+#: components/data-fields/date-offset.jsx:77
 msgid "Relative to a specific date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:78
+#: components/data-fields/date-offset.jsx:81
 msgid "Selected in the calendar"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:79
+#: components/data-fields/date-offset.jsx:82
 msgid "When the trigger is activated"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:80
+#: components/data-fields/date-offset.jsx:83
 msgid "When the step is activated"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:100
+#: components/data-fields/recurrence.jsx:15
 msgid "Non-repeating"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:101
+#: components/data-fields/recurrence.jsx:16
 msgid "Custom interval in seconds"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:106
-msgid "Forever"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:107
-msgid "Specific date"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:108
-msgid "For a number of times"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:155
+#: components/data-fields/date-offset.jsx:138
 msgid "When to run"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:164
+#: components/data-fields/date-offset.jsx:147
 msgid "Date source"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:180
+#: components/data-fields/date-offset.jsx:163
 msgid "Offset"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:187
+#: components/data-fields/date-offset.jsx:170
 msgid "Date Preview"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:188
+#: components/data-fields/date-offset.jsx:171
 msgid "Current Date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:189
+#: components/data-fields/date-offset.jsx:172
 msgid "Computed Date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:198
+#: components/data-fields/date-offset.jsx:181
 msgid "Error: "
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:203
+#: components/data-fields/date-offset.jsx:186
 msgid "Click for more information"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:211
+#: components/data-fields/date-offset.jsx:194
 msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:232
+#: components/data-fields/date-offset.jsx:216
 msgid "Repeating Action"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:240
-msgid "Interval in seconds"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:249
-msgid "Repeat until"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:257
-msgid "Times to repeat"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:277
+#: components/data-fields/date-offset.jsx:230
 msgid "Unique ID Expression"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:280
+#: components/data-fields/date-offset.jsx:233
 msgid "Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}} or {{global.user.ID}} to make sure the ID is unique."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:286
+#: components/data-fields/date-offset.jsx:239
 msgid "Priority"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:289
+#: components/data-fields/date-offset.jsx:242
 msgid "Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first."
 msgstr ""
 
@@ -229,31 +205,26 @@ msgstr ""
 msgid "Pro"
 msgstr ""
 
-#: components/inspector-card/index.jsx:59
-#: components/secondary-sidebar/node-card.jsx:35
-msgid "Upgrade to Pro to unlock this feature."
-msgstr ""
-
-#: components/layout/header.jsx:132
+#: components/layout/header.jsx:133
 msgid "Add"
 msgstr ""
 
-#: components/layout/header.jsx:132
+#: components/layout/header.jsx:133
 msgid "Close"
 msgstr ""
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/layout/header.jsx:143
-#: components/layout/header.jsx:148
+#: components/layout/header.jsx:144
+#: components/layout/header.jsx:149
 msgid "Auto Layout"
 msgstr ""
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/layout/header.jsx:160
+#: components/layout/header.jsx:161
 msgid "Upgrade to Pro and unlock more features"
 msgstr ""
 
-#: components/layout/header.jsx:163
+#: components/layout/header.jsx:164
 msgid "Upgrade to Pro"
 msgstr ""
 
@@ -432,39 +403,39 @@ msgstr ""
 msgid "The connection between nodes in the workflow. Signifies the path along which data or control flow one node to another."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:63
+#: components/node-inspector/node-data-flow-panel.jsx:83
 msgid "Step Data Flow"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:65
+#: components/node-inspector/node-data-flow-panel.jsx:85
 msgid "Inputs"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:69
+#: components/node-inspector/node-data-flow-panel.jsx:89
 msgid "This step receives the following input from previous step:"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:80
+#: components/node-inspector/node-data-flow-panel.jsx:100
 msgid "This step does not receive any input from previous step."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:85
+#: components/node-inspector/node-data-flow-panel.jsx:105
 msgid "Outputs"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:89
+#: components/node-inspector/node-data-flow-panel.jsx:109
 msgid "This step outputs the following data:"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:100
+#: components/node-inspector/node-data-flow-panel.jsx:120
 msgid "This step does not output any data."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:105
+#: components/node-inspector/node-data-flow-panel.jsx:125
 msgid "Global Variables"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:109
+#: components/node-inspector/node-data-flow-panel.jsx:129
 msgid "No global variables are declared"
 msgstr ""
 
@@ -472,11 +443,7 @@ msgstr ""
 msgid "No description"
 msgstr ""
 
-#: components/node-types/generic.jsx:162
-msgid "Upgrade to Pro to unlock this feature"
-msgstr ""
-
-#: components/node-types/generic.jsx:170
+#: components/node-types/generic.jsx:172
 msgid "This node has errors"
 msgstr ""
 
@@ -620,7 +587,7 @@ msgstr ""
 msgid "Easily add new steps by clicking on a step's handle and dragging it. Drop it in the workflow pane to see a floating inserter where you can type and search for the step you need."
 msgstr ""
 
-#: components/settings-sidebar/plugin-sidebar.jsx:34
+#: components/settings-sidebar/plugin-sidebar.jsx:39
 msgid "(no name)"
 msgstr ""
 
@@ -651,23 +618,23 @@ msgstr ""
 msgid "Get started"
 msgstr ""
 
-#: components/workflow-debug-ray-panel/index.jsx:47
+#: components/workflow-debug-ray-panel/index.jsx:50
 msgid "Ray Debug"
 msgstr ""
 
-#: components/workflow-debug-ray-panel/index.jsx:52
+#: components/workflow-debug-ray-panel/index.jsx:55
 msgid "Enable or disable the different types of debug information that is shown in Ray when this workflow is activated."
 msgstr ""
 
-#: components/workflow-debug-ray-panel/index.jsx:56
+#: components/workflow-debug-ray-panel/index.jsx:59
 msgid "Show Queries"
 msgstr ""
 
-#: components/workflow-debug-ray-panel/index.jsx:63
+#: components/workflow-debug-ray-panel/index.jsx:66
 msgid "Show Emails"
 msgstr ""
 
-#: components/workflow-debug-ray-panel/index.jsx:70
+#: components/workflow-debug-ray-panel/index.jsx:73
 msgid "Show WordPress Errors"
 msgstr ""
 
@@ -726,48 +693,48 @@ msgstr ""
 msgid "Saved"
 msgstr ""
 
-#: components/workflow-store/actions.jsx:29
+#: components/workflow-store/actions.jsx:30
 msgid "Unable to create a new workflow. Please try again."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:48
+#: components/workflow-store/actions.jsx:49
 msgid "Unable to load the workflow. Please try again."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:86
+#: components/workflow-store/actions.jsx:87
 msgid "Workflow saved as draft."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:94
-#: components/workflow-store/actions.jsx:131
+#: components/workflow-store/actions.jsx:95
+#: components/workflow-store/actions.jsx:132
 msgid "Unable to save workflow. Please, try again."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:123
+#: components/workflow-store/actions.jsx:124
 msgid "Workflow saved."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:168
+#: components/workflow-store/actions.jsx:169
 msgid "Workflow published."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:176
+#: components/workflow-store/actions.jsx:177
 msgid "Unable to publish the workflow. Please, try again."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:213
+#: components/workflow-store/actions.jsx:214
 msgid "Workflow switched to draft."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:221
+#: components/workflow-store/actions.jsx:222
 msgid "Unable to switch workflow to draft. Please, try again."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:311
+#: components/workflow-store/actions.jsx:312
 msgid "Workflow deleted. Redirecting..."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:322
+#: components/workflow-store/actions.jsx:323
 msgid "Unable to delete the workflow. Please, try again."
 msgstr ""
 
@@ -793,4 +760,38 @@ msgstr ""
 
 #: components/workflow-switch-to-draft-button/index.jsx:56
 msgid "Switch to draft"
+msgstr ""
+
+#: components/inspector-card/index.jsx:59
+#: components/node-types/generic.jsx:164
+#: components/secondary-sidebar/node-card.jsx:35
+msgid "Currently this step is being skipped. Upgrade to Pro to unlock this feature."
+msgstr ""
+
+#: components/data-fields/conditional.jsx:85
+msgid "Edit condition"
+msgstr ""
+
+#: components/data-fields/conditional.jsx:94
+msgid "This conditional will only be evaluated in the Pro version. In the Free version, it will always return true."
+msgstr ""
+
+#: components/data-fields/conditional.jsx:106
+msgid "Condition"
+msgstr ""
+
+#: components/data-fields/conditional.jsx:122
+msgid "Add Group"
+msgstr ""
+
+#: components/data-fields/conditional.jsx:123
+msgid "Add Rule"
+msgstr ""
+
+#: components/pro-feature-button/index.jsx:26
+msgid "Upgrade to Pro to unlock this feature."
+msgstr ""
+
+#: components/workflow-debug-ray-panel/index.jsx:80
+msgid "Show current running step"
 msgstr ""

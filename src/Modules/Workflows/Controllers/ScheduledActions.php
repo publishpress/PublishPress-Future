@@ -3,6 +3,7 @@
 namespace PublishPress\Future\Modules\Workflows\Controllers;
 
 use Closure;
+use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
@@ -134,13 +135,17 @@ class ScheduledActions implements InitializableInterface
         }
 
         if (ScheduledActionModel::argsAreOnNewFormat((array) $args)) {
-            $scheduledStepModel = new WorkflowScheduledStepModel();
-            $scheduledStepModel->loadByActionId($actionModel->getActionId());
+            try {
+                $scheduledStepModel = new WorkflowScheduledStepModel();
+                $scheduledStepModel->loadByActionId($actionModel->getActionId());
 
-            $args = $scheduledStepModel->getArgs();
+                $args = $scheduledStepModel->getArgs();
+            } catch (Exception $e) {
+                return [];
+            }
         }
 
-        if (! isset($args['contextVariables']['global']['workflow'])) {
+        if (! isset($args['runtimeVariables']['global']['workflow'])) {
             return [];
         }
 
@@ -148,7 +153,7 @@ class ScheduledActions implements InitializableInterface
 
         if ($stepIsCompact) {
             $workflowModel = new WorkflowModel();
-            $workflowModel->load($args['contextVariables']['global']['workflow']['value'] ?? 0);
+            $workflowModel->load($args['runtimeVariables']['global']['workflow']['value'] ?? 0);
 
             $step = $workflowModel->getNodeById($args['step']['nodeId']);
         } else {
@@ -229,7 +234,7 @@ class ScheduledActions implements InitializableInterface
                         $args = $scheduledStepModel->getArgs();
                     }
 
-                    if (! isset($args['contextVariables']['global']['workflow'])) {
+                    if (! isset($args['runtimeVariables']['global']['workflow'])) {
                         return $html;
                     }
 
@@ -237,9 +242,9 @@ class ScheduledActions implements InitializableInterface
 
                     // Before v3.4.1 the plugin version was not set in the arguments
                     if (isset($args['pluginVersion'])) {
-                        $workflowId = $args['contextVariables']['global']['workflow']['value'] ?? 0;
+                        $workflowId = $args['runtimeVariables']['global']['workflow']['value'] ?? 0;
                     } else {
-                        $workflowId = $args['contextVariables']['global']['workflow'] ?? 0;
+                        $workflowId = $args['runtimeVariables']['global']['workflow'] ?? 0;
                     }
 
                     $workflowModel = new WorkflowModel();
@@ -320,14 +325,14 @@ class ScheduledActions implements InitializableInterface
 
                     if (isset($args['pluginVersion'])) {
                         $argsText .= '<strong>' . __('Trigger: ', 'post-expirator') . '</strong>'
-                            . $args['contextVariables']['global']['trigger']['value']['label'] . '<br>';
+                            . $args['runtimeVariables']['global']['trigger']['value']['label'] . '<br>';
 
                         // Check if the trigger is related to a post
-                        if (isset($args['contextVariables']['global']['trigger']['value']['slug'])) {
-                            $nodeSlug = $args['contextVariables']['global']['trigger']['value']['slug'];
+                        if (isset($args['runtimeVariables']['global']['trigger']['value']['slug'])) {
+                            $nodeSlug = $args['runtimeVariables']['global']['trigger']['value']['slug'];
 
-                            if (isset($args['contextVariables'][$nodeSlug]['postId'])) {
-                                $postId = $args['contextVariables'][$nodeSlug]['postId']['value'];
+                            if (isset($args['runtimeVariables'][$nodeSlug]['postId'])) {
+                                $postId = $args['runtimeVariables'][$nodeSlug]['postId']['value'];
                                 $post = get_post($postId);
 
                                 if ($post instanceof \WP_Post) {
@@ -340,7 +345,7 @@ class ScheduledActions implements InitializableInterface
                         }
                     } else {
                         $argsText .= '<strong>' . __('Trigger: ', 'post-expirator') . '</strong>'
-                            . $args['contextVariables']['global']['trigger']['label'] . '<br>';
+                            . $args['runtimeVariables']['global']['trigger']['label'] . '<br>';
                     }
 
                     $argsText .= '<strong>' . __('Steps:', 'post-expirator') . '</strong><br>' . $nextNodes;

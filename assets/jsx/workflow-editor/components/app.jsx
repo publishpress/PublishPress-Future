@@ -3,7 +3,6 @@ import { WorkflowEditorLayout } from "./layout/layout";
 import { useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "./workflow-store";
 import { store as editorStore } from "./editor-store";
-import { workflowId, nodeTypeCategories, nodeTypes } from 'future-workflow-editor';
 import {
     PostData,
     BooleanData,
@@ -18,6 +17,8 @@ import {
     NodeData,
     ArrayData
 } from "./data-types";
+
+const { workflowId, nodeTypeCategories, nodeTypes } = window.futureWorkflowEditor;
 
 import "../css/index.css";
 import 'reactflow/dist/style.css';

@@ -10,6 +10,7 @@ use PostExpirator_Facade;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
@@ -85,9 +86,20 @@ class BlockEditorController implements InitializableInterface
         ) {
             wp_enqueue_script(
                 'postexpirator-block-editor',
-                POSTEXPIRATOR_BASEURL . 'assets/js/block-editor.js',
-                ['wp-edit-post', 'wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins'],
-                POSTEXPIRATOR_VERSION,
+                Plugin::getScriptUrl('blockEditor'),
+                [
+                    'wp-edit-post',
+                    'wp-i18n',
+                    'wp-components',
+                    'wp-url',
+                    'wp-data',
+                    'wp-api-fetch',
+                    'wp-element',
+                    'inline-edit-post',
+                    'wp-html-entities',
+                    'wp-plugins',
+                ],
+                PUBLISHPRESS_FUTURE_VERSION,
                 true
             );
 
@@ -115,6 +127,7 @@ class BlockEditorController implements InitializableInterface
                 'publishpressFutureBlockEditorConfig',
                 [
                     'postTypeDefaultConfig' => $postTypeDefaultConfig,
+                    'postId' => $post->ID,
                     'defaultDate' => $defaultExpirationDate['iso'],
                     'is12Hour' => $options->getOption('time_format') !== 'H:i',
                     'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
@@ -127,8 +140,9 @@ class BlockEditorController implements InitializableInterface
                     'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
                     'strings' => [
                         'category' => __('Categories', 'post-expirator'),
-                        'panelTitle' => __('PublishPress Future', 'post-expirator'),
+                        'panelTitle' => __('Future Actions', 'post-expirator'),
                         'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
+                        'futureActions' => __('Future Actions', 'post-expirator'),
                         'action' => __('Action', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
                         'showCalendar' => __('Show Calendar', 'post-expirator'),
