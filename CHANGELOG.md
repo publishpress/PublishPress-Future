@@ -3,16 +3,11 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.0.0] - 17 Oct, 2024
+## [4.0.0] - 21 Oct, 2024
 
 ### Added
 
 - Add the Workflows feature, with the workflow editor and the workflow engine.
-
-### Fixed
-
-- Update post model to update post date when setting post status to publish.
-- Prevent error when the current_post->ID is empty for unknown reasons, usually related to 3rd party plugins.
 
 ### Changes
 
@@ -23,7 +18,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add title to the future action panel for UI consistency (Issue #965)
 - Renamed the PublishPress Future metabox to Future Actions for UI consistency (Issue #965)
 
-### Code changes
+### Fixed
+
+- Update post model to update post date when setting post status to publish.
+- Prevent error when the current_post->ID is empty for unknown reasons, usually related to 3rd party plugins.
+
+### Developers
 
 - Interface `PublishPress\Future\Core\HookableInterface`: Add new method `removeFilter` to remove a hooked filter.
 - Interface `PublishPress\Future\Core\HookableInterface`: Add new method `removeAction` to remove a hooked action.
@@ -33,8 +33,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add new filter 'publishpressfuture_migrations' to filter the list of migrations that will be executed.
 - Call the action 'publishpressfuture_fix_db_schema' when a DB fix is executed from the settings page.
 - Call the action 'publishpressfuture_upgrade_plugin' when the plugin is upgraded.
-- Change the data type from void to int for the method 'PublishPress\Future\Modules\Expirator\Interfaces]CronInterfac::scheduleRecurringAction'.
-- Change the data type from void to int for the method 'PublishPress\Future\Modules\Expirator\Interfaces]CronInterfac::scheduleAsyncAction'.
+- Change the data type from void to int for the method 'PublishPress\Future\Modules\Expirator\Interfaces\CronInterfac::scheduleRecurringAction'.
+- Change the data type from void to int for the method 'PublishPress\Future\Modules\Expirator\Interfaces\CronInterfac::scheduleAsyncAction'.
 - Add new filter 'publishpressfuture_schema_is_healthy' to check if the DB schema is healthy.
 - The method 'PublishPress\Future\Modules\Workflows\Models\WorkflowModel::getStepFromRoutineTreeRecursively' now always returns an array.
 - Add new filter 'action_scheduler_list_table_column_recurrence' to filter the recurrence column in the scheduled actions list.
