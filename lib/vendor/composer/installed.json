@@ -350,17 +350,17 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-release-4.0.0",
-            "version_normalized": "dev-release-4.0.0",
+            "version": "4.0.1",
+            "version_normalized": "4.0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "44bde35a9afb14a55649b949623bb40cfdbdcd7c"
+                "reference": "92b4b6a91cc1bcd03305b566d5b436d333c7a387"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/44bde35a9afb14a55649b949623bb40cfdbdcd7c",
-                "reference": "44bde35a9afb14a55649b949623bb40cfdbdcd7c",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/92b4b6a91cc1bcd03305b566d5b436d333c7a387",
+                "reference": "92b4b6a91cc1bcd03305b566d5b436d333c7a387",
                 "shasum": ""
             },
             "require": {
@@ -396,7 +396,7 @@
                 "wp-cli/wp-cli-bundle": "^2.10",
                 "wp-coding-standards/wpcs": "^3"
             },
-            "time": "2024-10-18T18:56:26+00:00",
+            "time": "2024-10-21T20:16:30+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",
@@ -438,34 +438,34 @@
                 "get:version": [
                     "pbuild version"
                 ],
-                "gen:pot-php": [
+                "build:pot-php": [
                     "wp i18n make-pot . ./languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests,lib,tmp,doc,*.js,*.js.map,*.jsx --allow-root"
                 ],
-                "gen:pot-js": [
+                "build:pot-js": [
                     "bash ./dev-workspace/scripts/lang-make-pot-js.sh"
                 ],
-                "gen:mo": [
+                "build:mo": [
                     "wp i18n make-mo ./languages ./languages --allow-root"
                 ],
-                "gen:po-scripts": [
+                "build:po-scripts": [
                     "bash ./dev-workspace/scripts/lang-update-js-po.sh"
                 ],
-                "gen:po-json": [
+                "build:po-json": [
                     "bash ./dev-workspace/scripts/lang-make-json.sh"
                 ],
-                "gen:pot": [
-                    "@gen:pot-php",
-                    "@gen:pot-js"
+                "build:pot": [
+                    "@build:pot-php",
+                    "@build:pot-js"
                 ],
-                "gen:l10n-php": [
+                "build:l10n-php": [
                     "wp i18n make-php ./languages --allow-root"
                 ],
-                "gen:lang": [
-                    "@gen:pot",
-                    "@gen:mo",
-                    "@gen:po-scripts",
-                    "@gen:po-json",
-                    "@gen:l10n-php",
+                "build:lang": [
+                    "@build:pot",
+                    "@build:mo",
+                    "@build:po-scripts",
+                    "@build:po-json",
+                    "@build:l10n-php",
                     "@cleanup:js-mo"
                 ],
                 "cleanup:js-mo": [
@@ -530,7 +530,7 @@
                     "@fix:cs"
                 ],
                 "prepare": [
-                    "@gen:lang",
+                    "@build:lang",
                     "@build:js"
                 ],
                 "dbox:up": [
@@ -647,7 +647,7 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/release-4.0.0",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/4.0.1",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
             "install-path": "../publishpress/publishpress-future"
