@@ -333,9 +333,9 @@ class WorkflowsList implements InitializableInterface
         return $actions;
     }
 
-    public function addWorkflowStatusToTitle($title, $id)
+    public function addWorkflowStatusToTitle($title, $id = null)
     {
-        if (!function_exists('get_current_screen')) {
+        if (!function_exists('get_current_screen') || empty($id)) {
             return $title;
         }
 
