@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.2] - 21 Oct, 2024
+
+- Fix error when the filter `the_title` is called without an ID, #984
+
 ## [4.0.1] - 21 Oct, 2024
 
 ### Fixed
