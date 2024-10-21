@@ -154,7 +154,9 @@ class Plugin implements InitializableInterface
         $version = get_option('postexpiratorVersion');
 
         if ($version === false) {
+            // Fresh install. Run migrations that create the DB tables.
             $container->get(ServicesAbstract::HOOKS)->doAction(V30000ActionArgsSchema::HOOK);
+            $container->get(ServicesAbstract::HOOKS)->doAction(V40000WorkflowScheduledStepsSchema::HOOK);
         } else {
             if (version_compare($version, '1.6.1') === -1) {
                 update_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);

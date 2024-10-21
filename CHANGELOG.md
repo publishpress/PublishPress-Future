@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.1] - 21 Oct, 2024
+
+### Fixed
+
+- Fix the database schema check for version 4.0.0 on fresh installations, (Issue #928).
+
 ## [4.0.0] - 21 Oct, 2024
 
 ### Added
