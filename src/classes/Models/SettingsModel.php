@@ -3,6 +3,7 @@
 namespace PublishPress\FuturePro\Models;
 
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
@@ -40,10 +41,16 @@ class SettingsModel
      */
     private $customStatusesModel;
 
-    public function __construct(OptionsFacade $options, CustomStatusesModel $customStatusesModel)
+    /**
+     * @var \PublishPress\Future\Modules\Settings\SettingsFacade
+     */
+    private $settings;
+
+    public function __construct(OptionsFacade $options, CustomStatusesModel $customStatusesModel, SettingsFacade $settings)
     {
         $this->options = $options;
         $this->customStatusesModel = $customStatusesModel;
+        $this->settings = $settings;
     }
 
     /**
@@ -275,5 +282,15 @@ class SettingsModel
     public function getMetadataMapping(): array
     {
         return (array)$this->options->getOption(self::OPTION_METADATA_MAPPING, []);
+    }
+
+    public function getStepScheduleCompressedArgsStatus(): bool
+    {
+        return $this->settings->getStepScheduleCompressedArgsStatus();
+    }
+
+    public function getExperimentalFeaturesStatus(): bool
+    {
+        return $this->settings->getExperimentalFeaturesStatus();
     }
 }
