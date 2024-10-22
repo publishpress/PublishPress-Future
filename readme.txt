@@ -175,6 +175,10 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 
 ## [4.0.3] - 22 Oct, 2024
 
+### Changed
+
+- Add the banner notice to the workflows list screen.
+
 ### Fixed
 
 - Fix PHP warning when post attribute is empty in the workflow model (Issue #987, #988).

@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.0.3] - 22 Oct, 2024
 
+### Changed
+
+- Add the banner notice to the workflows list screen.
+
 ### Fixed
 
 - Fix PHP warning when post attribute is empty in the workflow model (Issue #987, #988).
