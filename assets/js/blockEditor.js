@@ -3245,6 +3245,8 @@ module.exports = wp.url;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
 /*!*************************************!*\
   !*** ./assets/jsx/block-editor.jsx ***!
   \*************************************/
@@ -3307,6 +3309,8 @@ var BlockEditorFutureActionPlugin = function BlockEditorFutureActionPlugin() {
 (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_3__.registerPlugin)('publishpress-future-action', {
   render: BlockEditorFutureActionPlugin
 });
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=blockEditor.js.map

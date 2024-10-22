@@ -142,6 +142,8 @@ module.exports = wp.i18n;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
 /*!********************************************!*\
   !*** ./assets/jsx/legacy-action/index.jsx ***!
   \********************************************/
@@ -237,6 +239,8 @@ wp.plugins.registerPlugin('legacy-action-plugin', {
   render: LegacyActionFields,
   scope: 'publishpress-future'
 });
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=legacyAction.js.map

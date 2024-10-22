@@ -3287,6 +3287,8 @@ module.exports = wp.url;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
 /*!***************************************!*\
   !*** ./assets/jsx/classic-editor.jsx ***!
   \***************************************/
@@ -3349,6 +3351,8 @@ if (!(0,_utils__WEBPACK_IMPORTED_MODULE_2__.isGutenbergEnabled)()) {
     (0,react_dom_client__WEBPACK_IMPORTED_MODULE_4__.createRoot)(container).render(component);
   }
 }
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=classicEditor.js.map

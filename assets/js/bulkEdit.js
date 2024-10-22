@@ -3287,6 +3287,8 @@ module.exports = wp.url;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
 /*!**********************************!*\
   !*** ./assets/jsx/bulk-edit.jsx ***!
   \**********************************/
@@ -3385,6 +3387,8 @@ inlineEditPost.setBulk = function (id) {
     wpInlineEditRevert.apply(this, arguments);
   };
 };
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=bulkEdit.js.map

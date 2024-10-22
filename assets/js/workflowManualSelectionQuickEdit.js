@@ -2100,6 +2100,8 @@ module.exports = wp.url;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
 /*!*******************************************************************!*\
   !*** ./assets/jsx/workflow-manual-selection/quick-edit/index.jsx ***!
   \*******************************************************************/
@@ -2167,6 +2169,8 @@ window.inlineEditPost.edit = function (button, id) {
     wpInlineEditProRevert.apply(this, arguments);
   };
 };
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=workflowManualSelectionQuickEdit.js.map

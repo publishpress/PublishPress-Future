@@ -221,6 +221,8 @@ module.exports = wp.element;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
 /*!******************************************!*\
   !*** ./assets/jsx/settings-advanced.jsx ***!
   \******************************************/
@@ -238,6 +240,8 @@ if ('advanced' === settingsTab) {
     root.render(/*#__PURE__*/React.createElement(_workflow_editor_settings_scheduled_steps_cleanup__WEBPACK_IMPORTED_MODULE_1__.ScheduledStepsCleanupSettings, null));
   }
 }
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=settingsAdvanced.js.map
