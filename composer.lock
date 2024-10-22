@@ -2168,12 +2168,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "75c07a2ad1287cd946e1fa92c6f33bdb032d4a85"
+                "reference": "3953c5cac48cc957e79ac3aefc0d039f28ece7d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/75c07a2ad1287cd946e1fa92c6f33bdb032d4a85",
-                "reference": "75c07a2ad1287cd946e1fa92c6f33bdb032d4a85",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/3953c5cac48cc957e79ac3aefc0d039f28ece7d5",
+                "reference": "3953c5cac48cc957e79ac3aefc0d039f28ece7d5",
                 "shasum": ""
             },
             "require": {
@@ -2264,7 +2264,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-21T19:00:41+00:00"
+            "time": "2024-10-21T22:38:03+00:00"
         },
         {
             "name": "gettext/gettext",
@@ -5899,12 +5899,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "b330d66632f48a6a174067dc27910b7471e2ede1"
+                "reference": "0065fd82b89095e2a13871de6b85d1a99906668a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/b330d66632f48a6a174067dc27910b7471e2ede1",
-                "reference": "b330d66632f48a6a174067dc27910b7471e2ede1",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/0065fd82b89095e2a13871de6b85d1a99906668a",
+                "reference": "0065fd82b89095e2a13871de6b85d1a99906668a",
                 "shasum": ""
             },
             "require": {
@@ -5951,7 +5951,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-21T15:29:15+00:00"
+            "time": "2024-10-22T14:24:09+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -12081,9 +12081,9 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "friendsofphp/php-cs-fixer": 20,
-        "giacocorsiglia/wordpress-stubs": 20,
         "publishpress/publishpress-phpcs-standards": 20,
+        "giacocorsiglia/wordpress-stubs": 20,
+        "friendsofphp/php-cs-fixer": 20,
         "rector/rector": 20
     },
     "prefer-stable": false,
@@ -12091,6 +12091,6 @@
     "platform": {
         "php": ">=7.2.5"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }

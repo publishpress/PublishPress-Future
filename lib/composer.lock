@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9aadaeb409ffd5c46fd16123c8ec648b",
+    "content-hash": "ba154c0a01b0956ebe149b3b7514910e",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -341,16 +341,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "4.0.1",
+            "version": "4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "92b4b6a91cc1bcd03305b566d5b436d333c7a387"
+                "reference": "93ff40dc8c438ae55aa95e1d095bcfd38e479da7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/92b4b6a91cc1bcd03305b566d5b436d333c7a387",
-                "reference": "92b4b6a91cc1bcd03305b566d5b436d333c7a387",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/93ff40dc8c438ae55aa95e1d095bcfd38e479da7",
+                "reference": "93ff40dc8c438ae55aa95e1d095bcfd38e479da7",
                 "shasum": ""
             },
             "require": {
@@ -635,10 +635,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/4.0.1",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/4.0.3",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2024-10-21T20:16:30+00:00"
+            "time": "2024-10-22T16:50:28+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
@@ -938,13 +938,13 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "ext-json": "*",
         "php": ">=7.2.5"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }

@@ -58,7 +58,7 @@ class PostsList implements ModuleInterface
         );
     }
 
-    public function addPostColumns($columns, $postType)
+    public function addPostColumns($columns, $postType = 'post')
     {
         if (Module::POST_TYPE_WORKFLOW === $postType) {
             return $columns;
