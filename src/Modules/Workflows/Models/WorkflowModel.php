@@ -250,6 +250,10 @@ class WorkflowModel implements WorkflowModelInterface
     public function getFlow(bool $updateNodes = false): array
     {
         try {
+            if (empty($this->post)) {
+                return [];
+            }
+
             if (empty($this->flow)) {
                 $this->flow = json_decode($this->post->post_content, true);
 
