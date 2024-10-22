@@ -3,9 +3,19 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.3] - 22 Oct, 2024
+
+### Fixed
+
+- Fix PHP warning when post attribute is empty in the workflow model (Issue #987, #988).
+- Fix error when`manage_posts_columns` filter do not receive a post type (Issue #990).
+- Fix error about undefined index: date (Issue #991).
+
 ## [4.0.2] - 21 Oct, 2024
 
-- Fix error when the filter `the_title` is called without an ID, #984
+### Fixed
+
+- Fix error when the filter `the_title` is called without an ID (Issue #984).
 
 ## [4.0.1] - 21 Oct, 2024
 
