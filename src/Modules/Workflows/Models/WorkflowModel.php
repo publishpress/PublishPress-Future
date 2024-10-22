@@ -104,49 +104,86 @@ class WorkflowModel implements WorkflowModelInterface
         $this->debugRayShowCurrentRunningStep = null;
     }
 
+    private function getPostProperty(string $property)
+    {
+        if (empty($this->post)) {
+            return null;
+        }
+
+        return $this->post->$property;
+    }
+
+    private function getPostPropertyAsInt(string $property): int
+    {
+        $value = $this->getPostProperty($property);
+
+        return (int) $value;
+    }
+
+    private function getPostPropertyAsString(string $property): string
+    {
+        $value = $this->getPostProperty($property);
+
+        return (string) $value;
+    }
+
     public function getId(): int
     {
-        return $this->post->ID;
+        return $this->getPostPropertyAsInt('ID');
     }
 
     public function getTitle(): string
     {
+        if (empty($this->post)) {
+            return '';
+        }
+
         return $this->post->post_title;
     }
 
     public function setTitle(string $title)
     {
+        if (empty($this->post)) {
+            return;
+        }
+
         $this->post->post_title = sanitize_text_field($title);
     }
 
     public function getDescription(): string
     {
-        return $this->post->post_excerpt;
+        return $this->getPostPropertyAsString('post_excerpt');
     }
 
     public function setDescription(string $description)
     {
+        if (empty($this->post)) {
+            return;
+        }
+
         $this->post->post_excerpt = $description;
     }
 
     public function getStatus(): string
     {
-        $status = $this->post->post_status;
-
-        if (empty($status)) {
-            return '';
-        }
-
-        return $status;
+        return $this->getPostPropertyAsString('post_status');
     }
 
     public function setStatus(string $status)
     {
+        if (empty($this->post)) {
+            return;
+        }
+
         $this->post->post_status = sanitize_key($status);
     }
 
     public function publish()
     {
+        if (empty($this->post)) {
+            return;
+        }
+
         $this->setStatus(self::STATUS_ENABLED);
         $this->post->post_date = current_time('mysql');
         $this->post->post_date_gmt = current_time('mysql');
@@ -155,17 +192,29 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function unpublish()
     {
+        if (empty($this->post)) {
+            return;
+        }
+
         $this->setStatus(self::STATUS_DISABLED);
         $this->save();
     }
 
     public function isActive(): bool
     {
+        if (empty($this->post)) {
+            return false;
+        }
+
         return $this->post->post_status === self::STATUS_ENABLED;
     }
 
     private function updateLegacyActionMetadata()
     {
+        if (empty($this->post)) {
+            return;
+        }
+
         $this->hasLegacyActionTrigger = $this->checkHasLegacyActionTriggerInTheFlow();
 
         if ($this->hasLegacyActionTrigger) {
@@ -212,11 +261,15 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function getModifiedAt(): string
     {
-        return $this->post->post_modified;
+        return $this->getPostPropertyAsString('post_modified');
     }
 
     public function save()
     {
+        if (empty($this->post)) {
+            return;
+        }
+
         wp_update_post($this->post);
 
         $this->updateLegacyActionMetadata();
@@ -226,6 +279,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function delete()
     {
+        if (empty($this->post)) {
+            return;
+        }
+
         wp_delete_post($this->post->ID);
         $this->reset();
 
@@ -237,6 +294,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     private function getAllNodeTypesByType(): array
     {
+        if (empty($this->post)) {
+            return [];
+        }
+
         if (is_null($this->allNodeTypes)) {
             // Ensure the flow is updated with the latest node types
             // FIXME: Use dependency injection
@@ -445,6 +506,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function convertLegacyScreenshots(): void
     {
+        if (empty($this->post)) {
+            return;
+        }
+
         $existingScreenshotId = get_post_thumbnail_id($this->post->ID);
 
         if ($existingScreenshotId) {
@@ -513,6 +578,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function setScreenshotFromBase64(string $dataImage)
     {
+        if (empty($this->post)) {
+            return;
+        }
+
         $this->deleteLegacyScreenshotFile();
         $this->prepareScreenshotsFolder();
         $this->deleteScreenshotFile();
@@ -554,6 +623,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function getScreenshotUrl($size = 'full'): string
     {
+        if (empty($this->post)) {
+            return '';
+        }
+
         $screenshotDir = $this->getScreenshotsFolder();
         $screenshotFile = $screenshotDir . $this->getScreenshotFileName();
 
@@ -572,6 +645,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function getTriggerNodes(): array
     {
+        if (empty($this->post)) {
+            return [];
+        }
+
         $abstractFlow = $this->getFlow();
 
         if (empty($abstractFlow)) {
@@ -595,6 +672,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function getEdges(): array
     {
+        if (empty($this->post)) {
+            return [];
+        }
+
         $abstractFlow = $this->getFlow();
 
         if (empty($abstractFlow)) {
@@ -606,6 +687,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function getRoutineTree(array $nodeTypes): array
     {
+        if (empty($this->post)) {
+            return [];
+        }
+
         $abstractFlow = $this->getFlow();
 
         if (empty($abstractFlow)) {
@@ -714,6 +799,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function hasLegacyActionTrigger(): bool
     {
+        if (empty($this->post)) {
+            return false;
+        }
+
         if (is_null($this->hasLegacyActionTrigger)) {
             $this->updateLegacyActionMetadata();
         }
@@ -743,6 +832,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function isDebugRayShowQueriesEnabled(): bool
     {
+        if (empty($this->post)) {
+            return false;
+        }
+
         if (null === $this->debugRayShowQueries) {
             $this->debugRayShowQueries = get_post_meta(
                 $this->post->ID,
@@ -756,6 +849,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function isDebugRayShowEmailsEnabled(): bool
     {
+        if (empty($this->post)) {
+            return false;
+        }
+
         if (null === $this->debugRayShowEmails) {
             $this->debugRayShowEmails = get_post_meta(
                 $this->post->ID,
@@ -769,6 +866,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function isDebugRayShowWordPressErrorsEnabled(): bool
     {
+        if (empty($this->post)) {
+            return false;
+        }
+
         if (null === $this->debugRayShowWordPressErrors) {
             $this->debugRayShowWordPressErrors = get_post_meta(
                 $this->post->ID,
@@ -782,6 +883,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function isDebugRayShowCurrentRunningStepEnabled(): bool
     {
+        if (empty($this->post)) {
+            return false;
+        }
+
         if (null === $this->debugRayShowCurrentRunningStep) {
             $this->debugRayShowCurrentRunningStep = get_post_meta(
                 $this->post->ID,
@@ -811,6 +916,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function getManualSelectionLabel(): string
     {
+        if (empty($this->post)) {
+            return '';
+        }
+
         $manualSelectionTrigger = $this->getManualSelectionTrigger();
 
         if (empty($manualSelectionTrigger)) {
@@ -822,6 +931,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function getPartialRoutineTreeFromNodeId(string $nodeId): array
     {
+        if (empty($this->post)) {
+            return [];
+        }
+
         $nodeTypes = $this->nodeTypesModel->getAllNodeTypesByType();
         $routineTree = $this->getRoutineTree($nodeTypes);
 
@@ -855,6 +968,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function getNodeById(string $nodeId): array
     {
+        if (empty($this->post)) {
+            return [];
+        }
+
         $abstractFlow = $this->getFlow();
 
         if (empty($abstractFlow)) {
@@ -875,6 +992,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function getNodes(bool $fullNodes = false): array
     {
+        if (empty($this->post)) {
+            return [];
+        }
+
         $abstractFlow = $this->getFlow();
 
         if (empty($abstractFlow)) {
