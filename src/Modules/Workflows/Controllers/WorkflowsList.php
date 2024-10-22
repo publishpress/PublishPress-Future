@@ -152,9 +152,11 @@ class WorkflowsList implements InitializableInterface
         $columns["workflow_preview"] = __("Preview", "post-expirator");
 
         // Move the date column to the end
-        $date = $columns["date"];
-        unset($columns["date"]);
-        $columns["date"] = $date;
+        if (isset($columns["date"])) {
+            $date = $columns["date"];
+            unset($columns["date"]);
+            $columns["date"] = $date;
+        }
 
         return $columns;
     }
