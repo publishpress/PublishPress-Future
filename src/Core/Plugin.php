@@ -340,8 +340,13 @@ class Plugin implements InitializableInterface
         $settingsSubmenu = $futureMenu[$settingsIndex];
         $actionsSubmenu = $futureMenu[$actionsIndex];
 
-        unset($futureMenu[$actionsIndex]);
-        unset($futureMenu[$settingsIndex]);
+        if (false !== $actionsIndex) {
+            unset($futureMenu[$actionsIndex]);
+        }
+
+        if (false !== $settingsIndex) {
+            unset($futureMenu[$settingsIndex]);
+        }
 
         if (false !== $upgradeToProIndex) {
             $upgradeToProSubmenu = $futureMenu[$upgradeToProIndex];
