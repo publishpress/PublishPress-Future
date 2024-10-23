@@ -148,14 +148,20 @@ class BlockEditorController implements InitializableInterface
                         'showCalendar' => __('Show Calendar', 'post-expirator'),
                         'hideCalendar' => __('Hide Calendar', 'post-expirator'),
                         // translators: the text between {} is the link to the settings page.
-                        'timezoneSettingsHelp' => __('Timezone is controlled by the {WordPress Settings}.', 'post-expirator'),
+                        'timezoneSettingsHelp' => __(
+                            'Timezone is controlled by the {WordPress Settings}.',
+                            'post-expirator'
+                        ),
                         // translators: %s is the name of the taxonomy in plural form.
                         'noTermsFound' => sprintf(
                             // translators: %s is the name of the taxonomy in plural form.
                             __('No %s found.', 'post-expirator'),
                             strtolower($taxonomyPluralName)
                         ),
-                        'noTaxonomyFound' => __('You must assign a taxonomy to this post type to use this feature.', 'post-expirator'),
+                        'noTaxonomyFound' => __(
+                            'You must assign a taxonomy to this post type to use this feature.',
+                            'post-expirator'
+                        ),
                         // translators: %s is the name of the taxonomy in plural form.
                         'newTerms' => __('New %s', 'post-expirator'),
                         // translators: %s is the name of the taxonomy in plural form.
@@ -163,7 +169,10 @@ class BlockEditorController implements InitializableInterface
                         // translators: %s is the name of the taxonomy in plural form.
                         'addTerms' => __('%s to add', 'post-expirator'),
                         // translators: %s is the name of the taxonomy in singular form.
-                        'addTermsPlaceholder' => sprintf(__('Search for %s', 'post-expirator'), strtolower($taxonomyPluralName)),
+                        'addTermsPlaceholder' => sprintf(
+                            __('Search for %s', 'post-expirator'),
+                            strtolower($taxonomyPluralName)
+                        ),
                         'errorActionRequired' => __('Select an action', 'post-expirator'),
                         'errorDateRequired' => __('Select a date', 'post-expirator'),
                         'errorDateInPast' => __('Date cannot be in the past', 'post-expirator'),
