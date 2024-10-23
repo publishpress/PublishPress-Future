@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.4] - 23 Oct, 2024
+
+### Fixed
+
+- Fix the workflows list screen to be shown only to users with `manage_options` capability (Issue #998).
+- Fix compatibility with the "WP Remote User Sync" plugin (Issue #999).
+
 ## [4.0.3] - 22 Oct, 2024
 
 ### Changed
