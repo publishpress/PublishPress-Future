@@ -180,7 +180,8 @@ class ManualPostTrigger implements InitializableInterface
     {
         global $post;
 
-        if (! $post) {
+        if (! $post || is_null($post->ID)) {
+            error_log('Post is null or ID is not set, cannot enqueue block editor scripts.');
             return;
         }
 
@@ -244,7 +245,7 @@ class ManualPostTrigger implements InitializableInterface
                     'get_callback' => function ($post) {
                         $post = get_post();
 
-                        if (! $post) {
+                        if (! $post || is_null($post->ID)) {
                             return [
                                 'enabledWorkflows' => []
                             ];
@@ -281,8 +282,13 @@ class ManualPostTrigger implements InitializableInterface
         }
     }
 
-    public function registerClassicEditorMetabox($postType, $post)
+    public function registerClassicEditorMetabox($postType, $post = null)
     {
+        if (!is_object($post) || is_null($post->ID)) {
+            error_log('Post is null or ID is not set, cannot load workflows.');
+            return;
+        }
+
         if ($this->isBlockEditor) {
             return;
         }
