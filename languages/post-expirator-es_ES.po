@@ -790,17 +790,6 @@ msgstr "No-repetir"
 msgid "No Scheduled Actions."
 msgstr "No hay acciones programadas."
 
-#: src/Modules/ProFeaturesAds/views/actions-workflows-page.html.php:16
-msgid ""
-"PublishPress Future Pro allows you to create custom workflows to update your "
-"content. Your workflows can have multiple actions, schedules, emails, and "
-"more."
-msgstr ""
-"PublishPress Future Pro te permite crear flujos de trabajo personalizados "
-"para actualizar tus contenidos. Tus flujos de trabajo pueden tener múltiples "
-"acciones, programaciones, correos electrónicos y mucho más."
-
-#: src/Modules/ProFeaturesAds/views/actions-workflows-page.html.php:18
 #: src/Modules/VersionNotices/Module.php:125
 #: src/Views/ad-banner-right-sidebar.php:37
 msgid "Upgrade to Pro"
