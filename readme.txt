@@ -173,7 +173,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
 
-## [4.0.4] - 23 Oct, 2024
+## [4.0.4] - 24 Oct, 2024
 
 ### Fixed
 
