@@ -26,6 +26,7 @@ if (! isGutenbergEnabled()) {
         createStore({
             name: storeName,
             defaultState: {
+                postId: document.getElementById('post_ID') ? parseInt(document.getElementById('post_ID').value, 10) : 0,
                 autoEnable: postTypeDefaultConfig.autoEnable,
                 action: postTypeDefaultConfig.expireType,
                 newStatus: postTypeDefaultConfig.newStatus,
@@ -37,21 +38,23 @@ if (! isGutenbergEnabled()) {
     }
 
     const container = document.getElementById("publishpress-future-classic-editor");
-    const component = (
-        <FutureActionPanelClassicEditor
-            storeName={storeName}
-            postType={postType}
-            isNewPost={isNewPost}
-            actionsSelectOptions={actionsSelectOptions}
-            statusesSelectOptions={statusesSelectOptions}
-            is12Hour={is12Hour}
-            timeFormat={timeFormat}
-            startOfWeek={startOfWeek}
-            strings={strings}
-            taxonomyName={taxonomyName}
-            hideCalendarByDefault={hideCalendarByDefault}
-        />
-    );
+    if (container) {
+        const component = (
+            <FutureActionPanelClassicEditor
+                storeName={storeName}
+                postType={postType}
+                isNewPost={isNewPost}
+                actionsSelectOptions={actionsSelectOptions}
+                statusesSelectOptions={statusesSelectOptions}
+                is12Hour={is12Hour}
+                timeFormat={timeFormat}
+                startOfWeek={startOfWeek}
+                strings={strings}
+                taxonomyName={taxonomyName}
+                hideCalendarByDefault={hideCalendarByDefault}
+            />
+        );
 
-    createRoot(container).render(component);
+        createRoot(container).render(component);
+    }
 }

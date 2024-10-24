@@ -185,11 +185,17 @@ class ScheduledActionsController implements InitializableInterface
         }
 
         // Add nonce field
-        $screenSettings .= wp_nonce_field('publishpressfuture_actions_log_format', 'publishpressfuture_actions_log_format_nonce', true, false);
+        $screenSettings .= wp_nonce_field(
+            'publishpressfuture_actions_log_format',
+            'publishpressfuture_actions_log_format_nonce',
+            true,
+            false
+        );
 
         $screenSettings .= '<fieldset class="metabox-prefs">';
         $screenSettings .= '<legend>' . esc_html__('Log format', 'post-expirator') . '</legend>';
         $screenSettings .= '<label for="' . $screen->id . '_log_format_list">';
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $screenSettings .= '<input type="radio" id="' . $screen->id . '_log_format_list" name="publishpressfuture_actions_log_format" value="list" ' . checked(
             $userLogFormat,
             'list',
@@ -199,6 +205,7 @@ class ScheduledActionsController implements InitializableInterface
         $screenSettings .= '</label>';
         $screenSettings .= '&nbsp;';
         $screenSettings .= '<label for="' . $screen->id . '_log_format_popup">';
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $screenSettings .= '<input type="radio" id="' . $screen->id . '_log_format_popup" name="publishpressfuture_actions_log_format" value="popup" ' . checked(
             $userLogFormat,
             'popup',
@@ -267,7 +274,6 @@ class ScheduledActionsController implements InitializableInterface
             $args = $action->get_args();
 
             if (isset($args['postId']) && isset($args['workflow']) && 'expire' === $args['workflow']) {
-
                 $transientName = 'post-expirator-notice-' . (int) $args['postId'];
                 $noticeMessage = get_transient($transientName);
                 delete_transient($transientName);

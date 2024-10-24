@@ -152,9 +152,11 @@ class WorkflowsList implements InitializableInterface
         $columns["workflow_preview"] = __("Preview", "post-expirator");
 
         // Move the date column to the end
-        $date = $columns["date"];
-        unset($columns["date"]);
-        $columns["date"] = $date;
+        if (isset($columns["date"])) {
+            $date = $columns["date"];
+            unset($columns["date"]);
+            $columns["date"] = $date;
+        }
 
         return $columns;
     }
@@ -333,8 +335,12 @@ class WorkflowsList implements InitializableInterface
         return $actions;
     }
 
-    public function addWorkflowStatusToTitle($title, $id)
+    public function addWorkflowStatusToTitle($title, $id = null)
     {
+        if (!function_exists('get_current_screen') || empty($id)) {
+            return $title;
+        }
+
         $currentScreen = get_current_screen();
 
         if (

@@ -10,6 +10,8 @@ use PublishPress\Future\Modules\Workflows\Module;
 
 class PostType implements InitializableInterface
 {
+    const MENU_CAPABILITY = 'manage_options';
+
     /**
      * @var HookableInterface
      */
@@ -35,6 +37,12 @@ class PostType implements InitializableInterface
 
     public function registerPostType()
     {
+        $showInMenu = "publishpress-future";
+
+        if (!current_user_can(self::MENU_CAPABILITY)) {
+            $showInMenu = false;
+        }
+
         register_post_type(Module::POST_TYPE_WORKFLOW, [
             "labels" => [
                 "name" => __("Action Workflows", "post-expirator"),
@@ -108,7 +116,7 @@ class PostType implements InitializableInterface
             ],
             "public" => false,
             "show_ui" => true,
-            "show_in_menu" => "publishpress-future",
+            "show_in_menu" => $showInMenu,
             "show_in_nav_menus" => false,
             "show_in_admin_bar" => true,
             "menu_position" => 20,

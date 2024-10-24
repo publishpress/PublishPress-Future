@@ -576,7 +576,12 @@ var FutureActionPanel = function FutureActionPanel(props) {
     type: "hidden",
     name: 'future_action_enabled',
     value: 1
-  }), /*#__PURE__*/React.createElement(_FutureActionPanelTop__WEBPACK_IMPORTED_MODULE_5__.FutureActionPanelTop.Slot, {
+  }), props.showTitle && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontWeight: 'bold',
+      marginBottom: '10px'
+    }
+  }, props.strings.futureActions), /*#__PURE__*/React.createElement(_FutureActionPanelTop__WEBPACK_IMPORTED_MODULE_5__.FutureActionPanelTop.Slot, {
     fillProps: {
       storeName: props.storeName
     }
@@ -779,6 +784,7 @@ var FutureActionPanelBlockEditor = function FutureActionPanelBlockEditor(props) 
     strings: props.strings,
     onDataIsValid: onDataIsValid,
     hideCalendarByDefault: props.hideCalendarByDefault,
+    showTitle: false,
     onDataIsInvalid: onDataIsInvalid
   })));
 };
@@ -902,6 +908,7 @@ var FutureActionPanelBulkEdit = function FutureActionPanelBulkEdit(props) {
     startOfWeek: props.startOfWeek,
     storeName: props.storeName,
     hideCalendarByDefault: props.hideCalendarByDefault,
+    showTitle: false,
     strings: props.strings
   }), /*#__PURE__*/React.createElement("input", {
     type: "hidden",
@@ -1030,6 +1037,7 @@ var FutureActionPanelClassicEditor = function FutureActionPanelClassicEditor(pro
     strings: props.strings,
     onDataIsValid: onDataIsValid,
     hideCalendarByDefault: props.hideCalendarByDefault,
+    showTitle: false,
     onDataIsInvalid: onDataIsInvalid
   }));
 };
@@ -1112,6 +1120,7 @@ var FutureActionPanelQuickEdit = function FutureActionPanelQuickEdit(props) {
     strings: props.strings,
     onDataIsValid: onDataIsValid,
     hideCalendarByDefault: props.hideCalendarByDefault,
+    showTitle: true,
     onDataIsInvalid: onDataIsInvalid
   }), /*#__PURE__*/React.createElement("input", {
     type: "hidden",
@@ -2196,6 +2205,7 @@ var createStore = function createStore(props) {
     });
   }
   var defaultState = {
+    postId: props.defaultState.postId ? props.defaultState.postId : 0,
     action: props.defaultState.action,
     date: props.defaultState.date ? props.defaultState.date : (0,_time__WEBPACK_IMPORTED_MODULE_0__.getCurrentTimeAsTimestamp)(),
     enabled: props.defaultState.autoEnable,
@@ -2216,6 +2226,10 @@ var createStore = function createStore(props) {
       var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
       var action = arguments.length > 1 ? arguments[1] : undefined;
       switch (action.type) {
+        case 'SET_POST_ID':
+          return _objectSpread(_objectSpread({}, state), {}, {
+            postId: action.postId
+          });
         case 'SET_ACTION':
           return _objectSpread(_objectSpread({}, state), {}, {
             action: action.action
@@ -2292,6 +2306,12 @@ var createStore = function createStore(props) {
       return state;
     },
     actions: {
+      setPostId: function setPostId(postId) {
+        return {
+          type: 'SET_POST_ID',
+          postId: postId
+        };
+      },
       setAction: function setAction(action) {
         return {
           type: 'SET_ACTION',
@@ -2385,6 +2405,9 @@ var createStore = function createStore(props) {
       }
     },
     selectors: {
+      getPostId: function getPostId(state) {
+        return state.postId;
+      },
       getAction: function getAction(state) {
         return state.action;
       },
@@ -3264,6 +3287,8 @@ module.exports = wp.url;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
 /*!***************************************!*\
   !*** ./assets/jsx/classic-editor.jsx ***!
   \***************************************/
@@ -3298,6 +3323,7 @@ if (!(0,_utils__WEBPACK_IMPORTED_MODULE_2__.isGutenbergEnabled)()) {
     (0,_data__WEBPACK_IMPORTED_MODULE_1__.createStore)({
       name: storeName,
       defaultState: {
+        postId: document.getElementById('post_ID') ? parseInt(document.getElementById('post_ID').value, 10) : 0,
         autoEnable: postTypeDefaultConfig.autoEnable,
         action: postTypeDefaultConfig.expireType,
         newStatus: postTypeDefaultConfig.newStatus,
@@ -3308,21 +3334,25 @@ if (!(0,_utils__WEBPACK_IMPORTED_MODULE_2__.isGutenbergEnabled)()) {
     });
   }
   var container = document.getElementById("publishpress-future-classic-editor");
-  var component = /*#__PURE__*/React.createElement(_components__WEBPACK_IMPORTED_MODULE_0__.FutureActionPanelClassicEditor, {
-    storeName: storeName,
-    postType: postType,
-    isNewPost: isNewPost,
-    actionsSelectOptions: actionsSelectOptions,
-    statusesSelectOptions: statusesSelectOptions,
-    is12Hour: is12Hour,
-    timeFormat: timeFormat,
-    startOfWeek: startOfWeek,
-    strings: strings,
-    taxonomyName: taxonomyName,
-    hideCalendarByDefault: hideCalendarByDefault
-  });
-  (0,react_dom_client__WEBPACK_IMPORTED_MODULE_4__.createRoot)(container).render(component);
+  if (container) {
+    var component = /*#__PURE__*/React.createElement(_components__WEBPACK_IMPORTED_MODULE_0__.FutureActionPanelClassicEditor, {
+      storeName: storeName,
+      postType: postType,
+      isNewPost: isNewPost,
+      actionsSelectOptions: actionsSelectOptions,
+      statusesSelectOptions: statusesSelectOptions,
+      is12Hour: is12Hour,
+      timeFormat: timeFormat,
+      startOfWeek: startOfWeek,
+      strings: strings,
+      taxonomyName: taxonomyName,
+      hideCalendarByDefault: hideCalendarByDefault
+    });
+    (0,react_dom_client__WEBPACK_IMPORTED_MODULE_4__.createRoot)(container).render(component);
+  }
 }
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=classicEditor.js.map

@@ -107,8 +107,8 @@ class Module implements ModuleInterface
                                     'id' => 'future_page_publishpress-future-scheduled-actions'
                                 ],
                                 [
-                                    'base' => 'future_page_publishpress_future_pro_features_ads',
-                                    'id' => 'future_page_publishpress_future_pro_features_ads'
+                                    'base' => 'edit',
+                                    'id' => 'edit-ppfuture_workflow'
                                 ]
                             ]
                         ];

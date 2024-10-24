@@ -69,6 +69,8 @@ class FutureLegacyAction implements InitializableInterface
             "futureWorkflows",
             [
                 "workflows" => $workflows,
+                "apiUrl" => rest_url("publishpress-future/v1"),
+                "nonce" => wp_create_nonce("wp_rest"),
             ]
         );
     }

@@ -7,7 +7,7 @@ Requires at least: 6.1
 Requires PHP: 7.2.5
 Tested up to: 6.6
 License: GPLv2 or later
-Stable tag: 4.0.0
+Stable tag: 4.0.4
 
 PublishPress Future can make scheduled changes to your content. You can unpublish posts, move posts to a new status, update the categories, and more.
 
@@ -173,23 +173,58 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
 
-## [4.0.0] - 01 Oct, 2024
+## [4.0.4] - 24 Oct, 2024
+
+### Fixed
+
+- Fix the workflows list screen to be shown only to users with `manage_options` capability (Issue #998).
+- Fix compatibility with the "WP Remote User Sync" plugin (Issue #999).
+
+## [4.0.3] - 22 Oct, 2024
+
+### Changed
+
+- Add the banner notice to the workflows list screen.
+
+### Fixed
+
+- Fix PHP warning when post attribute is empty in the workflow model (Issue #987, #988).
+- Fix error when`manage_posts_columns` filter do not receive a post type (Issue #990).
+- Fix error about undefined index: date (Issue #991).
+
+## [4.0.2] - 21 Oct, 2024
+
+### Fixed
+
+- Fix error when the filter `the_title` is called without an ID, #984
+
+## [4.0.1] - 21 Oct, 2024
+
+### Fixed
+
+- Fix the database schema check for version 4.0.0 on fresh installations, (Issue #928).
+
+## [4.0.0] - 21 Oct, 2024
 
 ### Added
 
 - Add the Workflows feature, with the workflow editor and the workflow engine.
+
+### Changes
+
+- The list of scheduled actions now displays the repetition count/date limits (Issue #928).
+- Update language files.
+- Updated the UI in the advanced settings page.
+- Move some advanced settings to the "Display" tab (Issue #952)
+- Add title to the future action panel for UI consistency (Issue #965)
+- Renamed the PublishPress Future metabox to Future Actions for UI consistency (Issue #965)
 
 ### Fixed
 
 - Update post model to update post date when setting post status to publish.
 - Prevent error when the current_post->ID is empty for unknown reasons, usually related to 3rd party plugins.
 
-### Changes
-
-- The list of scheduled actions now displays the repetition count/date limits (#928).
-- Update language files.
-
-### Code changes
+### Developers
 
 - Interface `PublishPress\Future\Core\HookableInterface`: Add new method `removeFilter` to remove a hooked filter.
 - Interface `PublishPress\Future\Core\HookableInterface`: Add new method `removeAction` to remove a hooked action.
@@ -199,8 +234,8 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 - Add new filter 'publishpressfuture_migrations' to filter the list of migrations that will be executed.
 - Call the action 'publishpressfuture_fix_db_schema' when a DB fix is executed from the settings page.
 - Call the action 'publishpressfuture_upgrade_plugin' when the plugin is upgraded.
-- Change the data type from void to int for the method 'PublishPress\Future\Modules\Expirator\Interfaces]CronInterfac::scheduleRecurringAction'.
-- Change the data type from void to int for the method 'PublishPress\Future\Modules\Expirator\Interfaces]CronInterfac::scheduleAsyncAction'.
+- Change the data type from void to int for the method 'PublishPress\Future\Modules\Expirator\Interfaces\CronInterfac::scheduleRecurringAction'.
+- Change the data type from void to int for the method 'PublishPress\Future\Modules\Expirator\Interfaces\CronInterfac::scheduleAsyncAction'.
 - Add new filter 'publishpressfuture_schema_is_healthy' to check if the DB schema is healthy.
 - The method 'PublishPress\Future\Modules\Workflows\Models\WorkflowModel::getStepFromRoutineTreeRecursively' now always returns an array.
 - Add new filter 'action_scheduler_list_table_column_recurrence' to filter the recurrence column in the scheduled actions list.
@@ -278,54 +313,3 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 - Improve the exception message when the date/time offset is invalid
 - Update composer files for dev dependencies
 
-## [3.4.0.1] - 20 Jun, 2024
-
-### Fixed
-
-- Fix fatal error for low level users when PublishPress menu is not available, #803
-- Fix wrong action date on the future action panel, #802
-
-### Changed
-
-- The interface `PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface` has changed:
-  - Method `setCronActionId` now returns void instead of `ActionArgsModelInterface`
-  - Method `setPostId` now returns void instead of `ActionArgsModelInterface`
-  - Method `setArgs` now returns void instead of `ActionArgsModelInterface`
-  - Method `setArg` now returns void instead of `ActionArgsModelInterface`
-  - Method `setCreatedAt` now returns void instead of `ActionArgsModelInterface`
-  - Method `setEnabled` now returns void instead of `ActionArgsModelInterface`
-  - Method `setScheduledDate` now returns void instead of `ActionArgsModelInterface`
-  - Method `setScheduledDateFromISO8601` now returns void instead of `ActionArgsModelInterface`
-  - Method `setScheduledDateFromUnixTime` now returns void instead of `ActionArgsModelInterface`
-  - Method `convertUnixTimeDateToISO8601` is now public
-  - Method `convertISO8601DateToUnixTime` is now public
-- Improve exception message when the date/time offset is invalid
-
-## [3.4.0] - 20 Jun, 2024
-
-### Added
-
-- In the JS context, implemented a way to extend the future action panel using SlotFill `FutureActionPanelAfterActionField` and setting extra fields to the panel, right after the action field
-- Add a new filter to allow filtering the options of the future action being scheduled: `publishpressfuture_prepare_post_expiration_opts`
-- Add method `scheduleRecurringAction` to the `CronToWooActionSchedulerAdapter` to schedule recurring action
-- Add method `scheduleAsyncAction` to the `CronToWooActionSchedulerAdapter` to schedule async action
-- In the JS context, added the slot `FutureActionPanelTop` to the beginning of the future panel
-
-### Changed
-
-- Added `$unique` and `$priority` arguments to the `scheduleSingleAction` method in the `CronToWooActionSchedulerAdapter` class
-- Method `scheduleRecurringAction` renamed to `scheduleRecurringActionInSeconds` in the `CronToWooActionSchedulerAdapter` class
-- Added argument `$clearOnlyPendingActions` to the method signature `clearScheduledAction` to the `CronInterface` interface
-- Changed the method `clearScheduledAction` in the class `CronToWooActionSchedulerAdapter` adding new argument `$clearOnlyPendingActions`, allowing to remove running actions
-- The plugin activation and deactivation callback functions were moved from the main file to independent files
-- Change the admin menu names for clarity
-- Update the promo sidebar for mentioning the Actions Workflow feature
-
-### Fixed
-
-- Fix error when quick-edit data is not available, #730
-- Fix dependency of the enqueued scripts for the future action box. Add 'wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins' as dependencies
-- Updated ES, FR and IT translations, #698
-- Redirects to the settings page after activating the plugin, #764
-- Fix access to the View Debug settings tab when debug is disabled
-- Fix the position of the "Upgrade to Pro" and "Settings" menu items in the admin bar

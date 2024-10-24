@@ -70,6 +70,7 @@ inlineEditPost.edit = function (button, id) {
 
     // if store exists, update the state. Otherwise, create it.
     if (select(storeName)) {
+        dispatch(storeName).setPostId(postId);
         dispatch(storeName).setEnabled(enabled);
         dispatch(storeName).setAction(action);
         dispatch(storeName).setDate(date);
@@ -80,6 +81,7 @@ inlineEditPost.edit = function (button, id) {
         createStore({
             name: storeName,
             defaultState: {
+                postId: postId,
                 autoEnable: enabled,
                 action: action,
                 date: date,
@@ -91,9 +93,11 @@ inlineEditPost.edit = function (button, id) {
     }
 
     const container = document.getElementById("publishpress-future-quick-edit");
+
     if (!container) {
         return;
     }
+
     const root = createRoot(container);
 
     const saveButton = document.querySelector('.inline-edit-save .save');

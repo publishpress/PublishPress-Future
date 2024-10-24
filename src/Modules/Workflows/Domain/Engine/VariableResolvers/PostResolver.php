@@ -2,6 +2,8 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers;
 
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\VariableResolverInterface;
 
 class PostResolver implements VariableResolverInterface
@@ -11,9 +13,15 @@ class PostResolver implements VariableResolverInterface
      */
     private $post;
 
-    public function __construct(object $post)
+    /**
+     * @var HookableInterface
+     */
+    private $hooks;
+
+    public function __construct(object $post, HookableInterface $hooks)
     {
         $this->post = $post;
+        $this->hooks = $hooks;
     }
 
     public function getType(): string
@@ -38,7 +46,21 @@ class PostResolver implements VariableResolverInterface
 
             case 'post_content':
             case 'content':
-                return $this->post->post_content;
+                return $this->hooks->applyFilters(
+                    HooksAbstract::FILTER_THE_CONTENT,
+                    $this->post->post_content
+                );
+
+            case 'post_content_text':
+                case 'content_text':
+                    return wp_strip_all_tags(
+                        strip_shortcodes(
+                        $this->hooks->applyFilters(
+                                HooksAbstract::FILTER_THE_CONTENT,
+                                $this->post->post_content
+                            )
+                        )
+                    );
 
             case 'post_excerpt':
             case 'excerpt':
@@ -102,6 +124,7 @@ class PostResolver implements VariableResolverInterface
                 'ID',
                 'post_title',
                 'post_content',
+                'post_content_text',
                 'post_excerpt',
                 'post_type',
                 'post_status',

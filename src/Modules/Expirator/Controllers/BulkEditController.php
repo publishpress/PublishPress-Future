@@ -174,14 +174,18 @@ class BulkEditController implements InitializableInterface
                 'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
                 'strings' => [
                     'category' => __('Categories', 'post-expirator'),
-                    'panelTitle' => __('PublishPress Future', 'post-expirator'),
+                    'panelTitle' => __('Future Actions', 'post-expirator'),
                     'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
+                    'futureActions' => __('Future Actions', 'post-expirator'),
                     'action' => __('Action', 'post-expirator'),
                     'showCalendar' => __('Show Calendar', 'post-expirator'),
                     'hideCalendar' => __('Hide Calendar', 'post-expirator'),
                     'loading' => __('Loading', 'post-expirator'),
                     // translators: the text between {{}} is the link to the settings page.
-                    'timezoneSettingsHelp' => __('Timezone is controlled by the {WordPress Settings}.', 'post-expirator'),
+                    'timezoneSettingsHelp' => __(
+                        'Timezone is controlled by the {WordPress Settings}.',
+                        'post-expirator'
+                    ),
                     // translators: %s is the name of the taxonomy in plural form.
                     'noTermsFound' => sprintf(
                         // translators: %s is the name of the taxonomy in plural form.
@@ -189,7 +193,10 @@ class BulkEditController implements InitializableInterface
                         strtolower($taxonomyPluralName)
                     ),
                     'futureActionUpdate' => __('Future Action Update', 'post-expirator'),
-                    'noTaxonomyFound' => __('You must assign a taxonomy to this post type to use this feature.', 'post-expirator'),
+                    'noTaxonomyFound' => __(
+                        'You must assign a taxonomy to this post type to use this feature.',
+                        'post-expirator'
+                    ),
                     'noChange' => __('— No Change —', 'post-expirator'),
                     'changeAdd' => __('Add or update action for posts', 'post-expirator'),
                     'addOnly' => __('Add action if none exists for posts', 'post-expirator'),
@@ -202,7 +209,10 @@ class BulkEditController implements InitializableInterface
                     // translators: %s is the name of the taxonomy in plural form.
                     'addTerms' => __('%s to add', 'post-expirator'),
                     // translators: %s is the name of the taxonomy in singular form.
-                    'addTermsPlaceholder' => sprintf(__('Search for %s', 'post-expirator'), strtolower($taxonomyPluralName)),
+                    'addTermsPlaceholder' => sprintf(
+                        __('Search for %s', 'post-expirator'),
+                        strtolower($taxonomyPluralName)
+                    ),
                     'errorActionRequired' => __('Select an action', 'post-expirator'),
                     'errorDateRequired' => __('Select a date', 'post-expirator'),
                     'errorDateInPast' => __('Date cannot be in the past', 'post-expirator'),
@@ -277,14 +287,17 @@ class BulkEditController implements InitializableInterface
         $this->request->checkAdminReferer('bulk-posts');
 
         $this->saveBulkEditData();
-        // phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        // phpcs:enable
     }
 
     private function updateScheduleForPostFromBulkEditData(ExpirablePostModel $postModel)
     {
-        // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-        $expireType = isset($_REQUEST['future_action_bulk_action']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_action']) : '';
-        $newStatus = isset($_REQUEST['future_action_bulk_new_status']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_new_status']) : 'draft';
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
+        // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $expireType = isset($_REQUEST['future_action_bulk_action']) ?
+            $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_action']) : '';
+        $newStatus = isset($_REQUEST['future_action_bulk_new_status']) ?
+            $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_new_status']) : 'draft';
 
         if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
             $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
@@ -304,8 +317,10 @@ class BulkEditController implements InitializableInterface
         $opts = [
             'expireType' => $expireType,
             'newStatus' => $newStatus,
-            'category' => isset($_REQUEST['future_action_bulk_terms']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_terms']) : '',
-            'categoryTaxonomy' => isset($_REQUEST['future_action_bulk_taxonomy']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_taxonomy']) : '',
+            'category' => isset($_REQUEST['future_action_bulk_terms']) ?
+                $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_terms']) : '',
+            'categoryTaxonomy' => isset($_REQUEST['future_action_bulk_taxonomy']) ?
+                $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_taxonomy']) : '',
         ];
 
         if (! empty($opts['category'])) {
@@ -323,7 +338,8 @@ class BulkEditController implements InitializableInterface
             $opts['category'] = [];
         }
 
-        $date = isset($_REQUEST['future_action_bulk_date']) ? sanitize_text_field($_REQUEST['future_action_bulk_date']) : '0';
+        $date = isset($_REQUEST['future_action_bulk_date']) ?
+            sanitize_text_field($_REQUEST['future_action_bulk_date']) : '0';
         $date = strtotime($date);
 
         $this->hooks->doAction(
@@ -332,7 +348,7 @@ class BulkEditController implements InitializableInterface
             $date,
             $opts
         );
-        // phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        // phpcs:enable
     }
 
     private function changeStrategyChangeOnly(ExpirablePostModel $postModel)

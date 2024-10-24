@@ -13,6 +13,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterfac
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+
 class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 {
     use InfiniteLoopPreventer;
@@ -116,7 +117,7 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 
         $this->variablesHandler->setVariable($nodeSlug, [
             'postId' => new IntegerResolver($postId),
-            'post' => new PostResolver($post),
+            'post' => new PostResolver($post, $this->hooks),
         ]);
 
         $this->nodeRunnerProcessor->triggerCallbackIsRunning();

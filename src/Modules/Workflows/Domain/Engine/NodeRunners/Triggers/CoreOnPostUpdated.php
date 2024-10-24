@@ -120,8 +120,8 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
 
         $this->variablesHandler->setVariable($nodeSlug, [
             'postId' => new IntegerResolver($postId),
-            'postBefore' => new PostResolver($postBefore),
-            'postAfter' => new PostResolver($postAfter),
+            'postBefore' => new PostResolver($postBefore, $this->hooks),
+            'postAfter' => new PostResolver($postAfter, $this->hooks),
         ]);
 
         $this->nodeRunnerProcessor->triggerCallbackIsRunning();

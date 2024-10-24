@@ -25,7 +25,9 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
     private $hooks;
 
     /**
-     * Array of seconds for common time periods, like week or month, alongside an internationalised string representation, i.e. "Day" or "Days"
+     * Array of seconds for common time periods, like week or month,
+     * alongside an internationalised string representation, i.e.
+     * "Day" or "Days".
      *
      * @var array
      */
@@ -327,11 +329,13 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
     public function column_status(array $row)
     {
         $icons = [
-            \ActionScheduler_Store::STATUS_COMPLETE => 'dashicons dashicons-yes-alt action-scheduler-status-icon-complete',
+            \ActionScheduler_Store::STATUS_COMPLETE =>
+                'dashicons dashicons-yes-alt action-scheduler-status-icon-complete',
             \ActionScheduler_Store::STATUS_PENDING => 'dashicons dashicons-clock action-scheduler-status-icon-pending',
             \ActionScheduler_Store::STATUS_RUNNING => 'dashicons dashicons-update action-scheduler-status-icon-running',
             \ActionScheduler_Store::STATUS_FAILED => 'dashicons dashicons-warning action-scheduler-status-icon-failed',
-            \ActionScheduler_Store::STATUS_CANCELED => 'dashicons dashicons-marker action-scheduler-status-icon-canceled',
+            \ActionScheduler_Store::STATUS_CANCELED =>
+                'dashicons dashicons-marker action-scheduler-status-icon-canceled',
         ];
 
         $iconClass = 'dashicons dashicons-editor-help';

@@ -1203,7 +1203,7 @@ function Fieldset(_ref) {
     setWorkflowsWithManualTrigger([]);
     setWorkflowsEnabledForPost([]);
     (0,_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_4__["default"])({
-      path: "".concat(apiUrl, "/posts/workflow-settings/").concat(postId),
+      url: "".concat(apiUrl, "/posts/workflow-settings/").concat(postId),
       headers: {
         'X-WP-Nonce': nonce
       }
@@ -1597,6 +1597,8 @@ module.exports = wp.url;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
 /*!*********************************************************************!*\
   !*** ./assets/jsx/workflow-manual-selection/block-editor/index.jsx ***!
   \*********************************************************************/
@@ -1661,6 +1663,8 @@ function BlockEditorWorkflowManualTrigger() {
 (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_4__.registerPlugin)('publishpress-future-workflow-manual-trigger', {
   render: BlockEditorWorkflowManualTrigger
 });
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=workflowManualSelectionBlockEditor.js.map

@@ -54,7 +54,6 @@ use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory
 use PublishPress\Future\Modules\Expirator\Module as ModuleExpirator;
 use PublishPress\Future\Modules\Expirator\Tables\ScheduledActionsTable;
 use PublishPress\Future\Modules\InstanceProtection\Module as ModuleInstanceProtection;
-use PublishPress\Future\Modules\ProFeaturesAds\Module as ProFeaturesAdsModule;
 use PublishPress\Future\Modules\Settings\Models\SettingsPostTypesModel;
 use PublishPress\Future\Modules\Settings\Models\TaxonomiesModel;
 use PublishPress\Future\Modules\Settings\Module as ModuleSettings;
@@ -145,10 +144,6 @@ return [
             ServicesAbstract::MODULE_WOOCOMMERCE,
             ServicesAbstract::MODULE_WORKFLOWS,
         ];
-
-        if (! defined('PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION')) {
-            $modulesServiceList[] = ServicesAbstract::MODULE_PRO_FEATURES_ADS;
-        }
 
         $modules = [];
         foreach ($modulesServiceList as $service) {
@@ -404,17 +399,6 @@ return [
             $container->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY),
             $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL),
             $container->get(ServicesAbstract::MIGRATIONS_FACTORY)
-        );
-    },
-
-    /**
-     * @return ModuleInterface
-     */
-    ServicesAbstract::MODULE_PRO_FEATURES_ADS => static function (ContainerInterface $container) {
-        return new ProFeaturesAdsModule(
-            $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::BASE_URL),
-            $container->get(ServicesAbstract::PLUGIN_VERSION)
         );
     },
 

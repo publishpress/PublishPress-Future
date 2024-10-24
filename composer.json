@@ -69,8 +69,8 @@
         ],
         "build:dir": "pbuild build-dir",
         "build:clean": "pbuild clean",
-        "build:js-prod": "cross-env NODE_ENV=production npx webpack",
-        "build:js-dev": "cross-env NODE_ENV=development npx webpack",
+        "build:js-prod": "cross-env NODE_ENV=production npx webpack --progress",
+        "build:js-dev": "cross-env NODE_ENV=development npx webpack --progress",
         "build:js": [
             "@build:js-prod",
             "@build:js-dev"
@@ -78,22 +78,22 @@
         "profile:js": "cross-env NODE_ENV=production npx webpack --profile",
         "watch:js": "cross-env NODE_ENV=development npx webpack --watch --progress",
         "get:version": "pbuild version",
-        "gen:pot-php": "wp i18n make-pot . ./languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests,lib,tmp,doc,*.js,*.js.map,*.jsx --allow-root",
-        "gen:pot-js": "bash ./dev-workspace/scripts/lang-make-pot-js.sh",
-        "gen:mo": "wp i18n make-mo ./languages ./languages --allow-root",
-        "gen:po-scripts": "bash ./dev-workspace/scripts/lang-update-js-po.sh",
-        "gen:po-json": "bash ./dev-workspace/scripts/lang-make-json.sh",
-        "gen:pot": [
-            "@gen:pot-php",
-            "@gen:pot-js"
+        "build:pot-php": "wp i18n make-pot . ./languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests,lib,tmp,doc,*.js,*.js.map,*.jsx --allow-root",
+        "build:pot-js": "bash ./dev-workspace/scripts/lang-make-pot-js.sh",
+        "build:mo": "wp i18n make-mo ./languages ./languages --allow-root",
+        "build:po-scripts": "bash ./dev-workspace/scripts/lang-update-js-po.sh",
+        "build:po-json": "bash ./dev-workspace/scripts/lang-make-json.sh",
+        "build:pot": [
+            "@build:pot-php",
+            "@build:pot-js"
         ],
-        "gen:l10n-php": "wp i18n make-php ./languages --allow-root",
-        "gen:lang": [
-            "@gen:pot",
-            "@gen:mo",
-            "@gen:po-scripts",
-            "@gen:po-json",
-            "@gen:l10n-php",
+        "build:l10n-php": "wp i18n make-php ./languages --allow-root",
+        "build:lang": [
+            "@build:pot",
+            "@build:mo",
+            "@build:po-scripts",
+            "@build:po-json",
+            "@build:l10n-php",
             "@cleanup:js-mo"
         ],
         "cleanup:js-mo": "bash ./dev-workspace/scripts/lang-cleanup.sh",
@@ -130,7 +130,7 @@
             "@fix:cs"
         ],
         "prepare": [
-            "@gen:lang",
+            "@build:lang",
             "@build:js"
         ],
         "dbox:up": "pdropbox upload && pdropbox share",
@@ -183,14 +183,14 @@
         "profile:js": "Generates a profile of the JavaScript build.",
         "watch:js": "Watches the JavaScript files for changes.",
         "get:version": "Gets the version of the plugin.",
-        "gen:pot-php": "Generates the PHP POT file for translations.",
-        "gen:pot-js": "Generates the JavaScript POT file for translations.",
-        "gen:mo": "Generates the MO files for translations.",
-        "gen:po-scripts": "Updates the JavaScript PO files for translations.",
-        "gen:po-json": "Generates the JSON files for translations.",
-        "gen:pot": "Generates the POT files for translations.",
-        "gen:l10n-php": "Generates the PHP language files for performant translations (WP 6.5+).",
-        "gen:lang": "Generates the language files for translations.",
+        "build:pot-php": "Generates the PHP POT file for translations.",
+        "build:pot-js": "Generates the JavaScript POT file for translations.",
+        "build:mo": "Generates the MO files for translations.",
+        "build:po-scripts": "Updates the JavaScript PO files for translations.",
+        "build:po-json": "Generates the JSON files for translations.",
+        "build:pot": "Generates the POT files for translations.",
+        "build:l10n-php": "Generates the PHP language files for performant translations (WP 6.5+).",
+        "build:lang": "Generates the language files for translations.",
         "cleanup:js-mo": "Cleans up the JavaScript MO files.",
         "cleanup:gh-workflows": "Cleans up the GitHub workflows.",
         "check": "Runs all the checks.",

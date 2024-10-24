@@ -3,6 +3,37 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.4] - 24 Oct, 2024
+
+### Fixed
+
+- Fix the workflows list screen to be shown only to users with `manage_options` capability (Issue #998).
+- Fix compatibility with the "WP Remote User Sync" plugin (Issue #999).
+
+## [4.0.3] - 22 Oct, 2024
+
+### Changed
+
+- Add the banner notice to the workflows list screen.
+
+### Fixed
+
+- Fix PHP warning when post attribute is empty in the workflow model (Issue #987, #988).
+- Fix error when`manage_posts_columns` filter do not receive a post type (Issue #990).
+- Fix error about undefined index: date (Issue #991).
+
+## [4.0.2] - 21 Oct, 2024
+
+### Fixed
+
+- Fix error when the filter `the_title` is called without an ID (Issue #984).
+
+## [4.0.1] - 21 Oct, 2024
+
+### Fixed
+
+- Fix the database schema check for version 4.0.0 on fresh installations, (Issue #928).
+
 ## [4.0.0] - 01 Oct, 2024
 
 ### Added
