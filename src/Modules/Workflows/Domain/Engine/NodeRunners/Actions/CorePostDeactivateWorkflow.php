@@ -2,7 +2,6 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions;
 
-use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDeactivateWorkflow as NodeType;

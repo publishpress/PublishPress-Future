@@ -2,7 +2,6 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions;
 
-use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDelete as NodeTypeCorePostDelete;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
