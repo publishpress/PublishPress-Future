@@ -78,11 +78,12 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
         $this->step = $step;
         $this->workflowId = $workflowId;
 
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+
         $this->logger->debug(
-            sprintf(
-                // translators: %s is the step slug
-                __('Setting up step [%s]', 'post-expirator'),
-                $step['node']['data']['slug']
+            $this->nodeRunnerProcessor->prepareLogMessage(
+                'Setting up step %s',
+                $nodeSlug
             )
         );
 
@@ -99,13 +100,27 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
                 $this->step
             )
         ) {
-            $this->logger->debug('Ignoring save post event');
+            $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
+
+            $this->logger->debug(
+                $this->nodeRunnerProcessor->prepareLogMessage(
+                    'Ignoring save post event for step %s',
+                    $nodeSlug
+                )
+            );
 
             return;
         }
 
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
+
         if ($this->isInfinityLoopDetected($this->workflowId, $this->step)) {
-            $this->logger->debug('Infinity loop detected');
+            $this->logger->debug(
+                $this->nodeRunnerProcessor->prepareLogMessage(
+                    'Infinite loop detected for step %s, skipping',
+                    $nodeSlug
+                )
+            );
 
             return;
         }
@@ -116,14 +131,10 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
         ];
 
         if (! $this->postQueryValidator->validate($postQueryArgs)) {
-            $this->logger->debug('Post query validation failed');
-
             return false;
         }
 
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $this->step);
-
-        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
 
         $this->variablesHandler->setVariable($nodeSlug, [
             'postId' => new IntegerResolver($postId),
@@ -131,9 +142,23 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
             'update' => new BooleanResolver($update),
         ]);
 
-        $this->logger->debug('Post query validation passed');
+        $this->logger->debug(
+            $this->nodeRunnerProcessor->prepareLogMessage(
+                'Post query validation passed for step %s on post %d',
+                $nodeSlug,
+                $postId
+            )
+        );
 
         $this->nodeRunnerProcessor->triggerCallbackIsRunning();
+
+        $this->logger->debug(
+            $this->nodeRunnerProcessor->prepareLogMessage(
+                'Trigger %s is running',
+                $nodeSlug
+            )
+        );
+
         $this->nodeRunnerProcessor->runNextSteps($this->step);
     }
 }

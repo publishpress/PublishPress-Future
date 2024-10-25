@@ -37,16 +37,29 @@ class GeneralStep implements NodeRunnerProcessorInterface
         $this->logger = $logger;
     }
 
+    public function prepareLogMessage(string $message, ...$args): string
+    {
+        $message = sprintf($message, ...$args);
+
+        return sprintf(
+            '[Workflow "%1$s"] %2$s',
+            $this->variablesHandler->getVariable('global.workflow.title'),
+            $message
+        );
+    }
+
+    private function addDebugLogMessage(string $message, ...$args): void
+    {
+        $this->logger->debug($this->prepareLogMessage($message, ...$args));
+    }
+
     public function setup(
         array $step,
         callable $actionCallback
     ): void {
-        $this->logger->debug(
-            sprintf(
-                // translators: %s is the step slug
-                __('Setting up step [%s]', 'post-expirator'),
-                $step['node']['data']['slug']
-            )
+        $this->addDebugLogMessage(
+            'Setting up step %1$s',
+            $step['node']['data']['slug']
         );
 
         call_user_func($actionCallback, $step);
@@ -58,12 +71,9 @@ class GeneralStep implements NodeRunnerProcessorInterface
     {
         $nextSteps = $this->getNextSteps($step);
 
-        $this->logger->debug(
-            sprintf(
-                // translators: %s is the step slug
-                __('Running next steps after %s', 'post-expirator'),
-                $step['node']['data']['slug']
-            )
+        $this->addDebugLogMessage(
+            'Running next steps after %1$s',
+            $step['node']['data']['slug']
         );
 
         foreach ($nextSteps as $nextStep) {
@@ -106,30 +116,12 @@ class GeneralStep implements NodeRunnerProcessorInterface
         return $nodeSettings;
     }
 
+    /**
+     * @deprecated 4.1.0 Use the logger instead
+     */
     public function logError(string $message, int $workflowId, array $step)
     {
-        if (! function_exists('error_log')) {
-            return;
-        }
-
-        $this->logger->error(
-            sprintf(
-                // translators: %1$s is the step slug, %2$d is the workflow ID, %3$s is the error message
-                __('Error in step %1$s, workflowId: %2$d: %3$s', 'post-expirator'),
-                $step['node']['data']['slug'],
-                $workflowId,
-                $message
-            )
-        );
-
-        error_log(
-            sprintf(
-                '%1$s: workflowId: %2$d, step: %3$s',
-                $message,
-                $workflowId,
-                print_r($step, true) // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-            )
-        );
+        $this->logger->error($this->prepareLogMessage($message));
     }
 
     private function isWordPressRayInstalled(): bool

@@ -53,11 +53,11 @@ class ConditionalSplit implements NodeRunnerInterface
     {
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step);
 
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
         $this->logger->debug(
-            sprintf(
-                // translators: %s is the step slug
-                __('Setting up step [%s]', 'post-expirator'),
-                $step['node']['data']['slug']
+            $this->nodeRunnerProcessor->prepareLogMessage(
+                'Setting up step %s',
+                $nodeSlug
             )
         );
 
@@ -67,11 +67,18 @@ class ConditionalSplit implements NodeRunnerInterface
         unset($step['next']['true']);
         unset($step['next']['false']);
 
-        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+
 
         $this->variablesHandler->setVariable($nodeSlug, [
             'branch' => 'true',
         ]);
+
+        $this->logger->debug(
+            $this->nodeRunnerProcessor->prepareLogMessage(
+                'Step %1$s only runs on the pro plugin, skipping to the true branch',
+                $nodeSlug
+            )
+        );
 
         $this->nodeRunnerProcessor->runNextSteps($step);
     }

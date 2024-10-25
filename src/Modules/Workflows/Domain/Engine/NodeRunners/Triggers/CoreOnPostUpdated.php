@@ -79,8 +79,7 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
 
         $this->logger->debug(
             sprintf(
-                // translators: %s is the step slug
-                __('Setting up step [%s]', 'post-expirator'),
+                'Setting up step [%s]',
                 $step['node']['data']['slug']
             )
         );
@@ -101,7 +100,16 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
             return;
         }
 
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
+
         if ($this->isInfinityLoopDetected($this->workflowId, $this->step)) {
+            $this->logger->debug(
+                $this->nodeRunnerProcessor->prepareLogMessage(
+                    'Infinite loop detected for step %s, skipping',
+                    $nodeSlug
+                )
+            );
+
             return;
         }
 
@@ -116,8 +124,6 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
             return false;
         }
 
-        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
-
         $this->variablesHandler->setVariable($nodeSlug, [
             'postId' => new IntegerResolver($postId),
             'postBefore' => new PostResolver($postBefore, $this->hooks),
@@ -125,6 +131,14 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
         ]);
 
         $this->nodeRunnerProcessor->triggerCallbackIsRunning();
+
+        $this->logger->debug(
+            $this->nodeRunnerProcessor->prepareLogMessage(
+                'Trigger %s is running',
+                $nodeSlug
+            )
+        );
+
         $this->nodeRunnerProcessor->runNextSteps($this->step);
     }
 }

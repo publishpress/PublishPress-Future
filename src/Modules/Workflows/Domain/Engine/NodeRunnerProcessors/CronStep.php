@@ -2,6 +2,7 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunnerProcessors;
 
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayResolver;
@@ -97,6 +98,11 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
      */
     private $workflowEngine;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         HooksFacade $hooks,
         NodeRunnerProcessorInterface $generalNodeRunnerProcessor,
@@ -105,7 +111,8 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         NodeTypesModelInterface $nodeTypesModel,
         WorkflowEngineInterface $engine,
         string $pluginVersion,
-        WorkflowEngineInterface $workflowEngine
+        WorkflowEngineInterface $workflowEngine,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->generalNodeRunnerProcessor = $generalNodeRunnerProcessor;
@@ -115,18 +122,15 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         $this->variablesHandler = $engine->getVariablesHandler();
         $this->pluginVersion = $pluginVersion;
         $this->workflowEngine = $workflowEngine;
+        $this->logger = $logger;
     }
 
     public function setup(array $step, callable $actionCallback): void
     {
         try {
-            $this->logger->debug(
-                sprintf(
-                    // translators: %s is the step slug
-                    __('Setting up step [%s]', 'post-expirator'),
-                    $step['node']['data']['slug']
-                )
-            );
+            $stepSlug = $step['node']['data']['slug'];
+
+            $this->addDebugLogMessage('Setting up step %s', $stepSlug);
 
             $node = $this->getNodeFromStep($step);
             $nodeSettings = $this->getNodeSettings($node);
@@ -146,6 +150,8 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             }
 
             if (is_null($timestamp)) {
+                $this->addDebugLogMessage('No timestamp found, skipping step %s', $stepSlug);
+
                 return;
             }
 
@@ -165,13 +171,12 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             $actionArgs = [
                 'workflowId' => $workflowId,
                 'stepId' => $node['id'],
-                'stepLabel' => $node['node']['data']['label'] ?? null,
-                'stepName' => $node['node']['data']['name'],
+                'stepLabel' => $node['data']['label'] ?? null,
+                'stepName' => $node['data']['name'],
                 'pluginVersion' => $this->pluginVersion,
             ];
 
             $compactedArgs = $this->compactArguments($step);
-
 
             $actionUIDHash = md5($actionUID);
             $scheduledActionsModel = new ScheduledActionsModel();
@@ -181,37 +186,31 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
             // Do not run single actions that have already run
             if ($isSingleAction && $runCount > 0) {
-                $this->logger->debug(
-                    sprintf(
-                        // translators: %s is the step slug
-                        __('Step [%s] is already finished, skipping', 'post-expirator'),
-                        $step['node']['data']['slug']
-                    )
+                $this->addDebugLogMessage(
+                    'Step %s is single action and already ran, skipping',
+                    $stepSlug
                 );
+
                 return;
             }
 
             // If the action is already finished, we don't need to schedule it again.
             if ($hasFinished) {
-                $this->logger->debug(
-                    sprintf(
-                        // translators: %s is the step slug
-                        __('Step [%s] is already finished, skipping', 'post-expirator'),
-                        $step['node']['data']['slug']
-                    )
+                $this->addDebugLogMessage(
+                    'Step %s is already finished, skipping',
+                    $stepSlug
                 );
+
                 return;
             }
 
             if ($scheduledActionsModel->hasRowWithActionUIDHash($actionUIDHash)) {
                 // It should be unique, so if the action is already scheduled, we don't need to schedule it again.
-                $this->logger->debug(
-                    sprintf(
-                        // translators: %s is the step slug
-                        __('Step [%s] is already scheduled, skipping', 'post-expirator'),
-                        $step['node']['data']['slug']
-                    )
+                $this->addDebugLogMessage(
+                    'Step %s is already scheduled, based on its ID, skipping',
+                    $stepSlug
                 );
+
                 return;
             }
 
@@ -223,6 +222,12 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                         false,
                         $priority
                     );
+
+                    $this->addDebugLogMessage(
+                        'Step %s scheduled as async action as %d',
+                        $stepSlug,
+                        $scheduledActionId
+                    );
                 } else {
                     // Schedule a single action
                     $scheduledActionId = $this->cron->scheduleSingleAction(
@@ -231,6 +236,12 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                         [$actionArgs],
                         false,
                         $priority
+                    );
+
+                    $this->addDebugLogMessage(
+                        'Step %s scheduled as single action as %d',
+                        $stepSlug,
+                        $scheduledActionId
                     );
                 }
             } else {
@@ -266,6 +277,17 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                         false,
                         $priority
                     );
+
+                    $this->addDebugLogMessage(
+                        'Step %s scheduled as recurring action as %d',
+                        $stepSlug,
+                        $scheduledActionId
+                    );
+                } else {
+                    $this->addDebugLogMessage(
+                        'Invalid interval value for recurrence on step %s',
+                        $stepSlug
+                    );
                 }
             }
 
@@ -300,18 +322,25 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
                 $scheduledStepModel->insert();
 
-                $this->logger->debug(
-                    sprintf(
-                        // translators: %s is the step slug
-                        __('Step [%s] scheduled', 'post-expirator'),
-                        $step['node']['data']['slug']
-                    )
+                $this->addDebugLogMessage(
+                    'Steps arguments stored for %s and action ID %d',
+                    $stepSlug,
+                    $scheduledActionId
+                );
+            } else {
+                $this->addDebugLogMessage(
+                    'No scheduled action ID found for step %s, skipping',
+                    $stepSlug
                 );
             }
         } catch (\Exception $e) {
             $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
 
-            $this->logError($e->getMessage(), $workflowId, $step);
+            $this->addDebugLogMessage(
+                'Error scheduling step %1$s: %2$s',
+                $stepSlug,
+                $e->getMessage()
+            );
         }
     }
 
@@ -388,6 +417,11 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
     public function compactArguments(array $step): array
     {
+        $this->addDebugLogMessage(
+            'Compacting step %s arguments',
+            $step['node']['data']['slug']
+        );
+
         $compactedArgs = [
             'pluginVersion' => $this->pluginVersion,
             'step' => [
@@ -439,6 +473,11 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
     public function expandArguments(array $compactArguments): array
     {
+        $this->addDebugLogMessage(
+            'Expanding step %s arguments',
+            $compactArguments['step']['nodeId']
+        );
+
         if (isset($compactArguments['step']['nodeId'])) {
             // New format where the step is compacted
             $nodeId = $compactArguments['step']['nodeId'];
@@ -644,8 +683,14 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                 if (isset($resolversMap[$type])) {
                     $resolverClass = $resolversMap[$type];
 
+                    // TODO: Replace this with a factory
                     if ($type === 'site') {
                         $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass();
+                    } else if ($type === 'post') {
+                        $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass(
+                            $resolverArgument,
+                            $this->hooks
+                        );
                     } else {
                         $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass(
                             $resolverArgument
@@ -674,6 +719,11 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         $scheduledActionModel->cancel();
 
         $this->cancelFutureRecurringActions($originalArgs['workflowId'], $originalArgs['stepId']);
+
+        $this->addDebugLogMessage(
+            'Step %s scheduled action cancelled',
+            $originalArgs['stepId']
+        );
     }
 
     private function cancelFutureRecurringActions(int $workflowId, string $stepId): void
@@ -688,6 +738,11 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             false,
             10
         );
+
+        $this->addDebugLogMessage(
+            'Scheduled action to cancel future recurring actions for step %s',
+            $stepId
+        );
     }
 
     public function completeScheduledStep(int $actionId): void
@@ -697,6 +752,11 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         $scheduledActionModel->complete();
 
         $this->markStepAsFinished($actionId);
+
+        $this->addDebugLogMessage(
+            'Step scheduled action with ID %d completed',
+            $actionId
+        );
     }
 
     public function actionCallback(array $compactedArgs, array $originalArgs)
@@ -716,6 +776,13 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         if (! $workflowModel->isActive()) {
             // TODO: Log this into the scheduler log
             $this->cancelScheduledStep($actionId, $originalArgs);
+
+            $this->addDebugLogMessage(
+                'Workflow %d is not active, cancelling scheduled action %s',
+                $workflowId,
+                $actionId
+            );
+
             return;
         }
 
@@ -761,6 +828,11 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         }
 
         if ($shouldExecute) {
+            $this->addDebugLogMessage(
+                'Executing step %s',
+                $expandedArgs['step']['node']['data']['slug']
+            );
+
             $this->runNextSteps($expandedArgs['step'], $expandedArgs['runtimeVariables']);
 
             $scheduledStepModel->incrementRunCount();
@@ -769,6 +841,11 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         }
 
         if ($markAsCompletedAfterExecution) {
+            $this->addDebugLogMessage(
+                'Step scheduled action with ID %d completed',
+                $actionId
+            );
+
             $this->completeScheduledStep($actionId);
             $this->cancelFutureRecurringActions($workflowId, $originalArgs['stepId']);
             return;
@@ -802,7 +879,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
     public function logError(string $message, int $workflowId, array $step)
     {
-        $this->generalNodeRunnerProcessor->logError($message, $workflowId, $step);
+        $this->addErrorLogMessage($message);
     }
 
     public function triggerCallbackIsRunning(): void
@@ -823,5 +900,20 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         $routineTree = $workflowModel->getPartialRoutineTreeFromNodeId($nodeId);
 
         return $routineTree;
+    }
+
+    public function prepareLogMessage(string $message, ...$args): string
+    {
+        return $this->generalNodeRunnerProcessor->prepareLogMessage($message, ...$args);
+    }
+
+    private function addDebugLogMessage(string $message, ...$args): void
+    {
+        $this->logger->debug($this->prepareLogMessage($message, ...$args));
+    }
+
+    private function addErrorLogMessage(string $message, ...$args): void
+    {
+        $this->logger->error($this->prepareLogMessage($message, ...$args));
     }
 }

@@ -45,23 +45,29 @@ class PostStep implements NodeRunnerProcessorInterface
     public function setup(array $step, callable $actionCallback): void
     {
         try {
-            $this->logger->debug(
-                sprintf(
-                    // translators: %s is the step slug
-                    __('Setting up step [%s]', 'post-expirator'),
-                    $step['node']['data']['slug']
-                )
+            $this->addDebugLogMessage(
+                'Setting up step %s',
+                $step['node']['data']['slug']
             );
 
             $node = $this->getNodeFromStep($step);
             $nodeSettings = $this->getNodeSettings($node);
-            $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
 
             if (! isset($nodeSettings['post'])) {
+                $this->addErrorLogMessage(
+                    'The "post" variable is not set in the node settings for step %s',
+                    $step['node']['data']['slug']
+                );
+
                 throw new Exception('The "post" variable is not set in the node settings');
             }
 
             if (! isset($nodeSettings['post']['variable'])) {
+                $this->addErrorLogMessage(
+                    'The post.variable variable is not set in the node settings for step %s',
+                    $step['node']['data']['slug']
+                );
+
                 throw new Exception('The "post.variable" variable is not set in the node settings');
             }
 
@@ -69,12 +75,9 @@ class PostStep implements NodeRunnerProcessorInterface
             $posts = $this->variablesHandler->getVariable($nodeSettings['post']['variable']);
 
             if (empty($posts)) {
-                $this->logger->debug(
-                    sprintf(
-                        // translators: %s is the step slug
-                        __('Step [%s] didn\'t find any posts, skipping', 'post-expirator'),
-                        $step['node']['data']['slug']
-                    )
+                $this->addDebugLogMessage(
+                    'Step %s didn\'t find any posts, skipping',
+                    $step['node']['data']['slug']
                 );
 
                 return;
@@ -85,12 +88,10 @@ class PostStep implements NodeRunnerProcessorInterface
             }
 
             foreach ($posts as $post) {
-                $this->logger->debug(
-                    sprintf(
-                        // translators: %s is the step slug
-                        __('Processing post [%s]', 'post-expirator'),
-                        $post
-                    )
+                $this->addDebugLogMessage(
+                    'Processing post %s on step %s',
+                    $post,
+                    $step['node']['data']['slug']
                 );
 
                 if (is_array($post)) {
@@ -110,7 +111,7 @@ class PostStep implements NodeRunnerProcessorInterface
 
             $this->runNextSteps($step);
         } catch (\Exception $e) {
-            $this->logError($e->getMessage(), $workflowId, $step);
+            $this->addErrorLogMessage($e->getMessage());
         }
     }
 
@@ -141,11 +142,26 @@ class PostStep implements NodeRunnerProcessorInterface
 
     public function logError(string $message, int $workflowId, array $step)
     {
-        $this->generalNodeRunnerProcessor->logError($message, $workflowId, $step);
+        $this->addErrorLogMessage($message);
     }
 
     public function triggerCallbackIsRunning(): void
     {
         $this->generalNodeRunnerProcessor->triggerCallbackIsRunning();
+    }
+
+    public function prepareLogMessage(string $message, ...$args): string
+    {
+        return $this->generalNodeRunnerProcessor->prepareLogMessage($message, ...$args);
+    }
+
+    private function addDebugLogMessage(string $message, ...$args): void
+    {
+        $this->logger->debug($this->prepareLogMessage($message, ...$args));
+    }
+
+    private function addErrorLogMessage(string $message, ...$args): void
+    {
+        $this->logger->error($this->prepareLogMessage($message, ...$args));
     }
 }

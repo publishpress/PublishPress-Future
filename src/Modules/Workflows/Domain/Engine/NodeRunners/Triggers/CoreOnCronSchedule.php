@@ -60,5 +60,14 @@ class CoreOnCronSchedule implements NodeTriggerRunnerInterface
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step);
 
         $this->nodeRunnerProcessor->setup($step, '__return_true');
+
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+
+        $this->logger->debug(
+            $this->nodeRunnerProcessor->prepareLogMessage(
+                'Step %s only runs on the pro plugin, skipping',
+                $nodeSlug
+            )
+        );
     }
 }

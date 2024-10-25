@@ -186,6 +186,10 @@ class Logger implements LoggerInterface
     public function error($message, $context = [])
     {
         $this->log(LogLevel::ERROR, $message, $context);
+
+        if (function_exists('error_log')) {
+            error_log($message);
+        }
     }
 
     /**

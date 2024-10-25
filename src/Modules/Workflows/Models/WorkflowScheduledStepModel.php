@@ -345,7 +345,8 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
         $this->isFinished = null;
 
         if ($this->getIsCompressed()) {
-            $this->setArgs($this->uncompressAndDecodeArguments($row['compressed_args'] ?? []));
+            $args = $this->uncompressAndDecodeArguments($row['compressed_args'] ?? []);
+            $this->setArgs($args);
         } else {
             $this->setArgs($this->decodeArguments($row['uncompressed_args'] ?? []));
         }

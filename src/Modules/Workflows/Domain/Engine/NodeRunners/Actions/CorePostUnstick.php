@@ -67,5 +67,15 @@ class CorePostUnstick implements NodeRunnerInterface
 
         $postModel = call_user_func($this->expirablePostModelFactory, $postId);
         $postModel->unstick();
+
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+
+        $this->logger->debug(
+            $this->nodeRunnerProcessor->prepareLogMessage(
+                'Post %1$s unstick on step %2$s',
+                $postId,
+                $nodeSlug
+            )
+        );
     }
 }

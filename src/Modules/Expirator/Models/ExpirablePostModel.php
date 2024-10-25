@@ -943,6 +943,10 @@ class ExpirablePostModel extends PostModel
             return $args;
         }
 
+        if (! isset($args[$key])) {
+            return null;
+        }
+
         return $args[$key];
     }
 

@@ -85,5 +85,27 @@ class CorePostTermsRemove implements NodeRunnerInterface
         $updatedTerms = $selectAll ? [] : array_diff($originalTerms, $termsToRemove);
 
         $result = $postModel->setTerms($updatedTerms, $taxonomy);
+
+        $resultIsError = $this->errorFacade->isWpError($result);
+
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+
+        if ($resultIsError) {
+            $this->logger->error(
+                $this->nodeRunnerProcessor->prepareLogMessage(
+                    'Error updating post %1$s terms on step %2$s',
+                    $postId,
+                    $nodeSlug
+                )
+            );
+        } else {
+            $this->logger->debug(
+                $this->nodeRunnerProcessor->prepareLogMessage(
+                    'Post %1$s terms updated on step %2$s',
+                    $postId,
+                    $nodeSlug
+                )
+            );
+        }
     }
 }

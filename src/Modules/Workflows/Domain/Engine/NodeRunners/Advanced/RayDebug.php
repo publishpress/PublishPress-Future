@@ -59,14 +59,18 @@ class RayDebug implements NodeRunnerInterface
     {
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step);
 
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+
         if (! function_exists('ray')) {
             $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
 
-            $this->nodeRunnerProcessor->logError(
-                'Ray is not installed. Please install it from the WordPress plugins directory',
-                $workflowId,
-                $step
+            $this->logger->error(
+                $this->nodeRunnerProcessor->prepareLogMessage(
+                    'Ray is not installed. Skipping step %s',
+                    $nodeSlug
+                )
             );
+
             return;
         }
 
@@ -118,5 +122,12 @@ class RayDebug implements NodeRunnerInterface
                     break;
             }
         }
+
+        $this->logger->debug(
+            $this->nodeRunnerProcessor->prepareLogMessage(
+                'Step %s completed',
+                $nodeSlug
+            )
+        );
     }
 }

@@ -66,5 +66,15 @@ class CorePostDeactivateWorkflow implements NodeRunnerInterface
         $workflowId = $workflowResolver->getValue('id');
 
         $postModel->removeManuallyEnabledWorkflow($workflowId);
+
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+
+        $this->logger->debug(
+            $this->nodeRunnerProcessor->prepareLogMessage(
+                'Workflow disabled on %1$s completed for post %2$s',
+                $nodeSlug,
+                $postId
+            )
+        );
     }
 }

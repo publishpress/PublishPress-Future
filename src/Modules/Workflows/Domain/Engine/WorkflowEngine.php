@@ -123,14 +123,18 @@ class WorkflowEngine implements WorkflowEngineInterface
         try {
             $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_START);
 
-            $this->logger->debug('Starting workflow engine');
+            $currentUser = wp_get_current_user();
+
+            if (is_object($currentUser)) {
+                $this->logger->debug('Starting workflow engine for user ' . $currentUser->ID);
+            } else {
+                $this->logger->debug('Starting workflow engine for unknown user');
+            }
 
             $workflowsModel = new WorkflowsModel();
             $workflows = $workflowsModel->getPublishedWorkflowsIds();
 
             $nodeTypes = $this->nodeTypesModel->getAllNodeTypesByType();
-
-            $currentUser = wp_get_current_user();
 
             // Setup the workflow triggers
             foreach ($workflows as $workflowId) {
@@ -140,8 +144,7 @@ class WorkflowEngine implements WorkflowEngineInterface
 
                 $this->logger->debug(
                     sprintf(
-                        // translators: %d is the workflow ID, %s is the workflow title
-                        __('Starting workflow [%d] %s', 'post-expirator'),
+                        'Starting workflow [%d] %s',
                         $workflowId,
                         $workflow->getTitle()
                     )
@@ -180,13 +183,13 @@ class WorkflowEngine implements WorkflowEngineInterface
                     $triggerRunner = call_user_func($this->nodeRunnerFactory, $triggerName);
 
                     if (is_null($triggerRunner)) {
-                        logError(
-                            sprintf(
-                                // translators: %s is the trigger name
-                                __('Trigger not found: %s', 'post-expirator'),
-                                $triggerName
-                            )
+                        $message = sprintf(
+                            'Trigger not found: %s',
+                            $triggerName
                         );
+
+                        $this->logger->error($message);
+                        logError($message);
 
                         continue;
                     }
@@ -216,9 +219,23 @@ class WorkflowEngine implements WorkflowEngineInterface
                     // Setup the trigger
                     $triggerRunner->setup($workflowId, $routineTree[$triggerId]);
                 }
+
+                $this->logger->debug(
+                    sprintf(
+                        'Finished workflow engine for user %d',
+                        $currentUser->ID
+                    )
+                );
             }
         } catch (Exception $e) {
-            logError("Workflow engine error", $e);
+            $message = sprintf(
+                'Workflow engine error: %s',
+                $e->getMessage()
+            );
+
+            $this->logger->error($message);
+
+            logError($message);
         }
     }
 
@@ -241,19 +258,35 @@ class WorkflowEngine implements WorkflowEngineInterface
             $nodeRunner = call_user_func($this->nodeRunnerFactory, $nodeName);
 
             if (is_null($nodeRunner)) {
-                throw new \Exception("Node runner not found: $nodeName");
+                $message = sprintf(
+                    'Node runner not found: %s',
+                    $nodeName
+                );
+
+                $this->logger->error($message);
+
+                throw new \Exception($message);
             }
 
             $nodeRunner->setup($step);
         } catch (Exception $e) {
-            logError("Node runner error", $e);
+            $message = sprintf(
+                'Node runner error: %s',
+                $e->getMessage()
+            );
+
+            $this->logger->error($message);
+            logError($message, $e);
         }
     }
 
     public function executeAsyncNodeRoutine($args)
     {
         if (is_null($args)) {
-            logError("Async node runner error", null, true);
+            $message = 'Async node runner error';
+
+            $this->logger->error($message);
+            logError($message, null, true);
 
             return;
         }
@@ -269,9 +302,11 @@ class WorkflowEngine implements WorkflowEngineInterface
                 $args = $scheduledStepModel->getArgs();
             } else {
                 // Old format, when the args were saved directly in the actionsscheduler_actions table.
-
                 if (! isset($args['step']['node']['data']['name'])) {
-                    logError("Async node runner error", null, true);
+                    $message = 'Async node runner error, no step name found';
+
+                    $this->logger->error($message);
+                    logError($message, null, true);
 
                     return;
                 }
@@ -281,9 +316,32 @@ class WorkflowEngine implements WorkflowEngineInterface
             $args['actionId'] = $this->currentAsyncActionId;
 
             $nodeRunner = call_user_func($this->nodeRunnerFactory, $nodeName);
+
+            $workflowTitle = $this->currentRunningWorkflow->getTitle();
+
+            $workflow = new WorkflowModel();
+            $workflow->load($this->currentRunningWorkflow->getId());
+
+            $step = $workflow->getPartialRoutineTreeFromNodeId($args['step']['nodeId']);
+
+            $this->logger->debug(
+                sprintf(
+                    '[Workflow "%1$s"] Executing async node routine for step %2$s on action %3$d',
+                    $workflowTitle,
+                    $step['node']['data']['slug'],
+                    (int) $this->currentAsyncActionId
+                )
+            );
+
             $nodeRunner->actionCallback($args, $originalArgs);
         } catch (Exception $e) {
-            logError("Async node runner error", $e);
+            $message = sprintf(
+                'Async node runner error: %s',
+                $e->getMessage()
+            );
+
+            $this->logger->error($message);
+            logError($message, $e);
         }
     }
 

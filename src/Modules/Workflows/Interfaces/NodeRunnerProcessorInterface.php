@@ -19,7 +19,12 @@ interface NodeRunnerProcessorInterface
 
     public function getNodeSettings(array $node);
 
+    /**
+     * @deprecated Use the logger instead
+     */
     public function logError(string $message, int $workflowId, array $step);
 
     public function triggerCallbackIsRunning(): void;
+
+    public function prepareLogMessage(string $message, ...$args): string;
 }

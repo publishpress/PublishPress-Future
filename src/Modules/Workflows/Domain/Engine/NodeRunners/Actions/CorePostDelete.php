@@ -67,5 +67,15 @@ class CorePostDelete implements NodeRunnerInterface
 
         $postModel = call_user_func($this->expirablePostModelFactory, $postId);
         $postModel->delete(true);
+
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+
+        $this->logger->debug(
+            $this->nodeRunnerProcessor->prepareLogMessage(
+                'Post %1$s deleted on step %2$s',
+                $postId,
+                $nodeSlug
+            )
+        );
     }
 }

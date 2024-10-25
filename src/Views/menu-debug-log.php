@@ -27,16 +27,44 @@ $results = $debug->getTable();
 
 if (empty($results)) {
     print '<p>' . esc_html__('Debugging table is currently empty.', 'post-expirator') . '</p>';
+}
 
-    return;
+if (! empty($results)) {
+    // Add copy button
+    print '<button id="copy-debug-log" class="button">' . esc_html__('Copy Debug Log', 'post-expirator') . '</button>';
+    print '<br><br>';
+
+    // Add JavaScript to handle copying
+    ?>
+    <script>
+    document.getElementById('copy-debug-log').addEventListener('click', function() {
+        const debugLog = document.querySelector('.pp-debug-log textarea');
+        debugLog.select();
+        document.execCommand('copy');
+        alert('<?php echo esc_js(__('Debug log copied to clipboard!', 'post-expirator')); ?>');
+    });
+    </script>
+    <?php
+
+    print '<div class="pp-debug-log">';
+    print '<textarea readonly>';
+    foreach ($results as $result) {
+        printf("%s: %s\n", $result->timestamp, esc_html($result->message));
+    }
+    print '</textarea>';
+    print '</div>';
+
+    // Add JavaScript to auto-scroll textarea to the end
+    ?>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const debugLog = document.querySelector('.pp-debug-log textarea');
+        debugLog.scrollTop = debugLog.scrollHeight;
+    });
+    </script>
+    <?php
 }
-print '<div class="pp-debug-log">';
-print '<textarea readonly>';
-foreach ($results as $result) {
-    printf("%s: %s\n", $result->timestamp, $result->message);
-}
-print '</textarea>';
-print '</div>';
+
 print '</div>';
 
 if ($showSideBar) {

@@ -5,9 +5,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.1.0] - UNRELEASED
 
-### Change
+### Added
 
-- Improved the debug log viewer adding text to a textarea.
+- Add more detailed debug logs to the workflow engine (Issue #724).
+- Add button to copy the debug logs to the clipboard (Issue #724).
+
+### Changed
+
+- Improved the debug log viewer adding text to a textarea (Issue #724).
+- The debug log viewer now automatically scrolls to the bottom when the page loads.
 
 ## [4.0.4] - 24 Oct, 2024
 

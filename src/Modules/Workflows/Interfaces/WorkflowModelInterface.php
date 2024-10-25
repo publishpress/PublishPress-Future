@@ -71,4 +71,6 @@ interface WorkflowModelInterface
     public function getNodeById(string $nodeId): array;
 
     public function getNodes(): array;
+
+    public function getPartialRoutineTreeFromNodeId(string $nodeId): array;
 }
