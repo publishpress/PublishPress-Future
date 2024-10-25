@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.0] - UNRELEASED
+
+### Change
+
+- Improved the debug log viewer adding text to a textarea.
+
 ## [4.0.4] - 24 Oct, 2024
 
 ### Fixed
