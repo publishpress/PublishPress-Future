@@ -609,6 +609,11 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
                     if ($type === 'site') {
                         $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass();
+                    } else if ($type === 'post') {
+                        $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass(
+                            $resolverArgument,
+                            $this->hooks
+                        );
                     } else {
                         $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass(
                             $resolverArgument
