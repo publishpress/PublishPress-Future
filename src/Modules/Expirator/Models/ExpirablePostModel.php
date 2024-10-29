@@ -943,7 +943,7 @@ class ExpirablePostModel extends PostModel
             return $args;
         }
 
-        return $args[$key];
+        return $args[$key] ?? null;
     }
 
     private function removeLegacyMetadataHash()
