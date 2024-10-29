@@ -9,6 +9,7 @@ use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\Database\DBTableSchemaHandler;
 use PublishPress\Future\Framework\Logger\DBTableSchemas\DebugLogSchema;
 use PublishPress\Future\Framework\Logger\Logger;
+use PublishPress\Future\Framework\System\DateTimeHandler;
 use PublishPress\Future\Framework\WordPress\Facade\DatabaseFacade;
 use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\EmailFacade;
@@ -384,7 +385,9 @@ return [
             $container->get(ServicesAbstract::SCHEDULED_ACTIONS_TABLE_FACTORY),
             $container->get(ServicesAbstract::NOTICES),
             $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA),
-            $container->get(ServicesAbstract::SETTINGS)
+            $container->get(ServicesAbstract::SETTINGS),
+            $container->get(ServicesAbstract::LOGGER),
+            $container->get(ServicesAbstract::DATE_TIME_HANDLER)
         );
     },
 
@@ -435,7 +438,8 @@ return [
         return new PostTypeDefaultDataModelFactory(
             $container->get(ServicesAbstract::SETTINGS),
             $container->get(ServicesAbstract::OPTIONS),
-            $container->get(ServicesAbstract::HOOKS)
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::DATE_TIME_HANDLER)
         );
     },
 
@@ -963,5 +967,9 @@ return [
 
     ServicesAbstract::INPUT_VALIDATOR_POST_QUERY => static function (ContainerInterface $container) {
         return new PostQuery();
+    },
+
+    ServicesAbstract::DATE_TIME_HANDLER => static function (ContainerInterface $container) {
+        return new DateTimeHandler();
     },
 ];
