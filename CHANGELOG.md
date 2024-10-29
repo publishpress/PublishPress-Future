@@ -3,6 +3,19 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## UNRELEASED
+
+### Fixed
+
+### Developers
+
+- Add new class `PublishPress\Future\Framework\System\DateTimeHandler` to handle date and time operations.
+- Change the REST API `/settings/validate-expire-offset` endpoint return value renaming `preview` to `calculatedTime`.
+- Change the REST API `/settings/validate-expire-offset` endpoint to log an error message when the offset is invalid.
+- Add `DateTimeHandlerInterface` as dependency to the class `PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModel`.
+- Add `LoggerInterface` as dependency to the class `PublishPress\Future\Modules\Expirator\Module`.
+- Add `DateTimeHandlerInterface` as dependency to the class `PublishPress\Future\Modules\Expirator\Module`.
+
 ## [4.0.4] - 24 Oct, 2024
 
 ### Fixed
