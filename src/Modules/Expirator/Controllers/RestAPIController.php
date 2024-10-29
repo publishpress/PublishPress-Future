@@ -11,10 +11,12 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Settings\Models\TaxonomiesModel;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
+use PublishPress\Future\Framework\System\DateTimeHandlerInterface;
 use WP_REST_Request;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -37,17 +39,31 @@ class RestAPIController implements InitializableInterface
     private $currentUserModel;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * @var DateTimeHandlerInterface
+     */
+    private $dateTimeHandler;
+
+    /**
      * @param HookableInterface $hooksFacade
      * @param callable $expirablePostModelFactory
      */
     public function __construct(
         HookableInterface $hooksFacade,
         $expirablePostModelFactory,
-        \Closure $currentUserModelFactory
+        \Closure $currentUserModelFactory,
+        LoggerInterface $logger,
+        DateTimeHandlerInterface $dateTimeHandler
     ) {
         $this->hooks = $hooksFacade;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->currentUserModel = $currentUserModelFactory();
+        $this->logger = $logger;
+        $this->dateTimeHandler = $dateTimeHandler;
     }
 
     public function initialize()
@@ -193,31 +209,33 @@ class RestAPIController implements InitializableInterface
     {
         $isValid = true;
         $message = '';
-        $preview = '';
         $currentTime = '';
+        $calculatedTime = '';
 
         try {
-            $jsonParams = $request->get_json_params('offset');
-            $offset = sanitize_text_field($jsonParams['offset']);
+            $offset = $request->get_json_params('offset');
+            $offset = sanitize_text_field($offset['offset']);
 
-            $currentTime = time();
-            $time = strtotime($offset);
-
-            if (empty($time)) {
-                throw new Exception(__('Invalid date time offset.', 'post-expirator'));
-            }
-
-            $preview = date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $time);
-            $currentTime = date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $currentTime);
+            $currentTime = $this->dateTimeHandler->formatTimestamp(
+                $this->dateTimeHandler->getCurrentTime()
+            );
+            $calculatedTime = $this->dateTimeHandler->formatTimestamp(
+                $this->dateTimeHandler->getCalculatedTimeWithOffset(
+                    $this->dateTimeHandler->getCurrentTime(),
+                    $offset
+                )
+            );
         } catch (Exception $e) {
             $isValid = false;
             $message = __('Invalid date time offset.', 'post-expirator');
+
+            $this->logger->error('Invalid date time offset: ' . $offset . ' - ' . $e->getMessage());
         }
 
         return rest_ensure_response([
             'isValid' => $isValid,
             'message' => $message,
-            'preview' => $preview,
+            'calculatedTime' => $calculatedTime,
             'currentTime' => $currentTime,
         ]);
     }
