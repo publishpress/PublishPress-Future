@@ -18,6 +18,10 @@ class PostExpirator_Cli
 
     public function __construct()
     {
+        if (! defined('WP_CLI')) {
+            return;
+        }
+
         try {
             WP_CLI::add_command(
                 self::CLI_COMMAND . ' expire-post',

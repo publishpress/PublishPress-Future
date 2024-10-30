@@ -253,7 +253,7 @@ class Logger implements LoggerInterface
     {
         $databaseTableName = $this->getDatabaseTableName();
 
-        return (array)$this->db->getResults("SELECT * FROM $databaseTableName ORDER BY `id`");
+        return (array)$this->db->getResults("SELECT * FROM $databaseTableName ORDER BY `id`", 'ARRAY_A');
     }
 
     /**

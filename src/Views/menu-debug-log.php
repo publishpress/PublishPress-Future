@@ -22,14 +22,15 @@ $showSideBar = $hooks->applyFilters(
 print '<div class="pp-columns-wrapper' . ($showSideBar ? ' pp-enable-sidebar' : '') . '">';
 print '<div class="pp-column-left">';
 
-$debug = new PostExpiratorDebug();
-$results = $debug->getTable();
+$debug = Container::getInstance()->get(ServicesAbstract::DEBUG);
+$results = $debug->fetchAll();
 
 if (empty($results)) {
     print '<p>' . esc_html__('Debugging table is currently empty.', 'post-expirator') . '</p>';
 }
 
 if (! empty($results)) {
+
     // Add copy button
     print '<button id="copy-debug-log" class="button">' . esc_html__('Copy Debug Log', 'post-expirator') . '</button>';
     print '<br><br>';
@@ -49,9 +50,19 @@ if (! empty($results)) {
     print '<div class="pp-debug-log">';
     print '<textarea readonly>';
     foreach ($results as $result) {
-        printf("%s: %s\n", $result->timestamp, esc_html($result->message));
+        printf("%s: %s\n", $result['timestamp'], esc_html($result['message']));
     }
     print '</textarea>';
+
+    $totalOfResults = count($results);
+
+    print '<p id="debug-log-length">' . sprintf(
+        // translators: %s is the number of results in the debug log. %s is the size of the log in KB.
+        esc_html__('Debug log contains %s results. The approximate size of the log is %s KB.', 'post-expirator'),
+        $totalOfResults,
+        '###'
+    ) . '</p>';
+
     print '</div>';
 
     // Add JavaScript to auto-scroll textarea to the end
@@ -60,6 +71,11 @@ if (! empty($results)) {
     document.addEventListener('DOMContentLoaded', function() {
         const debugLog = document.querySelector('.pp-debug-log textarea');
         debugLog.scrollTop = debugLog.scrollHeight;
+
+        // Measure the size in bytes of the debug log
+        const debugLogSize = debugLog.value.length / 1024;
+        document.getElementById('debug-log-length').textContent =
+            document.getElementById('debug-log-length').textContent.replace('###', debugLogSize.toFixed(2));
     });
     </script>
     <?php
