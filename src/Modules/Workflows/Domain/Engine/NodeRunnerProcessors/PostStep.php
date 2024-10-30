@@ -45,11 +45,6 @@ class PostStep implements NodeRunnerProcessorInterface
     public function setup(array $step, callable $actionCallback): void
     {
         try {
-            $this->addDebugLogMessage(
-                'Setting up step %s',
-                $step['node']['data']['slug']
-            );
-
             $node = $this->getNodeFromStep($step);
             $nodeSettings = $this->getNodeSettings($node);
 

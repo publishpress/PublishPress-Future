@@ -59,7 +59,7 @@ class CorePostQuery implements NodeRunnerInterface
 
         $this->logger->debug(
             $this->nodeRunnerProcessor->prepareLogMessage(
-                'Step %1$s only runs on the pro plugin, skipping',
+                'Step %1$s is a Pro feature, skipping',
                 $nodeSlug
             )
         );

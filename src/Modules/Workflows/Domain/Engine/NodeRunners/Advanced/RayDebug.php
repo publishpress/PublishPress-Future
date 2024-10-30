@@ -125,7 +125,7 @@ class RayDebug implements NodeRunnerInterface
 
         $this->logger->debug(
             $this->nodeRunnerProcessor->prepareLogMessage(
-                'Step %s completed',
+                'Step completed | Slug: %s',
                 $nodeSlug
             )
         );

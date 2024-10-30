@@ -9,6 +9,7 @@ namespace PublishPress\Future\Core;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\ModuleInterface as ModuleInterface;
 use PublishPress\Future\Framework\WordPress\Facade\NoticeInterface;
 use PublishPress\Future\Modules\Expirator\Controllers\PluginsListController;
@@ -21,11 +22,14 @@ use PublishPress\Future\Modules\Expirator\Migrations\V30104ArgsColumnLength;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\Migrations\V40000WorkflowScheduledStepsSchema;
+use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
 class Plugin implements InitializableInterface
 {
+    const LOG_PREFIX = '[Plugin]';
+
     /**
      * @var bool
      */
@@ -62,12 +66,18 @@ class Plugin implements InitializableInterface
     private $notices;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @param ModuleInterface[] $modules
      * @param object $legacyPlugin
      * @param HookableInterface $hooksFacade
      * @param string $pluginSlug
      * @param string $basePath
      * @param NoticeInterface $notices
+     * @param LoggerInterface $logger
      */
     public function __construct(
         $modules,
@@ -75,7 +85,8 @@ class Plugin implements InitializableInterface
         HookableInterface $hooksFacade,
         $pluginSlug,
         $basePath,
-        NoticeInterface $notices
+        NoticeInterface $notices,
+        LoggerInterface $logger
     ) {
         $this->modules = $modules;
         $this->legacyPlugin = $legacyPlugin;
@@ -83,35 +94,62 @@ class Plugin implements InitializableInterface
         $this->basePath = $basePath;
         $this->pluginSlug = $pluginSlug;
         $this->notices = $notices;
+        $this->logger = $logger;
     }
 
     public function initialize()
     {
-        if ($this->initialized) {
-            return;
-        }
-
         $this->initialized = true;
 
+        $this->initializeTextDomain();
+        $this->initializeReviews();
+        $this->initializeHooks();
+        $this->initializeNotices();
+        $this->initializeModules();
+        $this->initializeCli();
+
+        $this->hooks->doAction(HooksAbstract::ACTION_AFTER_INIT_PLUGIN);
+    }
+
+    private function initializeTextDomain()
+    {
         $pluginDir = basename($this->basePath);
         load_plugin_textdomain('post-expirator', false, $pluginDir . '/languages/');
 
+        $this->logger->debug(self::LOG_PREFIX . ' Text domain initialized');
+    }
+
+    private function initializeReviews()
+    {
         \PostExpirator_Reviews::init();
 
-        if (class_exists('WP_CLI')) {
-            \PostExpirator_Cli::getInstance();
+        $this->logger->debug(self::LOG_PREFIX . ' Reviews initialized');
+    }
+
+    private function initializeCli()
+    {
+        if (! defined('WP_CLI')) {
+            return;
         }
 
+        \PostExpirator_Cli::getInstance();
+
+        $this->logger->debug(self::LOG_PREFIX . ' CLI initialized');
+    }
+
+    private function initializeHooks()
+    {
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_INIT, [$this, 'manageUpgrade'], 99);
         $this->hooks->addAction(HooksAbstract::ACTION_INSERT_POST, [$this, 'setDefaultMetaForPost'], 10, 3);
         $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_MENU, [$this, 'sortAdminMenu'], 100);
+    }
 
+    private function initializeNotices()
+    {
         $this->notices->init();
 
-        $this->initializeModules();
-
-        $this->hooks->doAction(HooksAbstract::ACTION_AFTER_INIT_PLUGIN);
+        $this->logger->debug(self::LOG_PREFIX . ' Notices initialized');
     }
 
     private function initializeModules()

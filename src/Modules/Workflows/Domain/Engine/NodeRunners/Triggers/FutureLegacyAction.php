@@ -67,13 +67,6 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
 
         $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
 
-        $this->logger->debug(
-            $this->nodeRunnerProcessor->prepareLogMessage(
-                'Setting up step %s',
-                $nodeSlug
-            )
-        );
-
         $this->hooks->addAction(HooksAbstract::ACTION_LEGACY_ACTION, [$this, 'triggerCallback'], 10, 3);
     }
 
@@ -97,8 +90,9 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
 
         $this->logger->debug(
             $this->nodeRunnerProcessor->prepareLogMessage(
-                'Trigger %s is running',
-                $nodeSlug
+                'Trigger is running | Slug: %s | Post ID: %d',
+                $nodeSlug,
+                $postId
             )
         );
 

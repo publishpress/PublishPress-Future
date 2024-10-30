@@ -31,8 +31,8 @@ class PostExpirator_Cli
                     'longdesc' => 'Expire a post passing the post id, ignoring the expiration date',
                 ]
             );
-        } catch (Exception $e) {
-            WP_CLI::warning($e);
+        } catch (Throwable $e) {
+            WP_CLI::warning($e->getMessage());
         }
     }
 

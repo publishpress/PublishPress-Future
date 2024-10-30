@@ -3,6 +3,7 @@
 namespace Tests\Modules\Workflows\Domain\Engine\NodeRunners\Actions;
 
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostDeactivateWorkflow;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
@@ -70,7 +71,8 @@ class CorePostDeactivateWorkflowTest extends \lucatume\WPBrowser\TestCase\WPTest
             $this->makeEmpty(NodeRunnerProcessorInterface::class),
             $this->makeEmpty(RuntimeVariablesHandlerInterface::class, [
                 'getVariable' => new WorkflowResolver(['id' => $workflows[0]])
-            ])
+            ]),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $model = new PostModel();

@@ -35,13 +35,20 @@ class Logger implements LoggerInterface
      */
     private $settings;
 
+    /**
+     * @var string
+     */
+    private $requestId;
+
     public function __construct($databaseFacade, $siteFacade, $settingsFacade)
     {
         $this->db = $databaseFacade;
         $this->site = $siteFacade;
         $this->settings = $settingsFacade;
 
-        // FIXME: Rename the table to something like ppfuture_debug_log.
+        $this->requestId = uniqid();
+
+        // FIXME: Rename the table to something like ppfuture_debug_log and use a schema class.
         $this->dbTableName = $this->db->getTablePrefix() . 'postexpirator_debug';
 
         $this->initialize();
@@ -119,8 +126,9 @@ class Logger implements LoggerInterface
         $databaseTableName = $this->getDatabaseTableName();
 
         $fullMessage = sprintf(
-            '%s: %s',
+            '%s %s: %s',
             $levelDescription,
+            $this->requestId,
             $message
         );
 
@@ -188,7 +196,7 @@ class Logger implements LoggerInterface
         $this->log(LogLevel::ERROR, $message, $context);
 
         if (function_exists('error_log')) {
-            error_log($message);
+            error_log('PUBLISHPRESS FUTURE - ' . $message);
         }
     }
 

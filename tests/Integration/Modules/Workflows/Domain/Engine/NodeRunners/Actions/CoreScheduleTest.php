@@ -3,6 +3,7 @@
 namespace Tests\Modules\Workflows\Domain\Engine\NodeRunners\Actions;
 
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\CoreSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInterface;
@@ -47,7 +48,8 @@ class CoreScheduleTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             $this->makeEmpty(HookableInterface::class),
             $this->makeEmpty(RuntimeVariablesHandlerInterface::class, [
                 'getVariable' => new WorkflowResolver(['id' => 0])
-            ])
+            ]),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $step = [

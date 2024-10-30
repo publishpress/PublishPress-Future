@@ -167,7 +167,8 @@ return [
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::PLUGIN_SLUG),
             $container->get(ServicesAbstract::BASE_PATH),
-            $container->get(ServicesAbstract::NOTICES)
+            $container->get(ServicesAbstract::NOTICES),
+            $container->get(ServicesAbstract::LOGGER)
         );
     },
 

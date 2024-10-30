@@ -9,13 +9,13 @@
 
 namespace PublishPress\Future {
 
-    use Exception;
+    use Throwable;
 
     defined('ABSPATH') or die('No direct script access allowed.');
 
     if (! function_exists(__NAMESPACE__ . '\\logError')) {
 
-        function logError(string $message, Exception $e = null, bool $addTrace = false): void
+        function logError(string $message, Throwable $e = null, bool $addTrace = false): void
         {
             if (! function_exists('error_log')) {
                 return;
@@ -25,14 +25,13 @@ namespace PublishPress\Future {
                 return;
             }
 
-
-            $message = sprintf("PUBLISHPRESS FUTURE PRO - %s", $message);
-
-            if (! is_null($e) && is_a($e, Exception::class)) {
+            if (! is_null($e) && is_a($e, Throwable::class)) {
                 $message .= ' ' . sprintf(
-                    "[%s: %s]",
+                    '- Caught %1$s: %2$s on file %3$s, line %4$d',
                     get_class($e),
-                    $e->getMessage()
+                    $e->getMessage(),
+                    $e->getFile(),
+                    $e->getLine()
                 );
             }
 

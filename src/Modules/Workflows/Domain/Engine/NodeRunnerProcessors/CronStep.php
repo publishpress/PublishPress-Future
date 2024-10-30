@@ -130,8 +130,6 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         try {
             $stepSlug = $step['node']['data']['slug'];
 
-            $this->addDebugLogMessage('Setting up step %s', $stepSlug);
-
             $node = $this->getNodeFromStep($step);
             $nodeSettings = $this->getNodeSettings($node);
 
@@ -187,7 +185,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             // Do not run single actions that have already run
             if ($isSingleAction && $runCount > 0) {
                 $this->addDebugLogMessage(
-                    'Step %s is single action and already ran, skipping',
+                    'Step %s is a single action and has already run, skipping',
                     $stepSlug
                 );
 
@@ -197,7 +195,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             // If the action is already finished, we don't need to schedule it again.
             if ($hasFinished) {
                 $this->addDebugLogMessage(
-                    'Step %s is already finished, skipping',
+                    'Step %s has already finished, skipping',
                     $stepSlug
                 );
 
@@ -207,7 +205,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             if ($scheduledActionsModel->hasRowWithActionUIDHash($actionUIDHash)) {
                 // It should be unique, so if the action is already scheduled, we don't need to schedule it again.
                 $this->addDebugLogMessage(
-                    'Step %s is already scheduled, based on its ID, skipping',
+                    'Step %s is already scheduled based on its ID, skipping',
                     $stepSlug
                 );
 
@@ -224,7 +222,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                     );
 
                     $this->addDebugLogMessage(
-                        'Step %s scheduled as async action as %d',
+                        'Step "%s" scheduled for immediate execution with async action ID: %d',
                         $stepSlug,
                         $scheduledActionId
                     );
@@ -239,7 +237,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                     );
 
                     $this->addDebugLogMessage(
-                        'Step %s scheduled as single action as %d',
+                        'Step %s scheduled as a single action with ID %d',
                         $stepSlug,
                         $scheduledActionId
                     );
@@ -279,13 +277,13 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                     );
 
                     $this->addDebugLogMessage(
-                        'Step %s scheduled as recurring action as %d',
+                        'Step %s scheduled as recurring action with ID %d',
                         $stepSlug,
                         $scheduledActionId
                     );
                 } else {
                     $this->addDebugLogMessage(
-                        'Invalid interval value for recurrence on step %s',
+                        'Cannot schedule recurring step %s: Interval value must be greater than 0.',
                         $stepSlug
                     );
                 }
@@ -323,13 +321,13 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                 $scheduledStepModel->insert();
 
                 $this->addDebugLogMessage(
-                    'Steps arguments stored for %s and action ID %d',
+                    'Successfully stored workflow step arguments for step "%s" with scheduled action ID %d',
                     $stepSlug,
                     $scheduledActionId
                 );
             } else {
                 $this->addDebugLogMessage(
-                    'No scheduled action ID found for step %s, skipping',
+                    'Failed to schedule action for step %s - no action ID was generated',
                     $stepSlug
                 );
             }
@@ -337,7 +335,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
 
             $this->addDebugLogMessage(
-                'Error scheduling step %1$s: %2$s',
+                'Failed to schedule workflow step "%1$s" due to error: %2$s',
                 $stepSlug,
                 $e->getMessage()
             );
@@ -740,7 +738,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         );
 
         $this->addDebugLogMessage(
-            'Scheduled action to cancel future recurring actions for step %s',
+            'Scheduled cleanup of future recurring actions for step %s',
             $stepId
         );
     }
@@ -754,7 +752,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         $this->markStepAsFinished($actionId);
 
         $this->addDebugLogMessage(
-            'Step scheduled action with ID %d completed',
+            'Successfully completed scheduled action ID %d',
             $actionId
         );
     }
@@ -778,7 +776,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             $this->cancelScheduledStep($actionId, $originalArgs);
 
             $this->addDebugLogMessage(
-                'Workflow %d is not active, cancelling scheduled action %s',
+                'Workflow %d is inactive, cancelling scheduled action %s',
                 $workflowId,
                 $actionId
             );

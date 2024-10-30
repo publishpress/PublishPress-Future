@@ -80,13 +80,6 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
 
         $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
 
-        $this->logger->debug(
-            $this->nodeRunnerProcessor->prepareLogMessage(
-                'Setting up step %s',
-                $nodeSlug
-            )
-        );
-
         $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'triggerCallback'], 10, 3);
     }
 
@@ -142,20 +135,13 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
             'update' => new BooleanResolver($update),
         ]);
 
-        $this->logger->debug(
-            $this->nodeRunnerProcessor->prepareLogMessage(
-                'Post query validation passed for step %s on post %d',
-                $nodeSlug,
-                $postId
-            )
-        );
-
         $this->nodeRunnerProcessor->triggerCallbackIsRunning();
 
         $this->logger->debug(
             $this->nodeRunnerProcessor->prepareLogMessage(
-                'Trigger %s is running',
-                $nodeSlug
+                'Trigger is running | Slug: %s | Post ID: %d',
+                $nodeSlug,
+                $postId
             )
         );
 

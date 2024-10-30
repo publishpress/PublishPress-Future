@@ -76,13 +76,6 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 
     public function setup(int $workflowId, array $step): void
     {
-        $this->logger->debug(
-            sprintf(
-                'Setting up step [%s]',
-                $step['node']['data']['slug']
-            )
-        );
-
         $this->step = $step;
         $this->workflowId = $workflowId;
 
@@ -129,15 +122,15 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
             ]
         );
 
-        $this->nodeRunnerProcessor->triggerCallbackIsRunning();
-
         $this->logger->debug(
             $this->nodeRunnerProcessor->prepareLogMessage(
-                'Trigger %s is running',
-                $nodeSlug
+                'Trigger is running | Slug: %s | Post ID: %d',
+                $nodeSlug,
+                $postId
             )
         );
 
+        $this->nodeRunnerProcessor->triggerCallbackIsRunning();
         $this->nodeRunnerProcessor->runNextSteps($this->step);
     }
 }

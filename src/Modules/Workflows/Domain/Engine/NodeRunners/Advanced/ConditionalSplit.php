@@ -54,12 +54,6 @@ class ConditionalSplit implements NodeRunnerInterface
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step);
 
         $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
-        $this->logger->debug(
-            $this->nodeRunnerProcessor->prepareLogMessage(
-                'Setting up step %s',
-                $nodeSlug
-            )
-        );
 
         // Convert the "true" (default one) to a "next" step.
         // A real conditional split is only handled in the Pro version.
@@ -75,7 +69,7 @@ class ConditionalSplit implements NodeRunnerInterface
 
         $this->logger->debug(
             $this->nodeRunnerProcessor->prepareLogMessage(
-                'Step %1$s only runs on the pro plugin, skipping to the true branch',
+                'Step %1$s is a Pro feature, skipping to the true branch',
                 $nodeSlug
             )
         );

@@ -45,29 +45,25 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
 
         $container = Container::getInstance();
 
-        try {
-            /**
-             * @var SettingsFacade $settingsFacade
-             */
-            $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+        /**
+         * @var SettingsFacade $settingsFacade
+         */
+        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
-            $tableSchema = $wpdb->prefix . 'actionscheduler_actions';
+        $tableSchema = $wpdb->prefix . 'actionscheduler_actions';
 
-            $retention = $settingsFacade->getScheduledWorkflowStepsCleanupRetention();
+        $retention = $settingsFacade->getScheduledWorkflowStepsCleanupRetention();
 
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
-            $wpdb->query(
-                $wpdb->prepare(
-                    "DELETE FROM %i WHERE scheduled_date_gmt < %s",
-                    $tableSchema,
-                    gmdate('Y-m-d H:i:s', time() - ($retention * DAY_IN_SECONDS))
-                )
-            );
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $wpdb->query(
+            $wpdb->prepare(
+                "DELETE FROM %i WHERE scheduled_date_gmt < %s",
+                $tableSchema,
+                gmdate('Y-m-d H:i:s', time() - ($retention * DAY_IN_SECONDS))
+            )
+        );
 
-            $this->deleteOrphanWorkflowArgs();
-        } catch (Exception $e) {
-            // TODO: Log error
-        }
+        $this->deleteOrphanWorkflowArgs();
     }
 
     public function hasRowWithActionUIDHash(string $actionUIDHash): bool

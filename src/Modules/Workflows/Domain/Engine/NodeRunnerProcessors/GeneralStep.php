@@ -12,6 +12,8 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 
 class GeneralStep implements NodeRunnerProcessorInterface
 {
+    const LOG_PREFIX = '[WF Engine]   - ';
+
     /**
      * @var HooksFacade
      */
@@ -42,8 +44,8 @@ class GeneralStep implements NodeRunnerProcessorInterface
         $message = sprintf($message, ...$args);
 
         return sprintf(
-            '[Workflow "%1$s"] %2$s',
-            $this->variablesHandler->getVariable('global.workflow.title'),
+            self::LOG_PREFIX . 'Workflow %1$s: %2$s',
+            $this->variablesHandler->getVariable('global.workflow.id'),
             $message
         );
     }
@@ -57,11 +59,6 @@ class GeneralStep implements NodeRunnerProcessorInterface
         array $step,
         callable $actionCallback
     ): void {
-        $this->addDebugLogMessage(
-            'Setting up step %1$s',
-            $step['node']['data']['slug']
-        );
-
         call_user_func($actionCallback, $step);
 
         $this->runNextSteps($step);
@@ -70,11 +67,6 @@ class GeneralStep implements NodeRunnerProcessorInterface
     public function runNextSteps(array $step): void
     {
         $nextSteps = $this->getNextSteps($step);
-
-        $this->addDebugLogMessage(
-            'Running next steps after %1$s',
-            $step['node']['data']['slug']
-        );
 
         foreach ($nextSteps as $nextStep) {
             /**

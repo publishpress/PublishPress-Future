@@ -59,7 +59,7 @@ class CoreOnAdminInit implements NodeTriggerRunnerInterface
 
         $this->logger->debug(
             $this->nodeRunnerProcessor->prepareLogMessage(
-                'Step %s only runs on the pro plugin, skipping',
+                'Step %1$s is a Pro feature, skipping',
                 $nodeSlug
             )
         );

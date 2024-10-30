@@ -5,6 +5,7 @@ namespace Tests\Core\DI;
 use Codeception\Stub\Expected;
 use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Core\Plugin;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\NoticeInterface;
@@ -37,6 +38,7 @@ class PluginTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $legacyPlugin = $this->makeEmpty(stdClass::class);
         $noticesFacade = $this->makeEmpty(NoticeFacade::class);
+        $logger = $this->makeEmpty(LoggerInterface::class);
 
         $basePath = '/tmp';
         $pluginSlug = 'post-expirator';
@@ -49,7 +51,8 @@ class PluginTest extends \lucatume\WPBrowser\TestCase\WPTestCase
                 $hooksFacade,
                 $basePath,
                 $pluginSlug,
-                $noticesFacade
+                $noticesFacade,
+                $logger
             ]
         );
 
