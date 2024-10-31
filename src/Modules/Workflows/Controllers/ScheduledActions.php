@@ -2,21 +2,21 @@
 
 namespace PublishPress\Future\Modules\Workflows\Controllers;
 
-use Closure;
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSchedule;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionModel;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionsModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowScheduledStepModel;
+use Throwable;
 
 class ScheduledActions implements InitializableInterface
 {
@@ -47,16 +47,23 @@ class ScheduledActions implements InitializableInterface
      */
     private $settingsFacade;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         HookableInterface $hooks,
         NodeTypesModelInterface $nodeTypesModel,
         CronInterface $cron,
-        SettingsFacade $settingsFacade
+        SettingsFacade $settingsFacade,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->nodeTypesModel = $nodeTypesModel;
         $this->cron = $cron;
         $this->settingsFacade = $settingsFacade;
+        $this->logger = $logger;
     }
 
     public function initialize()
@@ -357,8 +364,10 @@ class ScheduledActions implements InitializableInterface
                     $html = __('Workflow recurring scheduled action', 'post-expirator');
                     break;
             }
-        } catch (\Exception $e) {
-            // TODO: Log error
+        } catch (Throwable $e) {
+            $this->logger->error(
+                sprintf('Error showing args in args column: %s', $e->getMessage())
+            );
         }
 
         return $html;

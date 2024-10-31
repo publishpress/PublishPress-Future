@@ -411,8 +411,8 @@ return [
             return new PostModel(
                 $postId,
                 $container->get(ServicesAbstract::TERM_MODEL_FACTORY),
-                $container->get(ServicesAbstract::DEBUG),
-                $container->get(ServicesAbstract::HOOKS)
+                $container->get(ServicesAbstract::HOOKS),
+                $container->get(ServicesAbstract::LOGGER)
             );
         };
     },
@@ -680,7 +680,8 @@ return [
             $container->get(ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA),
             $container->get(ServicesAbstract::MIGRATIONS_FACTORY),
             $container->get(ServicesAbstract::PLUGIN_VERSION),
-            $container->get(ServicesAbstract::CRON)
+            $container->get(ServicesAbstract::CRON),
+            $container->get(ServicesAbstract::LOGGER)
         );
     },
 

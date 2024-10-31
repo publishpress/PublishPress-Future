@@ -10,6 +10,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use Throwable;
 
 class RayDebug implements NodeRunnerInterface
 {
@@ -75,22 +76,18 @@ class RayDebug implements NodeRunnerInterface
         }
 
         $output = null;
-        try {
-            $node = $this->nodeRunnerProcessor->getNodeFromStep($step);
-            $nodeSettings = $this->nodeRunnerProcessor->getNodeSettings($node);
+        $node = $this->nodeRunnerProcessor->getNodeFromStep($step);
+        $nodeSettings = $this->nodeRunnerProcessor->getNodeSettings($node);
 
-            $dataToOutput = $nodeSettings['data']['dataToOutput'] ?? 'all-input';
+        $dataToOutput = $nodeSettings['data']['dataToOutput'] ?? 'all-input';
 
-            if ($dataToOutput === 'all-input') {
-                $onlyInputVariables = $this->variablesHandler->getAllVariables();
-                unset($onlyInputVariables['global']);
+        if ($dataToOutput === 'all-input') {
+            $onlyInputVariables = $this->variablesHandler->getAllVariables();
+            unset($onlyInputVariables['global']);
 
-                $output = $onlyInputVariables;
-            } else {
-                $output = $this->variablesHandler->getVariable($dataToOutput);
-            }
-        } catch (\Exception $e) {
-            $output = 'Error: ' . $e->getMessage();
+            $output = $onlyInputVariables;
+        } else {
+            $output = $this->variablesHandler->getVariable($dataToOutput);
         }
 
         // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction

@@ -38,6 +38,7 @@ class GeneralStepTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $variablesHandler->setAllVariables([
             'global' => [
                 'workflow' => [
+                    'id' => 123,
                     'title' => 'Our Workflow',
                 ],
             ],
@@ -52,18 +53,18 @@ class GeneralStepTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         );
 
         $this->assertEquals(
-            '-> Workflow "Our Workflow": Setting up step step1',
-            $processor->prepareLogMessage('Setting up step %s', ['step1'])
+            '[WF Engine]   - Workflow 123: Setting up step step1',
+            $processor->prepareLogMessage('Setting up step %s', 'step1')
         );
 
         $this->assertEquals(
-            '-> Workflow "Our Workflow": Setting up step step1',
-            $processor->prepareLogMessage('Setting up step %1$s', ['step1'])
+            '[WF Engine]   - Workflow 123: Setting up step step1',
+            $processor->prepareLogMessage('Setting up step %1$s', 'step1')
         );
 
         $this->assertEquals(
-            '-> Workflow "Our Workflow": Setting up step step1 with title "step title"',
-            $processor->prepareLogMessage('Setting up step %1$s with title "%2$s"', ['step1', 'step title'])
+            '[WF Engine]   - Workflow 123: Setting up step step1 with title "step title"',
+            $processor->prepareLogMessage('Setting up step %1$s with title "%2$s"', 'step1', 'step title')
         );
     }
 }

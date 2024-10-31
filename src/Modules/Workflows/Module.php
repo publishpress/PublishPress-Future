@@ -5,6 +5,7 @@ namespace PublishPress\Future\Modules\Workflows;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
@@ -63,6 +64,11 @@ class Module implements InitializableInterface
      */
     private $cron;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         HookableInterface $hooksFacade,
         RestApiManagerInterface $restApiManager,
@@ -73,7 +79,8 @@ class Module implements InitializableInterface
         DBTableSchemaInterface $workflowScheduledStepsSchema,
         \Closure $migrationsFactory,
         string $pluginVersion,
-        CronInterface $cron
+        CronInterface $cron,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooksFacade;
         $this->restApiManager = $restApiManager;
@@ -85,6 +92,7 @@ class Module implements InitializableInterface
         $this->migrationsFactory = $migrationsFactory;
         $this->pluginVersion = $pluginVersion;
         $this->cron = $cron;
+        $this->logger = $logger;
         /*
          * We initialize the engine in the constructor because it requires
          * the init hook has not been fired yet. The initialize method runs in the init hook.
@@ -123,7 +131,8 @@ class Module implements InitializableInterface
                 $this->hooks,
                 $this->nodeTypesModel,
                 $this->cron,
-                $this->settingsFacade
+                $this->settingsFacade,
+                $this->logger
             ),
             new Controllers\SampleWorkflows(),
             new Controllers\PostsList($this->hooks),

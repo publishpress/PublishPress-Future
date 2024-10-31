@@ -26,6 +26,7 @@ use PublishPress\Future\Modules\Workflows\Models\ScheduledActionModel;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionsModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowScheduledStepModel;
+use Throwable;
 
 class CronStep implements AsyncNodeRunnerProcessorInterface
 {
@@ -331,14 +332,10 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                     $stepSlug
                 );
             }
-        } catch (\Exception $e) {
-            $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
+        } catch (Throwable $e) {
+            $this->addErrorLogMessage('Failed to schedule workflow step "%s"', $stepSlug);
 
-            $this->addDebugLogMessage(
-                'Failed to schedule workflow step "%1$s" due to error: %2$s',
-                $stepSlug,
-                $e->getMessage()
-            );
+            throw $e;
         }
     }
 

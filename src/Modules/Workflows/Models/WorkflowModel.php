@@ -11,6 +11,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
+use Throwable;
 use WP_Post;
 use WP_Query;
 
@@ -310,41 +311,35 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function getFlow(bool $updateNodes = false): array
     {
-        try {
-            if (empty($this->post)) {
-                return [];
+        if (empty($this->post)) {
+            return [];
+        }
+
+        if (empty($this->flow)) {
+            $this->flow = json_decode($this->post->post_content, true);
+
+            if (! is_array($this->flow)) {
+                $this->flow = [];
             }
 
-            if (empty($this->flow)) {
-                $this->flow = json_decode($this->post->post_content, true);
-
-                if (! is_array($this->flow)) {
-                    $this->flow = [];
+            if ($updateNodes) {
+                if (empty($this->flow)) {
+                    return $this->flow;
                 }
 
-                if ($updateNodes) {
-                    if (empty($this->flow)) {
-                        return $this->flow;
+                // Check if the nodes are updated and update them if necessary
+                $nodes = $this->flow['nodes'] ?? [];
+                $nodesUpdated = false;
+                foreach ($nodes as &$node) {
+                    if (! $this->isNodeUpdated($node)) {
+                        $node = $this->updateNode($node);
+                        $nodesUpdated = true;
                     }
-
-                    // Check if the nodes are updated and update them if necessary
-                    $nodes = $this->flow['nodes'] ?? [];
-                    $nodesUpdated = false;
-                    foreach ($nodes as &$node) {
-                        if (! $this->isNodeUpdated($node)) {
-                            $node = $this->updateNode($node);
-                            $nodesUpdated = true;
-                        }
-                    }
-                    if ($nodesUpdated) {
-                        $this->flow['nodes'] = $nodes;
-                    }
+                }
+                if ($nodesUpdated) {
+                    $this->flow['nodes'] = $nodes;
                 }
             }
-        } catch (Exception $e) {
-            $this->flow = [];
-
-            logError('Error getting the workflow', $e);
         }
 
         return $this->flow;

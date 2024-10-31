@@ -6,12 +6,10 @@
 
 namespace PublishPress\Future\Framework\WordPress\Models;
 
-use PublishPress\Future\Core\DI\Container;
-use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
 use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentTermException;
-use PublishPress\Future\Modules\Debug\DebugInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use WP_Post;
 
@@ -37,22 +35,21 @@ class PostModel
     protected $termModelFactory;
 
     /**
-     * @var DebugInterface
-     */
-    protected $debug;
-
-    /**
      * @var HookableInterface
      */
     protected $hooks;
 
     /**
-     * @param int|\WP_Post $post
-     * @param \Closure $termModelFactory
-     * @param DebugInterface $debug
+     * @var LoggerInterface
      */
-    public function __construct($post, $termModelFactory, DebugInterface $debug, HookableInterface $hooks)
-    {
+    protected $logger;
+
+    public function __construct(
+        $post,
+        $termModelFactory,
+        HookableInterface $hooks,
+        LoggerInterface $logger
+    ) {
         if (is_object($post)) {
             $this->postInstance = $post;
             $this->postId = $post->ID;
@@ -63,8 +60,8 @@ class PostModel
         }
 
         $this->termModelFactory = $termModelFactory;
-        $this->debug = $debug;
         $this->hooks = $hooks;
+        $this->logger = $logger;
     }
 
     /**
@@ -288,17 +285,16 @@ class PostModel
 
     public function getTermNames($taxonomy = 'post_tag', $args = [])
     {
-        $debugIsEnabled = $this->debug->isEnabled();
         $terms = $this->getTerms($taxonomy, $args);
 
         foreach ($terms as &$term) {
             try {
                 $term = $term->getName();
             } catch (NonexistentTermException $e) {
-                if ($debugIsEnabled) {
-                    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
-                    error_log('Error: Nonexistent term: ' . print_r($term, true) . ' in ' . __METHOD__);
-                }
+                $this->logger->error(
+                    'Nonexistent term: {term} in {method}',
+                    ['term' => $term, 'method' => __METHOD__]
+                );
 
                 continue;
             }

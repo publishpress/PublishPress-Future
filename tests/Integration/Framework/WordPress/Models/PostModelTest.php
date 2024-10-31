@@ -2,8 +2,11 @@
 
 namespace Tests\Framework\WordPress\Models;
 
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Framework\WordPress\Models\PostModel;
+use PublishPress\Future\Modules\Debug\DebugInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 
 class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
@@ -27,8 +30,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $postModel->addMeta($metaKey, $metaValue);
@@ -51,8 +54,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         add_filter(HooksAbstract::FILTER_ACTION_META_KEY, function ($key) use ($filteredMetaKey) {
@@ -83,8 +86,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $postModel->updateMeta($metaKey, $metaValue);
@@ -107,8 +110,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         add_filter(HooksAbstract::FILTER_ACTION_META_KEY, function ($key) use ($filteredMetaKey) {
@@ -139,8 +142,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $postModel->addMeta($metaKey, $metaValue);
@@ -165,8 +168,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         add_filter(HooksAbstract::FILTER_ACTION_META_KEY, function ($key) use ($filteredMetaKey) {
@@ -198,8 +201,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         add_post_meta($post->ID, $metaKey, $metaValue);
@@ -222,8 +225,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         add_filter(HooksAbstract::FILTER_ACTION_META_KEY, function ($key) use ($filteredMetaKey) {
@@ -251,8 +254,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $postModel->setPostStatus('draft');
@@ -271,8 +274,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $this->assertTrue($postModel->postExists());
@@ -287,8 +290,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $postModel->postExists();
@@ -305,8 +308,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $this->assertEquals('post', $postModel->getPostType());
@@ -328,8 +331,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $this->assertTrue($postModel->metadataExists($metaKey));
@@ -348,8 +351,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $this->assertFalse($postModel->metadataExists($metaKey));
@@ -380,8 +383,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $this->assertTrue($postModel->metadataExists($metaKey));
@@ -409,8 +412,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $this->assertFalse($postModel->metadataExists($metaKey));
@@ -430,8 +433,8 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             function () {
                 return null;
             },
-            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
-            new HooksFacade()
+            new HooksFacade(),
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $postModel->publish();
