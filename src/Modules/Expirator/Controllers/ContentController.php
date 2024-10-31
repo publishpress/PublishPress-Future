@@ -33,7 +33,7 @@ class ContentController implements InitializableInterface
     public function initialize()
     {
         $this->hooks->addFilter(ExpiratorHooks::FILTER_CONTENT_FOOTER, [$this, 'getFooterText'], 10, 2);
-        $this->hooks->addAction(ExpiratorHooks::ACTION_THE_CONTENT, [$this, 'addFooterToContent'], 0);
+        $this->hooks->addFilter(ExpiratorHooks::FILTER_THE_CONTENT, [$this, 'addFooterToContent'], 0);
     }
 
     /**
