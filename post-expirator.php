@@ -15,7 +15,6 @@
 
 namespace PublishPress\Future;
 
-use Exception;
 use PublishPress\Future\Core\Autoloader;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
