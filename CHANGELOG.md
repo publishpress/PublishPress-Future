@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Improved the debug log viewer adding text to a textarea (Issue #724).
 - The debug log viewer now automatically scrolls to the bottom when the page loads.
+- Deprecate the class `PublishPress\Future\Modules\Debug\Debug` and use the logger facade instead.
+- Better handling of the exceptions and errors thrown by the plugin.
 
 ### Developers
 

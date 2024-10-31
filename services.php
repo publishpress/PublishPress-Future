@@ -452,7 +452,6 @@ return [
         return function ($postId) use ($container) {
             return new ExpirablePostModel(
                 $postId,
-                $container->get(ServicesAbstract::DEBUG),
                 $container->get(ServicesAbstract::OPTIONS),
                 $container->get(ServicesAbstract::HOOKS),
                 $container->get(ServicesAbstract::USERS),
@@ -462,7 +461,8 @@ return [
                 $container->get(ServicesAbstract::TERM_MODEL_FACTORY),
                 $container->get(ServicesAbstract::EXPIRATION_ACTION_FACTORY),
                 $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY),
-                $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY)
+                $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY),
+                $container->get(ServicesAbstract::LOGGER)
             );
         };
     },

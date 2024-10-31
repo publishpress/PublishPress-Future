@@ -10,6 +10,9 @@ use PublishPress\Future\Framework\Logger\LoggerInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+/**
+ * @deprecated 4.1.0 Use the logger facade instead.
+ */
 class Debug implements DebugInterface
 {
     /**
