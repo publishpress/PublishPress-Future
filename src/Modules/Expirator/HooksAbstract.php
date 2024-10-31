@@ -70,7 +70,7 @@ abstract class HooksAbstract
 
     public const ACTION_POSTS_ORDER_BY = 'posts_orderby';
 
-    public const ACTION_THE_CONTENT = 'the_content';
+    public const FILTER_THE_CONTENT = 'the_content';
 
     public const FILTER_CUSTOM_EXPIRATION_TYPE = 'publishpressfuture_custom_expiration_type';
 

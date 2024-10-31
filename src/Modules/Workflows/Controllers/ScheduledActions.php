@@ -90,7 +90,7 @@ class ScheduledActions implements InitializableInterface
         );
 
         $this->hooks->addAction(
-            CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT,
+            CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS,
             [$this, 'enqueueScripts'],
             10,
             2
@@ -463,62 +463,70 @@ class ScheduledActions implements InitializableInterface
 
     public function scheduleOrphanWorkflowArgsCleanup()
     {
-        /**
-         * @param int $interval
-         * @return int
-         */
-        $interval = $this->hooks->applyFilters(
-            WorkflowsHooksAbstract::FILTER_ORPHAN_WORKFLOW_ARGS_CLEANUP_INTERVAL,
-            DAY_IN_SECONDS
-        );
+        try {
+            /**
+             * @param int $interval
+            * @return int
+            */
+            $interval = $this->hooks->applyFilters(
+                WorkflowsHooksAbstract::FILTER_ORPHAN_WORKFLOW_ARGS_CLEANUP_INTERVAL,
+                DAY_IN_SECONDS
+            );
 
-        if (! $this->verifyOperationTimeout('orphan_workflow_args_cleanup', $interval)) {
-            return;
+            if (! $this->verifyOperationTimeout('orphan_workflow_args_cleanup', $interval)) {
+                return;
+            }
+
+            $this->cron->clearScheduledAction(
+                WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS,
+                [],
+                false
+            );
+
+            $this->cron->scheduleRecurringActionInSeconds(
+                time() + $interval,
+                $interval,
+                WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS,
+                [],
+                true
+            );
+        } catch (Throwable $th) {
+            $this->logger->error('Error scheduling orphan workflow args cleanup: ' . $th->getMessage());
         }
-
-        $this->cron->clearScheduledAction(
-            WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS,
-            [],
-            false
-        );
-
-        $this->cron->scheduleRecurringActionInSeconds(
-            time() + $interval,
-            $interval,
-            WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS,
-            [],
-            true
-        );
     }
 
     public function scheduleFinishedScheduledStepsCleanup()
     {
-        /**
-         * @param int $interval
-         * @return int
-         */
-        $interval = $this->hooks->applyFilters(
-            WorkflowsHooksAbstract::FILTER_FINISHED_SCHEDULED_STEPS_CLEANUP_INTERVAL,
-            DAY_IN_SECONDS
-        );
+        try {
+            /**
+             * @param int $interval
+             * @return int
+             */
+            $interval = $this->hooks->applyFilters(
+                WorkflowsHooksAbstract::FILTER_FINISHED_SCHEDULED_STEPS_CLEANUP_INTERVAL,
+                DAY_IN_SECONDS
+            );
 
-        if (! $this->verifyOperationTimeout('finished_scheduled_steps_cleanup', $interval)) {
-            return;
+            if (! $this->verifyOperationTimeout('finished_scheduled_steps_cleanup', $interval)) {
+                return;
+            }
+
+            $this->cron->clearScheduledAction(
+                WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS,
+                [],
+                false
+            );
+
+            $this->cron->scheduleRecurringActionInSeconds(
+                time() + $interval,
+                $interval,
+                WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS,
+                [],
+                true
+            );
+        } catch (Throwable $th) {
+            $this->logger->error('Error scheduling finished scheduled steps cleanup: ' . $th->getMessage());
         }
-
-        $this->cron->clearScheduledAction(
-            WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS,
-            [],
-            false
-        );
-
-        $this->cron->scheduleRecurringActionInSeconds(
-            time() + $interval,
-            $interval,
-            WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS,
-            [],
-            true
-        );
     }
 
     /**

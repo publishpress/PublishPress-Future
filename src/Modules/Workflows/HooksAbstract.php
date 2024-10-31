@@ -60,8 +60,6 @@ abstract class HooksAbstract
 
     public const ACTION_WORKFLOW_EDITOR_SCRIPTS = 'publishpressfuture_workflow_editor_scripts';
 
-    public const ACTION_WORKFLOW_ENGINE_RUNNING_STEP = 'publishpressfuture_workflow_engine_running_step';
-
     public const FILTER_WORKFLOW_TRIGGER_NODES = 'publishpressfuture_workflow_trigger_nodes';
 
     public const FILTER_WORKFLOW_ACTION_NODES = 'publishpressfuture_workflow_action_nodes';

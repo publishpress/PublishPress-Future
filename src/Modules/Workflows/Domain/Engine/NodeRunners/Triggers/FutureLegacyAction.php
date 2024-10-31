@@ -10,6 +10,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterfac
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class FutureLegacyAction implements NodeTriggerRunnerInterface
 {
@@ -43,16 +44,23 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
      */
     private $logger;
 
+    /**
+     * @var WorkflowEngineInterface
+     */
+    private $engine;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        WorkflowEngineInterface $engine
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
+        $this->engine = $engine;
     }
 
     public static function getNodeTypeName(): string
@@ -65,8 +73,6 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
         $this->step = $step;
         $this->workflowId = $workflowId;
 
-        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
-
         $this->hooks->addAction(HooksAbstract::ACTION_LEGACY_ACTION, [$this, 'triggerCallback'], 10, 3);
     }
 
@@ -77,25 +83,30 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
             return false;
         }
 
-        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $this->step);
+        $this->engine->executeStep(
+            $this->step ,
+            function ($step, $postId, $post) {
+                $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
 
-        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
+                $this->variablesHandler->setVariable($nodeSlug, [
+                    'post' => new PostResolver($post, $this->hooks),
+                ]);
 
-        $this->variablesHandler->setVariable($nodeSlug, [
-            'post' => new PostResolver($post, $this->hooks),
-        ]);
-
-        $this->nodeRunnerProcessor->triggerCallbackIsRunning();
+                $this->nodeRunnerProcessor->triggerCallbackIsRunning();
 
 
-        $this->logger->debug(
-            $this->nodeRunnerProcessor->prepareLogMessage(
-                'Trigger is running | Slug: %s | Post ID: %d',
-                $nodeSlug,
-                $postId
-            )
+                $this->logger->debug(
+                    $this->nodeRunnerProcessor->prepareLogMessage(
+                        'Trigger is running | Slug: %s | Post ID: %d',
+                        $nodeSlug,
+                        $postId
+                    )
+                );
+
+                $this->nodeRunnerProcessor->runNextSteps($this->step);
+            },
+            $postId,
+            $post
         );
-
-        $this->nodeRunnerProcessor->runNextSteps($this->step);
     }
 }

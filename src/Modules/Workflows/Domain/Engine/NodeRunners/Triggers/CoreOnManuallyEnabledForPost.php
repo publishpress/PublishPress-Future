@@ -13,6 +13,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterfac
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 {
@@ -55,18 +56,25 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
      */
     private $logger;
 
+    /**
+     * @var WorkflowEngineInterface
+     */
+    private $engine;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         InputValidatorsInterface $postQueryValidator,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        WorkflowEngineInterface $engine
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->postQueryValidator = $postQueryValidator;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
+        $this->engine = $engine;
     }
 
     public static function getNodeTypeName(): string
@@ -101,36 +109,43 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
             return;
         }
 
-        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $this->step);
 
-        $post = get_post($postId);
+        $this->engine->executeStep(
+            $this->step,
+            function ($step, $postId) {
+                $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
 
-        $postQueryArgs = [
-            'post' => $post,
-            'node' => $this->step['node'],
-        ];
+                $post = get_post($postId);
 
-        if (! $this->postQueryValidator->validate($postQueryArgs)) {
-            return false;
-        }
+                $postQueryArgs = [
+                    'post' => $post,
+                    'node' => $this->step['node'],
+                ];
 
-        $this->variablesHandler->setVariable(
-            $nodeSlug,
-            [
-                'postId' => new IntegerResolver($postId),
-                'post' => new PostResolver($post, $this->hooks),
-            ]
+                if (! $this->postQueryValidator->validate($postQueryArgs)) {
+                    return false;
+                }
+
+                $this->variablesHandler->setVariable(
+                    $nodeSlug,
+                    [
+                        'postId' => new IntegerResolver($postId),
+                        'post' => new PostResolver($post, $this->hooks),
+                    ]
+                );
+
+                $this->logger->debug(
+                    $this->nodeRunnerProcessor->prepareLogMessage(
+                        'Trigger is running | Slug: %s | Post ID: %d',
+                        $nodeSlug,
+                        $postId
+                    )
+                );
+
+                $this->nodeRunnerProcessor->triggerCallbackIsRunning();
+                $this->nodeRunnerProcessor->runNextSteps($this->step);
+            },
+            $postId
         );
-
-        $this->logger->debug(
-            $this->nodeRunnerProcessor->prepareLogMessage(
-                'Trigger is running | Slug: %s | Post ID: %d',
-                $nodeSlug,
-                $postId
-            )
-        );
-
-        $this->nodeRunnerProcessor->triggerCallbackIsRunning();
-        $this->nodeRunnerProcessor->runNextSteps($this->step);
     }
 }

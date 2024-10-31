@@ -11,6 +11,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class CorePostTermsAdd implements NodeRunnerInterface
 {
@@ -44,13 +45,19 @@ class CorePostTermsAdd implements NodeRunnerInterface
      */
     private $logger;
 
+    /**
+     * @var WorkflowEngineInterface
+     */
+    private $engine;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         \Closure $expirablePostModelFactory,
         ErrorFacade $errorFacade,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        WorkflowEngineInterface $engine
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
@@ -58,6 +65,7 @@ class CorePostTermsAdd implements NodeRunnerInterface
         $this->errorFacade = $errorFacade;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
+        $this->engine = $engine;
     }
 
     public static function getNodeTypeName(): string
@@ -67,44 +75,49 @@ class CorePostTermsAdd implements NodeRunnerInterface
 
     public function setup(array $step): void
     {
-        $this->nodeRunnerProcessor->setup($step, [$this, 'actionCallback']);
+        $this->nodeRunnerProcessor->setup($step, [$this, 'setupCallback']);
     }
 
-    public function actionCallback(int $postId, array $nodeSettings, array $step)
+    public function setupCallback(int $postId, array $nodeSettings, array $step)
     {
-        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step);
+        $this->engine->executeStep(
+            $step,
+            function ($step, $postId, $nodeSettings) {
+                $postModel = call_user_func($this->expirablePostModelFactory, $postId);
 
-        $postModel = call_user_func($this->expirablePostModelFactory, $postId);
+                $taxonomy = $nodeSettings['taxonomyTerms']['taxonomy'];
+                $termsToAdd = $nodeSettings['taxonomyTerms']['terms'] ?? [];
 
-        $taxonomy = $nodeSettings['taxonomyTerms']['taxonomy'];
-        $termsToAdd = $nodeSettings['taxonomyTerms']['terms'] ?? [];
+                $originalTerms = $postModel->getTermIDs($taxonomy);
+                $updatedTerms = array_merge($originalTerms, $termsToAdd);
+                $updatedTerms = array_unique($updatedTerms);
 
-        $originalTerms = $postModel->getTermIDs($taxonomy);
-        $updatedTerms = array_merge($originalTerms, $termsToAdd);
-        $updatedTerms = array_unique($updatedTerms);
+                $result = $postModel->setTerms($updatedTerms, $taxonomy);
 
-        $result = $postModel->setTerms($updatedTerms, $taxonomy);
+                $resultIsError = $this->errorFacade->isWpError($result);
 
-        $resultIsError = $this->errorFacade->isWpError($result);
+                $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
 
-        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
-
-        if ($resultIsError) {
-            $this->logger->error(
-                $this->nodeRunnerProcessor->prepareLogMessage(
-                    'Error updating post %1$s terms on step %2$s',
-                    $postId,
-                    $nodeSlug
-                )
-            );
-        } else {
-            $this->logger->debug(
-                $this->nodeRunnerProcessor->prepareLogMessage(
-                    'Post %1$s terms updated on step %2$s',
-                    $postId,
-                    $nodeSlug
-                )
-            );
-        }
+                if ($resultIsError) {
+                    $this->logger->error(
+                        $this->nodeRunnerProcessor->prepareLogMessage(
+                            'Error updating post %1$s terms on step %2$s',
+                            $postId,
+                            $nodeSlug
+                        )
+                    );
+                } else {
+                    $this->logger->debug(
+                        $this->nodeRunnerProcessor->prepareLogMessage(
+                            'Post %1$s terms updated on step %2$s',
+                            $postId,
+                            $nodeSlug
+                        )
+                    );
+                }
+            },
+            $postId,
+            $nodeSettings
+        );
     }
 }

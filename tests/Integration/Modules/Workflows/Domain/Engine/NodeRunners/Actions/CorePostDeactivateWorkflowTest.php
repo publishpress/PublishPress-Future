@@ -8,6 +8,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\Core
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\Future\Modules\Workflows\Models\PostModel;
 
 
@@ -72,7 +73,12 @@ class CorePostDeactivateWorkflowTest extends \lucatume\WPBrowser\TestCase\WPTest
             $this->makeEmpty(RuntimeVariablesHandlerInterface::class, [
                 'getVariable' => new WorkflowResolver(['id' => $workflows[0]])
             ]),
-            $this->makeEmpty(LoggerInterface::class)
+            $this->makeEmpty(LoggerInterface::class),
+            $this->makeEmpty(WorkflowEngineInterface::class, [
+                'executeStep' => function ($step, $callback, ...$args) {
+                    call_user_func($callback, $step, ...$args);
+                }
+            ])
         );
 
         $model = new PostModel();
@@ -82,7 +88,7 @@ class CorePostDeactivateWorkflowTest extends \lucatume\WPBrowser\TestCase\WPTest
 
         $this->assertEquals([$workflows[0]], $model->getManuallyEnabledWorkflows());
 
-        $runner->actionCallback(
+        $runner->setupCallback(
             $postId,
             [
                 'post' => [

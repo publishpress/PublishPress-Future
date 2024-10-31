@@ -10,6 +10,8 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
+
 class CorePostUnstick implements NodeRunnerInterface
 {
     /**
@@ -37,18 +39,25 @@ class CorePostUnstick implements NodeRunnerInterface
      */
     private $logger;
 
+    /**
+     * @var WorkflowEngineInterface
+     */
+    private $engine;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         \Closure $expirablePostModelFactory,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        WorkflowEngineInterface $engine
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
+        $this->engine = $engine;
     }
 
     public static function getNodeTypeName(): string
@@ -63,19 +72,23 @@ class CorePostUnstick implements NodeRunnerInterface
 
     public function actionCallback(int $postId, array $nodeSettings, array $step)
     {
-        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step);
+        $this->engine->executeStep(
+            $step,
+            function ($step, $postId) {
+                $postModel = call_user_func($this->expirablePostModelFactory, $postId);
+                $postModel->unstick();
 
-        $postModel = call_user_func($this->expirablePostModelFactory, $postId);
-        $postModel->unstick();
+                $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
 
-        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
-
-        $this->logger->debug(
-            $this->nodeRunnerProcessor->prepareLogMessage(
-                'Post %1$s unstick on step %2$s',
-                $postId,
-                $nodeSlug
-            )
+                $this->logger->debug(
+                    $this->nodeRunnerProcessor->prepareLogMessage(
+                        'Post %1$s unstick on step %2$s',
+                        $postId,
+                        $nodeSlug
+                    )
+                );
+            },
+            $postId
         );
     }
 }

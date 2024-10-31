@@ -2,6 +2,8 @@
 
 namespace PublishPress\Future\Modules\Workflows\Interfaces;
 
+use Closure;
+
 interface WorkflowEngineInterface
 {
     public function start();
@@ -11,4 +13,6 @@ interface WorkflowEngineInterface
     public function setCurrentAsyncActionId($actionId);
 
     public function getCurrentAsyncActionId(): int;
+
+    public function executeStep(array $step, callable $callback, ...$args);
 }

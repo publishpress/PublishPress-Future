@@ -58,7 +58,7 @@ class WorkflowEditor implements InitializableInterface
         );
 
         $this->hooks->addAction(
-            CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT,
+            CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS,
             [$this, "enqueueScriptsEditor"]
         );
 

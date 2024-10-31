@@ -59,7 +59,8 @@
         "automattic/vipwpcs": "^3",
         "publishpress/publishpress-phpcs-standards": "dev-main",
         "spatie/ray": "^1.41",
-        "rector/rector": "dev-main"
+        "rector/rector": "dev-main",
+        "phpunit/phpunit": "^10"
     },
     "scripts": {
         "build": "pbuild build",

@@ -147,6 +147,6 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
             }
         }, 10, 0);
     } catch (Throwable $e) {
-        logError('PUBLISHPRESS FUTURE - Error starting the plugin', $e, true);
+        logError('PUBLISHPRESS FUTURE - Error starting the plugin', $e);
     }
 }

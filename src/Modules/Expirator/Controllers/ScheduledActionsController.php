@@ -9,11 +9,13 @@ namespace PublishPress\Future\Modules\Expirator\Controllers;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\Tables\ScheduledActionsTable as ScheduledActionsTable;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
+use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -44,18 +46,25 @@ class ScheduledActionsController implements InitializableInterface
     private $settingsFacade;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @param HookableInterface $hooksFacade
      */
     public function __construct(
         HookableInterface $hooksFacade,
         \Closure $actionArgsModelFactory,
         \Closure $scheduledActionsTableFactory,
-        SettingsFacade $settingsFacade
+        SettingsFacade $settingsFacade,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooksFacade;
         $this->actionArgsModelFactory = $actionArgsModelFactory;
         $this->scheduledActionsTableFactory = $scheduledActionsTableFactory;
         $this->settingsFacade = $settingsFacade;
+        $this->logger = $logger;
     }
 
     public function initialize()
@@ -98,33 +107,37 @@ class ScheduledActionsController implements InitializableInterface
 
     public function onAdminMenu()
     {
-        add_menu_page(
-            __('PublishPress Future', 'post-expirator'),
-            __('Future', 'post-expirator'),
-            'manage_options',
-            'publishpress-future',
-            [\PostExpirator_Display::getInstance(), 'settings_tabs'],
-            'dashicons-clock',
-            74
-        );
-        add_submenu_page(
-            'publishpress-future',
-            __('Action Settings', 'post-expirator'),
-            __('Action Settings', 'post-expirator'),
-            'manage_options',
-            'publishpress-future',
-            [\PostExpirator_Display::getInstance(), 'settings_tabs']
-        );
+        try {
+            add_menu_page(
+                __('PublishPress Future', 'post-expirator'),
+                __('Future', 'post-expirator'),
+                'manage_options',
+                'publishpress-future',
+                [\PostExpirator_Display::getInstance(), 'settings_tabs'],
+                'dashicons-clock',
+                74
+            );
+            add_submenu_page(
+                'publishpress-future',
+                __('Action Settings', 'post-expirator'),
+                __('Action Settings', 'post-expirator'),
+                'manage_options',
+                'publishpress-future',
+                [\PostExpirator_Display::getInstance(), 'settings_tabs']
+            );
 
-        $hook_suffix = add_submenu_page(
-            'publishpress-future',
-            __('Scheduled Actions', 'post-expirator'),
-            __('Scheduled Actions', 'post-expirator'),
-            'manage_options',
-            'publishpress-future-scheduled-actions',
-            [$this, 'renderScheduledActionsTemplate']
-        );
-        add_action('load-' . $hook_suffix, [$this, 'processAdminUi']);
+            $hook_suffix = add_submenu_page(
+                'publishpress-future',
+                __('Scheduled Actions', 'post-expirator'),
+                __('Scheduled Actions', 'post-expirator'),
+                'manage_options',
+                'publishpress-future-scheduled-actions',
+                [$this, 'renderScheduledActionsTemplate']
+            );
+            add_action('load-' . $hook_suffix, [$this, 'processAdminUi']);
+        } catch (Throwable $th) {
+            $this->logger->error('Error adding scheduled actions menu: ' . $th->getMessage());
+        }
     }
 
     public function renderScheduledActionsTemplate()
@@ -245,7 +258,8 @@ class ScheduledActionsController implements InitializableInterface
 
     public function enqueueScripts($screenId)
     {
-        if ('future_page_publishpress-future-scheduled-actions' === $screenId) {
+        try {
+            if ('future_page_publishpress-future-scheduled-actions' === $screenId) {
             wp_enqueue_style(
                 'postexpirator-css',
                 POSTEXPIRATOR_BASEURL . 'assets/css/style.css',
@@ -258,7 +272,10 @@ class ScheduledActionsController implements InitializableInterface
                 POSTEXPIRATOR_BASEURL . 'assets/css/footer.css',
                 false,
                 PUBLISHPRESS_FUTURE_VERSION
-            );
+                );
+            }
+        } catch (Throwable $th) {
+            $this->logger->error('Error enqueuing scripts: ' . $th->getMessage());
         }
     }
 

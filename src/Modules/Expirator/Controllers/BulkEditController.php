@@ -14,10 +14,12 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
+use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -49,24 +51,32 @@ class BulkEditController implements InitializableInterface
     private $request;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @param HookableInterface $hooksFacade
      * @param callable $expirablePostModelFactory
      * @param \PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade $sanitization
      * @param \Closure $currentUserModelFactory
      * @param \PublishPress\Future\Framework\WordPress\Facade\RequestFacade $request
+     * @param LoggerInterface $logger
      */
     public function __construct(
         HookableInterface $hooksFacade,
         $expirablePostModelFactory,
         $sanitization,
         $currentUserModelFactory,
-        $request
+        $request,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooksFacade;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->sanitization = $sanitization;
         $this->currentUserModel = $currentUserModelFactory();
         $this->request = $request;
+        $this->logger = $logger;
     }
 
     public function initialize()
@@ -229,65 +239,73 @@ class BulkEditController implements InitializableInterface
 
     public function registerBulkEditCustomBox($columnName, $postType)
     {
-        $facade = PostExpirator_Facade::getInstance();
+        try {
+            $facade = PostExpirator_Facade::getInstance();
 
-        if (
-            ($columnName !== 'expirationdate')
-            || (! $facade->current_user_can_expire_posts())
-        ) {
-            return;
+            if (
+                ($columnName !== 'expirationdate')
+                || (! $facade->current_user_can_expire_posts())
+            ) {
+                return;
+            }
+
+            // TODO: Use DI here.
+            $container = Container::getInstance();
+            $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+
+            $defaults = $settingsFacade->getPostTypeDefaults($postType);
+
+            $taxonomy = isset($defaults['taxonomy']) ? $defaults['taxonomy'] : '';
+            $label = '';
+
+            // if settings have not been configured and this is the default post type
+            if (empty($taxonomy) && 'post' === $postType) {
+                $taxonomy = 'category';
+            }
+
+            if (! empty($taxonomy)) {
+                $tax_object = get_taxonomy($taxonomy);
+                $label = $tax_object ? $tax_object->label : '';
+            }
+
+            PostExpirator_Display::getInstance()->render_template('bulk-edit', array(
+                'post_type' => $postType,
+                'taxonomy' => $taxonomy,
+                'tax_label' => $label
+            ));
+        } catch (Throwable $th) {
+            $this->logger->error('Error registering bulk edit custom box: ' . $th->getMessage());
         }
-
-        // TODO: Use DI here.
-        $container = Container::getInstance();
-        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
-
-        $defaults = $settingsFacade->getPostTypeDefaults($postType);
-
-        $taxonomy = isset($defaults['taxonomy']) ? $defaults['taxonomy'] : '';
-        $label = '';
-
-        // if settings have not been configured and this is the default post type
-        if (empty($taxonomy) && 'post' === $postType) {
-            $taxonomy = 'category';
-        }
-
-        if (! empty($taxonomy)) {
-            $tax_object = get_taxonomy($taxonomy);
-            $label = $tax_object ? $tax_object->label : '';
-        }
-
-        PostExpirator_Display::getInstance()->render_template('bulk-edit', array(
-            'post_type' => $postType,
-            'taxonomy' => $taxonomy,
-            'tax_label' => $label
-        ));
     }
 
     public function processBulkEditUpdate()
     {
-        // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-        $doAction = isset($_GET['action']) ? $this->sanitization->sanitizeKey($_GET['action']) : '';
+        try {
+            // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $doAction = isset($_GET['action']) ? $this->sanitization->sanitizeKey($_GET['action']) : '';
 
-        if (
-            ('edit' !== $doAction)
-            || (! isset($_REQUEST['future_action_bulk_view']))
-            || ($_REQUEST['future_action_bulk_view'] !== 'bulk-edit')
-            || (! isset($_REQUEST['future_action_bulk_change_action']))
-            || ($this->sanitization->sanitizeKey($_REQUEST['future_action_bulk_change_action']) === 'no-change')
-        ) {
-            return;
+            if (
+                ('edit' !== $doAction)
+                || (! isset($_REQUEST['future_action_bulk_view']))
+                || ($_REQUEST['future_action_bulk_view'] !== 'bulk-edit')
+                || (! isset($_REQUEST['future_action_bulk_change_action']))
+                || ($this->sanitization->sanitizeKey($_REQUEST['future_action_bulk_change_action']) === 'no-change')
+            ) {
+                return;
+            }
+
+            if (! $this->currentUserModel->userCanExpirePosts()) {
+                return;
+            }
+
+            $this->request->checkAdminReferer('bulk-posts');
+
+            $this->saveBulkEditData();
+            // phpcs:enable
+        } catch (Throwable $th) {
+            $this->logger->error('Error processing bulk edit update: ' . $th->getMessage());
         }
-
-        if (! $this->currentUserModel->userCanExpirePosts()) {
-            return;
-        }
-
-        $this->request->checkAdminReferer('bulk-posts');
-
-        $this->saveBulkEditData();
-        // phpcs:enable
     }
 
     private function updateScheduleForPostFromBulkEditData(ExpirablePostModel $postModel)

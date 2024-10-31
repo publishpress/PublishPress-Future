@@ -55,11 +55,9 @@ class GeneralStep implements NodeRunnerProcessorInterface
         $this->logger->debug($this->prepareLogMessage($message, ...$args));
     }
 
-    public function setup(
-        array $step,
-        callable $actionCallback
-    ): void {
-        call_user_func($actionCallback, $step);
+    public function setup(array $step, callable $setupCallback): void
+    {
+        call_user_func($setupCallback, $step);
 
         $this->runNextSteps($step);
     }

@@ -25,6 +25,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add `DateTimeHandlerInterface` as dependency to the class `PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModel`.
 - Add `LoggerInterface` as dependency to the class `PublishPress\Future\Modules\Expirator\Module`.
 - Add `DateTimeHandlerInterface` as dependency to the class `PublishPress\Future\Modules\Expirator\Module`.
+- Deprecated the constant `PublishPress\Future\Core::ACTION_ADMIN_ENQUEUE_SCRIPT` in favor of `PublishPress\Future\Core::ACTION_ADMIN_ENQUEUE_SCRIPTS`.
+- Remove the action `publishpressfuture_workflow_engine_running_step` from the workflow engine.
 
 ## [4.0.4] - 24 Oct, 2024
 

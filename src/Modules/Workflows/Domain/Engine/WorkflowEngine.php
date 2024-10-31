@@ -2,6 +2,7 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine;
 
+use Closure;
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
@@ -113,11 +114,6 @@ class WorkflowEngine implements WorkflowEngineInterface
             [$this, "onWorkflowUpdated"],
             10,
             3
-        );
-
-        $this->hooks->addAction(
-            HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP,
-            [$this, "onRunningStep"]
         );
     }
 
@@ -393,6 +389,27 @@ class WorkflowEngine implements WorkflowEngineInterface
 
         // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction
         ray($stepSlug)->label('Current running step');
+    }
+
+    /**
+     * This method should be called by the node runners to execute the step in
+     * a try/catch block and log any errors.
+     */
+    public function executeStep(array $step, callable $callback, ...$args)
+    {
+        try {
+            $this->onRunningStep($step);
+
+            call_user_func($callback, $step, ...$args);
+        } catch (Throwable $th) {
+            $this->logger->error(
+                sprintf(
+                    'Error executing step: %s | Message: %s',
+                    $step['node']['data']['slug'] ?? 'unknown',
+                    $th->getMessage()
+                )
+            );
+        }
     }
 
     private function getContext(): string

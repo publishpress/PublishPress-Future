@@ -177,7 +177,8 @@ class Module implements ModuleInterface
             $this->expirablePostModelFactory,
             $this->sanitization,
             $this->currentUserModelFactory,
-            $this->request
+            $this->request,
+            $this->logger
         );
     }
 
@@ -185,7 +186,8 @@ class Module implements ModuleInterface
     {
         return new Controllers\QuickEditController(
             $this->hooks,
-            $this->currentUserModelFactory
+            $this->currentUserModelFactory,
+            $this->logger
         );
     }
 
@@ -195,7 +197,8 @@ class Module implements ModuleInterface
             $this->hooks,
             $this->actionArgsModelFactory,
             $this->scheduledActionsTableFactory,
-            $this->settingsFacade
+            $this->settingsFacade,
+            $this->logger
         );
     }
 
@@ -213,7 +216,8 @@ class Module implements ModuleInterface
     {
         return new Controllers\ClassicEditorController(
             $this->hooks,
-            $this->currentUserModelFactory
+            $this->currentUserModelFactory,
+            $this->logger
         );
     }
 
@@ -226,7 +230,8 @@ class Module implements ModuleInterface
     {
         return new Controllers\PostListController(
             $this->hooks,
-            $this->actionArgsSchema
+            $this->actionArgsSchema,
+            $this->logger
         );
     }
 

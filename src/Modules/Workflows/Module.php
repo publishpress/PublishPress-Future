@@ -116,7 +116,7 @@ class Module implements InitializableInterface
             new Controllers\WorkflowsList(
                 $this->hooks,
                 $this->nodeTypesModel,
-                $this->workflowScheduledStepsSchema
+                $this->logger
             ),
             new Controllers\WorkflowEditor(
                 $this->hooks,
@@ -125,8 +125,8 @@ class Module implements InitializableInterface
                 $this->settingsFacade
             ),
             new Controllers\RestApi($this->hooks, $this->restApiManager),
-            new Controllers\FutureLegacyAction($this->hooks),
-            new Controllers\ManualPostTrigger($this->hooks),
+            new Controllers\FutureLegacyAction($this->hooks, $this->logger),
+            new Controllers\ManualPostTrigger($this->hooks, $this->logger),
             new Controllers\ScheduledActions(
                 $this->hooks,
                 $this->nodeTypesModel,

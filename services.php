@@ -402,7 +402,8 @@ return [
             $container->get(ServicesAbstract::POST_TYPE_SETTINGS_MODEL_FACTORY),
             $container->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY),
             $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL),
-            $container->get(ServicesAbstract::MIGRATIONS_FACTORY)
+            $container->get(ServicesAbstract::MIGRATIONS_FACTORY),
+            $container->get(ServicesAbstract::LOGGER)
         );
     },
 
@@ -788,7 +789,8 @@ return [
                             $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                             $container->get(ServicesAbstract::HOOKS),
                             $variablesHandler,
-                            $container->get(ServicesAbstract::LOGGER)
+                            $container->get(ServicesAbstract::LOGGER),
+                            $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                         );
                     }
                     break;
@@ -799,7 +801,8 @@ return [
                             $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                             $container->get(ServicesAbstract::HOOKS),
                             $variablesHandler,
-                            $container->get(ServicesAbstract::LOGGER)
+                            $container->get(ServicesAbstract::LOGGER),
+                            $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                         );
                     }
                     break;
@@ -810,7 +813,8 @@ return [
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -820,7 +824,8 @@ return [
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -830,7 +835,8 @@ return [
                         $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -839,7 +845,8 @@ return [
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -848,7 +855,8 @@ return [
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::HOOKS),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -859,7 +867,8 @@ return [
                         $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -869,7 +878,8 @@ return [
                         $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -879,7 +889,8 @@ return [
                         $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -890,7 +901,8 @@ return [
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                         $container->get(ServicesAbstract::ERROR),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -901,7 +913,8 @@ return [
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                         $container->get(ServicesAbstract::ERROR),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -912,7 +925,8 @@ return [
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                         $container->get(ServicesAbstract::ERROR),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -921,7 +935,8 @@ return [
                         $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::HOOKS),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -930,7 +945,8 @@ return [
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::HOOKS),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -939,7 +955,8 @@ return [
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -949,7 +966,8 @@ return [
                         $container->get(ServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::HOOKS),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -958,7 +976,8 @@ return [
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::HOOKS),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -967,7 +986,8 @@ return [
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::HOOKS),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 
@@ -976,7 +996,8 @@ return [
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $variablesHandler,
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
             }

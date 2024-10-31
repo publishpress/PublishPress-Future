@@ -14,6 +14,8 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterfac
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
+use Throwable;
 
 class CoreOnSavePost implements NodeTriggerRunnerInterface
 {
@@ -54,18 +56,25 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
      */
     private $logger;
 
+    /**
+     * @var WorkflowEngineInterface
+     */
+    private $engine;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         InputValidatorsInterface $postQueryValidator,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        WorkflowEngineInterface $engine
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->postQueryValidator = $postQueryValidator;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
+        $this->engine = $engine;
     }
 
     public static function getNodeTypeName(): string
@@ -78,13 +87,13 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
         $this->step = $step;
         $this->workflowId = $workflowId;
 
-        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
-
         $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'triggerCallback'], 10, 3);
     }
 
     public function triggerCallback($postId, $post, $update)
     {
+        $stepSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
+
         if (
             $this->hooks->applyFilters(
                 HooksAbstract::FILTER_IGNORE_SAVE_POST_EVENT,
@@ -93,25 +102,21 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
                 $this->step
             )
         ) {
-            $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
-
             $this->logger->debug(
                 $this->nodeRunnerProcessor->prepareLogMessage(
                     'Ignoring save post event for step %s',
-                    $nodeSlug
+                    $stepSlug
                 )
             );
 
             return;
         }
 
-        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
-
         if ($this->isInfinityLoopDetected($this->workflowId, $this->step)) {
             $this->logger->debug(
                 $this->nodeRunnerProcessor->prepareLogMessage(
                     'Infinite loop detected for step %s, skipping',
-                    $nodeSlug
+                    $stepSlug
                 )
             );
 
@@ -127,24 +132,31 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
             return false;
         }
 
-        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $this->step);
+        $this->engine->executeStep(
+            $this->step,
+            function ($step, $stepSlug, $postId, $post, $update) {
+                $this->variablesHandler->setVariable($stepSlug, [
+                    'postId' => new IntegerResolver($postId),
+                    'post' => new PostResolver($post, $this->hooks),
+                    'update' => new BooleanResolver($update),
+                ]);
 
-        $this->variablesHandler->setVariable($nodeSlug, [
-            'postId' => new IntegerResolver($postId),
-            'post' => new PostResolver($post, $this->hooks),
-            'update' => new BooleanResolver($update),
-        ]);
+                $this->nodeRunnerProcessor->triggerCallbackIsRunning();
 
-        $this->nodeRunnerProcessor->triggerCallbackIsRunning();
+                $this->logger->debug(
+                    $this->nodeRunnerProcessor->prepareLogMessage(
+                        'Trigger is running | Slug: %s | Post ID: %d',
+                        $stepSlug,
+                        $postId
+                    )
+                );
 
-        $this->logger->debug(
-            $this->nodeRunnerProcessor->prepareLogMessage(
-                'Trigger is running | Slug: %s | Post ID: %d',
-                $nodeSlug,
-                $postId
-            )
+                $this->nodeRunnerProcessor->runNextSteps($step);
+            },
+            $stepSlug,
+            $postId,
+            $post,
+            $update
         );
-
-        $this->nodeRunnerProcessor->runNextSteps($this->step);
     }
 }

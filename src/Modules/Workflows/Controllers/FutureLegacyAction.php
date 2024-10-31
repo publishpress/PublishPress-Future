@@ -7,9 +7,11 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorModuleHooksAbstract;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Core\Plugin;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\LegacyAction\TriggerWorkflow;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
+use Throwable;
 
 class FutureLegacyAction implements InitializableInterface
 {
@@ -18,15 +20,21 @@ class FutureLegacyAction implements InitializableInterface
      */
     private $hooks;
 
-    public function __construct(HookableInterface $hooks)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(HookableInterface $hooks, LoggerInterface $logger)
     {
         $this->hooks = $hooks;
+        $this->logger = $logger;
     }
 
     public function initialize()
     {
         $this->hooks->addAction(
-            CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT,
+            CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS,
             [$this, "enqueueScriptsLegacyAction"]
         );
 
@@ -40,39 +48,43 @@ class FutureLegacyAction implements InitializableInterface
 
     public function enqueueScriptsLegacyAction($hook)
     {
-        wp_enqueue_style("wp-components");
+        try {
+            wp_enqueue_style("wp-components");
 
-        wp_enqueue_script("wp-components");
-        wp_enqueue_script("wp-plugins");
-        wp_enqueue_script("wp-element");
-        wp_enqueue_script("wp-data");
+            wp_enqueue_script("wp-components");
+            wp_enqueue_script("wp-plugins");
+            wp_enqueue_script("wp-element");
+            wp_enqueue_script("wp-data");
 
-        wp_enqueue_script(
-            "future_workflow_legacy_action_script",
-            Plugin::getScriptUrl('legacyAction'),
-            [
-                "wp-plugins",
-                "wp-plugins",
-                "wp-components",
-                "wp-element",
-                "wp-data",
-            ],
-            PUBLISHPRESS_FUTURE_VERSION,
-            true
-        );
+            wp_enqueue_script(
+                "future_workflow_legacy_action_script",
+                Plugin::getScriptUrl('legacyAction'),
+                [
+                    "wp-plugins",
+                    "wp-plugins",
+                    "wp-components",
+                    "wp-element",
+                    "wp-data",
+                ],
+                PUBLISHPRESS_FUTURE_VERSION,
+                true
+            );
 
-        $workflowsModel = new WorkflowsModel();
-        $workflows = $workflowsModel->getPublishedWorkflowsWithLegacyTriggerAsOptions();
+            $workflowsModel = new WorkflowsModel();
+            $workflows = $workflowsModel->getPublishedWorkflowsWithLegacyTriggerAsOptions();
 
-        wp_localize_script(
-            "future_workflow_legacy_action_script",
-            "futureWorkflows",
-            [
-                "workflows" => $workflows,
-                "apiUrl" => rest_url("publishpress-future/v1"),
-                "nonce" => wp_create_nonce("wp_rest"),
-            ]
-        );
+            wp_localize_script(
+                "future_workflow_legacy_action_script",
+                "futureWorkflows",
+                [
+                    "workflows" => $workflows,
+                    "apiUrl" => rest_url("publishpress-future/v1"),
+                    "nonce" => wp_create_nonce("wp_rest"),
+                ]
+            );
+        } catch (Throwable $th) {
+            $this->logger->error('Error enqueuing scripts: ' . $th->getMessage());
+        }
     }
 
     public function preparePostExpirationOpts($opts, $postId)

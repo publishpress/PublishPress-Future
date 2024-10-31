@@ -26,7 +26,12 @@ abstract class HooksAbstract
 
     public const ACTION_DEACTIVATE_PLUGIN = 'publishpressfuture_deactivate_plugin';
 
+    /**
+     * @deprecated 4.1.0 use ACTION_ADMIN_ENQUEUE_SCRIPTS instead
+     */
     public const ACTION_ADMIN_ENQUEUE_SCRIPT = 'admin_enqueue_scripts';
+
+    public const ACTION_ADMIN_ENQUEUE_SCRIPTS = 'admin_enqueue_scripts';
 
     public const ACTION_INSERT_POST = 'wp_insert_post';
 
@@ -46,8 +51,6 @@ abstract class HooksAbstract
     public const ACTION_ADD_META_BOX = self::ACTION_ADD_META_BOXES;
 
     public const ACTION_ADMIN_PRINT_SCRIPTS_EDIT = 'admin_print_scripts-edit.php';
-
-    public const ACTION_ADMIN_ENQUEUE_SCRIPTS = 'admin_enqueue_scripts';
 
     public const ACTION_UPGRADE_PLUGIN = 'publishpressfuture_upgrade_plugin';
 

@@ -43,7 +43,7 @@ class PostStep implements NodeRunnerProcessorInterface
         $this->logger = $logger;
     }
 
-    public function setup(array $step, callable $actionCallback): void
+    public function setup(array $step, callable $setupCallback): void
     {
         $node = $this->getNodeFromStep($step);
         $nodeSettings = $this->getNodeSettings($node);
@@ -101,7 +101,7 @@ class PostStep implements NodeRunnerProcessorInterface
                 $postId = intval($post);
             }
 
-            call_user_func($actionCallback, $postId, $nodeSettings, $step);
+            call_user_func($setupCallback, $postId, $nodeSettings, $step);
         }
 
         $this->runNextSteps($step);
