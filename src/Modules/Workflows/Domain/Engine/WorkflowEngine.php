@@ -404,8 +404,9 @@ class WorkflowEngine implements WorkflowEngineInterface
         } catch (Throwable $th) {
             $this->logger->error(
                 sprintf(
-                    'Error executing step: %s | Message: %s',
+                    'Error executing step: %s | Workflow ID: %d | Message: %s',
                     $step['node']['data']['slug'] ?? 'unknown',
+                    $this->currentRunningWorkflow->getId(),
                     $th->getMessage()
                 )
             );
