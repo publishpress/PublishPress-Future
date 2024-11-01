@@ -70,12 +70,10 @@ class Controller implements InitializableInterface
 
         if (! current_user_can('manage_options')) {
             wp_die(__('You do not have sufficient permissions to access this page.', 'post-expirator'), '', ['response' => 403]);
-            exit;
         }
 
         if (! isset($_GET['nonce']) || ! wp_verify_nonce($_GET['nonce'], 'publishpress_future_download_log')) {
             wp_die(__('Invalid nonce.', 'post-expirator'), '', ['response' => 403]);
-            exit;
         }
 
         require_once __DIR__ . '/../Views/raw-debug-log.html.php';
