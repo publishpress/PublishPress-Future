@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Improved the debug log viewer adding text to a textarea (Issue #724).
-- The debug log viewer now automatically scrolls to the bottom when the page loads.
+- Improve the debug log viewer adding a button to download the entire log or copy it to the clipboard (Issue #724).
+- The debug log viewer now automatically scrolls to the bottom when the page loads (Issue #724).
 - Deprecate the class `PublishPress\Future\Modules\Debug\Debug` and use the logger facade instead.
 - Better handling of the exceptions and errors thrown by the plugin.
 
@@ -27,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add `DateTimeHandlerInterface` as dependency to the class `PublishPress\Future\Modules\Expirator\Module`.
 - Deprecated the constant `PublishPress\Future\Core::ACTION_ADMIN_ENQUEUE_SCRIPT` in favor of `PublishPress\Future\Core::ACTION_ADMIN_ENQUEUE_SCRIPTS`.
 - Remove the action `publishpressfuture_workflow_engine_running_step` from the workflow engine.
+- Add new methods to the class `PublishPress\Future\Framework\Logger\Logger` to retrieve the log count, the log size, and to fetch the latest logs.
 
 ## [4.0.4] - 24 Oct, 2024
 

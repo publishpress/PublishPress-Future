@@ -60,6 +60,14 @@ class Debug implements DebugInterface
     /**
      * @inheritDoc
      */
+    public function fetchLatest($limit = 100)
+    {
+        return $this->logger->fetchLatest($limit);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function deleteLogs()
     {
         $this->logger->deleteLogs();

@@ -146,6 +146,10 @@ class Module implements InitializableInterface
 
     private function initializeEngine()
     {
+        if ($this->logger->isDownloadLogRequested()) {
+            return;
+        }
+
         $this->workflowEngine->start();
     }
 }

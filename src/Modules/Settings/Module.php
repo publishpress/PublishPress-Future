@@ -9,8 +9,6 @@ namespace PublishPress\Future\Modules\Settings;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\ModuleInterface;
-use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
-use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Settings\Controllers\Controller;
 
 defined('ABSPATH') or die('Direct access not allowed.');

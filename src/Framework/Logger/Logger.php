@@ -106,6 +106,11 @@ class Logger implements LoggerInterface
         $this->log(LogLevel::EMERGENCY, $message, $context);
     }
 
+    public function isDownloadLogRequested()
+    {
+        return is_admin() && isset($_GET['action']) && $_GET['action'] === 'publishpress_future_debug_log';
+    }
+
     /**
      * Logs with an arbitrary level.
      *
@@ -118,6 +123,11 @@ class Logger implements LoggerInterface
     public function log($level, $message, $context = [])
     {
         if (! $this->debugIsEnabled()) {
+            return;
+        }
+
+        // Do not log when downloading the log itself.
+        if ($this->isDownloadLogRequested()) {
             return;
         }
 
@@ -262,6 +272,38 @@ class Logger implements LoggerInterface
         $databaseTableName = $this->getDatabaseTableName();
 
         return (array)$this->db->getResults("SELECT * FROM $databaseTableName ORDER BY `id`", 'ARRAY_A');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function fetchLatest($limit = 100)
+    {
+        $databaseTableName = $this->getDatabaseTableName();
+
+        $list = (array)$this->db->getResults("SELECT * FROM $databaseTableName ORDER BY `id` DESC LIMIT $limit", 'ARRAY_A');
+
+        return array_reverse($list);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTotalLogs()
+    {
+        $databaseTableName = $this->getDatabaseTableName();
+
+        return (int)$this->db->getVar("SELECT COUNT(*) FROM $databaseTableName");
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getLogSizeInBytes()
+    {
+        $databaseTableName = $this->getDatabaseTableName();
+
+        return $this->db->getVar("SELECT SUM(LENGTH(`message`)) FROM $databaseTableName");
     }
 
     /**

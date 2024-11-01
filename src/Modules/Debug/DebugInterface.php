@@ -27,6 +27,11 @@ interface DebugInterface
     public function fetchAll();
 
     /**
+     * @return array
+     */
+    public function fetchLatest($limit = 100);
+
+    /**
      * @return void
      */
     public function deleteLogs();
