@@ -374,3 +374,7 @@ p.description,
 .pp-debug-log-count {
     margin-bottom: 10px;
 }
+
+.pp-debug-log-count select {
+    margin-left: 5px;
+}
