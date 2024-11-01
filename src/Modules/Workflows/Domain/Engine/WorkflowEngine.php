@@ -364,53 +364,14 @@ class WorkflowEngine implements WorkflowEngineInterface
         return $this->variablesHandler;
     }
 
-    public function onRunningStep(array $step)
+    public function getCurrentExecutionTrace(): array
     {
-        if (empty($this->currentRunningWorkflow)) {
-            return;
-        }
-
-        if (! $this->currentRunningWorkflow->isDebugRayShowCurrentRunningStepEnabled()) {
-            return;
-        }
-
-        if (! function_exists('ray')) {
-            return;
-        }
-
-        $stepSlug = $step['node']['data']['slug'];
-
-        $this->currentExecutionTrace[] = $stepSlug;
-
-        // Update the trace global variable.
-        $globalVariables = $this->variablesHandler->getVariable('global');
-        $globalVariables['trace'] = new ArrayResolver($this->currentExecutionTrace);
-        $this->variablesHandler->setVariable('global', $globalVariables);
-
-        // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction
-        ray($stepSlug)->label('Current running step');
+        return $this->currentExecutionTrace;
     }
 
-    /**
-     * This method should be called by the node runners to execute the step in
-     * a try/catch block and log any errors.
-     */
-    public function executeStep(array $step, callable $callback, ...$args)
+    public function getCurrentRunningWorkflow(): WorkflowModelInterface
     {
-        try {
-            $this->onRunningStep($step);
-
-            call_user_func($callback, $step, ...$args);
-        } catch (Throwable $th) {
-            $this->logger->error(
-                sprintf(
-                    'Error executing step: %s | Workflow ID: %d | Message: %s',
-                    $step['node']['data']['slug'] ?? 'unknown',
-                    $this->currentRunningWorkflow->getId(),
-                    $th->getMessage()
-                )
-            );
-        }
+        return $this->currentRunningWorkflow;
     }
 
     private function getContext(): string

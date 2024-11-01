@@ -2,24 +2,14 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions;
 
-use Exception;
-use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsSet as NodeTypeCorePostTermsSet;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
-use PublishPress\Future\Modules\Workflows\HooksAbstract;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class CorePostTermsSet implements NodeRunnerInterface
 {
-    /**
-     * @var HookableInterface
-     */
-    private $hooks;
-
     /**
      * @var NodeRunnerProcessorInterface
      */
@@ -31,11 +21,6 @@ class CorePostTermsSet implements NodeRunnerInterface
     private $expirablePostModelFactory;
 
     /**
-     * @var RuntimeVariablesHandlerInterface
-     */
-    private $variablesHandler;
-
-    /**
      * @var ErrorFacade
      */
     private $errorFacade;
@@ -45,27 +30,16 @@ class CorePostTermsSet implements NodeRunnerInterface
      */
     private $logger;
 
-    /**
-     * @var WorkflowEngineInterface
-     */
-    private $engine;
-
     public function __construct(
-        HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         \Closure $expirablePostModelFactory,
         ErrorFacade $errorFacade,
-        RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger,
-        WorkflowEngineInterface $engine
+        LoggerInterface $logger
     ) {
-        $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->errorFacade = $errorFacade;
-        $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
-        $this->engine = $engine;
     }
 
     public static function getNodeTypeName(): string
@@ -80,15 +54,13 @@ class CorePostTermsSet implements NodeRunnerInterface
 
     public function setupCallback(int $postId, array $nodeSettings, array $step)
     {
-        $this->engine->executeStep(
+        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step, $postId, $nodeSettings) {
                 $postModel = call_user_func($this->expirablePostModelFactory, $postId);
 
                 $taxonomy = $nodeSettings['taxonomyTerms']['taxonomy'];
                 $updatedTerms = $nodeSettings['taxonomyTerms']['terms'] ?? [];
-
-                $originalTerms = $postModel->getTermIDs($taxonomy);
 
                 $result = $postModel->setTerms($updatedTerms, $taxonomy);
 

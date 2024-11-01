@@ -2,22 +2,15 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions;
 
-use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDeactivateWorkflow as NodeType;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\Future\Modules\Workflows\Models\PostModel;
 
 class CorePostDeactivateWorkflow implements NodeRunnerInterface
 {
-    /**
-     * @var HookableInterface
-     */
-    private $hooks;
-
     /**
      * @var NodeRunnerProcessorInterface
      */
@@ -33,23 +26,14 @@ class CorePostDeactivateWorkflow implements NodeRunnerInterface
      */
     private $logger;
 
-    /**
-     * @var WorkflowEngineInterface
-     */
-    private $engine;
-
     public function __construct(
-        HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger,
-        WorkflowEngineInterface $engine
+        LoggerInterface $logger
     ) {
-        $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
-        $this->engine = $engine;
     }
 
     public static function getNodeTypeName(): string
@@ -64,7 +48,7 @@ class CorePostDeactivateWorkflow implements NodeRunnerInterface
 
     public function setupCallback(int $postId, array $nodeSettings, array $step)
     {
-        $this->engine->executeStep(
+        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step, $postId, $nodeSettings) {
                 $postModel = new PostModel();

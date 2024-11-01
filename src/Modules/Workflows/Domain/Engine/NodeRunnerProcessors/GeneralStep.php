@@ -4,11 +4,14 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunnerProcesso
 
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayResolver;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
+use Throwable;
 
 class GeneralStep implements NodeRunnerProcessorInterface
 {
@@ -29,12 +32,18 @@ class GeneralStep implements NodeRunnerProcessorInterface
      */
     private $logger;
 
+    /**
+     * @var WorkflowEngineInterface
+     */
+    private $engine;
+
     public function __construct(
         HooksFacade $hooks,
         WorkflowEngineInterface $engine,
         LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
+        $this->engine = $engine;
         $this->variablesHandler = $engine->getVariablesHandler();
         $this->logger = $logger;
     }
@@ -149,5 +158,65 @@ class GeneralStep implements NodeRunnerProcessorInterface
     public function triggerCallbackIsRunning(): void
     {
         $this->activateGlobalRayDebug();
+    }
+
+    private function handleStepExecution(array $step): void
+    {
+        $currentRunningWorkflow = $this->engine->getCurrentRunningWorkflow();
+
+        if (empty($currentRunningWorkflow)) {
+            return;
+        }
+
+        $stepSlug = $step['node']['data']['slug'];
+
+        $this->updateExecutionTraceOnVariablesHandler($stepSlug, $currentRunningWorkflow);
+        $this->logStepExecution($stepSlug, $currentRunningWorkflow);
+    }
+
+    private function updateExecutionTraceOnVariablesHandler(
+        string $stepSlug,
+        WorkflowModelInterface $currentRunningWorkflow
+    ): void
+    {
+        $currentExecutionTrace = $this->engine->getCurrentExecutionTrace();
+        $currentExecutionTrace[] = $stepSlug;
+
+        // Update the trace global variable.
+        $globalVariables = $this->variablesHandler->getVariable('global');
+        $globalVariables['trace'] = new ArrayResolver($currentExecutionTrace);
+        $this->variablesHandler->setVariable('global', $globalVariables);
+    }
+
+    private function logStepExecution(string $stepSlug, WorkflowModelInterface $currentRunningWorkflow): void
+    {
+        if (! $this->isWordPressRayInstalled()) {
+            return;
+        }
+
+        if (! $currentRunningWorkflow->isDebugRayShowCurrentRunningStepEnabled()) {
+            return;
+        }
+
+        // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction
+        ray($stepSlug)->label('Current running step');
+    }
+
+    public function executeSafelyWithErrorHandling(array $step, callable $callback, ...$args): void
+    {
+        try {
+            $this->handleStepExecution($step);
+
+            call_user_func($callback, $step, ...$args);
+        } catch (Throwable $th) {
+            $this->logger->error(
+                sprintf(
+                    'Error executing step: %s | Workflow ID: %d | Message: %s',
+                    $step['node']['data']['slug'] ?? 'unknown',
+                    $this->engine->getCurrentRunningWorkflow()->getId(),
+                    $th->getMessage()
+                )
+            );
+        }
     }
 }

@@ -10,7 +10,6 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterfac
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class FutureLegacyAction implements NodeTriggerRunnerInterface
 {
@@ -44,23 +43,16 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
      */
     private $logger;
 
-    /**
-     * @var WorkflowEngineInterface
-     */
-    private $engine;
-
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger,
-        WorkflowEngineInterface $engine
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
-        $this->engine = $engine;
     }
 
     public static function getNodeTypeName(): string
@@ -83,7 +75,7 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
             return false;
         }
 
-        $this->engine->executeStep(
+        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
             $this->step ,
             function ($step, $postId, $post) {
                 $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);

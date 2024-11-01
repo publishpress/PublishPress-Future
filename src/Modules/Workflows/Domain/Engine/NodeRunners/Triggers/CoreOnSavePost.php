@@ -14,8 +14,6 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterfac
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
-use Throwable;
 
 class CoreOnSavePost implements NodeTriggerRunnerInterface
 {
@@ -56,25 +54,18 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
      */
     private $logger;
 
-    /**
-     * @var WorkflowEngineInterface
-     */
-    private $engine;
-
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         InputValidatorsInterface $postQueryValidator,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger,
-        WorkflowEngineInterface $engine
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->postQueryValidator = $postQueryValidator;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
-        $this->engine = $engine;
     }
 
     public static function getNodeTypeName(): string
@@ -132,7 +123,7 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
             return false;
         }
 
-        $this->engine->executeStep(
+        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
             $this->step,
             function ($step, $stepSlug, $postId, $post, $update) {
                 $this->variablesHandler->setVariable($stepSlug, [

@@ -68,17 +68,15 @@ class CorePostDeactivateWorkflowTest extends \lucatume\WPBrowser\TestCase\WPTest
         $workflows = $this->createWorkflows();
 
         $runner = new CorePostDeactivateWorkflow(
-            $this->makeEmpty(HookableInterface::class),
-            $this->makeEmpty(NodeRunnerProcessorInterface::class),
+            $this->makeEmpty(NodeRunnerProcessorInterface::class, [
+                'executeSafelyWithErrorHandling' => function ($step, $callback, ...$args) {
+                    call_user_func($callback, $step, ...$args);
+                }
+            ]),
             $this->makeEmpty(RuntimeVariablesHandlerInterface::class, [
                 'getVariable' => new WorkflowResolver(['id' => $workflows[0]])
             ]),
-            $this->makeEmpty(LoggerInterface::class),
-            $this->makeEmpty(WorkflowEngineInterface::class, [
-                'executeStep' => function ($step, $callback, ...$args) {
-                    call_user_func($callback, $step, ...$args);
-                }
-            ])
+            $this->makeEmpty(LoggerInterface::class)
         );
 
         $model = new PostModel();

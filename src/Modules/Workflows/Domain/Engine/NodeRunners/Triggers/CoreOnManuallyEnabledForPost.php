@@ -13,7 +13,6 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterfac
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 {
@@ -56,25 +55,18 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
      */
     private $logger;
 
-    /**
-     * @var WorkflowEngineInterface
-     */
-    private $engine;
-
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         InputValidatorsInterface $postQueryValidator,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger,
-        WorkflowEngineInterface $engine
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->postQueryValidator = $postQueryValidator;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
-        $this->engine = $engine;
     }
 
     public static function getNodeTypeName(): string
@@ -109,8 +101,7 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
             return;
         }
 
-
-        $this->engine->executeStep(
+        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
             $this->step,
             function ($step, $postId) {
                 $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);

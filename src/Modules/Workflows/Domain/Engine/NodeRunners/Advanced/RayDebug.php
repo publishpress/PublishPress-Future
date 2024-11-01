@@ -2,24 +2,14 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Advanced;
 
-use Exception;
-use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\RayDebug as NodeTypeRayDebug;
-use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
-use Throwable;
 
 class RayDebug implements NodeRunnerInterface
 {
-    /**
-     * @var HookableInterface
-     */
-    private $hooks;
-
     /**
      * @var NodeRunnerProcessorInterface
      */
@@ -35,23 +25,14 @@ class RayDebug implements NodeRunnerInterface
      */
     private $logger;
 
-    /**
-     * @var WorkflowEngineInterface
-     */
-    private $engine;
-
     public function __construct(
-        HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger,
-        WorkflowEngineInterface $engine
+        LoggerInterface $logger
     ) {
-        $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
-        $this->engine = $engine;
     }
 
     public static function getNodeTypeName(): string
@@ -66,7 +47,7 @@ class RayDebug implements NodeRunnerInterface
 
     public function setupCallback(array $step)
     {
-        $this->engine->executeStep(
+        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step) {
                 $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);

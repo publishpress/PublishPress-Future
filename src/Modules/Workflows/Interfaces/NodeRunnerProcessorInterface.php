@@ -27,4 +27,6 @@ interface NodeRunnerProcessorInterface
     public function triggerCallbackIsRunning(): void;
 
     public function prepareLogMessage(string $message, ...$args): string;
+
+    public function executeSafelyWithErrorHandling(array $step, callable $callback, ...$args): void;
 }

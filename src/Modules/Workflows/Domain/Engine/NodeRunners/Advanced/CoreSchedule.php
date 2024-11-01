@@ -5,10 +5,7 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Advanc
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\CoreSchedule as NodeType;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncNodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInterface;
-use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
-use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class CoreSchedule implements AsyncNodeRunnerInterface
 {
@@ -18,37 +15,16 @@ class CoreSchedule implements AsyncNodeRunnerInterface
     private $nodeRunnerProcessor;
 
     /**
-     * @var HookableInterface
-     */
-    private $hooks;
-
-    /**
      * @var RuntimeVariablesHandlerInterface
      */
     private $variablesHandler;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var WorkflowEngineInterface
-     */
-    private $engine;
-
     public function __construct(
         AsyncNodeRunnerProcessorInterface $nodeRunnerProcessor,
-        HookableInterface $hooks,
-        RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger,
-        WorkflowEngineInterface $engine
+        RuntimeVariablesHandlerInterface $variablesHandler
     ) {
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
-        $this->hooks = $hooks;
         $this->variablesHandler = $variablesHandler;
-        $this->logger = $logger;
-        $this->engine = $engine;
     }
 
     public static function getNodeTypeName(): string
@@ -58,7 +34,7 @@ class CoreSchedule implements AsyncNodeRunnerInterface
 
     public function setup(array $step): void
     {
-        $this->engine->executeStep(
+        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step) {
                 $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);

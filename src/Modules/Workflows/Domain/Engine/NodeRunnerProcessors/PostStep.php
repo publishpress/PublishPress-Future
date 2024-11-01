@@ -147,6 +147,11 @@ class PostStep implements NodeRunnerProcessorInterface
         return $this->generalNodeRunnerProcessor->prepareLogMessage($message, ...$args);
     }
 
+    public function executeSafelyWithErrorHandling(array $step, callable $callback, ...$args): void
+    {
+        $this->generalNodeRunnerProcessor->executeSafelyWithErrorHandling($step, $callback, ...$args);
+    }
+
     private function addDebugLogMessage(string $message, ...$args): void
     {
         $this->logger->debug($this->prepareLogMessage($message, ...$args));

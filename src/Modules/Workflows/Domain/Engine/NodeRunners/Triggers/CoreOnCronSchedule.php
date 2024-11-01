@@ -5,11 +5,7 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Trigge
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSchedule as NodeType;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
-use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Modules\Workflows\HooksAbstract;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class CoreOnCronSchedule implements NodeTriggerRunnerInterface
 {
@@ -19,37 +15,16 @@ class CoreOnCronSchedule implements NodeTriggerRunnerInterface
     private $nodeRunnerProcessor;
 
     /**
-     * @var HookableInterface
-     */
-    private $hooks;
-
-    /**
-     * @var RuntimeVariablesHandlerInterface
-     */
-    private $variablesHandler;
-
-    /**
      * @var LoggerInterface
      */
     private $logger;
 
-    /**
-     * @var WorkflowEngineInterface
-     */
-    private $engine;
-
     public function __construct(
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
-        HookableInterface $hooks,
-        RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger,
-        WorkflowEngineInterface $engine
+        LoggerInterface $logger
     ) {
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
-        $this->hooks = $hooks;
-        $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
-        $this->engine = $engine;
     }
 
     /**
@@ -66,7 +41,7 @@ class CoreOnCronSchedule implements NodeTriggerRunnerInterface
 
     public function setup(int $workflowId, array $step): void
     {
-        $this->engine->executeStep(
+        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step) {
                 $this->nodeRunnerProcessor->setup($step, '__return_true');
