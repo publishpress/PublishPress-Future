@@ -370,3 +370,7 @@ p.description,
     gap: 10px;
     justify-content: flex-start;
 }
+
+.pp-debug-log-count {
+    margin-bottom: 10px;
+}

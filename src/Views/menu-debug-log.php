@@ -23,11 +23,12 @@ $showSideBar = $hooks->applyFilters(
 echo '<div class="pp-columns-wrapper' . ($showSideBar ? ' pp-enable-sidebar' : '') . '">';
 echo '<div class="pp-column-left">';
 
+$currentLogCount = isset($_GET['log_count']) ? (int)$_GET['log_count'] : 500;
 /**
  * @var LoggerInterface $logger
  */
 $logger = Container::getInstance()->get(ServicesAbstract::LOGGER);
-$results = $logger->fetchLatest(500);
+$results = $logger->fetchLatest($currentLogCount);
 $totalLogs = $logger->getTotalLogs();
 $logSizeInBytes = $logger->getLogSizeInBytes();
 
@@ -38,6 +39,33 @@ if (empty($results)) {
 if (! empty($results)) {
 
     echo '<div class="pp-debug-log">';
+
+    $logCountOptions = [
+        500 => '500',
+        700 => '700',
+        1000 => '1000',
+        2500 => '2000',
+        5000 => '5000',
+        7500 => '7500',
+        10000 => '10000'
+    ];
+
+    echo '<div class="pp-debug-log-count">';
+    echo '<form method="get">';
+    echo '<input type="hidden" name="page" value="publishpress-future">';
+    echo '<input type="hidden" name="tab" value="viewdebug">';
+    echo '<label for="log-count">' . esc_html__('Number of logs to display:', 'post-expirator') . '</label>';
+    echo '<select id="log-count" name="log_count" onchange="this.form.submit()">';
+    foreach ($logCountOptions as $value => $label) {
+        $selected = $currentLogCount === $value ? ' selected' : '';
+        echo '<option value="' . esc_attr($value) . '"' . $selected . '>' . esc_html($label) . '</option>';
+    }
+    echo '</select>';
+    echo '</form>';
+    echo '</div>';
+
+
+
     echo '<textarea readonly>';
     foreach ($results as $result) {
         printf("%s: %s\n", $result['timestamp'], esc_html($result['message']));
