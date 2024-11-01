@@ -12,6 +12,7 @@ import PostInput from "../data-fields/post-input";
 import ManualWorkflowInput from "../data-fields/manual-workflow-input";
 import List from "../data-fields/list";
 import Conditional from "../data-fields/conditional";
+import DebugLevels from "../data-fields/debug-levels";
 
 export const MappedField = (props) => {
     switch (props.type) {
@@ -66,6 +67,10 @@ export const MappedField = (props) => {
         case "conditional":
             return (
                 <Conditional {...props} />
+            );
+        case "debugLevels":
+            return (
+                <DebugLevels {...props} />
             );
     }
 

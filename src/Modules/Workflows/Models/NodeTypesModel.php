@@ -18,6 +18,7 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\CorePostQuer
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\RayDebug;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\CoreSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\ConditionalSplit;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\LogAdd;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminInit;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
@@ -223,6 +224,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             CoreSchedule::getNodeTypeName() => new CoreSchedule(),
             CorePostQuery::getNodeTypeName() => new CorePostQuery(),
             ConditionalSplit::getNodeTypeName() => new ConditionalSplit(),
+            LogAdd::getNodeTypeName() => new LogAdd(),
         ];
 
         if (function_exists('ray')) {

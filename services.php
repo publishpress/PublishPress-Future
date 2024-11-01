@@ -79,6 +79,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\Cor
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\CoreSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\RayDebug;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\ConditionalSplit;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\LogAdd;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnCronSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
