@@ -9,9 +9,9 @@ interface NodeRunnerProcessorInterface
         callable $actionCallback
     ): void;
 
-    public function runNextSteps(array $step): void;
+    public function runNextSteps(array $step, string $branch = 'output'): void;
 
-    public function getNextSteps(array $step);
+    public function getNextSteps(array $step, string $branch = 'output'): array;
 
     public function getNodeFromStep(array $step);
 

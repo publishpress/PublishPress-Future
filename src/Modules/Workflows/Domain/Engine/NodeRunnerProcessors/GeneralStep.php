@@ -71,9 +71,9 @@ class GeneralStep implements NodeRunnerProcessorInterface
         $this->runNextSteps($step);
     }
 
-    public function runNextSteps(array $step): void
+    public function runNextSteps(array $step, string $branch = 'output'): void
     {
-        $nextSteps = $this->getNextSteps($step);
+        $nextSteps = $this->getNextSteps($step, $branch);
 
         foreach ($nextSteps as $nextStep) {
             /**
@@ -83,11 +83,11 @@ class GeneralStep implements NodeRunnerProcessorInterface
         }
     }
 
-    public function getNextSteps(array $step)
+    public function getNextSteps(array $step, string $branch = 'output'): array
     {
         $nextSteps = [];
-        if (isset($step['next']['output'])) {
-            $nextSteps = $step['next']['output'];
+        if (isset($step['next'][$branch])) {
+            $nextSteps = $step['next'][$branch];
         }
 
         return $nextSteps;

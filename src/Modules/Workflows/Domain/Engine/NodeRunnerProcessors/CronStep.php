@@ -847,14 +847,14 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         }
     }
 
-    public function runNextSteps(array $step): void
+    public function runNextSteps(array $step, string $branch = 'output'): void
     {
-        $this->generalNodeRunnerProcessor->runNextSteps($step);
+        $this->generalNodeRunnerProcessor->runNextSteps($step, $branch);
     }
 
-    public function getNextSteps(array $step)
+    public function getNextSteps(array $step, string $branch = 'output'): array
     {
-        return $this->generalNodeRunnerProcessor->getNextSteps($step);
+        return $this->generalNodeRunnerProcessor->getNextSteps($step, $branch);
     }
 
     public function getNodeFromStep(array $step)
