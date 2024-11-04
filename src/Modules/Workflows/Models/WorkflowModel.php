@@ -8,14 +8,13 @@ use Exception;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
-use Throwable;
 use WP_Post;
 use WP_Query;
 
-use function PublishPress\Future\logError;
 use function wp_json_encode;
 use function get_post;
 
@@ -68,6 +67,11 @@ class WorkflowModel implements WorkflowModelInterface
      */
     private $hooks;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct()
     {
         $container = Container::getInstance();
@@ -75,6 +79,7 @@ class WorkflowModel implements WorkflowModelInterface
         // FIXME: Use dependency injection
         $this->hooks = $container->get(ServicesAbstract::HOOKS);
         $this->nodeTypesModel = $container->get(ServicesAbstract::NODE_TYPES_MODEL);
+        $this->logger = $container->get(ServicesAbstract::LOGGER);
     }
 
     public function load(int $id): bool
@@ -724,7 +729,7 @@ class WorkflowModel implements WorkflowModelInterface
         $nodeTypeInstance = $nodeTypes[$elementaryType][$nodeName] ?? null;
 
         if (is_null($nodeTypeInstance)) {
-            logError(
+            $this->logger->error(
                 sprintf(
                     'Node type not found. Workflow: %1$d; ElementaryType: %2$s; NodeName; %3$s; SourceNodeId: %4$s',
                     $this->post->ID,
