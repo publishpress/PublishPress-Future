@@ -24,8 +24,6 @@ use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInte
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowModelInterface;
 use Throwable;
 
-use function PublishPress\Future\logError;
-
 class WorkflowEngine implements WorkflowEngineInterface
 {
     const LOG_PREFIX = '[WF Engine]';
@@ -188,7 +186,6 @@ class WorkflowEngine implements WorkflowEngineInterface
                     );
 
                     $this->logger->error($message);
-                    logError($message);
 
                     continue;
                 }
@@ -299,7 +296,6 @@ class WorkflowEngine implements WorkflowEngineInterface
                     $message = self::LOG_PREFIX . ' Async node runner error, no step name found';
 
                     $this->logger->error($message);
-                    logError($message, null, true);
 
                     return;
                 }
