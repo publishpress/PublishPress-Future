@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Deprecated the constant `PublishPress\Future\Core::ACTION_ADMIN_ENQUEUE_SCRIPT` in favor of `PublishPress\Future\Core::ACTION_ADMIN_ENQUEUE_SCRIPTS`.
 - Remove the action `publishpressfuture_workflow_engine_running_step` from the workflow engine.
 - Add new methods to the class `PublishPress\Future\Framework\Logger\Logger` to retrieve the log count, the log size, and to fetch the latest logs.
+- Node runner processors now accept a branch argument to get the next steps and run the next steps.
 
 ## [4.0.4] - 24 Oct, 2024
 
