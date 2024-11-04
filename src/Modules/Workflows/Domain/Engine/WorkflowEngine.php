@@ -6,7 +6,6 @@ use Closure;
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\SiteResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\UserResolver;
@@ -278,49 +277,54 @@ class WorkflowEngine implements WorkflowEngineInterface
 
     public function executeAsyncNodeRoutine($args)
     {
-        if (is_null($args)) {
-            $message = self::LOG_PREFIX . ' Async node runner error, no args found';
+        try {
 
-            throw new \Exception($message);
-        }
+            if (is_null($args)) {
+                $message = self::LOG_PREFIX . ' Async node runner error, no args found';
 
-        $originalArgs = $args;
-
-        if (ScheduledActionModel::argsAreOnNewFormat($args)) {
-            // New format, when the args are saved in the wp_ppfuture_workflow_scheduled_steps table.
-            $nodeName = $args['stepName'];
-            $scheduledStepModel = new WorkflowScheduledStepModel();
-            $scheduledStepModel->loadByActionId($this->currentAsyncActionId);
-            $args = $scheduledStepModel->getArgs();
-        } else {
-            // Old format, when the args were saved directly in the actionsscheduler_actions table.
-            if (! isset($args['step']['node']['data']['name'])) {
-                $message = self::LOG_PREFIX . ' Async node runner error, no step name found';
-
-                $this->logger->error($message);
-                logError($message, null, true);
-
-                return;
+                throw new \Exception($message);
             }
 
-            $nodeName = $args['step']['node']['data']['name'];
+            $originalArgs = $args;
+
+            if (ScheduledActionModel::argsAreOnNewFormat($args)) {
+                // New format, when the args are saved in the wp_ppfuture_workflow_scheduled_steps table.
+                $nodeName = $args['stepName'];
+                $scheduledStepModel = new WorkflowScheduledStepModel();
+                $scheduledStepModel->loadByActionId($this->currentAsyncActionId);
+                $args = $scheduledStepModel->getArgs();
+            } else {
+                // Old format, when the args were saved directly in the actionsscheduler_actions table.
+                if (! isset($args['step']['node']['data']['name'])) {
+                    $message = self::LOG_PREFIX . ' Async node runner error, no step name found';
+
+                    $this->logger->error($message);
+                    logError($message, null, true);
+
+                    return;
+                }
+
+                $nodeName = $args['step']['node']['data']['name'];
+            }
+            $args['actionId'] = $this->currentAsyncActionId;
+
+            $nodeRunner = call_user_func($this->nodeRunnerFactory, $nodeName);
+
+            $step = $this->currentRunningWorkflow->getPartialRoutineTreeFromNodeId($args['step']['nodeId']);
+
+            $this->logger->debug(
+                sprintf(
+                    self::LOG_PREFIX . '   - Workflow %1$d: Executing async step %2$s on action %3$d',
+                    $this->currentRunningWorkflow->getId(),
+                    $step['node']['data']['slug'],
+                    (int) $this->currentAsyncActionId
+                )
+            );
+
+            $nodeRunner->actionCallback($args, $originalArgs);
+        } catch (Throwable $e) {
+            $this->logger->error(sprintf(self::LOG_PREFIX . ' Async node runner error: %s', $e->getMessage()));
         }
-        $args['actionId'] = $this->currentAsyncActionId;
-
-        $nodeRunner = call_user_func($this->nodeRunnerFactory, $nodeName);
-
-        $step = $this->currentRunningWorkflow->getPartialRoutineTreeFromNodeId($args['step']['nodeId']);
-
-        $this->logger->debug(
-            sprintf(
-                self::LOG_PREFIX . '   - Workflow %1$d: Executing async step %2$s on action %3$d',
-                $this->currentRunningWorkflow->getId(),
-                $step['node']['data']['slug'],
-                (int) $this->currentAsyncActionId
-            )
-        );
-
-        $nodeRunner->actionCallback($args, $originalArgs);
     }
 
     public function onWorkflowUpdated($workflowId, $newPost, $oldPost)
