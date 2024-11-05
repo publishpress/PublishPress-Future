@@ -23,6 +23,7 @@ jobs:
     env:
       ISSUE_ASSIGNEE: andergmartins
       ISSUE_CC: "@andergmartins, @stevejburge"
+      GH_TOKEN: ${{ github.token }}
     runs-on: ubuntu-latest
     steps:
       - name: Setup tmate session for Debugging, if inputs.tmate_enabled is true
