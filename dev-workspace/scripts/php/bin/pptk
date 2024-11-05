@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Publishpress\PpToolkit\Cmd\Pot\CompareCommand as PotCompareCommand;
+use Symfony\Component\Console\Application;
+
+define('PPTK_VERSION', '1.0.0');
+
+$application = new Application('pptk', PPTK_VERSION);
+
+$application->add(new PotCompareCommand());
+
+$application->run();
