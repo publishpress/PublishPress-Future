@@ -68,6 +68,6 @@ jobs:
               echo ""
               echo "Changes found"
               echo "Commenting on issue $ISSUE_NUMBER"
-              gh issue comment $ISSUE_NUMBER --body "New changes detected in POT file for version $PLUGIN_VERSION.<br /><br />CC: $ISSUE_CC<br />##Output of check:pot-diff:<br />$OUTPUT"
+              gh issue comment $ISSUE_NUMBER --body "New changes detected in POT file for version $PLUGIN_VERSION.<br /><br />CC: $ISSUE_CC<br /><br />##Output of check:pot-diff:<br />$OUTPUT"
             fi
           fi
