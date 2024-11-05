@@ -51,11 +51,11 @@ jobs:
           PLUGIN_VERSION=$($GITHUB_WORKSPACE/dev-workspace/run pversion)
           if [[ ! "$OUTPUT" =~ "No messages found" ]]; then
             # Check if issue already exists
-            ISSUE_EXISTS=$(gh issue list --search "POT file has changes that need to be reviewed for version $PLUGIN_VERSION in:title" --json number --jq 'length')
+            ISSUE_EXISTS=$(gh issue list --search "POT file has changes that need to be reviewed for version $PLUGIN_VERSION in:title is:open" --json number --jq 'length')
             if [ "$ISSUE_EXISTS" -eq 0 ]; then
               gh issue create \
                 --title "POT file has changes that need to be reviewed for version $PLUGIN_VERSION" \
-                --body "The POT file check detected changes between the main branch and the current branch. Please review and update the PO files.\n\n##Output of check:pot-diff:\n\n\`\`\`\n$OUTPUT\n\`\`\`\n\ncc: $ISSUE_CC" \
+                --body $'The POT file check detected changes between the main branch and the current branch. Please review and update the PO files.\n\n##Output of check:pot-diff:\n\n```\n$OUTPUT\n```\n\ncc: $ISSUE_CC' \
                 --label "translation" \
                 --assignee "$ISSUE_ASSIGNEE"
             else

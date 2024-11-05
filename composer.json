@@ -125,7 +125,7 @@
         "check:cs": "phpcs",
         "check:stan": "phpstan",
         "check:longpath": "longpath .",
-        "check:pot-diff": "php dev-workspace/scripts/php/bin/pptk po:compare https://raw.githubusercontent.com/publishpress/PublishPress-Future/refs/heads/main/languages/post-expirator.pot ./languages/post-expirator.pot",
+        "check:pot-diff": "php dev-workspace/scripts/php/bin/pptk po:compare https://raw.githubusercontent.com/publishpress/PublishPress-Future/refs/heads/main/languages/post-expirator.pot ./languages/post-expirator.pot -m",
         "fix:cs": "phpcbf --standard=.phpcs.xml",
         "fix:php": [
             "php-cs-fixer fix .",

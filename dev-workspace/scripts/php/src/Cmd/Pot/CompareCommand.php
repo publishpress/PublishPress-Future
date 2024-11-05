@@ -5,6 +5,7 @@ namespace Publishpress\PpToolkit\Cmd\Pot;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CompareCommand extends Command
@@ -14,13 +15,19 @@ class CompareCommand extends Command
      */
     protected $output;
 
+    /**
+     * @var InputInterface
+     */
+    protected $input;
+
     protected function configure(): void
     {
         $this->setName('po:compare')
             ->setHelp('This command allows you to compare two PO/POT files.')
             ->setHidden(false)
             ->addArgument('old', InputArgument::REQUIRED, 'The old PO/POT file')
-            ->addArgument('new', InputArgument::REQUIRED, 'The new PO/POT file');
+            ->addArgument('new', InputArgument::REQUIRED, 'The new PO/POT file')
+            ->addOption('markdown', 'm', InputOption::VALUE_NONE, 'Output in markdown format');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -30,6 +37,7 @@ class CompareCommand extends Command
         }
 
         $this->output = $output;
+        $this->input = $input;
         $this->comparePoFiles($input->getArgument('old'), $input->getArgument('new'));
 
         return Command::SUCCESS;
@@ -120,25 +128,47 @@ class CompareCommand extends Command
 
     private function outputTerms(string $type, array $terms): void
     {
-        $this->output->writeln("\n<fg=green>{$type}</>\n");
+        $this->outputHeader($type);
 
         foreach ($terms as $term) {
-            $this->output->writeln($term);
+            if ($this->input->getOption('markdown')) {
+                $this->output->writeln("* {$term}");
+            } else {
+                $this->output->writeln($term);
+            }
         }
     }
 
     private function outputStatistics(array $oldMessages, array $newMessages, array $newTerms, array $removedTerms): void
     {
-        $this->output->writeln("\n<fg=green>Statistics</>\n");
+        $this->outputHeader('Statistics');
+
         $rows = [
             ['Old terms total', count($oldMessages)],
             ['New terms total', count($newMessages)],
             ['New terms added', count($newTerms)],
             ['Terms removed', count($removedTerms)]
         ];
-        $table = new \Symfony\Component\Console\Helper\Table($this->output);
-        $table->setHeaders(['Metric', 'Count'])
-              ->setRows($rows)
-              ->render();
+        if ($this->input->getOption('markdown')) {
+            $this->output->writeln('| Metric | Count |');
+            $this->output->writeln('|--------|-------|');
+            foreach ($rows as $row) {
+                $this->output->writeln('| ' . $row[0] . ' | ' . $row[1] . ' |');
+            }
+        } else {
+            $table = new \Symfony\Component\Console\Helper\Table($this->output);
+            $table->setHeaders(['Metric', 'Count'])
+                  ->setRows($rows)
+                  ->render();
+        }
+    }
+
+    private function outputHeader(string $header): void
+    {
+        if ($this->input->getOption('markdown')) {
+            $this->output->writeln("\n### {$header}\n");
+        } else {
+            $this->output->writeln("\n<fg=green>{$header}</>\n");
+        }
     }
 }
