@@ -60,7 +60,7 @@ jobs:
               echo "No issue found, creating a new one"
               gh issue create \
                 --title "POT file has changes that need to be reviewed for version $PLUGIN_VERSION" \
-                --body "The POT file check detected changes between the main branch and the current branch.<br />Please review and update the PO files.<br /><br />CC: $ISSUE_CC<br /><br />##Output of check:pot-diff:<br />$OUTPUT" \
+                --body "The POT file check detected changes between the main branch and the current branch.<br />Please review and update the PO files.<br /><br />CC: $ISSUE_CC<br /><br />## Output of check:pot-diff:<br />$OUTPUT" \
                 --label "translation" \
                 --assignee "$ISSUE_ASSIGNEE"
             else
@@ -68,6 +68,6 @@ jobs:
               echo ""
               echo "Changes found"
               echo "Commenting on issue $ISSUE_NUMBER"
-              gh issue comment $ISSUE_NUMBER --body "New changes detected in POT file for version $PLUGIN_VERSION.<br /><br />CC: $ISSUE_CC<br /><br />##Output of check:pot-diff:<br />$OUTPUT"
+              gh issue comment $ISSUE_NUMBER --body "New changes detected in POT file for version $PLUGIN_VERSION.<br /><br />CC: $ISSUE_CC<br /><br />## Output of check:pot-diff:<br />$OUTPUT"
             fi
           fi
