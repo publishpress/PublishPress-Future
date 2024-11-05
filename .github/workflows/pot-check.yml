@@ -2,7 +2,7 @@ name: POT file check
 on:
   push:
     branches:
-      - 'develop'
+      - 'pre-release'
 
   pull_request:
     branches:
@@ -20,6 +20,9 @@ on:
 jobs:
   check:
     name: Check the POT file
+    env:
+      ISSUE_ASSIGNEE: andergmartins
+      ISSUE_CC: "@andergmartins, @stevejburge"
     runs-on: ubuntu-latest
     steps:
       - name: Setup tmate session for Debugging, if inputs.tmate_enabled is true
@@ -44,11 +47,18 @@ jobs:
       - name: Run POT file check
         run: |
           OUTPUT=$($GITHUB_WORKSPACE/dev-workspace/run composer check:pot-diff)
-          EXIT_CODE=$?
-          if [ $EXIT_CODE -eq 1 ]; then
-            gh issue create \
-              --title "POT file has changes that need to be reviewed" \
-              --body "The POT file check detected changes between the main branch and the current branch. Please review and update the PO files.\n\n##Output of check:pot-diff:\n\n\`\`\`\n$OUTPUT\n\`\`\`\n\ncc: @andergmartins @stevejburge" \
-              --label "translation" \
-              --assignee "wocmultimedia"
+          PLUGIN_VERSION=$($GITHUB_WORKSPACE/dev-workspace/run composer get:version)
+          if [[ ! "$OUTPUT" =~ "No messages found" ]]; then
+            # Check if issue already exists
+            ISSUE_EXISTS=$(gh issue list --search "POT file has changes that need to be reviewed for version $PLUGIN_VERSION in:title" --json number --jq 'length')
+            if [ "$ISSUE_EXISTS" -eq 0 ]; then
+              gh issue create \
+                --title "POT file has changes that need to be reviewed for version $PLUGIN_VERSION" \
+                --body "The POT file check detected changes between the main branch and the current branch. Please review and update the PO files.\n\n##Output of check:pot-diff:\n\n\`\`\`\n$OUTPUT\n\`\`\`\n\ncc: $ISSUE_CC" \
+                --label "translation" \
+                --assignee "$ISSUE_ASSIGNEE"
+            else
+              ISSUE_NUMBER=$(gh issue list --search "POT file has changes that need to be reviewed for version $PLUGIN_VERSION in:title" --json number --jq '.[0].number')
+              gh issue comment $ISSUE_NUMBER --body "New changes detected in POT file for version $PLUGIN_VERSION.\n\n##Output of check:pot-diff:\n\n\`\`\`\n$OUTPUT\n\`\`\`"
+            fi
           fi

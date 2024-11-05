@@ -30,9 +30,9 @@ class CompareCommand extends Command
         }
 
         $this->output = $output;
-        $hasChanges = $this->comparePoFiles($input->getArgument('old'), $input->getArgument('new'));
+        $this->comparePoFiles($input->getArgument('old'), $input->getArgument('new'));
 
-        return $hasChanges ? Command::FAILURE : Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
     private function comparePoFiles(string $oldPo, string $newPo): bool
