@@ -60,7 +60,7 @@ jobs:
                 --assignee "$ISSUE_ASSIGNEE"
             else
               ISSUE_NUMBER=$(gh issue list --search "POT file has changes that need to be reviewed for version $PLUGIN_VERSION in:title" --json number --jq '.[0].number')
-              gh issue comment $ISSUE_NUMBER --body "New changes detected in POT file for version $PLUGIN_VERSION.\n\n##Output of check:pot-diff:\n$OUTPUT"
+              gh issue comment $ISSUE_NUMBER --body "New changes detected in POT file for version $PLUGIN_VERSION.\n\n##Output of check:pot-diff: $OUTPUT \n cc: $ISSUE_CC"
             fi
           fi
 
