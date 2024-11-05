@@ -48,7 +48,7 @@ jobs:
       - name: Run POT file check
         run: |
           OUTPUT=$($GITHUB_WORKSPACE/dev-workspace/run composer check:pot-diff)
-          PLUGIN_VERSION=$($GITHUB_WORKSPACE/dev-workspace/run composer get:version)
+          PLUGIN_VERSION=$($GITHUB_WORKSPACE/dev-workspace/run pversion)
           if [[ ! "$OUTPUT" =~ "No messages found" ]]; then
             # Check if issue already exists
             ISSUE_EXISTS=$(gh issue list --search "POT file has changes that need to be reviewed for version $PLUGIN_VERSION in:title" --json number --jq 'length')
