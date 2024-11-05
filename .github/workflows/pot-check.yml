@@ -1,4 +1,4 @@
-name: POT file check
+name: Check POT file changes
 on:
   push:
     branches:
@@ -45,10 +45,12 @@ jobs:
         run: |
           $GITHUB_WORKSPACE/dev-workspace/run composer info:versions
 
-      - name: Run POT file check
+      - name: Run POT file check against the main branch
         run: |
           OUTPUT=$($GITHUB_WORKSPACE/dev-workspace/run composer check:pot-diff)
           PLUGIN_VERSION=$($GITHUB_WORKSPACE/dev-workspace/run pversion)
+          echo "Checking for changes in POT file for version $PLUGIN_VERSION"
+          echo "$OUTPUT"
           if [[ ! "$OUTPUT" =~ "No messages found" ]]; then
             # Check if issue already exists
             ISSUE_EXISTS=$(gh issue list --search "POT file has changes that need to be reviewed for version $PLUGIN_VERSION in:title is:open" --json number --jq 'length')
@@ -63,7 +65,3 @@ jobs:
               gh issue comment $ISSUE_NUMBER --body "New changes detected in POT file for version $PLUGIN_VERSION.\n\n cc: $ISSUE_CC \n\n ##Output of check:pot-diff: \n $OUTPUT"
             fi
           fi
-
-      - name: Show the output of the POT file check
-        run: |
-          echo "$OUTPUT"
