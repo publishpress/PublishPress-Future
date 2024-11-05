@@ -51,17 +51,23 @@ jobs:
           PLUGIN_VERSION=$($GITHUB_WORKSPACE/dev-workspace/run pversion)
           echo "Checking for changes in POT file for version $PLUGIN_VERSION"
           echo "$OUTPUT"
+          echo ""
           if [[ ! "$OUTPUT" =~ "No messages found" ]]; then
             # Check if issue already exists
             ISSUE_EXISTS=$(gh issue list --search "POT file has changes that need to be reviewed for version $PLUGIN_VERSION in:title is:open" --json number --jq 'length')
             if [ "$ISSUE_EXISTS" -eq 0 ]; then
+              echo ""
+              echo "No issue found, creating a new one"
               gh issue create \
                 --title "POT file has changes that need to be reviewed for version $PLUGIN_VERSION" \
-                --body "The POT file check detected changes between the main branch and the current branch. Please review and update the PO files. \n\n cc: $ISSUE_CC \n\n ##Output of check:pot-diff: \n\n $OUTPUT" \
+                --body "The POT file check detected changes between the main branch and the current branch. Please review and update the PO files.<br/>CC: $ISSUE_CC ##Output of check:pot-diff: $OUTPUT" \
                 --label "translation" \
                 --assignee "$ISSUE_ASSIGNEE"
             else
               ISSUE_NUMBER=$(gh issue list --search "POT file has changes that need to be reviewed for version $PLUGIN_VERSION in:title" --json number --jq '.[0].number')
-              gh issue comment $ISSUE_NUMBER --body "New changes detected in POT file for version $PLUGIN_VERSION.\n\n cc: $ISSUE_CC \n\n ##Output of check:pot-diff: \n $OUTPUT"
+              echo ""
+              echo "Changes found"
+              echo "Commenting on issue $ISSUE_NUMBER"
+              gh issue comment $ISSUE_NUMBER --body "New changes detected in POT file for version $PLUGIN_VERSION.<br/>CC: $ISSUE_CC ##Output of check:pot-diff: $OUTPUT"
             fi
           fi
