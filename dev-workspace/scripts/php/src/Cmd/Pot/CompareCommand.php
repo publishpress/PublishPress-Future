@@ -22,7 +22,7 @@ class CompareCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('po:compare')
+        $this->setName('pot:diff')
             ->setHelp('This command allows you to compare two PO/POT files.')
             ->setHidden(false)
             ->addArgument('old', InputArgument::REQUIRED, 'The old PO/POT file')
