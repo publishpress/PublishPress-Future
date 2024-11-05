@@ -57,7 +57,7 @@ jobs:
             if [ "$ISSUE_EXISTS" -eq 0 ]; then
               gh issue create \
                 --title "POT file has changes that need to be reviewed for version $PLUGIN_VERSION" \
-                --body 'The POT file check detected changes between the main branch and the current branch. Please review and update the PO files. \n\n cc: $ISSUE_CC \n\n ##Output of check:pot-diff: \n\n $OUTPUT' \
+                --body "The POT file check detected changes between the main branch and the current branch. Please review and update the PO files. \n\n cc: $ISSUE_CC \n\n ##Output of check:pot-diff: \n\n $OUTPUT" \
                 --label "translation" \
                 --assignee "$ISSUE_ASSIGNEE"
             else
