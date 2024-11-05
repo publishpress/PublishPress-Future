@@ -63,3 +63,7 @@ jobs:
               gh issue comment $ISSUE_NUMBER --body "New changes detected in POT file for version $PLUGIN_VERSION.\n\n##Output of check:pot-diff:\n$OUTPUT"
             fi
           fi
+
+      - name: Show the output of the POT file check
+        run: |
+          echo "$OUTPUT"
