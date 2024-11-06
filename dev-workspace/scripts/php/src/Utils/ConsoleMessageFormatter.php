@@ -34,13 +34,13 @@ class ConsoleMessageFormatter implements ConsoleMessageFormatterInterface
         }
     }
 
-    public function writeTerm(string $term): void
+    public function writeTerm(string $term, int $index = -1): void
     {
-        if ($this->input->getOption('markdown')) {
-            $this->output->writeln("* {$term}");
-        } else {
-            $this->output->writeln($term);
+        if ($index !== -1) {
+            $term = "{$index}. {$term}";
         }
+
+        $this->output->writeln($term);
     }
 
     public function writeDebugLine(string $line): void

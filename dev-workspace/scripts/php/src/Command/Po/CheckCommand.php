@@ -57,7 +57,7 @@ class CheckCommand extends Command
     {
         $this->consoleMessageFormatter->setDependencies($input, $output);
 
-        $this->consoleMessageFormatter->writeDebugLine('Checking PO file...');
+        $this->consoleMessageFormatter->writeDebugLine('Checking the PO file...');
 
         $this->output = $output;
         $this->input = $input;
@@ -73,27 +73,30 @@ class CheckCommand extends Command
         });
 
         if (!empty($emptyTranslatedMessages)) {
-            $this->consoleMessageFormatter->writeHeader('Entries with empty translations in PO file');
+            $this->consoleMessageFormatter->writeHeader('Empty translations in PO file');
+            $index = 0;
             foreach ($emptyTranslatedMessages as $term => $translation) {
-                $this->consoleMessageFormatter->writeTerm($term);
+                $this->consoleMessageFormatter->writeTerm($term, $index++);
             }
         }
 
         // Terms from POT that are not present in PO
         $missingTranslations = array_diff($potMessages, $poMessages);
         if (!empty($missingTranslations)) {
-            $this->consoleMessageFormatter->writeHeader('Missing terms in PO file');
+            $this->consoleMessageFormatter->writeHeader('Terms missing from PO file');
+            $index = 0;
             foreach ($missingTranslations as $term) {
-                $this->consoleMessageFormatter->writeTerm($term);
+                $this->consoleMessageFormatter->writeTerm($term, $index++);
             }
         }
 
         // Unused terms in the PO file (terms found in the PO file not present in the POT file)
         $unusedTerms = array_diff($poMessages, $potMessages);
         if (!empty($unusedTerms)) {
-            $this->consoleMessageFormatter->writeHeader('Extra terms in PO file');
+            $this->consoleMessageFormatter->writeHeader('Additional terms in PO file');
+            $index = 0;
             foreach ($unusedTerms as $term) {
-                $this->consoleMessageFormatter->writeTerm($term);
+                $this->consoleMessageFormatter->writeTerm($term, $index++);
             }
         }
 
@@ -120,9 +123,9 @@ class CheckCommand extends Command
         $rows = [
             ['Terms in PO', count($poMessages)],
             ['Terms in POT', count($potMessages)],
-            ['Empty translated messages in PO', count($emptyTranslatedMessages)],
-            ['Missing translations in PO', count($missingTranslations)],
-            ['Unused terms in PO', count($unusedTerms)]
+            ['Empty translations in PO file', count($emptyTranslatedMessages)],
+            ['Terms missing from PO file', count($missingTranslations)],
+            ['Additional terms in PO file', count($unusedTerms)]
         ];
 
         $headers = ['Metric', 'Count'];
