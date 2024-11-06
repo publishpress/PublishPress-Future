@@ -88,8 +88,8 @@ class CheckCommand extends Command
             }
         }
 
-        // Unused terms in the PO file (terms found in the POT file not present in the PO file)
-        $unusedTerms = array_diff($potMessages, $poMessages);
+        // Unused terms in the PO file (terms found in the PO file not present in the POT file)
+        $unusedTerms = array_diff($poMessages, $potMessages);
         if (!empty($unusedTerms)) {
             $this->consoleMessageFormatter->writeHeader('Extra terms in PO file');
             foreach ($unusedTerms as $term) {
