@@ -47,6 +47,7 @@ class CompareCommand extends Command
     {
         $this->setName('pot:diff')
             ->setHelp('This command allows you to compare two PO/POT files.')
+            ->setDescription('Compare two PO/POT files.')
             ->setHidden(false)
             ->addArgument('old', InputArgument::REQUIRED, 'The old PO/POT file')
             ->addArgument('new', InputArgument::REQUIRED, 'The new PO/POT file')

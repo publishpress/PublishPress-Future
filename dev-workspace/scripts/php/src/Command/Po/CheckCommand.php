@@ -47,6 +47,7 @@ class CheckCommand extends Command
     {
         $this->setName('po:check')
             ->setHelp('This command allows you to check a PO file for changes comparing it to a POT file.')
+            ->setDescription('Check a PO file for changes comparing it to a POT file.')
             ->setHidden(false)
             ->addArgument('po', InputArgument::REQUIRED, 'The PO file to check')
             ->addArgument('pot', InputArgument::REQUIRED, 'The POT file to compare against')
