@@ -3,13 +3,29 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Publishpress\PpToolkit\Cmd\Pot\CompareCommand as PotCompareCommand;
+use Publishpress\PpToolkit\Command\Pot\CompareCommand as PotCompareCommand;
+use Publishpress\PpToolkit\Command\Po\CheckCommand as PoCheckCommand;
+use Publishpress\PpToolkit\Utils\ConsoleMessageFormatter;
+use Publishpress\PpToolkit\Utils\PoFileProcessor;
 use Symfony\Component\Console\Application;
 
 define('PPTK_VERSION', '1.0.0');
 
+// Initialize dependencies
+$poFileProcessor = new PoFileProcessor();
+$consoleMessageFormatter = new ConsoleMessageFormatter();
+
+// Initialize application
 $application = new Application('pptk', PPTK_VERSION);
 
-$application->add(new PotCompareCommand());
+$application->add(
+    (new PotCompareCommand())
+        ->setDependencies($poFileProcessor, $consoleMessageFormatter)
+);
+
+$application->add(
+    (new PoCheckCommand())
+        ->setDependencies($poFileProcessor, $consoleMessageFormatter)
+);
 
 $application->run();
