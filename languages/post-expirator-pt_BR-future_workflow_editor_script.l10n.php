@@ -1,2 +1,0 @@
-<?php
-return ['domain'=>'publishpress-future-pro','plural-forms'=>'nplurals=2; plural=(n > 1);','language'=>'pt_BR','project-id-version'=>'','pot-creation-date'=>'2024-05-24T16:28:58+00:00','po-revision-date'=>'2024-05-30 19:10-0300','x-generator'=>'Poedit 3.4.4','messages'=>['Help'=>'Ajuda','Triggers'=>'Gatilhos','Actions'=>'Ações']];
