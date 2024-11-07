@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Add more detailed debug logs to the workflow engine (Issue #724).
 - Add button to copy the debug logs to the clipboard (Issue #724).
+- Add "Published" status to the expiration statuses (Issue #1023).
 
 ### Changed
 
