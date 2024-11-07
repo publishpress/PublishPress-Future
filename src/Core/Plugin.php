@@ -142,7 +142,6 @@ class Plugin implements InitializableInterface
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_INIT, [$this, 'manageUpgrade'], 99);
         $this->hooks->addAction(HooksAbstract::ACTION_INSERT_POST, [$this, 'setDefaultMetaForPost'], 10, 3);
         $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
-        $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_MENU, [$this, 'sortAdminMenu'], 100);
     }
 
     private function initializeNotices()
@@ -358,61 +357,6 @@ class Plugin implements InitializableInterface
             );
         } catch (Throwable $th) {
             $this->logger->error('Error setting default meta for post: ' . $th->getMessage());
-        }
-    }
-
-    public function sortAdminMenu()
-    {
-        try {
-            global $submenu;
-
-            if (! isset($submenu['publishpress-future'])) {
-                return;
-            }
-
-            $futureMenu = $submenu['publishpress-future'];
-
-            $menuNames = array_column($futureMenu, 2);
-
-            // Get the Settings menu index
-            $settingsIndex = array_search('publishpress-future', $menuNames);
-
-            // Get the Actions menu list
-            $actionsIndex = array_search('publishpress-future-scheduled-actions', $menuNames);
-
-            // Get the Upgrade to Pro menu list, if exists
-            $upgradeToProIndex = array_search('publishpress-future-menu-upgrade-link', $menuNames);
-
-            // Remove the Actions menu
-            $settingsSubmenu = $futureMenu[$settingsIndex];
-            $actionsSubmenu = $futureMenu[$actionsIndex];
-
-            if (false !== $actionsIndex) {
-                unset($futureMenu[$actionsIndex]);
-            }
-
-            if (false !== $settingsIndex) {
-                unset($futureMenu[$settingsIndex]);
-            }
-
-            if (false !== $upgradeToProIndex) {
-                $upgradeToProSubmenu = $futureMenu[$upgradeToProIndex];
-                unset($futureMenu[$upgradeToProIndex]);
-            }
-
-            $futureMenu = array_merge(
-                [$actionsSubmenu],
-                $futureMenu,
-                [$settingsSubmenu]
-            );
-
-            if (false !== $upgradeToProIndex) {
-                $futureMenu[] = $upgradeToProSubmenu;
-            }
-
-            $submenu['publishpress-future'] = $futureMenu;
-        } catch (Throwable $th) {
-            $this->logger->error('Error sorting admin menu: ' . $th->getMessage());
         }
     }
 
