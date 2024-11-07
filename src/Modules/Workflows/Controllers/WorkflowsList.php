@@ -46,6 +46,11 @@ class WorkflowsList implements InitializableInterface
         $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_MENU, [$this, "adminMenu"]);
 
         $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_ADMIN_INIT,
+            [$this, "fixWorkflowEditorPageTitle"]
+        );
+
+        $this->hooks->addAction(
             CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS,
             [$this, "enqueueScriptsList"]
         );
@@ -381,5 +386,12 @@ class WorkflowsList implements InitializableInterface
         }
 
         return $title;
+    }
+
+    public function fixWorkflowEditorPageTitle()
+    {
+        global $title;
+
+        $title = __("Action Workflow Editor", "post-expirator");
     }
 }
