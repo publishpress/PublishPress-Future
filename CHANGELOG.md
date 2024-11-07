@@ -9,7 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Add more detailed debug logs to the workflow engine (Issue #724).
 - Add button to copy the debug logs to the clipboard (Issue #724).
-- Add "Published" status to the expiration statuses (Issue #1023).
+- Add "Published" status to the legacy expiration statuses (Issue #1023).
+- Add new workflow step to write a log message (Issue #690).
+
+### Fixed
+
+- Fixed the timezone in the default date applied from default action time (Issue #1005).
+- Fixed the timezone in the date preview (Issue #1004).
 
 ### Changed
 
@@ -18,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The debug log viewer now automatically scrolls to the bottom when the page loads (Issue #724).
 - Deprecate the class `PublishPress\Future\Modules\Debug\Debug` and use the logger facade instead.
 - Better handling of the exceptions and errors thrown by the plugin.
+- Removed the admin submenu item "Scheduled Actions" and added a button in the workflows list screen (Issue #1022).
 
 ### Developers
 
