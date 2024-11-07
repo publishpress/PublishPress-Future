@@ -828,7 +828,8 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                 $expandedArgs['step']['node']['data']['slug']
             );
 
-            $this->runNextSteps($expandedArgs['step'], $expandedArgs['runtimeVariables']);
+            $this->variablesHandler->setAllVariables($expandedArgs['runtimeVariables']);
+            $this->runNextSteps($expandedArgs['step']);
 
             $scheduledStepModel->incrementRunCount();
             $scheduledStepModel->updateLastRunAt();

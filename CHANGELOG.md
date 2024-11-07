@@ -3,12 +3,13 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## UNRELEASED
+## [4.1.0] - 06 Nov, 2024
 
 ### Added
 
 - Add more detailed debug logs to the workflow engine (Issue #724).
 - Add button to copy the debug logs to the clipboard (Issue #724).
+- Add "Published" status to the expiration statuses (Issue #1023).
 
 ### Changed
 

@@ -43,7 +43,16 @@ class WorkflowsList implements InitializableInterface
 
     public function initialize()
     {
-        $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_MENU, [$this, "adminMenu"]);
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_ADMIN_MENU,
+            [$this, "adminMenu"],
+            20
+        );
+
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_ADMIN_INIT,
+            [$this, "fixWorkflowEditorPageTitle"]
+        );
 
         $this->hooks->addAction(
             CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS,
@@ -87,6 +96,16 @@ class WorkflowsList implements InitializableInterface
             10,
             2
         );
+
+        $this->hooks->addAction(
+            'admin_footer',
+            [$this, "addScheduledActionsButton"]
+        );
+
+        $this->hooks->addAction(
+            'admin_footer',
+            [$this, "addBackToWorkflowsButton"]
+        );
     }
 
     public function adminMenu()
@@ -98,20 +117,12 @@ class WorkflowsList implements InitializableInterface
                 return;
             }
 
-            $indexAllWorkflows = array_search(
-                "edit.php?post_type=ppfuture_workflow",
-                array_column($submenu["publishpress-future"], 2)
-            );
-
-            $submenu["publishpress-future"][$indexAllWorkflows][0] = __(
-                "Action Workflows",
-                "post-expirator"
-            );
+            $this->renameWorkflowsSubmenu();
 
             add_submenu_page(
-                "edit.php?post_type=" . Module::POST_TYPE_WORKFLOW,
-                "Action Workflows",
-                "Action Workflows",
+                '',
+                "Action Workflow Editor",
+                "Action Workflow Editor",
                 "manage_options",
                 "future_workflow_editor",
                 [$this, "renderEditorPage"]
@@ -119,6 +130,18 @@ class WorkflowsList implements InitializableInterface
         } catch (Throwable $th) {
             $this->logger->error('Error adding workflows menu: ' . $th->getMessage());
         }
+    }
+
+    private function renameWorkflowsSubmenu()
+    {
+        global $submenu;
+
+        $indexAllWorkflows = array_search(
+            "edit.php?post_type=" . Module::POST_TYPE_WORKFLOW,
+            array_column($submenu["publishpress-future"], 2)
+        );
+
+        $submenu["publishpress-future"][$indexAllWorkflows][0] = __("Action Workflows", "post-expirator");
     }
 
     public function renderEditorPage()
@@ -381,5 +404,67 @@ class WorkflowsList implements InitializableInterface
         }
 
         return $title;
+    }
+
+    public function fixWorkflowEditorPageTitle()
+    {
+        global $title;
+
+        $title = __("Action Workflow Editor", "post-expirator");
+    }
+
+    public function addScheduledActionsButton()
+    {
+        if (!is_admin()) {
+            return;
+        }
+
+        global $current_screen;
+
+        if (!isset($current_screen) || Module::POST_TYPE_WORKFLOW !== $current_screen->post_type) {
+            return;
+        }
+
+        $url = admin_url('admin.php?page=publishpress-future-scheduled-actions');
+
+        $customButton = sprintf(
+            '<a href="%s" class="page-title-action">%s</a>',
+            esc_url($url),
+            esc_html__('Scheduled Actions', 'post-expirator')
+        );
+
+        // Insert the button into the DOM via JavaScript
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo '<script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $(".wrap .page-title-action:first").after(\'' . $customButton . '\');
+            });
+        </script>';
+    }
+
+    public function addBackToWorkflowsButton()
+    {
+        if (!is_admin()) {
+            return;
+        }
+
+        global $current_screen;
+
+        if (!isset($current_screen) || 'admin_page_publishpress-future-scheduled-actions' !== $current_screen->id) {
+            return;
+        }
+
+        $button = sprintf(
+            '<a href="%s" class="page-title-action">%s</a>',
+            esc_url(admin_url('edit.php?post_type=' . Module::POST_TYPE_WORKFLOW)),
+            esc_html__('Action Workflows', 'post-expirator')
+        );
+
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo '<script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $(".wrap .wp-heading-inline:first").after(\'' . $button . '\');
+            });
+        </script>';
     }
 }

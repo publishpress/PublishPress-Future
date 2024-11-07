@@ -211,10 +211,12 @@ class GeneralStep implements NodeRunnerProcessorInterface
         } catch (Throwable $th) {
             $this->logger->error(
                 sprintf(
-                    'Error executing step: %s | Workflow ID: %d | Message: %s',
+                    'Error executing step: %s | Workflow ID: %d | Message: %s, on file %s, line %d',
                     $step['node']['data']['slug'] ?? 'unknown',
                     $this->engine->getCurrentRunningWorkflow()->getId(),
-                    $th->getMessage()
+                    $th->getMessage(),
+                    $th->getFile(),
+                    $th->getLine()
                 )
             );
         }

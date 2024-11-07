@@ -11,10 +11,10 @@ use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
-use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\Tables\ScheduledActionsTable as ScheduledActionsTable;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
+use PublishPress\Future\Modules\Workflows\Module;
 use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -117,6 +117,7 @@ class ScheduledActionsController implements InitializableInterface
                 'dashicons-clock',
                 74
             );
+
             add_submenu_page(
                 'publishpress-future',
                 __('Action Settings', 'post-expirator'),
@@ -127,7 +128,7 @@ class ScheduledActionsController implements InitializableInterface
             );
 
             $hook_suffix = add_submenu_page(
-                'publishpress-future',
+                "edit.php?post_type=" . Module::POST_TYPE_WORKFLOW,
                 __('Scheduled Actions', 'post-expirator'),
                 __('Scheduled Actions', 'post-expirator'),
                 'manage_options',
@@ -259,7 +260,7 @@ class ScheduledActionsController implements InitializableInterface
     public function enqueueScripts($screenId)
     {
         try {
-            if ('future_page_publishpress-future-scheduled-actions' === $screenId) {
+            if ('admin_page_publishpress-future-scheduled-actions' === $screenId) {
             wp_enqueue_style(
                 'postexpirator-css',
                 POSTEXPIRATOR_BASEURL . 'assets/css/style.css',

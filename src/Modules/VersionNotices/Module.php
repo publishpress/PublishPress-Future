@@ -109,6 +109,10 @@ class Module implements ModuleInterface
                                 [
                                     'base' => 'edit',
                                     'id' => 'edit-ppfuture_workflow'
+                                ],
+                                [
+                                    'base' => 'admin_page_publishpress-future-scheduled-actions',
+                                    'id' => 'admin_page_publishpress-future-scheduled-actions'
                                 ]
                             ]
                         ];

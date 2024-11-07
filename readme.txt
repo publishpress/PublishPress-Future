@@ -7,7 +7,7 @@ Requires at least: 6.1
 Requires PHP: 7.2.5
 Tested up to: 6.6
 License: GPLv2 or later
-Stable tag: 4.0.4
+Stable tag: 4.1.0
 
 PublishPress Future can make scheduled changes to your content. You can unpublish posts, move posts to a new status, update the categories, and more.
 
@@ -172,6 +172,35 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 == Changelog ==
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
+
+## [4.1.0] - 06 Nov, 2024
+
+### Added
+
+- Add more detailed debug logs to the workflow engine (Issue #724).
+- Add button to copy the debug logs to the clipboard (Issue #724).
+- Add "Published" status to the expiration statuses (Issue #1023).
+
+### Changed
+
+- Improved the debug log viewer adding text to a textarea (Issue #724).
+- Improve the debug log viewer adding a button to download the entire log or copy it to the clipboard (Issue #724).
+- The debug log viewer now automatically scrolls to the bottom when the page loads (Issue #724).
+- Deprecate the class `PublishPress\Future\Modules\Debug\Debug` and use the logger facade instead.
+- Better handling of the exceptions and errors thrown by the plugin.
+
+### Developers
+
+- Add new class `PublishPress\Future\Framework\System\DateTimeHandler` to handle date and time operations.
+- Change the REST API `/settings/validate-expire-offset` endpoint return value renaming `preview` to `calculatedTime`.
+- Change the REST API `/settings/validate-expire-offset` endpoint to log an error message when the offset is invalid.
+- Add `DateTimeHandlerInterface` as dependency to the class `PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModel`.
+- Add `LoggerInterface` as dependency to the class `PublishPress\Future\Modules\Expirator\Module`.
+- Add `DateTimeHandlerInterface` as dependency to the class `PublishPress\Future\Modules\Expirator\Module`.
+- Deprecated the constant `PublishPress\Future\Core::ACTION_ADMIN_ENQUEUE_SCRIPT` in favor of `PublishPress\Future\Core::ACTION_ADMIN_ENQUEUE_SCRIPTS`.
+- Remove the action `publishpressfuture_workflow_engine_running_step` from the workflow engine.
+- Add new methods to the class `PublishPress\Future\Framework\Logger\Logger` to retrieve the log count, the log size, and to fetch the latest logs.
+- Node runner processors now accept a branch argument to get the next steps and run the next steps.
 
 ## [4.0.4] - 24 Oct, 2024
 
