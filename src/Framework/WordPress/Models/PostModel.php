@@ -72,6 +72,10 @@ class PostModel
      */
     public function setPostStatus($newPostStatus)
     {
+        if ($newPostStatus === 'publish') {
+            return $this->publish(false);
+        }
+
         $postData = [
             'post_status' => $newPostStatus,
         ];
@@ -87,17 +91,19 @@ class PostModel
      */
     public function publish($updateDateInFuture = true)
     {
-        $postData = ['post_status' => 'publish'];
-
         if ($updateDateInFuture) {
+            $postData = ['post_status' => 'publish'];
             $currentPostDate = get_post_field('post_date', $this->getPostId());
+
             if (strtotime($currentPostDate) > current_time('timestamp')) {
                 $postData['post_date'] = current_time('mysql');
                 $postData['post_date_gmt'] = current_time('mysql', true);
             }
+
+            $this->update($postData);
         }
 
-        return $this->update($postData);
+        return wp_publish_post($this->getPostId()) ? true : false;
     }
 
     /**
