@@ -378,3 +378,12 @@ p.description,
 .pp-debug-log-count select {
     margin-left: 5px;
 }
+
+.pp-settings-title {
+    display: inline-block;
+    margin-right: 5px !important;
+}
+
+#pe-settings-tabs {
+    margin-top: 10px;
+}

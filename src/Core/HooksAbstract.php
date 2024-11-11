@@ -26,11 +26,6 @@ abstract class HooksAbstract
 
     public const ACTION_DEACTIVATE_PLUGIN = 'publishpressfuture_deactivate_plugin';
 
-    /**
-     * @deprecated 4.1.0 use ACTION_ADMIN_ENQUEUE_SCRIPTS instead
-     */
-    public const ACTION_ADMIN_ENQUEUE_SCRIPT = 'admin_enqueue_scripts';
-
     public const ACTION_ADMIN_ENQUEUE_SCRIPTS = 'admin_enqueue_scripts';
 
     public const ACTION_INSERT_POST = 'wp_insert_post';
@@ -45,11 +40,6 @@ abstract class HooksAbstract
 
     public const ACTION_ADD_META_BOXES = 'add_meta_boxes';
 
-    /**
-     * @deprecated 3.1.5 use ACTION_ADD_META_BOXES instead
-     */
-    public const ACTION_ADD_META_BOX = self::ACTION_ADD_META_BOXES;
-
     public const ACTION_ADMIN_PRINT_SCRIPTS_EDIT = 'admin_print_scripts-edit.php';
 
     public const ACTION_UPGRADE_PLUGIN = 'publishpressfuture_upgrade_plugin';
@@ -60,11 +50,21 @@ abstract class HooksAbstract
 
     public const ACTION_REST_API_INIT = 'rest_api_init';
 
+    public const ACTION_ENQUEUE_BLOCK_EDITOR_ASSETS = 'enqueue_block_editor_assets';
+
     public const FILTER_MODULES_LIST = 'publishpressfuture_list_modules';
 
     public const FILTER_PLUGIN_ACTION_LINKS = 'plugin_action_links';
 
     public const FILTER_MIGRATIONS = 'publishpressfuture_migrations';
 
-    public const ACTION_ENQUEUE_BLOCK_EDITOR_ASSETS = 'enqueue_block_editor_assets';
+    /**
+     * @deprecated 4.1.0 use ACTION_ADMIN_ENQUEUE_SCRIPTS instead
+     */
+    public const ACTION_ADMIN_ENQUEUE_SCRIPT = 'admin_enqueue_scripts';
+
+    /**
+     * @deprecated 3.1.5 use ACTION_ADD_META_BOXES instead
+     */
+    public const ACTION_ADD_META_BOX = self::ACTION_ADD_META_BOXES;
 }

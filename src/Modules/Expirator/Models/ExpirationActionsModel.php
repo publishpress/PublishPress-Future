@@ -149,6 +149,7 @@ class ExpirationActionsModel
             'draft' => __('Draft'),
             'private' => __('Private'),
             'trash' => __('Trash'),
+            'publish' => __('Published'),
         ];
 
         /**
@@ -162,6 +163,8 @@ class ExpirationActionsModel
             $statuses,
             $postType
         );
+
+        asort($statuses);
 
         return $statuses;
     }
