@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Deprecate the class `PublishPress\Future\Modules\Debug\Debug` and use the logger facade instead.
 - Better handling of the exceptions and errors thrown by the plugin.
 - Removed the admin submenu item "Scheduled Actions" and added a button in the workflows list screen (Issue #1022).
+- Removed the "post-expirator-debug.php" file which is no longer used.
 
 ### Developers
 
