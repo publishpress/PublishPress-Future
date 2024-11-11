@@ -101,11 +101,6 @@ class WorkflowsList implements InitializableInterface
             'admin_footer',
             [$this, "addScheduledActionsButton"]
         );
-
-        $this->hooks->addAction(
-            'admin_footer',
-            [$this, "addBackToWorkflowsButton"]
-        );
     }
 
     public function adminMenu()
@@ -421,7 +416,14 @@ class WorkflowsList implements InitializableInterface
 
         global $current_screen;
 
-        if (!isset($current_screen) || Module::POST_TYPE_WORKFLOW !== $current_screen->post_type) {
+        if (!isset($current_screen)) {
+            return;
+        }
+
+        if (
+            Module::POST_TYPE_WORKFLOW !== $current_screen->post_type
+            && 'toplevel_page_publishpress-future' !== $current_screen->id
+        ) {
             return;
         }
 
@@ -433,37 +435,15 @@ class WorkflowsList implements InitializableInterface
             esc_html__('Scheduled Actions', 'post-expirator')
         );
 
+        $titleClass = 'toplevel_page_publishpress-future' === $current_screen->id
+            ? 'pp-settings-title'
+            : 'page-title-action';
+
         // Insert the button into the DOM via JavaScript
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo '<script type="text/javascript">
             jQuery(document).ready(function($) {
-                $(".wrap .page-title-action:first").after(\'' . $customButton . '\');
-            });
-        </script>';
-    }
-
-    public function addBackToWorkflowsButton()
-    {
-        if (!is_admin()) {
-            return;
-        }
-
-        global $current_screen;
-
-        if (!isset($current_screen) || 'admin_page_publishpress-future-scheduled-actions' !== $current_screen->id) {
-            return;
-        }
-
-        $button = sprintf(
-            '<a href="%s" class="page-title-action">%s</a>',
-            esc_url(admin_url('edit.php?post_type=' . Module::POST_TYPE_WORKFLOW)),
-            esc_html__('Action Workflows', 'post-expirator')
-        );
-
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        echo '<script type="text/javascript">
-            jQuery(document).ready(function($) {
-                $(".wrap .wp-heading-inline:first").after(\'' . $button . '\');
+                $(".wrap .' . $titleClass . ':first").after(\'' . $customButton . '\');
             });
         </script>';
     }
