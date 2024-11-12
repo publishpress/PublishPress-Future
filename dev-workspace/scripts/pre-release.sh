@@ -99,6 +99,12 @@ checklist=$(create_checklist $version)
 
 # Create pull request using GitHub CLI
 if command -v gh &> /dev/null; then
+# Check gh is authenticated
+    if ! gh auth status &> /dev/null; then
+        echo -e "${YELLOW}Warning: GitHub credentials are not set up.${NC}"
+        exit 1
+    fi
+
     echo -e "${GREEN}Creating pull request...${NC}"
     gh pr create \
         --title "Release $version" \
