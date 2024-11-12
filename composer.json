@@ -164,6 +164,7 @@
         "info:versions": "bash .\/dev-workspace\/scripts\/info-versions.sh",
         "set:version": "php .\/dev-workspace\/scripts\/bump-version.php \"$@\"",
         "pre-release": "bash .\/dev-workspace\/scripts\/pre-release.sh \"$@\"",
+        "pr-link": "bash .\/dev-workspace\/scripts\/pr-link.sh",
         "config:phpcs": "phpcs --config-set installed_paths \"../../phpcsstandards/phpcsutils,../../phpcsstandards/phpcsextra,../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../publishpress/publishpress-phpcs-standards/standards,../../wp-coding-standards/wpcs\"",
         "post-install-cmd": [
             "@config:phpcs"
@@ -234,7 +235,8 @@
         "config:phpcs": "Configures the PHP CodeSniffer installed paths.",
         "info:versions": "Gets the version of the main tools available.",
         "set:version": "Sets the version of the plugin.",
-        "pre-release": "Creates a release branch and a pull request for the release."
+        "pre-release": "Creates a release branch and a pull request for the release.",
+        "pr-link": "Gets the pull request URL for the release branch."
     },
     "extra": {
         "plugin-slug": "post-expirator",
