@@ -3,6 +3,18 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.1] - 12 Nov, 2024
+
+### Fixed
+
+- Fix the layout of inserter in the workflow editor for WP 6.7 (Issue #1025).
+- Fix the layout of the top toolbar in the workflow editor for WP 6.7 (Issue #1028).
+
+### Changed
+
+- Minimum required version of WordPress is now 6.7.
+- Minimum required version of PHP is now 7.4.
+
 ## [4.1.0] - 11 Nov, 2024
 
 ### Added

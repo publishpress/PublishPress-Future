@@ -1,52 +1,45 @@
 /**
  * WordPress dependencies
  */
-import {
-	Button,
-	__unstableCompositeItem as CompositeItem,
-} from '@wordpress/components';
-import { forwardRef, useContext } from '@wordpress/element';
-
-/**
- * Internal dependencies
- */
-import InserterListboxContext from './context';
+import { Button, Composite } from '@wordpress/components';
+import { forwardRef } from '@wordpress/element';
 
 function InserterListboxItem(
 	{ isFirst, as: Component, children, ...props },
 	ref
 ) {
-	const state = useContext(InserterListboxContext);
 	return (
-		<CompositeItem
-			ref={ref}
-			state={state}
+		<Composite.Item
+			ref={ ref }
 			role="option"
-			// Use the CompositeItem `focusable` prop over Button's
-			// isFocusable. The latter was shown to cause an issue
-			// with tab order in the inserter list.
-			focusable
-			{...props}
-		>
-			{(htmlProps) => {
+			// Use the Composite.Item `accessibleWhenDisabled` prop
+			// over Button's `isFocusable`. The latter was shown to
+			// cause an issue with tab order in the inserter list.
+			accessibleWhenDisabled
+			{ ...props }
+			render={ ( htmlProps ) => {
 				const propsWithTabIndex = {
 					...htmlProps,
 					tabIndex: isFirst ? 0 : htmlProps.tabIndex,
 				};
-				if (Component) {
+				if ( Component ) {
 					return (
-						<Component {...propsWithTabIndex}>
-							{children}
+						<Component { ...propsWithTabIndex }>
+							{ children }
 						</Component>
 					);
 				}
-				if (typeof children === 'function') {
-					return children(propsWithTabIndex);
+				if ( typeof children === 'function' ) {
+					return children( propsWithTabIndex );
 				}
-				return <Button {...propsWithTabIndex}>{children}</Button>;
-			}}
-		</CompositeItem>
+				return (
+					<Button __next40pxDefaultSize { ...propsWithTabIndex }>
+						{ children }
+					</Button>
+				);
+			} }
+		/>
 	);
 }
 
-export default forwardRef(InserterListboxItem);
+export default forwardRef( InserterListboxItem );
