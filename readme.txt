@@ -1,4 +1,4 @@
-=== Schedule Post Changes: Unpublish, Delete, Change Status, Trash, Change Categories and Tags with PublishPress Future ===
+=== Schedule Post Changes With PublishPress Future: Unpublish, Delete, Change Status, Trash, Change Categories ===
 Contributors: publishpress, kevinB, stevejburge, andergmartins
 Author: publishpress
 Author URI: https://publishpress.com
