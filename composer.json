@@ -163,6 +163,7 @@
         "ray:cleanup": "vendor/bin/rector process post-expirator.php src legacy tests/Acceptance tests/EndToEnd tests/Integration tests/Unit --config vendor/spatie/ray/remove-ray-rector.php",
         "info:versions": "bash .\/dev-workspace\/scripts\/info-versions.sh",
         "set:version": "php .\/dev-workspace\/scripts\/bump-version.php \"$@\"",
+        "pre-release": "bash .\/dev-workspace\/scripts\/pre-release.sh \"$@\"",
         "config:phpcs": "phpcs --config-set installed_paths \"../../phpcsstandards/phpcsutils,../../phpcsstandards/phpcsextra,../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../publishpress/publishpress-phpcs-standards/standards,../../wp-coding-standards/wpcs\"",
         "post-install-cmd": [
             "@config:phpcs"
@@ -232,7 +233,8 @@
         "docker:cleanup": "Cleans up the Docker system.",
         "config:phpcs": "Configures the PHP CodeSniffer installed paths.",
         "info:versions": "Gets the version of the main tools available.",
-        "set:version": "Sets the version of the plugin."
+        "set:version": "Sets the version of the plugin.",
+        "pre-release": "Creates a release branch and a pull request for the release."
     },
     "extra": {
         "plugin-slug": "post-expirator",
