@@ -190,7 +190,7 @@ export function InserterMenu({
         <div className="block-editor-inserter__menu">
             <div className="block-editor-inserter__main-area show-as-tabs">
                 { /* the following div is necessary to fix the sticky position of the search form */}
-                <div className="block-editor-inserter__content">
+                <div className="block-editor-tabbed-sidebar">
                     <SearchControl
                         className="block-editor-inserter__search"
                         onChange={(value) => {

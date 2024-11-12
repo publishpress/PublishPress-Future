@@ -16683,7 +16683,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var reactflow__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! reactflow */ "./node_modules/@reactflow/core/dist/esm/index.mjs");
 /* harmony import */ var _keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../keyboard-shortcuts */ "./assets/jsx/workflow-editor/components/keyboard-shortcuts/index.jsx");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../constants */ "./assets/jsx/workflow-editor/constants.jsx");
-/* harmony import */ var _secondary_sidebar_inserter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../secondary-sidebar/inserter */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter.jsx");
+/* harmony import */ var _secondary_sidebar_inserter_sidebar__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../secondary-sidebar/inserter-sidebar */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-sidebar.jsx");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
@@ -16731,7 +16731,7 @@ function WorkflowEditorLayout() {
   }, []);
   var secondarySidebar = function secondarySidebar() {
     if (isInserterOpened) {
-      return /*#__PURE__*/React.createElement(_secondary_sidebar_inserter__WEBPACK_IMPORTED_MODULE_9__.InserterSidebar, null);
+      return /*#__PURE__*/React.createElement(_secondary_sidebar_inserter_sidebar__WEBPACK_IMPORTED_MODULE_9__.InserterSidebar, null);
     }
     return null;
   };
@@ -19177,28 +19177,6 @@ function InserterListItem(_ref) {
 
 /***/ }),
 
-/***/ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/context.jsx":
-/*!**********************************************************************************************!*\
-  !*** ./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/context.jsx ***!
-  \**********************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/**
- * WordPress dependencies
- */
-
-var InserterListboxContext = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createContext)();
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InserterListboxContext);
-
-/***/ }),
-
 /***/ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/group.jsx":
 /*!********************************************************************************************!*\
   !*** ./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/group.jsx ***!
@@ -19235,7 +19213,7 @@ function InserterListboxGroup(props, ref) {
     setShouldSpeak = _useState2[1];
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (shouldSpeak) {
-      (0,_wordpress_a11y__WEBPACK_IMPORTED_MODULE_2__.speak)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Use left and right arrow keys to move through blocks', 'post-expirator'));
+      (0,_wordpress_a11y__WEBPACK_IMPORTED_MODULE_2__.speak)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Use left and right arrow keys to move through steps', 'post-expirator'));
     }
   }, [shouldSpeak]);
   return /*#__PURE__*/React.createElement("div", _extends({
@@ -19267,39 +19245,31 @@ function InserterListboxGroup(props, ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   InserterListbox: () => (/* binding */ InserterListbox),
-/* harmony export */   InserterListboxGroup: () => (/* reexport safe */ _group__WEBPACK_IMPORTED_MODULE_2__["default"]),
-/* harmony export */   InserterListboxItem: () => (/* reexport safe */ _item__WEBPACK_IMPORTED_MODULE_4__["default"]),
-/* harmony export */   InserterListboxRow: () => (/* reexport safe */ _row__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   InserterListboxGroup: () => (/* reexport safe */ _group__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   InserterListboxItem: () => (/* reexport safe */ _item__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   InserterListboxRow: () => (/* reexport safe */ _row__WEBPACK_IMPORTED_MODULE_2__["default"]),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./context */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/context.jsx");
-/* harmony import */ var _group__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./group */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/group.jsx");
-/* harmony import */ var _row__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./row */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/row.jsx");
-/* harmony import */ var _item__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./item */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/item.jsx");
+/* harmony import */ var _group__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./group */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/group.jsx");
+/* harmony import */ var _row__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./row */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/row.jsx");
+/* harmony import */ var _item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./item */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/item.jsx");
 /**
  * WordPress dependencies
  */
 
 
-/**
- * Internal dependencies
- */
 
 
-
-
-function InserterListbox(_ref) {
+var InserterListbox = function InserterListbox(_ref) {
   var children = _ref.children;
-  var compositeState = (0,_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__unstableUseCompositeState)({
-    shift: true,
-    wrap: 'horizontal'
-  });
-  return /*#__PURE__*/React.createElement(_context__WEBPACK_IMPORTED_MODULE_1__["default"].Provider, {
-    value: compositeState
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Composite, {
+    focusShift: true,
+    focusWrap: "horizontal",
+    render: /*#__PURE__*/React.createElement(React.Fragment, null)
   }, children);
-}
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InserterListbox);
 
 /***/ }),
@@ -19319,7 +19289,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./context */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/context.jsx");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var _excluded = ["isFirst", "as", "children"];
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
@@ -19335,38 +19304,35 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
  */
 
 
-
-/**
- * Internal dependencies
- */
-
 function InserterListboxItem(_ref, ref) {
   var isFirst = _ref.isFirst,
     Component = _ref.as,
     children = _ref.children,
     props = _objectWithoutProperties(_ref, _excluded);
-  var state = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context__WEBPACK_IMPORTED_MODULE_2__["default"]);
-  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__unstableCompositeItem, _extends({
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Composite.Item, _extends({
     ref: ref,
-    state: state,
     role: "option"
-    // Use the CompositeItem `focusable` prop over Button's
-    // isFocusable. The latter was shown to cause an issue
-    // with tab order in the inserter list.
+    // Use the Composite.Item `accessibleWhenDisabled` prop
+    // over Button's `isFocusable`. The latter was shown to
+    // cause an issue with tab order in the inserter list.
     ,
-    focusable: true
-  }, props), function (htmlProps) {
-    var propsWithTabIndex = _objectSpread(_objectSpread({}, htmlProps), {}, {
-      tabIndex: isFirst ? 0 : htmlProps.tabIndex
-    });
-    if (Component) {
-      return /*#__PURE__*/React.createElement(Component, propsWithTabIndex, children);
+    accessibleWhenDisabled: true
+  }, props, {
+    render: function render(htmlProps) {
+      var propsWithTabIndex = _objectSpread(_objectSpread({}, htmlProps), {}, {
+        tabIndex: isFirst ? 0 : htmlProps.tabIndex
+      });
+      if (Component) {
+        return /*#__PURE__*/React.createElement(Component, propsWithTabIndex, children);
+      }
+      if (typeof children === 'function') {
+        return children(propsWithTabIndex);
+      }
+      return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, _extends({
+        __next40pxDefaultSize: true
+      }, propsWithTabIndex), children);
     }
-    if (typeof children === 'function') {
-      return children(propsWithTabIndex);
-    }
-    return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, propsWithTabIndex, children);
-  });
+  }));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(InserterListboxItem));
 
@@ -19387,22 +19353,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./context */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/context.jsx");
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
  * WordPress dependencies
  */
 
 
-
-/**
- * Internal dependencies
- */
-
 function InserterListboxRow(props, ref) {
-  var state = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context__WEBPACK_IMPORTED_MODULE_2__["default"]);
-  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__unstableCompositeGroup, _extends({
-    state: state,
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Composite.Group, _extends({
     role: "presentation",
     ref: ref
   }, props));
@@ -19501,9 +19459,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_types_list__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./node-types-list */ "./assets/jsx/workflow-editor/components/secondary-sidebar/node-types-list.jsx");
 /* harmony import */ var _panel__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./panel */ "./assets/jsx/workflow-editor/components/secondary-sidebar/panel.jsx");
 /* harmony import */ var _search_items__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./search-items */ "./assets/jsx/workflow-editor/components/secondary-sidebar/search-items.jsx");
-/* harmony import */ var _inserter_listbox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./inserter-listbox */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/index.jsx");
-/* harmony import */ var _inserter_no_results__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./inserter-no-results */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-no-results.jsx");
-/* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
+/* harmony import */ var _inserter_no_results__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./inserter-no-results */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-no-results.jsx");
+/* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
+/* harmony import */ var _inserter_listbox__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./inserter-listbox */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-listbox/index.jsx");
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -19545,12 +19503,12 @@ var InserterSearchResults = function InserterSearchResults(_ref) {
     filterTypes = _ref.filterTypes;
   var debouncedSpeak = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_13__["default"])(_wordpress_a11y__WEBPACK_IMPORTED_MODULE_5__.speak, 500);
   var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_6__.useSelect)(function (select) {
-      var actionNodes = select(_editor_store__WEBPACK_IMPORTED_MODULE_12__.store).getActionNodes();
-      var actionCategories = select(_editor_store__WEBPACK_IMPORTED_MODULE_12__.store).getActionCategories();
-      var triggerNodes = select(_editor_store__WEBPACK_IMPORTED_MODULE_12__.store).getTriggerNodes();
-      var triggerCategories = select(_editor_store__WEBPACK_IMPORTED_MODULE_12__.store).getTriggerCategories();
-      var advancedNodes = select(_editor_store__WEBPACK_IMPORTED_MODULE_12__.store).getAdvancedNodes();
-      var advancedCategories = select(_editor_store__WEBPACK_IMPORTED_MODULE_12__.store).getAdvancedCategories();
+      var actionNodes = select(_editor_store__WEBPACK_IMPORTED_MODULE_11__.store).getActionNodes();
+      var actionCategories = select(_editor_store__WEBPACK_IMPORTED_MODULE_11__.store).getActionCategories();
+      var triggerNodes = select(_editor_store__WEBPACK_IMPORTED_MODULE_11__.store).getTriggerNodes();
+      var triggerCategories = select(_editor_store__WEBPACK_IMPORTED_MODULE_11__.store).getTriggerCategories();
+      var advancedNodes = select(_editor_store__WEBPACK_IMPORTED_MODULE_11__.store).getAdvancedNodes();
+      var advancedCategories = select(_editor_store__WEBPACK_IMPORTED_MODULE_11__.store).getAdvancedCategories();
       var nodeTypes = [];
       if (filterTypes && filterTypes.length) {
         nodeTypes = [].concat(_toConsumableArray(actionNodes.filter(function (node) {
@@ -19587,7 +19545,7 @@ var InserterSearchResults = function InserterSearchResults(_ref) {
     debouncedSpeak(resultsFoundMessage);
   }, [filterValue, debouncedSpeak, filteredNodeTypes]);
   var hasItems = !lodash_isEmpty__WEBPACK_IMPORTED_MODULE_1___default()(filteredNodeTypes);
-  return /*#__PURE__*/React.createElement(_inserter_listbox__WEBPACK_IMPORTED_MODULE_10__.InserterListbox, null, !hasItems && /*#__PURE__*/React.createElement(_inserter_no_results__WEBPACK_IMPORTED_MODULE_11__.InserterNoResults, null), !!hasItems && /*#__PURE__*/React.createElement(_panel__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  return /*#__PURE__*/React.createElement(_inserter_listbox__WEBPACK_IMPORTED_MODULE_12__["default"], null, !hasItems && /*#__PURE__*/React.createElement(_inserter_no_results__WEBPACK_IMPORTED_MODULE_10__.InserterNoResults, null), !!hasItems && /*#__PURE__*/React.createElement(_panel__WEBPACK_IMPORTED_MODULE_8__["default"], {
     title: /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.VisuallyHidden, null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Nodes', 'post-expirator'))
   }, /*#__PURE__*/React.createElement(_node_types_list__WEBPACK_IMPORTED_MODULE_7__["default"], {
     items: filteredNodeTypes,
@@ -19601,10 +19559,10 @@ var InserterSearchResults = function InserterSearchResults(_ref) {
 
 /***/ }),
 
-/***/ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter.jsx":
-/*!******************************************************************************!*\
-  !*** ./assets/jsx/workflow-editor/components/secondary-sidebar/inserter.jsx ***!
-  \******************************************************************************/
+/***/ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-sidebar.jsx":
+/*!**************************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/secondary-sidebar/inserter-sidebar.jsx ***!
+  \**************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -19667,16 +19625,17 @@ function InserterSidebar() {
   return /*#__PURE__*/React.createElement("div", _extends({
     ref: inserterDialogRef
   }, inserterDialogProps, {
-    className: "edit-post-editor__inserter-panel"
+    className: "editor-inserter-sidebar"
   }), /*#__PURE__*/React.createElement("div", {
-    className: "edit-post-editor__inserter-panel-header"
+    className: "editor-inserter-sidebar__header"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__["default"],
     onClick: function onClick() {
       return closeInserter();
-    }
+    },
+    className: "block-editor-tabbed-sidebar__close-button is-small"
   })), /*#__PURE__*/React.createElement("div", {
-    className: "edit-post-editor__inserter-panel-content"
+    className: "editor-inserter-sidebar__content"
   }, /*#__PURE__*/React.createElement(_library__WEBPACK_IMPORTED_MODULE_4__.InserterLibrary, {
     showMostUsedNodes: showMostUsedNodes,
     showInserterHelpPanel: true,
@@ -19876,7 +19835,7 @@ function InserterMenu(_ref) {
   }, /*#__PURE__*/React.createElement("div", {
     className: "block-editor-inserter__main-area show-as-tabs"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "block-editor-inserter__content"
+    className: "block-editor-tabbed-sidebar"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SearchControl, {
     className: "block-editor-inserter__search",
     onChange: function onChange(value) {
@@ -24202,8 +24161,8 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.edit-post-editor__inserter-panel-head
 	justify-content: flex-end;
 }
 
-@media (min-width: 600px) {
-    .edit-post-editor__inserter-panel-header {
+@media (min-width: 782px) {
+    .editor-inserter-sidebar__header {
         display: none;
     }
 }
@@ -24211,7 +24170,8 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.edit-post-editor__inserter-panel-head
 .edit-post-header-toolbar .editor-document-tools__left > .edit-post-header-toolbar__inserter-toggle.is-pressed svg {
     transform: rotate(45deg);
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/inserter.css"],"names":[],"mappings":"AAAA;IACI,aAAa;CAChB,yBAAyB;AAC1B;;AAEA;IACI;QACI,aAAa;IACjB;AACJ;;AAEA;IACI,wBAAwB;AAC5B","sourcesContent":[".edit-post-editor__inserter-panel-header {\n    display: flex;\n\tjustify-content: flex-end;\n}\n\n@media (min-width: 600px) {\n    .edit-post-editor__inserter-panel-header {\n        display: none;\n    }\n}\n\n.edit-post-header-toolbar .editor-document-tools__left > .edit-post-header-toolbar__inserter-toggle.is-pressed svg {\n    transform: rotate(45deg);\n}\n"],"sourceRoot":""}]);
+
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/inserter.css"],"names":[],"mappings":"AAAA;IACI,aAAa;CAChB,yBAAyB;AAC1B;;AAEA;IACI;QACI,aAAa;IACjB;AACJ;;AAEA;IACI,wBAAwB;AAC5B","sourcesContent":[".edit-post-editor__inserter-panel-header {\n    display: flex;\n\tjustify-content: flex-end;\n}\n\n@media (min-width: 782px) {\n    .editor-inserter-sidebar__header {\n        display: none;\n    }\n}\n\n.edit-post-header-toolbar .editor-document-tools__left > .edit-post-header-toolbar__inserter-toggle.is-pressed svg {\n    transform: rotate(45deg);\n}\n\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
