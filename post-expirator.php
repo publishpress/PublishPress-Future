@@ -27,7 +27,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 global $wp_version;
 
 $min_php_version = '7.4';
-$min_wp_version  = '6.7';
+$min_wp_version  = '6.7-RC4';
 
 // If the PHP or WP version is not compatible, terminate the plugin execution.
 $invalid_php_version = version_compare(phpversion(), $min_php_version, '<');
