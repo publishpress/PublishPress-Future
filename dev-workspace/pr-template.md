@@ -1,16 +1,8 @@
----
-name: Release the Free Version (Team Only)
-about: Default checklist for the plugin's release process.
-title: Release PublishPress Future v[VERSION]
-labels: release
-assignees: ''
----
+To release the Free plugin version $1, ensure you complete all the tasks below.
 
-To release the Free plugin, ensure you complete all the tasks below.
+## Pre-release Checklist
 
-### Pre-release Checklist
-
-- [ ] Create the release branch as `release-<version>` from the development branch.
+- [ ] Create the release branch as `release-$1` from the development branch.
 - [ ] Review and merge all relevant Pull Requests into the release branch.
 - [ ] Update the version number to a beta version in the main plugin file as per [tech documentation](https://rambleventures.slab.com/posts/version-numbers-58nmrk4b), and commit to the release branch.
 - [ ] Start a dev-workspace session.
@@ -27,7 +19,7 @@ To release the Free plugin, ensure you complete all the tasks below.
 - [ ] Build the zip package with `composer build`, creating a new beta package in the `./dist` directory.
 - [ ] Distribute the new package to the team for testing.
 
-### Deployment Checklist
+## Deployment Checklist
 
 - [ ] Update the version number to a stable version in the main plugin file and `readme.txt` as per [tech documentation](https://rambleventures.slab.com/posts/version-numbers-58nmrk4b), and commit to the release branch.
 - [ ] If anything changed in the code after test package distribution, redo the pre-release checklist.
@@ -37,3 +29,7 @@ To release the Free plugin, ensure you complete all the tasks below.
 - [ ] Merge the `main` branch into the `develop` branch.
 - [ ] Follow up with the deployment process on the [GitHub Actions](https://github.com/publishpress/PublishPress-Future/actions) page.
 - [ ] Await WordPress's version number update and perform a final test by updating the plugin on a staging site.
+
+## Notes
+- Release version: $1
+- Created on: $(date +"%Y-%m-%d")
