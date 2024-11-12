@@ -102,7 +102,15 @@ if command -v gh &> /dev/null; then
 # Check gh is authenticated
     if ! gh auth status &> /dev/null; then
         echo -e "${YELLOW}Warning: GitHub credentials are not set up.${NC}"
-        exit 1
+
+        # Set gh token
+        gh_token=$(cat gh_token.txt)
+        gh auth login --with-token <<< $gh_token
+
+        if ! gh auth status &> /dev/null; then
+            echo -e "${RED}Failed to set up GitHub credentials.${NC}"
+            exit 1
+        fi
     fi
 
     echo -e "${GREEN}Creating pull request...${NC}"
