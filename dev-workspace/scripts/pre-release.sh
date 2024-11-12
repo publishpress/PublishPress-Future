@@ -86,13 +86,21 @@ validate_version $version
 # Create branch name
 branch_name="release-$version"
 
-# Create and checkout new branch
-echo -e "${GREEN}Creating branch $branch_name...${NC}"
-git checkout -b $branch_name
+# Check if the current branch already exists. If not, create it.
+if ! git show-ref --verify --quiet refs/heads/$branch_name; then
+    echo -e "${GREEN}Creating branch $branch_name...${NC}"
+    git checkout -b $branch_name
+fi
 
-# Push branch to remote
-echo -e "${GREEN}Pushing branch to remote...${NC}"
-git push -u origin $branch_name
+# If not in the release branch, checkout to it.
+if [[ "$(git branch --show-current)" != "$branch_name" ]]; then
+    git checkout $branch_name
+fi
+
+# Push branch to remote, if not already pushed.
+if ! git push -u origin $branch_name; then
+    echo -e "${GREEN}Branch $branch_name already pushed to remote.${NC}"
+fi
 
 # Generate checklist
 checklist=$(create_checklist $version)
