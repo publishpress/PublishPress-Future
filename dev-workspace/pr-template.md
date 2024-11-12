@@ -2,14 +2,13 @@ To release the Free plugin version $1, ensure you complete all the tasks below.
 
 ## Pre-release Checklist
 
-- [ ] Create the release branch as `release-$1` from the development branch.
 - [ ] Review and merge all relevant Pull Requests into the release branch.
 - [ ] Update the version number to a beta version in the main plugin file as per [tech documentation](https://rambleventures.slab.com/posts/version-numbers-58nmrk4b), and commit to the release branch.
 - [ ] Start a dev-workspace session.
 - [ ] Run `composer update` (updating root and lib vendors).
 - [ ] Review updated packages and mention any production library updates in the changelog.
 - [ ] Inspect GitHub’s Dependabot warnings or Pull Requests. Resolve any false positives, then fix and commit the remaining issues.
-- [ ] If needed, build JS files for production using `composer build:js` and commit changes.
+- [ ] If needed, build JS files for production using `composer build:js` and `composer build:js-dev` and commit changes.
 - [ ] Run a code quality check with `composer check` and fix the highlighted issues.
 - [ ] Update the language files with `composer gen:lang` and note this in the changelog.
 - [ ] For minor and patch releases, maintain backward compatibility (e.g., renamed or moved classes, namespaces, functions). Include deprecation comments and note this in the changelog. Major releases may remove deprecated code; always note this in the changelog.
@@ -32,4 +31,3 @@ To release the Free plugin version $1, ensure you complete all the tasks below.
 
 ## Notes
 - Release version: $1
-- Created on: $(date +"%Y-%m-%d")

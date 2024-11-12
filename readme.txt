@@ -1,13 +1,13 @@
-=== Schedule Post Changes: Unpublish, Delete, Change Status, Trash, Change Categories and Tags with PublishPress Future ===
+=== Schedule Post Changes With PublishPress Future: Unpublish, Delete, Change Status, Trash, Change Categories ===
 Contributors: publishpress, kevinB, stevejburge, andergmartins
 Author: publishpress
 Author URI: https://publishpress.com
 Tags: unpublish posts, update posts, schedule changes, automatic changes, workflows
-Requires at least: 6.1
-Requires PHP: 7.2.5
-Tested up to: 6.6
+Requires at least: 6.7
+Requires PHP: 7.4
+Tested up to: 6.7
 License: GPLv2 or later
-Stable tag: 4.1.0
+Stable tag: 4.1.1
 
 PublishPress Future can make scheduled changes to your content. You can unpublish posts, move posts to a new status, update the categories, and more.
 
@@ -173,6 +173,18 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
 
+## [4.1.1] - 12 Nov, 2024
+
+### Fixed
+
+- Fix the layout of inserter in the workflow editor for WP 6.7 (Issue #1025).
+- Fix the layout of the top toolbar in the workflow editor for WP 6.7 (Issue #1028).
+
+### Changed
+
+- Minimum required version of WordPress is now 6.7.
+- Minimum required version of PHP is now 7.4.
+
 ## [4.1.0] - 11 Nov, 2024
 
 ### Added
@@ -311,42 +323,3 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 - Fix quick edit action box to use the filter to hide action box when deactivated for the post type, #884
 - Fixed the database schema check to also check the debug log table, #887
 - Fixed the database schema check to check the table indexes, #887
-
-## [3.4.2] - 15 Jul, 2024
-
-### Added
-
-- Add the current date and time to date preview in the date/time offset setting field, #840
-
-### Fixed
-
-- Optimized the date/time offset validation requests in the Post Types settings, #840
-- Fix error message in the date/time offset setting field, #841
-- Fix user capabilities check in the block editor, #727
-- Update ES, FR, and IT translations, #859
-
-### Changed
-
-- Change the text in the promo screen for the Actions Workflow feature, #867
-
-## [3.4.1] - 02 Jul, 2024
-
-### Added
-
-- Implement add promo screen for Actions Workflows, #777
-- Implement the post_id attribute to the futureaction shortcode, #814
-
-### Fixed
-
-- Fix some translations in ES, FR, and IT languages, #798
-- Fix “no future actions” message in the scheduled actions list, #788
-- Try to avoid fatal error for wrong argument counting
-- Minor issues pointed by PHPCS
-- Escape an exception message
-
-### Changed
-
-- Update language files
-- Improve the exception message when the date/time offset is invalid
-- Update composer files for dev dependencies
-

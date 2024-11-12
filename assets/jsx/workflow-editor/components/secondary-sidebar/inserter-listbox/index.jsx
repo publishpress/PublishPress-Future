@@ -1,26 +1,17 @@
 /**
  * WordPress dependencies
  */
-import { __unstableUseCompositeState as useCompositeState } from '@wordpress/components';
-
-/**
- * Internal dependencies
- */
-import InserterListboxContext from './context';
+import { Composite } from '@wordpress/components';
 
 export { default as InserterListboxGroup } from './group';
 export { default as InserterListboxRow } from './row';
 export { default as InserterListboxItem } from './item';
 
-export function InserterListbox({ children }) {
-	const compositeState = useCompositeState({
-		shift: true,
-		wrap: 'horizontal',
-	});
+export const InserterListbox = ({ children }) => {
 	return (
-		<InserterListboxContext.Provider value={compositeState}>
-			{children}
-		</InserterListboxContext.Provider>
+		<Composite focusShift focusWrap="horizontal" render={ <></> }>
+			{ children }
+		</Composite>
 	);
 }
 

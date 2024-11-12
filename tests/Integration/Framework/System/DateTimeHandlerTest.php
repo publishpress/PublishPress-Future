@@ -72,7 +72,7 @@ class DateTimeHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $dateTimeHandler->getCalculatedTimeWithOffset(time(), 'invalid offset');
     }
 
-    #[Examples(['+1 month 13:00', '-4', 'America/New_York', '+1 month 17:00'])]
+    #[Examples(['+1 month 13:00', '-5', 'America/New_York', '+1 month 18:00'])]
     #[Examples(['+1 month 17:00', '0', 'UTC', '+1 month 17:00'])]
     #[Examples(['+1 month 18:00', '+1', 'Europe/Madrid', '+1 month 17:00'])]
     #[Examples(['+1 month 14:00', '-3', 'America/Sao_Paulo', '+1 month 17:00'])]

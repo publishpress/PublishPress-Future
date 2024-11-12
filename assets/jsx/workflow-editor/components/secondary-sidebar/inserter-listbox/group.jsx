@@ -11,7 +11,7 @@ function InserterListboxGroup(props, ref) {
 	useEffect(() => {
 		if (shouldSpeak) {
 			speak(
-				__('Use left and right arrow keys to move through blocks', 'post-expirator')
+				__('Use left and right arrow keys to move through steps', 'post-expirator')
 			);
 		}
 	}, [shouldSpeak]);

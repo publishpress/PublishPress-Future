@@ -12,7 +12,7 @@ import {
     FEATURE_INSERTER,
     FEATURE_WELCOME_GUIDE
 } from "../../constants";
-import { InserterSidebar } from "../secondary-sidebar/inserter";
+import { InserterSidebar } from "../secondary-sidebar/inserter-sidebar";
 import classnames from 'classnames';
 import { SlotFillProvider } from "@wordpress/components";
 import { SettingsSidebar } from "../settings-sidebar/settings-sidebar";
