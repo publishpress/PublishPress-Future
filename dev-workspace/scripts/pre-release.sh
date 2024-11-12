@@ -102,6 +102,12 @@ if ! git push -u origin $branch_name; then
     echo -e "${GREEN}Branch $branch_name already pushed to remote.${NC}"
 fi
 
+# Check if the github credentials are set up.
+if ! gh auth status &> /dev/null; then
+    echo -e "${YELLOW}Warning: GitHub credentials are not set up.${NC}"
+    exit 1
+fi
+
 # Generate checklist
 checklist=$(create_checklist $version)
 
