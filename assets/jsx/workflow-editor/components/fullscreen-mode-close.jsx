@@ -32,7 +32,7 @@ export function FullscreenModeClose({ showTooltip }) {
     let buttonIcon = <Icon size="36px" icon={wordpress} />;
 
     return (
-        <motion.div whileHover="expand">
+        <motion.div whileHover="expand" className="editor-header__back-button">
             <Button
                 className="edit-post-fullscreen-mode-close"
                 href={

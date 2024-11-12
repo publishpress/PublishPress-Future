@@ -15215,7 +15215,8 @@ function FullscreenModeClose(_ref) {
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__["default"]
   });
   return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__unstableMotion.div, {
-    whileHover: "expand"
+    whileHover: "expand",
+    className: "editor-header__back-button"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
     className: "edit-post-fullscreen-mode-close",
     href: (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_3__.addQueryArgs)('edit.php', {
