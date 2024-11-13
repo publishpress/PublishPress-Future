@@ -18,6 +18,8 @@ abstract class HooksAbstract
 
     public const ACTION_ADMIN_NOTICES = 'admin_notices';
 
+    public const FILTER_ADMIN_TITLE = 'admin_title';
+
     public const ACTION_INIT_PLUGIN = 'publishpressfuture_init_plugin';
 
     public const ACTION_AFTER_INIT_PLUGIN = 'publishpressfuture_after_init_plugin';
