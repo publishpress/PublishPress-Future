@@ -134,12 +134,7 @@ class ExpirationController implements InitializableInterface
                 return;
             }
 
-            $postModelFactory = $this->expirablePostModelFactory;
-            $postModel = $postModelFactory($postId);
-
-            if ($postModel->shouldAutoEnable()) {
-                $postModel->setupFutureActionWithDefaultData();
-            }
+            $this->setupFutureActionIfAutoEnabled($postId);
         } catch (Throwable $th) {
             $this->logger->error('Error setting default meta for post: ' . $th->getMessage());
         }
@@ -155,6 +150,11 @@ class ExpirationController implements InitializableInterface
             return;
         }
 
+        $this->setupFutureActionIfAutoEnabled($postId);
+    }
+
+    private function setupFutureActionIfAutoEnabled(int $postId): void
+    {
         $postModelFactory = $this->expirablePostModelFactory;
         $postModel = $postModelFactory($postId);
 
