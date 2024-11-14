@@ -17,6 +17,7 @@ use PublishPress\Future\Framework\WordPress\Facade\RequestFacade;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\System\DateTimeHandlerInterface;
+use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -103,6 +104,11 @@ class Module implements ModuleInterface
      */
     private $dateTimeHandler;
 
+    /**
+     * @var PostTypeDefaultDataModelFactory
+     */
+    private $defaultDataModelFactory;
+
     public function __construct(
         \PublishPress\Future\Core\HookableInterface $hooks,
         SiteFacade $site,
@@ -118,7 +124,8 @@ class Module implements ModuleInterface
         DBTableSchemaInterface $actionArgsSchema,
         SettingsFacade $settingsFacade,
         LoggerInterface $logger,
-        DateTimeHandlerInterface $dateTimeHandler
+        DateTimeHandlerInterface $dateTimeHandler,
+        PostTypeDefaultDataModelFactory $defaultDataModelFactory
     ) {
         $this->hooks = $hooks;
         $this->site = $site;
@@ -135,6 +142,7 @@ class Module implements ModuleInterface
         $this->settingsFacade = $settingsFacade;
         $this->logger = $logger;
         $this->dateTimeHandler = $dateTimeHandler;
+        $this->defaultDataModelFactory = $defaultDataModelFactory;
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
         $this->controllers['quick_edit'] = $this->factoryQuickEditController();
@@ -166,7 +174,8 @@ class Module implements ModuleInterface
         return new Controllers\ExpirationController(
             $this->hooks,
             $this->scheduler,
-            $this->expirablePostModelFactory
+            $this->expirablePostModelFactory,
+            $this->logger
         );
     }
 
