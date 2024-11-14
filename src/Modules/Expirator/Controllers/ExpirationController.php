@@ -82,7 +82,7 @@ class ExpirationController implements InitializableInterface
 
         $this->hooks->addAction(
             HooksAbstract::ACTION_POST_UPDATED,
-            [$this, 'autoEnabeOnPostUpdate'],
+            [$this, 'autoEnableOnPostUpdate'],
             10,
             3
         );
@@ -121,7 +121,7 @@ class ExpirationController implements InitializableInterface
         $postModel->expire($force);
     }
 
-    public function autoEnabeOnPostUpdate($postId, $postAfter, $postBefore): void
+    public function autoEnableOnPostUpdate($postId, $postAfter, $postBefore): void
     {
         try {
             // Ignore auto-drafts
