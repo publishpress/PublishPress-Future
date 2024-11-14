@@ -82,8 +82,8 @@ if command -v gh &> /dev/null; then
         echo -e "${YELLOW}Warning: GitHub credentials are not set up.${NC}"
 
         # Set gh token
-        gh_token=$(cat gh_token.txt)
-        gh auth login --with-token <<< $gh_token
+        source .env
+        gh auth login --with-token <<< $GITHUB_ACCESS_TOKEN
 
         if ! gh auth status &> /dev/null; then
             echo -e "${RED}Failed to set up GitHub credentials.${NC}"
