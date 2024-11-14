@@ -109,6 +109,11 @@ class Module implements ModuleInterface
      */
     private $defaultDataModelFactory;
 
+    /**
+     * @var \Closure
+     */
+    private $taxonomiesModelFactory;
+
     public function __construct(
         \PublishPress\Future\Core\HookableInterface $hooks,
         SiteFacade $site,
@@ -125,7 +130,8 @@ class Module implements ModuleInterface
         SettingsFacade $settingsFacade,
         LoggerInterface $logger,
         DateTimeHandlerInterface $dateTimeHandler,
-        PostTypeDefaultDataModelFactory $defaultDataModelFactory
+        PostTypeDefaultDataModelFactory $defaultDataModelFactory,
+        \Closure $taxonomiesModelFactory
     ) {
         $this->hooks = $hooks;
         $this->site = $site;
@@ -143,6 +149,7 @@ class Module implements ModuleInterface
         $this->logger = $logger;
         $this->dateTimeHandler = $dateTimeHandler;
         $this->defaultDataModelFactory = $defaultDataModelFactory;
+        $this->taxonomiesModelFactory = $taxonomiesModelFactory;
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
         $this->controllers['quick_edit'] = $this->factoryQuickEditController();
@@ -261,7 +268,8 @@ class Module implements ModuleInterface
             $this->expirablePostModelFactory,
             $this->currentUserModelFactory,
             $this->logger,
-            $this->dateTimeHandler
+            $this->dateTimeHandler,
+            $this->taxonomiesModelFactory
         );
     }
 
