@@ -140,7 +140,6 @@ class Plugin implements InitializableInterface
     private function initializeHooks()
     {
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_INIT, [$this, 'manageUpgrade'], 99);
-        $this->hooks->addAction(HooksAbstract::ACTION_INSERT_POST, [$this, 'setDefaultMetaForPost'], 10, 3);
         $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
     }
 
@@ -318,45 +317,6 @@ class Plugin implements InitializableInterface
             }
         } catch (Throwable $th) {
             $this->logger->error('Error managing upgrade: ' . $th->getMessage());
-        }
-    }
-
-    public function setDefaultMetaForPost($postId, $post, $update)
-    {
-        try {
-            if ($update) {
-                return;
-            }
-
-            $container = Container::getInstance();
-            $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
-            $defaultDataModel = $defaultDataModelFactory->create($post->post_type);
-
-            if (! $defaultDataModel->isAutoEnabled()) {
-                return;
-            }
-
-            $defaultExpire = $defaultDataModel->getActionDateParts($postId);
-
-            if (empty($defaultExpire['ts'])) {
-                return;
-            }
-
-            $opts = [
-                'expireType' => $defaultDataModel->getAction(),
-                'newStatus' => $defaultDataModel->getNewStatus(),
-                'category' => $defaultDataModel->getTerms(),
-                'categoryTaxonomy' => (string)$defaultDataModel->getTaxonomy(),
-            ];
-
-            $this->hooks->doAction(
-                ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION,
-                $postId,
-                $defaultExpire['ts'],
-                $opts
-            );
-        } catch (Throwable $th) {
-            $this->logger->error('Error setting default meta for post: ' . $th->getMessage());
         }
     }
 
