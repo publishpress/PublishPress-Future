@@ -79,7 +79,7 @@
         "profile:js": "cross-env NODE_ENV=production npx webpack --profile",
         "watch:js": "cross-env NODE_ENV=development npx webpack --watch --progress",
         "get:version": "pbuild version",
-        "build:pot-php": "wp i18n make-pot . ./languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests,lib,tmp,doc,*.js,*.js.map --allow-root",
+        "build:pot-php": "wp i18n make-pot . ./languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests,lib,tmp,doc,*.js,*.js.map,*.jsx --allow-root",
         "build:pot-js": "bash ./dev-workspace/scripts/lang-make-pot-js.sh",
         "build:mo": "wp i18n make-mo ./languages ./languages --allow-root",
         "build:po-scripts": "bash ./dev-workspace/scripts/lang-update-js-po.sh",
