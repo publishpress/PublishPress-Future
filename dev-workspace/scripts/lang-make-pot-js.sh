@@ -20,7 +20,5 @@ do
         if [ ! -f "$po_file" ]; then
             touch "$po_file"
         fi
-
-        wp i18n update-po $pot_file $po_file --allow-root
     done
 done
