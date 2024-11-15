@@ -299,7 +299,7 @@ class ManualPostTrigger implements InitializableInterface
                             return true;
                         },
                         'schema' => [
-                            'description' => 'Workflow Manual Trigger',
+                            'description' => __('Workflow Manual Trigger', 'post-expirator'),
                             'type' => 'object',
                         ]
                     ]
