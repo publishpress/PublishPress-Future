@@ -2,21 +2,21 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 4.1.0-beta.1\n"
+"Project-Id-Version: PublishPress Future 4.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-05T20:32:43+00:00\n"
+"POT-Creation-Date: 2024-11-15T20:47:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
 
 #. Plugin Name of the plugin
 #: post-expirator.php
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:112
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:119
 #: src/Modules/Workflows/Models/NodeTypesModel.php:81
 msgid "PublishPress Future"
 msgstr ""
@@ -143,7 +143,7 @@ msgid "The table indexes are invalid: "
 msgstr ""
 
 #: src/Framework/System/DateTimeHandler.php:39
-#: src/Modules/Expirator/Controllers/RestAPIController.php:230
+#: src/Modules/Expirator/Controllers/RestAPIController.php:237
 msgid "Invalid date time offset."
 msgstr ""
 
@@ -291,7 +291,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/BulkEditController.php:231
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:424
 #: src/Modules/Expirator/Controllers/QuickEditController.php:338
-#: src/Modules/Settings/Controllers/Controller.php:265
+#: src/Modules/Settings/Controllers/Controller.php:271
 msgid "Please select one or more %s"
 msgstr ""
 
@@ -355,47 +355,50 @@ msgstr ""
 msgid "Future Action"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:113
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:120
 msgid "Future"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:122
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:123
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:130
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:131
+#: src/Modules/Settings/Controllers/Controller.php:601
 #: src/Views/tabs.php:59
 msgid "Action Settings"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:131
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:132
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:139
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:140
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:337
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:46
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:439
 msgid "Scheduled Actions"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:209
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:217
 msgid "Log format"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:217
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:225
 msgid "List"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:227
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:235
 msgid "Popup"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:300
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:308
 msgid "Successfully executed action: %s"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:307
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:315
 msgid "Executed workflow scheduled step"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:314
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:322
 msgid "Cleaned up completed scheduled steps older than %d days"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:320
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:328
 msgid "Cleaned up orphan workflow scheduled step arguments"
 msgstr ""
 
@@ -764,141 +767,141 @@ msgid "No Scheduled Actions."
 msgstr ""
 
 #. translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
-#: src/Modules/Settings/Controllers/Controller.php:218
+#: src/Modules/Settings/Controllers/Controller.php:224
 msgid ""
 "Set the offset to use for the default action date and time. For information on formatting, see %1$s\n"
 "                    . For example, you could enter %2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, use only terms in English."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:229
+#: src/Modules/Settings/Controllers/Controller.php:235
 msgid "Default Values"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:230
+#: src/Modules/Settings/Controllers/Controller.php:236
 msgid "Use the values below to set the default actions/values to be used for each for the corresponding post types.  These values can all be overwritten when creating/editing the post/page."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:234
+#: src/Modules/Settings/Controllers/Controller.php:240
 msgid "Active"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:235
+#: src/Modules/Settings/Controllers/Controller.php:241
 msgid "Activate the PublishPress Future actions for this post type"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:236
+#: src/Modules/Settings/Controllers/Controller.php:242
 msgid "Default Action"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:237
+#: src/Modules/Settings/Controllers/Controller.php:243
 msgid "Select the default action for the post type."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:241
+#: src/Modules/Settings/Controllers/Controller.php:247
 #: src/Views/taxonomy-field.php:14
 msgid "Select the taxonomy to be used for actions."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:245
+#: src/Modules/Settings/Controllers/Controller.php:251
 msgid "Auto-enable"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:246
+#: src/Modules/Settings/Controllers/Controller.php:252
 msgid "Enabled for all new posts"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:247
+#: src/Modules/Settings/Controllers/Controller.php:253
 msgid "Taxonomy"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:248
+#: src/Modules/Settings/Controllers/Controller.php:254
 msgid "No taxonomies found for this post type. Taxonomy actions will not be available."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:249
+#: src/Modules/Settings/Controllers/Controller.php:255
 #: src/Views/menu-general.php:224
 msgid "Who to Notify"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:250
+#: src/Modules/Settings/Controllers/Controller.php:256
 msgid "Enter a comma separated list of emails that you would like to be notified when the action runs."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:254
+#: src/Modules/Settings/Controllers/Controller.php:260
 #: src/Views/menu-general.php:68
 msgid "Default Date/Time Offset"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:257
+#: src/Modules/Settings/Controllers/Controller.php:263
 #: src/Views/menu-general.php:84
 msgid "PHP strtotime function"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:261
+#: src/Modules/Settings/Controllers/Controller.php:267
 msgid "Default terms:"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:262
+#: src/Modules/Settings/Controllers/Controller.php:268
 msgid "Save changes"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:263
+#: src/Modules/Settings/Controllers/Controller.php:269
 msgid "Wait for the validation..."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:266
-#: src/Modules/Settings/Controllers/Controller.php:313
+#: src/Modules/Settings/Controllers/Controller.php:272
+#: src/Modules/Settings/Controllers/Controller.php:319
 msgid "Date Preview"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:267
-#: src/Modules/Settings/Controllers/Controller.php:314
+#: src/Modules/Settings/Controllers/Controller.php:273
+#: src/Modules/Settings/Controllers/Controller.php:320
 msgid "Current Date"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:268
-#: src/Modules/Settings/Controllers/Controller.php:315
+#: src/Modules/Settings/Controllers/Controller.php:274
+#: src/Modules/Settings/Controllers/Controller.php:321
 msgid "Computed Date"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:269
-#: src/Modules/Settings/Controllers/Controller.php:316
+#: src/Modules/Settings/Controllers/Controller.php:275
+#: src/Modules/Settings/Controllers/Controller.php:322
 msgid "Error"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:347
+#: src/Modules/Settings/Controllers/Controller.php:353
 msgid "Scheduled Workflow Steps Cleanup"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:348
+#: src/Modules/Settings/Controllers/Controller.php:354
 msgid "Automatically remove scheduled workflow steps"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:352
+#: src/Modules/Settings/Controllers/Controller.php:358
 msgid "Automatically remove scheduled workflow steps that have been marked as failed, completed, or cancelled."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:356
+#: src/Modules/Settings/Controllers/Controller.php:362
 msgid "Retain all scheduled workflow steps"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:360
+#: src/Modules/Settings/Controllers/Controller.php:366
 msgid "Retain all scheduled workflow steps indefinitely, including those marked as failed, completed, or cancelled. This may impact database performance over time."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:364
+#: src/Modules/Settings/Controllers/Controller.php:370
 msgid "Retention"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:365
+#: src/Modules/Settings/Controllers/Controller.php:371
 msgid "The duration, in days, for which completed, failed, and canceled scheduled workflow steps will be preserved before automatic removal."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:369
+#: src/Modules/Settings/Controllers/Controller.php:375
 msgid "days"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:475
+#: src/Modules/Settings/Controllers/Controller.php:481
 msgid "Form Validation Failure: Sorry, your nonce did not verify."
 msgstr ""
 
@@ -907,14 +910,18 @@ msgstr ""
 msgid "You're using PublishPress Future Free. The Pro version has more features and support. %1$sUpgrade to Pro%2$s"
 msgstr ""
 
-#: src/Modules/VersionNotices/Module.php:125
+#: src/Modules/VersionNotices/Module.php:129
 #: src/Views/ad-banner-right-sidebar.php:37
 msgid "Upgrade to Pro"
 msgstr ""
 
+#: src/Modules/Workflows/Controllers/ManualPostTrigger.php:302
+msgid "Workflow Manual Trigger"
+msgstr ""
+
 #: src/Modules/Workflows/Controllers/ManualPostTrigger.php:336
 #: src/Modules/Workflows/Controllers/PostType.php:48
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:106
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:139
 #: src/Modules/Workflows/Views/manual-trigger-quick-edit.html.php:9
 msgid "Action Workflows"
 msgstr ""
@@ -931,80 +938,80 @@ msgstr ""
 msgid "Add New Workflow"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:55
+#: src/Modules/Workflows/Controllers/PostType.php:52
 msgid "Edit Workflow"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:56
+#: src/Modules/Workflows/Controllers/PostType.php:53
 #: src/Modules/Workflows/Models/WorkflowModel.php:448
 msgid "New Workflow"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:57
+#: src/Modules/Workflows/Controllers/PostType.php:54
 msgid "View Workflow"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:58
+#: src/Modules/Workflows/Controllers/PostType.php:55
 msgid "Search Workflows"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:62
+#: src/Modules/Workflows/Controllers/PostType.php:56
 msgid "No Workflows found"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:66
+#: src/Modules/Workflows/Controllers/PostType.php:57
 msgid "No Workflows found in Trash"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:70
+#: src/Modules/Workflows/Controllers/PostType.php:58
 msgid "Parent Workflow:"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:74
+#: src/Modules/Workflows/Controllers/PostType.php:59
 msgid "All Workflows"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:75
+#: src/Modules/Workflows/Controllers/PostType.php:60
 msgid "Workflow Archives"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:79
+#: src/Modules/Workflows/Controllers/PostType.php:61
 msgid "Insert into workflow"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:83
+#: src/Modules/Workflows/Controllers/PostType.php:62
 msgid "Uploaded to this workflow"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:87
+#: src/Modules/Workflows/Controllers/PostType.php:63
 msgid "Filter workflows list"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:91
+#: src/Modules/Workflows/Controllers/PostType.php:64
 msgid "Workflows list navigation"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:95
+#: src/Modules/Workflows/Controllers/PostType.php:65
 msgid "Action Workflows list"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:96
+#: src/Modules/Workflows/Controllers/PostType.php:66
 msgid "Workflow published."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:100
+#: src/Modules/Workflows/Controllers/PostType.php:67
 msgid "Workflow published privately."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:104
+#: src/Modules/Workflows/Controllers/PostType.php:68
 msgid "Workflow reverted to draft."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:108
+#: src/Modules/Workflows/Controllers/PostType.php:69
 msgid "Workflow scheduled."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/PostType.php:112
+#: src/Modules/Workflows/Controllers/PostType.php:70
 msgid "Workflow updated."
 msgstr ""
 
@@ -1177,30 +1184,34 @@ msgstr ""
 msgid "If you have any questions or need help, click the help button in the top right corner to access the support resources."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:157
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:175
 msgid "Triggers"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:161
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:179
 msgid "Preview"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:187
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:205
 msgid "—"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:224
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:242
 msgid "No screenshot"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:309
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:310
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:327
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:328
 msgid "Activate"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:315
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:316
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:333
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:334
 msgid "Deactivate"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:412
+msgid "Action Workflow Editor"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/DataType/PostQuery.php:16

@@ -106,6 +106,12 @@ class Controller implements InitializableInterface
             [$this, 'initMigrations'],
             20
         );
+        $this->hooks->addFilter(
+            CoreAbstractHooks::FILTER_ADMIN_TITLE,
+            [$this, 'onFilterAdminTitle'],
+            10,
+            2
+        );
     }
 
     public function onActionActivatePlugin()
@@ -587,5 +593,14 @@ class Controller implements InitializableInterface
         }
 
         $this->settings->setScheduledWorkflowStepsCleanupRetention($stepScheduleCleanupRetention);
+    }
+
+    public function onFilterAdminTitle($adminTitle, $title)
+    {
+        if (isset($_GET['page']) && $_GET['page'] === 'publishpress-future') {
+            return str_replace($title, __('Action Settings', 'post-expirator'), $adminTitle);
+        }
+
+        return $adminTitle;
     }
 }
