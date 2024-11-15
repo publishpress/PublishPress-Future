@@ -92,8 +92,6 @@
         "build:lang": [
             "@build:pot",
             "@build:mo",
-            "@build:po-scripts",
-            "@build:po-json",
             "@build:l10n-php",
             "@cleanup:js-mo"
         ],
