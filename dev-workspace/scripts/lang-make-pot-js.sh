@@ -17,8 +17,10 @@ do
 
         wp i18n make-pot $source_path $pot_file --domain=$LANG_DOMAIN  --allow-root
 
+        # If the PO file doesn't exist, create it and update it with the POT file. If exists, do nothing.
         if [ ! -f "$po_file" ]; then
             touch "$po_file"
+            wp i18n update-po $pot_file $po_file --allow-root
         fi
     done
 done
