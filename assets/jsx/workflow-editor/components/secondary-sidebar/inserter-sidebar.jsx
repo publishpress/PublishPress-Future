@@ -38,15 +38,16 @@ export function InserterSidebar() {
         <div
             ref={inserterDialogRef}
             {...inserterDialogProps}
-            className="edit-post-editor__inserter-panel"
+            className="editor-inserter-sidebar"
         >
-            <div className="edit-post-editor__inserter-panel-header">
+            <div className="editor-inserter-sidebar__header">
                 <Button
                     icon={close}
                     onClick={() => closeInserter()}
+                    className="block-editor-tabbed-sidebar__close-button is-small"
                 />
             </div>
-            <div className="edit-post-editor__inserter-panel-content">
+            <div className="editor-inserter-sidebar__content">
                 <InserterLibrary
                     showMostUsedNodes={showMostUsedNodes}
                     showInserterHelpPanel={true}

@@ -28,5 +28,5 @@ webpack-bundle-stats.json
 webpack-bundle-stats.html
 webpack-bundle-stats-*.json
 webpack-bundle-stats-*.html
-.env
 gh_token.txt
+.env

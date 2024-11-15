@@ -20,9 +20,9 @@ import { useSelect } from '@wordpress/data';
 import NodeTypesList from './node-types-list';
 import InserterPanel from './panel';
 import { searchNodeItems } from './search-items';
-import { InserterListbox } from './inserter-listbox';
 import { InserterNoResults } from './inserter-no-results';
 import { store as editorStore } from '../editor-store';
+import InserterListbox from './inserter-listbox';
 
 export const InserterSearchResults = ({
     filterValue,
