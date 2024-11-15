@@ -18095,7 +18095,7 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
   var _useDispatch2 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_editor_store__WEBPACK_IMPORTED_MODULE_4__.store),
     openGeneralSidebar = _useDispatch2.openGeneralSidebar;
   var nodeType = getNodeTypeByName(data.name);
-  var nodeLabel = nodeType.label || data.label || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Node', 'publishpress-future-pro');
+  var nodeLabel = nodeType.label || data.label || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Node', 'post-expirator');
   var nodeClassName = (nodeType === null || nodeType === void 0 ? void 0 : nodeType.className) || 'react-flow__node-genericNode';
   var targetHandles = null;
   if (nodeType.handleSchema) {
@@ -18140,23 +18140,23 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
       });
     }
   }
-  var topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Step', 'publishpress-future-pro');
+  var topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Step', 'post-expirator');
   if (data.elementaryType === 'action') {
-    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Action', 'publishpress-future-pro');
+    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Action', 'post-expirator');
   } else if (data.elementaryType === 'advanced') {
-    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Advanced', 'publishpress-future-pro');
+    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Advanced', 'post-expirator');
   } else if (data.elementaryType === 'trigger') {
-    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Trigger', 'publishpress-future-pro');
+    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Trigger', 'post-expirator');
   }
   var nodeAttributes = [
     // {
     //     id: 'id',
-    //     label: __('ID', 'publishpress-future-pro'),
+    //     label: __('ID', 'post-expirator'),
     //     value: id,
     // },
     // {
     //     id: 'slug',
-    //     label: __('Slug', 'publishpress-future-pro'),
+    //     label: __('Slug', 'post-expirator'),
     //     value: data.slug,
     // },
   ];
@@ -18180,7 +18180,7 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
     className: "components-accessible-toolbar block-editor-block-contextual-toolbar react-flow__node-toolbar"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.ToolbarGroup, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.ToolbarButton, {
     icon: 'trash',
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Delete', 'publishpress-future-pro'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Delete', 'post-expirator'),
     onClick: onClickDeleteNode
   }))))), /*#__PURE__*/React.createElement("div", {
     className: "react-flow__node-body " + nodeClassName,

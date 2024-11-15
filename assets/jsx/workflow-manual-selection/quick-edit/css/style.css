@@ -1,4 +1,4 @@
-#publishpress-future-pro-quick-edit-wrapper {
+#publishpress-future-quick-edit {
     max-width: 340px;
     padding: 14px;
     border: 1px solid #ddd;
@@ -6,7 +6,7 @@
 }
 
 
-#publishpress-future-pro-quick-edit-wrapper label {
+#publishpress-future-quick-edit label {
     display: inline-block;
     max-width: 100%;
 }

@@ -4,7 +4,7 @@
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
-PLUGIN_REPO="publishpress/publishpress-future-pro"
+PLUGIN_REPO="publishpress/publishpress-future"
 
 # Function to validate version number format (x.x.x)
 validate_version() {

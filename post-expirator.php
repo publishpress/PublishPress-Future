@@ -123,6 +123,10 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         HooksFacade::registerActivationHook(__FILE__, __NAMESPACE__ . '\\install');
         HooksFacade::registerDeactivationHook(__FILE__, __NAMESPACE__ . '\\uninstall');
 
+        add_action('plugins_loaded', function () {
+            load_plugin_textdomain('post-expirator', false, basename(dirname(__FILE__)) . '/languages/');
+        });
+
         add_action('init', function () {
             try {
                 loadDependencies();

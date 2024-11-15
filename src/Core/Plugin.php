@@ -101,7 +101,6 @@ class Plugin implements InitializableInterface
     {
         $this->initialized = true;
 
-        $this->initializeTextDomain();
         $this->initializeReviews();
         $this->initializeHooks();
         $this->initializeNotices();
@@ -109,14 +108,6 @@ class Plugin implements InitializableInterface
         $this->initializeCli();
 
         $this->hooks->doAction(HooksAbstract::ACTION_AFTER_INIT_PLUGIN);
-    }
-
-    private function initializeTextDomain()
-    {
-        $pluginDir = basename($this->basePath);
-        load_plugin_textdomain('post-expirator', false, $pluginDir . '/languages/');
-
-        $this->logger->debug(self::LOG_PREFIX . ' Text domain initialized');
     }
 
     private function initializeReviews()
