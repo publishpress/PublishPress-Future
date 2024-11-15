@@ -93,7 +93,8 @@
             "@build:pot",
             "@build:mo",
             "@build:l10n-php",
-            "@cleanup:js-mo"
+            "@cleanup:js-mo",
+            "@build:po-json"
         ],
         "cleanup:js-mo": "bash ./dev-workspace/scripts/lang-cleanup.sh",
         "cleanup:gh-workflows": "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
