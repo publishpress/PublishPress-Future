@@ -41,7 +41,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
     } = useDispatch(editorStore);
 
     const nodeType = getNodeTypeByName(data.name);
-    const nodeLabel = nodeType.label || data.label || __('Node', 'publishpress-future-pro');
+    const nodeLabel = nodeType.label || data.label || __('Node', 'post-expirator');
     const nodeClassName = nodeType?.className || 'react-flow__node-genericNode';
 
     let targetHandles = null;
@@ -94,24 +94,24 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
         }
     }
 
-    let topText = __('Step', 'publishpress-future-pro');
+    let topText = __('Step', 'post-expirator');
     if (data.elementaryType === 'action') {
-        topText = __('Action', 'publishpress-future-pro');
+        topText = __('Action', 'post-expirator');
     } else if (data.elementaryType === 'advanced') {
-        topText = __('Advanced', 'publishpress-future-pro');
+        topText = __('Advanced', 'post-expirator');
     } else if (data.elementaryType === 'trigger') {
-        topText = __('Trigger', 'publishpress-future-pro');
+        topText = __('Trigger', 'post-expirator');
     }
 
     const nodeAttributes = [
         // {
         //     id: 'id',
-        //     label: __('ID', 'publishpress-future-pro'),
+        //     label: __('ID', 'post-expirator'),
         //     value: id,
         // },
         // {
         //     id: 'slug',
-        //     label: __('Slug', 'publishpress-future-pro'),
+        //     label: __('Slug', 'post-expirator'),
         //     value: data.slug,
         // },
     ];
@@ -139,7 +139,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                             <ToolbarGroup>
                                 <ToolbarButton
                                     icon={'trash'}
-                                    label={__('Delete', 'publishpress-future-pro')}
+                                    label={__('Delete', 'post-expirator')}
                                     onClick={onClickDeleteNode}
                                 />
                             </ToolbarGroup>
