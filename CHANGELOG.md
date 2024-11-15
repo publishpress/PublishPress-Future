@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.2] - UNRELEASED
+
+### Fixed
+
+- Fix translations (Issues #1003, #1006, #1007, #1026).
+- Updated pt-BR translations (Issue #10018).
+- Fix zombie auto-drafts appearing in the future when auto-enable is activated (Issue #1024).
+- Fix call to undefined function `error_log` (Issue #1036).
+- Fix the page title in the workflow editor (Issue #1027).
+- Fix the page title on admin pages of 3rd party plugins (Issue #1037).
+
 ## [4.1.1] - 12 Nov, 2024
 
 ### Fixed
