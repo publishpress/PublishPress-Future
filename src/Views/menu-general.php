@@ -74,8 +74,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                             <p class="description"><?php
                                 // translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
                                 $description = esc_html__(
-                                    'Set the offset to use for the default action date and time. For information on formatting, see %1$s
-                                    . For example, you could enter %2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, use only terms in English.',
+                                    'Set the offset to use for the default action date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, use only terms in English.',
                                     'post-expirator'
                                 );
 

@@ -2429,20 +2429,10 @@ msgid "Defaults"
 msgstr "Défaut"
 
 #. translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
+#: src/Modules/Settings/Controllers/Controller.php:224
 #: src/Views/menu-general.php:76
-msgid ""
-"Set the offset to use for the default action date and time. For information "
-"on formatting, see %1$s\n"
-"                                    . For example, you could enter %2$s+1 "
-"month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext "
-"Thursday%3$s. Please, use only terms in English."
-msgstr ""
-"Définir le décalage à utiliser pour la date et l’heure de l’action par "
-"défaut. Pour plus d’informations sur le formatage, voir %1$s\n"
-"                                  . Par exemple, vous pouvez saisir %2$s + 1 "
-"mois%3$s ou %2$s + 1 semaine 2 jours 4 heures 2 secondes%3$s ou %2$sprochain "
-"jeudi%3$s. Pour ces valeurs, veuillez utiliser uniquement des termes en "
-"anglais."
+msgid "Set the offset to use for the default action date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, use only terms in English."
+msgstr "Définir le décalage à utiliser pour la date et l’heure de l’action par défaut. Pour plus d’informations sur le formatage, voir %1$s. Par exemple, vous pouvez saisir %2$s + 1 mois%3$s ou %2$s + 1 semaine 2 jours 4 heures 2 secondes%3$s ou %2$sprochain jeudi%3$s. Pour ces valeurs, veuillez utiliser uniquement des termes en anglais."
 
 #: src/Views/menu-general.php:95
 msgid "Calendar Visibility"

@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #. Plugin Name of the plugin
 #: src/Modules/Expirator/Controllers/BlockEditorController.php:110
@@ -29,12 +29,8 @@ msgid "http://wordpress.org/extend/plugins/post-expirator/"
 msgstr "http://wordpress.org/extend/plugins/post-expirator/"
 
 #. Description of the plugin
-msgid ""
-"PublishPress Future allows you to schedule automatic changes to posts, pages "
-"and other content types."
-msgstr ""
-"O PublishPress Future permite que você programe alterações automáticas em "
-"posts, páginas e outros tipos de conteúdo."
+msgid "PublishPress Future allows you to schedule automatic changes to posts, pages and other content types."
+msgstr "O PublishPress Future permite que você programe alterações automáticas em posts, páginas e outros tipos de conteúdo."
 
 #. Author of the plugin
 msgid "PublishPress"
@@ -61,31 +57,20 @@ msgid "Debugging Table Emptied"
 msgstr "Tabela de Depuração Esvaziada"
 
 #: legacy/classes/Display.class.php:198
-msgid ""
-"The legacy future actions migration has been enqueued and will run "
-"asynchronously."
-msgstr ""
-"A migração de ações futuras legadas foi enfileirada e será executada de "
-"forma assíncrona."
+msgid "The legacy future actions migration has been enqueued and will run asynchronously."
+msgstr "A migração de ações futuras legadas foi enfileirada e será executada de forma assíncrona."
 
 #: legacy/classes/Display.class.php:207
-msgid ""
-"The legacy actions arguments restoration has been enqueued and will run "
-"asynchronously."
-msgstr ""
-"A restauração dos argumentos de ações legadas foi enfileirada e será "
-"executada de forma assíncrona."
+msgid "The legacy actions arguments restoration has been enqueued and will run asynchronously."
+msgstr "A restauração dos argumentos de ações legadas foi enfileirada e será executada de forma assíncrona."
 
 #: legacy/classes/Display.class.php:217
 msgid "The database schema was fixed."
 msgstr "A estrutura do banco de dados foi corrigida."
 
 #: legacy/classes/Display.class.php:222
-msgid ""
-"The database schema could not be fixed. Please, contact the support team."
-msgstr ""
-"A estrutura do banco de dados não pode ser corrigida. Por favor, entre em "
-"contaot com o suporte."
+msgid "The database schema could not be fixed. Please, contact the support team."
+msgstr "A estrutura do banco de dados não pode ser corrigida. Por favor, entre em contaot com o suporte."
 
 #: legacy/classes/Display.class.php:313 legacy/classes/Display.class.php:371
 msgid "Saved Options!"
@@ -198,18 +183,15 @@ msgstr "Não existem %s."
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:337
 #: src/Modules/Expirator/Controllers/QuickEditController.php:223
 msgid "You must assign a taxonomy to this post type to use this feature."
-msgstr ""
-"Você deve atribuir uma taxonomia a esse tipo de post para usar esse recurso."
+msgstr "Você deve atribuir uma taxonomia a esse tipo de post para usar esse recurso."
 
 #: src/Modules/Expirator/Controllers/BulkActionController.php:82
 msgid "No posts selected. Unable to sync Future Actions."
-msgstr ""
-"Nenhuma postagem selecionada. Não é possível sincronizar as ações futuras."
+msgstr "Nenhuma postagem selecionada. Não é possível sincronizar as ações futuras."
 
 #: src/Modules/Expirator/Controllers/BulkActionController.php:87
 msgid "Future Actions successfully synced with Post Metadata."
-msgstr ""
-"As ações futuras foram sincronizadas com sucesso com os metadados do post."
+msgstr "As ações futuras foram sincronizadas com sucesso com os metadados do post."
 
 #: src/Modules/Expirator/Controllers/BulkActionController.php:93
 msgid "Update Future Actions from Post Metadata"
@@ -291,12 +273,8 @@ msgid "No terms were added to the %s."
 msgstr "Nenhum termo foi adicionado à %s."
 
 #: src/Modules/Expirator/ExpirationActions/PostCategoryAdd.php:73
-msgid ""
-"The following terms (%s) were added to the %s: \"%s\". The full list of "
-"terms on the post is: %s."
-msgstr ""
-"Os seguintes termos (%s) foram adicionados ao %s: \"%s\". A lista completa "
-"de termos na postagem é: %s."
+msgid "The following terms (%s) were added to the %s: \"%s\". The full list of terms on the post is: %s."
+msgstr "Os seguintes termos (%s) foram adicionados ao %s: \"%s\". A lista completa de termos na postagem é: %s."
 
 #. translators: %s is the taxonomy label (plural)
 #: src/Modules/Expirator/ExpirationActions/PostCategoryAdd.php:119
@@ -309,12 +287,8 @@ msgid "No terms were removed from the %s."
 msgstr "Nenhum termo foi removido de %s."
 
 #: src/Modules/Expirator/ExpirationActions/PostCategoryRemove.php:65
-msgid ""
-"The following terms (%s) were removed from the %s: %s. The new list of terms "
-"on the post is: %s."
-msgstr ""
-"Os seguintes termos (%s) foram removidos do %s: %s. A nova lista de termos "
-"na postagem é: %s."
+msgid "The following terms (%s) were removed from the %s: %s. The new list of terms on the post is: %s."
+msgstr "Os seguintes termos (%s) foram removidos do %s: %s. A nova lista de termos na postagem é: %s."
 
 #. translators: %s is the taxonomy name (plural)
 #: src/Modules/Expirator/ExpirationActions/PostCategoryRemove.php:113
@@ -335,12 +309,8 @@ msgid "No terms were changed on the %s."
 msgstr "Nenhum termo foi alterado no %s."
 
 #: src/Modules/Expirator/ExpirationActions/PostCategorySet.php:67
-msgid ""
-"The following terms (%s) were set to the %s: \"%s\". The old list of terms "
-"on the post was: %s."
-msgstr ""
-"Os seguintes termos (%s) foram definidos para %s: \"%s\". A lista antiga de "
-"termos na postagem era: %s."
+msgid "The following terms (%s) were set to the %s: \"%s\". The old list of terms on the post was: %s."
+msgstr "Os seguintes termos (%s) foram definidos para %s: \"%s\". A lista antiga de termos na postagem era: %s."
 
 #. translators: %s is the taxonomy name (plural)
 #: src/Modules/Expirator/ExpirationActions/PostCategorySet.php:110
@@ -443,8 +413,7 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:66
-msgid ""
-"Cancel the action. This will prevent the action from running in the future"
+msgid "Cancel the action. This will prevent the action from running in the future"
 msgstr "Cancelar a ação. Isso impedirá que a ação seja executada no futuro"
 
 #. translators: %s: amount of time
@@ -608,14 +577,8 @@ msgid "Default Values"
 msgstr "Valores Padrão"
 
 #: src/Modules/Settings/Controllers/Controller.php:203
-msgid ""
-"Use the values below to set the default actions/values to be used for each "
-"for the corresponding post types.  These values can all be overwritten when "
-"creating/editing the post/page."
-msgstr ""
-"Use os valores abaixo para definir as ações/valores padrão a serem usados "
-"para cada um para os tipos de postagem correspondentes.  Todos esses valores "
-"podem ser substituídos ao criar/editar o post/página."
+msgid "Use the values below to set the default actions/values to be used for each for the corresponding post types.  These values can all be overwritten when creating/editing the post/page."
+msgstr "Use os valores abaixo para definir as ações/valores padrão a serem usados para cada um para os tipos de postagem correspondentes.  Todos esses valores podem ser substituídos ao criar/editar o post/página."
 
 #: src/Modules/Settings/Controllers/Controller.php:207
 msgid "Active"
@@ -651,12 +614,8 @@ msgid "Taxonomy"
 msgstr "Taxonomia"
 
 #: src/Modules/Settings/Controllers/Controller.php:221
-msgid ""
-"No taxonomies found for this post type. Taxonomy actions will not be "
-"available."
-msgstr ""
-"Não foram encontradas taxonomias para esse tipo de postagem. As ações de "
-"taxonomia não estarão disponíveis."
+msgid "No taxonomies found for this post type. Taxonomy actions will not be available."
+msgstr "Não foram encontradas taxonomias para esse tipo de postagem. As ações de taxonomia não estarão disponíveis."
 
 #: src/Modules/Settings/Controllers/Controller.php:222
 #: src/Views/menu-general.php:161
@@ -664,31 +623,19 @@ msgid "Who to Notify"
 msgstr "A quem notificar"
 
 #: src/Modules/Settings/Controllers/Controller.php:223
-msgid ""
-"Enter a comma separated list of emails that you would like to be notified "
-"when the action runs."
-msgstr ""
-"Insira uma lista separada por vírgulas de e-mails que você gostaria de ser "
-"notificado quando a ação for executada."
+msgid "Enter a comma separated list of emails that you would like to be notified when the action runs."
+msgstr "Insira uma lista separada por vírgulas de e-mails que você gostaria de ser notificado quando a ação for executada."
 
 #: src/Modules/Settings/Controllers/Controller.php:227
 #: src/Views/menu-general.php:67
 msgid "Default Date/Time Offset"
 msgstr "Deslocamento padrão de data/hora"
 
-#: src/Modules/Settings/Controllers/Controller.php:230
-msgid ""
-"Set the offset to use for the default action date and time. For information "
-"on formatting, see %1$s\n"
-"                                    . For example, you could enter %2$s+1 "
-"month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
-"Thursday%7$s. Please, use only terms in English."
-msgstr ""
-"Defina o deslocamento a ser usado para a data e hora da ação padrão. Para "
-"obter informações sobre formatação, consulte %1$s\n"
-"                                    . Por exemplo, você poderia inserir "
-"%2$s+1 month%3$s ou %4$s+1 week 2 days 4 hours 2 seconds%5$s ou %6$snext "
-"Thursday%7$s. Por favor, use apenas termos em inglês."
+#. translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
+#: src/Modules/Settings/Controllers/Controller.php:224
+#: src/Views/menu-general.php:76
+msgid "Set the offset to use for the default action date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, use only terms in English."
+msgstr "Defina o deslocamento a ser usado para a data e hora da ação padrão. Para obter informações sobre formatação, consulte %1$s. Por exemplo, você poderia inserir %2$s+1 month%3$s ou %2$s+1 week 2 days 4 hours 2 seconds%3$s ou %2$snext Thursday%3$s. Por favor, use apenas termos em inglês."
 
 #: src/Modules/Settings/Controllers/Controller.php:235
 #: src/Views/menu-general.php:81
@@ -708,12 +655,8 @@ msgid "Form Validation Failure: Sorry, your nonce did not verify."
 msgstr "Falha na validação do formulário: Desculpe, seu nonce é inválido."
 
 #: src/Modules/VersionNotices/Module.php:84
-msgid ""
-"You're using PublishPress Future Free. The Pro version has more features and "
-"support. %sUpgrade to Pro%s"
-msgstr ""
-"Você está usando o PublishPress Future Free. A versão Pro tem mais recursos "
-"e suporte. %sAtualize para a versão Pro%s"
+msgid "You're using PublishPress Future Free. The Pro version has more features and support. %sUpgrade to Pro%s"
+msgstr "Você está usando o PublishPress Future Free. A versão Pro tem mais recursos e suporte. %sAtualize para a versão Pro%s"
 
 #: src/Modules/VersionNotices/Module.php:110
 #: src/Views/ad-banner-right-sidebar.php:31
@@ -746,9 +689,7 @@ msgstr "Precisa de suporte para PublishPress Future?"
 
 #: src/Views/ad-banner-right-sidebar.php:45
 msgid "If you need help or have a new feature request, let us know."
-msgstr ""
-"Se precisar de ajuda ou tiver uma solicitação de novo recurso, entre em "
-"contato conosco."
+msgstr "Se precisar de ajuda ou tiver uma solicitação de novo recurso, entre em contato conosco."
 
 #: src/Views/ad-banner-right-sidebar.php:51
 msgid "Request Support"
@@ -767,12 +708,8 @@ msgid "%1$s%2$s%3$s on %5$s%4$s%6$s"
 msgstr "%1$s%2$s%3$s em %5$s%4$s%6$s"
 
 #: src/Views/expire-column.php:80
-msgid ""
-"Action was not scheduled due to a configuration issue. Please attempt to "
-"schedule it again."
-msgstr ""
-"A ação não foi agendada devido a um problema de configuração. Tente agendá-"
-"la novamente."
+msgid "Action was not scheduled due to a configuration issue. Please attempt to schedule it again."
+msgstr "A ação não foi agendada devido a um problema de configuração. Tente agendá-la novamente."
 
 #: src/Views/expire-column.php:85
 msgid "No future action"
@@ -835,11 +772,8 @@ msgid "Delete data"
 msgstr "Excluir dados"
 
 #: src/Views/menu-advanced.php:163
-msgid ""
-"Toggle between preserving or deleting data after the plugin is deactivated."
-msgstr ""
-"Alternar entre preservar ou excluir dados depois que o plug-in for "
-"desativado."
+msgid "Toggle between preserving or deleting data after the plugin is deactivated."
+msgstr "Alternar entre preservar ou excluir dados depois que o plug-in for desativado."
 
 #: src/Views/menu-advanced.php:174 src/Views/menu-display.php:181
 #: src/Views/menu-general.php:179
@@ -847,12 +781,8 @@ msgid "Save Changes"
 msgstr "Salvar Alterações"
 
 #: src/Views/menu-debug-log.php:7
-msgid ""
-"Below is a dump of the debugging table, this should be useful for "
-"troubleshooting."
-msgstr ""
-"Abaixo está o conteúdo da tabela de depuração, isso pode ser útil para a "
-"solução de problemas."
+msgid "Below is a dump of the debugging table, this should be useful for troubleshooting."
+msgstr "Abaixo está o conteúdo da tabela de depuração, isso pode ser útil para a solução de problemas."
 
 #: src/Views/menu-debug-log.php:24
 msgid "Debugging table is currently empty."
@@ -886,7 +816,7 @@ msgstr "Verificação da Estrutura do Banco de Dados"
 msgid "Error found on the database schema:"
 msgid_plural "Errors found on the database schema:"
 msgstr[0] "Erro encontrado no esquema do banco de dados:"
-msgstr[1] ""
+msgstr[1] "Erros encontrados no esquema do banco de dados:"
 
 #: src/Views/menu-diagnostics.php:65
 msgid "The table _ppfuture_actions_args does not exist."
@@ -939,12 +869,8 @@ msgid "Run Migration"
 msgstr "Executar a Migração"
 
 #: src/Views/menu-diagnostics.php:139
-msgid ""
-"Migrate legacy future actions from WP Cron to the new Action Scheduler. This "
-"will run in the background and may take a while."
-msgstr ""
-"Migre as ações futuras legadas do WP Cron para o novo Action Scheduler. Isso "
-"será executado em segundo plano e pode demorar um pouco."
+msgid "Migrate legacy future actions from WP Cron to the new Action Scheduler. This will run in the background and may take a while."
+msgstr "Migre as ações futuras legadas do WP Cron para o novo Action Scheduler. Isso será executado em segundo plano e pode demorar um pouco."
 
 #: src/Views/menu-diagnostics.php:149
 msgid "Restore Legacy Action Arguments"
@@ -955,26 +881,16 @@ msgid "Run Data Restoration"
 msgstr "Executar Restauração de Dados"
 
 #: src/Views/menu-diagnostics.php:156
-msgid ""
-"Restore legacy action arguments as Post Meta. This is useful if you have "
-"issues with 3rd party plugins that read that data. This will run in the "
-"background and may take a while."
-msgstr ""
-"Restaurar argumentos de ação legados como Post Meta. Isso é útil se você "
-"tiver problemas com plug-ins de terceiros que leem esses dados. Isso será "
-"executado em segundo plano e pode demorar um pouco."
+msgid "Restore legacy action arguments as Post Meta. This is useful if you have issues with 3rd party plugins that read that data. This will run in the background and may take a while."
+msgstr "Restaurar argumentos de ação legados como Post Meta. Isso é útil se você tiver problemas com plug-ins de terceiros que leem esses dados. Isso será executado em segundo plano e pode demorar um pouco."
 
 #: src/Views/menu-diagnostics.php:169
 msgid "Legacy Cron Schedule"
 msgstr "Lista de Eventos Cron Legados"
 
 #: src/Views/menu-diagnostics.php:177
-msgid ""
-"The below table will show all currently scheduled cron events for the plugin "
-"with the next run time."
-msgstr ""
-"A tabela abaixo mostrará todos os eventos cron atualmente agendados para o "
-"plug-in com o próximo tempo de execução."
+msgid "The below table will show all currently scheduled cron events for the plugin with the next run time."
+msgstr "A tabela abaixo mostrará todos os eventos cron atualmente agendados para o plug-in com o próximo tempo de execução."
 
 #: src/Views/menu-diagnostics.php:192
 msgid "Event"
@@ -997,14 +913,8 @@ msgid "Date Format"
 msgstr "Formato da Data"
 
 #: src/Views/menu-display.php:45
-msgid ""
-"The default format to use when displaying the action date within a post "
-"using the shortcode or within the footer.  For information on valid "
-"formatting options, see: %s."
-msgstr ""
-"O formato padrão a ser usado ao exibir a data da ação em uma postagem usando "
-"o shortcode ou no rodapé.  Para obter informações sobre as opções de "
-"formatação válidas, consulte: %s."
+msgid "The default format to use when displaying the action date within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
+msgstr "O formato padrão a ser usado ao exibir a data da ação em uma postagem usando o shortcode ou no rodapé.  Para obter informações sobre as opções de formatação válidas, consulte: %s."
 
 #: src/Views/menu-display.php:49 src/Views/menu-display.php:66
 msgid "PHP Date Function"
@@ -1015,52 +925,32 @@ msgid "Time Format"
 msgstr "Formato da Hora"
 
 #: src/Views/menu-display.php:62
-msgid ""
-"The default format to use when displaying the action time within a post "
-"using the shortcode or within the footer.  For information on valid "
-"formatting options, see: %s."
-msgstr ""
-"O formato padrão a ser usado ao exibir a hora da ação em uma postagem usando "
-"o shortcode ou no rodapé.  Para obter informações sobre as opções de "
-"formatação válidas, consulte: %s."
+msgid "The default format to use when displaying the action time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
+msgstr "O formato padrão a ser usado ao exibir a hora da ação em uma postagem usando o shortcode ou no rodapé.  Para obter informações sobre as opções de formatação válidas, consulte: %s."
 
 #: src/Views/menu-display.php:75
 msgid "Post Footer Display"
 msgstr "Exibição no Rodapé do Post"
 
 #: src/Views/menu-display.php:77
-msgid ""
-"Enabling this below will display the action date automatically at the end of "
-"any post which is set to run an action."
-msgstr ""
-"A ativação da opção abaixo exibirá a data da ação automaticamente no final "
-"de qualquer postagem definida para executar uma ação."
+msgid "Enabling this below will display the action date automatically at the end of any post which is set to run an action."
+msgstr "A ativação da opção abaixo exibirá a data da ação automaticamente no final de qualquer postagem definida para executar uma ação."
 
 #: src/Views/menu-display.php:84
 msgid "Show in Post Footer?"
 msgstr "Mostrar no Rodapé do Post?"
 
 #: src/Views/menu-display.php:99
-msgid ""
-"This will enable or disable displaying the future action date in the post "
-"footer."
-msgstr ""
-"Isso ativará ou desativará a exibição da data da ação futura no rodapé da "
-"postagem."
+msgid "This will enable or disable displaying the future action date in the post footer."
+msgstr "Isso ativará ou desativará a exibição da data da ação futura no rodapé da postagem."
 
 #: src/Views/menu-display.php:107
 msgid "Footer Contents"
 msgstr "Conteúdo do Rodapé"
 
 #: src/Views/menu-display.php:112
-msgid ""
-"Enter the text you would like to appear at the bottom of every post which "
-"has an action scheduled.  The following placeholders will be replaced with "
-"the future action date in the following format:"
-msgstr ""
-"Digite o texto que você deseja que apareça na parte inferior de cada "
-"postagem que tenha uma ação programada.  Os seguintes espaços reservados "
-"serão substituídos pela data da ação futura no seguinte formato:"
+msgid "Enter the text you would like to appear at the bottom of every post which has an action scheduled.  The following placeholders will be replaced with the future action date in the following format:"
+msgstr "Digite o texto que você deseja que apareça na parte inferior de cada postagem que tenha uma ação programada.  Os seguintes espaços reservados serão substituídos pela data da ação futura no seguinte formato:"
 
 #: src/Views/menu-display.php:130
 msgid "Footer Style"
@@ -1083,35 +973,16 @@ msgid "Valid %s attributes:"
 msgstr "Atributos válidos %s:"
 
 #: src/Views/menu-display.php:155
-msgid ""
-"%1$s - valid options are %2$sfull%3$s (default), %4$sdate%5$s, %6$stime%7$s"
-msgstr ""
-"%1$s - as opções válidas são %2$sfull%3$s (padrão), %4$sdate%5$s, "
-"%6$stime%7$s"
+msgid "%1$s - valid options are %2$sfull%3$s (default), %4$sdate%5$s, %6$stime%7$s"
+msgstr "%1$s - as opções válidas são %2$sfull%3$s (padrão), %4$sdate%5$s, %6$stime%7$s"
 
 #: src/Views/menu-display.php:169 src/Views/menu-display.php:174
 msgid "%s - format set here will override the value set on the settings page"
-msgstr ""
-"%s - o formato definido aqui substituirá o valor definido na página de "
-"configurações"
+msgstr "%s - o formato definido aqui substituirá o valor definido na página de configurações"
 
 #: src/Views/menu-general.php:63
 msgid "Defaults"
 msgstr "Padrões"
-
-#: src/Views/menu-general.php:76
-msgid ""
-"Set the offset to use for the default action date and time. For information "
-"on formatting, see %1$s\n"
-"                                        . For example, you could enter "
-"%2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
-"Thursday%7$s. Please, use only terms in English."
-msgstr ""
-"Defina o deslocamento a ser usado para a data e hora da ação padrão. Para "
-"obter informações sobre formatação, consulte %1$s\n"
-"                                        . Por exemplo, você poderia inserir "
-"%2$s+1 month%3$s ou %4$s+1 week 2 day 4 hours 2 seconds%5$s ou %6$snext "
-"Thursday%7$s. Por favor, use apenas termos em inglês."
 
 #: src/Views/menu-general.php:95
 msgid "Email Notification"
@@ -1119,41 +990,27 @@ msgstr "Notificação por Email"
 
 #: src/Views/menu-general.php:97
 msgid "Whenever an action runs, an email can be sent to alert users."
-msgstr ""
-"Sempre que uma ação é executada, um e-mail pode ser enviado para alertar os "
-"usuários."
+msgstr "Sempre que uma ação é executada, um e-mail pode ser enviado para alertar os usuários."
 
 #: src/Views/menu-general.php:104
 msgid "Enable Email Notification?"
 msgstr "Habilitar a Notificação por E-mail?"
 
 #: src/Views/menu-general.php:123
-msgid ""
-"This will enable or disable the send of email notification on future action."
-msgstr ""
-"Isso ativará ou desativará o envio de notificações por e-mail sobre ações "
-"futuras."
+msgid "This will enable or disable the send of email notification on future action."
+msgstr "Isso ativará ou desativará o envio de notificações por e-mail sobre ações futuras."
 
 #: src/Views/menu-general.php:131
 msgid "Include Blog Administrators?"
 msgstr "Incluir Administradores do Blog?"
 
 #: src/Views/menu-general.php:152
-msgid ""
-"This will include all users with the role of \"Administrator\" in the email."
-msgstr ""
-"Isso incluirá no e-mail todos os usuários com a função de \"Administrador\"."
+msgid "This will include all users with the role of \"Administrator\" in the email."
+msgstr "Isso incluirá no e-mail todos os usuários com a função de \"Administrador\"."
 
 #: src/Views/menu-general.php:168
-msgid ""
-"Enter a comma separate list of emails that you would like to be notified "
-"when the action runs.  This will be applied to ALL post types.  You can set "
-"post type specific emails on the Defaults tab."
-msgstr ""
-"Insira uma lista separada por vírgulas de e-mails que você gostaria de ser "
-"notificado quando a ação for executada.  Isso será aplicado a TODOS os tipos "
-"de postagem.  Você pode definir e-mails específicos para cada tipo de "
-"postagem na guia Defaults (Padrões)."
+msgid "Enter a comma separate list of emails that you would like to be notified when the action runs.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab."
+msgstr "Insira uma lista separada por vírgulas de e-mails que você gostaria de ser notificado quando a ação for executada.  Isso será aplicado a TODOS os tipos de postagem.  Você pode definir e-mails específicos para cada tipo de postagem na guia Defaults (Padrões)."
 
 #: src/Views/tabs.php:15
 msgid "Post Types"
@@ -1189,19 +1046,13 @@ msgstr "Depuração"
 #~ msgstr "Desativar"
 
 #~ msgid "Select whether the PublishPress Future is enabled for all new posts."
-#~ msgstr ""
-#~ "Selecione se o painel de Ações Futuras está ativado para todas as novas "
-#~ "postagens."
+#~ msgstr "Selecione se o painel de Ações Futuras está ativado para todas as novas postagens."
 
 #~ msgid "Taxonomy (Hierarchical)"
 #~ msgstr "Taxonomia (hierárquica)"
 
-#~ msgid ""
-#~ "Select the hierarchical taxonomy and terms to be used for taxonomy based "
-#~ "expiration."
-#~ msgstr ""
-#~ "Selecione a taxonomia hierárquica e termos a serem usados para ações "
-#~ "baseadas em “taxonomia”."
+#~ msgid "Select the hierarchical taxonomy and terms to be used for taxonomy based expiration."
+#~ msgstr "Selecione a taxonomia hierárquica e termos a serem usados para ações baseadas em “taxonomia”."
 
 #~ msgid "Remove PublishPress ads and branding"
 #~ msgstr "Remover os anúncios e a marca do PublishPress"
@@ -1221,12 +1072,8 @@ msgstr "Depuração"
 #~ msgid "The published date/time will be used as the expiration value"
 #~ msgstr "A data/hora publicada será usada como valor de expiração"
 
-#~ msgid ""
-#~ "More than 1 hierarchical taxonomy detected.  You must assign a default "
-#~ "taxonomy on the settings screen."
-#~ msgstr ""
-#~ "Mais de 1 taxonomia hierárquica detectada.  Você deve atribuir uma "
-#~ "taxonomia padrão na tela de configurações."
+#~ msgid "More than 1 hierarchical taxonomy detected.  You must assign a default taxonomy on the settings screen."
+#~ msgstr "Mais de 1 taxonomia hierárquica detectada.  Você deve atribuir uma taxonomia padrão na tela de configurações."
 
 #~ msgid "Cron event scheduled."
 #~ msgstr "Evento Cron programado."
@@ -1243,53 +1090,30 @@ msgstr "Depuração"
 #~ msgid "Show Classic Editor style box"
 #~ msgstr "Mostrar caixa estilo Editor Clássico"
 
-#~ msgid ""
-#~ "Toggle between native support for the Block Editor or the backward "
-#~ "compatible Classic Editor style metabox."
-#~ msgstr ""
-#~ "Alterne entre o suporte nativo para o Block Editor ou a metabox de estilo "
-#~ "do Classic Editor compatível com versões anteriores."
+#~ msgid "Toggle between native support for the Block Editor or the backward compatible Classic Editor style metabox."
+#~ msgstr "Alterne entre o suporte nativo para o Block Editor ou a metabox de estilo do Classic Editor compatível com versões anteriores."
 
-#~ msgid ""
-#~ "\"Detailed\" will display all information in the Future Action column. "
-#~ "\"Simplified\" will display only the icon and date/time."
-#~ msgstr ""
-#~ "\"Detailed\" (Detalhado) exibirá todas as informações na coluna Future "
-#~ "Action (Ação futura). \"Simplified\" (Simplificado) exibirá apenas o "
-#~ "ícone e a data/hora."
+#~ msgid "\"Detailed\" will display all information in the Future Action column. \"Simplified\" will display only the icon and date/time."
+#~ msgstr "\"Detailed\" (Detalhado) exibirá todas as informações na coluna Future Action (Ação futura). \"Simplified\" (Simplificado) exibirá apenas o ícone e a data/hora."
 
 #~ msgid "Action Arguments table not found"
 #~ msgstr "Tabela de Argumentos de Ações não encontrada"
 
 #~ msgid ""
 #~ "\n"
-#~ "                                    No cron events found for the plugin "
-#~ "using WP Cron."
+#~ "                                    No cron events found for the plugin using WP Cron."
 #~ msgstr ""
 #~ "\n"
-#~ "                                    Não foram encontrados eventos cron "
-#~ "para o plug-in usando o WP Cron."
+#~ "                                    Não foram encontrados eventos cron para o plug-in usando o WP Cron."
 
-#~ msgid ""
-#~ "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been "
-#~ "successfully set."
-#~ msgstr ""
-#~ "%1$s (%2$s) expirou em %3$s. O status de \"%4$s\" foi definido com "
-#~ "sucesso."
+#~ msgid "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully set."
+#~ msgstr "%1$s (%2$s) expirou em %3$s. O status de \"%4$s\" foi definido com sucesso."
 
-#~ msgid ""
-#~ "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been "
-#~ "successfully removed."
-#~ msgstr ""
-#~ "%1$s (%2$s) expirou em %3$s. O status de \"%4$s\" foi removido com "
-#~ "sucesso."
+#~ msgid "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully removed."
+#~ msgstr "%1$s (%2$s) expirou em %3$s. O status de \"%4$s\" foi removido com sucesso."
 
-#~ msgid ""
-#~ "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" have now been set to "
-#~ "\"%5$s\"."
-#~ msgstr ""
-#~ "%1$s (%2$s) expirou em %3$s. O post \"%4$s\" já foi definido para "
-#~ "\"%5$s\"."
+#~ msgid "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" have now been set to \"%5$s\"."
+#~ msgstr "%1$s (%2$s) expirou em %3$s. O post \"%4$s\" já foi definido para \"%5$s\"."
 
 #~ msgid "You're not allowed to set posts to expire"
 #~ msgstr "Você não tem permissão para colocar este post para expirar"
