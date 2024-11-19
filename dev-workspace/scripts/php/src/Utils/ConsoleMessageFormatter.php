@@ -55,7 +55,8 @@ class ConsoleMessageFormatter implements ConsoleMessageFormatterInterface
         if ($this->input->getOption('markdown')) {
             $headersString = implode(' | ', $headers);
             $this->output->writeln('| ' . $headersString . ' |');
-            $this->output->writeln('| ' . str_repeat(' ---- ', count($headers)) . ' |');
+            $headersString = array_fill(0, count($headers), '----');
+            $this->output->writeln('| ' . implode(' | ', $headersString) . ' |');
             foreach ($rows as $row) {
                 $rowString = implode(' | ', $row);
                 $this->output->writeln('| ' . $rowString . ' |');
