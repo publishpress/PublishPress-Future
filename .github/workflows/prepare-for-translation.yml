@@ -65,7 +65,7 @@ jobs:
         id: build-testing-package
         run: |
           $GITHUB_WORKSPACE/dev-workspace/run composer build
-          ZIPFILE_NAME=$(pzipfile)
+          ZIPFILE_NAME=$($GITHUB_WORKSPACE/dev-workspace/run pzipfile)
           echo "ZIPFILE_NAME=$ZIPFILE_NAME" >> $GITHUB_OUTPUT
 
       - name: Upload zip as artifact
