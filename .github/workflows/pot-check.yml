@@ -45,6 +45,10 @@ jobs:
         run: |
           $GITHUB_WORKSPACE/dev-workspace/run composer info:versions
 
+      - name: Add exception for dubious ownership in /project
+        run: |
+          git config --global --add safe.directory /project
+
       - name: Run POT file check against the main branch
         run: |
           OUTPUT=$($GITHUB_WORKSPACE/dev-workspace/run composer check:pot-diff-md)
