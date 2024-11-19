@@ -24881,13 +24881,8 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.block-editor-block-types-list__item-p
     border-radius: 4px;
     font-size: 10px;
     font-weight: 600;
-    width: 81%;
-}
-
-.components-popover__content .block-editor-block-types-list__item-pro-badge {
     width: 100%;
 }
-
 .workflow-editor-inspector-card__pro-badge,
 .block-editor-block-card__pro-badge {
     background-color: #ffb200;
@@ -24927,7 +24922,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.block-editor-block-types-list__item-p
     height: 18px !important;
     margin-right: 4px;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/pro-features.css"],"names":[],"mappings":"AAAA;IACI,yBAAyB;IACzB,WAAW;IACX,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,gBAAgB;IAChB,UAAU;AACd;;AAEA;IACI,WAAW;AACf;;AAEA;;IAEI,yBAAyB;IACzB,WAAW;IACX,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,gBAAgB;AACpB;;AAEA;;IAEI,gBAAgB;AACpB;;AAEA;;IAEI,eAAe;IACf,cAAc;IACd,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,gBAAgB;IAChB,6BAA6B;IAC7B,gBAAgB;AACpB;;AAEA;IACI,yBAAyB;IACzB,WAAW;IACX,4BAA4B;IAC5B,kBAAkB;AACtB;;AAEA;IACI,sBAAsB;IACtB,uBAAuB;IACvB,iBAAiB;AACrB","sourcesContent":[".block-editor-block-types-list__item-pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    padding: 3px 8px;\n    border-radius: 4px;\n    font-size: 10px;\n    font-weight: 600;\n    width: 81%;\n}\n\n.components-popover__content .block-editor-block-types-list__item-pro-badge {\n    width: 100%;\n}\n\n.workflow-editor-inspector-card__pro-badge,\n.block-editor-block-card__pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    padding: 3px 8px;\n    border-radius: 4px;\n    font-size: 10px;\n    font-weight: 600;\n}\n\n.workflow-editor-inspector-card__pro-badge,\n.components-popover__content .block-editor-block-card__pro-badge {\n    margin-left: 8px;\n}\n\n.workflow-editor-inspector-card__pro-instructions,\n.block-editor-block-card__pro-instructions {\n    font-size: 12px;\n    color: #757575;\n    margin-top: 8px;\n    line-height: 1.5;\n    font-style: italic;\n    font-weight: 400;\n    border-top: 1px solid #e0e0e0;\n    padding-top: 8px;\n}\n\n.edit-post-header-toolbar__buy-pro {\n    background-color: #ffb200;\n    color: #000;\n    padding: 4px 10px !important;\n    border-radius: 4px;\n}\n\n.edit-post-header-toolbar__buy-pro .publishpress-icon {\n    width: 18px !important;\n    height: 18px !important;\n    margin-right: 4px;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/pro-features.css"],"names":[],"mappings":"AAAA;IACI,yBAAyB;IACzB,WAAW;IACX,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,gBAAgB;IAChB,WAAW;AACf;AACA;;IAEI,yBAAyB;IACzB,WAAW;IACX,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,gBAAgB;AACpB;;AAEA;;IAEI,gBAAgB;AACpB;;AAEA;;IAEI,eAAe;IACf,cAAc;IACd,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,gBAAgB;IAChB,6BAA6B;IAC7B,gBAAgB;AACpB;;AAEA;IACI,yBAAyB;IACzB,WAAW;IACX,4BAA4B;IAC5B,kBAAkB;AACtB;;AAEA;IACI,sBAAsB;IACtB,uBAAuB;IACvB,iBAAiB;AACrB","sourcesContent":[".block-editor-block-types-list__item-pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    padding: 3px 8px;\n    border-radius: 4px;\n    font-size: 10px;\n    font-weight: 600;\n    width: 100%;\n}\n.workflow-editor-inspector-card__pro-badge,\n.block-editor-block-card__pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    padding: 3px 8px;\n    border-radius: 4px;\n    font-size: 10px;\n    font-weight: 600;\n}\n\n.workflow-editor-inspector-card__pro-badge,\n.components-popover__content .block-editor-block-card__pro-badge {\n    margin-left: 8px;\n}\n\n.workflow-editor-inspector-card__pro-instructions,\n.block-editor-block-card__pro-instructions {\n    font-size: 12px;\n    color: #757575;\n    margin-top: 8px;\n    line-height: 1.5;\n    font-style: italic;\n    font-weight: 400;\n    border-top: 1px solid #e0e0e0;\n    padding-top: 8px;\n}\n\n.edit-post-header-toolbar__buy-pro {\n    background-color: #ffb200;\n    color: #000;\n    padding: 4px 10px !important;\n    border-radius: 4px;\n}\n\n.edit-post-header-toolbar__buy-pro .publishpress-icon {\n    width: 18px !important;\n    height: 18px !important;\n    margin-right: 4px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
