@@ -47,7 +47,7 @@ jobs:
 
       - name: Run POT file check against the main branch
         run: |
-          OUTPUT=$($GITHUB_WORKSPACE/dev-workspace/run composer check:pot-diff)
+          OUTPUT=$($GITHUB_WORKSPACE/dev-workspace/run composer check:pot-diff-md)
           PLUGIN_VERSION=$($GITHUB_WORKSPACE/dev-workspace/run pversion)
           echo "Checking for changes in POT file for version $PLUGIN_VERSION"
           echo "$OUTPUT"

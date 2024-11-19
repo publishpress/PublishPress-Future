@@ -124,7 +124,8 @@
         "check:cs": "phpcs",
         "check:stan": "phpstan",
         "check:longpath": "longpath .",
-        "check:pot-diff": "php dev-workspace/scripts/php/bin/pptk pot:diff https://raw.githubusercontent.com/publishpress/PublishPress-Future/refs/heads/main/languages/post-expirator.pot ./languages/post-expirator.pot -m",
+        "check:pot-diff": "php dev-workspace/scripts/php/bin/pptk pot:diff https://raw.githubusercontent.com/publishpress/PublishPress-Future/refs/heads/main/languages/post-expirator.pot ./languages/post-expirator.pot",
+        "check:pot-diff-md": "php dev-workspace/scripts/php/bin/pptk pot:diff https://raw.githubusercontent.com/publishpress/PublishPress-Future/refs/heads/main/languages/post-expirator.pot ./languages/post-expirator.pot -m",
         "fix:cs": "phpcbf --standard=.phpcs.xml",
         "fix:php": [
             "php-cs-fixer fix .",
@@ -236,7 +237,9 @@
         "info:versions": "Gets the version of the main tools available.",
         "set:version": "Sets the version of the plugin.",
         "pre-release": "Creates a release branch and a pull request for the release.",
-        "pr-link": "Gets the pull request URL for the release branch."
+        "pr-link": "Gets the pull request URL for the release branch.",
+        "check:pot-diff": "Checks the POT file for differences in the main branch.",
+        "check:pot-diff-md": "Checks the POT file for differences in the main branch and outputs the results in Markdown format."
     },
     "extra": {
         "plugin-slug": "post-expirator",
