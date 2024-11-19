@@ -999,7 +999,7 @@ msgstr "Acionador Manual de Fluxo de Trabalho"
 #: src/Modules/Workflows/Controllers/WorkflowsList.php:139
 #: src/Modules/Workflows/Views/manual-trigger-quick-edit.html.php:9
 msgid "Action Workflows"
-msgstr "Fluxos de trabalho de ações"
+msgstr "Fluxos de trabalho"
 
 #: src/Modules/Workflows/Controllers/PostType.php:49
 msgid "Future Workflow"
@@ -1068,7 +1068,7 @@ msgstr "Navegação na lista de fluxos de trabalho"
 
 #: src/Modules/Workflows/Controllers/PostType.php:65
 msgid "Action Workflows list"
-msgstr "Lista de fluxos de trabalho de ações"
+msgstr "Lista de fluxos de trabalho"
 
 #: src/Modules/Workflows/Controllers/PostType.php:66
 msgid "Workflow published."
@@ -1324,7 +1324,7 @@ msgstr "Desativar"
 
 #: src/Modules/Workflows/Controllers/WorkflowsList.php:412
 msgid "Action Workflow Editor"
-msgstr "Editor de fluxo de trabalho de ação"
+msgstr "Editor de fluxo de trabalho"
 
 #: src/Modules/Workflows/Domain/DataType/PostQuery.php:16
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:67
