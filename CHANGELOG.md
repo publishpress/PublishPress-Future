@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix call to undefined function `error_log` (Issue #1036).
 - Fix the page title in the workflow editor (Issue #1027).
 - Fix the page title on admin pages of 3rd party plugins (Issue #1037).
+- Updated the pt-BR translations.
+- Fix the size of Pro badge on step inserter in the workflow editor.
 
 ## [4.1.1] - 12 Nov, 2024
 
