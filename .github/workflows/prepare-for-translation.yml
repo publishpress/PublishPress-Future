@@ -1,81 +1,128 @@
 name: Prepare for translation
 on:
   push:
-    branches:
-      - 'pre-release'
+    branches: ['pre-release']
 
 jobs:
-  check:
-    name: Check the POT file and prepare for translation
-    env:
-      # ISSUE_ASSIGNEE: wocmultimedia
-      ISSUE_ASSIGNEE: andergmartins
-      # ISSUE_CC: "@wocmultimedia, @andergmartins, @stevejburge"
-      ISSUE_CC: "@andergmartins"
-      GH_TOKEN: ${{ github.token }}
+  setup:
+    name: Setup and Check POT
     runs-on: ubuntu-latest
+    container:
+      image: publishpress/dev-workspace-terminal:future-free
+    outputs:
+      pot_has_changes: ${{ steps.check-pot-diff.outputs.POT_HAS_CHANGES }}
+      plugin_version: ${{ steps.get-plugin-version.outputs.PLUGIN_VERSION }}
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@master
+      - uses: actions/checkout@master
 
-      - name: Prepare composer
+      - name: Setup composer
         run: |
-          $GITHUB_WORKSPACE/dev-workspace/run composer validate
-          $GITHUB_WORKSPACE/dev-workspace/run composer install
+          composer validate
+          composer install
+          composer info:versions
 
-      - name: Show version of tools inside the dev-workspace
-        run: |
-          $GITHUB_WORKSPACE/dev-workspace/run composer info:versions
-
-      # - name: Run POT file check against the main branch
-      #   run: |
-      #     OUTPUT=$($GITHUB_WORKSPACE/dev-workspace/run composer check:pot-diff-md)
-      #     PLUGIN_VERSION=${{ steps.get-plugin-version.outputs.PLUGIN_VERSION }}
-      #     echo "Checking for changes in POT file for version $PLUGIN_VERSION"
-      #     echo "$OUTPUT"
-      #     echo ""
-      #     if [[ ! "$OUTPUT" =~ "No messages found" ]]; then
-      #       # Check if issue already exists
-      #       ISSUE_EXISTS=$(gh issue list --search "POT file has changes that need to be reviewed for version $PLUGIN_VERSION in:title is:open" --json number --jq 'length')
-      #       if [ "$ISSUE_EXISTS" -eq 0 ]; then
-      #         echo ""
-      #         echo "No issue found, creating a new one"
-      #         gh issue create \
-      #           --title "POT file has changes that need to be reviewed for version $PLUGIN_VERSION" \
-      #           --body "The POT file check detected changes between the main branch and the current branch.<br />Please review and update the PO files.<br /><br />CC: $ISSUE_CC<br /><br />Output of \`check:pot-diff\`:<br />$OUTPUT" \
-      #           --label "translation" \
-      #           --assignee "$ISSUE_ASSIGNEE"
-      #       else
-      #         ISSUE_NUMBER=$(gh issue list --search "POT file has changes that need to be reviewed for version $PLUGIN_VERSION in:title" --json number --jq '.[0].number')
-      #         echo ""
-      #         echo "Changes found"
-      #         echo "Commenting on issue $ISSUE_NUMBER"
-      #         gh issue comment $ISSUE_NUMBER --body "Additional changes detected in the repository for version $PLUGIN_VERSION. Please review the latest differences below.<br /><br />CC: $ISSUE_CC<br /><br />Latest output of \`check:pot-diff\`:<br />$OUTPUT"
-      #       fi
-      #     fi
-
-      - name: Get the current version number and store it in a variable
+      - name: Get plugin version
         id: get-plugin-version
         run: |
-          PLUGIN_VERSION=$($GITHUB_WORKSPACE/dev-workspace/run pversion)
-          echo "Current version: $PLUGIN_VERSION"
+          PLUGIN_VERSION=$(pversion)
           echo "PLUGIN_VERSION=$PLUGIN_VERSION" >> $GITHUB_OUTPUT
 
-      - name: Build the testing package and get its url for download
-        id: build-testing-package
+      - name: Check POT differences
+        id: check-pot-diff
         run: |
-          $GITHUB_WORKSPACE/dev-workspace/run composer build
-          ZIPFILE_NAME=$($GITHUB_WORKSPACE/dev-workspace/run pzipfile)
-          echo "ZIPFILE_NAME=$ZIPFILE_NAME" >> $GITHUB_OUTPUT
-          ls -lha $GITHUB_WORKSPACE/dist/
+          composer check:pot-diff-md > pot-diff.txt
+          cat pot-diff.txt
+          OUTPUT=$(cat pot-diff.txt)
+          [[ "$OUTPUT" =~ "No messages found" ]] && \
+            echo "POT_HAS_CHANGES=false" >> $GITHUB_OUTPUT || \
+            echo "POT_HAS_CHANGES=true" >> $GITHUB_OUTPUT
 
-      - name: Upload zip as artifact
+      - name: Upload pot-diff
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.build-testing-package.outputs.ZIPFILE_NAME }}
-          path: $GITHUB_WORKSPACE/dist/${{ steps.build-testing-package.outputs.ZIPFILE_NAME }}
+          name: pot-diff
+          path: pot-diff.txt
+          retention-days: 1
+
+  build:
+    needs: setup
+    name: Build testing package
+    if: needs.setup.outputs.pot_has_changes == 'true'
+    runs-on: ubuntu-latest
+    container:
+      image: publishpress/dev-workspace-terminal:future-free
+    outputs:
+      zipfile_name: ${{ steps.build-package.outputs.ZIPFILE_NAME }}
+      artifact_url: ${{ steps.upload-artifact.outputs.artifact-url }}
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Build package
+        id: build-package
+        run: |
+          ZIPFILE_NAME=$(pzipfile)
+          echo "ZIPFILE_NAME=$ZIPFILE_NAME" >> $GITHUB_OUTPUT
+          composer install
+          composer build
+
+      - name: Upload artifact
+        id: upload-artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.build-package.outputs.ZIPFILE_NAME }}
+          path: dist/${{ steps.build-package.outputs.ZIPFILE_NAME }}
           retention-days: 7
 
-      - name: Echo the URL for the artifact
-        run: |
-          echo "Artifact URL: ${{ steps.upload-artifact.outputs.artifact_url }}"
+  create-issue:
+    needs: [setup, build]
+    if: needs.setup.outputs.pot_has_changes == 'true' && needs.build.outputs.artifact_url != ''
+    name: Create issue for translation
+    runs-on: ubuntu-latest
+    env:
+      ISSUE_ASSIGNEE: andergmartins
+      ISSUE_CC: "@andergmartins"
+      GH_TOKEN: ${{ github.token }}
+      PLUGIN_VERSION: ${{ needs.setup.outputs.plugin_version }}
+    steps:
+      - name: Download pot-diff
+        uses: actions/download-artifact@v4
+        with:
+          name: pot-diff
+          path: .
+
+      - name: Create or update issue
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const potDiff = fs.readFileSync('pot-diff.txt', 'utf8');
+
+            const searchQuery = `POT file has changes that need to be reviewed for version ${process.env.PLUGIN_VERSION} in:title is:open`;
+            const issues = await github.rest.search.issuesAndPullRequests({
+              q: searchQuery,
+              per_page: 1
+            });
+
+            const body = `The POT file check detected changes between the main branch and the current branch.
+            \nPlease review and update the PO files.
+            \nDownload the testing package for this version: ${{ needs.build.outputs.artifact_url }}
+            \nCC: ${process.env.ISSUE_CC}
+            \n${potDiff}\n`;
+
+            if (issues.data.total_count === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `POT file has changes that need to be reviewed for version ${process.env.PLUGIN_VERSION}`,
+                body,
+                labels: ['translation'],
+                assignees: [process.env.ISSUE_ASSIGNEE]
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issues.data.items[0].number,
+                body: `Additional changes detected. ${body}`
+              });
+            }
