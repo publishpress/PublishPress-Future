@@ -96,8 +96,16 @@ class CompareCommand extends Command
     {
         $this->consoleMessageFormatter->writeHeader($type);
 
-        foreach ($terms as $term) {
-            $this->consoleMessageFormatter->writeTerm($term);
+        $terms = array_map(function ($term) use ($type) {
+            return [$term];
+        }, $terms);
+
+        if ($this->input->getOption('markdown')) {
+            $this->consoleMessageFormatter->writeTable([$type], $terms);
+        } else {
+            foreach ($terms as $term) {
+                $this->consoleMessageFormatter->writeTerm($term[0]);
+            }
         }
     }
 
