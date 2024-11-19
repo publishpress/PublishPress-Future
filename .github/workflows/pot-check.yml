@@ -21,8 +21,8 @@ jobs:
   check:
     name: Check the POT file
     env:
-      ISSUE_ASSIGNEE: andergmartins
-      ISSUE_CC: "@andergmartins, @stevejburge"
+      ISSUE_ASSIGNEE: wocmultimedia
+      ISSUE_CC: "@wocmultimedia, @andergmartins, @stevejburge"
       GH_TOKEN: ${{ github.token }}
     runs-on: ubuntu-latest
     steps:
