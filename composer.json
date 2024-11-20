@@ -59,7 +59,6 @@
         "automattic/vipwpcs": "^3",
         "publishpress/publishpress-phpcs-standards": "dev-main",
         "spatie/ray": "^1.41",
-        "rector/rector": "dev-main",
         "phpunit/phpunit": "^10"
     },
     "scripts": {
@@ -161,7 +160,6 @@
         "test": ".\/vendor\/bin\/codecept run $@",
         "codecept": ".\/vendor\/bin\/codecept $@",
         "docker:cleanup": "docker system prune -f",
-        "ray:cleanup": "vendor/bin/rector process post-expirator.php src legacy tests/Acceptance tests/EndToEnd tests/Integration tests/Unit --config vendor/spatie/ray/remove-ray-rector.php",
         "info:versions": "bash .\/dev-workspace\/scripts\/info-versions.sh",
         "set:version": "php .\/dev-workspace\/scripts\/bump-version.php \"$@\"",
         "pre-release": "bash .\/dev-workspace\/scripts\/pre-release.sh \"$@\"",

@@ -1,0 +1,128 @@
+name: Prepare for translation
+on:
+  push:
+    branches: ['pre-release']
+
+jobs:
+  setup:
+    name: Setup and Check POT
+    runs-on: ubuntu-latest
+    container:
+      image: publishpress/dev-workspace-terminal:future-free
+    outputs:
+      pot_has_changes: ${{ steps.check-pot-diff.outputs.POT_HAS_CHANGES }}
+      plugin_version: ${{ steps.get-plugin-version.outputs.PLUGIN_VERSION }}
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Setup composer
+        run: |
+          composer validate
+          composer install
+          composer info:versions
+
+      - name: Get plugin version
+        id: get-plugin-version
+        run: |
+          PLUGIN_VERSION=$(pversion)
+          echo "PLUGIN_VERSION=$PLUGIN_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Check POT differences
+        id: check-pot-diff
+        run: |
+          composer check:pot-diff-md > pot-diff.txt
+          cat pot-diff.txt
+          OUTPUT=$(cat pot-diff.txt)
+          [[ "$OUTPUT" =~ "No messages found" ]] && \
+            echo "POT_HAS_CHANGES=false" >> $GITHUB_OUTPUT || \
+            echo "POT_HAS_CHANGES=true" >> $GITHUB_OUTPUT
+
+      - name: Upload pot-diff
+        uses: actions/upload-artifact@v4
+        with:
+          name: pot-diff
+          path: pot-diff.txt
+          retention-days: 1
+
+  build:
+    needs: setup
+    name: Build testing package
+    if: needs.setup.outputs.pot_has_changes == 'true'
+    runs-on: ubuntu-latest
+    container:
+      image: publishpress/dev-workspace-terminal:future-free
+    outputs:
+      zipfile_name: ${{ steps.build-package.outputs.ZIPFILE_NAME }}
+      artifact_url: ${{ steps.upload-artifact.outputs.artifact-url }}
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Build package
+        id: build-package
+        run: |
+          ZIPFILE_NAME=$(pzipfile)
+          echo "ZIPFILE_NAME=$ZIPFILE_NAME" >> $GITHUB_OUTPUT
+          composer install
+          composer build
+
+      - name: Upload artifact
+        id: upload-artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.build-package.outputs.ZIPFILE_NAME }}
+          path: dist/${{ steps.build-package.outputs.ZIPFILE_NAME }}
+          retention-days: 7
+
+  create-issue:
+    needs: [setup, build]
+    if: needs.setup.outputs.pot_has_changes == 'true' && needs.build.outputs.artifact_url != ''
+    name: Create issue for translation
+    runs-on: ubuntu-latest
+    env:
+      ISSUE_ASSIGNEE: andergmartins
+      ISSUE_CC: "@andergmartins"
+      GH_TOKEN: ${{ github.token }}
+      PLUGIN_VERSION: ${{ needs.setup.outputs.plugin_version }}
+    steps:
+      - name: Download pot-diff
+        uses: actions/download-artifact@v4
+        with:
+          name: pot-diff
+          path: .
+
+      - name: Create or update issue
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const potDiff = fs.readFileSync('pot-diff.txt', 'utf8');
+
+            const searchQuery = `POT file has changes that need to be reviewed for version ${process.env.PLUGIN_VERSION} in:title is:open`;
+            const issues = await github.rest.search.issuesAndPullRequests({
+              q: searchQuery,
+              per_page: 1
+            });
+
+            const body = `The POT file check detected changes between the main branch and the current branch.
+            \nPlease review and update the PO files.
+            \nDownload the testing package for this version: ${{ needs.build.outputs.artifact_url }}
+            \nCC: ${process.env.ISSUE_CC}
+            \n${potDiff}\n`;
+
+            if (issues.data.total_count === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `POT file has changes that need to be reviewed for version ${process.env.PLUGIN_VERSION}`,
+                body,
+                labels: ['translation'],
+                assignees: [process.env.ISSUE_ASSIGNEE]
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issues.data.items[0].number,
+                body: `Additional changes detected. ${body}`
+              });
+            }

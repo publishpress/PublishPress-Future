@@ -63,8 +63,11 @@ class CompareCommand extends Command
         $this->output = $output;
         $this->input = $input;
 
-        $oldMessages = $this->poFileProcessor->extractTermsFromFile($input->getArgument('old'));
-        $newMessages = $this->poFileProcessor->extractTermsFromFile($input->getArgument('new'));
+        $oldArgument = $input->getArgument('old');
+        $newArgument = $input->getArgument('new');
+
+        $oldMessages = $this->poFileProcessor->extractTermsFromFile($oldArgument);
+        $newMessages = $this->poFileProcessor->extractTermsFromFile($newArgument);
 
         if (empty($oldMessages) || empty($newMessages)) {
             $this->consoleMessageFormatter->writeErrorLine('No messages found in the PO/POT files');
@@ -79,12 +82,18 @@ class CompareCommand extends Command
             return Command::SUCCESS;
         }
 
+        $this->output->writeln('Comparing ' . $oldArgument . ' and ' . $newArgument);
+
         if (!empty($newTerms)) {
-            $this->outputTerms('New Terms', $newTerms);
+            $this->consoleMessageFormatter->writeHeader('Terms Added');
+            $this->output->writeln('Terms added to the POT file:');
+            $this->outputTerms($newTerms);
         }
 
         if (!empty($removedTerms)) {
-            $this->outputTerms('Removed Terms', $removedTerms);
+            $this->consoleMessageFormatter->writeHeader('Terms Removed');
+            $this->output->writeln('Terms removed from the POT file:');
+            $this->outputTerms($removedTerms);
         }
 
         $this->outputStatistics($oldMessages, $newMessages, $newTerms, $removedTerms);
@@ -92,16 +101,14 @@ class CompareCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function outputTerms(string $type, array $terms): void
+    private function outputTerms(array $terms): void
     {
-        $this->consoleMessageFormatter->writeHeader($type);
-
-        $terms = array_map(function ($term) use ($type) {
+        $terms = array_map(function ($term) {
             return [$term];
         }, $terms);
 
         if ($this->input->getOption('markdown')) {
-            $this->consoleMessageFormatter->writeTable([$type], $terms);
+            $this->consoleMessageFormatter->writeTable(['Term'], $terms);
         } else {
             foreach ($terms as $term) {
                 $this->consoleMessageFormatter->writeTerm($term[0]);
