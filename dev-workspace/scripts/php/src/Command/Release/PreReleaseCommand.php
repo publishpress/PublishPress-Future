@@ -183,7 +183,10 @@ class PreReleaseCommand extends Command
         $remoteUrl = $this->runGitCommand(['remote', 'get-url', 'origin']);
 
         // Parse the URL to get owner and repo
-        if (preg_match('#[:/]([^/]+)/([^/]+?)(?:\.git)?$#', $remoteUrl, $matches)) {
+        // Handle both HTTPS and SSH URLs:
+        // HTTPS: https://github.com/owner/repo.git
+        // SSH: git@github.com:owner/repo.git
+        if (preg_match('#^(?:https://github\.com/|git@github\.com:)([^/]+)/([^/]+?)(?:\.git)?$#', $remoteUrl, $matches)) {
             return [$matches[1], $matches[2]];
         }
 
