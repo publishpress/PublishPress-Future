@@ -182,7 +182,8 @@ class Module implements ModuleInterface
             $this->hooks,
             $this->scheduler,
             $this->expirablePostModelFactory,
-            $this->logger
+            $this->logger,
+            $this->actionArgsSchema
         );
     }
 
