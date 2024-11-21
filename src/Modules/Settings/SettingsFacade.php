@@ -143,6 +143,10 @@ class SettingsFacade
      */
     public function getDebugIsEnabled($default = false)
     {
+        if (defined('PUBLISHPRESS_FUTURE_FORCE_DEBUG') && constant('PUBLISHPRESS_FUTURE_FORCE_DEBUG')) {
+            return true;
+        }
+
         if (! isset($this->cache['debugIsEnabled'])) {
             $this->cache['debugIsEnabled'] = (bool)$this->options->getOption('expirationdateDebug', $default);
         }
