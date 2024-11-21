@@ -45,3 +45,4 @@
 - phpstan.neon
 - codeception.yml
 - CHANGELOG.md
+.env
