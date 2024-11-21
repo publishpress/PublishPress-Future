@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-19T15:23:56+00:00\n"
+"PO-Revision-Date: 2024-11-20 23:01+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-17T15:39:48+00:00\n"
-"PO-Revision-Date: 2024-10-23 18:20+0200\n"
-"Language: it_IT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.4.4\n"
 "X-Domain: publishpress-future-pro\n"
@@ -19,8 +19,12 @@ msgid "Edit condition"
 msgstr "Modifica condizione"
 
 #: components/data-fields/conditional.jsx:94
-msgid "This conditional will only be evaluated in the Pro version. In the Free version, it will always return true."
-msgstr "Questa condizione sarà valutata solo nella versione Pro. Nella versione Free, restituirà sempre true."
+msgid ""
+"This conditional will only be evaluated in the Pro version. In the Free "
+"version, it will always return true."
+msgstr ""
+"Questa condizione sarà valutata solo nella versione Pro. Nella versione "
+"Free, restituirà sempre true."
 
 #: components/data-fields/conditional.jsx:106
 msgid "Condition"
@@ -91,8 +95,15 @@ msgid "Click for more information"
 msgstr "Fai clic per maggiori informazioni"
 
 #: components/data-fields/date-offset.jsx:194
-msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
-msgstr "Per ulteriori informazioni sulla formattazione, consultare la funzione %sPHP strtotime%s. Ad esempio, si può inserire %s+1 mese%s o %s+1 settimana 2 giorni 4 ore 2 secondi%s o %sgiovedì prossimo%s. Si prega di utilizzare solo frasi in inglese."
+msgid ""
+"For more information on formatting, see the %sPHP strtotime function%s. For "
+"example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 "
+"seconds%s or %snext Thursday%s. Please use only phrases in English."
+msgstr ""
+"Per ulteriori informazioni sulla formattazione, consultare la funzione %sPHP "
+"strtotime%s. Ad esempio, si può inserire %s+1 mese%s o %s+1 settimana 2 "
+"giorni 4 ore 2 secondi%s o %sgiovedì prossimo%s. Si prega di utilizzare solo "
+"frasi in inglese."
 
 #: components/data-fields/date-offset.jsx:216
 msgid "Repeating Action"
@@ -103,16 +114,25 @@ msgid "Unique ID Expression"
 msgstr "Espressione ID unica"
 
 #: components/data-fields/date-offset.jsx:233
-msgid "Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}} or {{global.user.ID}} to make sure the ID is unique."
-msgstr "Definire un'espressione personalizzata per un ID attività univoco. Utilizzare segnaposti come {{onSavePost1.post.ID}} o {{global.user.ID}} per essere sicuro che l'ID sia unico."
+msgid ""
+"Define a custom expression for a unique task ID. Use placeholders like "
+"{{onSavePost1.post.ID}} or {{global.user.ID}} to make sure the ID is unique."
+msgstr ""
+"Definire un'espressione personalizzata per un ID attività univoco. "
+"Utilizzare segnaposti come {{onSavePost1.post.ID}} o {{global.user.ID}} per "
+"essere sicuro che l'ID sia unico."
 
 #: components/data-fields/date-offset.jsx:239
 msgid "Priority"
 msgstr "Priorità"
 
 #: components/data-fields/date-offset.jsx:242
-msgid "Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first."
-msgstr "Imposta la priorità di esecuzione del passaggio programmato. I numeri più bassi indicano una priorità più alta e vengono eseguiti per primi."
+msgid ""
+"Sets the execution priority of the scheduled step. Lower numbers indicate "
+"higher priority and are executed first."
+msgstr ""
+"Imposta la priorità di esecuzione del passaggio programmato. I numeri più "
+"bassi indicano una priorità più alta e vengono eseguiti per primi."
 
 #: components/data-fields/debug-data.jsx:7
 msgid "All received input"
@@ -121,6 +141,38 @@ msgstr "Tutti gli input ricevuti"
 #: components/data-fields/debug-data.jsx:35
 msgid "Data to output"
 msgstr "Dati da mostrare"
+
+#: components/data-fields/debug-levels.jsx:7
+msgid "Debug"
+msgstr "Debug"
+
+#: components/data-fields/debug-levels.jsx:8
+msgid "Info"
+msgstr "Informazione"
+
+#: components/data-fields/debug-levels.jsx:9
+msgid "Notice"
+msgstr "Avviso"
+
+#: components/data-fields/debug-levels.jsx:10
+msgid "Warning"
+msgstr "Attenzione"
+
+#: components/data-fields/debug-levels.jsx:11
+msgid "Error"
+msgstr "Errore"
+
+#: components/data-fields/debug-levels.jsx:12
+msgid "Critical"
+msgstr "Critico"
+
+#: components/data-fields/debug-levels.jsx:13
+msgid "Alert"
+msgstr "Allerta"
+
+#: components/data-fields/debug-levels.jsx:28
+msgid "Level"
+msgstr "Livello"
 
 #: components/data-fields/email-recipient.jsx:13
 msgid "Custom Addresses"
@@ -228,11 +280,13 @@ msgstr "Indietro"
 msgid "Pro"
 msgstr "Pro"
 
-#: components/inspector-card/index.jsx:59
-#: components/node-types/generic.jsx:164
+#: components/inspector-card/index.jsx:59 components/node-types/generic.jsx:164
 #: components/secondary-sidebar/node-card.jsx:35
-msgid "Currently this step is being skipped. Upgrade to Pro to unlock this feature."
-msgstr "Attualmente questo passaggio viene saltato. Aggiorna a Pro per sbloccare questa caratteristica."
+msgid ""
+"Currently this step is being skipped. Upgrade to Pro to unlock this feature."
+msgstr ""
+"Attualmente questo passaggio viene saltato. Aggiorna a Pro per sbloccare "
+"questa caratteristica."
 
 #: components/layout/header.jsx:133
 msgid "Add"
@@ -243,8 +297,7 @@ msgid "Close"
 msgstr "Chiudi"
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/layout/header.jsx:144
-#: components/layout/header.jsx:149
+#: components/layout/header.jsx:144 components/layout/header.jsx:149
 msgid "Auto Layout"
 msgstr "Layout automatico"
 
@@ -307,7 +360,8 @@ msgstr "Impostazioni avanzate"
 
 #: components/more-menu/menu-items-view.jsx:37
 msgid "Display advanced settings for the workflow, triggers and steps"
-msgstr "Visualizza le impostazioni avanzate per flusso di lavoro, trigger e fasi"
+msgstr ""
+"Visualizza le impostazioni avanzate per flusso di lavoro, trigger e fasi"
 
 #: components/more-menu/menu-items-view.jsx:38
 msgid "Advanced settings mode activated"
@@ -340,8 +394,12 @@ msgid "Display the controls panel"
 msgstr "Visualizza il pannello di controllo"
 
 #: components/more-menu/menu-items-view.jsx:54
-msgid "Display the controls panel with buttons to zoon in, zoom out, fit the view and lock the viewport"
-msgstr "Visualizza il pannello di controllo con i pulsanti di zoom in, zoom out, adatta alla vista e blocca il viewport"
+msgid ""
+"Display the controls panel with buttons to zoon in, zoom out, fit the view "
+"and lock the viewport"
+msgstr ""
+"Visualizza il pannello di controllo con i pulsanti di zoom in, zoom out, "
+"adatta alla vista e blocca il viewport"
 
 #: components/more-menu/menu-items-view.jsx:59
 msgid "Tools"
@@ -393,6 +451,7 @@ msgstr "Informazioni sviluppatore"
 
 #: components/node-dev-info-panel/index.jsx:30
 #: components/node-inspector/node-inspector-card.jsx:18
+#: components/node-types/generic.jsx:44
 msgid "Node"
 msgstr "Nodo"
 
@@ -429,8 +488,12 @@ msgid "Connection"
 msgstr "Connessione"
 
 #: components/node-inspector/index.jsx:170
-msgid "The connection between nodes in the workflow. Signifies the path along which data or control flow one node to another."
-msgstr "La connessione tra i nodi del flusso di lavoro. Indica il percorso lungo il quale i dati o il controllo fluiscono da un nodo all'altro."
+msgid ""
+"The connection between nodes in the workflow. Signifies the path along which "
+"data or control flow one node to another."
+msgstr ""
+"La connessione tra i nodi del flusso di lavoro. Indica il percorso lungo il "
+"quale i dati o il controllo fluiscono da un nodo all'altro."
 
 #: components/node-inspector/node-data-flow-panel.jsx:83
 msgid "Step Data Flow"
@@ -471,6 +534,30 @@ msgstr "Nessuna variabile globale dichiarata"
 #: components/node-inspector/node-inspector-card.jsx:19
 msgid "No description"
 msgstr "Senza descrizione"
+
+#: components/node-types/generic.jsx:97
+msgid "Step"
+msgstr "Passaggio"
+
+#: components/node-types/generic.jsx:99
+msgid "Action"
+msgstr "Azione"
+
+#. translators: Patterns tab title in the block inserter.
+#: components/node-types/generic.jsx:101
+#: components/secondary-sidebar/tabs.jsx:30
+msgid "Advanced"
+msgstr "Avanzato"
+
+#: components/node-types/generic.jsx:103
+#| msgid "Triggers"
+msgid "Trigger"
+msgstr "Trigger"
+
+#: components/node-types/generic.jsx:142
+#: components/workflow-delete-button/index.jsx:39
+msgid "Delete"
+msgstr "Elimina"
 
 #: components/node-types/generic.jsx:172
 msgid "This node has errors"
@@ -521,11 +608,15 @@ msgstr "Il campo %s è obbligatorio."
 
 #: components/node-validator/index.jsx:155
 msgid "The field %s must be a valid email address."
-msgstr "Il campo %s deve essere un elenco di indirizzi email validi separati da virgole."
+msgstr ""
+"Il campo %s deve essere un elenco di indirizzi email validi separati da "
+"virgole."
 
 #: components/node-validator/index.jsx:171
 msgid "The field %s must be a valid email address list separated by commas."
-msgstr "Il campo %s deve essere un elenco di indirizzi email validi separati da virgole."
+msgstr ""
+"Il campo %s deve essere un elenco di indirizzi email validi separati da "
+"virgole."
 
 #: components/node-validator/index.jsx:185
 msgid "The field %s must be an integer."
@@ -533,11 +624,16 @@ msgstr "Il campo %s deve essere un numero intero."
 
 #: components/node-validator/index.jsx:200
 msgid "The field %s must be an integer list separated by commas."
-msgstr "Il campo %s deve essere un elenco di numeri interi separati da virgole."
+msgstr ""
+"Il campo %s deve essere un elenco di numeri interi separati da virgole."
 
 #: components/pro-feature-button/index.jsx:26
 msgid "Upgrade to Pro to unlock this feature."
 msgstr "Aggiorna a Pro e sblocca questa caratteristica."
+
+#: components/secondary-sidebar/inserter-listbox/group.jsx:14
+msgid "Use left and right arrow keys to move through steps"
+msgstr "Utilizza i tasti freccia sinistra e destra per spostarti tra i blocchi"
 
 #: components/secondary-sidebar/inserter-no-results.jsx:14
 msgid "No results found."
@@ -562,7 +658,9 @@ msgstr "Un suggerimento per usare l'editor di flusso di lavoro"
 
 #: components/secondary-sidebar/node-card.jsx:37
 msgid "Drag this node to preview its options in your workflow."
-msgstr "Trascina questo nodo per visualizzare l'anteprima delle su opzioni nel tuo flusso di lavoro."
+msgstr ""
+"Trascina questo nodo per visualizzare l'anteprima delle su opzioni nel tuo "
+"flusso di lavoro."
 
 #. translators: %d: Number of blocks.
 #: components/secondary-sidebar/node-draggable-chip.jsx:27
@@ -587,34 +685,55 @@ msgstr "Trigger"
 msgid "Actions"
 msgstr "Azioni"
 
-#. translators: Patterns tab title in the block inserter.
-#: components/secondary-sidebar/tabs.jsx:30
-msgid "Advanced"
-msgstr "Avanzato"
-
 #: components/secondary-sidebar/tips.jsx:10
-msgid "Select multiple steps by pressing <kbd>cmd</kbd> and clicking on each step in the workflow."
-msgstr "Selezionare più fasi premendo <kbd>cmd o ctrl</kbd> e fare clic su ogni fase del flusso di lavoro."
+msgid ""
+"Select multiple steps by pressing <kbd>cmd</kbd> and clicking on each step "
+"in the workflow."
+msgstr ""
+"Selezionare più fasi premendo <kbd>cmd o ctrl</kbd> e fare clic su ogni fase "
+"del flusso di lavoro."
 
 #: components/secondary-sidebar/tips.jsx:16
-msgid "Drag steps from the inserter and drop them directly into your workflow for easy customization."
-msgstr "Trascina i passaggi dall'inseritore e rilasciali direttamente nel tuo flusso di lavoro per una facile personalizzazione."
+msgid ""
+"Drag steps from the inserter and drop them directly into your workflow for "
+"easy customization."
+msgstr ""
+"Trascina i passaggi dall'inseritore e rilasciali direttamente nel tuo flusso "
+"di lavoro per una facile personalizzazione."
 
 #: components/secondary-sidebar/tips.jsx:17
-msgid "Simply double-click any step to bring up the settings sidebar for quick adjustments."
-msgstr "È sufficiente fare doppio clic su un passaggio qualsiasi per visualizzare la barra laterale delle impostazioni ed effettuare regolazioni rapide."
+msgid ""
+"Simply double-click any step to bring up the settings sidebar for quick "
+"adjustments."
+msgstr ""
+"È sufficiente fare doppio clic su un passaggio qualsiasi per visualizzare la "
+"barra laterale delle impostazioni ed effettuare regolazioni rapide."
 
 #: components/secondary-sidebar/tips.jsx:18
-msgid "Double-click the workflow pane to increase the zoom level for a closer look."
-msgstr "Fai doppio clic sul pannello del flusso di lavoro per aumentare il livello d'ingrandimento per una visione più ravvicinata."
+msgid ""
+"Double-click the workflow pane to increase the zoom level for a closer look."
+msgstr ""
+"Fai doppio clic sul pannello del flusso di lavoro per aumentare il livello "
+"d'ingrandimento per una visione più ravvicinata."
 
 #: components/secondary-sidebar/tips.jsx:20
-msgid "Hold down the <kbd>shift</kbd> key and double-click the workflow pane to decrease the zoom level."
-msgstr "Tieni premuto il tasto <kbd>maiusc</kbd> e fai doppio clic sul pannello del flusso di lavoro per ridurre il livello d'ingrandimento."
+msgid ""
+"Hold down the <kbd>shift</kbd> key and double-click the workflow pane to "
+"decrease the zoom level."
+msgstr ""
+"Tieni premuto il tasto <kbd>maiusc</kbd> e fai doppio clic sul pannello del "
+"flusso di lavoro per ridurre il livello d'ingrandimento."
 
 #: components/secondary-sidebar/tips.jsx:26
-msgid "Easily add new steps by clicking on a step's handle and dragging it. Drop it in the workflow pane to see a floating inserter where you can type and search for the step you need."
-msgstr "Aggiungi facilmente dei nuovi passaggi facendo clic sulla maniglia di un passaggio e trascinalo rilasciandolo poi nel pannello di controllo e vedrai apparire un inseritore mobile, nel quale digitare e ricercare il passaggio che ti necessita."
+msgid ""
+"Easily add new steps by clicking on a step's handle and dragging it. Drop it "
+"in the workflow pane to see a floating inserter where you can type and "
+"search for the step you need."
+msgstr ""
+"Aggiungi facilmente dei nuovi passaggi facendo clic sulla maniglia di un "
+"passaggio e trascinalo rilasciandolo poi nel pannello di controllo e vedrai "
+"apparire un inseritore mobile, nel quale digitare e ricercare il passaggio "
+"che ti necessita."
 
 #: components/settings-sidebar/plugin-sidebar.jsx:39
 msgid "(no name)"
@@ -652,8 +771,12 @@ msgid "Ray Debug"
 msgstr "Ray Debug"
 
 #: components/workflow-debug-ray-panel/index.jsx:55
-msgid "Enable or disable the different types of debug information that is shown in Ray when this workflow is activated."
-msgstr "Abilita o disabilita i diversi tipi di informazioni di debug visualizzate in Ray quando questo flusso di lavoro è attivato."
+msgid ""
+"Enable or disable the different types of debug information that is shown in "
+"Ray when this workflow is activated."
+msgstr ""
+"Abilita o disabilita i diversi tipi di informazioni di debug visualizzate in "
+"Ray quando questo flusso di lavoro è attivato."
 
 #: components/workflow-debug-ray-panel/index.jsx:59
 msgid "Show Queries"
@@ -674,10 +797,6 @@ msgstr "Mostra il passaggio attualmente in esecuzione"
 #: components/workflow-delete-button/index.jsx:24
 msgid "Are you sure you want to delete this workflow?"
 msgstr "Vuoi davvero eliminare questo flusso di lavoro?"
-
-#: components/workflow-delete-button/index.jsx:39
-msgid "Delete"
-msgstr "Elimina"
 
 #: components/workflow-delete-button/index.jsx:39
 msgid "Move to trash"
@@ -794,39 +913,3 @@ msgstr "Bozza"
 #: components/workflow-switch-to-draft-button/index.jsx:56
 msgid "Switch to draft"
 msgstr "Passa alla bozza"
-
-#: components/data-fields/debug-levels.jsx:7
-msgid "Debug"
-msgstr ""
-
-#: components/data-fields/debug-levels.jsx:8
-msgid "Info"
-msgstr ""
-
-#: components/data-fields/debug-levels.jsx:9
-msgid "Notice"
-msgstr ""
-
-#: components/data-fields/debug-levels.jsx:10
-msgid "Warning"
-msgstr ""
-
-#: components/data-fields/debug-levels.jsx:11
-msgid "Error"
-msgstr ""
-
-#: components/data-fields/debug-levels.jsx:12
-msgid "Critical"
-msgstr ""
-
-#: components/data-fields/debug-levels.jsx:13
-msgid "Alert"
-msgstr ""
-
-#: components/data-fields/debug-levels.jsx:28
-msgid "Level"
-msgstr ""
-
-#: components/secondary-sidebar/inserter-listbox/group.jsx:14
-msgid "Use left and right arrow keys to move through steps"
-msgstr ""
