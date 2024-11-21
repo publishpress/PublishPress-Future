@@ -22,7 +22,8 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "phpstan/extension-installer": true,
-            "automattic/jetpack-autoloader": true
+            "automattic/jetpack-autoloader": true,
+            "php-http/discovery": true
         },
         "process-timeout": 0
     },
@@ -59,7 +60,11 @@
         "automattic/vipwpcs": "^3",
         "publishpress/publishpress-phpcs-standards": "dev-main",
         "spatie/ray": "^1.41",
-        "phpunit/phpunit": "^10"
+        "phpunit/phpunit": "^10",
+        "symfony/process": "^6.4",
+        "knplabs/github-api": "^3.16",
+        "symfony/http-client": "^7.1",
+        "nyholm/psr7": "^1.8"
     },
     "scripts": {
         "build": "pbuild build",

@@ -5,6 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Publishpress\PpToolkit\Command\Pot\CompareCommand as PotCompareCommand;
 use Publishpress\PpToolkit\Command\Po\CheckCommand as PoCheckCommand;
+use Publishpress\PpToolkit\Command\Release\PreReleaseCommand;
 use Publishpress\PpToolkit\Utils\ConsoleMessageFormatter;
 use Publishpress\PpToolkit\Utils\PoFileProcessor;
 use Symfony\Component\Console\Application;
@@ -26,6 +27,11 @@ $application->add(
 $application->add(
     (new PoCheckCommand())
         ->setDependencies($poFileProcessor, $consoleMessageFormatter)
+);
+
+$application->add(
+    (new PreReleaseCommand())
+        ->setDependencies($consoleMessageFormatter)
 );
 
 $application->run();
