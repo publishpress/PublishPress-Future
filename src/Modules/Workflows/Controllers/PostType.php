@@ -48,71 +48,26 @@ class PostType implements InitializableInterface
                 "name" => __("Action Workflows", "post-expirator"),
                 "singular_name" => __("Future Workflow", "post-expirator"),
                 "add_new" => __("Add New", "post-expirator"),
-                "add_new_item" => __(
-                    "Add New Workflow",
-                    "post-expirator"
-                ),
+                "add_new_item" => __("Add New Workflow", "post-expirator"),
                 "edit_item" => __("Edit Workflow", "post-expirator"),
                 "new_item" => __("New Workflow", "post-expirator"),
                 "view_item" => __("View Workflow", "post-expirator"),
-                "search_items" => __(
-                    "Search Workflows",
-                    "post-expirator"
-                ),
-                "not_found" => __(
-                    "No Workflows found",
-                    "post-expirator"
-                ),
-                "not_found_in_trash" => __(
-                    "No Workflows found in Trash",
-                    "post-expirator"
-                ),
-                "parent_item_colon" => __(
-                    "Parent Workflow:",
-                    "post-expirator"
-                ),
+                "search_items" => __("Search Workflows", "post-expirator"),
+                "not_found" => __("No Workflows found", "post-expirator"),
+                "not_found_in_trash" => __("No Workflows found in Trash", "post-expirator"),
+                "parent_item_colon" => __("Parent Workflow:", "post-expirator"),
                 "all_items" => __("All Workflows", "post-expirator"),
-                "archives" => __(
-                    "Workflow Archives",
-                    "post-expirator"
-                ),
-                "insert_into_item" => __(
-                    "Insert into workflow",
-                    "post-expirator"
-                ),
-                "uploaded_to_this_item" => __(
-                    "Uploaded to this workflow",
-                    "post-expirator"
-                ),
-                "filter_items_list" => __(
-                    "Filter workflows list",
-                    "post-expirator"
-                ),
-                "items_list_navigation" => __(
-                    "Workflows list navigation",
-                    "post-expirator"
-                ),
+                "archives" => __("Workflow Archives", "post-expirator"),
+                "insert_into_item" => __("Insert into workflow", "post-expirator"),
+                "uploaded_to_this_item" => __("Uploaded to this workflow", "post-expirator"),
+                "filter_items_list" => __("Filter workflows list", "post-expirator"),
+                "items_list_navigation" => __("Workflows list navigation", "post-expirator"),
                 "items_list" => __("Action Workflows list", "post-expirator"),
-                "item_published" => __(
-                    "Workflow published.",
-                    "post-expirator"
-                ),
-                "item_published_privately" => __(
-                    "Workflow published privately.",
-                    "post-expirator"
-                ),
-                "item_reverted_to_draft" => __(
-                    "Workflow reverted to draft.",
-                    "post-expirator"
-                ),
-                "item_scheduled" => __(
-                    "Workflow scheduled.",
-                    "post-expirator"
-                ),
-                "item_updated" => __(
-                    "Workflow updated.",
-                    "post-expirator"
-                ),
+                "item_published" => __("Workflow published.", "post-expirator"),
+                "item_published_privately" => __("Workflow published privately.", "post-expirator"),
+                "item_reverted_to_draft" => __("Workflow reverted to draft.", "post-expirator"),
+                "item_scheduled" => __("Workflow scheduled.", "post-expirator"),
+                "item_updated" => __("Workflow updated.", "post-expirator"),
             ],
             "public" => false,
             "show_ui" => true,

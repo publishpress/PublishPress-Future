@@ -506,10 +506,6 @@ msgstr ""
 msgid "The field %s must be an integer list separated by commas."
 msgstr ""
 
-#: components/secondary-sidebar/inserter-listbox/group.jsx:14
-msgid "Use left and right arrow keys to move through blocks"
-msgstr ""
-
 #: components/secondary-sidebar/inserter-no-results.jsx:14
 msgid "No results found."
 msgstr ""
@@ -794,4 +790,40 @@ msgstr ""
 
 #: components/workflow-debug-ray-panel/index.jsx:80
 msgid "Show current running step"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:7
+msgid "Debug"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:8
+msgid "Info"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:9
+msgid "Notice"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:10
+msgid "Warning"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:11
+msgid "Error"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:12
+msgid "Critical"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:13
+msgid "Alert"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:28
+msgid "Level"
+msgstr ""
+
+#: components/secondary-sidebar/inserter-listbox/group.jsx:14
+msgid "Use left and right arrow keys to move through steps"
 msgstr ""

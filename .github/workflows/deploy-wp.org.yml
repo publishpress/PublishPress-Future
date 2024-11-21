@@ -48,7 +48,7 @@ jobs:
 
       - name: Build the package using ./dev-workspace
         run: |
-          $GITHUB_WORKSPACE/dev-workspace/run composer build
+          $GITHUB_WORKSPACE/dev-workspace/run composer build:dir
 
       - name: WordPress.org plugin deploy
         uses: 10up/action-wordpress-plugin-deploy@stable

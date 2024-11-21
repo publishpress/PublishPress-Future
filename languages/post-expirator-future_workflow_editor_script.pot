@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-24T15:14:42+00:00\n"
+"POT-Creation-Date: 2024-11-21T14:06:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -118,6 +118,38 @@ msgstr ""
 
 #: components/data-fields/debug-data.jsx:35
 msgid "Data to output"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:7
+msgid "Debug"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:8
+msgid "Info"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:9
+msgid "Notice"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:10
+msgid "Warning"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:11
+msgid "Error"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:12
+msgid "Critical"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:13
+msgid "Alert"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:28
+msgid "Level"
 msgstr ""
 
 #: components/data-fields/email-recipient.jsx:13
@@ -391,6 +423,7 @@ msgstr ""
 
 #: components/node-dev-info-panel/index.jsx:30
 #: components/node-inspector/node-inspector-card.jsx:18
+#: components/node-types/generic.jsx:44
 msgid "Node"
 msgstr ""
 
@@ -470,6 +503,29 @@ msgstr ""
 msgid "No description"
 msgstr ""
 
+#: components/node-types/generic.jsx:97
+msgid "Step"
+msgstr ""
+
+#: components/node-types/generic.jsx:99
+msgid "Action"
+msgstr ""
+
+#. translators: Patterns tab title in the block inserter.
+#: components/node-types/generic.jsx:101
+#: components/secondary-sidebar/tabs.jsx:30
+msgid "Advanced"
+msgstr ""
+
+#: components/node-types/generic.jsx:103
+msgid "Trigger"
+msgstr ""
+
+#: components/node-types/generic.jsx:142
+#: components/workflow-delete-button/index.jsx:39
+msgid "Delete"
+msgstr ""
+
 #: components/node-types/generic.jsx:172
 msgid "This node has errors"
 msgstr ""
@@ -538,7 +594,7 @@ msgid "Upgrade to Pro to unlock this feature."
 msgstr ""
 
 #: components/secondary-sidebar/inserter-listbox/group.jsx:14
-msgid "Use left and right arrow keys to move through blocks"
+msgid "Use left and right arrow keys to move through steps"
 msgstr ""
 
 #: components/secondary-sidebar/inserter-no-results.jsx:14
@@ -587,11 +643,6 @@ msgstr ""
 #. translators: Patterns tab title in the block inserter.
 #: components/secondary-sidebar/tabs.jsx:25
 msgid "Actions"
-msgstr ""
-
-#. translators: Patterns tab title in the block inserter.
-#: components/secondary-sidebar/tabs.jsx:30
-msgid "Advanced"
 msgstr ""
 
 #: components/secondary-sidebar/tips.jsx:10
@@ -675,10 +726,6 @@ msgstr ""
 
 #: components/workflow-delete-button/index.jsx:24
 msgid "Are you sure you want to delete this workflow?"
-msgstr ""
-
-#: components/workflow-delete-button/index.jsx:39
-msgid "Delete"
 msgstr ""
 
 #: components/workflow-delete-button/index.jsx:39

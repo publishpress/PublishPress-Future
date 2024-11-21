@@ -5,13 +5,8 @@
     border-radius: 4px;
     font-size: 10px;
     font-weight: 600;
-    width: 81%;
-}
-
-.components-popover__content .block-editor-block-types-list__item-pro-badge {
     width: 100%;
 }
-
 .workflow-editor-inspector-card__pro-badge,
 .block-editor-block-card__pro-badge {
     background-color: #ffb200;

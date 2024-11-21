@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-17T15:39:48+00:00\n"
-"PO-Revision-Date: 2024-10-24 18:42+0200\n"
+"POT-Creation-Date: 2024-11-19T15:23:56+00:00\n"
+"PO-Revision-Date: 2024-11-20 23:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -141,6 +141,38 @@ msgstr "Todas las entradas recibidas"
 #: components/data-fields/debug-data.jsx:35
 msgid "Data to output"
 msgstr "Datos de salida"
+
+#: components/data-fields/debug-levels.jsx:7
+msgid "Debug"
+msgstr "Depurar"
+
+#: components/data-fields/debug-levels.jsx:8
+msgid "Info"
+msgstr "Información"
+
+#: components/data-fields/debug-levels.jsx:9
+msgid "Notice"
+msgstr "Aviso"
+
+#: components/data-fields/debug-levels.jsx:10
+msgid "Warning"
+msgstr "Advertencia"
+
+#: components/data-fields/debug-levels.jsx:11
+msgid "Error"
+msgstr "Error"
+
+#: components/data-fields/debug-levels.jsx:12
+msgid "Critical"
+msgstr "Crítico"
+
+#: components/data-fields/debug-levels.jsx:13
+msgid "Alert"
+msgstr "Alerta"
+
+#: components/data-fields/debug-levels.jsx:28
+msgid "Level"
+msgstr "Nivel"
 
 #: components/data-fields/email-recipient.jsx:13
 msgid "Custom Addresses"
@@ -422,6 +454,7 @@ msgstr "Información para desarrolladores"
 
 #: components/node-dev-info-panel/index.jsx:30
 #: components/node-inspector/node-inspector-card.jsx:18
+#: components/node-types/generic.jsx:44
 msgid "Node"
 msgstr "Nodo"
 
@@ -505,6 +538,29 @@ msgstr "No hay variable globales declaradas"
 msgid "No description"
 msgstr "Sin descripción"
 
+#: components/node-types/generic.jsx:97
+msgid "Step"
+msgstr "Paso"
+
+#: components/node-types/generic.jsx:99
+msgid "Action"
+msgstr "Acción"
+
+#. translators: Patterns tab title in the block inserter.
+#: components/node-types/generic.jsx:101
+#: components/secondary-sidebar/tabs.jsx:30
+msgid "Advanced"
+msgstr "Avanzado"
+
+#: components/node-types/generic.jsx:103
+msgid "Trigger"
+msgstr "Disparador"
+
+#: components/node-types/generic.jsx:142
+#: components/workflow-delete-button/index.jsx:39
+msgid "Delete"
+msgstr "Borrar"
+
 #: components/node-types/generic.jsx:172
 msgid "This node has errors"
 msgstr "Este nodo tiene errores"
@@ -575,7 +631,7 @@ msgid "Upgrade to Pro to unlock this feature."
 msgstr "Actualiza a Pro para desbloquear esta característica."
 
 #: components/secondary-sidebar/inserter-listbox/group.jsx:14
-msgid "Use left and right arrow keys to move through blocks"
+msgid "Use left and right arrow keys to move through steps"
 msgstr "Usa las flechas izquierda y derecha para moverte entre los bloques"
 
 #: components/secondary-sidebar/inserter-no-results.jsx:14
@@ -626,11 +682,6 @@ msgstr "Disparadores"
 #: components/secondary-sidebar/tabs.jsx:25
 msgid "Actions"
 msgstr "Acciones"
-
-#. translators: Patterns tab title in the block inserter.
-#: components/secondary-sidebar/tabs.jsx:30
-msgid "Advanced"
-msgstr "Avanzado"
 
 #: components/secondary-sidebar/tips.jsx:10
 msgid ""
@@ -743,10 +794,6 @@ msgstr "Mostrar el paso actual en ejecución"
 #: components/workflow-delete-button/index.jsx:24
 msgid "Are you sure you want to delete this workflow?"
 msgstr "¿Estás seguro de querer borrar este flujo de trabajo?"
-
-#: components/workflow-delete-button/index.jsx:39
-msgid "Delete"
-msgstr "Borrar"
 
 #: components/workflow-delete-button/index.jsx:39
 msgid "Move to trash"

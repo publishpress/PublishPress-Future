@@ -7,7 +7,7 @@ Requires at least: 6.7
 Requires PHP: 7.4
 Tested up to: 6.7
 License: GPLv2 or later
-Stable tag: 4.1.1
+Stable tag: 4.1.2
 
 PublishPress Future can make scheduled changes to your content. You can unpublish posts, move posts to a new status, update the categories, and more.
 
@@ -173,6 +173,20 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
 
+## [4.1.2] - 21 Nov, 2024
+
+### Fixed
+
+- Fix translations (Issues #1003, #1006, #1007, #1026).
+- Updated pt-BR translations (Issue #10018).
+- Updated es, it, fr translations (Issue #1047).
+- Fix zombie auto-drafts appearing in the future when auto-enable is activated (Issue #1024).
+- Fix call to undefined function `error_log` (Issue #1036).
+- Fix the page title in the workflow editor (Issue #1027).
+- Fix the page title on admin pages of 3rd party plugins (Issue #1037).
+- Updated the pt-BR translations.
+- Fix the size of Pro badge on step inserter in the workflow editor.
+
 ## [4.1.1] - 12 Nov, 2024
 
 ### Fixed
@@ -309,17 +323,3 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 - Added computed date preview to the general settings page (PR #897).
 - Added option to hide the calendar by default in the future action panel (PR #899).
 - Added new filter `publishpressfuture_posts_future_action_column_output` to the Future Action column.
-
-## [3.4.3] - 06 Aug, 2024
-
-### Changed
-
-- Remove icon from the Future metabox in the block editor, #821
-
-### Fixed
-
-- Update translation files
-- Only load the quick-edit script if in the post list screen
-- Fix quick edit action box to use the filter to hide action box when deactivated for the post type, #884
-- Fixed the database schema check to also check the debug log table, #887
-- Fixed the database schema check to check the table indexes, #887

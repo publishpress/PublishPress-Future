@@ -18095,7 +18095,7 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
   var _useDispatch2 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_editor_store__WEBPACK_IMPORTED_MODULE_4__.store),
     openGeneralSidebar = _useDispatch2.openGeneralSidebar;
   var nodeType = getNodeTypeByName(data.name);
-  var nodeLabel = nodeType.label || data.label || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Node', 'publishpress-future-pro');
+  var nodeLabel = nodeType.label || data.label || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Node', 'post-expirator');
   var nodeClassName = (nodeType === null || nodeType === void 0 ? void 0 : nodeType.className) || 'react-flow__node-genericNode';
   var targetHandles = null;
   if (nodeType.handleSchema) {
@@ -18140,23 +18140,23 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
       });
     }
   }
-  var topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Step', 'publishpress-future-pro');
+  var topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Step', 'post-expirator');
   if (data.elementaryType === 'action') {
-    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Action', 'publishpress-future-pro');
+    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Action', 'post-expirator');
   } else if (data.elementaryType === 'advanced') {
-    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Advanced', 'publishpress-future-pro');
+    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Advanced', 'post-expirator');
   } else if (data.elementaryType === 'trigger') {
-    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Trigger', 'publishpress-future-pro');
+    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Trigger', 'post-expirator');
   }
   var nodeAttributes = [
     // {
     //     id: 'id',
-    //     label: __('ID', 'publishpress-future-pro'),
+    //     label: __('ID', 'post-expirator'),
     //     value: id,
     // },
     // {
     //     id: 'slug',
-    //     label: __('Slug', 'publishpress-future-pro'),
+    //     label: __('Slug', 'post-expirator'),
     //     value: data.slug,
     // },
   ];
@@ -18180,7 +18180,7 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
     className: "components-accessible-toolbar block-editor-block-contextual-toolbar react-flow__node-toolbar"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.ToolbarGroup, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.ToolbarButton, {
     icon: 'trash',
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Delete', 'publishpress-future-pro'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Delete', 'post-expirator'),
     onClick: onClickDeleteNode
   }))))), /*#__PURE__*/React.createElement("div", {
     className: "react-flow__node-body " + nodeClassName,
@@ -24881,13 +24881,8 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.block-editor-block-types-list__item-p
     border-radius: 4px;
     font-size: 10px;
     font-weight: 600;
-    width: 81%;
-}
-
-.components-popover__content .block-editor-block-types-list__item-pro-badge {
     width: 100%;
 }
-
 .workflow-editor-inspector-card__pro-badge,
 .block-editor-block-card__pro-badge {
     background-color: #ffb200;
@@ -24927,7 +24922,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.block-editor-block-types-list__item-p
     height: 18px !important;
     margin-right: 4px;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/pro-features.css"],"names":[],"mappings":"AAAA;IACI,yBAAyB;IACzB,WAAW;IACX,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,gBAAgB;IAChB,UAAU;AACd;;AAEA;IACI,WAAW;AACf;;AAEA;;IAEI,yBAAyB;IACzB,WAAW;IACX,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,gBAAgB;AACpB;;AAEA;;IAEI,gBAAgB;AACpB;;AAEA;;IAEI,eAAe;IACf,cAAc;IACd,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,gBAAgB;IAChB,6BAA6B;IAC7B,gBAAgB;AACpB;;AAEA;IACI,yBAAyB;IACzB,WAAW;IACX,4BAA4B;IAC5B,kBAAkB;AACtB;;AAEA;IACI,sBAAsB;IACtB,uBAAuB;IACvB,iBAAiB;AACrB","sourcesContent":[".block-editor-block-types-list__item-pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    padding: 3px 8px;\n    border-radius: 4px;\n    font-size: 10px;\n    font-weight: 600;\n    width: 81%;\n}\n\n.components-popover__content .block-editor-block-types-list__item-pro-badge {\n    width: 100%;\n}\n\n.workflow-editor-inspector-card__pro-badge,\n.block-editor-block-card__pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    padding: 3px 8px;\n    border-radius: 4px;\n    font-size: 10px;\n    font-weight: 600;\n}\n\n.workflow-editor-inspector-card__pro-badge,\n.components-popover__content .block-editor-block-card__pro-badge {\n    margin-left: 8px;\n}\n\n.workflow-editor-inspector-card__pro-instructions,\n.block-editor-block-card__pro-instructions {\n    font-size: 12px;\n    color: #757575;\n    margin-top: 8px;\n    line-height: 1.5;\n    font-style: italic;\n    font-weight: 400;\n    border-top: 1px solid #e0e0e0;\n    padding-top: 8px;\n}\n\n.edit-post-header-toolbar__buy-pro {\n    background-color: #ffb200;\n    color: #000;\n    padding: 4px 10px !important;\n    border-radius: 4px;\n}\n\n.edit-post-header-toolbar__buy-pro .publishpress-icon {\n    width: 18px !important;\n    height: 18px !important;\n    margin-right: 4px;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/pro-features.css"],"names":[],"mappings":"AAAA;IACI,yBAAyB;IACzB,WAAW;IACX,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,gBAAgB;IAChB,WAAW;AACf;AACA;;IAEI,yBAAyB;IACzB,WAAW;IACX,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,gBAAgB;AACpB;;AAEA;;IAEI,gBAAgB;AACpB;;AAEA;;IAEI,eAAe;IACf,cAAc;IACd,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,gBAAgB;IAChB,6BAA6B;IAC7B,gBAAgB;AACpB;;AAEA;IACI,yBAAyB;IACzB,WAAW;IACX,4BAA4B;IAC5B,kBAAkB;AACtB;;AAEA;IACI,sBAAsB;IACtB,uBAAuB;IACvB,iBAAiB;AACrB","sourcesContent":[".block-editor-block-types-list__item-pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    padding: 3px 8px;\n    border-radius: 4px;\n    font-size: 10px;\n    font-weight: 600;\n    width: 100%;\n}\n.workflow-editor-inspector-card__pro-badge,\n.block-editor-block-card__pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    padding: 3px 8px;\n    border-radius: 4px;\n    font-size: 10px;\n    font-weight: 600;\n}\n\n.workflow-editor-inspector-card__pro-badge,\n.components-popover__content .block-editor-block-card__pro-badge {\n    margin-left: 8px;\n}\n\n.workflow-editor-inspector-card__pro-instructions,\n.block-editor-block-card__pro-instructions {\n    font-size: 12px;\n    color: #757575;\n    margin-top: 8px;\n    line-height: 1.5;\n    font-style: italic;\n    font-weight: 400;\n    border-top: 1px solid #e0e0e0;\n    padding-top: 8px;\n}\n\n.edit-post-header-toolbar__buy-pro {\n    background-color: #ffb200;\n    color: #000;\n    padding: 4px 10px !important;\n    border-radius: 4px;\n}\n\n.edit-post-header-toolbar__buy-pro .publishpress-icon {\n    width: 18px !important;\n    height: 18px !important;\n    margin-right: 4px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
