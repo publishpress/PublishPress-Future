@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.1.3] - UNRELEASED
 
+### Added
+
+- Add check for the constant `PUBLISHPRESS_FUTURE_FORCE_DEBUG` to force debug mode.
+
 ### Fixed
 
 - Fix error on fresh install about missing table (Issue #1051).
