@@ -11,10 +11,10 @@ use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Expirator\DBTableSchemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
-use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory;
 use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -42,6 +42,11 @@ class ExpirationController implements InitializableInterface
     private $logger;
 
     /**
+     * @var ActionArgsSchema
+     */
+    private $actionArgsSchema;
+
+    /**
      * @param HookableInterface $hooksFacade
      * @param SchedulerInterface $scheduler
      * @param Closure $expirablePostModelFactory
@@ -51,12 +56,14 @@ class ExpirationController implements InitializableInterface
         HookableInterface $hooksFacade,
         SchedulerInterface $scheduler,
         Closure $expirablePostModelFactory,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        ActionArgsSchema $actionArgsSchema
     ) {
         $this->hooks = $hooksFacade;
         $this->scheduler = $scheduler;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->logger = $logger;
+        $this->actionArgsSchema = $actionArgsSchema;
     }
 
     public function initialize()
@@ -155,6 +162,11 @@ class ExpirationController implements InitializableInterface
 
     private function setupFutureActionIfAutoEnabled(int $postId): void
     {
+        // This is needed to avoid errors on fresh install. See issue #1051.
+        if (! $this->actionArgsSchema->isTableHealthy()) {
+            return;
+        }
+
         $postModelFactory = $this->expirablePostModelFactory;
         $postModel = $postModelFactory($postId);
 
