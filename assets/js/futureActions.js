@@ -17,7 +17,8 @@ jQuery(document).ready(function ($) {
   $("a.publishpres-future-view-log").on('click', function (e) {
     e.preventDefault();
     var id = $(this).data('id');
-    $(".publishpress-future-log-" + id).dialog("open");
+    var logElement = $.find(".publishpress-future-log-".concat(id));
+    $(logElement).dialog("open");
   });
 });
 /******/ })()

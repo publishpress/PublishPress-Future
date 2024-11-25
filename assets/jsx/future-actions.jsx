@@ -15,8 +15,10 @@ jQuery(document).ready(function ($) {
 
     $("a.publishpres-future-view-log").on('click', function (e) {
         e.preventDefault();
-        const id = $(this).data('id');
 
-        $(".publishpress-future-log-" + id).dialog("open");
+        const id = $(this).data('id');
+        const logElement = $.find(`.publishpress-future-log-${id}`);
+
+        $(logElement).dialog("open");
     });
 });
