@@ -392,6 +392,7 @@ class Controller implements InitializableInterface
             'defaults',
             'general',
             'display',
+            'notifications',
             'diagnostics',
             'viewdebug',
             'advanced',

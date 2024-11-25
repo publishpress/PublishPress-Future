@@ -109,7 +109,7 @@ class PostExpirator_Display
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
 
-        $allowed_tabs = ['defaults', 'general', 'display', 'advanced', 'diagnostics', 'viewdebug', ];
+        $allowed_tabs = ['defaults', 'general', 'display', 'advanced', 'diagnostics', 'viewdebug', 'notifications', ];
         $allowed_tabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
 
         $debugIsEnabled = (bool)$this->hooks->applyFilters(SettingsHooksAbstract::FILTER_DEBUG_ENABLED, false);
@@ -304,9 +304,6 @@ class PostExpirator_Display
                 exit;
             } else {
                 // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-                update_option('expirationdateEmailNotification', sanitize_text_field($_POST['expired-email-notification']));
-                update_option('expirationdateEmailNotificationAdmins', sanitize_text_field($_POST['expired-email-notification-admins']));
-                update_option('expirationdateEmailNotificationList', trim(sanitize_text_field($_POST['expired-email-notification-list'])));
                 update_option(
                     'expirationdateCategoryDefaults',
                     // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
@@ -359,6 +356,39 @@ class PostExpirator_Display
         ];
 
         $this->render_template('menu-general', $params);
+    }
+
+    private function menu_notifications()
+    {
+        if (isset($_POST['expirationNotificationSave']) && ! empty($_POST['expirationNotificationSave'])) {
+            if (
+                ! isset($_POST['_postExpiratorMenuNotifications_nonce']) || ! wp_verify_nonce(
+                    sanitize_key($_POST['_postExpiratorMenuNotifications_nonce']),
+                    'postexpirator_menu_notifications'
+                )
+            ) {
+                print 'Form Validation Failure: Sorry, your nonce did not verify.';
+                exit;
+            }
+
+            // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+            update_option('expirationdateEmailNotification', sanitize_text_field($_POST['expired-email-notification']));
+            update_option('expirationdateEmailNotificationAdmins', sanitize_text_field($_POST['expired-email-notification-admins']));
+            update_option('expirationdateEmailNotificationList', trim(sanitize_text_field($_POST['expired-email-notification-list'])));
+
+            echo "<div id='message' class='updated fade'><p>";
+            esc_html_e('Saved Options!', 'post-expirator');
+            echo '</p></div>';
+        }
+
+        $params = [
+            'showSideBar' => $this->hooks->applyFilters(
+                SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
+                ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
+            ),
+        ];
+
+        $this->render_template('menu-notifications', $params);
     }
 
     /**
