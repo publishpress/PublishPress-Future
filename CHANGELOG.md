@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Do not remove expiration post meta when clearing the scheduled action (Issue #1053).
+- Potential fix for DOM text reinterpretation as HTML issue.
 
 ## [4.1.3] - 22 Nov, 2024
 
