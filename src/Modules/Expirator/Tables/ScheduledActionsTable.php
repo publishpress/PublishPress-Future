@@ -464,8 +464,8 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             esc_html__('%1$s: [%2$d] %3$s%4$s%5$s', 'post-expirator'),
             esc_html($actionData['postTypeLabel']),
             $actionData['postId'],
-            '<a href="' . esc_url($actionData['postLink']) . '">',
-            esc_html($actionData['postTitle']),
+            '<a href="' . esc_url($actionData['postLink'] ?? '') . '">',
+            esc_html($actionData['postTitle'] ?? ''),
             '</a>'
         );
 
