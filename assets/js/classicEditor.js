@@ -584,7 +584,7 @@ var FutureActionPanel = function FutureActionPanel(props) {
       fontWeight: 'bold',
       marginBottom: '10px'
     }
-  }, props.strings.futureActions), /*#__PURE__*/React.createElement(_FutureActionPanelTop__WEBPACK_IMPORTED_MODULE_5__.FutureActionPanelTop.Slot, {
+  }, props.strings.panelTitle), /*#__PURE__*/React.createElement(_FutureActionPanelTop__WEBPACK_IMPORTED_MODULE_5__.FutureActionPanelTop.Slot, {
     fillProps: {
       storeName: props.storeName
     }

@@ -19,6 +19,7 @@ use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -41,16 +42,23 @@ class QuickEditController implements InitializableInterface
     private $logger;
 
     /**
+     * @var SettingsFacade
+     */
+    private $settingsFacade;
+
+    /**
      * @param HookableInterface $hooksFacade
      */
     public function __construct(
         HookableInterface $hooksFacade,
         \Closure $currentUserModelFactory,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        SettingsFacade $settingsFacade
     ) {
         $this->hooks = $hooksFacade;
         $this->currentUserModel = $currentUserModelFactory();
         $this->logger = $logger;
+        $this->settingsFacade = $settingsFacade;
     }
 
     public function initialize()
@@ -286,6 +294,9 @@ class QuickEditController implements InitializableInterface
             $defaultExpirationDate = $defaultDataModel->getActionDateParts();
             $nonce = wp_create_nonce('__future_action');
 
+            $metaboxTitle = $this->settingsFacade->getMetaboxTitle() ?? __('Future Actions', 'post-expirator');
+            $metaboxCheckboxLabel = $this->settingsFacade->getMetaboxCheckboxLabel() ?? __('Enable Future Action', 'post-expirator');
+
             wp_localize_script(
                 'postexpirator-quick-edit',
                 'publishpressFutureQuickEditConfig',
@@ -306,9 +317,8 @@ class QuickEditController implements InitializableInterface
                     'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
                     'strings' => [
                         'category' => __('Categories', 'post-expirator'),
-                        'panelTitle' => __('Future Actions', 'post-expirator'),
-                        'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
-                        'futureActions' => __('Future Actions', 'post-expirator'),
+                        'panelTitle' => $metaboxTitle,
+                        'enablePostExpiration' => $metaboxCheckboxLabel,
                         'action' => __('Action', 'post-expirator'),
                         'showCalendar' => __('Show Calendar', 'post-expirator'),
                         'hideCalendar' => __('Hide Calendar', 'post-expirator'),

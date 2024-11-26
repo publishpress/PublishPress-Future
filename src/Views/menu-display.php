@@ -9,7 +9,7 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 
 $container = Container::getInstance();
 $hooks = $container->get(ServicesAbstract::HOOKS);
-
+$settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 // phpcs:disable WordPress.NamingConventions.ValidVariableName.InterpolatedVariableNotSnakeCase
 // phpcs:disable WordPress.PHP.StrictComparisons.LooseComparison
 
@@ -77,14 +77,51 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
             <hr/>
 
             <h3><?php
-                esc_html_e('Future actions column', 'post-expirator'); ?></h3>
+                esc_html_e('Metabox', 'post-expirator'); ?></h3>
+
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row"><?php
+                        esc_html_e('Metabox Title', 'post-expirator'); ?></th>
+                    <td>
+                        <?php
+                        $metaboxTitle = $settingsFacade->getMetaboxTitle();
+                        ?>
+                        <input type="text" name="expirationdate-metabox-title" id="expirationdate-metabox-title" value="<?php
+                        echo esc_attr($metaboxTitle); ?>" size="25" placeholder="<?php
+                        esc_attr_e('Future Actions', 'post-expirator'); ?>"/>
+                        <p class="description"><?php
+                        esc_html_e('The title of the metabox that will be displayed in the post edit screen.', 'post-expirator'); ?></p>
+                    </td>
+                </tr>
+
+                <tr valign="top">
+                    <th scope="row"><?php
+                        esc_html_e('Checkbox Field Label', 'post-expirator'); ?></th>
+                    <td>
+                        <?php
+                        $metaboxCheckboxLabel = $settingsFacade->getMetaboxCheckboxLabel();
+                        ?>
+                        <input type="text" name="expirationdate-metabox-checkbox-label" id="expirationdate-metabox-checkbox-label" value="<?php
+                        echo esc_attr($metaboxCheckboxLabel); ?>" size="25" placeholder="<?php
+                        esc_attr_e('Enable Future Action', 'post-expirator'); ?>"/>
+                        <p class="description"><?php
+                        esc_html_e('The label of the checkbox field that will be displayed in the metabox.', 'post-expirator'); ?></p>
+                    </td>
+                </tr>
+            </table>
+
+            <hr/>
+
+            <h3><?php
+                esc_html_e('Future Actions Column', 'post-expirator'); ?></h3>
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row"><?php
                         esc_html_e('Future Action Column Style', 'post-expirator'); ?></th>
                     <td>
                         <?php
-                        $columnStyle = $container->get(ServicesAbstract::SETTINGS)->getColumnStyle();
+                        $columnStyle = $settingsFacade->getColumnStyle();
                         ?>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="future-action-column-style"
@@ -120,7 +157,7 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
             <hr/>
 
             <h3><?php
-                esc_html_e('Future actions editor', 'post-expirator'); ?></h3>
+                esc_html_e('Future Actions Editor', 'post-expirator'); ?></h3>
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row"><?php

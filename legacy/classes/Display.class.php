@@ -5,10 +5,10 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
 use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
-use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -43,6 +43,11 @@ class PostExpirator_Display
     private $debugLogSchema;
 
     /**
+     * @var SettingsFacade
+     */
+    private $settingsFacade;
+
+    /**
      * Constructor.
      */
     private function __construct()
@@ -53,6 +58,7 @@ class PostExpirator_Display
         $this->hooks = $container->get(ServicesAbstract::HOOKS);
         $this->actionArgsSchema = $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA);
         $this->debugLogSchema = $container->get(ServicesAbstract::DB_TABLE_DEBUG_LOG_SCHEMA);
+        $this->settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
         $this->hooks();
     }
@@ -170,6 +176,9 @@ class PostExpirator_Display
                 update_option('expirationdateFooterStyle', wp_kses($_POST['expired-footer-style'], []));
                 update_option('expirationdateColumnStyle', sanitize_key($_POST['future-action-column-style']));
                 update_option('expirationdateTimeFormatForDatePicker', sanitize_key($_POST['future-action-time-format']));
+
+                $this->settingsFacade->setMetaboxTitle(sanitize_text_field($_POST['expirationdate-metabox-title']));
+                $this->settingsFacade->setMetaboxCheckboxLabel(sanitize_text_field($_POST['expirationdate-metabox-checkbox-label']));
                 // phpcs:enable
             }
         }

@@ -204,7 +204,8 @@ class Module implements ModuleInterface
         return new Controllers\QuickEditController(
             $this->hooks,
             $this->currentUserModelFactory,
-            $this->logger
+            $this->logger,
+            $this->settingsFacade
         );
     }
 

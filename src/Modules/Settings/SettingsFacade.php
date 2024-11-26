@@ -24,6 +24,10 @@ class SettingsFacade
 
     public const OPTION_EXPERIMENTAL_ENABLED = 'ppfuture_experimental_status';
 
+    public const OPTION_METABOX_TITLE = 'expirationdateMetaboxTitle';
+
+    public const OPTION_METABOX_CHECKBOX_LABEL = 'expirationdateMetaboxCheckboxLabel';
+
     /**
      * @var HookableInterface
      */
@@ -341,5 +345,25 @@ class SettingsFacade
     public function setScheduledWorkflowStepsCleanupRetention(int $value): void
     {
         $this->options->updateOption(self::OPTION_FINISHED_SCHEDULED_STEP_RETENTION, $value);
+    }
+
+    public function getMetaboxTitle(): ?string
+    {
+        return $this->options->getOption(self::OPTION_METABOX_TITLE, null);
+    }
+
+    public function getMetaboxCheckboxLabel(): ?string
+    {
+        return $this->options->getOption(self::OPTION_METABOX_CHECKBOX_LABEL, null);
+    }
+
+    public function setMetaboxTitle(string $value): void
+    {
+        $this->options->updateOption(self::OPTION_METABOX_TITLE, $value);
+    }
+
+    public function setMetaboxCheckboxLabel(string $value): void
+    {
+        $this->options->updateOption(self::OPTION_METABOX_CHECKBOX_LABEL, $value);
     }
 }
