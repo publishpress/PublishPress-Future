@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Do not remove expiration post meta when clearing the scheduled action (Issue #1053).
+- Fix DB error when deleting orphan scheduled steps (Issue #1060).
 - Potential fix for DOM text reinterpretation as HTML issue.
 - Fix error when a trigger node type is not found.
 - Fix warning PHP Deprecated:  ltrim(): Passing null to parameter #1 ($string) of type string on the Scheduled Actions table.
