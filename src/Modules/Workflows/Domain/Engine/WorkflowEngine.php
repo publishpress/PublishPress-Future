@@ -176,6 +176,10 @@ class WorkflowEngine implements WorkflowEngineInterface
                 $triggerId = $triggerNode['id'];
                 $nodeType = $this->nodeTypesModel->getNodeType($triggerName);
 
+                if (! $nodeType) {
+                    continue;
+                }
+
                 /** @var NodeRunnerInterface $triggerRunner */
                 $triggerRunner = call_user_func($this->nodeRunnerFactory, $triggerName);
 
