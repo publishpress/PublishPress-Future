@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-26T13:44:21+00:00\n"
+"POT-Creation-Date: 2024-11-27T19:10:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -116,17 +116,17 @@ msgstr ""
 msgid "No taxonomies found"
 msgstr ""
 
-#: services.php:110
+#: services.php:111
 #: src/Modules/Settings/SettingsFacade.php:114
 msgid "l F jS, Y"
 msgstr ""
 
-#: services.php:114
+#: services.php:115
 #: src/Modules/Settings/SettingsFacade.php:115
 msgid "g:ia"
 msgstr ""
 
-#: services.php:115
+#: services.php:116
 #: src/Modules/Settings/SettingsFacade.php:116
 msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
 msgstr ""
@@ -146,6 +146,10 @@ msgstr ""
 #: src/Framework/System/DateTimeHandler.php:39
 #: src/Modules/Expirator/Controllers/RestAPIController.php:237
 msgid "Invalid date time offset."
+msgstr ""
+
+#: src/Modules/Backup/Views/debug-panel.php:8
+msgid "Backup"
 msgstr ""
 
 #: src/Modules/Debug/Controllers/Controller.php:72
@@ -908,7 +912,7 @@ msgstr ""
 msgid "You're using PublishPress Future Free. The Pro version has more features and support. %1$sUpgrade to Pro%2$s"
 msgstr ""
 
-#: src/Modules/VersionNotices/Module.php:129
+#: src/Modules/VersionNotices/Module.php:133
 #: src/Views/ad-banner-right-sidebar.php:37
 msgid "Upgrade to Pro"
 msgstr ""

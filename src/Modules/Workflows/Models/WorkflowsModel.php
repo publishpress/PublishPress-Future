@@ -25,6 +25,20 @@ class WorkflowsModel implements WorkflowsModelInterface
         return $query->posts;
     }
 
+    public function getAllWorkflowsIds(): array
+    {
+        $args = [
+            'post_type' => Module::POST_TYPE_WORKFLOW,
+            'post_status' => 'any',
+            'posts_per_page' => -1,
+            'fields' => 'ids',
+        ];
+
+        $query = new WP_Query($args);
+
+        return $query->posts;
+    }
+
     public function getPublishedWorkflowsWithLegacyTriggerAsOptions(): array
     {
         return $this->getPublishedWorkflowsWithMetadataAsOptions(WorkflowModel::META_KEY_HAS_LEGACY_TRIGGER, 1);

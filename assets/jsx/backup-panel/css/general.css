@@ -1,0 +1,30 @@
+ul#export-actions {
+    margin-bottom: 20px;
+}
+
+ul#export-actions li ul {
+    margin-top: 10px;
+    border: 1px solid #e0e0e0e5;
+    padding: 10px;
+    background-color: #fff;
+}
+
+ul#export-actions span {
+    display: inline-block;
+}
+
+.pe-settings-tab__workflow-status {
+    margin-left: 5px;
+}
+
+.pe-settings-tab__workflow-actions button {
+    margin-left: 5px !important;
+}
+
+.pe-settings-tab__workflows-container {
+    margin-left: 30px;
+}
+
+.pe-settings-tab__export-cancel-button {
+    margin-left: 10px !important;
+}

@@ -113,6 +113,10 @@ class Module implements ModuleInterface
                                 [
                                     'base' => 'admin_page_publishpress-future-scheduled-actions',
                                     'id' => 'admin_page_publishpress-future-scheduled-actions'
+                                ],
+                                [
+                                    'base' => 'future_page_future-backup',
+                                    'id' => 'future_page_future-backup'
                                 ]
                             ]
                         ];
