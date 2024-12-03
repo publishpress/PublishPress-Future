@@ -18,7 +18,13 @@ const TabbedWindow = ({
 }) => {
     const getCurrentTabFromUrl = () => {
         const hash = window.location.hash.replace('#', '');
-        return tabs.find((tab) => tab.value === hash) || defaultTab;
+        const theTab = tabs.find((tab) => tab.value === hash) || defaultTab;
+
+        if (typeof theTab === 'object') {
+            return theTab.value;
+        }
+
+        return theTab;
     };
 
     const [activeTab, setActiveTab] = useState(getCurrentTabFromUrl());
