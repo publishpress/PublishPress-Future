@@ -18,6 +18,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _tabs_content_import__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tabs-content/import */ "./assets/jsx/backup-panel/components/tabs-content/import.jsx");
 /* harmony import */ var _tabs_content_export__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./tabs-content/export */ "./assets/jsx/backup-panel/components/tabs-content/export.jsx");
+/* harmony import */ var _tabbed_window__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./tabbed-window */ "./assets/jsx/backup-panel/components/tabbed-window/index.jsx");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -28,8 +29,9 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 var BackupPanel = function BackupPanel() {
-  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)('export'),
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(),
     _useState2 = _slicedToArray(_useState, 2),
     activeTab = _useState2[0],
     setActiveTab = _useState2[1];
@@ -40,6 +42,78 @@ var BackupPanel = function BackupPanel() {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import', 'post-expirator'),
     value: 'import'
   }];
+  return /*#__PURE__*/React.createElement(_tabbed_window__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    tabs: tabs,
+    defaultTab: tabs[0].value,
+    onChange: setActiveTab
+  }, activeTab === 'import' && /*#__PURE__*/React.createElement(_tabs_content_import__WEBPACK_IMPORTED_MODULE_2__["default"], null), activeTab === 'export' && /*#__PURE__*/React.createElement(_tabs_content_export__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BackupPanel);
+
+/***/ }),
+
+/***/ "./assets/jsx/backup-panel/components/tabbed-window/index.jsx":
+/*!********************************************************************!*\
+  !*** ./assets/jsx/backup-panel/components/tabbed-window/index.jsx ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+var TabbedWindow = function TabbedWindow(_ref) {
+  var _ref$defaultTab = _ref.defaultTab,
+    defaultTab = _ref$defaultTab === void 0 ? '' : _ref$defaultTab,
+    _ref$tabs = _ref.tabs,
+    tabs = _ref$tabs === void 0 ? [{
+      label: 'Tab 1',
+      value: 'tab1'
+    }, {
+      label: 'Tab 2',
+      value: 'tab2'
+    }] : _ref$tabs,
+    _ref$onChange = _ref.onChange,
+    onChange = _ref$onChange === void 0 ? function () {} : _ref$onChange,
+    children = _ref.children;
+  var getCurrentTabFromUrl = function getCurrentTabFromUrl() {
+    var hash = window.location.hash.replace('#', '');
+    return tabs.find(function (tab) {
+      return tab.value === hash;
+    }) || defaultTab;
+  };
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(getCurrentTabFromUrl()),
+    _useState2 = _slicedToArray(_useState, 2),
+    activeTab = _useState2[0],
+    setActiveTab = _useState2[1];
+
+  // Listen for hash changes
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    var handleHashChange = function handleHashChange() {
+      var newTab = getCurrentTabFromUrl();
+      setActiveTab(newTab);
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return function () {
+      return window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    window.history.replaceState(null, '', "#".concat(activeTab));
+    onChange(activeTab);
+  }, [activeTab]);
   return /*#__PURE__*/React.createElement("div", {
     id: "pe-settings-tabs"
   }, /*#__PURE__*/React.createElement("nav", {
@@ -51,13 +125,14 @@ var BackupPanel = function BackupPanel() {
       href: "#",
       className: "pe-tab nav-tab ".concat(activeTab === tab.value ? 'nav-tab-active' : ''),
       "data-tab": tab.value,
-      onClick: function onClick() {
-        return setActiveTab(tab.value);
+      onClick: function onClick(e) {
+        e.preventDefault();
+        setActiveTab(tab.value);
       }
     }, tab.label);
-  })), activeTab === 'import' && /*#__PURE__*/React.createElement(_tabs_content_import__WEBPACK_IMPORTED_MODULE_2__["default"], null), activeTab === 'export' && /*#__PURE__*/React.createElement(_tabs_content_export__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+  })), children);
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BackupPanel);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TabbedWindow);
 
 /***/ }),
 
@@ -352,14 +427,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
 var ImportTab = function ImportTab() {
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    isImporting = _useState2[0],
+    setIsImporting = _useState2[1];
+  var handleImport = function handleImport() {
+    setIsImporting(true);
+    apiFetch({
+      path: addQueryArgs("publishpress-future/v1/backup/import"),
+      method: 'POST',
+      data: {
+        backupFile: backupFile
+      }
+    }).then(function (result) {
+      setIsImporting(false);
+    }).catch(function (error) {
+      setIsImporting(false);
+    });
+  };
   return /*#__PURE__*/React.createElement("div", {
     className: "pe-settings-tab"
-  }, /*#__PURE__*/React.createElement("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import Settings', 'post-expirator')), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import the plugin settings or workflows from a .json file.', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-    isPrimary: true
+  }, /*#__PURE__*/React.createElement("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import Settings', 'post-expirator')), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import the plugin settings or workflows from a .json file.', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FormFileUpload, {
+    accept: "text/json"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Upload', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+    isPrimary: true,
+    isBusy: isImporting,
+    onClick: handleImport
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import', 'post-expirator')));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ImportTab);

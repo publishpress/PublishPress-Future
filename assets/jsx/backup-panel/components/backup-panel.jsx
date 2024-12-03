@@ -1,11 +1,12 @@
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 
 import ImportTab from './tabs-content/import';
 import ExportTab from './tabs-content/export';
+import TabbedWindow from './tabbed-window';
 
 const BackupPanel = () => {
-    const [activeTab, setActiveTab] = useState('export');
+    const [activeTab, setActiveTab] = useState();
 
     const tabs = [
         {
@@ -19,23 +20,14 @@ const BackupPanel = () => {
     ];
 
     return (
-        <div id="pe-settings-tabs">
-            <nav className="nav-tab-wrapper postexpirator-nav-tab-wrapper" id="postexpirator-nav">
-                {tabs.map((tab) => (
-                    <a
-                        key={tab.value}
-                        href="#"
-                        className={`pe-tab nav-tab ${activeTab === tab.value ? 'nav-tab-active' : ''}`}
-                        data-tab={tab.value}
-                        onClick={() => setActiveTab(tab.value)}
-                    >
-                        {tab.label}
-                    </a>
-                ))}
-            </nav>
+        <TabbedWindow
+            tabs={tabs}
+            defaultTab={tabs[0].value}
+            onChange={setActiveTab}
+        >
             {activeTab === 'import' && <ImportTab />}
             {activeTab === 'export' && <ExportTab />}
-        </div>
+        </TabbedWindow>
     );
 };
 
