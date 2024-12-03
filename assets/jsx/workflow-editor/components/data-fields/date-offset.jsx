@@ -230,7 +230,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                                     label={__("Unique ID Expression", "post-expirator")}
                                     value={defaultValue.uniqueIdExpression ?? ''}
                                     onChange={(value) => onChangeSetting({ settingName: "uniqueIdExpression", value })}
-                                    help={__("Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}} or {{global.user.ID}} to make sure the ID is unique.", "post-expirator")}
+                                    help={__("Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}}, {{global.user.ID}} or {{global.execution_id}} to make sure the ID is unique.", "post-expirator")}
                                 />
                             </PanelRow>
                         )}

@@ -162,7 +162,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
             $isSingleAction = self::SCHEDULE_RECURRENCE_SINGLE === $recurrence;
 
-            $actionUID = $this->getScheduledActionUniqueId($node);
+            $actionUIDHash = $this->getScheduledActionUniqueIdHash($node);
             $scheduledActionId = 0;
 
             $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
@@ -177,7 +177,6 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
             $compactedArgs = $this->compactArguments($step);
 
-            $actionUIDHash = md5($actionUID);
             $scheduledActionsModel = new ScheduledActionsModel();
 
             $hasFinished = WorkflowScheduledStepModel::getMetaIsFinished($workflowId, $actionUIDHash);
@@ -308,7 +307,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                 $scheduledStepModel->setActionId($scheduledActionId);
                 $scheduledStepModel->setWorkflowId($workflowId);
                 $scheduledStepModel->setStepId($node['id']);
-                $scheduledStepModel->setActionUID($actionUID);
+                $scheduledStepModel->setActionUID($actionUIDHash);
                 $scheduledStepModel->setArgs($compactedArgs);
                 $scheduledStepModel->setRunCount(0);
                 $scheduledStepModel->setIsRecurring(! $isSingleAction);
@@ -391,7 +390,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         return $timestamp;
     }
 
-    private function getScheduledActionUniqueId(array $node)
+    private function getScheduledActionUniqueIdHash(array $node): string
     {
         $uniqueId = [
             'workflowId' => $this->variablesHandler->getVariable('global.workflow.id'),
@@ -407,7 +406,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             }
         }
 
-        return wp_json_encode($uniqueId);
+        return md5(wp_json_encode($uniqueId));
     }
 
     public function compactArguments(array $step): array

@@ -12563,7 +12563,7 @@ function DateOffset(_ref) {
         value: value
       });
     },
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}} or {{global.user.ID}} to make sure the ID is unique.", "post-expirator")
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}}, {{global.user.ID}} or {{global.execution_id}} to make sure the ID is unique.", "post-expirator")
   })), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Priority", "post-expirator"),
     value: defaultValue.priority || 10,
@@ -22357,6 +22357,14 @@ function _setInitialStateForGlobalVariables(state) {
       name: 'trace',
       label: 'Execution Trace',
       type: 'array',
+      runtimeOnly: true
+    }
+  });
+  state = setGlobalVariable(state, {
+    payload: {
+      name: 'execution_id',
+      label: 'Execution ID',
+      type: 'string',
       runtimeOnly: true
     }
   });

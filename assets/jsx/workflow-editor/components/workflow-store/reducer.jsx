@@ -132,6 +132,15 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
         }
     });
 
+    state = setGlobalVariable(state, {
+        payload: {
+            name: 'execution_id',
+            label: 'Execution ID',
+            type: 'string',
+            runtimeOnly: true,
+        }
+    });
+
     return state;
 }
 

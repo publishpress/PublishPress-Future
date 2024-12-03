@@ -101,7 +101,7 @@ msgid "Unique ID Expression"
 msgstr ""
 
 #: components/data-fields/date-offset.jsx:233
-msgid "Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}} or {{global.user.ID}} to make sure the ID is unique."
+msgid "Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}}, {{global.user.ID}} or {{global.execution_id}} to make sure the ID is unique."
 msgstr ""
 
 #: components/data-fields/date-offset.jsx:239

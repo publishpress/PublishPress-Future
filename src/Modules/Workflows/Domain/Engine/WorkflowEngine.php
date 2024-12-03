@@ -169,6 +169,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                         'steps' => $workflow->getNodes(),
                     ]
                 ),
+                'execution_id' => $this->getExecutionId(),
             ];
 
             foreach ($triggerNodes as $triggerNode) {
@@ -397,5 +398,10 @@ class WorkflowEngine implements WorkflowEngineInterface
         }
 
         return 'frontend';
+    }
+
+    private function getExecutionId(): string
+    {
+        return wp_generate_uuid4();
     }
 }
