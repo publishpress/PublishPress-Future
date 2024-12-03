@@ -5,6 +5,8 @@ namespace PublishPress\Future\Modules\Backup\Controllers;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Modules\Settings\Models\SettingsPostTypesModel;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 use WP_REST_Request;
@@ -16,10 +18,16 @@ class BackupRestApi implements InitializableInterface
 
     private string $pluginVersion;
 
-    public function __construct(HookableInterface $hooks, string $pluginVersion)
-    {
+    private SettingsFacade $settingsFacade;
+
+    public function __construct(
+        HookableInterface $hooks,
+        string $pluginVersion,
+        SettingsFacade $settingsFacade
+    ) {
         $this->hooks = $hooks;
         $this->pluginVersion = $pluginVersion;
+        $this->settingsFacade = $settingsFacade;
     }
 
     public function initialize()
@@ -68,6 +76,9 @@ class BackupRestApi implements InitializableInterface
                     'includeScreenshots' => [
                         'type' => 'boolean',
                     ],
+                    'settings' => [
+                        'type' => 'array',
+                    ],
                 ],
             ]
         );
@@ -107,6 +118,8 @@ class BackupRestApi implements InitializableInterface
         $exportActionSettings = $request->get_param('exportActionSettings');
         $selectedWorkflows = $request->get_param('workflows');
         $includeScreenshots = $request->get_param('includeScreenshots');
+        $selectedSettings = $request->get_param('settings');
+
         if (! $exportActionWorkflows && ! $exportActionSettings) {
             return new \WP_Error('invalid_request', 'Invalid request');
         }
@@ -121,7 +134,7 @@ class BackupRestApi implements InitializableInterface
         }
 
         if ($exportActionSettings) {
-            $exportData['settings'] = $this->exportSettings();
+            $exportData['settings'] = $this->exportSettings($selectedSettings);
         }
 
         return [
@@ -178,41 +191,80 @@ class BackupRestApi implements InitializableInterface
         return $workflows;
     }
 
-    private function exportSettings()
+    private function exportSettings(array $selectedSettings = [])
     {
         $settings = [];
 
-        $settings = array_merge($settings, $this->getPostTypesSettings());
-        $settings = array_merge($settings, $this->getGeneralSettings());
-        $settings = array_merge($settings, $this->getNotificationsSettings());
-        $settings = array_merge($settings, $this->getDisplaySettings());
-        $settings = array_merge($settings, $this->getAdvancedSettings());
+        if (empty($selectedSettings)) {
+            return $settings;
+        }
+
+        if (in_array('postTypesDefaults', $selectedSettings)) {
+            $settings = array_merge($settings, $this->getPostTypesSettings());
+        }
+
+        if (in_array('general', $selectedSettings)) {
+            $settings = array_merge($settings, $this->getGeneralSettings());
+        }
+
+        if (in_array('notifications', $selectedSettings)) {
+            $settings = array_merge($settings, $this->getNotificationsSettings());
+        }
+
+        if (in_array('display', $selectedSettings)) {
+            $settings = array_merge($settings, $this->getDisplaySettings());
+        }
+
+        if (in_array('advanced', $selectedSettings)) {
+            $settings = array_merge($settings, $this->getAdvancedSettings());
+        }
 
         return $settings;
     }
 
     private function getPostTypesSettings(): array
     {
-        return [];
+        /** @var SettingsPostTypesModel $settingsPostTypesModel */
+        $settingsPostTypesModel = new SettingsPostTypesModel();
+
+
+        $postTypes = $settingsPostTypesModel->getPostTypes();
+        $defaults = [];
+
+        foreach ($postTypes as $postType) {
+            $defaults[$postType] = $this->settingsFacade->getPostTypeDefaults($postType);
+        }
+
+        return [
+            'postTypesDefaults' => $defaults,
+        ];
     }
 
     private function getGeneralSettings(): array
     {
-        return [];
+        return [
+            'general' => $this->settingsFacade->getGeneralSettings(),
+        ];
     }
 
     private function getNotificationsSettings(): array
     {
-        return [];
+        return [
+            'notifications' => $this->settingsFacade->getNotificationsSettings(),
+        ];
     }
 
     private function getDisplaySettings(): array
     {
-        return [];
+        return [
+            'display' => $this->settingsFacade->getDisplaySettings(),
+        ];
     }
 
     private function getAdvancedSettings(): array
     {
-        return [];
+        return [
+            'advanced' => $this->settingsFacade->getAdvancedSettings(),
+        ];
     }
 }

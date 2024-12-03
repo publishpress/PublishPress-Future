@@ -6,6 +6,7 @@
 
 namespace PublishPress\Future\Modules\Settings;
 
+use PostExpirator_Facade;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
@@ -156,6 +157,11 @@ class SettingsFacade
         }
 
         return (bool)$this->cache['debugIsEnabled'];
+    }
+
+    public function getSendEmailNotification()
+    {
+        return (bool)$this->options->getOption('expirationdateEmailNotification', POSTEXPIRATOR_EMAILNOTIFICATION);
     }
 
     public function getSendEmailNotificationToAdmins()
@@ -365,5 +371,108 @@ class SettingsFacade
     public function setMetaboxCheckboxLabel(string $value): void
     {
         $this->options->updateOption(self::OPTION_METABOX_CHECKBOX_LABEL, $value);
+    }
+
+    public function getDefaultDateFormat(): string
+    {
+        return $this->options->getOption('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
+    }
+
+    public function getDefaultTimeFormat(): string
+    {
+        return $this->options->getOption('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
+    }
+
+    public function getShowInPostFooter(): bool
+    {
+        return (bool)$this->options->getOption('expirationdateDisplayFooter', POSTEXPIRATOR_FOOTERDISPLAY);
+    }
+
+    public function getFooterContents(): string
+    {
+        return $this->options->getOption('expirationdateFooterContents', POSTEXPIRATOR_FOOTERCONTENTS);
+    }
+
+    public function getFooterStyle(): string
+    {
+        return $this->options->getOption('expirationdateFooterStyle', POSTEXPIRATOR_FOOTERSTYLE);
+    }
+
+    public function getAllowUserRoles(): array
+    {
+        $userRoles = wp_roles()->get_names();
+
+        $allowedUserRoles = [];
+
+        $pluginFacade = PostExpirator_Facade::getInstance();
+
+        foreach ($userRoles as $userRoleName => $userRoleLabel)
+        {
+            if ($pluginFacade->user_role_can_expire_posts($userRoleName)) {
+                $allowedUserRoles[] = $userRoleName;
+            }
+        }
+
+        return $allowedUserRoles;
+    }
+
+    public function getGeneralSettings(): array
+    {
+        $settings = [
+            'defaultDateTimeOffset' => $this->getGeneralDateTimeOffset(),
+            'hideCalendarByDefault' => $this->getHideCalendarByDefault(),
+            'allowUserRoles' => $this->getAllowUserRoles(),
+        ];
+
+        $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_GENERAL, $settings);
+
+        return $settings;
+    }
+
+    public function getNotificationsSettings(): array
+    {
+        $settings = [
+            'enableEmailNotification' => $this->getSendEmailNotification(),
+            'enableEmailNotificationToAdmins' => $this->getSendEmailNotificationToAdmins(),
+            'emailNotificationAddressesList' => $this->getEmailNotificationAddressesList(),
+        ];
+
+        $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_NOTIFICATIONS, $settings);
+
+        return $settings;
+    }
+
+    public function getDisplaySettings(): array
+    {
+        $settings = [
+            'defaultDateFormat' => $this->getDefaultDateFormat(),
+            'defaultTimeFormat' => $this->getDefaultTimeFormat(),
+            'metaboxTitle' => $this->getMetaboxTitle(),
+            'metaboxCheckboxLabel' => $this->getMetaboxCheckboxLabel(),
+            'columnStyle' => $this->getColumnStyle(),
+            'timeFormatForDatePicker' => $this->getTimeFormatForDatePicker(),
+            'showInPostFooter' => $this->getShowInPostFooter(),
+            'footerContents' => $this->getFooterContents(),
+            'footerStyle' => $this->getFooterStyle(),
+        ];
+
+        $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_DISPLAY, $settings);
+
+        return $settings;
+    }
+
+    public function getAdvancedSettings(): array
+    {
+        $settings = [
+            'stepScheduleCompressedArgs' => $this->getStepScheduleCompressedArgsStatus(),
+            'scheduledWorkflowStepsCleanup' => $this->getScheduledWorkflowStepsCleanupStatus(),
+            'scheduledWorkflowStepsCleanupRetention' => $this->getScheduledWorkflowStepsCleanupRetention(),
+            'experimentalFeatures' => $this->getExperimentalFeaturesStatus(),
+            'preserveDataDeactivating' => $this->getSettingPreserveData(),
+        ];
+
+        $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_ADVANCED, $settings);
+
+        return $settings;
     }
 }

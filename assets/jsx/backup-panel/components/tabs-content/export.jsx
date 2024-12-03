@@ -12,8 +12,32 @@ const ExportTab = () => {
     const [isExporting, setIsExporting] = useState(false);
     const [workflows, setWorkflows] = useState([]);
     const [selectedWorkflows, setSelectedWorkflows] = useState([]);
+    const [selectedSettings, setSelectedSettings] = useState(['postTypesDefaults', 'general', 'notifications', 'display', 'advanced']);
 
     const apiRequestControllerRef = useRef(new AbortController());
+
+    const settingsOptions = [
+        {
+            label: __('Post Types', 'post-expirator'),
+            value: 'postTypesDefaults',
+        },
+        {
+            label: __('General', 'post-expirator'),
+            value: 'general',
+        },
+        {
+            label: __('Notifications', 'post-expirator'),
+            value: 'notifications',
+        },
+        {
+            label: __('Display', 'post-expirator'),
+            value: 'display',
+        },
+        {
+            label: __('Advanced', 'post-expirator'),
+            value: 'advanced',
+        },
+    ];
 
     useEffect(() => {
         apiFetch({
@@ -63,6 +87,7 @@ const ExportTab = () => {
                 exportActionSettings: exportActionSettings,
                 workflows: selectedWorkflows,
                 includeScreenshots: includeScreenshots,
+                settings: selectedSettings,
             },
             signal,
         }).then((result) => {
@@ -93,6 +118,14 @@ const ExportTab = () => {
         setSelectedWorkflows([]);
     };
 
+    const handleSelectAllSettings = () => {
+        setSelectedSettings(settingsOptions.map((option) => option.value));
+    };
+
+    const handleUnselectAllSettings = () => {
+        setSelectedSettings([]);
+    };
+
     return (
         <div className="pe-settings-tab">
             <h2>{__('Export Settings', 'post-expirator')}</h2>
@@ -109,7 +142,7 @@ const ExportTab = () => {
                     />
 
                     {exportActionWorkflows && workflows.length > 0 && (
-                        <div className="pe-settings-tab__workflows-container">
+                        <div className="pe-settings-tab__backup-container">
                             <div>
                                 <ToggleControl
                                     label={__('Include screenshots', 'post-expirator')}
@@ -118,7 +151,7 @@ const ExportTab = () => {
                                 />
                             </div>
                             <div>
-                                <span className="pe-settings-tab__workflow-actions">
+                                <span className="pe-settings-tab__backup-actions">
                                     <Button isLink onClick={handleSelectAllWorkflows}>{__('Select all', 'post-expirator')}</Button> |
                                     <Button isLink onClick={handleUnselectAllWorkflows}>{__('Unselect all', 'post-expirator')}</Button>
                                 </span>
@@ -131,7 +164,7 @@ const ExportTab = () => {
                                             label={(
                                                 <>
                                                     {workflow.title}
-                                                    <span className="pe-settings-tab__workflow-status">[{workflow.status}]</span>
+                                                    <span className="pe-settings-tab__backup-status">[{workflow.status}]</span>
                                                 </>
                                             )}
                                             checked={selectedWorkflows.includes(workflow.id)}
@@ -155,6 +188,35 @@ const ExportTab = () => {
                         checked={exportActionSettings}
                         onChange={(value) => setExportActionSettings(value)}
                     />
+
+                    {exportActionSettings && (
+                        <div className="pe-settings-tab__backup-container">
+                            <div>
+                                <span className="pe-settings-tab__backup-actions">
+                                    <Button isLink onClick={handleSelectAllSettings}>{__('Select all', 'post-expirator')}</Button> |
+                                    <Button isLink onClick={handleUnselectAllSettings}>{__('Unselect all', 'post-expirator')}</Button>
+                                </span>
+                            </div>
+
+                            <ul>
+                                {settingsOptions.map((option) => (
+                                    <li key={option.value}>
+                                        <CheckboxControl
+                                            label={option.label}
+                                            checked={selectedSettings.includes(option.value)}
+                                            onChange={(value) => {
+                                                if (value) {
+                                                    setSelectedSettings([...selectedSettings, option.value]);
+                                                } else {
+                                                    setSelectedSettings(selectedSettings.filter((id) => id !== option.value));
+                                                }
+                                            }}
+                                        />
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                 </li>
             </ul>
 

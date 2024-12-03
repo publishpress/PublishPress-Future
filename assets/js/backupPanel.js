@@ -124,7 +124,27 @@ var ExportTab = function ExportTab() {
     _useState12 = _slicedToArray(_useState11, 2),
     selectedWorkflows = _useState12[0],
     setSelectedWorkflows = _useState12[1];
+  var _useState13 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(['postTypesDefaults', 'general', 'notifications', 'display', 'advanced']),
+    _useState14 = _slicedToArray(_useState13, 2),
+    selectedSettings = _useState14[0],
+    setSelectedSettings = _useState14[1];
   var apiRequestControllerRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useRef)(new AbortController());
+  var settingsOptions = [{
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Types', 'post-expirator'),
+    value: 'postTypesDefaults'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('General', 'post-expirator'),
+    value: 'general'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Notifications', 'post-expirator'),
+    value: 'notifications'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Display', 'post-expirator'),
+    value: 'display'
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Advanced', 'post-expirator'),
+    value: 'advanced'
+  }];
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
     apiFetch({
       path: (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_0__.addQueryArgs)("publishpress-future/v1/backup/workflows")
@@ -175,7 +195,8 @@ var ExportTab = function ExportTab() {
                 exportActionWorkflows: exportActionWorkflows,
                 exportActionSettings: exportActionSettings,
                 workflows: selectedWorkflows,
-                includeScreenshots: includeScreenshots
+                includeScreenshots: includeScreenshots,
+                settings: selectedSettings
               },
               signal: signal
             }).then(function (result) {
@@ -211,6 +232,14 @@ var ExportTab = function ExportTab() {
   var handleUnselectAllWorkflows = function handleUnselectAllWorkflows() {
     setSelectedWorkflows([]);
   };
+  var handleSelectAllSettings = function handleSelectAllSettings() {
+    setSelectedSettings(settingsOptions.map(function (option) {
+      return option.value;
+    }));
+  };
+  var handleUnselectAllSettings = function handleUnselectAllSettings() {
+    setSelectedSettings([]);
+  };
   return /*#__PURE__*/React.createElement("div", {
     className: "pe-settings-tab"
   }, /*#__PURE__*/React.createElement("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Export Settings', 'post-expirator')), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Export the plugin settings and workflows to a .json file. This file can be imported later to restore the data or migrate to another site.', 'post-expirator')), /*#__PURE__*/React.createElement("ul", {
@@ -225,7 +254,7 @@ var ExportTab = function ExportTab() {
     },
     disabled: workflows.length === 0
   }), exportActionWorkflows && workflows.length > 0 && /*#__PURE__*/React.createElement("div", {
-    className: "pe-settings-tab__workflows-container"
+    className: "pe-settings-tab__backup-container"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Include screenshots', 'post-expirator'),
     checked: includeScreenshots,
@@ -233,7 +262,7 @@ var ExportTab = function ExportTab() {
       return setIncludeScreenshots(value);
     }
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
-    className: "pe-settings-tab__workflow-actions"
+    className: "pe-settings-tab__backup-actions"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     isLink: true,
     onClick: handleSelectAllWorkflows
@@ -245,7 +274,7 @@ var ExportTab = function ExportTab() {
       key: workflow.id
     }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CheckboxControl, {
       label: /*#__PURE__*/React.createElement(React.Fragment, null, workflow.title, /*#__PURE__*/React.createElement("span", {
-        className: "pe-settings-tab__workflow-status"
+        className: "pe-settings-tab__backup-status"
       }, "[", workflow.status, "]")),
       checked: selectedWorkflows.includes(workflow.id),
       onChange: function onChange(value) {
@@ -266,7 +295,33 @@ var ExportTab = function ExportTab() {
     onChange: function onChange(value) {
       return setExportActionSettings(value);
     }
-  }))), (exportActionWorkflows || exportActionSettings) && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+  }), exportActionSettings && /*#__PURE__*/React.createElement("div", {
+    className: "pe-settings-tab__backup-container"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
+    className: "pe-settings-tab__backup-actions"
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    isLink: true,
+    onClick: handleSelectAllSettings
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Select all', 'post-expirator')), " |", /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    isLink: true,
+    onClick: handleUnselectAllSettings
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Unselect all', 'post-expirator')))), /*#__PURE__*/React.createElement("ul", null, settingsOptions.map(function (option) {
+    return /*#__PURE__*/React.createElement("li", {
+      key: option.value
+    }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CheckboxControl, {
+      label: option.label,
+      checked: selectedSettings.includes(option.value),
+      onChange: function onChange(value) {
+        if (value) {
+          setSelectedSettings([].concat(_toConsumableArray(selectedSettings), [option.value]));
+        } else {
+          setSelectedSettings(selectedSettings.filter(function (id) {
+            return id !== option.value;
+          }));
+        }
+      }
+    }));
+  }))))), (exportActionWorkflows || exportActionSettings) && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     isPrimary: true,
     onClick: handleExport,
     isBusy: isExporting,
@@ -345,22 +400,22 @@ ul#export-actions span {
     display: inline-block;
 }
 
-.pe-settings-tab__workflow-status {
+.pe-settings-tab__backup-status {
     margin-left: 5px;
 }
 
-.pe-settings-tab__workflow-actions button {
+.pe-settings-tab__backup-actions button {
     margin-left: 5px !important;
 }
 
-.pe-settings-tab__workflows-container {
+.pe-settings-tab__backup-container {
     margin-left: 30px;
 }
 
 .pe-settings-tab__export-cancel-button {
     margin-left: 10px !important;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/backup-panel/css/general.css"],"names":[],"mappings":"AAAA;IACI,mBAAmB;AACvB;;AAEA;IACI,gBAAgB;IAChB,2BAA2B;IAC3B,aAAa;IACb,sBAAsB;AAC1B;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,2BAA2B;AAC/B;;AAEA;IACI,iBAAiB;AACrB;;AAEA;IACI,4BAA4B;AAChC","sourcesContent":["ul#export-actions {\n    margin-bottom: 20px;\n}\n\nul#export-actions li ul {\n    margin-top: 10px;\n    border: 1px solid #e0e0e0e5;\n    padding: 10px;\n    background-color: #fff;\n}\n\nul#export-actions span {\n    display: inline-block;\n}\n\n.pe-settings-tab__workflow-status {\n    margin-left: 5px;\n}\n\n.pe-settings-tab__workflow-actions button {\n    margin-left: 5px !important;\n}\n\n.pe-settings-tab__workflows-container {\n    margin-left: 30px;\n}\n\n.pe-settings-tab__export-cancel-button {\n    margin-left: 10px !important;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/backup-panel/css/general.css"],"names":[],"mappings":"AAAA;IACI,mBAAmB;AACvB;;AAEA;IACI,gBAAgB;IAChB,2BAA2B;IAC3B,aAAa;IACb,sBAAsB;AAC1B;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,2BAA2B;AAC/B;;AAEA;IACI,iBAAiB;AACrB;;AAEA;IACI,4BAA4B;AAChC","sourcesContent":["ul#export-actions {\n    margin-bottom: 20px;\n}\n\nul#export-actions li ul {\n    margin-top: 10px;\n    border: 1px solid #e0e0e0e5;\n    padding: 10px;\n    background-color: #fff;\n}\n\nul#export-actions span {\n    display: inline-block;\n}\n\n.pe-settings-tab__backup-status {\n    margin-left: 5px;\n}\n\n.pe-settings-tab__backup-actions button {\n    margin-left: 5px !important;\n}\n\n.pe-settings-tab__backup-container {\n    margin-left: 30px;\n}\n\n.pe-settings-tab__export-cancel-button {\n    margin-left: 10px !important;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

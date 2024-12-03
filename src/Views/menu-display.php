@@ -13,7 +13,7 @@ $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 // phpcs:disable WordPress.NamingConventions.ValidVariableName.InterpolatedVariableNotSnakeCase
 // phpcs:disable WordPress.PHP.StrictComparisons.LooseComparison
 
-$expireddisplayfooter = get_option('expirationdateDisplayFooter', POSTEXPIRATOR_FOOTERDISPLAY);
+$expireddisplayfooter = $settingsFacade->getShowInPostFooter();
 $expireddisplayfooterenabled = '';
 $expireddisplayfooterdisabled = '';
 if ($expireddisplayfooter == 0) {
@@ -22,11 +22,11 @@ if ($expireddisplayfooter == 0) {
     $expireddisplayfooterenabled = 'checked="checked"';
 }
 
-$expirationdateFooterContents = get_option('expirationdateFooterContents', POSTEXPIRATOR_FOOTERCONTENTS);
-$expirationdateFooterStyle = get_option('expirationdateFooterStyle', POSTEXPIRATOR_FOOTERSTYLE);
+$expirationdateFooterContents = $settingsFacade->getFooterContents();
+$expirationdateFooterStyle = $settingsFacade->getFooterStyle();
 
-$expirationdateDefaultDateFormat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
-$expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
+$expirationdateDefaultDateFormat = $settingsFacade->getDefaultDateFormat();
+$expirationdateDefaultTimeFormat = $settingsFacade->getDefaultTimeFormat();
 
 ?>
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">

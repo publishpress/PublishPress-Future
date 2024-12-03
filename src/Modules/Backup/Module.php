@@ -10,6 +10,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\Future\Modules\Backup\Controllers\BackupAdminPage;
 use PublishPress\Future\Modules\Backup\Controllers\BackupRestApi;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -19,10 +20,16 @@ class Module implements ModuleInterface
 
     private string $pluginVersion;
 
-    public function __construct(HookableInterface $hooks, string $pluginVersion)
-    {
+    private SettingsFacade $settingsFacade;
+
+    public function __construct(
+        HookableInterface $hooks,
+        string $pluginVersion,
+        SettingsFacade $settingsFacade
+    ) {
         $this->hooks = $hooks;
         $this->pluginVersion = $pluginVersion;
+        $this->settingsFacade = $settingsFacade;
     }
 
     /**
@@ -36,7 +43,8 @@ class Module implements ModuleInterface
             ),
             new BackupRestApi(
                 $this->hooks,
-                $this->pluginVersion
+                $this->pluginVersion,
+                $this->settingsFacade
             ),
         ];
 

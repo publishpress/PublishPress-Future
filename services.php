@@ -403,7 +403,8 @@ return [
     ServicesAbstract::MODULE_BACKUP => static function (ContainerInterface $container) {
         return new ModuleBackup(
             $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::PLUGIN_VERSION)
+            $container->get(ServicesAbstract::PLUGIN_VERSION),
+            $container->get(ServicesAbstract::SETTINGS)
         );
     },
 
