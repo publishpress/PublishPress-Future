@@ -169,14 +169,13 @@ class PostExpirator_Display
                 exit;
             } else {
                 // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-                update_option('expirationdateDefaultDateFormat', sanitize_text_field($_POST['expired-default-date-format']));
-                update_option('expirationdateDefaultTimeFormat', sanitize_text_field($_POST['expired-default-time-format']));
-                update_option('expirationdateDisplayFooter', (int)$_POST['expired-display-footer']);
-                update_option('expirationdateFooterContents', wp_kses($_POST['expired-footer-contents'], []));
-                update_option('expirationdateFooterStyle', wp_kses($_POST['expired-footer-style'], []));
-                update_option('expirationdateColumnStyle', sanitize_key($_POST['future-action-column-style']));
-                update_option('expirationdateTimeFormatForDatePicker', sanitize_key($_POST['future-action-time-format']));
-
+                $this->settingsFacade->setDefaultDateFormat(sanitize_text_field($_POST['expired-default-date-format']));
+                $this->settingsFacade->setDefaultTimeFormat(sanitize_text_field($_POST['expired-default-time-format']));
+                $this->settingsFacade->setShowInPostFooter((bool)$_POST['expired-display-footer']);
+                $this->settingsFacade->setFooterContents(wp_kses($_POST['expired-footer-contents'], []));
+                $this->settingsFacade->setFooterStyle(wp_kses($_POST['expired-footer-style'], []));
+                $this->settingsFacade->setColumnStyle(sanitize_key($_POST['future-action-column-style']));
+                $this->settingsFacade->setTimeFormatForDatePicker(sanitize_key($_POST['future-action-time-format']));
                 $this->settingsFacade->setMetaboxTitle(sanitize_text_field($_POST['expirationdate-metabox-title']));
                 $this->settingsFacade->setMetaboxCheckboxLabel(sanitize_text_field($_POST['expirationdate-metabox-checkbox-label']));
                 // phpcs:enable

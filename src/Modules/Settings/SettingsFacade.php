@@ -313,9 +313,19 @@ class SettingsFacade
         return $this->options->getOption('expirationdateColumnStyle', 'verbose');
     }
 
+    public function setColumnStyle(string $value): void
+    {
+        $this->options->updateOption('expirationdateColumnStyle', $value);
+    }
+
     public function getTimeFormatForDatePicker()
     {
         return $this->options->getOption('expirationdateTimeFormatForDatePicker', 'inherited');
+    }
+
+    public function setTimeFormatForDatePicker(string $value): void
+    {
+        $this->options->updateOption('expirationdateTimeFormatForDatePicker', $value);
     }
 
     public function getHideCalendarByDefault()
@@ -410,9 +420,19 @@ class SettingsFacade
         return $this->options->getOption('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
     }
 
+    public function setDefaultDateFormat(string $value): void
+    {
+        $this->options->updateOption('expirationdateDefaultDateFormat', $value);
+    }
+
     public function getDefaultTimeFormat(): string
     {
         return $this->options->getOption('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
+    }
+
+    public function setDefaultTimeFormat(string $value): void
+    {
+        $this->options->updateOption('expirationdateDefaultTimeFormat', $value);
     }
 
     public function getShowInPostFooter(): bool
@@ -420,14 +440,29 @@ class SettingsFacade
         return (bool)$this->options->getOption('expirationdateDisplayFooter', POSTEXPIRATOR_FOOTERDISPLAY);
     }
 
+    public function setShowInPostFooter(bool $value): void
+    {
+        $this->options->updateOption('expirationdateDisplayFooter', $value);
+    }
+
     public function getFooterContents(): string
     {
         return $this->options->getOption('expirationdateFooterContents', POSTEXPIRATOR_FOOTERCONTENTS);
     }
 
+    public function setFooterContents(string $value): void
+    {
+        $this->options->updateOption('expirationdateFooterContents', $value);
+    }
+
     public function getFooterStyle(): string
     {
         return $this->options->getOption('expirationdateFooterStyle', POSTEXPIRATOR_FOOTERSTYLE);
+    }
+
+    public function setFooterStyle(string $value): void
+    {
+        $this->options->updateOption('expirationdateFooterStyle', $value);
     }
 
     public function getAllowUserRoles(): array
@@ -527,6 +562,19 @@ class SettingsFacade
         $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_DISPLAY, $settings);
 
         return $settings;
+    }
+
+    public function setDisplaySettings(array $settings): void
+    {
+        $this->setDefaultDateFormat($settings['defaultDateFormat']);
+        $this->setDefaultTimeFormat($settings['defaultTimeFormat']);
+        $this->setMetaboxTitle($settings['metaboxTitle']);
+        $this->setMetaboxCheckboxLabel($settings['metaboxCheckboxLabel']);
+        $this->setColumnStyle($settings['columnStyle']);
+        $this->setTimeFormatForDatePicker($settings['timeFormatForDatePicker']);
+        $this->setShowInPostFooter($settings['showInPostFooter']);
+        $this->setFooterContents($settings['footerContents']);
+        $this->setFooterStyle($settings['footerStyle']);
     }
 
     public function getAdvancedSettings(): array
