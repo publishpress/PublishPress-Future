@@ -602,9 +602,6 @@ var ImportTab = function ImportTab() {
         autoDismiss: true,
         explicitDismiss: true
       });
-      setFile(null);
-      setValidFile(false);
-      setValidationError(null);
     }).catch(function (error) {
       console.error('Upload error:', error);
       setIsImporting(false);
@@ -615,9 +612,6 @@ var ImportTab = function ImportTab() {
         autoDismiss: true,
         explicitDismiss: true
       });
-      setFile(null);
-      setValidFile(false);
-      setValidationError(null);
     });
   };
   var validateFile = function validateFile(fileToValidate) {

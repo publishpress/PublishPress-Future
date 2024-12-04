@@ -270,6 +270,11 @@ class SettingsFacade
         return $this->cache['postTypeDefaults'][$postType];
     }
 
+    public function setPostTypeDefaults(string $postType, array $defaults): void
+    {
+        $this->options->updateOption('expirationdateDefaults' . ucfirst($postType), $defaults);
+    }
+
     /**
      * @return mixed
      * @deprecated Use getDefaultDateCustom() instead

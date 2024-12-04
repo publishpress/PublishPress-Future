@@ -53,10 +53,6 @@ const ImportTab = () => {
                     explicitDismiss: true,
                 }
             );
-
-            setFile(null);
-            setValidFile(false);
-            setValidationError(null);
         })
         .catch(error => {
             console.error('Upload error:', error);
@@ -71,10 +67,6 @@ const ImportTab = () => {
                     explicitDismiss: true,
                 }
             );
-
-            setFile(null);
-            setValidFile(false);
-            setValidationError(null);
         });
     };
 

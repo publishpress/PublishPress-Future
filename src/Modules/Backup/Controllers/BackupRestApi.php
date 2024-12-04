@@ -354,7 +354,9 @@ class BackupRestApi implements InitializableInterface
     public function importSettings($settings)
     {
         if (isset($settings['postTypesDefaults'])) {
-            $this->settingsFacade->setPostTypesDefaults($settings['postTypesDefaults']);
+            foreach ($settings['postTypesDefaults'] as $postType => $default) {
+                $this->settingsFacade->setPostTypeDefaults($postType, $default);
+            }
         }
 
         if (isset($settings['general'])) {
