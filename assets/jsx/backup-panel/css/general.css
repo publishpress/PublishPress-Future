@@ -1,0 +1,70 @@
+ul#export-actions {
+    margin-bottom: 20px;
+}
+
+ul#export-actions li ul {
+    margin-top: 10px;
+    border: 1px solid #e0e0e0e5;
+    padding: 10px;
+    background-color: #fff;
+}
+
+ul#export-actions span {
+    display: inline-block;
+}
+
+.pe-settings-tab__backup-status {
+    margin-left: 5px;
+}
+
+.pe-settings-tab__backup-actions button {
+    margin-left: 5px !important;
+}
+
+.pe-settings-tab__backup-container {
+    margin-left: 30px;
+}
+
+.pe-settings-tab__export-cancel-button {
+    margin-left: 10px !important;
+}
+
+.components-snackbar-list {
+    position: fixed !important;
+    bottom: 20px;
+    left: 182px;
+    transform: none;
+    z-index: 100000;
+}
+
+.components-snackbar {
+    margin-bottom: 10px;
+}
+
+.wp-admin.folded .components-snackbar-list {
+    left: 58px;
+}
+
+.pe-settings-tab__import-file-upload {
+    margin-bottom: 20px;
+}
+
+.pe-settings-tab__import-file-upload-info {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.pe-dropzone {
+    border: 3px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+}
+
+.pe-dropzone--active {
+    border-color: #0073aa;
+}
+
+.pe-dropzone p {
+    margin: 0;
+}
+
