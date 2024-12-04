@@ -2,6 +2,73 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./assets/jsx/backup-panel/components/SelectableList/index.jsx":
+/*!*********************************************************************!*\
+  !*** ./assets/jsx/backup-panel/components/SelectableList/index.jsx ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SelectableList: () => (/* binding */ SelectableList),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+
+var SelectableList = function SelectableList(_ref) {
+  var items = _ref.items,
+    selectedItems = _ref.selectedItems,
+    onSelect = _ref.onSelect;
+  var handleSelectAll = function handleSelectAll() {
+    onSelect(items.map(function (item) {
+      return item.id;
+    }));
+  };
+  var handleUnselectAll = function handleUnselectAll() {
+    onSelect([]);
+  };
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
+    className: "pe-settings-tab__backup-actions"
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+    isLink: true,
+    onClick: handleSelectAll
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Select all', 'post-expirator')), " |", /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+    isLink: true,
+    onClick: handleUnselectAll
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Unselect all', 'post-expirator')))), /*#__PURE__*/React.createElement("ul", null, items.map(function (item) {
+    return /*#__PURE__*/React.createElement("li", {
+      key: item.id
+    }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CheckboxControl, {
+      label: /*#__PURE__*/React.createElement(React.Fragment, null, item.title, item.status && /*#__PURE__*/React.createElement("span", {
+        className: "pe-settings-tab__backup-status"
+      }, "[", item.status, "]")),
+      checked: selectedItems.includes(item.id),
+      onChange: function onChange(value) {
+        if (value) {
+          onSelect([].concat(_toConsumableArray(selectedItems), [item.id]));
+        } else {
+          onSelect(selectedItems.filter(function (id) {
+            return id !== item.id;
+          }));
+        }
+      }
+    }));
+  })));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SelectableList);
+
+/***/ }),
+
 /***/ "./assets/jsx/backup-panel/components/backup-panel.jsx":
 /*!*************************************************************!*\
   !*** ./assets/jsx/backup-panel/components/backup-panel.jsx ***!
@@ -200,11 +267,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _SelectableList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../SelectableList */ "./assets/jsx/backup-panel/components/SelectableList/index.jsx");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator.return && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, catch: function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
@@ -221,6 +285,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 var _wp = wp,
   apiFetch = _wp.apiFetch;
+
 var ExportTab = function ExportTab() {
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(true),
     _useState2 = _slicedToArray(_useState, 2),
@@ -252,20 +317,20 @@ var ExportTab = function ExportTab() {
     setSelectedSettings = _useState14[1];
   var apiRequestControllerRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useRef)(new AbortController());
   var settingsOptions = [{
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Types', 'post-expirator'),
-    value: 'postTypesDefaults'
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Types', 'post-expirator'),
+    id: 'postTypesDefaults'
   }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('General', 'post-expirator'),
-    value: 'general'
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('General', 'post-expirator'),
+    id: 'general'
   }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Notifications', 'post-expirator'),
-    value: 'notifications'
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Notifications', 'post-expirator'),
+    id: 'notifications'
   }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Display', 'post-expirator'),
-    value: 'display'
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Display', 'post-expirator'),
+    id: 'display'
   }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Advanced', 'post-expirator'),
-    value: 'advanced'
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Advanced', 'post-expirator'),
+    id: 'advanced'
   }];
   var _useDispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useDispatch)('core/notices'),
     createSuccessNotice = _useDispatch.createSuccessNotice,
@@ -374,14 +439,6 @@ var ExportTab = function ExportTab() {
       controller.abort();
     }
   };
-  var handleSelectAllWorkflows = function handleSelectAllWorkflows() {
-    setSelectedWorkflows(workflows.map(function (workflow) {
-      return workflow.id;
-    }));
-  };
-  var handleUnselectAllWorkflows = function handleUnselectAllWorkflows() {
-    setSelectedWorkflows([]);
-  };
   var handleSelectAllSettings = function handleSelectAllSettings() {
     setSelectedSettings(settingsOptions.map(function (option) {
       return option.value;
@@ -411,33 +468,11 @@ var ExportTab = function ExportTab() {
     onChange: function onChange(value) {
       return setIncludeScreenshots(value);
     }
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
-    className: "pe-settings-tab__backup-actions"
-  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    isLink: true,
-    onClick: handleSelectAllWorkflows
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Select all', 'post-expirator')), " |", /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    isLink: true,
-    onClick: handleUnselectAllWorkflows
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Unselect all', 'post-expirator')))), /*#__PURE__*/React.createElement("ul", null, workflows.map(function (workflow) {
-    return /*#__PURE__*/React.createElement("li", {
-      key: workflow.id
-    }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CheckboxControl, {
-      label: /*#__PURE__*/React.createElement(React.Fragment, null, workflow.title, /*#__PURE__*/React.createElement("span", {
-        className: "pe-settings-tab__backup-status"
-      }, "[", workflow.status, "]")),
-      checked: selectedWorkflows.includes(workflow.id),
-      onChange: function onChange(value) {
-        if (value) {
-          setSelectedWorkflows([].concat(_toConsumableArray(selectedWorkflows), [workflow.id]));
-        } else {
-          setSelectedWorkflows(selectedWorkflows.filter(function (id) {
-            return id !== workflow.id;
-          }));
-        }
-      }
-    }));
-  })))), /*#__PURE__*/React.createElement("li", {
+  })), /*#__PURE__*/React.createElement(_SelectableList__WEBPACK_IMPORTED_MODULE_5__.SelectableList, {
+    items: workflows,
+    selectedItems: selectedWorkflows,
+    onSelect: setSelectedWorkflows
+  }))), /*#__PURE__*/React.createElement("li", {
     key: "export-action-settings"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CheckboxControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Action Settings', 'post-expirator'),
@@ -447,31 +482,11 @@ var ExportTab = function ExportTab() {
     }
   }), exportActionSettings && /*#__PURE__*/React.createElement("div", {
     className: "pe-settings-tab__backup-container"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
-    className: "pe-settings-tab__backup-actions"
-  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    isLink: true,
-    onClick: handleSelectAllSettings
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Select all', 'post-expirator')), " |", /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    isLink: true,
-    onClick: handleUnselectAllSettings
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Unselect all', 'post-expirator')))), /*#__PURE__*/React.createElement("ul", null, settingsOptions.map(function (option) {
-    return /*#__PURE__*/React.createElement("li", {
-      key: option.value
-    }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CheckboxControl, {
-      label: option.label,
-      checked: selectedSettings.includes(option.value),
-      onChange: function onChange(value) {
-        if (value) {
-          setSelectedSettings([].concat(_toConsumableArray(selectedSettings), [option.value]));
-        } else {
-          setSelectedSettings(selectedSettings.filter(function (id) {
-            return id !== option.value;
-          }));
-        }
-      }
-    }));
-  }))))), (exportActionWorkflows || exportActionSettings) && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+  }, /*#__PURE__*/React.createElement(_SelectableList__WEBPACK_IMPORTED_MODULE_5__.SelectableList, {
+    items: settingsOptions,
+    selectedItems: selectedSettings,
+    onSelect: setSelectedSettings
+  })))), (exportActionWorkflows || exportActionSettings) && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     isPrimary: true,
     onClick: handleExport,
     isBusy: isExporting,
@@ -514,8 +529,13 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-var _wp = wp,
-  apiFetch = _wp.apiFetch;
+var formatFileSize = function formatFileSize(bytes) {
+  if (bytes === 0) return '0 Bytes';
+  var k = 1024;
+  var sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  var i = Math.floor(Math.log(bytes) / Math.log(k));
+  return "".concat(parseFloat((bytes / Math.pow(k, i)).toFixed(2)), " ").concat(sizes[i]);
+};
 var ImportTab = function ImportTab() {
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
@@ -533,6 +553,10 @@ var ImportTab = function ImportTab() {
     _useState8 = _slicedToArray(_useState7, 2),
     validationError = _useState8[0],
     setValidationError = _useState8[1];
+  var _useState9 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
+    _useState10 = _slicedToArray(_useState9, 2),
+    isDragging = _useState10[0],
+    setIsDragging = _useState10[1];
   var _useDispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)('core/notices'),
     createSuccessNotice = _useDispatch.createSuccessNotice,
     createErrorNotice = _useDispatch.createErrorNotice;
@@ -561,6 +585,9 @@ var ImportTab = function ImportTab() {
         autoDismiss: true,
         explicitDismiss: true
       });
+      setFile(null);
+      setValidFile(false);
+      setValidationError(null);
     }).catch(function (error) {
       console.error('Upload error:', error);
       setIsImporting(false);
@@ -571,6 +598,9 @@ var ImportTab = function ImportTab() {
         autoDismiss: true,
         explicitDismiss: true
       });
+      setFile(null);
+      setValidFile(false);
+      setValidationError(null);
     });
   };
   var validateFile = function validateFile(fileToValidate) {
@@ -585,13 +615,39 @@ var ImportTab = function ImportTab() {
   };
   return /*#__PURE__*/React.createElement("div", {
     className: "pe-settings-tab"
-  }, /*#__PURE__*/React.createElement("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import Settings', 'post-expirator')), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import the plugin settings or workflows from a .json file.', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FormFileUpload, {
+  }, /*#__PURE__*/React.createElement("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import Settings', 'post-expirator')), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import the plugin settings or workflows from a .json file.', 'post-expirator')), /*#__PURE__*/React.createElement("div", {
+    className: "pe-settings-tab__import-file-upload"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-dropzone ".concat(isDragging ? 'pe-dropzone--active' : ''),
+    onDrop: function onDrop(e) {
+      e.preventDefault();
+      var droppedFile = e.dataTransfer.files[0];
+      setFile(droppedFile);
+      validateFile(droppedFile);
+    },
+    onDragOver: function onDragOver(e) {
+      e.preventDefault();
+    },
+    onDragEnter: function onDragEnter(e) {
+      e.preventDefault();
+      setIsDragging(true);
+    },
+    onDragLeave: function onDragLeave(e) {
+      e.preventDefault();
+      if (e.currentTarget === e.target) {
+        setIsDragging(false);
+      }
+    }
+  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Drop your .json file here', 'post-expirator')), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('or', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FormFileUpload, {
     accept: ".json,application/json,text/json,text/plain",
     onChange: function onChange(event) {
       setFile(event.currentTarget.files[0]);
       validateFile(event.currentTarget.files[0]);
-    }
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Select file', 'post-expirator')), file && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", null, "File selected: ", file.name), /*#__PURE__*/React.createElement("p", null, "File size: ", file.size, " bytes")), validFile && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+    },
+    className: "is-primary"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Select a .json file', 'post-expirator')), file && /*#__PURE__*/React.createElement("div", {
+    className: "pe-settings-tab__import-file-upload-info"
+  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Selected file:', 'post-expirator'), ": ", file.name), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('File size:', 'post-expirator'), ": ", formatFileSize(file.size))))), validFile && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
     isPrimary: true,
     isBusy: isImporting,
     onClick: handleImport
@@ -668,7 +724,31 @@ ul#export-actions span {
 .wp-admin.folded .components-snackbar-list {
     left: 58px;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/backup-panel/css/general.css"],"names":[],"mappings":"AAAA;IACI,mBAAmB;AACvB;;AAEA;IACI,gBAAgB;IAChB,2BAA2B;IAC3B,aAAa;IACb,sBAAsB;AAC1B;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,2BAA2B;AAC/B;;AAEA;IACI,iBAAiB;AACrB;;AAEA;IACI,4BAA4B;AAChC;;AAEA;IACI,0BAA0B;IAC1B,YAAY;IACZ,WAAW;IACX,eAAe;IACf,eAAe;AACnB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;IACI,UAAU;AACd","sourcesContent":["ul#export-actions {\n    margin-bottom: 20px;\n}\n\nul#export-actions li ul {\n    margin-top: 10px;\n    border: 1px solid #e0e0e0e5;\n    padding: 10px;\n    background-color: #fff;\n}\n\nul#export-actions span {\n    display: inline-block;\n}\n\n.pe-settings-tab__backup-status {\n    margin-left: 5px;\n}\n\n.pe-settings-tab__backup-actions button {\n    margin-left: 5px !important;\n}\n\n.pe-settings-tab__backup-container {\n    margin-left: 30px;\n}\n\n.pe-settings-tab__export-cancel-button {\n    margin-left: 10px !important;\n}\n\n.components-snackbar-list {\n    position: fixed !important;\n    bottom: 20px;\n    left: 182px;\n    transform: none;\n    z-index: 100000;\n}\n\n.components-snackbar {\n    margin-bottom: 10px;\n}\n\n.wp-admin.folded .components-snackbar-list {\n    left: 58px;\n}\n"],"sourceRoot":""}]);
+
+.pe-settings-tab__import-file-upload {
+    margin-bottom: 20px;
+}
+
+.pe-settings-tab__import-file-upload-info {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.pe-dropzone {
+    border: 3px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+}
+
+.pe-dropzone--active {
+    border-color: #0073aa;
+}
+
+.pe-dropzone p {
+    margin: 0;
+}
+
+`, "",{"version":3,"sources":["webpack://./assets/jsx/backup-panel/css/general.css"],"names":[],"mappings":"AAAA;IACI,mBAAmB;AACvB;;AAEA;IACI,gBAAgB;IAChB,2BAA2B;IAC3B,aAAa;IACb,sBAAsB;AAC1B;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,2BAA2B;AAC/B;;AAEA;IACI,iBAAiB;AACrB;;AAEA;IACI,4BAA4B;AAChC;;AAEA;IACI,0BAA0B;IAC1B,YAAY;IACZ,WAAW;IACX,eAAe;IACf,eAAe;AACnB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;IACI,UAAU;AACd;;AAEA;IACI,mBAAmB;AACvB;;AAEA;IACI,gBAAgB;IAChB,eAAe;AACnB;;AAEA;IACI,uBAAuB;IACvB,aAAa;IACb,kBAAkB;AACtB;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,SAAS;AACb","sourcesContent":["ul#export-actions {\n    margin-bottom: 20px;\n}\n\nul#export-actions li ul {\n    margin-top: 10px;\n    border: 1px solid #e0e0e0e5;\n    padding: 10px;\n    background-color: #fff;\n}\n\nul#export-actions span {\n    display: inline-block;\n}\n\n.pe-settings-tab__backup-status {\n    margin-left: 5px;\n}\n\n.pe-settings-tab__backup-actions button {\n    margin-left: 5px !important;\n}\n\n.pe-settings-tab__backup-container {\n    margin-left: 30px;\n}\n\n.pe-settings-tab__export-cancel-button {\n    margin-left: 10px !important;\n}\n\n.components-snackbar-list {\n    position: fixed !important;\n    bottom: 20px;\n    left: 182px;\n    transform: none;\n    z-index: 100000;\n}\n\n.components-snackbar {\n    margin-bottom: 10px;\n}\n\n.wp-admin.folded .components-snackbar-list {\n    left: 58px;\n}\n\n.pe-settings-tab__import-file-upload {\n    margin-bottom: 20px;\n}\n\n.pe-settings-tab__import-file-upload-info {\n    margin-top: 10px;\n    font-size: 14px;\n}\n\n.pe-dropzone {\n    border: 3px dashed #ccc;\n    padding: 20px;\n    text-align: center;\n}\n\n.pe-dropzone--active {\n    border-color: #0073aa;\n}\n\n.pe-dropzone p {\n    margin: 0;\n}\n\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

@@ -44,3 +44,27 @@ ul#export-actions span {
 .wp-admin.folded .components-snackbar-list {
     left: 58px;
 }
+
+.pe-settings-tab__import-file-upload {
+    margin-bottom: 20px;
+}
+
+.pe-settings-tab__import-file-upload-info {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.pe-dropzone {
+    border: 3px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+}
+
+.pe-dropzone--active {
+    border-color: #0073aa;
+}
+
+.pe-dropzone p {
+    margin: 0;
+}
+

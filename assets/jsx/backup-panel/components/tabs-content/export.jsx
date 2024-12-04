@@ -4,6 +4,7 @@ import { CheckboxControl, Button, ToggleControl, Dashicon } from '@wordpress/com
 import { useState, useRef, useEffect } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 const { apiFetch } = wp;
+import { SelectableList } from '../SelectableList';
 
 const ExportTab = () => {
     const [exportActionWorkflows, setExportActionWorkflows] = useState(true);
@@ -18,24 +19,24 @@ const ExportTab = () => {
 
     const settingsOptions = [
         {
-            label: __('Post Types', 'post-expirator'),
-            value: 'postTypesDefaults',
+            title: __('Post Types', 'post-expirator'),
+            id: 'postTypesDefaults',
         },
         {
-            label: __('General', 'post-expirator'),
-            value: 'general',
+            title: __('General', 'post-expirator'),
+            id: 'general',
         },
         {
-            label: __('Notifications', 'post-expirator'),
-            value: 'notifications',
+            title: __('Notifications', 'post-expirator'),
+            id: 'notifications',
         },
         {
-            label: __('Display', 'post-expirator'),
-            value: 'display',
+            title: __('Display', 'post-expirator'),
+            id: 'display',
         },
         {
-            label: __('Advanced', 'post-expirator'),
-            value: 'advanced',
+            title: __('Advanced', 'post-expirator'),
+            id: 'advanced',
         },
     ];
 
@@ -143,14 +144,6 @@ const ExportTab = () => {
         }
     };
 
-    const handleSelectAllWorkflows = () => {
-        setSelectedWorkflows(workflows.map((workflow) => workflow.id));
-    };
-
-    const handleUnselectAllWorkflows = () => {
-        setSelectedWorkflows([]);
-    };
-
     const handleSelectAllSettings = () => {
         setSelectedSettings(settingsOptions.map((option) => option.value));
     };
@@ -183,35 +176,8 @@ const ExportTab = () => {
                                     onChange={(value) => setIncludeScreenshots(value)}
                                 />
                             </div>
-                            <div>
-                                <span className="pe-settings-tab__backup-actions">
-                                    <Button isLink onClick={handleSelectAllWorkflows}>{__('Select all', 'post-expirator')}</Button> |
-                                    <Button isLink onClick={handleUnselectAllWorkflows}>{__('Unselect all', 'post-expirator')}</Button>
-                                </span>
-                            </div>
 
-                            <ul>
-                                {workflows.map((workflow) => (
-                                    <li key={workflow.id}>
-                                        <CheckboxControl
-                                            label={(
-                                                <>
-                                                    {workflow.title}
-                                                    <span className="pe-settings-tab__backup-status">[{workflow.status}]</span>
-                                                </>
-                                            )}
-                                            checked={selectedWorkflows.includes(workflow.id)}
-                                            onChange={(value) => {
-                                                if (value) {
-                                                    setSelectedWorkflows([...selectedWorkflows, workflow.id]);
-                                                } else {
-                                                    setSelectedWorkflows(selectedWorkflows.filter((id) => id !== workflow.id));
-                                                }
-                                            }}
-                                        />
-                                    </li>
-                                ))}
-                            </ul>
+                            <SelectableList items={workflows} selectedItems={selectedWorkflows} onSelect={setSelectedWorkflows} />
                         </div>
                     )}
                 </li>
@@ -224,30 +190,7 @@ const ExportTab = () => {
 
                     {exportActionSettings && (
                         <div className="pe-settings-tab__backup-container">
-                            <div>
-                                <span className="pe-settings-tab__backup-actions">
-                                    <Button isLink onClick={handleSelectAllSettings}>{__('Select all', 'post-expirator')}</Button> |
-                                    <Button isLink onClick={handleUnselectAllSettings}>{__('Unselect all', 'post-expirator')}</Button>
-                                </span>
-                            </div>
-
-                            <ul>
-                                {settingsOptions.map((option) => (
-                                    <li key={option.value}>
-                                        <CheckboxControl
-                                            label={option.label}
-                                            checked={selectedSettings.includes(option.value)}
-                                            onChange={(value) => {
-                                                if (value) {
-                                                    setSelectedSettings([...selectedSettings, option.value]);
-                                                } else {
-                                                    setSelectedSettings(selectedSettings.filter((id) => id !== option.value));
-                                                }
-                                            }}
-                                        />
-                                    </li>
-                                ))}
-                            </ul>
+                            <SelectableList items={settingsOptions} selectedItems={selectedSettings} onSelect={setSelectedSettings} />
                         </div>
                     )}
                 </li>

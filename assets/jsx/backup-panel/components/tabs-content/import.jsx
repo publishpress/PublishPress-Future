@@ -3,13 +3,22 @@ import { Button, FormFileUpload } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 
-const { apiFetch } = wp;
+const formatFileSize = (bytes) => {
+    if (bytes === 0) return '0 Bytes';
+
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
+};
 
 const ImportTab = () => {
     const [isImporting, setIsImporting] = useState(false);
     const [file, setFile] = useState(null);
     const [validFile, setValidFile] = useState(false);
     const [validationError, setValidationError] = useState(null);
+    const [isDragging, setIsDragging] = useState(false);
 
     const { createSuccessNotice, createErrorNotice } = useDispatch('core/notices');
 
@@ -43,6 +52,10 @@ const ImportTab = () => {
                     explicitDismiss: true,
                 }
             );
+
+            setFile(null);
+            setValidFile(false);
+            setValidationError(null);
         })
         .catch(error => {
             console.error('Upload error:', error);
@@ -57,6 +70,10 @@ const ImportTab = () => {
                     explicitDismiss: true,
                 }
             );
+
+            setFile(null);
+            setValidFile(false);
+            setValidationError(null);
         });
     };
 
@@ -81,22 +98,54 @@ const ImportTab = () => {
 
             <p>{__('Import the plugin settings or workflows from a .json file.', 'post-expirator')}</p>
 
-            <FormFileUpload
-                accept=".json,application/json,text/json,text/plain"
-                onChange={ ( event ) => {
-                    setFile( event.currentTarget.files[0] );
-                    validateFile( event.currentTarget.files[0] );
-                } }
+            <div
+                className="pe-settings-tab__import-file-upload"
             >
-                {__('Select file', 'post-expirator')}
-            </FormFileUpload>
+                <div
+                    className={`pe-dropzone ${isDragging ? 'pe-dropzone--active' : ''}`}
+                    onDrop={(e) => {
+                        e.preventDefault();
+                        const droppedFile = e.dataTransfer.files[0];
+                        setFile(droppedFile);
+                        validateFile(droppedFile);
+                    }}
+                    onDragOver={(e) => {
+                        e.preventDefault();
+                    }}
+                    onDragEnter={(e) => {
+                        e.preventDefault();
+                        setIsDragging(true);
+                    }}
+                    onDragLeave={(e) => {
+                        e.preventDefault();
+                        if (e.currentTarget === e.target) {
+                            setIsDragging(false);
+                        }
+                    }}
+                >
+                    <p>{__('Drop your .json file here', 'post-expirator')}</p>
+                    <p>{__('or', 'post-expirator')}</p>
 
-            {file && (
-                <>
-                    <p>File selected: {file.name}</p>
-                    <p>File size: {file.size} bytes</p>
-                </>
-            )}
+                    <FormFileUpload
+                        accept=".json,application/json,text/json,text/plain"
+                        onChange={ ( event ) => {
+                            setFile( event.currentTarget.files[0] );
+                            validateFile( event.currentTarget.files[0] );
+                        } }
+                        className="is-primary"
+                    >
+                        {__('Select a .json file', 'post-expirator')}
+                    </FormFileUpload>
+
+                    {file && (
+                        <div className="pe-settings-tab__import-file-upload-info">
+                            <p>{__('Selected file:', 'post-expirator')}: {file.name}</p>
+                            <p>{__('File size:', 'post-expirator')}: {formatFileSize(file.size)}</p>
+                        </div>
+                    )}
+                </div>
+            </div>
+
 
             {validFile && (
                 <Button isPrimary isBusy={isImporting} onClick={handleImport}>
