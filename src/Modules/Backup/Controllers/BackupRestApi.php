@@ -283,14 +283,7 @@ class BackupRestApi implements InitializableInterface
 
     public function importBackup(WP_REST_Request $request)
     {
-        ray(file_get_contents('php://input'))->label('Raw POST data');
-        ray($_SERVER['CONTENT_TYPE'])->label('Content-Type header');
-        ray($_SERVER['REQUEST_METHOD'])->label('Request method');
-        ray($_FILES)->label('Files in $_FILES');
-
-
         $files = $request->get_file_params();
-        $headers = $request->get_headers();
 
         $uploadedFile = null;
 
@@ -329,6 +322,14 @@ class BackupRestApi implements InitializableInterface
             // Read and decode the JSON file
             $jsonContent = file_get_contents($uploadedFile['tmp_name']);
             $backupData = json_decode($jsonContent, true);
+
+            if (isset($backupData['workflows'])) {
+                $this->importWorkflows($backupData['workflows']);
+            }
+
+            if (isset($backupData['settings'])) {
+                $this->importSettings($backupData['settings']);
+            }
         } catch (\Exception $e) {
             return new \WP_Error('invalid_request', $e->getMessage());
         }
@@ -336,5 +337,40 @@ class BackupRestApi implements InitializableInterface
         return new WP_REST_Response([
             'message' => 'Backup imported successfully',
         ], 200);
+    }
+
+    public function importWorkflows($workflows)
+    {
+        foreach ($workflows as $workflow) {
+            $workflowModel = new WorkflowModel();
+            $workflowModel->setTitle($workflow['title']);
+            $workflowModel->setDescription($workflow['description']);
+            $workflowModel->setStatus($workflow['status']);
+            $workflowModel->setFlow($workflow['flow']);
+            $workflowModel->save();
+        }
+    }
+
+    public function importSettings($settings)
+    {
+        if (isset($settings['postTypesDefaults'])) {
+            $this->settingsFacade->setPostTypesDefaults($settings['postTypesDefaults']);
+        }
+
+        if (isset($settings['general'])) {
+            $this->settingsFacade->setGeneralSettings($settings['general']);
+        }
+
+        if (isset($settings['notifications'])) {
+            $this->settingsFacade->setNotificationsSettings($settings['notifications']);
+        }
+
+        if (isset($settings['display'])) {
+            $this->settingsFacade->setDisplaySettings($settings['display']);
+        }
+
+        if (isset($settings['advanced'])) {
+            $this->settingsFacade->setAdvancedSettings($settings['advanced']);
+        }
     }
 }

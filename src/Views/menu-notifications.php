@@ -4,35 +4,12 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 // phpcs:disable Generic.Files.LineLength.TooLong
 
-// Get Option
-$expirationdateDefaultDateFormat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
-$expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
-$expiredemailnotification = get_option('expirationdateEmailNotification', POSTEXPIRATOR_EMAILNOTIFICATION);
-$expiredemailnotificationadmins = get_option(
-    'expirationdateEmailNotificationAdmins',
-    POSTEXPIRATOR_EMAILNOTIFICATIONADMINS
-);
-$expiredemailnotificationlist = get_option('expirationdateEmailNotificationList', '');
-
 $container = \PublishPress\Future\Core\DI\Container::getInstance();
 $settingsFacade = $container->get(\PublishPress\Future\Core\DI\ServicesAbstract::SETTINGS);
 
-$expirationdateDefaultDateCustom = $settingsFacade->getGeneralDateTimeOffset();
-
-$categories = get_option('expirationdateCategoryDefaults');
-
-$preserveData = (bool)get_option('expirationdatePreserveData', true);
-
-$expireddisplayfooter = get_option('expirationdateDisplayFooter', POSTEXPIRATOR_FOOTERDISPLAY);
-$expireddisplayfooterenabled = '';
-$expireddisplayfooterdisabled = '';
-if ($expireddisplayfooter == 0) {
-    $expireddisplayfooterdisabled = 'checked="checked"';
-} elseif ($expireddisplayfooter == 1) {
-    $expireddisplayfooterenabled = 'checked="checked"';
-}
-$expirationdateFooterContents = get_option('expirationdateFooterContents', POSTEXPIRATOR_FOOTERCONTENTS);
-$expirationdateFooterStyle = get_option('expirationdateFooterStyle', POSTEXPIRATOR_FOOTERSTYLE);
+$expiredemailnotification = $settingsFacade->getSendEmailNotification();
+$expiredemailnotificationadmins = $settingsFacade->getSendEmailNotificationToAdmins();
+$expiredemailnotificationlist = $settingsFacade->getEmailNotificationAddressesList();
 
 $expiredemailnotificationenabled = '';
 $expiredemailnotificationdisabled = '';
@@ -50,10 +27,6 @@ if ($expiredemailnotificationadmins == 0) {
     $expiredemailnotificationadminsenabled = 'checked="checked"';
 }
 
-$calendarHiddenByDefault = (bool) get_option('expirationdateHideCalendarByDefault', false);
-
-$user_roles = wp_roles()->get_names();
-$plugin_facade = PostExpirator_Facade::getInstance();
 ?>
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
     <div class="pp-column-left">
@@ -133,7 +106,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     <td>
                         <input class="large-text" type="text" name="expired-email-notification-list"
                                id="expired-email-notification-list" value="<?php
-                                echo esc_attr($expiredemailnotificationlist); ?>"/>
+                                echo esc_attr(implode(',', $expiredemailnotificationlist)); ?>"/>
                         <p class="description"><?php
                             esc_html_e(
                                 'Enter a comma separate list of emails that you would like to be notified when the action runs.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab.',

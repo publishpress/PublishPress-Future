@@ -10,8 +10,10 @@ use PostExpirator_Facade;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
+use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\ChangePostStatus;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use WP_Role;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -296,6 +298,16 @@ class SettingsFacade
         return $defaultDateOffsetOption;
     }
 
+    public function setGeneralDateTimeOffset(string $value): void
+    {
+        $value = sanitize_text_field($value);
+        $value = html_entity_decode($value, ENT_QUOTES);
+        $value = preg_replace('/["\'`]/', '', $value);
+
+        $this->options->updateOption('expirationdateDefaultDate', 'custom');
+        $this->options->updateOption('expirationdateDefaultDateCustom', $value);
+    }
+
     public function getColumnStyle()
     {
         return $this->options->getOption('expirationdateColumnStyle', 'verbose');
@@ -309,6 +321,11 @@ class SettingsFacade
     public function getHideCalendarByDefault()
     {
         return (bool)$this->options->getOption('expirationdateHideCalendarByDefault', false);
+    }
+
+    public function setHideCalendarByDefault(bool $value): void
+    {
+        $this->options->updateOption('expirationdateHideCalendarByDefault', $value);
     }
 
     public function getStepScheduleCompressedArgsStatus(): bool
@@ -373,6 +390,21 @@ class SettingsFacade
         $this->options->updateOption(self::OPTION_METABOX_CHECKBOX_LABEL, $value);
     }
 
+    public function setSendEmailNotification(bool $value): void
+    {
+        $this->options->updateOption('expirationdateEmailNotification', $value);
+    }
+
+    public function setSendEmailNotificationToAdmins(bool $value): void
+    {
+        $this->options->updateOption('expirationdateEmailNotificationAdmins', $value);
+    }
+
+    public function setEmailNotificationAddressesList(array $value): void
+    {
+        $this->options->updateOption('expirationdateEmailNotificationList', implode(',', $value));
+    }
+
     public function getDefaultDateFormat(): string
     {
         return $this->options->getOption('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
@@ -416,6 +448,28 @@ class SettingsFacade
         return $allowedUserRoles;
     }
 
+    public function setAllowUserRoles(array $value): void
+    {
+        $userRoles = array_keys(wp_roles()->get_names());
+        $capability = CapabilitiesAbstract::EXPIRE_POST;
+
+        foreach ($userRoles as $roleName) {
+            $role = get_role($roleName);
+
+            if (! is_a($role, WP_Role::class)) {
+                continue;
+            }
+
+            // TODO: only allow roles that can edit posts. Filter in the form as well, adding a description.
+            if ($roleName === 'administrator' || in_array($roleName, $value, true)) {
+                $role->add_cap($capability);
+                continue;
+            }
+
+            $role->remove_cap($capability);
+        }
+    }
+
     public function getGeneralSettings(): array
     {
         $settings = [
@@ -429,6 +483,13 @@ class SettingsFacade
         return $settings;
     }
 
+    public function setGeneralSettings(array $settings): void
+    {
+        $this->setGeneralDateTimeOffset($settings['defaultDateTimeOffset']);
+        $this->setHideCalendarByDefault($settings['hideCalendarByDefault']);
+        $this->setAllowUserRoles($settings['allowUserRoles']);
+    }
+
     public function getNotificationsSettings(): array
     {
         $settings = [
@@ -440,6 +501,13 @@ class SettingsFacade
         $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_NOTIFICATIONS, $settings);
 
         return $settings;
+    }
+
+    public function setNotificationsSettings(array $settings): void
+    {
+        $this->setSendEmailNotification($settings['enableEmailNotification']);
+        $this->setSendEmailNotificationToAdmins($settings['enableEmailNotificationToAdmins']);
+        $this->setEmailNotificationAddressesList($settings['emailNotificationAddressesList']);
     }
 
     public function getDisplaySettings(): array

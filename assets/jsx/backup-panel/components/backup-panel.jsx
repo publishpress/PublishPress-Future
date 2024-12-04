@@ -1,7 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
-import { SnackbarList } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
+import { useState } from '@wordpress/element';
 
 import ImportTab from './tabs-content/import';
 import ExportTab from './tabs-content/export';
@@ -21,11 +19,8 @@ const BackupPanel = () => {
         },
     ];
 
-    const notices = useSelect(select => select('core/notices').getNotices());
-
     return (
         <>
-            <SnackbarList notices={notices} />
             <TabbedWindow
                 tabs={tabs}
                 defaultTab={tabs[0].value}

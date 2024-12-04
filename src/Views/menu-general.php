@@ -1,35 +1,26 @@
 <?php
 
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+
 defined('ABSPATH') or die('Direct access not allowed.');
+
+$settingsFacade = Container::getInstance()->get(ServicesAbstract::SETTINGS);
 
 // phpcs:disable Generic.Files.LineLength.TooLong
 
-// Get Option
-$expirationdateDefaultDateFormat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
-$expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
-
-$container = \PublishPress\Future\Core\DI\Container::getInstance();
-$settingsFacade = $container->get(\PublishPress\Future\Core\DI\ServicesAbstract::SETTINGS);
-
+$expirationdateDefaultDateFormat = $settingsFacade->getDefaultDateFormat();
+$expirationdateDefaultTimeFormat = $settingsFacade->getDefaultTimeFormat();
 $expirationdateDefaultDateCustom = $settingsFacade->getGeneralDateTimeOffset();
+$preserveData = $settingsFacade->getSettingPreserveData();
+$expireddisplayfooter = $settingsFacade->getShowInPostFooter();
+$expirationdateFooterContents = $settingsFacade->getFooterContents();
+$expirationdateFooterStyle = $settingsFacade->getFooterStyle();
 
-$categories = get_option('expirationdateCategoryDefaults');
+$expireddisplayfooterenabled = $expireddisplayfooter ? '' : 'checked="checked"';
+$expireddisplayfooterdisabled = $expireddisplayfooter ? 'checked="checked"' : '';
 
-$preserveData = (bool)get_option('expirationdatePreserveData', true);
-
-$expireddisplayfooter = get_option('expirationdateDisplayFooter', POSTEXPIRATOR_FOOTERDISPLAY);
-$expireddisplayfooterenabled = '';
-$expireddisplayfooterdisabled = '';
-if ($expireddisplayfooter == 0) {
-    $expireddisplayfooterdisabled = 'checked="checked"';
-} elseif ($expireddisplayfooter == 1) {
-    $expireddisplayfooterenabled = 'checked="checked"';
-}
-$expirationdateFooterContents = get_option('expirationdateFooterContents', POSTEXPIRATOR_FOOTERCONTENTS);
-$expirationdateFooterStyle = get_option('expirationdateFooterStyle', POSTEXPIRATOR_FOOTERSTYLE);
-
-
-$calendarHiddenByDefault = (bool) get_option('expirationdateHideCalendarByDefault', false);
+$calendarHiddenByDefault = $settingsFacade->getHideCalendarByDefault();
 
 $user_roles = wp_roles()->get_names();
 $plugin_facade = PostExpirator_Facade::getInstance();
