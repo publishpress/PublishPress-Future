@@ -82,6 +82,19 @@ class BackupRestApi implements InitializableInterface
                 ],
             ]
         );
+
+        register_rest_route(
+            $apiNamespace,
+            '/backup/import',
+            [
+                'methods' => 'POST',
+                'callback' => [$this, 'importBackup'],
+                'permission_callback' => function () {
+                    return current_user_can('manage_options');
+                },
+                'accept_file_uploads' => true,
+            ]
+        );
     }
 
     public function getWorkflows(WP_REST_Request $request)
@@ -266,5 +279,62 @@ class BackupRestApi implements InitializableInterface
         return [
             'advanced' => $this->settingsFacade->getAdvancedSettings(),
         ];
+    }
+
+    public function importBackup(WP_REST_Request $request)
+    {
+        ray(file_get_contents('php://input'))->label('Raw POST data');
+        ray($_SERVER['CONTENT_TYPE'])->label('Content-Type header');
+        ray($_SERVER['REQUEST_METHOD'])->label('Request method');
+        ray($_FILES)->label('Files in $_FILES');
+
+
+        $files = $request->get_file_params();
+        $headers = $request->get_headers();
+
+        $uploadedFile = null;
+
+        $permittedTypes = ['application/json', 'text/json', 'text/plain'];
+
+        if (!empty($files) && !empty($files['backupFile'])) {
+            $uploadedFile = $files['backupFile'];
+        }
+
+        try {
+            if (empty($uploadedFile) || !isset($uploadedFile['tmp_name'])) {
+                return new \WP_Error('invalid_request', 'No backup file uploaded');
+            }
+
+            if (! is_uploaded_file($uploadedFile['tmp_name'])) {
+                return new \WP_Error('invalid_request', 'Invalid backup file');
+            }
+
+            if ($uploadedFile['error'] !== UPLOAD_ERR_OK) {
+                return new \WP_Error('invalid_request', 'Error uploading backup file');
+            }
+
+            $ext = pathinfo($uploadedFile['name'], PATHINFO_EXTENSION);
+
+            if ($ext !== 'json') {
+                return new \WP_Error('invalid_file_type', 'Invalid file type. Please upload a JSON file.');
+            }
+
+            $mimeType = mime_content_type($uploadedFile['tmp_name']);
+            if (!in_array($uploadedFile['type'], $permittedTypes)
+                || !in_array($mimeType, $permittedTypes)
+            ) {
+                return new \WP_Error('invalid_mime_type', 'Invalid mime type');
+            }
+
+            // Read and decode the JSON file
+            $jsonContent = file_get_contents($uploadedFile['tmp_name']);
+            $backupData = json_decode($jsonContent, true);
+        } catch (\Exception $e) {
+            return new \WP_Error('invalid_request', $e->getMessage());
+        }
+
+        return new WP_REST_Response([
+            'message' => 'Backup imported successfully',
+        ], 200);
     }
 }

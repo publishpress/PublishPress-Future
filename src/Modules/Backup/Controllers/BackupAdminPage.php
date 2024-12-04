@@ -93,6 +93,14 @@ class BackupAdminPage implements InitializableInterface
             true
         );
 
+        wp_localize_script(
+            'future_backup_panel',
+            'futureBackupPanelData',
+            [
+                'apiRoot' => esc_url_raw(rest_url()),
+            ]
+        );
+
         wp_set_script_translations(
             'future_backup_panel',
             'post-expirator',
