@@ -1,5 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
+import { SnackbarList } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
 
 import ImportTab from './tabs-content/import';
 import ExportTab from './tabs-content/export';
@@ -19,15 +21,20 @@ const BackupPanel = () => {
         },
     ];
 
+    const notices = useSelect(select => select('core/notices').getNotices());
+
     return (
-        <TabbedWindow
-            tabs={tabs}
-            defaultTab={tabs[0].value}
-            onChange={setActiveTab}
+        <>
+            <SnackbarList notices={notices} />
+            <TabbedWindow
+                tabs={tabs}
+                defaultTab={tabs[0].value}
+                onChange={setActiveTab}
         >
             {activeTab === 'import' && <ImportTab />}
-            {activeTab === 'export' && <ExportTab />}
-        </TabbedWindow>
+                {activeTab === 'export' && <ExportTab />}
+            </TabbedWindow>
+        </>
     );
 };
 

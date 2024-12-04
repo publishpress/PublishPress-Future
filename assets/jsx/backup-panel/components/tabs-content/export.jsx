@@ -1,8 +1,8 @@
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
-import { CheckboxControl, Button, ToggleControl } from '@wordpress/components';
+import { CheckboxControl, Button, ToggleControl, Dashicon } from '@wordpress/components';
 import { useState, useRef, useEffect } from '@wordpress/element';
-
+import { useDispatch } from '@wordpress/data';
 const { apiFetch } = wp;
 
 const ExportTab = () => {
@@ -38,6 +38,8 @@ const ExportTab = () => {
             value: 'advanced',
         },
     ];
+
+    const { createSuccessNotice, createErrorNotice } = useDispatch('core/notices');
 
     useEffect(() => {
         apiFetch({
@@ -93,10 +95,41 @@ const ExportTab = () => {
         }).then((result) => {
             setIsExporting(false);
             handleJsonDataDownload(result.data);
+
+            createSuccessNotice(
+                __('Settings exported successfully.', 'post-expirator'),
+                {
+                    type: 'snackbar',
+                    isDismissible: true,
+                    actions: [
+                        {
+                            label: __('Download', 'post-expirator'),
+                            onClick: () => {
+                                handleJsonDataDownload(result.data);
+                            },
+                        },
+                    ],
+                    icon: <Dashicon icon="yes" />,
+                    autoDismiss: true,
+                    explicitDismiss: true,
+                }
+            );
         }).catch((error) => {
             if (error.name === 'AbortError') {
                 return;
             }
+
+            createErrorNotice(
+                error.message || __('Failed to export settings.', 'post-expirator'),
+                {
+                    type: 'snackbar',
+                    isDismissible: true,
+                    actions: [],
+                    icon: <Dashicon icon="no" />,
+                    autoDismiss: true,
+                    explicitDismiss: true,
+                }
+            );
 
             setIsExporting(false);
         });

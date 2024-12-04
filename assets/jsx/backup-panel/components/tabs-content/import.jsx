@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { Button, FormFileUpload } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-import { addQueryArgs } from '@wordpress/url';
+import { useDispatch } from '@wordpress/data';
 
 const { apiFetch } = wp;
 
@@ -10,6 +10,8 @@ const ImportTab = () => {
     const [file, setFile] = useState(null);
     const [validFile, setValidFile] = useState(false);
     const [validationError, setValidationError] = useState(null);
+
+    const { createSuccessNotice, createErrorNotice } = useDispatch('core/notices');
 
     const handleImport = () => {
         setIsImporting(true);
@@ -31,22 +33,28 @@ const ImportTab = () => {
         .then(response => response.json())
         .then(result => {
             setIsImporting(false);
-            wp.data.dispatch('core/notices').createSuccessNotice(
+            createSuccessNotice(
                 __('Settings imported successfully.', 'post-expirator'),
                 {
                     type: 'snackbar',
                     isDismissible: true,
+                    actions: [],
+                    autoDismiss: true,
+                    explicitDismiss: true,
                 }
             );
         })
         .catch(error => {
             console.error('Upload error:', error);
             setIsImporting(false);
-            wp.data.dispatch('core/notices').createErrorNotice(
+            createErrorNotice(
                 error.message || __('Failed to import settings.', 'post-expirator'),
                 {
                     type: 'snackbar',
                     isDismissible: true,
+                    actions: [],
+                    autoDismiss: true,
+                    explicitDismiss: true,
                 }
             );
         });

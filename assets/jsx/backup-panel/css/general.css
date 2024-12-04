@@ -28,3 +28,19 @@ ul#export-actions span {
 .pe-settings-tab__export-cancel-button {
     margin-left: 10px !important;
 }
+
+.components-snackbar-list {
+    position: fixed !important;
+    bottom: 20px;
+    left: 182px;
+    transform: none;
+    z-index: 100000;
+}
+
+.components-snackbar {
+    margin-bottom: 10px;
+}
+
+.wp-admin.folded .components-snackbar-list {
+    left: 58px;
+}
