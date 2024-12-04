@@ -9,4 +9,9 @@
 #publishpress-future-quick-edit label {
     display: inline-block;
     max-width: 100%;
+    line-height: 12px;
+}
+
+#post-expirator-quick-edit-wrapper .components-checkbox-control__label {
+    line-height: 12px;
 }
