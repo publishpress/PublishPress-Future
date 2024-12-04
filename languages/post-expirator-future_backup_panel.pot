@@ -7,11 +7,125 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-27T19:10:27+00:00\n"
+"POT-Creation-Date: 2024-12-04T21:01:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
 
-#: components/BackupPanel.jsx:6
-msgid "Backup"
+#: components/backup-panel.jsx:13
+#: components/tabs-content/export.jsx:201
+msgid "Export"
+msgstr ""
+
+#: components/backup-panel.jsx:17
+#: components/tabs-content/import.jsx:144
+msgid "Import"
+msgstr ""
+
+#: components/selectable-list/index.jsx:17
+msgid "Select all"
+msgstr ""
+
+#: components/selectable-list/index.jsx:18
+msgid "Unselect all"
+msgstr ""
+
+#: components/tabs-content/export.jsx:23
+msgid "Post Types"
+msgstr ""
+
+#: components/tabs-content/export.jsx:27
+msgid "General"
+msgstr ""
+
+#: components/tabs-content/export.jsx:31
+msgid "Notifications"
+msgstr ""
+
+#: components/tabs-content/export.jsx:35
+msgid "Display"
+msgstr ""
+
+#: components/tabs-content/export.jsx:39
+msgid "Advanced"
+msgstr ""
+
+#: components/tabs-content/export.jsx:102
+msgid "Settings exported successfully."
+msgstr ""
+
+#: components/tabs-content/export.jsx:108
+msgid "Download"
+msgstr ""
+
+#: components/tabs-content/export.jsx:125
+msgid "Failed to export settings."
+msgstr ""
+
+#: components/tabs-content/export.jsx:158
+msgid "Export Settings"
+msgstr ""
+
+#: components/tabs-content/export.jsx:159
+msgid "Export the plugin settings and workflows to a .json file. This file can be imported later to restore the data or migrate to another site."
+msgstr ""
+
+#: components/tabs-content/export.jsx:164
+msgid "Action Workflows"
+msgstr ""
+
+#: components/tabs-content/export.jsx:174
+msgid "Include screenshots"
+msgstr ""
+
+#: components/tabs-content/export.jsx:186
+msgid "Action Settings"
+msgstr ""
+
+#: components/tabs-content/export.jsx:201
+msgid "Exporting..."
+msgstr ""
+
+#: components/tabs-content/export.jsx:205
+msgid "Cancel"
+msgstr ""
+
+#: components/tabs-content/import.jsx:47
+msgid "Settings imported successfully."
+msgstr ""
+
+#: components/tabs-content/import.jsx:61
+msgid "Failed to import settings."
+msgstr ""
+
+#: components/tabs-content/import.jsx:78
+msgid "Invalid file type. Please upload a .json file."
+msgstr ""
+
+#: components/tabs-content/import.jsx:90
+msgid "Import Settings"
+msgstr ""
+
+#: components/tabs-content/import.jsx:91
+msgid "Import the plugin settings or workflows from a .json file."
+msgstr ""
+
+#: components/tabs-content/import.jsx:118
+msgid "Drop your .json file here"
+msgstr ""
+
+#: components/tabs-content/import.jsx:119
+msgid "or"
+msgstr ""
+
+#: components/tabs-content/import.jsx:129
+msgid "Select a .json file"
+msgstr ""
+
+#: components/tabs-content/import.jsx:134
+msgid "Selected file:"
+msgstr ""
+
+#: components/tabs-content/import.jsx:135
+msgid "File size:"
 msgstr ""

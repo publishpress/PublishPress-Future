@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-27T19:10:27+00:00\n"
+"POT-Creation-Date: 2024-12-04T21:01:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -164,24 +164,32 @@ msgstr ""
 msgid "Custom Email Addresses"
 msgstr ""
 
-#: components/data-fields/post-query.jsx:44
-msgid "Post selection"
-msgstr ""
-
-#: components/data-fields/post-query.jsx:47
-msgid "Post received as input"
-msgstr ""
-
-#: components/data-fields/post-query.jsx:48
-msgid "Custom query"
-msgstr ""
-
-#: components/data-fields/post-query.jsx:59
+#: components/data-fields/post-query.jsx:46
 msgid "Post Type"
 msgstr ""
 
-#: components/data-fields/post-query.jsx:74
+#: components/data-fields/post-query.jsx:53
+msgid "Post selection"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:56
+msgid "Post received as input"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:57
+msgid "Custom query"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:77
+msgid "Post ID"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:83
 msgid "Post Status"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:94
+msgid "* Required field"
 msgstr ""
 
 #: components/data-fields/post-status.jsx:40
