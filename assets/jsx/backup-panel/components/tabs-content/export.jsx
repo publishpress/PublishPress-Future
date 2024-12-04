@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 const { apiFetch } = wp;
 import { SelectableList } from '../SelectableList';
+import { SettingsTab } from '../SettingsTab';
 
 const ExportTab = () => {
     const [exportActionWorkflows, setExportActionWorkflows] = useState(true);
@@ -153,11 +154,10 @@ const ExportTab = () => {
     };
 
     return (
-        <div className="pe-settings-tab">
-            <h2>{__('Export Settings', 'post-expirator')}</h2>
-
-            <p>{__('Export the plugin settings and workflows to a .json file. This file can be imported later to restore the data or migrate to another site.', 'post-expirator')}</p>
-
+        <SettingsTab
+            title={__('Export Settings', 'post-expirator')}
+            description={__('Export the plugin settings and workflows to a .json file. This file can be imported later to restore the data or migrate to another site.', 'post-expirator')}
+        >
             <ul id="export-actions">
                 <li key="export-action-workflows">
                     <CheckboxControl
@@ -203,7 +203,7 @@ const ExportTab = () => {
             )}
 
             {isExporting && <Button isLink onClick={handleExportCancel} className="pe-settings-tab__export-cancel-button">{__('Cancel', 'post-expirator')}</Button>}
-        </div>
+        </SettingsTab>
     );
 };
 

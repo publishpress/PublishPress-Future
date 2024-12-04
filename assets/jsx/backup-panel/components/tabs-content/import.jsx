@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { Button, FormFileUpload } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
+import { SettingsTab } from '../SettingsTab';
 
 const formatFileSize = (bytes) => {
     if (bytes === 0) return '0 Bytes';
@@ -93,11 +94,10 @@ const ImportTab = () => {
 
 
     return (
-        <div className="pe-settings-tab">
-            <h2>{__('Import Settings', 'post-expirator')}</h2>
-
-            <p>{__('Import the plugin settings or workflows from a .json file.', 'post-expirator')}</p>
-
+        <SettingsTab
+            title={__('Import Settings', 'post-expirator')}
+            description={__('Import the plugin settings or workflows from a .json file.', 'post-expirator')}
+        >
             <div
                 className="pe-settings-tab__import-file-upload"
             >
@@ -156,7 +156,7 @@ const ImportTab = () => {
             {validationError && (
                 <p className="error">{validationError}</p>
             )}
-        </div>
+        </SettingsTab>
     );
 };
 
