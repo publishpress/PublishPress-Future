@@ -185,7 +185,7 @@ class BackupRestApi implements InitializableInterface
             if ($includeScreenshots) {
                 $screenshotUrl = $workflow->getScreenshotUrl();
                 $screenshotData = @file_get_contents($screenshotUrl);
-                $screenshotData = base64_encode($screenshotData);
+                $screenshotData = 'data:image/png;base64,' . base64_encode($screenshotData);
             } else {
                 $screenshotData = null;
             }
@@ -343,11 +343,16 @@ class BackupRestApi implements InitializableInterface
     {
         foreach ($workflows as $workflow) {
             $workflowModel = new WorkflowModel();
+            $workflowModel->createNew();
             $workflowModel->setTitle($workflow['title']);
             $workflowModel->setDescription($workflow['description']);
-            $workflowModel->setStatus($workflow['status']);
+            $workflowModel->setStatus('draft');
             $workflowModel->setFlow($workflow['flow']);
             $workflowModel->save();
+
+            if (isset($workflow['screenshot'])) {
+                $workflowModel->setScreenshotFromBase64($workflow['screenshot']);
+            }
         }
     }
 
