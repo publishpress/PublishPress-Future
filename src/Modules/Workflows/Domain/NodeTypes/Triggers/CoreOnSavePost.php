@@ -81,6 +81,7 @@ class CoreOnSavePost implements NodeTypeInterface
                         ),
                         "settings" => [
                             "acceptsInput" => false,
+                            "isPostTypeRequired" => true,
                         ],
                         "default" => [
                             "postSource" => "custom",

@@ -5,7 +5,13 @@ import { InlineMultiSelect } from "../inline-multi-select";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 
 
-export function PostQuery({ name, label, defaultValue, onChange, settings }) {
+export function PostQuery({
+    name,
+    label,
+    defaultValue,
+    onChange,
+    settings
+}) {
     const postTypes = futureWorkflowEditor.postTypes;
     const postStatuses = futureWorkflowEditor.postStatuses;
 
@@ -19,6 +25,7 @@ export function PostQuery({ name, label, defaultValue, onChange, settings }) {
     }
 
     const acceptsInput = settings && settings?.acceptsInput === true;
+    const isPostTypeRequired = settings && settings?.isPostTypeRequired === true;
     const defaultPostSource =acceptsInput ? 'input' : 'custom';
     const showCustomQueryFields = defaultValue?.postSource === 'custom' || ! acceptsInput;
 
@@ -35,6 +42,8 @@ export function PostQuery({ name, label, defaultValue, onChange, settings }) {
             onChangeSetting({ settingName: "postSource", value: defaultPostSource });
         }
     }, []);
+
+    const postTypeFieldLabel = isPostTypeRequired ? __('Post Type', 'post-expirator') + ' *' : __('Post Type', 'post-expirator');
 
     return (
         <>
@@ -56,7 +65,7 @@ export function PostQuery({ name, label, defaultValue, onChange, settings }) {
                 {showCustomQueryFields && (
                     <>
                         <InlineMultiSelect
-                            label={__('Post Type', 'post-expirator')}
+                            label={postTypeFieldLabel}
                             value={defaultValue?.postType || []}
                             suggestions={postTypes}
                             expandOnFocus={true}
@@ -65,7 +74,7 @@ export function PostQuery({ name, label, defaultValue, onChange, settings }) {
                         />
 
                         <FormTokenField
-                            label="Post ID"
+                            label={__('Post ID', 'post-expirator')}
                             value={defaultValue?.postId || []}
                             onChange={(value) => onChangeSetting({ settingName: "postId", value })}
                         />
@@ -79,6 +88,10 @@ export function PostQuery({ name, label, defaultValue, onChange, settings }) {
                             onChange={(value) => onChangeSetting({ settingName: "postStatus", value })}
                         />
                     </>
+                )}
+
+                {isPostTypeRequired && (
+                    <p className="description">{__('* Required field', 'post-expirator')}</p>
                 )}
             </VStack>
         </>

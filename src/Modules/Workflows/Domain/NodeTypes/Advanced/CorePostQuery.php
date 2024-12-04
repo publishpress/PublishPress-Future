@@ -80,6 +80,9 @@ class CorePostQuery implements NodeTypeInterface
                             "postId" => [],
                             "postStatus" => [],
                         ],
+                        "settings" => [
+                            "isPostTypeRequired" => true,
+                        ],
                     ],
                 ]
             ]

@@ -13058,6 +13058,7 @@ function PostQuery(_ref) {
     }
   };
   var acceptsInput = settings && (settings === null || settings === void 0 ? void 0 : settings.acceptsInput) === true;
+  var isPostTypeRequired = settings && (settings === null || settings === void 0 ? void 0 : settings.isPostTypeRequired) === true;
   var defaultPostSource = acceptsInput ? 'input' : 'custom';
   var showCustomQueryFields = ((_defaultValue = defaultValue) === null || _defaultValue === void 0 ? void 0 : _defaultValue.postSource) === 'custom' || !acceptsInput;
 
@@ -13076,6 +13077,7 @@ function PostQuery(_ref) {
       });
     }
   }, []);
+  var postTypeFieldLabel = isPostTypeRequired ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Type', 'post-expirator') + ' *' : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Type', 'post-expirator');
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalVStack, null, acceptsInput && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.RadioControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post selection', 'post-expirator'),
     selected: ((_defaultValue2 = defaultValue) === null || _defaultValue2 === void 0 ? void 0 : _defaultValue2.postSource) || defaultPostSource,
@@ -13093,7 +13095,7 @@ function PostQuery(_ref) {
       });
     }
   }), showCustomQueryFields && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_inline_multi_select__WEBPACK_IMPORTED_MODULE_3__.InlineMultiSelect, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Type', 'post-expirator'),
+    label: postTypeFieldLabel,
     value: ((_defaultValue3 = defaultValue) === null || _defaultValue3 === void 0 ? void 0 : _defaultValue3.postType) || [],
     suggestions: postTypes,
     expandOnFocus: true,
@@ -13105,7 +13107,7 @@ function PostQuery(_ref) {
       });
     }
   }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FormTokenField, {
-    label: "Post ID",
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post ID', 'post-expirator'),
     value: ((_defaultValue4 = defaultValue) === null || _defaultValue4 === void 0 ? void 0 : _defaultValue4.postId) || [],
     onChange: function onChange(value) {
       return onChangeSetting({
@@ -13125,7 +13127,9 @@ function PostQuery(_ref) {
         value: value
       });
     }
-  }))));
+  })), isPostTypeRequired && /*#__PURE__*/React.createElement("p", {
+    className: "description"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('* Required field', 'post-expirator'))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PostQuery);
 
