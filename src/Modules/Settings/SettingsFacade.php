@@ -144,6 +144,11 @@ class SettingsFacade
         return (bool)$this->options->getOption('expirationdatePreserveData', $default);
     }
 
+    public function setSettingPreserveData(bool $value): void
+    {
+        $this->options->updateOption('expirationdatePreserveData', $value);
+    }
+
     /**
      * @param bool $default
      * @return bool
@@ -590,5 +595,14 @@ class SettingsFacade
         $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_ADVANCED, $settings);
 
         return $settings;
+    }
+
+    public function setAdvancedSettings(array $settings): void
+    {
+        $this->setStepScheduleCompressedArgsStatus($settings['stepScheduleCompressedArgs']);
+        $this->setScheduledWorkflowStepsCleanupStatus($settings['scheduledWorkflowStepsCleanup']);
+        $this->setScheduledWorkflowStepsCleanupRetention($settings['scheduledWorkflowStepsCleanupRetention']);
+        $this->setExperimentalFeaturesStatus($settings['experimentalFeatures']);
+        $this->setSettingPreserveData($settings['preserveDataDeactivating']);
     }
 }

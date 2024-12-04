@@ -10,7 +10,6 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 // Get Option
 
-$plugin_facade = PostExpirator_Facade::getInstance();
 $container = DIContainer::getInstance();
 $hooks = $container->get(ServicesAbstract::HOOKS);
 $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
