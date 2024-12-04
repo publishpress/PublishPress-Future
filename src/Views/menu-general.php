@@ -113,8 +113,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                                             ?>checked="checked"<?php
                                         endif; ?>
                                 />
-                                <?php
-                                echo esc_html($role_label); ?>
+                                <?php echo esc_html(translate_user_role($role_label)); ?>
                             </label>
                             <?php
                         endforeach;
