@@ -4,8 +4,8 @@ import { CheckboxControl, Button, ToggleControl, Dashicon } from '@wordpress/com
 import { useState, useRef, useEffect } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 const { apiFetch } = wp;
-import { SelectableList } from '../SelectableList';
-import { SettingsTab } from '../SettingsTab';
+import { SelectableList } from '../selectable-list';
+import { SettingsTab } from '../settings-tab';
 
 const ExportTab = () => {
     const [exportActionWorkflows, setExportActionWorkflows] = useState(true);

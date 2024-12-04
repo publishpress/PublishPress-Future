@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { Button, FormFileUpload } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
-import { SettingsTab } from '../SettingsTab';
+import { SettingsTab } from '../settings-tab';
 
 const formatFileSize = (bytes) => {
     if (bytes === 0) return '0 Bytes';
