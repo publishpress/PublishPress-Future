@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Add method `disableExpiration` to the class `PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel`.
+- Add new admin page to export and import workflows and plugin settings (Issue #704).
+- Add global variable `global.execution_id` to the workflow engine to identify the current execution of the workflow.
 - Add setting fields to customize the metabox title and checkbox label (Issue #227).
+- Add method `disableExpiration` to the class `PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel`.
+- Add `*` to indicate required fields in the workflow editor (Issue #974).
 
 ### Changed
 
@@ -22,6 +25,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix error when a trigger node type is not found.
 - Fix warning PHP Deprecated:  ltrim(): Passing null to parameter #1 ($string) of type string on the Scheduled Actions table.
 - Fix error on table ScheduledActionsTable refactoring calls to `next` instead of `get_date`.
+- Fix displaced labels for checkboxes in the Future Actions metabox and manual workflow activation checkbox (Issue #1057).
+- Fix translations for user roles in the plugin settings page (Issue #1050).
 
 ## [4.1.3] - 22 Nov, 2024
 
