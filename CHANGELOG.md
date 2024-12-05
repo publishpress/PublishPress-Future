@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Move notification settings to a specific tab (Issue #190).
 - Disable the workflow screenshot feature by default (Issue #1066).
+- Changed the Message field in the "Log - Add" step displaying a textarea instead of a text field (Issue #1068).
 
 ### Fixed
 
