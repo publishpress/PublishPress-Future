@@ -45,15 +45,15 @@ const ImportTab = () => {
             if (response.ok) {
                 setIsImporting(false);
                 createSuccessNotice(
-                __('Settings imported successfully.', 'post-expirator'),
-                {
-                    type: 'snackbar',
-                    isDismissible: true,
-                    actions: [],
-                    autoDismiss: true,
-                    explicitDismiss: true,
-                    icon: <Dashicon icon="yes" />,
-                }
+                    response.message || __('Settings imported successfully.', 'post-expirator'),
+                    {
+                        type: 'snackbar',
+                        isDismissible: true,
+                        actions: [],
+                        autoDismiss: true,
+                        explicitDismiss: true,
+                        icon: <Dashicon icon="yes" />,
+                    }
                 );
             } else {
                 throw new Error(response.message);

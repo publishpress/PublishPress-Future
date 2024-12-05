@@ -530,9 +530,9 @@ class SettingsFacade
 
     public function setGeneralSettings(array $settings): void
     {
-        $this->setGeneralDateTimeOffset($settings['defaultDateTimeOffset']);
-        $this->setHideCalendarByDefault($settings['hideCalendarByDefault']);
-        $this->setAllowUserRoles($settings['allowUserRoles']);
+        $this->setGeneralDateTimeOffset($settings['defaultDateTimeOffset'] ?? '');
+        $this->setHideCalendarByDefault($settings['hideCalendarByDefault'] ?? false);
+        $this->setAllowUserRoles($settings['allowUserRoles'] ?? []);
     }
 
     public function getNotificationsSettings(): array
@@ -550,9 +550,9 @@ class SettingsFacade
 
     public function setNotificationsSettings(array $settings): void
     {
-        $this->setSendEmailNotification($settings['enableEmailNotification']);
-        $this->setSendEmailNotificationToAdmins($settings['enableEmailNotificationToAdmins']);
-        $this->setEmailNotificationAddressesList($settings['emailNotificationAddressesList']);
+        $this->setSendEmailNotification($settings['enableEmailNotification'] ?? false);
+        $this->setSendEmailNotificationToAdmins($settings['enableEmailNotificationToAdmins'] ?? false);
+        $this->setEmailNotificationAddressesList($settings['emailNotificationAddressesList'] ?? []);
     }
 
     public function getDisplaySettings(): array
@@ -576,15 +576,15 @@ class SettingsFacade
 
     public function setDisplaySettings(array $settings): void
     {
-        $this->setDefaultDateFormat($settings['defaultDateFormat']);
-        $this->setDefaultTimeFormat($settings['defaultTimeFormat']);
-        $this->setMetaboxTitle($settings['metaboxTitle']);
-        $this->setMetaboxCheckboxLabel($settings['metaboxCheckboxLabel']);
-        $this->setColumnStyle($settings['columnStyle']);
-        $this->setTimeFormatForDatePicker($settings['timeFormatForDatePicker']);
-        $this->setShowInPostFooter($settings['showInPostFooter']);
-        $this->setFooterContents($settings['footerContents']);
-        $this->setFooterStyle($settings['footerStyle']);
+        $this->setDefaultDateFormat($settings['defaultDateFormat'] ?? '');
+        $this->setDefaultTimeFormat($settings['defaultTimeFormat'] ?? '');
+        $this->setMetaboxTitle($settings['metaboxTitle'] ?? '');
+        $this->setMetaboxCheckboxLabel($settings['metaboxCheckboxLabel'] ?? '');
+        $this->setColumnStyle($settings['columnStyle'] ?? '');
+        $this->setTimeFormatForDatePicker($settings['timeFormatForDatePicker'] ?? '');
+        $this->setShowInPostFooter($settings['showInPostFooter'] ?? false);
+        $this->setFooterContents($settings['footerContents'] ?? '');
+        $this->setFooterStyle($settings['footerStyle'] ?? '');
     }
 
     public function getAdvancedSettings(): array
@@ -604,10 +604,10 @@ class SettingsFacade
 
     public function setAdvancedSettings(array $settings): void
     {
-        $this->setStepScheduleCompressedArgsStatus($settings['stepScheduleCompressedArgs']);
-        $this->setScheduledWorkflowStepsCleanupStatus($settings['scheduledWorkflowStepsCleanup']);
-        $this->setScheduledWorkflowStepsCleanupRetention($settings['scheduledWorkflowStepsCleanupRetention']);
-        $this->setExperimentalFeaturesStatus($settings['experimentalFeatures']);
-        $this->setSettingPreserveData($settings['preserveDataDeactivating']);
+        $this->setStepScheduleCompressedArgsStatus($settings['stepScheduleCompressedArgs'] ?? false);
+        $this->setScheduledWorkflowStepsCleanupStatus($settings['scheduledWorkflowStepsCleanup'] ?? true);
+        $this->setScheduledWorkflowStepsCleanupRetention($settings['scheduledWorkflowStepsCleanupRetention'] ?? 30);
+        $this->setExperimentalFeaturesStatus($settings['experimentalFeatures'] ?? false);
+        $this->setSettingPreserveData($settings['preserveDataDeactivating'] ?? false);
     }
 }

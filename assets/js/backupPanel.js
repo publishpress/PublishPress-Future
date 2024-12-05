@@ -596,7 +596,7 @@ var ImportTab = function ImportTab() {
     }).then(function (response) {
       if (response.ok) {
         setIsImporting(false);
-        createSuccessNotice((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Settings imported successfully.', 'post-expirator'), {
+        createSuccessNotice(response.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Settings imported successfully.', 'post-expirator'), {
           type: 'snackbar',
           isDismissible: true,
           actions: [],

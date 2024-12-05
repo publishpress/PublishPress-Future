@@ -128,6 +128,7 @@ class BackupRestApi implements InitializableInterface
             return new WP_REST_Response(
                 [
                     'workflows' => $workflows,
+                    'ok' => true,
                 ],
                 200
             );
@@ -137,6 +138,7 @@ class BackupRestApi implements InitializableInterface
             return new WP_REST_Response(
                 [
                     'message' => __('Failed to get workflows. Check the logs for more details.', 'post-expirator'),
+                    'ok' => false,
                 ],
                 400
             );
@@ -173,6 +175,7 @@ class BackupRestApi implements InitializableInterface
                 [
                     'message' => 'Exporting backup',
                     'data' => $exportData,
+                    'ok' => true,
                 ],
                 200
             );
@@ -182,6 +185,7 @@ class BackupRestApi implements InitializableInterface
             return new WP_REST_Response(
                 [
                     'message' => __('Failed to export the file. Check the logs for more details.', 'post-expirator'),
+                    'ok' => false,
                 ],
                 400
             );
@@ -362,20 +366,25 @@ class BackupRestApi implements InitializableInterface
             if (isset($backupData['settings'])) {
                 $this->importSettings($backupData['settings']);
             }
+
+            return new WP_REST_Response(
+                [
+                    'message' => 'Backup imported successfully',
+                    'ok' => true,
+                ],
+                200
+            );
         } catch (Throwable $e) {
             $this->logger->error('Error importing backup: ' . $e->getMessage());
 
             return new WP_REST_Response(
                 [
                     'message' => __('Failed to import the file. Check the logs for more details.', 'post-expirator'),
+                    'ok' => false,
                 ],
                 400
             );
         }
-
-        return new WP_REST_Response([
-            'message' => 'Backup imported successfully',
-        ], 200);
     }
 
     public function importWorkflows($workflows)
