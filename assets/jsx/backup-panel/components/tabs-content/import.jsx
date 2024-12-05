@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { Button, FormFileUpload } from '@wordpress/components';
+import { Button, FormFileUpload, Dashicon } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import { SettingsTab } from '../settings-tab';
@@ -41,9 +41,10 @@ const ImportTab = () => {
             credentials: 'same-origin'
         })
         .then(response => response.json())
-        .then(result => {
-            setIsImporting(false);
-            createSuccessNotice(
+        .then(response => {
+            if (response.ok) {
+                setIsImporting(false);
+                createSuccessNotice(
                 __('Settings imported successfully.', 'post-expirator'),
                 {
                     type: 'snackbar',
@@ -51,20 +52,24 @@ const ImportTab = () => {
                     actions: [],
                     autoDismiss: true,
                     explicitDismiss: true,
+                    icon: <Dashicon icon="yes" />,
                 }
-            );
+                );
+            } else {
+                throw new Error(response.message);
+            }
         })
         .catch(error => {
-            console.error('Upload error:', error);
             setIsImporting(false);
             createErrorNotice(
-                error.message || __('Failed to import settings.', 'post-expirator'),
+                error || __('Failed to import settings.', 'post-expirator'),
                 {
                     type: 'snackbar',
                     isDismissible: true,
                     actions: [],
                     autoDismiss: true,
                     explicitDismiss: true,
+                    icon: <Dashicon icon="warning" />,
                 }
             );
         });

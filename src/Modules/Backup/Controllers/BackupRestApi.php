@@ -2,13 +2,16 @@
 
 namespace PublishPress\Future\Modules\Backup\Controllers;
 
+use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Settings\Models\SettingsPostTypesModel;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
+use Throwable;
 use WP_REST_Request;
 use WP_REST_Response;
 
@@ -20,14 +23,18 @@ class BackupRestApi implements InitializableInterface
 
     private SettingsFacade $settingsFacade;
 
+    private LoggerInterface $logger;
+
     public function __construct(
         HookableInterface $hooks,
         string $pluginVersion,
-        SettingsFacade $settingsFacade
+        SettingsFacade $settingsFacade,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->pluginVersion = $pluginVersion;
         $this->settingsFacade = $settingsFacade;
+        $this->logger = $logger;
     }
 
     public function initialize()
@@ -99,61 +106,86 @@ class BackupRestApi implements InitializableInterface
 
     public function getWorkflows(WP_REST_Request $request)
     {
-        /** @var WorkflowsModel $workflowsModel */
-        $workflowsModel = new WorkflowsModel();
+        try {
+            /** @var WorkflowsModel $workflowsModel */
+            $workflowsModel = new WorkflowsModel();
 
-        $workflowsIds = $workflowsModel->getAllWorkflowsIds();
+            $workflowsIds = $workflowsModel->getAllWorkflowsIds();
 
-        $workflows = [];
+            $workflows = [];
 
-        foreach ($workflowsIds as $workflowId) {
-            $workflow = new WorkflowModel();
-            $workflow->load($workflowId);
+            foreach ($workflowsIds as $workflowId) {
+                $workflow = new WorkflowModel();
+                $workflow->load($workflowId);
 
-            $workflows[] = [
-                'id' => $workflow->getId(),
-                'title' => $workflow->getTitle(),
-                'status' => $workflow->getStatus(),
-            ];
+                $workflows[] = [
+                    'id' => $workflow->getId(),
+                    'title' => $workflow->getTitle(),
+                    'status' => $workflow->getStatus(),
+                ];
+            }
+
+            return new WP_REST_Response(
+                [
+                    'workflows' => $workflows,
+                ],
+                200
+            );
+        } catch (Throwable $e) {
+            $this->logger->error('Error getting workflows: ' . $e->getMessage());
+
+            return new WP_REST_Response(
+                [
+                    'message' => __('Failed to get workflows. Check the logs for more details.', 'post-expirator'),
+                ],
+                400
+            );
         }
-
-        return new WP_REST_Response(
-            [
-                'workflows' => $workflows,
-            ],
-            200
-        );
     }
 
     public function exportBackup(WP_REST_Request $request)
     {
-        $exportActionWorkflows = $request->get_param('exportActionWorkflows');
-        $exportActionSettings = $request->get_param('exportActionSettings');
-        $selectedWorkflows = $request->get_param('workflows');
-        $includeScreenshots = $request->get_param('includeScreenshots');
-        $selectedSettings = $request->get_param('settings');
+        try {
+            $exportActionWorkflows = $request->get_param('exportActionWorkflows');
+            $exportActionSettings = $request->get_param('exportActionSettings');
+            $selectedWorkflows = $request->get_param('workflows');
+            $includeScreenshots = $request->get_param('includeScreenshots');
+            $selectedSettings = $request->get_param('settings');
 
-        if (! $exportActionWorkflows && ! $exportActionSettings) {
-            return new \WP_Error('invalid_request', 'Invalid request');
+            if (! $exportActionWorkflows && ! $exportActionSettings) {
+                return new \WP_Error('invalid_request', 'Invalid request');
+            }
+
+            $exportData = [
+                'version' => $this->pluginVersion,
+                'date' => date('Y-m-d H:i:s'),
+            ];
+
+            if ($exportActionWorkflows) {
+                $exportData['workflows'] = $this->exportWorkflows($selectedWorkflows, $includeScreenshots);
+            }
+
+            if ($exportActionSettings) {
+                $exportData['settings'] = $this->exportSettings($selectedSettings);
+            }
+
+            return new WP_REST_Response(
+                [
+                    'message' => 'Exporting backup',
+                    'data' => $exportData,
+                ],
+                200
+            );
+        } catch (Throwable $e) {
+            $this->logger->error('Error exporting backup: ' . $e->getMessage());
+
+            return new WP_REST_Response(
+                [
+                    'message' => __('Failed to export the file. Check the logs for more details.', 'post-expirator'),
+                ],
+                400
+            );
         }
-
-        $exportData = [
-            'version' => $this->pluginVersion,
-            'date' => date('Y-m-d H:i:s'),
-        ];
-
-        if ($exportActionWorkflows) {
-            $exportData['workflows'] = $this->exportWorkflows($selectedWorkflows, $includeScreenshots);
-        }
-
-        if ($exportActionSettings) {
-            $exportData['settings'] = $this->exportSettings($selectedSettings);
-        }
-
-        return [
-            'message' => 'Exporting backup',
-            'data' => $exportData,
-        ];
     }
 
     private function exportWorkflows(array $selectedWorkflowIds = [], bool $includeScreenshots = false)
@@ -295,28 +327,28 @@ class BackupRestApi implements InitializableInterface
 
         try {
             if (empty($uploadedFile) || !isset($uploadedFile['tmp_name'])) {
-                return new \WP_Error('invalid_request', 'No backup file uploaded');
+                throw new Exception('No backup file uploaded');
             }
 
             if (! is_uploaded_file($uploadedFile['tmp_name'])) {
-                return new \WP_Error('invalid_request', 'Invalid backup file');
+                throw new Exception('Invalid backup file');
             }
 
             if ($uploadedFile['error'] !== UPLOAD_ERR_OK) {
-                return new \WP_Error('invalid_request', 'Error uploading backup file');
+                throw new Exception('Error uploading backup file');
             }
 
             $ext = pathinfo($uploadedFile['name'], PATHINFO_EXTENSION);
 
             if ($ext !== 'json') {
-                return new \WP_Error('invalid_file_type', 'Invalid file type. Please upload a JSON file.');
+                throw new Exception('Invalid file type. Please upload a JSON file.');
             }
 
             $mimeType = mime_content_type($uploadedFile['tmp_name']);
             if (!in_array($uploadedFile['type'], $permittedTypes)
                 || !in_array($mimeType, $permittedTypes)
             ) {
-                return new \WP_Error('invalid_mime_type', 'Invalid mime type');
+                throw new Exception('Invalid mime type');
             }
 
             // Read and decode the JSON file
@@ -330,8 +362,15 @@ class BackupRestApi implements InitializableInterface
             if (isset($backupData['settings'])) {
                 $this->importSettings($backupData['settings']);
             }
-        } catch (\Exception $e) {
-            return new \WP_Error('invalid_request', $e->getMessage());
+        } catch (Throwable $e) {
+            $this->logger->error('Error importing backup: ' . $e->getMessage());
+
+            return new WP_REST_Response(
+                [
+                    'message' => __('Failed to import the file. Check the logs for more details.', 'post-expirator'),
+                ],
+                400
+            );
         }
 
         return new WP_REST_Response([

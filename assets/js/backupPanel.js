@@ -593,24 +593,33 @@ var ImportTab = function ImportTab() {
       credentials: 'same-origin'
     }).then(function (response) {
       return response.json();
-    }).then(function (result) {
-      setIsImporting(false);
-      createSuccessNotice((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Settings imported successfully.', 'post-expirator'), {
-        type: 'snackbar',
-        isDismissible: true,
-        actions: [],
-        autoDismiss: true,
-        explicitDismiss: true
-      });
+    }).then(function (response) {
+      if (response.ok) {
+        setIsImporting(false);
+        createSuccessNotice((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Settings imported successfully.', 'post-expirator'), {
+          type: 'snackbar',
+          isDismissible: true,
+          actions: [],
+          autoDismiss: true,
+          explicitDismiss: true,
+          icon: /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Dashicon, {
+            icon: "yes"
+          })
+        });
+      } else {
+        throw new Error(response.message);
+      }
     }).catch(function (error) {
-      console.error('Upload error:', error);
       setIsImporting(false);
-      createErrorNotice(error.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Failed to import settings.', 'post-expirator'), {
+      createErrorNotice(error || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Failed to import settings.', 'post-expirator'), {
         type: 'snackbar',
         isDismissible: true,
         actions: [],
         autoDismiss: true,
-        explicitDismiss: true
+        explicitDismiss: true,
+        icon: /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Dashicon, {
+          icon: "warning"
+        })
       });
     });
   };

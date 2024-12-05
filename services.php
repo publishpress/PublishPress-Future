@@ -404,7 +404,8 @@ return [
         return new ModuleBackup(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::PLUGIN_VERSION),
-            $container->get(ServicesAbstract::SETTINGS)
+            $container->get(ServicesAbstract::SETTINGS),
+            $container->get(ServicesAbstract::LOGGER)
         );
     },
 
