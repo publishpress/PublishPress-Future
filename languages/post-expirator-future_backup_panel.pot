@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-12-05T13:01:11+00:00\n"
+"POT-Creation-Date: 2024-12-05T13:02:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -123,9 +123,9 @@ msgid "Select a .json file"
 msgstr ""
 
 #: components/tabs-content/import.jsx:134
-msgid "Selected file:"
+msgid "Selected file"
 msgstr ""
 
 #: components/tabs-content/import.jsx:135
-msgid "File size:"
+msgid "File size"
 msgstr ""

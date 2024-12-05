@@ -659,7 +659,7 @@ var ImportTab = function ImportTab() {
     className: "is-primary"
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Select a .json file', 'post-expirator')), file && /*#__PURE__*/React.createElement("div", {
     className: "pe-settings-tab__import-file-upload-info"
-  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Selected file:', 'post-expirator'), ": ", file.name), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('File size:', 'post-expirator'), ": ", formatFileSize(file.size))))), validFile && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Selected file', 'post-expirator'), ": ", file.name), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('File size', 'post-expirator'), ": ", formatFileSize(file.size))))), validFile && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
     isPrimary: true,
     isBusy: isImporting,
     onClick: handleImport

@@ -131,8 +131,8 @@ const ImportTab = () => {
 
                     {file && (
                         <div className="pe-settings-tab__import-file-upload-info">
-                            <p>{__('Selected file:', 'post-expirator')}: {file.name}</p>
-                            <p>{__('File size:', 'post-expirator')}: {formatFileSize(file.size)}</p>
+                            <p>{__('Selected file', 'post-expirator')}: {file.name}</p>
+                            <p>{__('File size', 'post-expirator')}: {formatFileSize(file.size)}</p>
                         </div>
                     )}
                 </div>
