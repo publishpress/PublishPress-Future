@@ -35,8 +35,8 @@ class BackupAdminPage implements InitializableInterface
     {
         add_submenu_page(
             'publishpress-future',
-            'Backup',
-            'Backup',
+            'Export / Import',
+            'Export / Import',
             'manage_options',
             'future-backup',
             [$this, 'renderSubmenuPage'],
