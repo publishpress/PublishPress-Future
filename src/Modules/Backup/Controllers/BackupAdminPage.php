@@ -6,15 +6,21 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
 class BackupAdminPage implements InitializableInterface
 {
-    private $hooks;
+    private HookableInterface $hooks;
 
-    public function __construct(HookableInterface $hooks)
-    {
+    private SettingsFacade $settingsFacade;
+
+    public function __construct(
+        HookableInterface $hooks,
+        SettingsFacade $settingsFacade
+    ) {
         $this->hooks = $hooks;
+        $this->settingsFacade = $settingsFacade;
     }
 
     public function initialize()
@@ -98,6 +104,7 @@ class BackupAdminPage implements InitializableInterface
             'futureBackupPanelData',
             [
                 'apiRoot' => esc_url_raw(rest_url()),
+                'enableWorkflowScreenshot' => $this->settingsFacade->getWorkflowScreenshotStatus(),
             ]
         );
 

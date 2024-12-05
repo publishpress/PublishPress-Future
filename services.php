@@ -716,7 +716,9 @@ return [
     },
 
     ServicesAbstract::WORKFLOWS_REST_API_MANAGER => static function (ContainerInterface $container) {
-        return new RestApiManager();
+        return new RestApiManager(
+            $container->get(ServicesAbstract::SETTINGS)
+        );
     },
 
     ServicesAbstract::NODE_TYPES_MODEL => static function (ContainerInterface $container) {

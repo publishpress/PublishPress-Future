@@ -64,6 +64,8 @@ export function WorkflowSaveDraftButton({
 
 	const wasSaving = usePrevious(isSaving);
 
+	const { enableWorkflowScreenshot } = futureWorkflowEditor;
+
 	useEffect(() => {
 		let timeoutId;
 
@@ -104,11 +106,14 @@ export function WorkflowSaveDraftButton({
 	}
 
 	const onClick = () => {
-		takeScreenshot().then((screenshot) => {
-			saveAsDraft({ screenshot });
-		});
+		if (enableWorkflowScreenshot) {
+			takeScreenshot().then((screenshot) => {
+				saveAsDraft({ screenshot });
+			});
+		} else {
+			saveAsDraft();
+		}
 	};
-
 
 	// Use common Button instance for all saved states so that focus is not
 	// lost.

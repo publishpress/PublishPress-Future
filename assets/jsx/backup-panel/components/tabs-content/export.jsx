@@ -18,6 +18,8 @@ const ExportTab = () => {
 
     const apiRequestControllerRef = useRef(new AbortController());
 
+    const { enableWorkflowScreenshot } = futureBackupPanelData;
+
     const settingsOptions = [
         {
             title: __('Post Types', 'post-expirator'),
@@ -169,13 +171,15 @@ const ExportTab = () => {
 
                     {exportActionWorkflows && workflows.length > 0 && (
                         <div className="pe-settings-tab__backup-container">
-                            <div>
-                                <ToggleControl
-                                    label={__('Include screenshots', 'post-expirator')}
-                                    checked={includeScreenshots}
-                                    onChange={(value) => setIncludeScreenshots(value)}
-                                />
-                            </div>
+                            {enableWorkflowScreenshot && (
+                                <div>
+                                    <ToggleControl
+                                        label={__('Include screenshots', 'post-expirator')}
+                                        checked={includeScreenshots}
+                                        onChange={(value) => setIncludeScreenshots(value)}
+                                    />
+                                </div>
+                            )}
 
                             <SelectableList items={workflows} selectedItems={selectedWorkflows} onSelect={setSelectedWorkflows} />
                         </div>

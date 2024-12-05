@@ -326,6 +326,9 @@ class PostExpirator_Display
                 }
 
                 $this->settingsFacade->setAllowUserRoles($_POST['allow-user-roles']);
+                $this->settingsFacade->setWorkflowScreenshotStatus(
+                    isset($_POST['workflow-screenshot']) && $_POST['workflow-screenshot'] == '1'
+                );
 
                 echo "<div id='message' class='updated fade'><p>";
                 esc_html_e('Saved Options!', 'post-expirator');

@@ -116,7 +116,8 @@ class Module implements InitializableInterface
             new Controllers\WorkflowsList(
                 $this->hooks,
                 $this->nodeTypesModel,
-                $this->logger
+                $this->logger,
+                $this->settingsFacade
             ),
             new Controllers\WorkflowEditor(
                 $this->hooks,

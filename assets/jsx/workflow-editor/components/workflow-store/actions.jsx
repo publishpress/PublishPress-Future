@@ -53,7 +53,7 @@ export function* setupEditor(workflowId) {
     }
 };
 
-export function* saveAsDraft({ screenshot }) {
+export function* saveAsDraft({ screenshot } = {}) {
     yield {type: 'SAVE_AS_DRAFT_START'};
 
     try {
@@ -99,7 +99,7 @@ export function* saveAsDraft({ screenshot }) {
     }
 }
 
-export function* saveAsCurrentStatus({ screenshot }) {
+export function* saveAsCurrentStatus({ screenshot } = {}) {
     yield {type: 'SAVE_AS_CURRENT_STATUS_START'};
 
     try {
@@ -136,7 +136,7 @@ export function* saveAsCurrentStatus({ screenshot }) {
     }
 }
 
-export function* publishWorkflow({ screenshot }) {
+export function* publishWorkflow({ screenshot } = {}) {
     yield {type: 'PUBLISH_WORKFLOW_START'};
 
     try {
@@ -145,6 +145,7 @@ export function* publishWorkflow({ screenshot }) {
         yield dispatch(STORE_NAME).setEditedWorkflowAttribute('status', 'publish');
 
         const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+
         if (screenshot) {
             editedWorkflow.screenshot = screenshot;
         }
@@ -181,7 +182,7 @@ export function* publishWorkflow({ screenshot }) {
     }
 }
 
-export function* switchToDraft({ screenshot }) {
+export function* switchToDraft({ screenshot } = {}) {
     yield {type: 'SWITCH_TO_DRAFT_START'};
 
     try {
@@ -190,6 +191,7 @@ export function* switchToDraft({ screenshot }) {
         yield dispatch(STORE_NAME).setEditedWorkflowAttribute('status', 'draft');
 
         const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+
         if (screenshot) {
             editedWorkflow.screenshot = screenshot;
         }

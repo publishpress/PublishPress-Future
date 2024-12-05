@@ -89,7 +89,6 @@ const ImportTab = () => {
         setValidationError(null);
     };
 
-
     return (
         <SettingsTab
             title={__('Import Settings', 'post-expirator')}

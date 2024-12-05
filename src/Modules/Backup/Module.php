@@ -44,7 +44,8 @@ class Module implements ModuleInterface
     {
         $controllers = [
             new BackupAdminPage(
-                $this->hooks
+                $this->hooks,
+                $this->settingsFacade
             ),
             new BackupRestApi(
                 $this->hooks,

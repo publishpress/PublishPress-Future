@@ -2,12 +2,12 @@
 
 namespace PublishPress\Future\Modules\Workflows\Rest;
 
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 use WP_Error;
 use WP_REST_Server;
 use PublishPress\Future\Modules\Workflows\Interfaces\RestApiManagerInterface;
 use PublishPress\Future\Modules\Workflows\Models\PostModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
-use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 
 class RestApiV1 implements RestApiManagerInterface
 {
@@ -22,6 +22,16 @@ class RestApiV1 implements RestApiManagerInterface
     public const PERMISSION_UPDATE = 'edit_posts';
 
     public const PERMISSION_DELETE = 'edit_posts';
+
+    /**
+     * @var SettingsFacade
+     */
+    private SettingsFacade $settingsFacade;
+
+    public function __construct(SettingsFacade $settingsFacade)
+    {
+        $this->settingsFacade = $settingsFacade;
+    }
 
     public function register()
     {
@@ -214,7 +224,7 @@ class RestApiV1 implements RestApiManagerInterface
             $workflowModel->setStatus($request['status']);
         }
 
-        if (isset($request['screenshot'])) {
+        if (isset($request['screenshot']) && $this->settingsFacade->getWorkflowScreenshotStatus()) {
             $workflowModel->setScreenshotFromBase64($request['screenshot']);
         }
 

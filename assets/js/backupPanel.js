@@ -330,6 +330,8 @@ var ExportTab = function ExportTab() {
     selectedSettings = _useState14[0],
     setSelectedSettings = _useState14[1];
   var apiRequestControllerRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useRef)(new AbortController());
+  var _futureBackupPanelDat = futureBackupPanelData,
+    enableWorkflowScreenshot = _futureBackupPanelDat.enableWorkflowScreenshot;
   var settingsOptions = [{
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Types', 'post-expirator'),
     id: 'postTypesDefaults'
@@ -477,7 +479,7 @@ var ExportTab = function ExportTab() {
     disabled: workflows.length === 0
   }), exportActionWorkflows && workflows.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "pe-settings-tab__backup-container"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+  }, enableWorkflowScreenshot && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Include screenshots', 'post-expirator'),
     checked: includeScreenshots,
     onChange: function onChange(value) {

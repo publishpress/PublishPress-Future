@@ -65,6 +65,8 @@ export function WorkflowPublishButton({
 
 	const wasSaving = usePrevious(isSaving);
 
+	const { enableWorkflowScreenshot } = futureWorkflowEditor;
+
 	useEffect(() => {
 		let timeoutId;
 
@@ -104,13 +106,21 @@ export function WorkflowPublishButton({
 			return;
 		}
 
-		takeScreenshot().then((dataUrl) => {
+		if (enableWorkflowScreenshot) {
+			takeScreenshot().then((dataUrl) => {
+				if (isPublished) {
+					saveAsCurrentStatus({screenshot: dataUrl});
+				} else {
+					publishWorkflow({screenshot: dataUrl});
+				}
+			});
+		} else {
 			if (isPublished) {
-				saveAsCurrentStatus({screenshot: dataUrl});
+				saveAsCurrentStatus();
 			} else {
-				publishWorkflow({screenshot: dataUrl});
+				publishWorkflow();
 			}
-		});
+		}
 	}
 
 	// Use common Button instance for all saved states so that focus is not

@@ -12,6 +12,7 @@ use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 use WP_Post;
 use WP_Query;
 
@@ -72,6 +73,11 @@ class WorkflowModel implements WorkflowModelInterface
      */
     private $logger;
 
+    /**
+     * @var SettingsFacade
+     */
+    private $settingsFacade;
+
     public function __construct()
     {
         $container = Container::getInstance();
@@ -80,6 +86,7 @@ class WorkflowModel implements WorkflowModelInterface
         $this->hooks = $container->get(ServicesAbstract::HOOKS);
         $this->nodeTypesModel = $container->get(ServicesAbstract::NODE_TYPES_MODEL);
         $this->logger = $container->get(ServicesAbstract::LOGGER);
+        $this->settingsFacade = $container->get(ServicesAbstract::SETTINGS);
     }
 
     public function load(int $id): bool
@@ -510,6 +517,10 @@ class WorkflowModel implements WorkflowModelInterface
             return;
         }
 
+        if (! $this->settingsFacade->getWorkflowScreenshotStatus()) {
+            return;
+        }
+
         $existingScreenshotId = get_post_thumbnail_id($this->post->ID);
 
         if ($existingScreenshotId) {
@@ -533,6 +544,10 @@ class WorkflowModel implements WorkflowModelInterface
     private function createScreenshotThumbnails($screenshotFile)
     {
         if (!file_exists($screenshotFile)) {
+            return;
+        }
+
+        if (! $this->settingsFacade->getWorkflowScreenshotStatus()) {
             return;
         }
 
@@ -582,6 +597,10 @@ class WorkflowModel implements WorkflowModelInterface
             return;
         }
 
+        if (! $this->settingsFacade->getWorkflowScreenshotStatus()) {
+            return;
+        }
+
         $this->deleteLegacyScreenshotFile();
         $this->prepareScreenshotsFolder();
         $this->deleteScreenshotFile();
@@ -615,6 +634,10 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function setScreenshotFromFile(string $filePath)
     {
+        if (! $this->settingsFacade->getWorkflowScreenshotStatus()) {
+            return;
+        }
+
         // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
         $dataImage = 'data:image/png;base64,' . base64_encode(file_get_contents($filePath));
 
@@ -624,6 +647,10 @@ class WorkflowModel implements WorkflowModelInterface
     public function getScreenshotUrl($size = 'full'): string
     {
         if (empty($this->post)) {
+            return '';
+        }
+
+        if (! $this->settingsFacade->getWorkflowScreenshotStatus()) {
             return '';
         }
 
