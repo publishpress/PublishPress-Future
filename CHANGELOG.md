@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add method `disableExpiration` to the class `PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel`.
 - Add `*` to indicate required fields in the workflow editor (Issue #974).
 - Add new setting to disable/enable the screenshot feature in the workflow editor (Issue #1066).
+- Add new Custom Data option to "Ray - Debug step" to debug custom expressions (Issue #1067).
 
 ### Changed
 

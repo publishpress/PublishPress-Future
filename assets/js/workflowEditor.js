@@ -12625,6 +12625,12 @@ function DebugData(_ref) {
       });
     });
   }
+
+  // Add a new option to output custom data
+  debugOptions.push({
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Custom data", "post-expirator"),
+    id: "custom-data"
+  });
   var defaultDebugOption = "all-input";
   var onChangeSetting = function onChangeSetting(_ref2) {
     var settingName = _ref2.settingName,
@@ -12642,6 +12648,15 @@ function DebugData(_ref) {
     onChange: function onChange(value) {
       return onChangeSetting({
         settingName: "dataToOutput",
+        value: value
+      });
+    }
+  }), (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.dataToOutput) === "custom-data" && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextareaControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Custom data", "post-expirator"),
+    value: defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.customData,
+    onChange: function onChange(value) {
+      return onChangeSetting({
+        settingName: "customData",
         value: value
       });
     }
