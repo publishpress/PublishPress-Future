@@ -13,13 +13,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add method `disableExpiration` to the class `PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel`.
 - Add `*` to indicate required fields in the workflow editor (Issue #974).
 - Add new setting to disable/enable the screenshot feature in the workflow editor (Issue #1066).
-- Add new Custom Data option to "Ray - Debug step" to debug custom expressions (Issue #1067).
+- Add new Custom Data option to "Ray - Debug step" to debug custom expressions on workflows (Issue #1067).
+- Add support to metadata when evaluating expressions in a workflow. Post, site, user and workflow (post) metadata are now available when evaluating expressions (Issue #1069).
+- Add support to custom email addresses using the post metadata when sending emails in a workflow (Issue #939).
 
 ### Changed
 
 - Move notification settings to a specific tab (Issue #190).
 - Disable the workflow screenshot feature by default (Issue #1066).
 - Changed the Message field in the "Log - Add" step displaying a textarea instead of a text field (Issue #1068).
+- Changed the Custom Email Addresses field in the Send Email step to be a textarea (Issue #939).
+- Changed the Subject field in the Send Email step to be a textarea (Issue #939).
 
 ### Fixed
 

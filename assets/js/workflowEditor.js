@@ -12810,7 +12810,7 @@ function EmailRecipient(_ref) {
         value: value
       });
     }
-  }), (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.recipient) === "custom" && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+  }), (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.recipient) === "custom" && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Custom Email Addresses", "post-expirator"),
     value: (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.custom) || "",
     onChange: function onChange(value) {

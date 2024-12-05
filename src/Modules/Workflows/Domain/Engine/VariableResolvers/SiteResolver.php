@@ -3,7 +3,6 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\VariableResolverInterface;
-use WP_Post;
 
 class SiteResolver implements VariableResolverInterface
 {
@@ -19,6 +18,10 @@ class SiteResolver implements VariableResolverInterface
         }
 
         switch ($propertyName) {
+            case 'id':
+            case 'ID':
+                return $this->getSiteId();
+
             case 'name':
                 return $this->getSiteName();
 
@@ -33,6 +36,9 @@ class SiteResolver implements VariableResolverInterface
 
             case 'admin_email':
                 return $this->getAdminEmail();
+
+            case 'meta':
+                return new SiteMetaResolver($this->getSiteId());
         }
 
         return '';
@@ -68,6 +74,11 @@ class SiteResolver implements VariableResolverInterface
         return get_option('admin_email');
     }
 
+    protected function getSiteId(): int
+    {
+        return get_current_blog_id();
+    }
+
     public function compact(): array
     {
         return [
@@ -86,26 +97,25 @@ class SiteResolver implements VariableResolverInterface
 
     public function __isset($name): bool
     {
-        return in_array($name, ['name', 'description', 'url', 'home_url', 'admin_email']);
+        return in_array(
+            $name,
+            [
+                'id',
+                'ID',
+                'name',
+                'description',
+                'url',
+                'home_url',
+                'admin_email',
+                'meta',
+            ]
+        );
     }
 
     public function __get($name)
     {
-        switch ($name) {
-            case 'name':
-                return $this->getSiteName();
-
-            case 'description':
-                return $this->getSiteDescription();
-
-            case 'url':
-                return $this->getSiteUrl();
-
-            case 'home_url':
-                return $this->getHomeUrl();
-
-            case 'admin_email':
-                return $this->getAdminEmail();
+        if (isset($this->$name)) {
+            return $this->getValue($name);
         }
 
         return null;

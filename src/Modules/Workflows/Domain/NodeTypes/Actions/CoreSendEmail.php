@@ -84,7 +84,7 @@ class CoreSendEmail implements NodeTypeInterface
                     ],
                     [
                         "name" => "subject",
-                        "type" => "text",
+                        "type" => "textarea",
                         "label" => __("Subject", "post-expirator"),
                         "settings" => [
                             "placeholder" => self::getDefaultSubject(),
