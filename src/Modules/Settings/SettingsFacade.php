@@ -265,6 +265,8 @@ class SettingsFacade
             $this->cache['postTypeDefaults'] = [];
         }
 
+        $defaults = apply_filters(HooksAbstract::FILTER_SETTINGS_POST_TYPE_DEFAULTS, $defaults, $postType);
+
         $this->cache['postTypeDefaults'][$postType] = $defaults;
 
         return $this->cache['postTypeDefaults'][$postType];
@@ -273,6 +275,8 @@ class SettingsFacade
     public function setPostTypeDefaults(string $postType, array $defaults): void
     {
         $this->options->updateOption('expirationdateDefaults' . ucfirst($postType), $defaults);
+
+        do_action(HooksAbstract::ACTION_SETTINGS_SET_POST_TYPE_DEFAULTS, $defaults, $postType);
     }
 
     /**
@@ -545,6 +549,8 @@ class SettingsFacade
         $this->setHideCalendarByDefault($settings['hideCalendarByDefault'] ?? false);
         $this->setAllowUserRoles($settings['allowUserRoles'] ?? []);
         $this->setWorkflowScreenshotStatus($settings['workflowScreenshot'] ?? false);
+
+        do_action(HooksAbstract::ACTION_SETTINGS_SET_GENERAL, $settings);
     }
 
     public function getNotificationsSettings(): array
@@ -565,6 +571,8 @@ class SettingsFacade
         $this->setSendEmailNotification($settings['enableEmailNotification'] ?? false);
         $this->setSendEmailNotificationToAdmins($settings['enableEmailNotificationToAdmins'] ?? false);
         $this->setEmailNotificationAddressesList($settings['emailNotificationAddressesList'] ?? []);
+
+        do_action(HooksAbstract::ACTION_SETTINGS_SET_NOTIFICATIONS, $settings);
     }
 
     public function getDisplaySettings(): array
@@ -597,6 +605,8 @@ class SettingsFacade
         $this->setShowInPostFooter($settings['showInPostFooter'] ?? false);
         $this->setFooterContents($settings['footerContents'] ?? '');
         $this->setFooterStyle($settings['footerStyle'] ?? '');
+
+        do_action(HooksAbstract::ACTION_SETTINGS_SET_DISPLAY, $settings);
     }
 
     public function getAdvancedSettings(): array
@@ -621,5 +631,7 @@ class SettingsFacade
         $this->setScheduledWorkflowStepsCleanupRetention($settings['scheduledWorkflowStepsCleanupRetention'] ?? 30);
         $this->setExperimentalFeaturesStatus($settings['experimentalFeatures'] ?? false);
         $this->setSettingPreserveData($settings['preserveDataDeactivating'] ?? false);
+
+        do_action(HooksAbstract::ACTION_SETTINGS_SET_ADVANCED, $settings);
     }
 }
