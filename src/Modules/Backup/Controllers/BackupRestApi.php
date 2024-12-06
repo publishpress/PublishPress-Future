@@ -269,7 +269,7 @@ class BackupRestApi implements InitializableInterface
             $settings = array_merge($settings, $this->getAdvancedSettings());
         }
 
-        $settings = apply_filters(BackupHooksAbstract::FILTER_EXPORTED_SETTINGS, $settings);
+        $settings = apply_filters(BackupHooksAbstract::FILTER_EXPORTED_SETTINGS, $settings, $selectedSettings);
 
         return $settings;
     }
