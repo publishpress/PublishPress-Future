@@ -156,7 +156,13 @@ class BackupRestApi implements InitializableInterface
             $selectedSettings = $request->get_param('settings');
 
             if (! $exportActionWorkflows && ! $exportActionSettings) {
-                return new \WP_Error('invalid_request', 'Invalid request');
+                return new WP_REST_Response(
+                    [
+                        'message' => 'No export action selected',
+                        'ok' => false,
+                    ],
+                    400
+                );
             }
 
             $exportData = [
