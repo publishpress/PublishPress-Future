@@ -7,6 +7,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Backup\HooksAbstract as BackupHooksAbstract;
 use PublishPress\Future\Modules\Settings\Models\SettingsPostTypesModel;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
@@ -268,6 +269,8 @@ class BackupRestApi implements InitializableInterface
             $settings = array_merge($settings, $this->getAdvancedSettings());
         }
 
+        $settings = apply_filters(BackupHooksAbstract::FILTER_EXPORTED_SETTINGS, $settings);
+
         return $settings;
     }
 
@@ -427,5 +430,7 @@ class BackupRestApi implements InitializableInterface
         if (isset($settings['advanced'])) {
             $this->settingsFacade->setAdvancedSettings($settings['advanced']);
         }
+
+        do_action(BackupHooksAbstract::ACTION_AFTER_IMPORT_SETTINGS, $settings);
     }
 }
