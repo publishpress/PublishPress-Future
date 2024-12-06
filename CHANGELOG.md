@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Changed the Message field in the "Log - Add" step displaying a textarea instead of a text field (Issue #1068).
 - Changed the Custom Email Addresses field in the Send Email step to be a textarea (Issue #939).
 - Changed the Subject field in the Send Email step to be a textarea (Issue #939).
+- Set the default value of Email Recipient on Send Email step to Site Admin (Issue #1071).
 
 ### Fixed
 
