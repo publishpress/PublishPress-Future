@@ -13913,6 +13913,10 @@ function PostData() {
       name: "permalink",
       type: "string",
       label: "Permalink"
+    }, {
+      name: "meta",
+      type: "object",
+      label: "Metadata"
     }]
   };
 }
@@ -13958,6 +13962,10 @@ function SiteData() {
       name: "admin_email",
       type: "email",
       label: "Admin Email"
+    }, {
+      name: "meta",
+      type: "object",
+      label: "Metadata"
     }]
   };
 }
@@ -14034,6 +14042,10 @@ function UserData() {
       name: "user_registered",
       type: "datetime",
       label: "Registration Date"
+    }, {
+      name: "meta",
+      type: "object",
+      label: "Metadata"
     }]
   };
 }
@@ -14079,6 +14091,10 @@ function WorkflowData() {
       name: "steps",
       type: "node",
       label: "Steps"
+    }, {
+      name: "meta",
+      type: "object",
+      label: "Metadata"
     }]
   };
 }

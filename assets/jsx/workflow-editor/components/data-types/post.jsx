@@ -54,7 +54,12 @@ export function PostData() {
                 name: "permalink",
                 type: "string",
                 label: "Permalink",
-            }
+            },
+            {
+                name: "meta",
+                type: "object",
+                label: "Metadata",
+            },
         ],
     };
 }

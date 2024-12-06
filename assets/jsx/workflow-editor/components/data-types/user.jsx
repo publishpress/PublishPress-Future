@@ -39,7 +39,12 @@ export function UserData() {
                 name: "user_registered",
                 type: "datetime",
                 label: "Registration Date",
-            }
+            },
+            {
+                name: "meta",
+                type: "object",
+                label: "Metadata",
+            },
         ],
     };
 }

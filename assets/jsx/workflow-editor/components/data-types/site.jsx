@@ -30,6 +30,11 @@ export function SiteData() {
                 type: "email",
                 label: "Admin Email",
             },
+            {
+                name: "meta",
+                type: "object",
+                label: "Metadata",
+            },
         ],
     };
 }
