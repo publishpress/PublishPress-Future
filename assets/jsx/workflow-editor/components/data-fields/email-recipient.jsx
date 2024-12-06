@@ -9,9 +9,8 @@ export function EmailRecipient({ name, label, defaultValue, onChange, settings, 
     variables = filterVariableOptionsByDataType(variables, ['email']);
 
     let recipientOptions = [
-        { name: '', id: '' },
-        { name: __("Custom Addresses", "post-expirator"), id: "custom" },
-        ...variables
+        ...variables,
+        { name: __("Custom Addresses", "post-expirator"), id: "custom" }
     ];
 
     const onChangeSetting = ({ settingName, value }) => {

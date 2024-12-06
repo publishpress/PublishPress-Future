@@ -12781,13 +12781,10 @@ function EmailRecipient(_ref) {
     _ref$variables = _ref.variables,
     variables = _ref$variables === void 0 ? [] : _ref$variables;
   variables = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.filterVariableOptionsByDataType)(variables, ['email']);
-  var recipientOptions = [{
-    name: '',
-    id: ''
-  }, {
+  var recipientOptions = [].concat(_toConsumableArray(variables), [{
     name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Custom Addresses", "post-expirator"),
     id: "custom"
-  }].concat(_toConsumableArray(variables));
+  }]);
   var onChangeSetting = function onChangeSetting(_ref2) {
     var settingName = _ref2.settingName,
       value = _ref2.value;

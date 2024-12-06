@@ -81,6 +81,9 @@ class CoreSendEmail implements NodeTypeInterface
                         "name" => "recipient",
                         "type" => "emailRecipient",
                         "label" => __("Recipient", "post-expirator"),
+                        "default" => [
+                            "recipient" => "global.site.admin_email",
+                        ],
                     ],
                     [
                         "name" => "subject",
