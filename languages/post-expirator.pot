@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 4.2.0-beta.1\n"
+"Project-Id-Version: PublishPress Future 4.2.0-beta.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-12-05T19:40:42+00:00\n"
+"POT-Creation-Date: 2024-12-06T20:16:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -148,15 +148,15 @@ msgstr ""
 msgid "Invalid date time offset."
 msgstr ""
 
-#: src/Modules/Backup/Controllers/BackupRestApi.php:140
+#: src/Modules/Backup/Controllers/BackupRestApi.php:141
 msgid "Failed to get workflows. Check the logs for more details."
 msgstr ""
 
-#: src/Modules/Backup/Controllers/BackupRestApi.php:187
+#: src/Modules/Backup/Controllers/BackupRestApi.php:188
 msgid "Failed to export the file. Check the logs for more details."
 msgstr ""
 
-#: src/Modules/Backup/Controllers/BackupRestApi.php:382
+#: src/Modules/Backup/Controllers/BackupRestApi.php:385
 msgid "Failed to import the file. Check the logs for more details."
 msgstr ""
 
@@ -745,7 +745,7 @@ msgstr ""
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:654
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:77
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:96
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:99
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/LogAdd.php:70
 msgid "Message"
 msgstr ""
@@ -1324,7 +1324,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:132
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:128
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:116
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:150
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:153
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:103
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:136
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:102
@@ -1341,7 +1341,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:133
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:129
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:117
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:151
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:154
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:104
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:137
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:103
@@ -1358,7 +1358,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:156
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:152
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:140
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:174
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:177
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:160
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:126
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/LogAdd.php:125
@@ -1507,16 +1507,16 @@ msgstr ""
 msgid "Recipient"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:88
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:91
 msgid "Subject"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:121
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:124
 msgid "Email Recipient"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:126
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:135
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:129
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:138
 msgid "Custom Email Address"
 msgstr ""
 

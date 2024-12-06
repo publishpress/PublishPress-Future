@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-12-05T19:40:46+00:00\n"
+"POT-Creation-Date: 2024-12-06T20:16:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -116,7 +116,12 @@ msgstr ""
 msgid "All received input"
 msgstr ""
 
-#: components/data-fields/debug-data.jsx:35
+#: components/data-fields/debug-data.jsx:22
+#: components/data-fields/debug-data.jsx:49
+msgid "Custom data"
+msgstr ""
+
+#: components/data-fields/debug-data.jsx:41
 msgid "Data to output"
 msgstr ""
 
@@ -156,11 +161,11 @@ msgstr ""
 msgid "Custom Addresses"
 msgstr ""
 
-#: components/data-fields/email-recipient.jsx:35
+#: components/data-fields/email-recipient.jsx:34
 msgid "Email Recipient"
 msgstr ""
 
-#: components/data-fields/email-recipient.jsx:42
+#: components/data-fields/email-recipient.jsx:41
 msgid "Custom Email Addresses"
 msgstr ""
 
