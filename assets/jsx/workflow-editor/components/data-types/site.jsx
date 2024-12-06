@@ -6,6 +6,11 @@ export function SiteData() {
         objectType: "site",
         propertiesSchema: [
             {
+                name: "id",
+                type: "integer",
+                label: "ID",
+            },
+            {
                 name: "name",
                 type: "string",
                 label: "Name",
