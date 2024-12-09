@@ -2,6 +2,7 @@
 
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -29,9 +30,12 @@ $pluginFacade = PostExpirator_Facade::getInstance();
                             esc_html_e('Default Date/Time Offset', 'post-expirator'); ?></label></th>
                     <td>
                         <div id="expired-custom-container" class="pe-custom-date-container">
-                            <input type="text" value="<?php
-                            echo esc_attr($expirationdateDefaultDateCustom); ?>" name="expired-custom-expiration-date"
-                                   id="expired-custom-expiration-date"/>
+                            <input
+                                type="text"
+                                value="<?php echo esc_attr($expirationdateDefaultDateCustom); ?>"
+                                name="expired-custom-expiration-date"
+                                placeholder="<?php echo esc_attr(SettingsFacade::DEFAULT_CUSTOM_DATE_OFFSET); ?>"
+                                id="expired-custom-expiration-date"/>
                             <p class="description"><?php
                                 // translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
                                 $description = esc_html__(

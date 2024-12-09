@@ -3,6 +3,15 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## UNRELEASED
+
+### Developers
+
+- Deprecated the method `get_wp_date` in the class `PostExpirator_Util` and use the method `getWpDate` from the DateTime service instead.
+- Deprecated the method `wp_timezone_string` in the class `PostExpirator_Util` and use the method `getTimezoneString` from the DateTime service instead.
+- Deprecated the method `get_timezone_offset` in the class `PostExpirator_Util`.
+- Deprecated the method `sanitize_array_of_integers` in the class `PostExpirator_Util`.
+
 ## [4.2.0] - 09 Dec, 2024
 
 ### Added

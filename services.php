@@ -393,7 +393,8 @@ return [
             $container->get(ServicesAbstract::LOGGER),
             $container->get(ServicesAbstract::DATE_TIME_HANDLER),
             $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY),
-            $container->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY)
+            $container->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY),
+            $container->get(ServicesAbstract::DATETIME)
         );
     },
 

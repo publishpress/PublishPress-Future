@@ -6,12 +6,13 @@
 
 namespace PublishPress\Future\Modules\Expirator\Controllers;
 
-use PostExpirator_Util;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Settings\HooksAbstract;
+use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -22,9 +23,24 @@ class ShortcodeController implements InitializableInterface
      */
     private $hooks;
 
-    public function __construct(HookableInterface $hooks)
-    {
+    /**
+     * @var DateTimeFacade
+     */
+    private $dateTimeFacade;
+
+    /**
+     * @var SettingsFacade
+     */
+    private $settingsFacade;
+
+    public function __construct(
+        HookableInterface $hooks,
+        DateTimeFacade $dateTimeFacade,
+        SettingsFacade $settingsFacade
+    ) {
         $this->hooks = $hooks;
+        $this->dateTimeFacade = $dateTimeFacade;
+        $this->settingsFacade = $settingsFacade;
     }
 
     public function initialize()
@@ -99,8 +115,8 @@ class ShortcodeController implements InitializableInterface
 
         $attrs = shortcode_atts(
             array(
-                'dateformat' => get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT),
-                'timeformat' => get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT),
+                'dateformat' => $this->settingsFacade->getDefaultDateFormat(),
+                'timeformat' => $this->settingsFacade->getDefaultTimeFormat(),
                 'type' => 'full',
                 'tz' => date('T'), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
             ),
@@ -133,6 +149,6 @@ class ShortcodeController implements InitializableInterface
             $attrs['format'] = $attrs['timeformat'];
         }
 
-        return PostExpirator_Util::get_wp_date($attrs['format'], $expirationDateTs);
+        return $this->dateTimeFacade->getWpDate($attrs['format'], $expirationDateTs);
     }
 }

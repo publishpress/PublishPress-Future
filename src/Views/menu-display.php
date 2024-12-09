@@ -10,6 +10,8 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 $container = Container::getInstance();
 $hooks = $container->get(ServicesAbstract::HOOKS);
 $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+$dateTimeFacade = $container->get(ServicesAbstract::DATETIME);
+
 // phpcs:disable WordPress.NamingConventions.ValidVariableName.InterpolatedVariableNotSnakeCase
 // phpcs:disable WordPress.PHP.StrictComparisons.LooseComparison
 
@@ -50,7 +52,7 @@ $columnStyle = $settingsFacade->getColumnStyle();
                             size="25"
                         /> <span class="description">(
                             <?php
-                            echo esc_html(PostExpirator_Util::get_wp_date($expirationdateDefaultDateFormat, time())); ?>
+                            echo esc_html($dateTimeFacade->getWpDate($expirationdateDefaultDateFormat, time())); ?>
                         )</span>
                         <p class="description">
                             <?php
@@ -81,7 +83,7 @@ $columnStyle = $settingsFacade->getColumnStyle();
                             size="25"
                         /> <span class="description">(
                             <?php
-                            echo esc_html(PostExpirator_Util::get_wp_date($expirationdateDefaultTimeFormat, time())); ?>
+                            echo esc_html($dateTimeFacade->getWpDate($expirationdateDefaultTimeFormat, time())); ?>
                         )</span>
                         <p class="description">
                             <?php

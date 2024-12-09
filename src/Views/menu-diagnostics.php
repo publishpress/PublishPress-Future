@@ -10,9 +10,10 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 // phpcs:disable Generic.Files.LineLength.TooLong
 
-$container = PublishPress\Future\Core\DI\Container::getInstance();
+$container = Container::getInstance();
 $debug = $container->get(ServicesAbstract::DEBUG);
 $hooks = $container->get(ServicesAbstract::HOOKS);
+$dateTimeFacade = $container->get(ServicesAbstract::DATETIME);
 
 /**
  * @var DBTableSchemaInterface $actionArgsSchema
@@ -187,12 +188,12 @@ $schemaHealthErrors = [
 
                             ?>
                             <p><?php
-                        // phpcs:disable Generic.Files.LineLength.TooLong, PSR2.Methods.FunctionCallSignature.Indent
+                         // phpcs:disable Generic.Files.LineLength.TooLong, PSR2.Methods.FunctionCallSignature.Indent
                             esc_html_e(
                             'The below table will show all currently scheduled cron events for the plugin with the next run time.',
                             'post-expirator'
                                );
-                    // phpcs:enable
+                            // phpcs:enable
                                 ?></p>
 
                             <div>
@@ -212,10 +213,9 @@ $schemaHealthErrors = [
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $printPostEvent = function ($post) {
+                                        $printPostEvent = function ($post) use ($container) {
                                             echo esc_html("$post->ID: $post->post_title (status: $post->post_status)");
 
-                                            $container = Container::getInstance();
                                             $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
                                             $postModel = $factory($post->ID);
                                             $attributes = $postModel->getExpirationDataAsArray();
@@ -228,33 +228,33 @@ $schemaHealthErrors = [
 
                     // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
                     foreach ($cron as $time => $value) {
-        foreach ($value as $eventKey => $eventValue) {
-            echo '<tr class="pe-event">';
-            echo '<td>' . esc_html(PostExpirator_Util::get_wp_date('r', $time))
-                . '</td>';
-            echo '<td>' . esc_html($eventKey) . '</td>';
-            $eventValueKeys = array_keys($eventValue);
-            echo '<td>';
-            foreach ($eventValueKeys as $eventGUID) {
-                if (false === empty($eventValue[$eventGUID]['args'])) {
-                    echo '<div class="pe-event-post" title="' . esc_attr($eventGUID) . '">';
-                    foreach ($eventValue[$eventGUID]['args'] as $value) {
-                        $eventPost = get_post((int)$value);
+                        foreach ($value as $eventKey => $eventValue) {
+                            echo '<tr class="pe-event">';
+                            echo '<td>' . esc_html($dateTimeFacade->getWpDate('r', $time))
+                                . '</td>';
+                            echo '<td>' . esc_html($eventKey) . '</td>';
+                            $eventValueKeys = array_keys($eventValue);
+                            echo '<td>';
+                            foreach ($eventValueKeys as $eventGUID) {
+                                if (false === empty($eventValue[$eventGUID]['args'])) {
+                                    echo '<div class="pe-event-post" title="' . esc_attr($eventGUID) . '">';
+                                    foreach ($eventValue[$eventGUID]['args'] as $value) {
+                                        $eventPost = get_post((int)$value);
 
-                        if (
-                            false === empty($eventPost)
-                            && false === is_wp_error($eventPost)
-                            && is_object($eventPost)
-                        ) {
-                            $printPostEvent($eventPost);
+                                        if (
+                                            false === empty($eventPost)
+                                            && false === is_wp_error($eventPost)
+                                            && is_object($eventPost)
+                                        ) {
+                                            $printPostEvent($eventPost);
+                                        }
+                                    }
+                                    echo '</div>';
+                                }
+                            }
+                            echo '</td>';
+                            echo '</tr>';
                         }
-                    }
-                    echo '</div>';
-                }
-            }
-            echo '</td>';
-            echo '</tr>';
-        }
                     }
                     // phpcs:enable?>
                                     </tbody>
