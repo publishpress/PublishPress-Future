@@ -113,6 +113,9 @@ class ContentController implements InitializableInterface
         $timeformat = $this->settingsFacade->getDefaultTimeFormat();
         $expirationdateFooterContents = $this->settingsFacade->getFooterContents();
 
+        $defaultDateFormat = $this->dateTimeFacade->getDefaultDateFormat();
+        $defaultTimeFormat = $this->dateTimeFacade->getDefaultTimeFormat();
+        $defaultDateTimeFormat = $this->dateTimeFacade->getDefaultDateTimeFormat();
 
         $search = [
             // Deprecated placeholders
@@ -127,13 +130,37 @@ class ContentController implements InitializableInterface
 
         $replace = [
             // Deprecated placeholders
-            $this->dateTimeFacade->getWpDate("$dateformat $timeformat", $expirationDate),
-            $this->dateTimeFacade->getWpDate($dateformat, $expirationDate),
-            $this->dateTimeFacade->getWpDate($timeformat, $expirationDate),
+            $this->dateTimeFacade->getWpDate(
+                "$dateformat $timeformat",
+                $expirationDate,
+                $defaultDateTimeFormat
+            ),
+            $this->dateTimeFacade->getWpDate(
+                $dateformat,
+                $expirationDate,
+                $defaultDateFormat
+            ),
+            $this->dateTimeFacade->getWpDate(
+                $timeformat,
+                $expirationDate,
+                $defaultTimeFormat
+            ),
             // New placeholders
-            $this->dateTimeFacade->getWpDate("$dateformat $timeformat", $expirationDate),
-            $this->dateTimeFacade->getWpDate($dateformat, $expirationDate),
-            $this->dateTimeFacade->getWpDate($timeformat, $expirationDate)
+            $this->dateTimeFacade->getWpDate(
+                "$dateformat $timeformat",
+                $expirationDate,
+                $defaultDateTimeFormat
+            ),
+            $this->dateTimeFacade->getWpDate(
+                $dateformat,
+                $expirationDate,
+                $defaultDateFormat
+            ),
+            $this->dateTimeFacade->getWpDate(
+                $timeformat,
+                $expirationDate,
+                $defaultTimeFormat
+            )
         ];
 
         $content .= str_replace(

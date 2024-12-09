@@ -149,6 +149,12 @@ class ShortcodeController implements InitializableInterface
             $attrs['format'] = $attrs['timeformat'];
         }
 
-        return $this->dateTimeFacade->getWpDate($attrs['format'], $expirationDateTs);
+        $defaultDateTimeFormat = $this->dateTimeFacade->getDefaultDateTimeFormat();
+
+        return $this->dateTimeFacade->getWpDate(
+            $attrs['format'],
+            $expirationDateTs,
+            $defaultDateTimeFormat
+        );
     }
 }

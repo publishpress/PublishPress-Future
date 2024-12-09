@@ -49,10 +49,17 @@ $columnStyle = $settingsFacade->getColumnStyle();
                             name="expired-default-date-format"
                             id="expired-default-date-format"
                             value="<?php echo esc_attr($expirationdateDefaultDateFormat); ?>"
+                            placeholder="<?php echo esc_attr($dateTimeFacade->getDefaultDateFormat()); ?>"
                             size="25"
                         /> <span class="description">(
                             <?php
-                            echo esc_html($dateTimeFacade->getWpDate($expirationdateDefaultDateFormat, time())); ?>
+                            echo esc_html(
+                                $dateTimeFacade->getWpDate(
+                                    $expirationdateDefaultDateFormat,
+                                    time(),
+                                    $dateTimeFacade->getDefaultDateFormat()
+                                )
+                            ); ?>
                         )</span>
                         <p class="description">
                             <?php
@@ -81,9 +88,16 @@ $columnStyle = $settingsFacade->getColumnStyle();
                             id="expired-default-time-format"
                             value="<?php echo esc_attr($expirationdateDefaultTimeFormat); ?>"
                             size="25"
+                            placeholder="<?php echo esc_attr($dateTimeFacade->getDefaultTimeFormat()); ?>"
                         /> <span class="description">(
                             <?php
-                            echo esc_html($dateTimeFacade->getWpDate($expirationdateDefaultTimeFormat, time())); ?>
+                            echo esc_html(
+                                $dateTimeFacade->getWpDate(
+                                    $expirationdateDefaultTimeFormat,
+                                    time(),
+                                    $dateTimeFacade->getDefaultTimeFormat()
+                                )
+                            ); ?>
                         )</span>
                         <p class="description">
                             <?php
@@ -311,7 +325,16 @@ $columnStyle = $settingsFacade->getColumnStyle();
                             <li>
                                 <p class="description">
                                     ACTIONFULL ->
-                                    <?php echo esc_html(date_i18n(
+                                    <?php
+                                    if (empty($expirationdateDefaultDateFormat)) {
+                                        $expirationdateDefaultDateFormat = $dateTimeFacade->getDefaultDateFormat();
+                                    }
+
+                                    if (empty($expirationdateDefaultTimeFormat)) {
+                                        $expirationdateDefaultTimeFormat = $dateTimeFacade->getDefaultTimeFormat();
+                                    }
+
+                                    echo esc_html(date_i18n(
                                         "$expirationdateDefaultDateFormat $expirationdateDefaultTimeFormat"
                                     )); ?>
                                 </p>

@@ -5,10 +5,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## UNRELEASED
 
+### Fixed
+
+- Fix error when the date or time format is empty in the settings page (Issue #212).
+
 ### Developers
 
-- Deprecated the method `get_wp_date` in the class `PostExpirator_Util` and use the method `getWpDate` from the DateTime service instead.
-- Deprecated the method `wp_timezone_string` in the class `PostExpirator_Util` and use the method `getTimezoneString` from the DateTime service instead.
+- Deprecated the method `get_wp_date` in the class `PostExpirator_Util` and use the method `getWpDate` from the class `PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade instead.
+- Deprecated the method `wp_timezone_string` in the class `PostExpirator_Util` and use the method `getTimezoneString` from the class `PublishPress\Future\Framework\System\DateTimeHandler` instead.
 - Deprecated the method `get_timezone_offset` in the class `PostExpirator_Util`.
 - Deprecated the method `sanitize_array_of_integers` in the class `PostExpirator_Util`.
 

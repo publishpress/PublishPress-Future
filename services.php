@@ -234,7 +234,9 @@ return [
      * @return DateTimeFacade
      */
     ServicesAbstract::DATETIME => static function (ContainerInterface $container) {
-        return new DateTimeFacade();
+        return new DateTimeFacade(
+            $container->get(ServicesAbstract::OPTIONS)
+        );
     },
 
     /**
