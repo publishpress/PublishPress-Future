@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix error on table ScheduledActionsTable refactoring calls to `next` instead of `get_date`.
 - Fix displaced labels for checkboxes in the Future Actions metabox and manual workflow activation checkbox (Issue #1057).
 - Fix translations for user roles in the plugin settings page (Issue #1050).
+- Fix error on Post Status filter in the Post Updated trigger (Issue #1074).
 
 ## [4.1.3] - 22 Nov, 2024
 
