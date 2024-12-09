@@ -9,17 +9,7 @@ $settingsFacade = Container::getInstance()->get(ServicesAbstract::SETTINGS);
 
 // phpcs:disable Generic.Files.LineLength.TooLong
 
-$expirationdateDefaultDateFormat = $settingsFacade->getDefaultDateFormat();
-$expirationdateDefaultTimeFormat = $settingsFacade->getDefaultTimeFormat();
 $expirationdateDefaultDateCustom = $settingsFacade->getGeneralDateTimeOffset();
-$preserveData = $settingsFacade->getSettingPreserveData();
-$expireddisplayfooter = $settingsFacade->getShowInPostFooter();
-$expirationdateFooterContents = $settingsFacade->getFooterContents();
-$expirationdateFooterStyle = $settingsFacade->getFooterStyle();
-
-$expireddisplayfooterenabled = $expireddisplayfooter ? '' : 'checked="checked"';
-$expireddisplayfooterdisabled = $expireddisplayfooter ? 'checked="checked"' : '';
-
 $calendarHiddenByDefault = $settingsFacade->getHideCalendarByDefault();
 $workflowScreenshotStatus = $settingsFacade->getWorkflowScreenshotStatus();
 
