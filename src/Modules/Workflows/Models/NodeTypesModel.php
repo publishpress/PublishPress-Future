@@ -23,6 +23,7 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminI
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostPublished;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
@@ -188,6 +189,7 @@ class NodeTypesModel implements NodeTypesModelInterface
         $nodesInstances = [
             CoreOnSavePost::getNodeTypeName() => new CoreOnSavePost(),
             CoreOnPostUpdated::getNodeTypeName() => new CoreOnPostUpdated(),
+            CoreOnPostPublished::getNodeTypeName() => new CoreOnPostPublished(),
             CoreOnManuallyEnabledForPost::getNodeTypeName() => new CoreOnManuallyEnabledForPost(),
             FutureLegacyAction::getNodeTypeName() => new FutureLegacyAction($this->hooks),
             CoreOnCronSchedule::getNodeTypeName() => new CoreOnCronSchedule(),

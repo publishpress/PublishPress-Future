@@ -13073,6 +13073,7 @@ function PostQuery(_ref) {
   var isPostTypeRequired = settings && (settings === null || settings === void 0 ? void 0 : settings.isPostTypeRequired) === true;
   var defaultPostSource = acceptsInput ? 'input' : 'custom';
   var showCustomQueryFields = ((_defaultValue = defaultValue) === null || _defaultValue === void 0 ? void 0 : _defaultValue.postSource) === 'custom' || !acceptsInput;
+  var hidePostStatus = settings && (settings === null || settings === void 0 ? void 0 : settings.hidePostStatus) === true;
 
   // Set default setting
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
@@ -13127,7 +13128,7 @@ function PostQuery(_ref) {
         value: value
       });
     }
-  }), /*#__PURE__*/React.createElement(_inline_multi_select__WEBPACK_IMPORTED_MODULE_3__.InlineMultiSelect, {
+  }), !hidePostStatus && /*#__PURE__*/React.createElement(_inline_multi_select__WEBPACK_IMPORTED_MODULE_3__.InlineMultiSelect, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Status', 'post-expirator'),
     value: ((_defaultValue5 = defaultValue) === null || _defaultValue5 === void 0 ? void 0 : _defaultValue5.postStatus) || [],
     suggestions: postStatuses,
@@ -13144,31 +13145,6 @@ function PostQuery(_ref) {
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('* Required field', 'post-expirator'))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PostQuery);
-
-/*
-Complex query, maybe for the conditional node type?
-
-* post new status
-* post old status
-* post author (one or more)
-* post author role (one or more)
-* post author capability (one or more)
-* post taxonomy (one or more, taxonomy and terms)
-* post title (equals, contains, starts with, ends with)
-* post content (equals, contains, starts with, ends with)
-* post excerpt (equals, contains, starts with, ends with)
-* post date (before, after, between)
-* post modified date (before, after, between)
-* post parent
-* post slug (equals, contains, starts with, ends with)
-* meta data (key, value, compare)
-* user meta data (key, value, compare)
-* user role (one or more)
-* user capability (one or more)
-* user email (equals, contains, starts with, ends with)
-* user login (equals, contains, starts with, ends with)
-* user nicename (equals, contains, starts with, ends with)
-*/
 
 /***/ }),
 
