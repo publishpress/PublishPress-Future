@@ -396,12 +396,14 @@ class SettingsFacade
 
     public function getMetaboxTitle(): ?string
     {
-        return $this->options->getOption(self::OPTION_METABOX_TITLE, null);
+        $option = $this->options->getOption(self::OPTION_METABOX_TITLE, null);
+        return empty($option) ? null : $option;
     }
 
     public function getMetaboxCheckboxLabel(): ?string
     {
-        return $this->options->getOption(self::OPTION_METABOX_CHECKBOX_LABEL, null);
+        $option = $this->options->getOption(self::OPTION_METABOX_CHECKBOX_LABEL, null);
+        return empty($option) ? null : $option;
     }
 
     public function setMetaboxTitle(string $value): void
