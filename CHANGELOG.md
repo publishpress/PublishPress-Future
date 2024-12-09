@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix error when the date or time format is empty in the settings page (Issue #212).
+- Fix empty title and label in the future action panel when custom title and label are not set (Issue #1075).
+- Fix the width of the checkbox in the future action panel (#1076).
 
 ### Developers
 
