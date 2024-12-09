@@ -13,8 +13,8 @@ $expirationdateDefaultDateCustom = $settingsFacade->getGeneralDateTimeOffset();
 $calendarHiddenByDefault = $settingsFacade->getHideCalendarByDefault();
 $workflowScreenshotStatus = $settingsFacade->getWorkflowScreenshotStatus();
 
-$user_roles = wp_roles()->get_names();
-$plugin_facade = PostExpirator_Facade::getInstance();
+$userRoles = wp_roles()->get_names();
+$pluginFacade = PostExpirator_Facade::getInstance();
 ?>
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
     <div class="pp-column-left">
@@ -117,7 +117,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     </th>
                     <td class="pe-checklist">
                         <?php
-                        foreach ($user_roles as $role_name => $role_label) : ?>
+                        foreach ($userRoles as $role_name => $role_label) : ?>
                             <label for="allow-user-role-<?php
                             echo esc_attr($role_name); ?>">
                                 <input type="checkbox"
@@ -131,13 +131,10 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                                        value="<?php
                                         echo esc_attr($role_name); ?>"
                                         <?php
-                                        if (
-                                            $plugin_facade->user_role_can_expire_posts(
-                                                $role_name
-                                            )
-                                        ) :
+                                        if ($pluginFacade->user_role_can_expire_posts($role_name)) :
                                             ?>checked="checked"<?php
-                                        endif; ?>
+                                        endif;
+                                        ?>
                                 />
                                 <?php echo esc_html(translate_user_role($role_label)); ?>
                             </label>
