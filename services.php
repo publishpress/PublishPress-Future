@@ -85,6 +85,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\Cor
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnCronSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnManuallyEnabledForPost;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostStatusChanged;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostUpdated;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnSavePost;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\FutureLegacyAction;
@@ -845,6 +846,15 @@ return [
 
                 case CoreOnPostPublished::getNodeTypeName():
                     $nodeRunner = new CoreOnPostPublished(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
+                        $container->get(ServicesAbstract::LOGGER)
+                    );
+                    break;
+
+                case CoreOnPostStatusChanged::getNodeTypeName():
+                    $nodeRunner = new CoreOnPostStatusChanged(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
