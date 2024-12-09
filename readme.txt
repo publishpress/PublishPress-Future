@@ -173,6 +173,41 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
 
+## [4.2.0] - 09 Dec, 2024
+
+### Added
+
+- Add new admin page to export and import workflows and plugin settings (Issue #704).
+- Add global variable `global.execution_id` to the workflow engine to identify the current execution of the workflow.
+- Add setting fields to customize the metabox title and checkbox label (Issue #227).
+- Add method `disableExpiration` to the class `PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel`.
+- Add `*` to indicate required fields in the workflow editor (Issue #974).
+- Add new setting to disable/enable the screenshot feature in the workflow editor (Issue #1066).
+- Add new Custom Data option to "Ray - Debug step" to debug custom expressions on workflows (Issue #1067).
+- Add support to metadata when evaluating expressions in a workflow. Post, site, user and workflow (post) metadata are now available when evaluating expressions (Issue #1069).
+- Add support to custom email addresses using the post metadata when sending emails in a workflow (Issue #939).
+
+### Changed
+
+- Move notification settings to a specific tab (Issue #190).
+- Disable the workflow screenshot feature by default (Issue #1066).
+- Changed the Message field in the "Log - Add" step displaying a textarea instead of a text field (Issue #1068).
+- Changed the Custom Email Addresses field in the Send Email step to be a textarea (Issue #939).
+- Changed the Subject field in the Send Email step to be a textarea (Issue #939).
+- Set the default value of Email Recipient on Send Email step to Site Admin (Issue #1071).
+
+### Fixed
+
+- Do not remove expiration post meta when clearing the scheduled action (Issue #1053).
+- Fix DB error when deleting orphan scheduled steps (Issue #1060).
+- Potential fix for DOM text reinterpretation as HTML issue.
+- Fix error when a trigger node type is not found.
+- Fix warning PHP Deprecated:  ltrim(): Passing null to parameter #1 ($string) of type string on the Scheduled Actions table.
+- Fix error on table ScheduledActionsTable refactoring calls to `next` instead of `get_date`.
+- Fix displaced labels for checkboxes in the Future Actions metabox and manual workflow activation checkbox (Issue #1057).
+- Fix translations for user roles in the plugin settings page (Issue #1050).
+- Fix error on Post Status filter in the Post Updated trigger (Issue #1074).
+
 ## [4.1.3] - 22 Nov, 2024
 
 ### Added
