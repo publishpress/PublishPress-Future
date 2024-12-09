@@ -122,6 +122,9 @@ class BlockEditorController implements InitializableInterface
 
             $defaultExpirationDate = $defaultDataModel->getActionDateParts($post->ID);
 
+            $metaboxTitle = $settingsFacade->getMetaboxTitle() ?? __('Future Actions', 'post-expirator');
+            $metaboxCheckboxLabel = $settingsFacade->getMetaboxCheckboxLabel() ?? __('Enable Future Action', 'post-expirator');
+
             wp_localize_script(
                 'postexpirator-block-editor',
                 'publishpressFutureBlockEditorConfig',
@@ -140,9 +143,8 @@ class BlockEditorController implements InitializableInterface
                     'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
                     'strings' => [
                         'category' => __('Categories', 'post-expirator'),
-                        'panelTitle' => __('Future Actions', 'post-expirator'),
-                        'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
-                        'futureActions' => __('Future Actions', 'post-expirator'),
+                        'panelTitle' => $metaboxTitle,
+                        'enablePostExpiration' => $metaboxCheckboxLabel,
                         'action' => __('Action', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
                         'showCalendar' => __('Show Calendar', 'post-expirator'),

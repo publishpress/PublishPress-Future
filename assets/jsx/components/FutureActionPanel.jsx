@@ -357,7 +357,7 @@ export const FutureActionPanel = (props) => {
                 )}
 
                 {props.showTitle && (
-                    <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>{props.strings.futureActions}</div>
+                    <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>{props.strings.panelTitle}</div>
                 )}
 
                 <FutureActionPanelTop.Slot fillProps={{ storeName: props.storeName }} />

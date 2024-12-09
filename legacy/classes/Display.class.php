@@ -5,10 +5,10 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
 use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
-use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -43,6 +43,11 @@ class PostExpirator_Display
     private $debugLogSchema;
 
     /**
+     * @var SettingsFacade
+     */
+    private $settingsFacade;
+
+    /**
      * Constructor.
      */
     private function __construct()
@@ -53,6 +58,7 @@ class PostExpirator_Display
         $this->hooks = $container->get(ServicesAbstract::HOOKS);
         $this->actionArgsSchema = $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA);
         $this->debugLogSchema = $container->get(ServicesAbstract::DB_TABLE_DEBUG_LOG_SCHEMA);
+        $this->settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
         $this->hooks();
     }
@@ -109,7 +115,7 @@ class PostExpirator_Display
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
 
-        $allowed_tabs = ['defaults', 'general', 'display', 'advanced', 'diagnostics', 'viewdebug', ];
+        $allowed_tabs = ['defaults', 'general', 'display', 'advanced', 'diagnostics', 'viewdebug', 'notifications', ];
         $allowed_tabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
 
         $debugIsEnabled = (bool)$this->hooks->applyFilters(SettingsHooksAbstract::FILTER_DEBUG_ENABLED, false);
@@ -163,13 +169,15 @@ class PostExpirator_Display
                 exit;
             } else {
                 // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-                update_option('expirationdateDefaultDateFormat', sanitize_text_field($_POST['expired-default-date-format']));
-                update_option('expirationdateDefaultTimeFormat', sanitize_text_field($_POST['expired-default-time-format']));
-                update_option('expirationdateDisplayFooter', (int)$_POST['expired-display-footer']);
-                update_option('expirationdateFooterContents', wp_kses($_POST['expired-footer-contents'], []));
-                update_option('expirationdateFooterStyle', wp_kses($_POST['expired-footer-style'], []));
-                update_option('expirationdateColumnStyle', sanitize_key($_POST['future-action-column-style']));
-                update_option('expirationdateTimeFormatForDatePicker', sanitize_key($_POST['future-action-time-format']));
+                $this->settingsFacade->setDefaultDateFormat(sanitize_text_field($_POST['expired-default-date-format']));
+                $this->settingsFacade->setDefaultTimeFormat(sanitize_text_field($_POST['expired-default-time-format']));
+                $this->settingsFacade->setShowInPostFooter((bool)$_POST['expired-display-footer']);
+                $this->settingsFacade->setFooterContents(wp_kses($_POST['expired-footer-contents'], []));
+                $this->settingsFacade->setFooterStyle(wp_kses($_POST['expired-footer-style'], []));
+                $this->settingsFacade->setColumnStyle(sanitize_key($_POST['future-action-column-style']));
+                $this->settingsFacade->setTimeFormatForDatePicker(sanitize_key($_POST['future-action-time-format']));
+                $this->settingsFacade->setMetaboxTitle(sanitize_text_field($_POST['expirationdate-metabox-title']));
+                $this->settingsFacade->setMetaboxCheckboxLabel(sanitize_text_field($_POST['expirationdate-metabox-checkbox-label']));
                 // phpcs:enable
             }
         }
@@ -304,46 +312,23 @@ class PostExpirator_Display
                 exit;
             } else {
                 // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-                update_option('expirationdateEmailNotification', sanitize_text_field($_POST['expired-email-notification']));
-                update_option('expirationdateEmailNotificationAdmins', sanitize_text_field($_POST['expired-email-notification-admins']));
-                update_option('expirationdateEmailNotificationList', trim(sanitize_text_field($_POST['expired-email-notification-list'])));
-                update_option(
-                    'expirationdateCategoryDefaults',
-                    // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                    isset($_POST['expirationdate_category']) ? PostExpirator_Util::sanitize_array_of_integers($_POST['expirationdate_category']) : []
+                $this->settingsFacade->setGeneralDateTimeOffset(
+                    sanitize_text_field($_POST['expired-custom-expiration-date'])
                 );
-                update_option('expirationdateDefaultDate', 'custom');
 
-                $customExpirationDate = sanitize_text_field($_POST['expired-custom-expiration-date']);
-                $customExpirationDate = html_entity_decode($customExpirationDate, ENT_QUOTES);
-                $customExpirationDate = preg_replace('/["\'`]/', '', $customExpirationDate);
-
-                update_option('expirationdateDefaultDateCustom', trim($customExpirationDate));
-
-                $hideCalendarByDefault = isset($_POST['expired-hide-calendar-by-default']) && $_POST['expired-hide-calendar-by-default'] == '1' ? 1 : 0;
-                update_option('expirationdateHideCalendarByDefault', $hideCalendarByDefault);
+                $this->settingsFacade->setHideCalendarByDefault(
+                    isset($_POST['expired-hide-calendar-by-default']) && $_POST['expired-hide-calendar-by-default'] == '1'
+                );
                 // phpcs:enable
 
                 if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
-                    $_POST['allow-user-roles'] = array();
+                    $_POST['allow-user-roles'] = [];
                 }
 
-                $user_roles = wp_roles()->get_names();
-
-                foreach ($user_roles as $role_name => $role_label) {
-                    $role = get_role($role_name);
-
-                    if (! is_a($role, WP_Role::class)) {
-                        continue;
-                    }
-
-                    // TODO: only allow roles that can edit posts. Filter in the form as well, adding a description.
-                    if ($role_name === 'administrator' || in_array($role_name, $_POST['allow-user-roles'], true)) {
-                        $role->add_cap(CapabilitiesAbstract::EXPIRE_POST);
-                    } else {
-                        $role->remove_cap(CapabilitiesAbstract::EXPIRE_POST);
-                    }
-                }
+                $this->settingsFacade->setAllowUserRoles($_POST['allow-user-roles']);
+                $this->settingsFacade->setWorkflowScreenshotStatus(
+                    isset($_POST['workflow-screenshot']) && $_POST['workflow-screenshot'] == '1'
+                );
 
                 echo "<div id='message' class='updated fade'><p>";
                 esc_html_e('Saved Options!', 'post-expirator');
@@ -359,6 +344,42 @@ class PostExpirator_Display
         ];
 
         $this->render_template('menu-general', $params);
+    }
+
+    private function menu_notifications()
+    {
+        if (isset($_POST['expirationNotificationSave']) && ! empty($_POST['expirationNotificationSave'])) {
+            if (
+                ! isset($_POST['_postExpiratorMenuNotifications_nonce']) || ! wp_verify_nonce(
+                    sanitize_key($_POST['_postExpiratorMenuNotifications_nonce']),
+                    'postexpirator_menu_notifications'
+                )
+            ) {
+                print 'Form Validation Failure: Sorry, your nonce did not verify.';
+                exit;
+            }
+
+            $emailList = explode(',', trim(sanitize_text_field($_POST['expired-email-notification-list'])));
+
+            // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+            $this->settingsFacade->setSendEmailNotification((bool)$_POST['expired-email-notification']);
+            $this->settingsFacade->setSendEmailNotificationToAdmins((bool)$_POST['expired-email-notification-admins']);
+            $this->settingsFacade->setEmailNotificationAddressesList($emailList);
+            // phpcs:enable
+
+            echo "<div id='message' class='updated fade'><p>";
+            esc_html_e('Saved Options!', 'post-expirator');
+            echo '</p></div>';
+        }
+
+        $params = [
+            'showSideBar' => $this->hooks->applyFilters(
+                SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
+                ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
+            ),
+        ];
+
+        $this->render_template('menu-notifications', $params);
     }
 
     /**

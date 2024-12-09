@@ -112,7 +112,7 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
                 $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
 
                 $postQueryArgs = [
-                    'post' => $postBefore,
+                    'post' => $postAfter,
                     'node' => $step['node'],
                 ];
 

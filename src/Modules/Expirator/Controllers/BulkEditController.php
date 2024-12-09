@@ -164,6 +164,9 @@ class BulkEditController implements InitializableInterface
         $defaultExpirationDate = $defaultDataModel->getActionDateParts();
         $nonce = wp_create_nonce('__future_action');
 
+        $metaboxTitle = $settingsFacade->getMetaboxTitle() ?? __('Future Actions', 'post-expirator');
+        $metaboxCheckboxLabel = $settingsFacade->getMetaboxCheckboxLabel() ?? __('Enable Future Action', 'post-expirator');
+
         wp_localize_script(
             'postexpirator-bulk-edit',
             'publishpressFutureBulkEditConfig',
@@ -184,9 +187,8 @@ class BulkEditController implements InitializableInterface
                 'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
                 'strings' => [
                     'category' => __('Categories', 'post-expirator'),
-                    'panelTitle' => __('Future Actions', 'post-expirator'),
-                    'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
-                    'futureActions' => __('Future Actions', 'post-expirator'),
+                    'panelTitle' => $metaboxTitle,
+                    'enablePostExpiration' => $metaboxCheckboxLabel,
                     'action' => __('Action', 'post-expirator'),
                     'showCalendar' => __('Show Calendar', 'post-expirator'),
                     'hideCalendar' => __('Hide Calendar', 'post-expirator'),

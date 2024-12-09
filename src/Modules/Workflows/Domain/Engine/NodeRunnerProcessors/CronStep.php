@@ -163,6 +163,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             $isSingleAction = self::SCHEDULE_RECURRENCE_SINGLE === $recurrence;
 
             $actionUID = $this->getScheduledActionUniqueId($node);
+            $actionUIDHash = md5($actionUID);
             $scheduledActionId = 0;
 
             $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
@@ -177,7 +178,6 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
             $compactedArgs = $this->compactArguments($step);
 
-            $actionUIDHash = md5($actionUID);
             $scheduledActionsModel = new ScheduledActionsModel();
 
             $hasFinished = WorkflowScheduledStepModel::getMetaIsFinished($workflowId, $actionUIDHash);
@@ -391,19 +391,20 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         return $timestamp;
     }
 
-    private function getScheduledActionUniqueId(array $node)
+    private function getScheduledActionUniqueId(array $node): string
     {
         $uniqueId = [
             'workflowId' => $this->variablesHandler->getVariable('global.workflow.id'),
-            'stepId' => $node['id'],
-            'custom' => '',
+            'stepId' => $node['id']
         ];
 
         if (isset($node['data']['settings']['schedule']['uniqueIdExpression'])) {
             $uniqueIdExpression = $node['data']['settings']['schedule']['uniqueIdExpression'];
 
             if (! empty($uniqueIdExpression)) {
-                $uniqueId['custom'] = $this->variablesHandler->replacePlaceholdersInText($uniqueIdExpression);
+                $uniqueId = [
+                    'custom' => $this->variablesHandler->replacePlaceholdersInText($uniqueIdExpression),
+                ];
             }
         }
 

@@ -53,8 +53,6 @@ class RayDebug implements NodeRunnerInterface
                 $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
 
                 if (! function_exists('ray')) {
-                    $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
-
                     $this->logger->error(
                         $this->nodeRunnerProcessor->prepareLogMessage(
                             'Ray is not installed. Skipping step %s',
@@ -70,6 +68,7 @@ class RayDebug implements NodeRunnerInterface
                 $nodeSettings = $this->nodeRunnerProcessor->getNodeSettings($node);
 
                 $dataToOutput = $nodeSettings['data']['dataToOutput'] ?? 'all-input';
+                $customData = $nodeSettings['data']['customData'] ?? '';
 
                 if ($dataToOutput === 'all-input') {
                     $onlyInputVariables = $this->variablesHandler->getAllVariables();
@@ -77,7 +76,11 @@ class RayDebug implements NodeRunnerInterface
 
                     $output = $onlyInputVariables;
                 } else {
-                    $output = $this->variablesHandler->getVariable($dataToOutput);
+                    if ($dataToOutput === 'custom-data') {
+                        $output = $this->variablesHandler->replacePlaceholdersInText($customData);
+                    } else {
+                        $output = $this->variablesHandler->getVariable($dataToOutput);
+                    }
                 }
 
                 // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction

@@ -2312,8 +2312,8 @@ msgstr ""
 "formatação válidas, consulte: %s."
 
 #: src/Views/menu-display.php:80
-msgid "Future actions column"
-msgstr "Coluna de ações futuras"
+msgid "Future Actions Column"
+msgstr "Coluna de Ações Futuras"
 
 #: src/Views/menu-display.php:84
 msgid "Future Action Column Style"
@@ -2336,7 +2336,7 @@ msgid "Displays only the icon and date/time."
 msgstr "Exibe apenas o ícone e a data/hora."
 
 #: src/Views/menu-display.php:123
-msgid "Future actions editor"
+msgid "Future Actions Editor"
 msgstr "Editor de ações futuras"
 
 #: src/Views/menu-display.php:127

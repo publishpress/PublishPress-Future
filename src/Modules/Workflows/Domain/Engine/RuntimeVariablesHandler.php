@@ -86,11 +86,22 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
         if (count($variableName) === 1) {
             return $this->getVariableValue($variableName[0], $dataSource);
         } else {
-            if (!isset($dataSource[$variableName[0]])) {
+            if (is_array($dataSource) && !isset($dataSource[$variableName[0]])) {
                 return '';
             }
 
-            $currentVariableSource = $dataSource[$variableName[0]];
+            if (is_object($dataSource)) {
+                if (!isset($dataSource->{$variableName[0]})) {
+                    return '';
+                }
+            }
+
+            if (is_array($dataSource)) {
+                $currentVariableSource = $dataSource[$variableName[0]];
+            } else {
+                $currentVariableSource = $dataSource->{$variableName[0]};
+            }
+
             $variableName = array_slice($variableName, 1);
 
             return $this->getVariableValueFromNestedVariable(

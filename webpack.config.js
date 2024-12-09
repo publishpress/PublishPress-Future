@@ -18,7 +18,8 @@ module.exports = {
         workflowManualSelectionQuickEdit: "./assets/jsx/workflow-manual-selection/quick-edit/index.jsx",
         workflowManualSelectionClassicEditor: "./assets/jsx/workflow-manual-selection/classic-editor/index.jsx",
         workflowManualSelectionBlockEditor: "./assets/jsx/workflow-manual-selection/block-editor/index.jsx",
-        futureActions: "./assets/jsx/future-actions.jsx"
+        futureActions: "./assets/jsx/future-actions.jsx",
+        backupPanel: "./assets/jsx/backup-panel/index.jsx"
     },
     output: {
         path: path.join(__dirname, "assets", "js"),

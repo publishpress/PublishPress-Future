@@ -12,6 +12,7 @@ use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Module;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 use Throwable;
 
 class WorkflowsList implements InitializableInterface
@@ -31,14 +32,21 @@ class WorkflowsList implements InitializableInterface
      */
     private $logger;
 
+    /**
+     * @var SettingsFacade
+     */
+    private $settingsFacade;
+
     public function __construct(
         HookableInterface $hooks,
         NodeTypesModelInterface $nodeTypesModel,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        SettingsFacade $settingsFacade
     ) {
         $this->hooks = $hooks;
         $this->nodeTypesModel = $nodeTypesModel;
         $this->logger = $logger;
+        $this->settingsFacade = $settingsFacade;
     }
 
     public function initialize()
@@ -78,12 +86,14 @@ class WorkflowsList implements InitializableInterface
             2
         );
 
-        $this->hooks->addAction(
-            "manage_" . Module::POST_TYPE_WORKFLOW . "_posts_custom_column",
-            [$this, "renderPreviewColumn"],
-            10,
-            2
-        );
+        if ($this->settingsFacade->getWorkflowScreenshotStatus()) {
+            $this->hooks->addAction(
+                "manage_" . Module::POST_TYPE_WORKFLOW . "_posts_custom_column",
+                [$this, "renderPreviewColumn"],
+                10,
+                2
+            );
+        }
 
         $this->hooks->addAction(
             FutureCoreHooksAbstract::ACTION_ADMIN_INIT,
@@ -176,7 +186,10 @@ class WorkflowsList implements InitializableInterface
             "Triggers",
             "post-expirator"
         );
-        $columns["workflow_preview"] = __("Preview", "post-expirator");
+
+        if ($this->settingsFacade->getWorkflowScreenshotStatus()) {
+            $columns["workflow_preview"] = __("Preview", "post-expirator");
+        }
 
         // Move the date column to the end
         if (isset($columns["date"])) {

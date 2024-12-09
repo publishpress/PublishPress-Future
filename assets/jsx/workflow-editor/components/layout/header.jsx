@@ -41,8 +41,6 @@ export const LayoutHeader = () => {
         hasReducedUI,
         showIconLabels,
         isLoadingWorkflow,
-        isEditedWorkflowDirty,
-        takeScreenshot,
         isPro
     } = useSelect((select) => {
         return {
@@ -51,8 +49,6 @@ export const LayoutHeader = () => {
             isInserterOpened: select(editorStore).isFeatureActive(FEATURE_INSERTER),
             showIconLabels: select(editorStore).isFeatureActive(FEATURE_SHOW_ICON_LABELS),
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
-            isEditedWorkflowDirty: select(workflowStore).isEditedWorkflowDirty(),
-            takeScreenshot: select(workflowStore).takeScreenshot,
             isPro: select(editorStore).isPro(),
         }
     });

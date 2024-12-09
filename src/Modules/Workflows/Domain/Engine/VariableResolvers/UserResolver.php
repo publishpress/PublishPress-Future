@@ -61,6 +61,9 @@ class UserResolver implements VariableResolverInterface
 
             case 'registered':
                 return $this->user->user_registered;
+
+            case 'meta':
+                return new UserMetaResolver($this->user->ID);
         }
 
         return '';
@@ -95,7 +98,20 @@ class UserResolver implements VariableResolverInterface
 
     public function __isset($name): bool
     {
-        return in_array($name, ['id', 'ID', 'user_login', 'user_email', 'roles', 'caps', 'display_name', 'registered']);
+        return in_array(
+            $name,
+            [
+                'id',
+                'ID',
+                'user_login',
+                'user_email',
+                'roles',
+                'caps',
+                'display_name',
+                'registered',
+                'meta',
+            ]
+        );
     }
 
     public function __get($name)

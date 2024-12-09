@@ -1,5 +1,5 @@
 import { __ } from "@wordpress/i18n";
-import { TreeSelect } from "@wordpress/components";
+import { TreeSelect, TextareaControl } from "@wordpress/components";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 
 export function DebugData({ name, label, defaultValue, onChange, variables = [] }) {
@@ -16,6 +16,12 @@ export function DebugData({ name, label, defaultValue, onChange, variables = [] 
             });
         });
     }
+
+    // Add a new option to output custom data
+    debugOptions.push({
+        name: __("Custom data", "post-expirator"),
+        id: "custom-data",
+    });
 
     const defaultDebugOption = "all-input";
 
@@ -37,6 +43,14 @@ export function DebugData({ name, label, defaultValue, onChange, variables = [] 
                     selectedId={defaultValue?.dataToOutput || defaultDebugOption}
                     onChange={(value) => onChangeSetting({ settingName: "dataToOutput", value })}
                 />
+
+                {defaultValue?.dataToOutput === "custom-data" && (
+                    <TextareaControl
+                        label={__("Custom data", "post-expirator")}
+                        value={defaultValue?.customData}
+                        onChange={(value) => onChangeSetting({ settingName: "customData", value })}
+                    />
+                )}
             </VStack>
         </>
     );

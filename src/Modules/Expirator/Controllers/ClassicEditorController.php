@@ -134,6 +134,8 @@ class ClassicEditorController implements InitializableInterface
             $defaults = $settingsFacade->getPostTypeDefaults($postType);
             $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
 
+            $metaboxTitle = $settingsFacade->getMetaboxTitle() ?? __('Future Actions', 'post-expirator');
+
             // if settings are not configured, show the metabox by default only for posts and pages
             if (
                 $hideMetabox === false
@@ -151,7 +153,7 @@ class ClassicEditorController implements InitializableInterface
             ) {
                 add_meta_box(
                     'expirationdatediv',
-                    __('Future Actions', 'post-expirator'),
+                    $metaboxTitle,
                     [$this, 'renderClassicEditorMetabox'],
                     $postType,
                     'side',
@@ -364,6 +366,9 @@ class ClassicEditorController implements InitializableInterface
 
             $defaultExpirationDate = $defaultDataModel->getActionDateParts();
 
+            $metaboxTitle = $settingsFacade->getMetaboxTitle() ?? __('Future Actions', 'post-expirator');
+            $metaboxCheckboxLabel = $settingsFacade->getMetaboxCheckboxLabel() ?? __('Enable Future Action', 'post-expirator');
+
             wp_localize_script(
                 'publishpress-future-classic-editor',
                 'publishpressFutureClassicEditorConfig',
@@ -383,9 +388,8 @@ class ClassicEditorController implements InitializableInterface
                     'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
                     'strings' => [
                         'category' => __('Category', 'post-expirator'),
-                        'panelTitle' => __('Future Actions', 'post-expirator'),
-                        'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
-                        'futureActions' => __('Future Actions', 'post-expirator'),
+                        'panelTitle' => $metaboxTitle,
+                        'enablePostExpiration' => $metaboxCheckboxLabel,
                         'action' => __('Action', 'post-expirator'),
                         'showCalendar' => __('Show Calendar', 'post-expirator'),
                         'hideCalendar' => __('Hide Calendar', 'post-expirator'),

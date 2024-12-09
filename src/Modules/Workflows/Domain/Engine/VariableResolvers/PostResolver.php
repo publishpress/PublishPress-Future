@@ -84,6 +84,9 @@ class PostResolver implements VariableResolverInterface
 
             case 'permalink':
                 return $this->getPermalink($this->post->ID);
+
+            case 'meta':
+                return new PostMetaResolver($this->post->ID);
         }
 
         return '';
@@ -130,7 +133,8 @@ class PostResolver implements VariableResolverInterface
                 'post_status',
                 'post_date',
                 'post_modified',
-                'permalink'
+                'permalink',
+                'meta',
             ]
         );
     }

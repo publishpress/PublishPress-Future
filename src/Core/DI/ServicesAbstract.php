@@ -94,6 +94,8 @@ abstract class ServicesAbstract
 
     public const MODULE_WORKFLOWS = 'future.free/module-workflows';
 
+    public const MODULE_BACKUP = 'future.free/module-backup';
+
     public const POST_MODEL_FACTORY = 'future.free/post-model-factory';
 
     public const TERM_MODEL_FACTORY = 'future.free/term-model-factory';

@@ -6,6 +6,11 @@ export function SiteData() {
         objectType: "site",
         propertiesSchema: [
             {
+                name: "id",
+                type: "integer",
+                label: "ID",
+            },
+            {
                 name: "name",
                 type: "string",
                 label: "Name",
@@ -29,6 +34,11 @@ export function SiteData() {
                 name: "admin_email",
                 type: "email",
                 label: "Admin Email",
+            },
+            {
+                name: "meta",
+                type: "object",
+                label: "Metadata",
             },
         ],
     };

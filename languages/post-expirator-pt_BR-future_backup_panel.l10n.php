@@ -1,0 +1,2 @@
+<?php
+return ['domain'=>NULL,'plural-forms'=>NULL,'language'=>'','project-id-version'=>'','pot-creation-date'=>'2024-11-27T18:46:32+00:00','po-revision-date'=>'2024-11-27T18:46:32+00:00','messages'=>['Backup'=>'Backup']];

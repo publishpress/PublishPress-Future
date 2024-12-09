@@ -169,12 +169,17 @@ class WorkflowEngine implements WorkflowEngineInterface
                         'steps' => $workflow->getNodes(),
                     ]
                 ),
+                'execution_id' => $this->getExecutionId(),
             ];
 
             foreach ($triggerNodes as $triggerNode) {
                 $triggerName = $triggerNode['data']['name'];
                 $triggerId = $triggerNode['id'];
                 $nodeType = $this->nodeTypesModel->getNodeType($triggerName);
+
+                if (! $nodeType) {
+                    continue;
+                }
 
                 /** @var NodeRunnerInterface $triggerRunner */
                 $triggerRunner = call_user_func($this->nodeRunnerFactory, $triggerName);
@@ -393,5 +398,10 @@ class WorkflowEngine implements WorkflowEngineInterface
         }
 
         return 'frontend';
+    }
+
+    private function getExecutionId(): string
+    {
+        return wp_generate_uuid4();
     }
 }

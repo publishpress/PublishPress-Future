@@ -4,6 +4,7 @@ import { store } from '../store';
 import { Fieldset } from '../fieldset';
 import apiFetch from '@wordpress/api-fetch';
 
+import './css/style.css';
 
 const container = document.getElementById("post-expirator-classic-editor");
 

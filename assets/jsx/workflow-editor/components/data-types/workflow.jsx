@@ -29,7 +29,12 @@ export function WorkflowData() {
                 name: "steps",
                 type: "node",
                 label: "Steps",
-            }
+            },
+            {
+                name: "meta",
+                type: "object",
+                label: "Metadata",
+            },
         ],
     };
 }

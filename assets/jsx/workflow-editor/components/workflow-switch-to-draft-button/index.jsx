@@ -28,6 +28,8 @@ export function WorkflowSwitchToDraftButton() {
         return null;
     }
 
+    const { enableWorkflowScreenshot } = futureWorkflowEditor;
+
     const onSwitch = () => {
         let alertMessage;
 
@@ -40,9 +42,13 @@ export function WorkflowSwitchToDraftButton() {
         }
 
         if (window.confirm(alertMessage)) {
-            takeScreenshot().then((dataUrl) => {
-                switchToDraft({ screenshot: dataUrl });
-            });
+            if (enableWorkflowScreenshot) {
+                takeScreenshot().then((dataUrl) => {
+                    switchToDraft({ screenshot: dataUrl });
+                });
+            } else {
+                switchToDraft();
+            }
         }
     };
 

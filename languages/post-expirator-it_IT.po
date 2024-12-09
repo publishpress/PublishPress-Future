@@ -2336,7 +2336,7 @@ msgstr ""
 "informazioni sulle opzioni di formattazione valide, vedere: %s."
 
 #: src/Views/menu-display.php:80
-msgid "Future actions column"
+msgid "Future Actions Column"
 msgstr "Colonna azioni Future"
 
 #: src/Views/menu-display.php:84
@@ -2360,7 +2360,7 @@ msgid "Displays only the icon and date/time."
 msgstr "Visualizza solo l'icona, la data e l'ora."
 
 #: src/Views/menu-display.php:123
-msgid "Future actions editor"
+msgid "Future Actions Editor"
 msgstr "Editor azioni Future"
 
 #: src/Views/menu-display.php:127

@@ -27,6 +27,11 @@ $tabs = [
         'link' => admin_url($baseLink . 'general'),
     ],
     [
+        'title' => __('Notifications', 'post-expirator'),
+        'slug'  => 'notifications',
+        'link' => admin_url($baseLink . 'notifications'),
+    ],
+    [
         'title' => __('Display', 'post-expirator'),
         'slug'  => 'display',
         'link' => admin_url($baseLink . 'display'),

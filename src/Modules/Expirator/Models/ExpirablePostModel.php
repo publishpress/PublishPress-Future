@@ -827,6 +827,11 @@ class ExpirablePostModel extends PostModel
         return $timestamp;
     }
 
+    public function disableExpiration()
+    {
+        $this->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, '0');
+    }
+
     public function hasActionScheduledInPostMeta()
     {
         $timestampInPostMeta = $this->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);

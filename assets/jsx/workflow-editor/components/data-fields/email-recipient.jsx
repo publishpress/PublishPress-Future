@@ -1,6 +1,6 @@
 import { __ } from "@wordpress/i18n";
 import { VariablesTreeSelect } from "../variables-tree-select";
-import { TextControl } from "@wordpress/components";
+import { TextareaControl } from "@wordpress/components";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 import { filterVariableOptionsByDataType } from "../../utils";
 
@@ -9,9 +9,8 @@ export function EmailRecipient({ name, label, defaultValue, onChange, settings, 
     variables = filterVariableOptionsByDataType(variables, ['email']);
 
     let recipientOptions = [
-        { name: '', id: '' },
-        { name: __("Custom Addresses", "post-expirator"), id: "custom" },
-        ...variables
+        ...variables,
+        { name: __("Custom Addresses", "post-expirator"), id: "custom" }
     ];
 
     const onChangeSetting = ({ settingName, value }) => {
@@ -38,7 +37,7 @@ export function EmailRecipient({ name, label, defaultValue, onChange, settings, 
                 />
 
                 {defaultValue?.recipient === "custom" && (
-                    <TextControl
+                    <TextareaControl
                         label={__("Custom Email Addresses", "post-expirator")}
                         value={defaultValue?.custom || ""}
                         onChange={(value) => onChangeSetting({ settingName: "custom", value })}

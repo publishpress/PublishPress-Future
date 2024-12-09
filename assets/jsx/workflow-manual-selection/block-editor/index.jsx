@@ -6,6 +6,8 @@ import { __ } from '@wordpress/i18n';
 import { registerPlugin } from '@wordpress/plugins';
 import { useEffect } from 'react';
 
+import './css/style.css';
+
 function BlockEditorWorkflowManualTrigger() {
     const { PluginDocumentSettingPanel } = wp.editPost;
 

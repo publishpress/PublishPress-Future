@@ -464,8 +464,8 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             esc_html__('%1$s: [%2$d] %3$s%4$s%5$s', 'post-expirator'),
             esc_html($actionData['postTypeLabel']),
             $actionData['postId'],
-            '<a href="' . esc_url($actionData['postLink']) . '">',
-            esc_html($actionData['postTitle']),
+            '<a href="' . esc_url($actionData['postLink'] ?? '') . '">',
+            esc_html($actionData['postTitle'] ?? ''),
             '</a>'
         );
 
@@ -688,13 +688,13 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             return __('Async', 'post-expirator');
         }
 
-        if (! method_exists($schedule, 'get_date') || ! $schedule->get_date()) {
+        if (! method_exists($schedule, 'next') || ! $schedule->next()) {
             return '0000-00-00 00:00:00';
         }
 
-        $next_timestamp = $schedule->get_date()->getTimestamp();
+        $next_timestamp = $schedule->next()->getTimestamp();
 
-        $gmt_schedule_display_string = $schedule->get_date()->format('Y-m-d H:i:s O');
+        $gmt_schedule_display_string = $schedule->next()->format('Y-m-d H:i:s O');
         $schedule_display_string .= wp_date('Y-m-d H:i:s O', $next_timestamp);
         $schedule_display_string .= '<br/>';
 
