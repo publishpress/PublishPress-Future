@@ -14,14 +14,6 @@ $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 // phpcs:disable WordPress.PHP.StrictComparisons.LooseComparison
 
 $expireddisplayfooter = $settingsFacade->getShowInPostFooter();
-$expireddisplayfooterenabled = '';
-$expireddisplayfooterdisabled = '';
-if ($expireddisplayfooter == 0) {
-    $expireddisplayfooterdisabled = 'checked="checked"';
-} elseif ($expireddisplayfooter == 1) {
-    $expireddisplayfooterenabled = 'checked="checked"';
-}
-
 $expirationdateFooterContents = $settingsFacade->getFooterContents();
 $expirationdateFooterStyle = $settingsFacade->getFooterStyle();
 
@@ -270,7 +262,7 @@ $columnStyle = $settingsFacade->getColumnStyle();
                                 name="expired-display-footer"
                                 id="expired-display-footer-true"
                                 value="1"
-                                <?php echo $expireddisplayfooterenabled; ?> />
+                                <?php echo $expireddisplayfooter ? 'checked' : ''; ?> />
                             <label for="expired-display-footer-true">
                                 <?php esc_html_e('Enabled', 'post-expirator'); ?>
                             </label>
@@ -281,7 +273,7 @@ $columnStyle = $settingsFacade->getColumnStyle();
                                 name="expired-display-footer"
                                 id="expired-display-footer-false"
                                 value="0"
-                                <?php echo $expireddisplayfooterdisabled; ?> />
+                                <?php echo !$expireddisplayfooter ? 'checked' : ''; ?> />
                             <label for="expired-display-footer-false">
                                 <?php esc_html_e('Disabled', 'post-expirator'); ?>
                             </label>
@@ -311,7 +303,7 @@ $columnStyle = $settingsFacade->getColumnStyle();
                             <?php esc_html_e(
                                 'Enter the text you would like to appear at the bottom of every post which has an action scheduled.  The following placeholders will be replaced with the future action date in the following format:',
                                 'post-expirator'
-                        ); ?>
+                            ); ?>
                         </p>
                         <ul class="pe-list">
                             <li>

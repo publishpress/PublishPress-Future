@@ -162,7 +162,8 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
             $isSingleAction = self::SCHEDULE_RECURRENCE_SINGLE === $recurrence;
 
-            $actionUIDHash = $this->getScheduledActionUniqueIdHash($node);
+            $actionUID = $this->getScheduledActionUniqueId($node);
+            $actionUIDHash = md5($actionUID);
             $scheduledActionId = 0;
 
             $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
@@ -307,7 +308,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                 $scheduledStepModel->setActionId($scheduledActionId);
                 $scheduledStepModel->setWorkflowId($workflowId);
                 $scheduledStepModel->setStepId($node['id']);
-                $scheduledStepModel->setActionUID($actionUIDHash);
+                $scheduledStepModel->setActionUID($actionUID);
                 $scheduledStepModel->setArgs($compactedArgs);
                 $scheduledStepModel->setRunCount(0);
                 $scheduledStepModel->setIsRecurring(! $isSingleAction);
@@ -390,23 +391,24 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         return $timestamp;
     }
 
-    private function getScheduledActionUniqueIdHash(array $node): string
+    private function getScheduledActionUniqueId(array $node): string
     {
         $uniqueId = [
             'workflowId' => $this->variablesHandler->getVariable('global.workflow.id'),
-            'stepId' => $node['id'],
-            'custom' => '',
+            'stepId' => $node['id']
         ];
 
         if (isset($node['data']['settings']['schedule']['uniqueIdExpression'])) {
             $uniqueIdExpression = $node['data']['settings']['schedule']['uniqueIdExpression'];
 
             if (! empty($uniqueIdExpression)) {
-                $uniqueId['custom'] = $this->variablesHandler->replacePlaceholdersInText($uniqueIdExpression);
+                $uniqueId = [
+                    'custom' => $this->variablesHandler->replacePlaceholdersInText($uniqueIdExpression),
+                ];
             }
         }
 
-        return md5(wp_json_encode($uniqueId));
+        return wp_json_encode($uniqueId);
     }
 
     public function compactArguments(array $step): array
