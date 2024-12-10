@@ -3,7 +3,7 @@ import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useMemo } from "@wordpress/element";
-import { getExpandedVariableOptionsForSelect } from "../../utils";
+import { getExpandedVariableOptionsForSelect, getVariablesList } from "../../utils";
 import MappedField from "./mapped-field";
 import PersistentPanelBody from "../persistent-panel-body";
 

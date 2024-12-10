@@ -309,6 +309,13 @@ export function getExpandedVariableOptionsForSelect(node, globalVariables) {
     return options;
 }
 
+export function getVariablesList(node, globalVariables) {
+    const mappedNodeInputs = mapNodeInputs(node);
+    const globalVariablesToList = getGlobalVariablesExpanded(globalVariables);
+
+    return [...mappedNodeInputs, ...globalVariablesToList];
+}
+
 function getOptionsForVariable(variable) {
     const getDataTypeByName = select(workflowStore).getDataTypeByName;
     const dataType = getDataTypeByName(variable.type);
@@ -327,6 +334,8 @@ function getOptionsForVariable(variable) {
             return {
                 id: variable.name + '.' + property.name,
                 name: variable.label + ' -> ' + property.label,
+                type: property.type,
+                itemsType: property.itemsType,
             };
         });
     }

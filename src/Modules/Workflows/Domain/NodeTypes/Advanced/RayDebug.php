@@ -70,6 +70,11 @@ class RayDebug implements NodeTypeInterface
                         "label" => __("Data", "post-expirator"),
                     ],
                     [
+                        "name" => "expression",
+                        "type" => "expression",
+                        "label" => __("Expression", "post-expirator"),
+                    ],
+                    [
                         "name" => "label",
                         "type" => "text",
                         "label" => __("Label", "post-expirator"),

@@ -1,0 +1,43 @@
+.columns-container {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #ccc;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    flex: 0 0 auto;
+    border-right: 1px solid #ccc;
+}
+
+.column-item {
+    cursor: pointer;
+    padding: 5px 8px;
+    position: relative;
+}
+
+.column-item.has-children::after {
+    content: '▶';
+    display: inline-block;
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ccc;
+}
+
+.column-item.selected {
+    background-color: #ccc;
+}
+
+.column-item.has-children.selected::after {
+    color: #1b1b1b;
+}
+
+.column-item:hover {
+    background-color: #f0f0f0;
+}
