@@ -41,3 +41,19 @@
 .column-item:hover {
     background-color: #f0f0f0;
 }
+
+#expression-editor-inline {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.expression-editor-textarea textarea {
+    width: 244px;
+    height: 92px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.ace_editor.ace_autocomplete {
+    z-index: 999999999;
+}
