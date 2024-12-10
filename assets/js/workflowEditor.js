@@ -14952,7 +14952,9 @@ var ExpressionBuilder = function ExpressionBuilder(_ref2) {
       maxWidth: '600px',
       overflowX: 'auto'
     }
-  }, /*#__PURE__*/React.createElement(ColumnsContainer, {
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalHeading, {
+    level: 2
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Variables", "post-expirator")), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Double click on a variable to add it to your expression.", "post-expirator")), /*#__PURE__*/React.createElement(ColumnsContainer, {
     items: items
   })))), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
     variant: "secondary",
