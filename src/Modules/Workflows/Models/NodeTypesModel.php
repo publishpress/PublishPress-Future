@@ -26,6 +26,7 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManual
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostPublished;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostStatusChanged;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostScheduled;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
@@ -191,6 +192,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             CoreOnSavePost::getNodeTypeName() => new CoreOnSavePost(),
             CoreOnPostUpdated::getNodeTypeName() => new CoreOnPostUpdated(),
             CoreOnPostPublished::getNodeTypeName() => new CoreOnPostPublished(),
+            CoreOnPostScheduled::getNodeTypeName() => new CoreOnPostScheduled(),
             CoreOnPostStatusChanged::getNodeTypeName() => new CoreOnPostStatusChanged(),
             CoreOnManuallyEnabledForPost::getNodeTypeName() => new CoreOnManuallyEnabledForPost(),
             FutureLegacyAction::getNodeTypeName() => new FutureLegacyAction($this->hooks),
