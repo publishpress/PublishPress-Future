@@ -278,7 +278,7 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
                     />
 
                     <div style={{ maxWidth: '600px', overflowX: 'auto' }}>
-                        <Heading level={2}>{__("Variables", "post-expirator")}</Heading>
+                        <Heading level={2} className="components-truncate components-text components-heading block-editor-inspector-popover-header__heading">{__("Variables", "post-expirator")}</Heading>
 
                         <p>{__("Double click on a variable to add it to your expression.", "post-expirator")}</p>
 
