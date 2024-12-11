@@ -1,6 +1,6 @@
 import { useState, useCallback } from "@wordpress/element";
 
-const RenderColumns = ({ currentItemPath, currentItems, handleClick, setCurrentDescription, path = [] }) => {
+const RenderColumns = ({ currentItemPath, currentItems, handleClick, setCurrentDescription, onDoubleClick, path = [] }) => {
     if (!currentItems) return null;
 
     const currentColumnIndex = path.length;
@@ -31,6 +31,7 @@ const RenderColumns = ({ currentItemPath, currentItems, handleClick, setCurrentD
                     path={[...path, selectedItemIndex]}
                     handleClick={handleClick}
                     setCurrentDescription={setCurrentDescription}
+                    onDoubleClick={onDoubleClick}
                 />
             )}
         </>
