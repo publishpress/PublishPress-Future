@@ -67,7 +67,7 @@ export function PostData() {
             },
             {
                 name: "meta",
-                type: "object",
+                type: "meta",
                 label: "Metadata",
                 description: "The metadata of the post.",
             },

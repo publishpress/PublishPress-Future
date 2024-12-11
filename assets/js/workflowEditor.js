@@ -39568,55 +39568,73 @@ function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Sym
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
-var _RenderColumns = function RenderColumns(_ref) {
-  var _currentItems$selecte;
-  var currentItemPath = _ref.currentItemPath,
-    currentItems = _ref.currentItems,
+var ColumnItem = function ColumnItem(_ref) {
+  var item = _ref.item,
+    currentItemPath = _ref.currentItemPath,
     handleClick = _ref.handleClick,
     setCurrentDescription = _ref.setCurrentDescription,
+    _onDoubleClick = _ref.onDoubleClick,
     _ref$path = _ref.path,
-    path = _ref$path === void 0 ? [] : _ref$path;
+    path = _ref$path === void 0 ? [] : _ref$path,
+    index = _ref.index;
+  var hasChildren = item.children && item.children.length > 0;
+  var currentColumnIndex = path.length;
+  var selectedItemIndex = currentItemPath[currentColumnIndex];
+  return /*#__PURE__*/React.createElement("div", {
+    className: "column-item ".concat(selectedItemIndex === index ? 'selected' : '', " ").concat(hasChildren ? 'has-children' : ''),
+    onClick: function onClick() {
+      return handleClick([].concat(_toConsumableArray(path), [index]));
+    },
+    onMouseEnter: function onMouseEnter() {
+      return setCurrentDescription(item.description);
+    },
+    onDoubleClick: function onDoubleClick() {
+      return _onDoubleClick(item);
+    }
+  }, item.name);
+};
+var _RenderColumns = function RenderColumns(_ref2) {
+  var currentItemPath = _ref2.currentItemPath,
+    currentItems = _ref2.currentItems,
+    handleClick = _ref2.handleClick,
+    setCurrentDescription = _ref2.setCurrentDescription,
+    onDoubleClick = _ref2.onDoubleClick,
+    _ref2$path = _ref2.path,
+    path = _ref2$path === void 0 ? [] : _ref2$path;
   if (!currentItems) return null;
   var currentColumnIndex = path.length;
   var selectedItemIndex = currentItemPath[currentColumnIndex];
+  var currentItem = currentItems[selectedItemIndex];
+  if ((currentItem === null || currentItem === void 0 ? void 0 : currentItem.type) === 'meta') {
+    console.log(currentItem);
+  }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "column",
     key: "column-".concat(path.join('-'))
   }, currentItems.map(function (item, index) {
-    var hasChildren = item.children && item.children.length > 0;
-    return /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React.createElement(ColumnItem, {
       key: "column-item-".concat(path.join('-'), "-").concat(index),
-      onClick: function onClick() {
-        return handleClick([].concat(_toConsumableArray(path), [index]));
-      },
-      onMouseEnter: function onMouseEnter() {
-        return setCurrentDescription(item.description);
-      },
-      onDoubleClick: function (_onDoubleClick) {
-        function onDoubleClick() {
-          return _onDoubleClick.apply(this, arguments);
-        }
-        onDoubleClick.toString = function () {
-          return _onDoubleClick.toString();
-        };
-        return onDoubleClick;
-      }(function () {
-        return onDoubleClick(item);
-      }),
-      className: "column-item ".concat(selectedItemIndex === index ? 'selected' : '', " ").concat(hasChildren ? 'has-children' : '')
-    }, item.name);
-  })), selectedItemIndex !== undefined && ((_currentItems$selecte = currentItems[selectedItemIndex]) === null || _currentItems$selecte === void 0 ? void 0 : _currentItems$selecte.children) && /*#__PURE__*/React.createElement(_RenderColumns, {
+      item: item,
+      currentItemPath: currentItemPath,
+      handleClick: handleClick,
+      setCurrentDescription: setCurrentDescription,
+      onDoubleClick: onDoubleClick,
+      path: [].concat(_toConsumableArray(path), [index]),
+      index: index
+    });
+  })), selectedItemIndex !== undefined && (currentItem === null || currentItem === void 0 ? void 0 : currentItem.children) && /*#__PURE__*/React.createElement(_RenderColumns, {
     currentItemPath: currentItemPath,
-    currentItems: currentItems[selectedItemIndex].children,
+    currentItems: currentItem.children,
     path: [].concat(_toConsumableArray(path), [selectedItemIndex]),
     handleClick: handleClick,
-    setCurrentDescription: setCurrentDescription
+    setCurrentDescription: setCurrentDescription,
+    onDoubleClick: onDoubleClick
   }));
 };
-var ColumnsContainer = function ColumnsContainer(_ref2) {
-  var items = _ref2.items,
-    setCurrentDescription = _ref2.setCurrentDescription,
-    onDoubleClick = _ref2.onDoubleClick;
+var ColumnsContainer = function ColumnsContainer(_ref3) {
+  var items = _ref3.items,
+    setCurrentDescription = _ref3.setCurrentDescription,
+    onDoubleClick = _ref3.onDoubleClick;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     currentItemPath = _useState2[0],
@@ -39704,7 +39722,8 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     _ref$propertyName = _ref.propertyName,
     propertyName = _ref$propertyName === void 0 ? "expression" : _ref$propertyName,
     _ref$settings = _ref.settings,
-    settings = _ref$settings === void 0 ? {} : _ref$settings;
+    settings = _ref$settings === void 0 ? {} : _ref$settings,
+    description = _ref.description;
   var editorRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(),
     _useState2 = _slicedToArray(_useState, 2),
@@ -39769,7 +39788,7 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
   }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalHeading, {
     level: 3,
     className: "expression-editor-preview-heading"
-  }, label), /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, label), description && /*#__PURE__*/React.createElement("p", null, description), /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_5__["default"], {
     mode: "handlebars",
     theme: "textmate",
     name: "expression-editor-preview",
@@ -40932,7 +40951,7 @@ function PostData() {
       description: "The permalink of the post."
     }, {
       name: "meta",
-      type: "object",
+      type: "meta",
       label: "Metadata",
       description: "The metadata of the post."
     }]
@@ -44758,13 +44777,13 @@ var NodeInspector = function NodeInspector() {
     node: selectedNode
   }), /*#__PURE__*/React.createElement(_node_validation_panel__WEBPACK_IMPORTED_MODULE_11__["default"], {
     errors: nodeErrors
-  }), isAdvancedSettingsEnabled && (selectedNodeHasInput || selectedNodeHasOutput) && /*#__PURE__*/React.createElement(_node_data_flow_panel__WEBPACK_IMPORTED_MODULE_12__["default"], {
+  }), isDeveloperModeEnabled && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_node_data_flow_panel__WEBPACK_IMPORTED_MODULE_12__["default"], {
     inputSchema: mappedNodeInputSchema,
     outputSchema: mappedNodeOutputSchema
-  }), isDeveloperModeEnabled && /*#__PURE__*/React.createElement(_node_dev_info_panel__WEBPACK_IMPORTED_MODULE_15__["default"], {
+  }), /*#__PURE__*/React.createElement(_node_dev_info_panel__WEBPACK_IMPORTED_MODULE_15__["default"], {
     node: selectedNode,
     nodeType: nodeType
-  }), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React.createElement("div", {
     className: "components-tools-panel"
   })), onlyEdgesSelected && selectedElementsCount === 1 && selectedEdge && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_inspector_card__WEBPACK_IMPORTED_MODULE_6__["default"], {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Connection", "post-expirator"),
@@ -44948,7 +44967,7 @@ var NodeDataFlowPanel = function NodeDataFlowPanel(_ref) {
       });
     }
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-      className: "workflow-editor-data-flow-variable"
+      className: "workflow-editor-data-flow-variable workflow-editor-dev-panel"
     }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_5__["default"], {
       icon: isOpen ? 'arrow-down' : 'arrow-right',
       onClick: togglePopover,

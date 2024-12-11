@@ -57,7 +57,7 @@ export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
 
         return (
             <>
-                <div className="workflow-editor-data-flow-variable">
+                <div className="workflow-editor-data-flow-variable workflow-editor-dev-panel">
                     <NodeIcon
                         icon={isOpen ? 'arrow-down' : 'arrow-right'}
                         onClick={togglePopover}

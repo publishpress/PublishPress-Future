@@ -74,13 +74,14 @@ class CoreSendEmail implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Message", "post-expirator"),
+                "label" => __("Email Message", "post-expirator"),
                 "description" => __("The email message configuration", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "recipient",
                         "type" => "expression",
                         "label" => __("Recipient", "post-expirator"),
+                        "description" => __("A comma-separated list of email addresses to send the message to.", "post-expirator"),
                         "default" => [
                             "expression" => "{{global.site.admin_email}}",
                         ],

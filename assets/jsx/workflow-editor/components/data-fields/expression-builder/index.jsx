@@ -16,7 +16,7 @@ import "ace-builds/src-noconflict/ext-language_tools";
 
 import './style.css';
 
-export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variables = [], propertyName = "expression", settings = {} }) => {
+export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variables = [], propertyName = "expression", settings = {}, description }) => {
     const editorRef = useRef(null);
 
     const [currentDescription, setCurrentDescription] = useState();
@@ -77,6 +77,10 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
         />
 
         <Heading level={3} className="expression-editor-preview-heading">{label}</Heading>
+
+        {description && (
+            <p>{description}</p>
+        )}
 
         <AceEditor
             mode="handlebars"

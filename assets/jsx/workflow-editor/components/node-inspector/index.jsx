@@ -151,12 +151,11 @@ export const NodeInspector = () => {
 
                     <NodeValidationPanel errors={nodeErrors} />
 
-                    {isAdvancedSettingsEnabled && (selectedNodeHasInput || selectedNodeHasOutput) && (
-                        <NodeDataFlowPanel inputSchema={mappedNodeInputSchema} outputSchema={mappedNodeOutputSchema} />
-                    )}
-
                     {isDeveloperModeEnabled && (
-                        <NodeDevInfoPanel node={selectedNode} nodeType={nodeType} />
+                        <>
+                            <NodeDataFlowPanel inputSchema={mappedNodeInputSchema} outputSchema={mappedNodeOutputSchema} />
+                            <NodeDevInfoPanel node={selectedNode} nodeType={nodeType} />
+                        </>
                     )}
 
                     <div className="components-tools-panel"></div>
