@@ -306,9 +306,12 @@
 
 
 /* SELECTED NODES */
+.react-flow__node.selected {
+    background-color: transparent;
+}
 
 .react-flow__node.selected .react-flow__node-body {
-    border: 1px solid #555;
+    border: 1px dashed #555;
 }
 
 .react-flow__node-genericNode .react-flow__node-slug {
