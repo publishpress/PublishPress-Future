@@ -69,10 +69,14 @@ const ColumnsContainer = ({ items, setCurrentDescription, onDoubleClick }) => {
 };
 
 
-export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variables = [] }) => {
+export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variables = [], propertyName = "expression", settings = {} }) => {
     const editorRef = useRef(null);
 
     const [currentDescription, setCurrentDescription] = useState();
+
+    if (! defaultValue) {
+        defaultValue = {};
+    }
 
     const onChangeSetting = ({ settingName, value }) => {
         const newValue = { ...defaultValue };
@@ -132,9 +136,9 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
             mode="handlebars"
             theme="textmate"
             name="expression-editor-preview"
-            value={defaultValue?.expression || ''}
+            value={defaultValue[propertyName] || ''}
             editorProps={{ $blockScrolling: true }}
-            onChange={(value) => onChangeSetting({ settingName: "expression", value })}
+            onChange={(value) => onChangeSetting({ settingName: propertyName, value })}
             setOptions={{
                 enableBasicAutocompletion: true,
                 enableLiveAutocompletion: true,
@@ -145,6 +149,7 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
             }}
             height="92px"
             width="244px"
+            placeholder={settings?.placeholder || ''}
         />
 
         {isOpen && (
@@ -163,8 +168,8 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
                         mode="handlebars"
                         theme="textmate"
                         name="expression-editor-full"
-                        onChange={(value) => onChangeSetting({ settingName: "expression", value })}
-                        value={defaultValue?.expression || ''}
+                        onChange={(value) => onChangeSetting({ settingName: propertyName, value })}
+                        value={defaultValue[propertyName] || ''}
                         editorProps={{ $blockScrolling: true }}
                         setOptions={{
                             enableBasicAutocompletion: true,
@@ -172,6 +177,7 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
                         }}
                         height="200px"
                         width="560px"
+                        placeholder={settings?.placeholder || ''}
                     />
 
                     <div style={{ maxWidth: '600px', overflowX: 'auto' }}>

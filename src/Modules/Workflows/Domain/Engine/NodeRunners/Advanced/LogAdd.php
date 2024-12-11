@@ -56,6 +56,11 @@ class LogAdd implements NodeRunnerInterface
                 $nodeSettings = $this->nodeRunnerProcessor->getNodeSettings($node);
 
                 $message = $nodeSettings['message'] ?? '';
+
+                if (is_array($message)) {
+                    $message = $message['expression'] ?? '';
+                }
+
                 $message = $this->variablesHandler->replacePlaceholdersInText($message);
                 $message = 'Slug: ' . $nodeSlug . ' | ' . $message;
                 $message = $this->nodeRunnerProcessor->prepareLogMessage($message, $nodeSlug);

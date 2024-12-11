@@ -39471,6 +39471,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils */ "./assets/jsx/workflow-editor/utils.jsx");
+/* harmony import */ var _expression_builder__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./expression-builder */ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/index.jsx");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -39496,7 +39497,8 @@ function EmailRecipient(_ref) {
     settings = _ref.settings,
     _ref$variables = _ref.variables,
     variables = _ref$variables === void 0 ? [] : _ref$variables;
-  variables = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.filterVariableOptionsByDataType)(variables, ['email']);
+  // variables = filterVariableOptionsByDataType(variables, ['email']);
+
   var recipientOptions = [].concat(_toConsumableArray(variables), [{
     name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Custom Addresses", "post-expirator"),
     id: "custom"
@@ -39523,15 +39525,18 @@ function EmailRecipient(_ref) {
         value: value
       });
     }
-  }), (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.recipient) === "custom" && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
+  }), (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.recipient) === "custom" && /*#__PURE__*/React.createElement(_expression_builder__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    name: name + "-custom",
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Custom Email Addresses", "post-expirator"),
-    value: (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.custom) || "",
-    onChange: function onChange(value) {
+    defaultValue: defaultValue || "",
+    onChange: function onChange(settingsName, value) {
       return onChangeSetting({
         settingName: "custom",
-        value: value
+        value: value.custom
       });
-    }
+    },
+    propertyName: "custom",
+    variables: variables
   })));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EmailRecipient);
@@ -39648,12 +39653,19 @@ var ExpressionBuilder = function ExpressionBuilder(_ref2) {
     defaultValue = _ref2.defaultValue,
     onChange = _ref2.onChange,
     _ref2$variables = _ref2.variables,
-    variables = _ref2$variables === void 0 ? [] : _ref2$variables;
+    variables = _ref2$variables === void 0 ? [] : _ref2$variables,
+    _ref2$propertyName = _ref2.propertyName,
+    propertyName = _ref2$propertyName === void 0 ? "expression" : _ref2$propertyName,
+    _ref2$settings = _ref2.settings,
+    settings = _ref2$settings === void 0 ? {} : _ref2$settings;
   var editorRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
   var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(),
     _useState4 = _slicedToArray(_useState3, 2),
     currentDescription = _useState4[0],
     setCurrentDescription = _useState4[1];
+  if (!defaultValue) {
+    defaultValue = {};
+  }
   var onChangeSetting = function onChangeSetting(_ref3) {
     var settingName = _ref3.settingName,
       value = _ref3.value;
@@ -39714,13 +39726,13 @@ var ExpressionBuilder = function ExpressionBuilder(_ref2) {
     mode: "handlebars",
     theme: "textmate",
     name: "expression-editor-preview",
-    value: (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.expression) || '',
+    value: defaultValue[propertyName] || '',
     editorProps: {
       $blockScrolling: true
     },
     onChange: function onChange(value) {
       return onChangeSetting({
-        settingName: "expression",
+        settingName: propertyName,
         value: value
       });
     },
@@ -39733,7 +39745,8 @@ var ExpressionBuilder = function ExpressionBuilder(_ref2) {
       showInvisibles: false
     },
     height: "92px",
-    width: "244px"
+    width: "244px",
+    placeholder: (settings === null || settings === void 0 ? void 0 : settings.placeholder) || ''
   }), isOpen && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Popover, {
     onClose: togglePopover,
     position: "middle left"
@@ -39756,11 +39769,11 @@ var ExpressionBuilder = function ExpressionBuilder(_ref2) {
     name: "expression-editor-full",
     onChange: function onChange(value) {
       return onChangeSetting({
-        settingName: "expression",
+        settingName: propertyName,
         value: value
       });
     },
-    value: (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.expression) || '',
+    value: defaultValue[propertyName] || '',
     editorProps: {
       $blockScrolling: true
     },
@@ -39769,7 +39782,8 @@ var ExpressionBuilder = function ExpressionBuilder(_ref2) {
       enableLiveAutocompletion: true
     },
     height: "200px",
-    width: "560px"
+    width: "560px",
+    placeholder: (settings === null || settings === void 0 ? void 0 : settings.placeholder) || ''
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       maxWidth: '600px',
@@ -45734,6 +45748,10 @@ function _objectDestructuringEmpty(t) { if (null == t) throw new TypeError("Cann
 
 
 
+function isVariable(value) {
+  var trimmedValue = value.trim();
+  return trimmedValue.startsWith('{{') && trimmedValue.endsWith('}}');
+}
 function NodeValidator(_ref) {
   _objectDestructuringEmpty(_ref);
   var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(function (select) {
@@ -45844,7 +45862,7 @@ function NodeValidator(_ref) {
                 var email;
                 for (var _i2 = 0; _i2 < emails.length; _i2++) {
                   email = emails[_i2].trim();
-                  if (!validator_lib_isEmail__WEBPACK_IMPORTED_MODULE_6___default()(email)) {
+                  if (!validator_lib_isEmail__WEBPACK_IMPORTED_MODULE_6___default()(email) && !isVariable(email)) {
                     addNodeError(node.id, "".concat(fieldName, "-emailList"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a valid email address list separated by commas.', 'post-expirator'), fieldLabel));
                     break;
                   }
