@@ -49403,7 +49403,8 @@ function _setInitialStateForGlobalVariables(state) {
       name: 'site',
       label: 'Site',
       type: 'site',
-      runtimeOnly: true
+      runtimeOnly: true,
+      description: 'The current site.'
     }
   });
   state = setGlobalVariable(state, {
@@ -49411,7 +49412,8 @@ function _setInitialStateForGlobalVariables(state) {
       name: 'workflow',
       label: 'Workflow',
       type: 'workflow',
-      runtimeOnly: false
+      runtimeOnly: false,
+      description: 'The current workflow.'
     }
   });
   state = setGlobalVariable(state, {
@@ -49419,7 +49421,8 @@ function _setInitialStateForGlobalVariables(state) {
       name: 'user',
       label: 'Activating User',
       type: 'user',
-      runtimeOnly: true
+      runtimeOnly: true,
+      description: 'The current user.'
     }
   });
   state = setGlobalVariable(state, {
@@ -49427,7 +49430,8 @@ function _setInitialStateForGlobalVariables(state) {
       name: 'trigger',
       label: 'Activating Trigger',
       type: 'node',
-      runtimeOnly: true
+      runtimeOnly: true,
+      description: 'The node that activated the workflow.'
     }
   });
   state = setGlobalVariable(state, {
@@ -49435,7 +49439,8 @@ function _setInitialStateForGlobalVariables(state) {
       name: 'trace',
       label: 'Execution Trace',
       type: 'array',
-      runtimeOnly: true
+      runtimeOnly: true,
+      description: 'The trace of the execution of the workflow.'
     }
   });
   state = setGlobalVariable(state, {
@@ -49443,7 +49448,8 @@ function _setInitialStateForGlobalVariables(state) {
       name: 'execution_id',
       label: 'Execution ID',
       type: 'string',
-      runtimeOnly: true
+      runtimeOnly: true,
+      description: 'The unique identifier for the execution of the workflow.'
     }
   });
   return state;
@@ -49714,14 +49720,16 @@ var setGlobalVariable = function setGlobalVariable(state, action) {
     label = _action$payload2.label,
     type = _action$payload2.type,
     value = _action$payload2.value,
-    runtimeOnly = _action$payload2.runtimeOnly;
+    runtimeOnly = _action$payload2.runtimeOnly,
+    description = _action$payload2.description;
   var globalVariables = _objectSpread({}, state.globalVariables);
   globalVariables[name] = {
     name: name,
     type: type,
     value: value,
     label: label,
-    runtimeOnly: runtimeOnly
+    runtimeOnly: runtimeOnly,
+    description: description
   };
   return _objectSpread(_objectSpread({}, state), {}, {
     globalVariables: globalVariables
@@ -50699,7 +50707,8 @@ function getGlobalVariablesExpanded(globalVariables) {
       name: variableName,
       type: variable.type,
       label: variable.label,
-      source: VARIABLE_SOURCE_GLOBAL
+      source: VARIABLE_SOURCE_GLOBAL,
+      description: variable.description
     });
   });
 
@@ -50798,7 +50807,8 @@ function getOptionsForVariable(variable) {
         id: variable.name + '.' + property.name,
         name: property.label,
         type: property.type,
-        itemsType: property.itemsType
+        itemsType: property.itemsType,
+        description: property.description
       };
     });
   }

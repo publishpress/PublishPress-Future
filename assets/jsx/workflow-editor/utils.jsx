@@ -216,6 +216,7 @@ export function getGlobalVariablesExpanded(globalVariables) {
             type: variable.type,
             label: variable.label,
             source: VARIABLE_SOURCE_GLOBAL,
+            description: variable.description,
         });
     });
 
@@ -337,6 +338,7 @@ function getOptionsForVariable(variable) {
                 name: property.label,
                 type: property.type,
                 itemsType: property.itemsType,
+                description: property.description,
             };
         });
     }

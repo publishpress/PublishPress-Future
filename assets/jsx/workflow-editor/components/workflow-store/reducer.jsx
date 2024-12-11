@@ -93,6 +93,7 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
             label: 'Site',
             type: 'site',
             runtimeOnly: true,
+            description: 'The current site.',
         }
     });
 
@@ -102,6 +103,7 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
             label: 'Workflow',
             type: 'workflow',
             runtimeOnly: false,
+            description: 'The current workflow.',
         }
     });
 
@@ -111,6 +113,7 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
             label: 'Activating User',
             type: 'user',
             runtimeOnly: true,
+            description: 'The current user.',
         }
     });
 
@@ -120,6 +123,7 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
             label: 'Activating Trigger',
             type: 'node',
             runtimeOnly: true,
+            description: 'The node that activated the workflow.',
         }
     });
 
@@ -129,6 +133,7 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
             label: 'Execution Trace',
             type: 'array',
             runtimeOnly: true,
+            description: 'The trace of the execution of the workflow.',
         }
     });
 
@@ -138,6 +143,7 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
             label: 'Execution ID',
             type: 'string',
             runtimeOnly: true,
+            description: 'The unique identifier for the execution of the workflow.',
         }
     });
 
@@ -509,7 +515,7 @@ const addDataType = (state, action) => {
 }
 
 const setGlobalVariable = (state, action) => {
-    const { name, label, type, value, runtimeOnly } = action.payload;
+    const { name, label, type, value, runtimeOnly, description } = action.payload;
 
     const globalVariables = {
         ...state.globalVariables
@@ -521,6 +527,7 @@ const setGlobalVariable = (state, action) => {
         value,
         label,
         runtimeOnly,
+        description,
     };
 
     return {
