@@ -39635,7 +39635,6 @@ function List(_ref) {
     defaultValue = _ref.defaultValue,
     onChange = _ref.onChange,
     settingsSchema = _ref.settingsSchema;
-  console.log(settingsSchema);
   var options = settingsSchema[0]['fields'][2]['options'];
   options = options.map(function (option) {
     return {
@@ -40535,23 +40534,28 @@ function NodeData() {
     propertiesSchema: [{
       name: "id",
       type: "integer",
-      label: "ID"
+      label: "ID",
+      description: "The unique identifier for the node."
     }, {
       name: "name",
       type: "string",
-      label: "Name"
+      label: "Name",
+      description: "The name of the node."
     }, {
       name: "slug",
       type: "string",
-      label: "Slug"
+      label: "Slug",
+      description: "The slug of the node."
     }, {
       name: "label",
       type: "string",
-      label: "Label"
+      label: "Label",
+      description: "The label of the node."
     }, {
       name: "activation_timestamp",
       type: "string",
-      label: "Activation Time"
+      label: "Activation Time",
+      description: "The timestamp when the node was activated."
     }]
   };
 }
@@ -40580,47 +40584,58 @@ function PostData() {
     propertiesSchema: [{
       name: "post_title",
       type: "string",
-      label: "Title"
+      label: "Title",
+      description: "The title of the post."
     }, {
       name: "post_content",
       type: "string",
-      label: "Content"
+      label: "Content",
+      description: "The content of the post."
     }, {
       name: "post_content_text",
       type: "string",
-      label: "Content (Plain Text)"
+      label: "Content (Plain Text)",
+      description: "The content of the post in plain text."
     }, {
       name: "post_excerpt",
       type: "string",
-      label: "Excerpt"
+      label: "Excerpt",
+      description: "The excerpt of the post."
     }, {
       name: "post_status",
       type: "string",
-      label: "Post Status"
+      label: "Post Status",
+      description: "The status of the post."
     }, {
       name: "post_type",
       type: "string",
-      label: "Post Type"
+      label: "Post Type",
+      description: "The type of the post."
     }, {
       name: "id",
       type: "integer",
-      label: "ID"
+      label: "ID",
+      description: "The unique identifier for the post."
     }, {
       name: "post_date",
       type: "datetime",
-      label: "Publish Date"
+      label: "Publish Date",
+      description: "The date when the post was published."
     }, {
       name: "post_modified",
       type: "datetime",
-      label: "Modification Date"
+      label: "Modification Date",
+      description: "The date when the post was last modified."
     }, {
       name: "permalink",
       type: "string",
-      label: "Permalink"
+      label: "Permalink",
+      description: "The permalink of the post."
     }, {
       name: "meta",
       type: "object",
-      label: "Metadata"
+      label: "Metadata",
+      description: "The metadata of the post."
     }]
   };
 }
@@ -40649,31 +40664,38 @@ function SiteData() {
     propertiesSchema: [{
       name: "id",
       type: "integer",
-      label: "ID"
+      label: "ID",
+      description: "The unique identifier for the site."
     }, {
       name: "name",
       type: "string",
-      label: "Name"
+      label: "Name",
+      description: "The name of the site."
     }, {
       name: "description",
       type: "string",
-      label: "Description"
+      label: "Description",
+      description: "The description of the site."
     }, {
       name: "url",
       type: "string",
-      label: "Site URL"
+      label: "Site URL",
+      description: "The URL of the site."
     }, {
       name: "home_url",
       type: "string",
-      label: "Home URL"
+      label: "Home URL",
+      description: "The URL of the home page of the site."
     }, {
       name: "admin_email",
       type: "email",
-      label: "Admin Email"
+      label: "Admin Email",
+      description: "The email address of the site administrator."
     }, {
       name: "meta",
       type: "object",
-      label: "Metadata"
+      label: "Metadata",
+      description: "The metadata of the site."
     }]
   };
 }
@@ -40725,35 +40747,43 @@ function UserData() {
     propertiesSchema: [{
       name: "ID",
       type: "integer",
-      label: "ID"
+      label: "ID",
+      description: "The unique identifier for the user."
     }, {
       name: "user_email",
       type: "email",
-      label: "Email"
+      label: "Email",
+      description: "The email address of the user."
     }, {
       name: "user_login",
       type: "string",
-      label: "User Login"
+      label: "User Login",
+      description: "The login name of the user."
     }, {
       name: "display_name",
       type: "string",
-      label: "Display Name"
+      label: "Display Name",
+      description: "The display name of the user."
     }, {
       name: "roles",
       type: "array",
-      label: "Roles"
+      label: "Roles",
+      description: "The roles of the user."
     }, {
       name: "caps",
       type: "object",
-      label: "Capabilities"
+      label: "Capabilities",
+      description: "The capabilities of the user."
     }, {
       name: "user_registered",
       type: "datetime",
-      label: "Registration Date"
+      label: "Registration Date",
+      description: "The date when the user was registered."
     }, {
       name: "meta",
       type: "object",
-      label: "Metadata"
+      label: "Metadata",
+      description: "The metadata of the user."
     }]
   };
 }
@@ -40782,27 +40812,33 @@ function WorkflowData() {
     propertiesSchema: [{
       name: "id",
       type: "integer",
-      label: "ID"
+      label: "ID",
+      description: "The unique identifier for the workflow."
     }, {
       name: "title",
       type: "string",
-      label: "Title"
+      label: "Title",
+      description: "The title of the workflow."
     }, {
       name: "description",
       type: "string",
-      label: "Description"
+      label: "Description",
+      description: "The description of the workflow."
     }, {
       name: "modified_at",
       type: "datetime",
-      label: "Modification Date"
+      label: "Modification Date",
+      description: "The date when the workflow was last modified."
     }, {
       name: "steps",
       type: "node",
-      label: "Steps"
+      label: "Steps",
+      description: "The steps of the workflow."
     }, {
       name: "meta",
       type: "object",
-      label: "Metadata"
+      label: "Metadata",
+      description: "The metadata of the workflow."
     }]
   };
 }
@@ -41494,117 +41530,6 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-var items = [{
-  name: 'global',
-  label: 'Global',
-  description: 'Global variables',
-  items: [{
-    name: 'site',
-    label: 'Site',
-    description: 'Site variables',
-    items: [{
-      name: 'name',
-      label: 'Name',
-      description: 'Site name'
-    }, {
-      name: 'url',
-      label: 'URL',
-      description: 'Site URL'
-    }]
-  }, {
-    name: 'user',
-    label: 'User',
-    description: 'User variables',
-    items: [{
-      name: 'name',
-      label: 'Name',
-      description: 'User name'
-    }, {
-      name: 'email',
-      label: 'Email',
-      description: 'User email'
-    }]
-  }]
-}, {
-  name: 'onPostUpdated1',
-  label: 'Post Updated',
-  description: 'Post updated variables',
-  items: [{
-    id: 'postBefore ',
-    label: 'Post before',
-    description: 'Post before the update',
-    items: [{
-      name: 'title',
-      label: 'Title',
-      description: 'Post title before the update'
-    }, {
-      name: 'status',
-      label: 'Status',
-      description: 'Post status before the update'
-    }]
-  }, {
-    id: 'postAfter',
-    label: 'Post after',
-    description: 'Post after the update',
-    items: [{
-      name: 'title',
-      label: 'Title',
-      description: 'Post title after the update'
-    }, {
-      name: 'status',
-      label: 'Status',
-      description: 'Post status after the update'
-    }, {
-      name: 'author',
-      label: 'Author',
-      description: 'Post author after the update',
-      items: [{
-        name: 'name',
-        label: 'Name',
-        description: 'Post author name after the update'
-      }, {
-        name: 'email',
-        label: 'Email',
-        description: 'Post author email after the update'
-      }, {
-        name: 'id',
-        label: 'ID',
-        description: 'Post author ID after the update'
-      }, {
-        name: 'mother',
-        label: 'Mother',
-        description: 'Post author mother',
-        items: [{
-          name: 'name',
-          label: 'Name',
-          description: 'Post author mother name'
-        }, {
-          name: 'email',
-          label: 'Email',
-          description: 'Post author mother email'
-        }]
-      }]
-    }]
-  }]
-}, {
-  name: 'onSavePost1',
-  label: 'Post saved',
-  description: 'Post saved variables',
-  items: [{
-    name: 'post',
-    label: 'Post',
-    description: 'Post variables after the save',
-    items: [{
-      name: 'title',
-      label: 'Title',
-      description: 'Post title after the save'
-    }, {
-      name: 'status',
-      label: 'Status',
-      description: 'Post status'
-    }]
-  }]
-}];
 var ColumnsContainer = function ColumnsContainer(_ref) {
   var items = _ref.items,
     setCurrentDescription = _ref.setCurrentDescription;
@@ -41631,7 +41556,7 @@ var ColumnsContainer = function ColumnsContainer(_ref) {
       className: "column",
       key: "column-".concat(path.join('-'))
     }, currentItems.map(function (item, index) {
-      var hasChildren = item.items && item.items.length > 0;
+      var hasChildren = item.children && item.children.length > 0;
       return /*#__PURE__*/React.createElement("div", {
         key: "column-item-".concat(path.join('-'), "-").concat(index),
         onClick: function onClick() {
@@ -41641,11 +41566,11 @@ var ColumnsContainer = function ColumnsContainer(_ref) {
           return setCurrentDescription(item.description);
         },
         className: "column-item ".concat(selectedItemIndex === index ? 'selected' : '', " ").concat(hasChildren ? 'has-children' : '')
-      }, item.label);
+      }, item.name);
     }));
     columns.push(column);
-    if (selectedItemIndex !== undefined && currentItems[selectedItemIndex].items) {
-      _renderColumns(currentItems[selectedItemIndex].items, [].concat(_toConsumableArray(path), [selectedItemIndex]));
+    if (selectedItemIndex !== undefined && currentItems[selectedItemIndex].children) {
+      _renderColumns(currentItems[selectedItemIndex].children, [].concat(_toConsumableArray(path), [selectedItemIndex]));
     }
   };
   _renderColumns(items);
@@ -41783,7 +41708,7 @@ var ExpressionBuilder = function ExpressionBuilder(_ref2) {
     level: 2,
     className: "components-truncate components-text components-heading block-editor-inspector-popover-header__heading"
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Variables", "post-expirator")), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Position the cursor where you want to add a variable and double click on a variable to add it to your expression.", "post-expirator")), /*#__PURE__*/React.createElement(ColumnsContainer, {
-    items: items,
+    items: variables,
     setCurrentDescription: setCurrentDescription
   })), currentDescription && /*#__PURE__*/React.createElement("p", null, currentDescription))));
 };
@@ -50862,7 +50787,8 @@ function getOptionsForVariable(variable) {
     name: variable.label,
     children: [],
     type: variable === null || variable === void 0 ? void 0 : variable.type,
-    itemsType: variable === null || variable === void 0 ? void 0 : variable.itemsType
+    itemsType: variable === null || variable === void 0 ? void 0 : variable.itemsType,
+    description: variable === null || variable === void 0 ? void 0 : variable.description
   };
 
   // If the variable is an object, add its properties as children
@@ -50870,7 +50796,7 @@ function getOptionsForVariable(variable) {
     option.children = dataType.propertiesSchema.map(function (property) {
       return {
         id: variable.name + '.' + property.name,
-        name: variable.label + ' -> ' + property.label,
+        name: property.label,
         type: property.type,
         itemsType: property.itemsType
       };

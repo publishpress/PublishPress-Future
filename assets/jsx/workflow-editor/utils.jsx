@@ -326,6 +326,7 @@ function getOptionsForVariable(variable) {
         children: [],
         type: variable?.type,
         itemsType: variable?.itemsType,
+        description: variable?.description,
     };
 
     // If the variable is an object, add its properties as children
@@ -333,7 +334,7 @@ function getOptionsForVariable(variable) {
         option.children = dataType.propertiesSchema.map((property) => {
             return {
                 id: variable.name + '.' + property.name,
-                name: variable.label + ' -> ' + property.label,
+                name: property.label,
                 type: property.type,
                 itemsType: property.itemsType,
             };

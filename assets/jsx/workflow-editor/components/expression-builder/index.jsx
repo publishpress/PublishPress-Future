@@ -16,155 +16,6 @@ import "ace-builds/src-noconflict/ext-language_tools";
 
 import './style.css';
 
-
-const items = [
-    {
-        name: 'global',
-        label: 'Global',
-        description: 'Global variables',
-        items: [
-            {
-                name: 'site',
-                label: 'Site',
-                description: 'Site variables',
-                items: [
-                    {
-                        name: 'name',
-                        label: 'Name',
-                        description: 'Site name',
-                    },
-                    {
-                        name: 'url',
-                        label: 'URL',
-                        description: 'Site URL',
-                    }
-                ]
-            },
-            {
-                name: 'user',
-                label: 'User',
-                description: 'User variables',
-                items: [
-                    {
-                        name: 'name',
-                        label: 'Name',
-                        description: 'User name',
-                    },
-                    {
-                        name: 'email',
-                        label: 'Email',
-                        description: 'User email',
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        name: 'onPostUpdated1',
-        label: 'Post Updated',
-        description: 'Post updated variables',
-        items: [
-            {
-                id: 'postBefore ',
-                label: 'Post before',
-                description: 'Post before the update',
-                items: [
-                    {
-                        name: 'title',
-                        label: 'Title',
-                        description: 'Post title before the update',
-                    },
-                    {
-                        name: 'status',
-                        label: 'Status',
-                        description: 'Post status before the update',
-                    }
-                ]
-            },
-            {
-                id: 'postAfter',
-                label: 'Post after',
-                description: 'Post after the update',
-                items: [
-                    {
-                        name: 'title',
-                        label: 'Title',
-                        description: 'Post title after the update',
-                    },
-                    {
-                        name: 'status',
-                        label: 'Status',
-                        description: 'Post status after the update',
-                    },
-                    {
-                        name: 'author',
-                        label: 'Author',
-                        description: 'Post author after the update',
-                        items: [
-                            {
-                                name: 'name',
-                                label: 'Name',
-                                description: 'Post author name after the update',
-                            },
-                            {
-                                name: 'email',
-                                label: 'Email',
-                                description: 'Post author email after the update',
-                            },
-                            {
-                                name: 'id',
-                                label: 'ID',
-                                description: 'Post author ID after the update',
-                            },
-                            {
-                                name: 'mother',
-                                label: 'Mother',
-                                description: 'Post author mother',
-                                items: [
-                                    {
-                                        name: 'name',
-                                        label: 'Name',
-                                        description: 'Post author mother name',
-                                    },
-                                    {
-                                        name: 'email',
-                                        label: 'Email',
-                                        description: 'Post author mother email',
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        name: 'onSavePost1',
-        label: 'Post saved',
-        description: 'Post saved variables',
-        items: [
-            {
-                name: 'post',
-                label: 'Post',
-                description: 'Post variables after the save',
-                items: [
-                    {
-                        name: 'title',
-                        label: 'Title',
-                        description: 'Post title after the save',
-                    },
-                    {
-                        name: 'status',
-                        label: 'Status',
-                        description: 'Post status',
-                    }
-                ]
-            }
-        ]
-    }
-];
-
 const ColumnsContainer = ({ items, setCurrentDescription }) => {
     const [currentItemPath, setCurrentItemPath] = useState([]);
 
@@ -189,7 +40,7 @@ const ColumnsContainer = ({ items, setCurrentDescription }) => {
         const column = (
             <div className="column" key={`column-${path.join('-')}`}>
                 {currentItems.map((item, index) => {
-                    const hasChildren = item.items && item.items.length > 0;
+                    const hasChildren = item.children && item.children.length > 0;
 
                     return <div
                         key={`column-item-${path.join('-')}-${index}`}
@@ -197,7 +48,7 @@ const ColumnsContainer = ({ items, setCurrentDescription }) => {
                         onMouseEnter={() => setCurrentDescription(item.description)}
                         className={`column-item ${selectedItemIndex === index ? 'selected' : ''} ${hasChildren ? 'has-children' : ''}`}
                     >
-                        {item.label}
+                        {item.name}
                     </div>;
                 })}
             </div>
@@ -205,8 +56,8 @@ const ColumnsContainer = ({ items, setCurrentDescription }) => {
 
         columns.push(column);
 
-        if (selectedItemIndex !== undefined && currentItems[selectedItemIndex].items) {
-            renderColumns(currentItems[selectedItemIndex].items, [...path, selectedItemIndex]);
+        if (selectedItemIndex !== undefined && currentItems[selectedItemIndex].children) {
+            renderColumns(currentItems[selectedItemIndex].children, [...path, selectedItemIndex]);
         }
     };
 
@@ -324,7 +175,7 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
 
                         <p>{__("Position the cursor where you want to add a variable and double click on a variable to add it to your expression.", "post-expirator")}</p>
 
-                        <ColumnsContainer items={items} setCurrentDescription={setCurrentDescription} />
+                        <ColumnsContainer items={variables} setCurrentDescription={setCurrentDescription} />
                     </div>
 
                     {currentDescription && (
