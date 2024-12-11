@@ -67,20 +67,28 @@ class RayDebug implements NodeRunnerInterface
                 $node = $this->nodeRunnerProcessor->getNodeFromStep($step);
                 $nodeSettings = $this->nodeRunnerProcessor->getNodeSettings($node);
 
-                $dataToOutput = $nodeSettings['data']['dataToOutput'] ?? 'all-input';
-                $customData = $nodeSettings['data']['customData'] ?? '';
-
-                if ($dataToOutput === 'all-input') {
-                    $onlyInputVariables = $this->variablesHandler->getAllVariables();
-                    unset($onlyInputVariables['global']);
-
-                    $output = $onlyInputVariables;
+                $expression = '';
+                if (isset($nodeSettings['data']['expression'])) {
+                    $expression = $nodeSettings['data']['expression'];
                 } else {
-                    if ($dataToOutput === 'custom-data') {
-                        $output = $this->variablesHandler->replacePlaceholdersInText($customData);
-                    } else {
-                        $output = $this->variablesHandler->getVariable($dataToOutput);
+                    if (isset($nodeSettings['data']['dataToOutput'])) {
+                        $expression = '{{' . $nodeSettings['data']['dataToOutput'] . '}}';
+
+                        if ($expression === '{{all-input}}') {
+                            $expression = '{{input}}';
+                        }
                     }
+
+                    if (isset($nodeSettings['data']['customData'])) {
+                        $expression = $nodeSettings['data']['customData'];
+                    }
+                }
+
+                if ($expression === '{{input}}') {
+                    $output = $this->variablesHandler->getAllVariables();
+                    unset($output['global']);
+                } else {
+                    $output = $this->variablesHandler->replacePlaceholdersInText($expression);
                 }
 
                 // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction

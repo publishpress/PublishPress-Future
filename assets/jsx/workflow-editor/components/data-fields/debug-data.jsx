@@ -1,56 +1,48 @@
 import { __ } from "@wordpress/i18n";
-import { TreeSelect, TextareaControl } from "@wordpress/components";
 import { __experimentalVStack as VStack } from "@wordpress/components";
+import { ExpressionBuilder } from "./expression-builder";
 
 export function DebugData({ name, label, defaultValue, onChange, variables = [] }) {
-    let debugOptions = [
-        { name: __("All received input", "post-expirator"), id: "all-input" },
+    let debugVariables = [
+        {
+            id: "input",
+            name: __("All received input", "post-expirator"),
+            description: __("All received input from the previous steps.", "post-expirator"),
+        },
+        ...variables,
     ];
 
-    if (variables.length > 0) {
-        variables.forEach((variable) => {
-            debugOptions.push({
-                name: variable.name,
-                id: variable.id,
-                children: variable.children,
-            });
-        });
+    const defaultDebugOption = {expression: "{{input}}"};
+
+    const onChangeSetting = (name, value) => {
+        if (onChange) {
+            onChange(name, value);
+        }
     }
 
-    // Add a new option to output custom data
-    debugOptions.push({
-        name: __("Custom data", "post-expirator"),
-        id: "custom-data",
-    });
+    // Convert legacy data to new data
+    if (defaultValue?.dataToOutput) {
+        defaultValue = {expression: `{{${defaultValue.dataToOutput}}}`};
 
-    const defaultDebugOption = "all-input";
-
-    const onChangeSetting = ({ settingName, value }) => {
-        const newValue = { ...defaultValue };
-        newValue[settingName] = value;
-
-        if (onChange) {
-            onChange(name, newValue);
+        if (defaultValue.expression === '{{all-input}}') {
+            defaultValue.expression = "{{input}}";
         }
+    }
+
+    if (defaultValue?.expression && defaultValue?.expression === '{{custom-data}}') {
+        defaultValue = {expression: defaultValue.customData};
     }
 
     return (
         <>
             <VStack>
-                <TreeSelect
-                    label={__("Data to output", "post-expirator")}
-                    tree={debugOptions}
-                    selectedId={defaultValue?.dataToOutput || defaultDebugOption}
-                    onChange={(value) => onChangeSetting({ settingName: "dataToOutput", value })}
+                <ExpressionBuilder
+                    name={name}
+                    label={label}
+                    defaultValue={defaultValue || defaultDebugOption}
+                    onChange={onChangeSetting}
+                    variables={debugVariables}
                 />
-
-                {defaultValue?.dataToOutput === "custom-data" && (
-                    <TextareaControl
-                        label={__("Custom data", "post-expirator")}
-                        value={defaultValue?.customData}
-                        onChange={(value) => onChangeSetting({ settingName: "customData", value })}
-                    />
-                )}
             </VStack>
         </>
     );

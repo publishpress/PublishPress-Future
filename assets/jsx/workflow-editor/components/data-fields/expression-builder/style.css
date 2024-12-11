@@ -18,6 +18,10 @@
     cursor: pointer;
     padding: 5px 8px;
     position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .column-item.has-children::after {
@@ -30,7 +34,7 @@
     color: #ccc;
 }
 
-.column-item.selected {
+.selected {
     background-color: #ccc;
 }
 

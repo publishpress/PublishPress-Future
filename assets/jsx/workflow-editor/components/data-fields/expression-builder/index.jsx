@@ -1,13 +1,12 @@
 import {
     Button,
     Popover,
-    TextareaControl,
     __experimentalHStack as HStack,
     __experimentalHeading as Heading
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { useState, useRef } from "@wordpress/element";
-import NodeIcon from "../node-icon";
+import NodeIcon from "../../node-icon";
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-handlebars";
@@ -16,7 +15,7 @@ import "ace-builds/src-noconflict/ext-language_tools";
 
 import './style.css';
 
-const ColumnsContainer = ({ items, setCurrentDescription }) => {
+const ColumnsContainer = ({ items, setCurrentDescription, onDoubleClick }) => {
     const [currentItemPath, setCurrentItemPath] = useState([]);
 
     const handleClick = (path) => {
@@ -46,6 +45,7 @@ const ColumnsContainer = ({ items, setCurrentDescription }) => {
                         key={`column-item-${path.join('-')}-${index}`}
                         onClick={() => handleClick([...path, index])}
                         onMouseEnter={() => setCurrentDescription(item.description)}
+                        onDoubleClick={() => onDoubleClick(item)}
                         className={`column-item ${selectedItemIndex === index ? 'selected' : ''} ${hasChildren ? 'has-children' : ''}`}
                     >
                         {item.name}
@@ -67,8 +67,6 @@ const ColumnsContainer = ({ items, setCurrentDescription }) => {
         {columns}
     </div>;
 };
-
-
 
 
 export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variables = [] }) => {
@@ -110,7 +108,13 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
         setIsOpen(false);
     }
 
-
+    const onDoubleClick = (item) => {
+        if (editorRef.current) {
+            const editor = editorRef.current.editor;
+            const cursorPosition = editor.getCursorPosition();
+            editor.session.insert(cursorPosition, `{{${item.id}}}`);
+        }
+    }
 
     return <div className="expression-builder">
 
@@ -146,7 +150,7 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
         {isOpen && (
             <Popover
                 onClose={togglePopover}
-                position="top left"
+                position="middle left"
             >
                 <div style={{ padding: '20px', minWidth: '600px' }}>
                     <HStack>
@@ -175,7 +179,11 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
 
                         <p>{__("Position the cursor where you want to add a variable and double click on a variable to add it to your expression.", "post-expirator")}</p>
 
-                        <ColumnsContainer items={variables} setCurrentDescription={setCurrentDescription} />
+                        <ColumnsContainer
+                            items={variables}
+                            setCurrentDescription={setCurrentDescription}
+                            onDoubleClick={onDoubleClick}
+                        />
                     </div>
 
                     {currentDescription && (
