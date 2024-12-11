@@ -41460,14 +41460,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_ace__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-ace */ "./node_modules/react-ace/lib/index.js");
-/* harmony import */ var ace_builds_src_noconflict_mode_handlebars__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ace-builds/src-noconflict/mode-handlebars */ "./node_modules/ace-builds/src-noconflict/mode-handlebars.js");
-/* harmony import */ var ace_builds_src_noconflict_mode_handlebars__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_mode_handlebars__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var ace_builds_src_noconflict_theme_textmate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ace-builds/src-noconflict/theme-textmate */ "./node_modules/ace-builds/src-noconflict/theme-textmate.js");
-/* harmony import */ var ace_builds_src_noconflict_theme_textmate__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_theme_textmate__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var ace_builds_src_noconflict_ext_language_tools__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ace-builds/src-noconflict/ext-language_tools */ "./node_modules/ace-builds/src-noconflict/ext-language_tools.js");
-/* harmony import */ var ace_builds_src_noconflict_ext_language_tools__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_ext_language_tools__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./style.css */ "./assets/jsx/workflow-editor/components/expression-builder/style.css");
+/* harmony import */ var _node_icon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../node-icon */ "./assets/jsx/workflow-editor/components/node-icon.jsx");
+/* harmony import */ var react_ace__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-ace */ "./node_modules/react-ace/lib/index.js");
+/* harmony import */ var ace_builds_src_noconflict_mode_handlebars__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ace-builds/src-noconflict/mode-handlebars */ "./node_modules/ace-builds/src-noconflict/mode-handlebars.js");
+/* harmony import */ var ace_builds_src_noconflict_mode_handlebars__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_mode_handlebars__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var ace_builds_src_noconflict_theme_textmate__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ace-builds/src-noconflict/theme-textmate */ "./node_modules/ace-builds/src-noconflict/theme-textmate.js");
+/* harmony import */ var ace_builds_src_noconflict_theme_textmate__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_theme_textmate__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var ace_builds_src_noconflict_ext_language_tools__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ace-builds/src-noconflict/ext-language_tools */ "./node_modules/ace-builds/src-noconflict/ext-language_tools.js");
+/* harmony import */ var ace_builds_src_noconflict_ext_language_tools__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_ext_language_tools__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./style.css */ "./assets/jsx/workflow-editor/components/expression-builder/style.css");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -41492,73 +41493,95 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 var items = [{
   name: 'global',
   label: 'Global',
+  description: 'Global variables',
   items: [{
     name: 'site',
     label: 'Site',
+    description: 'Site variables',
     items: [{
       name: 'name',
-      label: 'Name'
+      label: 'Name',
+      description: 'Site name'
     }, {
       name: 'url',
-      label: 'URL'
+      label: 'URL',
+      description: 'Site URL'
     }]
   }, {
     name: 'user',
     label: 'User',
+    description: 'User variables',
     items: [{
       name: 'name',
-      label: 'Name'
+      label: 'Name',
+      description: 'User name'
     }, {
       name: 'email',
-      label: 'Email'
+      label: 'Email',
+      description: 'User email'
     }]
   }]
 }, {
   name: 'onPostUpdated1',
   label: 'Post Updated',
+  description: 'Post updated variables',
   items: [{
     id: 'postBefore ',
     label: 'Post before',
+    description: 'Post before the update',
     items: [{
       name: 'title',
-      label: 'Title'
+      label: 'Title',
+      description: 'Post title before the update'
     }, {
       name: 'status',
-      label: 'Status'
+      label: 'Status',
+      description: 'Post status before the update'
     }]
   }, {
     id: 'postAfter',
     label: 'Post after',
+    description: 'Post after the update',
     items: [{
       name: 'title',
-      label: 'Title'
+      label: 'Title',
+      description: 'Post title after the update'
     }, {
       name: 'status',
-      label: 'Status'
+      label: 'Status',
+      description: 'Post status after the update'
     }, {
       name: 'author',
       label: 'Author',
+      description: 'Post author after the update',
       items: [{
         name: 'name',
-        label: 'Name'
+        label: 'Name',
+        description: 'Post author name after the update'
       }, {
         name: 'email',
-        label: 'Email'
+        label: 'Email',
+        description: 'Post author email after the update'
       }, {
         name: 'id',
-        label: 'ID'
+        label: 'ID',
+        description: 'Post author ID after the update'
       }, {
         name: 'mother',
         label: 'Mother',
+        description: 'Post author mother',
         items: [{
           name: 'name',
-          label: 'Name'
+          label: 'Name',
+          description: 'Post author mother name'
         }, {
           name: 'email',
-          label: 'Email'
+          label: 'Email',
+          description: 'Post author mother email'
         }]
       }]
     }]
@@ -41566,20 +41589,25 @@ var items = [{
 }, {
   name: 'onSavePost1',
   label: 'Post saved',
+  description: 'Post saved variables',
   items: [{
     name: 'post',
     label: 'Post',
+    description: 'Post variables after the save',
     items: [{
       name: 'title',
-      label: 'Title'
+      label: 'Title',
+      description: 'Post title after the save'
     }, {
       name: 'status',
-      label: 'Status'
+      label: 'Status',
+      description: 'Post status'
     }]
   }]
 }];
 var ColumnsContainer = function ColumnsContainer(_ref) {
-  var items = _ref.items;
+  var items = _ref.items,
+    setCurrentDescription = _ref.setCurrentDescription;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     currentItemPath = _useState2[0],
@@ -41609,6 +41637,9 @@ var ColumnsContainer = function ColumnsContainer(_ref) {
         onClick: function onClick() {
           return handleClick([].concat(_toConsumableArray(path), [index]));
         },
+        onMouseEnter: function onMouseEnter() {
+          return setCurrentDescription(item.description);
+        },
         className: "column-item ".concat(selectedItemIndex === index ? 'selected' : '', " ").concat(hasChildren ? 'has-children' : '')
       }, item.label);
     }));
@@ -41630,6 +41661,10 @@ var ExpressionBuilder = function ExpressionBuilder(_ref2) {
     _ref2$variables = _ref2.variables,
     variables = _ref2$variables === void 0 ? [] : _ref2$variables;
   var editorRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(),
+    _useState4 = _slicedToArray(_useState3, 2),
+    currentDescription = _useState4[0],
+    setCurrentDescription = _useState4[1];
   var onChangeSetting = function onChangeSetting(_ref3) {
     var settingName = _ref3.settingName,
       value = _ref3.value;
@@ -41653,10 +41688,10 @@ var ExpressionBuilder = function ExpressionBuilder(_ref2) {
       editorRef.current.editor.getSession().setAnnotations(annotations);
     }
   };
-  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
-    _useState4 = _slicedToArray(_useState3, 2),
-    isOpen = _useState4[0],
-    setIsOpen = _useState4[1];
+  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    isOpen = _useState6[0],
+    setIsOpen = _useState6[1];
   var togglePopover = function togglePopover() {
     setIsOpen(function (state) {
       return !state;
@@ -41665,14 +41700,44 @@ var ExpressionBuilder = function ExpressionBuilder(_ref2) {
   var onClose = function onClose() {
     setIsOpen(false);
   };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "expression-builder"
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
     variant: "secondary",
-    onClick: togglePopover
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Edit", "post-expirator")), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextareaControl, {
-    value: defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.expression,
-    label: label,
-    className: "expression-editor-textarea",
-    readOnly: true
+    onClick: togglePopover,
+    className: "expression-builder-button",
+    icon: /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      icon: "braces",
+      size: 18
+    }),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Edit", "post-expirator")
+  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalHeading, {
+    level: 3,
+    className: "expression-editor-preview-heading"
+  }, label), /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    mode: "handlebars",
+    theme: "textmate",
+    name: "expression-editor-preview",
+    value: (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.expression) || '',
+    editorProps: {
+      $blockScrolling: true
+    },
+    onChange: function onChange(value) {
+      return onChangeSetting({
+        settingName: "expression",
+        value: value
+      });
+    },
+    setOptions: {
+      enableBasicAutocompletion: true,
+      enableLiveAutocompletion: true,
+      showGutter: false,
+      showPrintMargin: false,
+      showLineNumbers: false,
+      showInvisibles: false
+    },
+    height: "92px",
+    width: "244px"
   }), isOpen && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Popover, {
     onClose: togglePopover,
     position: "top left"
@@ -41688,7 +41753,7 @@ var ExpressionBuilder = function ExpressionBuilder(_ref2) {
     onClick: onClose,
     icon: "no-alt",
     className: "block-editor-inspector-popover-header__action"
-  })), /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  })), /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_4__["default"], {
     ref: editorRef,
     mode: "handlebars",
     theme: "textmate",
@@ -41717,9 +41782,10 @@ var ExpressionBuilder = function ExpressionBuilder(_ref2) {
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalHeading, {
     level: 2,
     className: "components-truncate components-text components-heading block-editor-inspector-popover-header__heading"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Variables", "post-expirator")), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Double click on a variable to add it to your expression.", "post-expirator")), /*#__PURE__*/React.createElement(ColumnsContainer, {
-    items: items
-  })))));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Variables", "post-expirator")), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Position the cursor where you want to add a variable and double click on a variable to add it to your expression.", "post-expirator")), /*#__PURE__*/React.createElement(ColumnsContainer, {
+    items: items,
+    setCurrentDescription: setCurrentDescription
+  })), currentDescription && /*#__PURE__*/React.createElement("p", null, currentDescription))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ExpressionBuilder);
 
@@ -42274,6 +42340,43 @@ function BaseIcon(_ref) {
       display: 'inline-block'
     }
   }, children);
+}
+
+/***/ }),
+
+/***/ "./assets/jsx/workflow-editor/components/icons/braces.jsx":
+/*!****************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/icons/braces.jsx ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ BracesIcon)
+/* harmony export */ });
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base */ "./assets/jsx/workflow-editor/components/icons/base.jsx");
+
+
+/**
+ * Icon BsBraces from 'react-icons/bs'.
+ */
+function BracesIcon(_ref) {
+  var _ref$size = _ref.size,
+    size = _ref$size === void 0 ? 24 : _ref$size;
+  return /*#__PURE__*/React.createElement(_base__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    size: size
+  }, /*#__PURE__*/React.createElement("svg", {
+    stroke: "currentColor",
+    fill: "currentColor",
+    strokeWidth: "0",
+    viewBox: "0 0 16 16",
+    height: "100%",
+    width: "100%",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M2.114 8.063V7.9c1.005-.102 1.497-.615 1.497-1.6V4.503c0-1.094.39-1.538 1.354-1.538h.273V2h-.376C3.25 2 2.49 2.759 2.49 4.352v1.524c0 1.094-.376 1.456-1.49 1.456v1.299c1.114 0 1.49.362 1.49 1.456v1.524c0 1.593.759 2.352 2.372 2.352h.376v-.964h-.273c-.964 0-1.354-.444-1.354-1.538V9.663c0-.984-.492-1.497-1.497-1.6M13.886 7.9v.163c-1.005.103-1.497.616-1.497 1.6v1.798c0 1.094-.39 1.538-1.354 1.538h-.273v.964h.376c1.613 0 2.372-.759 2.372-2.352v-1.524c0-1.094.376-1.456 1.49-1.456V7.332c-1.114 0-1.49-.362-1.49-1.456V4.352C13.51 2.759 12.75 2 11.138 2h-.376v.964h.273c.964 0 1.354.444 1.354 1.538V6.3c0 .984.492 1.497 1.497 1.6"
+  })));
 }
 
 /***/ }),
@@ -44351,7 +44454,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/block-default.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/block-default.js");
 /* harmony import */ var _icons_woo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./icons/woo */ "./assets/jsx/workflow-editor/components/icons/woo.jsx");
 /* harmony import */ var _icons_user__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icons/user */ "./assets/jsx/workflow-editor/components/icons/user.jsx");
 /* harmony import */ var _icons_bug__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./icons/bug */ "./assets/jsx/workflow-editor/components/icons/bug.jsx");
@@ -44366,6 +44469,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icons_exclamation__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./icons/exclamation */ "./assets/jsx/workflow-editor/components/icons/exclamation.jsx");
 /* harmony import */ var _icons_lock__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./icons/lock */ "./assets/jsx/workflow-editor/components/icons/lock.jsx");
 /* harmony import */ var _icons_shop__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./icons/shop */ "./assets/jsx/workflow-editor/components/icons/shop.jsx");
+/* harmony import */ var _icons_braces__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./icons/braces */ "./assets/jsx/workflow-editor/components/icons/braces.jsx");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -44380,6 +44484,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -44412,7 +44517,7 @@ function NodeIcon(_ref) {
   switch (iconSrc) {
     case 'block-default':
       icon = {
-        src: _wordpress_icons__WEBPACK_IMPORTED_MODULE_16__["default"]
+        src: _wordpress_icons__WEBPACK_IMPORTED_MODULE_17__["default"]
       };
       break;
     case 'document':
@@ -44499,6 +44604,11 @@ function NodeIcon(_ref) {
     case 'shop':
       icon = {
         src: _icons_shop__WEBPACK_IMPORTED_MODULE_15__["default"]
+      };
+      break;
+    case 'braces':
+      icon = {
+        src: _icons_braces__WEBPACK_IMPORTED_MODULE_16__["default"]
       };
       break;
   }
@@ -52199,17 +52309,28 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.columns-container {
     margin-top: 10px;
 }
 
-.expression-editor-textarea textarea {
-    width: 244px;
-    height: 92px;
-    display: block;
+#expression-editor-preview {
     margin-bottom: 10px;
+    border: 1px solid #ccc;
 }
 
 .ace_editor.ace_autocomplete {
     z-index: 999999999;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;AACvB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;AAChC;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;AACtB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,YAAY;IACZ,YAAY;IACZ,cAAc;IACd,mBAAmB;AACvB;;AAEA;IACI,kBAAkB;AACtB","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 5px 8px;\n    position: relative;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.column-item.selected {\n    background-color: #ccc;\n}\n\n.column-item.has-children.selected::after {\n    color: #1b1b1b;\n}\n\n.column-item:hover {\n    background-color: #f0f0f0;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n.expression-editor-textarea textarea {\n    width: 244px;\n    height: 92px;\n    display: block;\n    margin-bottom: 10px;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n}\n"],"sourceRoot":""}]);
+
+.expression-builder {
+    position: relative;
+    padding-top: 20px;
+}
+
+.expression-builder .expression-builder-button {
+    position: absolute;
+    top: 14px;
+    right: 0;
+    height: 28px;
+    padding-top: 10px;
+}
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;AACvB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;AAChC;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;AACtB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,QAAQ;IACR,YAAY;IACZ,iBAAiB;AACrB","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 5px 8px;\n    position: relative;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.column-item.selected {\n    background-color: #ccc;\n}\n\n.column-item.has-children.selected::after {\n    color: #1b1b1b;\n}\n\n.column-item:hover {\n    background-color: #f0f0f0;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n}\n\n.expression-builder {\n    position: relative;\n    padding-top: 20px;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 14px;\n    right: 0;\n    height: 28px;\n    padding-top: 10px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

@@ -48,13 +48,24 @@
     margin-top: 10px;
 }
 
-.expression-editor-textarea textarea {
-    width: 244px;
-    height: 92px;
-    display: block;
+#expression-editor-preview {
     margin-bottom: 10px;
+    border: 1px solid #ccc;
 }
 
 .ace_editor.ace_autocomplete {
     z-index: 999999999;
+}
+
+.expression-builder {
+    position: relative;
+    padding-top: 20px;
+}
+
+.expression-builder .expression-builder-button {
+    position: absolute;
+    top: 14px;
+    right: 0;
+    height: 28px;
+    padding-top: 10px;
 }

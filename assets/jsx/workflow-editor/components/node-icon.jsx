@@ -22,6 +22,7 @@ import WebsiteIcon from './icons/website';
 import ExclamationIcon from './icons/exclamation';
 import LockIcon from './icons/lock';
 import ShopIcon from './icons/shop';
+import BracesIcon from './icons/braces';
 
 export function NodeIcon({ icon, showColors = false, className, size = 20, onClick = () => {}, style = {} }) {
 	const iconSrc = icon?.src || icon;
@@ -116,6 +117,11 @@ export function NodeIcon({ icon, showColors = false, className, size = 20, onCli
 		case 'shop':
 			icon = {
 				src: ShopIcon,
+			};
+			break;
+		case 'braces':
+			icon = {
+				src: BracesIcon,
 			};
 			break;
 	}

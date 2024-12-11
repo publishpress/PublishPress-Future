@@ -1,13 +1,13 @@
 import {
     Button,
-    TextControl,
     Popover,
     TextareaControl,
     __experimentalHStack as HStack,
     __experimentalHeading as Heading
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { useState, useRef } from "@wordpress/element"
+import { useState, useRef } from "@wordpress/element";
+import NodeIcon from "../node-icon";
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-handlebars";
@@ -21,32 +21,39 @@ const items = [
     {
         name: 'global',
         label: 'Global',
+        description: 'Global variables',
         items: [
             {
                 name: 'site',
                 label: 'Site',
+                description: 'Site variables',
                 items: [
                     {
                         name: 'name',
                         label: 'Name',
+                        description: 'Site name',
                     },
                     {
                         name: 'url',
                         label: 'URL',
+                        description: 'Site URL',
                     }
                 ]
             },
             {
                 name: 'user',
                 label: 'User',
+                description: 'User variables',
                 items: [
                     {
                         name: 'name',
                         label: 'Name',
+                        description: 'User name',
                     },
                     {
                         name: 'email',
                         label: 'Email',
+                        description: 'User email',
                     }
                 ]
             }
@@ -55,60 +62,74 @@ const items = [
     {
         name: 'onPostUpdated1',
         label: 'Post Updated',
+        description: 'Post updated variables',
         items: [
             {
                 id: 'postBefore ',
                 label: 'Post before',
+                description: 'Post before the update',
                 items: [
                     {
                         name: 'title',
                         label: 'Title',
+                        description: 'Post title before the update',
                     },
                     {
                         name: 'status',
                         label: 'Status',
+                        description: 'Post status before the update',
                     }
                 ]
             },
             {
                 id: 'postAfter',
                 label: 'Post after',
+                description: 'Post after the update',
                 items: [
                     {
                         name: 'title',
                         label: 'Title',
+                        description: 'Post title after the update',
                     },
                     {
                         name: 'status',
                         label: 'Status',
+                        description: 'Post status after the update',
                     },
                     {
                         name: 'author',
                         label: 'Author',
+                        description: 'Post author after the update',
                         items: [
                             {
                                 name: 'name',
                                 label: 'Name',
+                                description: 'Post author name after the update',
                             },
                             {
                                 name: 'email',
                                 label: 'Email',
+                                description: 'Post author email after the update',
                             },
                             {
                                 name: 'id',
                                 label: 'ID',
+                                description: 'Post author ID after the update',
                             },
                             {
                                 name: 'mother',
                                 label: 'Mother',
+                                description: 'Post author mother',
                                 items: [
                                     {
                                         name: 'name',
                                         label: 'Name',
+                                        description: 'Post author mother name',
                                     },
                                     {
                                         name: 'email',
                                         label: 'Email',
+                                        description: 'Post author mother email',
                                     }
                                 ]
                             }
@@ -121,18 +142,22 @@ const items = [
     {
         name: 'onSavePost1',
         label: 'Post saved',
+        description: 'Post saved variables',
         items: [
             {
                 name: 'post',
                 label: 'Post',
+                description: 'Post variables after the save',
                 items: [
                     {
                         name: 'title',
                         label: 'Title',
+                        description: 'Post title after the save',
                     },
                     {
                         name: 'status',
                         label: 'Status',
+                        description: 'Post status',
                     }
                 ]
             }
@@ -140,7 +165,7 @@ const items = [
     }
 ];
 
-const ColumnsContainer = ({ items }) => {
+const ColumnsContainer = ({ items, setCurrentDescription }) => {
     const [currentItemPath, setCurrentItemPath] = useState([]);
 
     const handleClick = (path) => {
@@ -169,6 +194,7 @@ const ColumnsContainer = ({ items }) => {
                     return <div
                         key={`column-item-${path.join('-')}-${index}`}
                         onClick={() => handleClick([...path, index])}
+                        onMouseEnter={() => setCurrentDescription(item.description)}
                         className={`column-item ${selectedItemIndex === index ? 'selected' : ''} ${hasChildren ? 'has-children' : ''}`}
                     >
                         {item.label}
@@ -196,6 +222,8 @@ const ColumnsContainer = ({ items }) => {
 
 export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variables = [] }) => {
     const editorRef = useRef(null);
+
+    const [currentDescription, setCurrentDescription] = useState();
 
     const onChangeSetting = ({ settingName, value }) => {
         const newValue = { ...defaultValue };
@@ -233,21 +261,35 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
 
 
 
-    return <div>
+    return <div className="expression-builder">
 
         <Button
             variant="secondary"
             onClick={togglePopover}
-        >
-            {__("Edit", "post-expirator")}
+            className="expression-builder-button"
+            icon={<NodeIcon icon="braces" size={18} />}
+            title={__("Edit", "post-expirator")}
+        />
 
-        </Button>
+        <Heading level={3} className="expression-editor-preview-heading">{label}</Heading>
 
-        <TextareaControl
-            value={defaultValue?.expression}
-            label={label}
-            className="expression-editor-textarea"
-            readOnly={true}
+        <AceEditor
+            mode="handlebars"
+            theme="textmate"
+            name="expression-editor-preview"
+            value={defaultValue?.expression || ''}
+            editorProps={{ $blockScrolling: true }}
+            onChange={(value) => onChangeSetting({ settingName: "expression", value })}
+            setOptions={{
+                enableBasicAutocompletion: true,
+                enableLiveAutocompletion: true,
+                showGutter: false,
+                showPrintMargin: false,
+                showLineNumbers: false,
+                showInvisibles: false,
+            }}
+            height="92px"
+            width="244px"
         />
 
         {isOpen && (
@@ -280,10 +322,14 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
                     <div style={{ maxWidth: '600px', overflowX: 'auto' }}>
                         <Heading level={2} className="components-truncate components-text components-heading block-editor-inspector-popover-header__heading">{__("Variables", "post-expirator")}</Heading>
 
-                        <p>{__("Double click on a variable to add it to your expression.", "post-expirator")}</p>
+                        <p>{__("Position the cursor where you want to add a variable and double click on a variable to add it to your expression.", "post-expirator")}</p>
 
-                        <ColumnsContainer items={items} />
+                        <ColumnsContainer items={items} setCurrentDescription={setCurrentDescription} />
                     </div>
+
+                    {currentDescription && (
+                        <p>{currentDescription}</p>
+                    )}
                 </div>
             </Popover>
         )}
