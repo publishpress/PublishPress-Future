@@ -5,8 +5,9 @@ import {
     __experimentalHeading as Heading
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { useState, useRef } from "@wordpress/element";
+import { useState, useRef, useCallback } from "@wordpress/element";
 import NodeIcon from "../../node-icon";
+import ColumnsContainer from "./columns-container";
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-handlebars";
@@ -15,70 +16,17 @@ import "ace-builds/src-noconflict/ext-language_tools";
 
 import './style.css';
 
-const ColumnsContainer = ({ items, setCurrentDescription, onDoubleClick }) => {
-    const [currentItemPath, setCurrentItemPath] = useState([]);
-
-    const handleClick = (path) => {
-        setCurrentItemPath(path);
-
-        const container = document.querySelector('.columns-container');
-        if (container) {
-            setTimeout(() => {
-                container.scrollLeft = container.scrollWidth;
-            }, 0);
-        }
-    };
-
-    const columns = [];
-
-    const renderColumns = (currentItems, path = []) => {
-        if (!currentItems) return null;
-
-        const currentColumnIndex = path.length;
-        const selectedItemIndex = currentItemPath[currentColumnIndex];
-        const column = (
-            <div className="column" key={`column-${path.join('-')}`}>
-                {currentItems.map((item, index) => {
-                    const hasChildren = item.children && item.children.length > 0;
-
-                    return <div
-                        key={`column-item-${path.join('-')}-${index}`}
-                        onClick={() => handleClick([...path, index])}
-                        onMouseEnter={() => setCurrentDescription(item.description)}
-                        onDoubleClick={() => onDoubleClick(item)}
-                        className={`column-item ${selectedItemIndex === index ? 'selected' : ''} ${hasChildren ? 'has-children' : ''}`}
-                    >
-                        {item.name}
-                    </div>;
-                })}
-            </div>
-        );
-
-        columns.push(column);
-
-        if (selectedItemIndex !== undefined && currentItems[selectedItemIndex].children) {
-            renderColumns(currentItems[selectedItemIndex].children, [...path, selectedItemIndex]);
-        }
-    };
-
-    renderColumns(items);
-
-    return <div className="columns-container">
-        {columns}
-    </div>;
-};
-
-
 export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variables = [], propertyName = "expression", settings = {} }) => {
     const editorRef = useRef(null);
 
     const [currentDescription, setCurrentDescription] = useState();
+    const [isOpen, setIsOpen] = useState(false);
 
     if (! defaultValue) {
         defaultValue = {};
     }
 
-    const onChangeSetting = ({ settingName, value }) => {
+    const onChangeSetting = useCallback(({ settingName, value }) => {
         const newValue = { ...defaultValue };
         newValue[settingName] = value;
 
@@ -100,25 +48,23 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
         if (editorRef.current) {
             editorRef.current.editor.getSession().setAnnotations(annotations);
         }
-    }
+    }, [defaultValue]);
 
-    const [isOpen, setIsOpen] = useState(false);
-
-    const togglePopover = () => {
+    const togglePopover = useCallback(() => {
         setIsOpen((state) => !state);
-    }
+    }, [setIsOpen]);
 
-    const onClose = () => {
+    const onClose = useCallback(() => {
         setIsOpen(false);
-    }
+    }, [setIsOpen]);
 
-    const onDoubleClick = (item) => {
+    const onDoubleClick = useCallback((item) => {
         if (editorRef.current) {
             const editor = editorRef.current.editor;
             const cursorPosition = editor.getCursorPosition();
             editor.session.insert(cursorPosition, `{{${item.id}}}`);
         }
-    }
+    }, [editorRef]);
 
     return <div className="expression-builder">
 
