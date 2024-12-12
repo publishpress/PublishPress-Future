@@ -39785,11 +39785,6 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
       editorRef.current.editor.getSession().setAnnotations(annotations);
     }
   }, [defaultValue]);
-  var togglePopover = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useCallback)(function () {
-    setIsOpen(function (state) {
-      return !state;
-    });
-  }, [setIsOpen]);
   var onClose = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useCallback)(function () {
     setIsOpen(false);
   }, [setIsOpen]);
@@ -39807,7 +39802,9 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     className: "expression-builder"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
     variant: "secondary",
-    onClick: togglePopover,
+    onClick: function onClick() {
+      return setIsOpen(true);
+    },
     className: "expression-builder-button",
     icon: /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_3__["default"], {
       icon: "braces",
@@ -39816,11 +39813,11 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Edit", "post-expirator")
   }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalHeading, {
     level: 3,
-    className: "expression-editor-preview-heading"
+    className: "expression-builder-small-heading"
   }, label), description && /*#__PURE__*/React.createElement("p", null, description), /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_5__["default"], {
     mode: "handlebars",
     theme: "textmate",
-    name: "expression-editor-preview",
+    name: "expression-builder-small",
     value: defaultValue[propertyName] || '',
     editorProps: editorProps,
     onChange: function onChange(value) {
@@ -39840,26 +39837,20 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     height: "92px",
     width: "244px",
     placeholder: (settings === null || settings === void 0 ? void 0 : settings.placeholder) || ''
-  }), isOpen && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Popover, {
-    onClose: togglePopover,
-    position: "middle left"
+  }), isOpen && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Modal, {
+    title: label,
+    onRequestClose: onClose,
+    className: "expression-builder-modal"
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '20px',
       minWidth: '600px'
     }
-  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalHStack, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalHeading, {
-    level: 2,
-    className: "block-editor-inspector-popover-header__heading"
-  }, label), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
-    onClick: onClose,
-    icon: "no-alt",
-    className: "block-editor-inspector-popover-header__action"
-  })), /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_5__["default"], {
     ref: editorRef,
     mode: "handlebars",
     theme: "textmate",
-    name: "expression-editor-full",
+    name: "expression-builder-full",
     onChange: function onChange(value) {
       return onChangeSetting({
         settingName: propertyName,
@@ -39876,6 +39867,7 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     width: "560px",
     placeholder: (settings === null || settings === void 0 ? void 0 : settings.placeholder) || ''
   }), /*#__PURE__*/React.createElement("div", {
+    className: "expression-builder-modal-variables",
     style: {
       maxWidth: '600px',
       overflowX: 'auto'
@@ -52388,6 +52380,10 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.columns-container {
     z-index: 999999999;
 }
 
+.components-modal__screen-overlay {
+    z-index: 999999998;
+}
+
 .expression-builder {
     position: relative;
     padding-top: 20px;
@@ -52413,7 +52409,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.columns-container {
 .expression-builder-variable-name {
     margin-left: 5px;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;AACvB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;IAC5B,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,iBAAiB;IACjB,yBAAyB;IACzB,sBAAsB;IACtB,qBAAqB;AACzB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,QAAQ;IACR,YAAY;IACZ,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,gBAAgB;AACpB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n    overflow-y: scroll;\n    max-height: 270px;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 5px 8px;\n    position: relative;\n    user-select: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.selected {\n    background-color: #ccc;\n}\n\n.column-item.has-children.selected::after {\n    color: #1b1b1b;\n}\n\n.column-item:hover {\n    background-color: #f0f0f0;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n}\n\n.expression-builder {\n    position: relative;\n    padding-top: 20px;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 14px;\n    right: 0;\n    height: 28px;\n    padding-top: 10px;\n}\n\n.column-item-form {\n    padding: 10px;\n    max-width: 270px;\n}\n\n.column-item-form p {\n    text-wrap: auto;\n}\n\n.expression-builder-variable-name {\n    margin-left: 5px;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;AACvB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;IAC5B,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,iBAAiB;IACjB,yBAAyB;IACzB,sBAAsB;IACtB,qBAAqB;AACzB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,QAAQ;IACR,YAAY;IACZ,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,gBAAgB;AACpB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n    overflow-y: scroll;\n    max-height: 270px;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 5px 8px;\n    position: relative;\n    user-select: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.selected {\n    background-color: #ccc;\n}\n\n.column-item.has-children.selected::after {\n    color: #1b1b1b;\n}\n\n.column-item:hover {\n    background-color: #f0f0f0;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n}\n\n.components-modal__screen-overlay {\n    z-index: 999999998;\n}\n\n.expression-builder {\n    position: relative;\n    padding-top: 20px;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 14px;\n    right: 0;\n    height: 28px;\n    padding-top: 10px;\n}\n\n.column-item-form {\n    padding: 10px;\n    max-width: 270px;\n}\n\n.column-item-form p {\n    text-wrap: auto;\n}\n\n.expression-builder-variable-name {\n    margin-left: 5px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

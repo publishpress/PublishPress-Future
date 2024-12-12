@@ -63,6 +63,10 @@
     z-index: 999999999;
 }
 
+.components-modal__screen-overlay {
+    z-index: 999999998;
+}
+
 .expression-builder {
     position: relative;
     padding-top: 20px;

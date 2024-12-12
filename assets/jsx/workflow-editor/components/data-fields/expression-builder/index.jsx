@@ -1,6 +1,6 @@
 import {
     Button,
-    Popover,
+    Modal,
     __experimentalHStack as HStack,
     __experimentalHeading as Heading
 } from "@wordpress/components";
@@ -51,10 +51,6 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
         }
     }, [defaultValue]);
 
-    const togglePopover = useCallback(() => {
-        setIsOpen((state) => !state);
-    }, [setIsOpen]);
-
     const onClose = useCallback(() => {
         setIsOpen(false);
     }, [setIsOpen]);
@@ -75,13 +71,13 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
 
         <Button
             variant="secondary"
-            onClick={togglePopover}
+            onClick={() => setIsOpen(true)}
             className="expression-builder-button"
             icon={<NodeIcon icon="braces" size={18} />}
             title={__("Edit", "post-expirator")}
         />
 
-        <Heading level={3} className="expression-editor-preview-heading">{label}</Heading>
+        <Heading level={3} className="expression-builder-small-heading">{label}</Heading>
 
         {description && (
             <p>{description}</p>
@@ -90,7 +86,7 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
         <AceEditor
             mode="handlebars"
             theme="textmate"
-            name="expression-editor-preview"
+            name="expression-builder-small"
             value={defaultValue[propertyName] || ''}
             editorProps={editorProps}
             onChange={(value) => onChangeSetting({ settingName: propertyName, value })}
@@ -108,21 +104,17 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
         />
 
         {isOpen && (
-            <Popover
-                onClose={togglePopover}
-                position="middle left"
+            <Modal
+                title={label}
+                onRequestClose={onClose}
+                className="expression-builder-modal"
             >
                 <div style={{ padding: '20px', minWidth: '600px' }}>
-                    <HStack>
-                        <Heading level={2} className="block-editor-inspector-popover-header__heading">{label}</Heading>
-                        <Button onClick={onClose} icon="no-alt" className='block-editor-inspector-popover-header__action' />
-                    </HStack>
-
                     <AceEditor
                         ref={editorRef}
                         mode="handlebars"
                         theme="textmate"
-                        name="expression-editor-full"
+                        name="expression-builder-full"
                         onChange={(value) => onChangeSetting({ settingName: propertyName, value })}
                         value={defaultValue[propertyName] || ''}
                         editorProps={editorProps}
@@ -135,7 +127,7 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
                         placeholder={settings?.placeholder || ''}
                     />
 
-                    <div style={{ maxWidth: '600px', overflowX: 'auto' }}>
+                    <div className="expression-builder-modal-variables" style={{ maxWidth: '600px', overflowX: 'auto' }}>
                         <Heading level={2} className="components-truncate components-text components-heading block-editor-inspector-popover-header__heading">{__("Variables", "post-expirator")}</Heading>
 
                         <p>{__("Position the cursor where you want to add a variable and double click on a variable to add it to your expression.", "post-expirator")}</p>
@@ -160,7 +152,7 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
                         <p>{__("Hover over a variable to see its description.", "post-expirator")}</p>
                     )}
                 </div>
-            </Popover>
+            </Modal>
         )}
     </div>;
 }
