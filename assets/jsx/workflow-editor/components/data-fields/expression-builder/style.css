@@ -12,6 +12,8 @@
     min-width: 150px;
     flex: 0 0 auto;
     border-right: 1px solid #ccc;
+    overflow-y: scroll;
+    max-height: 270px;
 }
 
 .column-item {
@@ -76,4 +78,9 @@
 
 .column-item-form {
     padding: 10px;
+    max-width: 270px;
+}
+
+.column-item-form p {
+    text-wrap: auto;
 }

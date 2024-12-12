@@ -8,21 +8,28 @@ const RenderColumns = ({ currentItemPath, currentItems, handleClick, setCurrentD
     const selectedItemIndex = currentItemPath[currentColumnIndex];
     const currentItem = currentItems[selectedItemIndex];
 
-    if (currentItem?.type === 'meta') {
-        currentItem.children = [
+    const addMetaKeyInputChildren = (item) => {
+        item.children = [
             {
-                id: currentItem.id,
+                id: item.id,
                 name: 'metaKey',
-                description: 'Type the meta key',
+                description: 'Type the meta key and click on the button to insert it.',
                 type: 'meta-key-input'
             }
         ]
+    }
+
+    if (currentItem?.type === 'meta') {
+        addMetaKeyInputChildren(currentItem);
     }
 
     return (
         <>
             <div className="column" key={`column-${path.join('-')}`}>
                 {currentItems.map((item, index) => {
+                    if (item.type === 'meta') {
+                        addMetaKeyInputChildren(item);
+                    }
                     return <ColumnItem
                         key={`column-item-${path.join('-')}-${index}`}
                         item={item}
