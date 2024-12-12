@@ -39800,6 +39800,9 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
       editor.session.insert(cursorPosition, "{{".concat(item.name, "}}"));
     }
   }, [editorRef]);
+  var editorProps = {
+    $blockScrolling: true
+  };
   return /*#__PURE__*/React.createElement("div", {
     className: "expression-builder"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
@@ -39819,9 +39822,7 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     theme: "textmate",
     name: "expression-editor-preview",
     value: defaultValue[propertyName] || '',
-    editorProps: {
-      $blockScrolling: true
-    },
+    editorProps: editorProps,
     onChange: function onChange(value) {
       return onChangeSetting({
         settingName: propertyName,
@@ -39829,8 +39830,8 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
       });
     },
     setOptions: {
-      enableBasicAutocompletion: true,
-      enableLiveAutocompletion: true,
+      enableBasicAutocompletion: false,
+      enableLiveAutocompletion: false,
       showGutter: false,
       showPrintMargin: false,
       showLineNumbers: false,
@@ -39866,12 +39867,10 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
       });
     },
     value: defaultValue[propertyName] || '',
-    editorProps: {
-      $blockScrolling: true
-    },
+    editorProps: editorProps,
     setOptions: {
-      enableBasicAutocompletion: true,
-      enableLiveAutocompletion: true
+      enableBasicAutocompletion: false,
+      enableLiveAutocompletion: false
     },
     height: "200px",
     width: "560px",

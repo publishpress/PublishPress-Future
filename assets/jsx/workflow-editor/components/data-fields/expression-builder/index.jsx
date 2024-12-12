@@ -67,6 +67,10 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
         }
     }, [editorRef]);
 
+    const editorProps = {
+        $blockScrolling: true,
+    };
+
     return <div className="expression-builder">
 
         <Button
@@ -88,11 +92,11 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
             theme="textmate"
             name="expression-editor-preview"
             value={defaultValue[propertyName] || ''}
-            editorProps={{ $blockScrolling: true }}
+            editorProps={editorProps}
             onChange={(value) => onChangeSetting({ settingName: propertyName, value })}
             setOptions={{
-                enableBasicAutocompletion: true,
-                enableLiveAutocompletion: true,
+                enableBasicAutocompletion: false,
+                enableLiveAutocompletion: false,
                 showGutter: false,
                 showPrintMargin: false,
                 showLineNumbers: false,
@@ -121,10 +125,10 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
                         name="expression-editor-full"
                         onChange={(value) => onChangeSetting({ settingName: propertyName, value })}
                         value={defaultValue[propertyName] || ''}
-                        editorProps={{ $blockScrolling: true }}
+                        editorProps={editorProps}
                         setOptions={{
-                            enableBasicAutocompletion: true,
-                            enableLiveAutocompletion: true,
+                            enableBasicAutocompletion: false,
+                            enableLiveAutocompletion: false,
                         }}
                         height="200px"
                         width="560px"
