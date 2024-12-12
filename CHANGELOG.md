@@ -5,6 +5,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## UNRELEASED
 
+### Added
+
+- Add new Post is Published trigger (Issue #944).
+- Add new Post Status Changes trigger (Issue #945).
+- Add new Post is Scheduled trigger (Issue #946).
+- Add new variables selector and an expression builder (Issue #976).
+- Add support to metadata in the variables resolvers and post type variables (Issue #1069, #939).
+- Add the site ID to the site data type schema.
+
+### Changed
+
+- Replace text fields on step settings with the new expression builder.
+- Changed the border of selected steps to dashed line.
+- Moved the panel "Step Data Flow" to the developer mode.
+
 ### Fixed
 
 - Fix error when the date or time format is empty in the settings page (Issue #212).
