@@ -87,6 +87,10 @@ class PostResolver implements VariableResolverInterface
 
             case 'meta':
                 return new PostMetaResolver($this->post->ID);
+
+            case 'post_author':
+            case 'author':
+                return new UserResolver($this->post->post_author);
         }
 
         return '';
@@ -135,6 +139,8 @@ class PostResolver implements VariableResolverInterface
                 'post_modified',
                 'permalink',
                 'meta',
+                'post_author',
+                'author',
             ]
         );
     }
