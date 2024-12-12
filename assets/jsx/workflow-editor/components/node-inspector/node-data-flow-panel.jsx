@@ -57,7 +57,7 @@ export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
 
         return (
             <>
-                <div className="workflow-editor-data-flow-variable workflow-editor-dev-panel">
+                <div className="workflow-editor-data-flow-variable">
                     <NodeIcon
                         icon={isOpen ? 'arrow-down' : 'arrow-right'}
                         onClick={togglePopover}
@@ -80,7 +80,7 @@ export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
     };
 
     return (
-        <PersistentPanelBody title={__("Step Data Flow", "post-expirator")}>
+        <PersistentPanelBody title={__("Step Data Flow", "post-expirator")} className="workflow-editor-dev-panel">
             <PanelRow className="workflow-editor-inspector-card__handles-schema">
                 <h3>{__('Inputs', 'post-expirator')}</h3>
                 <div>

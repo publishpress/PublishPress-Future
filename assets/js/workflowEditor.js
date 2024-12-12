@@ -44967,7 +44967,7 @@ var NodeDataFlowPanel = function NodeDataFlowPanel(_ref) {
       });
     }
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-      className: "workflow-editor-data-flow-variable workflow-editor-dev-panel"
+      className: "workflow-editor-data-flow-variable"
     }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_5__["default"], {
       icon: isOpen ? 'arrow-down' : 'arrow-right',
       onClick: togglePopover,
@@ -44985,7 +44985,8 @@ var NodeDataFlowPanel = function NodeDataFlowPanel(_ref) {
     })));
   };
   return /*#__PURE__*/React.createElement(_persistent_panel_body__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Step Data Flow", "post-expirator")
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Step Data Flow", "post-expirator"),
+    className: "workflow-editor-dev-panel"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, {
     className: "workflow-editor-inspector-card__handles-schema"
   }, /*#__PURE__*/React.createElement("h3", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Inputs', 'post-expirator')), /*#__PURE__*/React.createElement("div", null, inputSchema.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step receives the following input from previous step:", "post-expirator")), /*#__PURE__*/React.createElement("ul", null, inputSchema.map(function (schemaItem, index) {
