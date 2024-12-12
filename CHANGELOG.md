@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Replace text fields and input/variables selectors on step settings with the new expression builder (Issue #976).
 - Changed the border of selected steps to dashed line.
 - Moved the panel "Step Data Flow" to the developer mode.
+- Removed the arrow indicator from the workflow title and added a new Status column to the workflows list screen (Issue #970).
 
 ### Fixed
 

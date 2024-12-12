@@ -86,6 +86,13 @@ class WorkflowsList implements InitializableInterface
             2
         );
 
+        $this->hooks->addAction(
+            "manage_" . Module::POST_TYPE_WORKFLOW . "_posts_custom_column",
+            [$this, "renderStatusColumn"],
+            10,
+            2
+        );
+
         if ($this->settingsFacade->getWorkflowScreenshotStatus()) {
             $this->hooks->addAction(
                 "manage_" . Module::POST_TYPE_WORKFLOW . "_posts_custom_column",
@@ -182,6 +189,8 @@ class WorkflowsList implements InitializableInterface
 
     public function addCustomColumns($columns)
     {
+        $columns["workflow_status"] = __("Status", "post-expirator");
+
         $columns["workflow_triggers"] = __(
             "Triggers",
             "post-expirator"
@@ -199,6 +208,46 @@ class WorkflowsList implements InitializableInterface
         }
 
         return $columns;
+    }
+
+    public function renderStatusColumn($column, $postId)
+    {
+        if ("workflow_status" !== $column) {
+            return;
+        }
+
+        $workflowModel = new WorkflowModel();
+        $workflowModel->load($postId);
+
+        $workflowStatus = $workflowModel->getStatus();
+        $isActive = $workflowStatus === 'publish';
+
+        $title = $isActive ? __('Deactivate', 'post-expirator') : __('Activate', 'post-expirator');
+
+        $icon = $isActive ? 'yes' : 'no';
+        $iconClass = $isActive ? 'active' : 'inactive';
+
+        $toggleUrl = esc_url(
+            wp_nonce_url(
+                add_query_arg(
+                    [
+                        'pp_action' => 'change_workflow_status',
+                        'workflow_id' => $postId,
+                        'status' => $isActive ? 'draft' : 'publish'
+                    ],
+                    admin_url('edit.php?post_type=' . Module::POST_TYPE_WORKFLOW)
+                ),
+                'change_workflow_status_' . $postId
+            )
+        );
+
+        echo sprintf(
+            '<a href="%s"><i class="pp-future-workflow-status-icon dashicons dashicons-%s %s" title="%s"></i> </a>',
+            $toggleUrl,
+            $icon,
+            $iconClass,
+            $title
+        );
     }
 
     public function renderTriggersColumn($column, $postId)
@@ -322,18 +371,6 @@ class WorkflowsList implements InitializableInterface
 
         $workflowStatus = $workflowModel->getStatus();
 
-        $toggleUrl = wp_nonce_url(
-            add_query_arg(
-                [
-                    'pp_action' => 'change_workflow_status',
-                    'workflow_id' => $post->ID,
-                    'status' => ('draft' === $workflowStatus) ? 'publish' : 'draft'
-                ],
-                admin_url('edit.php?post_type=' . Module::POST_TYPE_WORKFLOW)
-            ),
-            'change_workflow_status_' . $post->ID
-        );
-
         $statuses = [
             'draft' => [
                 'action' => 'activate',
@@ -403,12 +440,6 @@ class WorkflowsList implements InitializableInterface
 
         if (empty($workflowModel)) {
             return $title;
-        }
-
-        $workflowStatus = $workflowModel->getStatus();
-
-        if ('publish' === $workflowStatus) {
-            $title = ' ▶ ' . $title;
         }
 
         return $title;
