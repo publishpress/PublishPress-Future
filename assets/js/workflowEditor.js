@@ -50610,7 +50610,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   getNodeInputs: () => (/* binding */ getNodeInputs),
 /* harmony export */   getNodeMenuDefaultClassName: () => (/* binding */ getNodeMenuDefaultClassName),
 /* harmony export */   getNodeOutgoers: () => (/* binding */ getNodeOutgoers),
-/* harmony export */   getVariablesList: () => (/* binding */ getVariablesList),
 /* harmony export */   incrementAndGetNodeSlug: () => (/* binding */ incrementAndGetNodeSlug),
 /* harmony export */   isAppleOS: () => (/* binding */ isAppleOS),
 /* harmony export */   isValidDataType: () => (/* binding */ isValidDataType),

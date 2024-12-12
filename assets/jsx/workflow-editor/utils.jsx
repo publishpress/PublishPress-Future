@@ -303,7 +303,7 @@ export function getExpandedVariablesList(node, globalVariables) {
     return expandedList;
 }
 
-export function getVariablesList(node, globalVariables) {
+function getVariablesList(node, globalVariables) {
     const mappedNodeInputs = mapNodeInputs(node);
     const globalVariablesToList = getGlobalVariablesExpanded(globalVariables);
 
