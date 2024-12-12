@@ -39543,20 +39543,24 @@ function EmailRecipient(_ref) {
 
 /***/ }),
 
-/***/ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/columns-container.jsx":
-/*!****************************************************************************************************!*\
-  !*** ./assets/jsx/workflow-editor/components/data-fields/expression-builder/columns-container.jsx ***!
-  \****************************************************************************************************/
+/***/ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/column-item.jsx":
+/*!**********************************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-fields/expression-builder/column-item.jsx ***!
+  \**********************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ColumnsContainer: () => (/* binding */ ColumnsContainer),
+/* harmony export */   ColumnItem: () => (/* binding */ ColumnItem),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
@@ -39568,7 +39572,9 @@ function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Sym
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
-var ColumnItem = function ColumnItem(_ref) {
+
+
+var ColumnItemVariable = function ColumnItemVariable(_ref) {
   var item = _ref.item,
     currentItemPath = _ref.currentItemPath,
     handleClick = _ref.handleClick,
@@ -39593,26 +39599,105 @@ var ColumnItem = function ColumnItem(_ref) {
     }
   }, item.name);
 };
-var _RenderColumns = function RenderColumns(_ref2) {
-  var currentItemPath = _ref2.currentItemPath,
-    currentItems = _ref2.currentItems,
+var ColumnItem = function ColumnItem(_ref2) {
+  var item = _ref2.item,
+    currentItemPath = _ref2.currentItemPath,
     handleClick = _ref2.handleClick,
     setCurrentDescription = _ref2.setCurrentDescription,
     onDoubleClick = _ref2.onDoubleClick,
     _ref2$path = _ref2.path,
-    path = _ref2$path === void 0 ? [] : _ref2$path;
+    path = _ref2$path === void 0 ? [] : _ref2$path,
+    index = _ref2.index;
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+    _useState2 = _slicedToArray(_useState, 2),
+    metaKey = _useState2[0],
+    setMetaKey = _useState2[1];
+  if ((item === null || item === void 0 ? void 0 : item.type) === 'text-input') {
+    var metaItem = {
+      id: item.id + '.' + metaKey
+    };
+    return /*#__PURE__*/React.createElement("div", {
+      className: "column-item-form"
+    }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+      label: item.name,
+      value: metaKey,
+      onChange: function onChange(value) {
+        return setMetaKey(value);
+      },
+      help: item.description
+    }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+      variant: "secondary",
+      onClick: function onClick() {
+        onDoubleClick(metaItem);
+      }
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Insert', 'post-expirator')));
+  }
+  return /*#__PURE__*/React.createElement(ColumnItemVariable, {
+    item: item,
+    currentItemPath: currentItemPath,
+    handleClick: handleClick,
+    setCurrentDescription: setCurrentDescription,
+    onDoubleClick: onDoubleClick,
+    path: path,
+    index: index
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ColumnItem);
+
+/***/ }),
+
+/***/ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/columns-container.jsx":
+/*!****************************************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-fields/expression-builder/columns-container.jsx ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ColumnsContainer: () => (/* binding */ ColumnsContainer),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _column_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./column-item */ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/column-item.jsx");
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+
+var _RenderColumns = function RenderColumns(_ref) {
+  var currentItemPath = _ref.currentItemPath,
+    currentItems = _ref.currentItems,
+    handleClick = _ref.handleClick,
+    setCurrentDescription = _ref.setCurrentDescription,
+    onDoubleClick = _ref.onDoubleClick,
+    _ref$path = _ref.path,
+    path = _ref$path === void 0 ? [] : _ref$path;
   if (!currentItems) return null;
   var currentColumnIndex = path.length;
   var selectedItemIndex = currentItemPath[currentColumnIndex];
   var currentItem = currentItems[selectedItemIndex];
   if ((currentItem === null || currentItem === void 0 ? void 0 : currentItem.type) === 'meta') {
-    console.log(currentItem);
+    currentItem.children = [{
+      id: currentItem.id,
+      name: 'metaKey',
+      description: 'Type the meta key',
+      type: 'text-input'
+    }];
   }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "column",
     key: "column-".concat(path.join('-'))
   }, currentItems.map(function (item, index) {
-    return /*#__PURE__*/React.createElement(ColumnItem, {
+    return /*#__PURE__*/React.createElement(_column_item__WEBPACK_IMPORTED_MODULE_1__.ColumnItem, {
       key: "column-item-".concat(path.join('-'), "-").concat(index),
       item: item,
       currentItemPath: currentItemPath,
@@ -39631,10 +39716,10 @@ var _RenderColumns = function RenderColumns(_ref2) {
     onDoubleClick: onDoubleClick
   }));
 };
-var ColumnsContainer = function ColumnsContainer(_ref3) {
-  var items = _ref3.items,
-    setCurrentDescription = _ref3.setCurrentDescription,
-    onDoubleClick = _ref3.onDoubleClick;
+var ColumnsContainer = function ColumnsContainer(_ref2) {
+  var items = _ref2.items,
+    setCurrentDescription = _ref2.setCurrentDescription,
+    onDoubleClick = _ref2.onDoubleClick;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     currentItemPath = _useState2[0],
@@ -41011,7 +41096,7 @@ function SiteData() {
       description: "The email address of the site administrator."
     }, {
       name: "meta",
-      type: "object",
+      type: "meta",
       label: "Metadata",
       description: "The metadata of the site."
     }]
@@ -41075,12 +41160,12 @@ function UserData() {
     }, {
       name: "user_login",
       type: "string",
-      label: "User Login",
+      label: "Login",
       description: "The login name of the user."
     }, {
       name: "display_name",
       type: "string",
-      label: "Display Name",
+      label: "Display name",
       description: "The display name of the user."
     }, {
       name: "roles",
@@ -41095,11 +41180,11 @@ function UserData() {
     }, {
       name: "user_registered",
       type: "datetime",
-      label: "Registration Date",
+      label: "Registration date",
       description: "The date when the user was registered."
     }, {
       name: "meta",
-      type: "object",
+      type: "meta",
       label: "Metadata",
       description: "The metadata of the user."
     }]
@@ -49504,7 +49589,7 @@ function _setInitialStateForGlobalVariables(state) {
   state = setGlobalVariable(state, {
     payload: {
       name: 'user',
-      label: 'Activating User',
+      label: 'Activating user',
       type: 'user',
       runtimeOnly: true,
       description: 'The current user.'
@@ -49513,7 +49598,7 @@ function _setInitialStateForGlobalVariables(state) {
   state = setGlobalVariable(state, {
     payload: {
       name: 'trigger',
-      label: 'Activating Trigger',
+      label: 'Activating trigger',
       type: 'node',
       runtimeOnly: true,
       description: 'The node that activated the workflow.'
@@ -49522,7 +49607,7 @@ function _setInitialStateForGlobalVariables(state) {
   state = setGlobalVariable(state, {
     payload: {
       name: 'trace',
-      label: 'Execution Trace',
+      label: 'Execution trace',
       type: 'array',
       runtimeOnly: true,
       description: 'The trace of the execution of the workflow.'
@@ -52358,7 +52443,11 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.columns-container {
     height: 28px;
     padding-top: 10px;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;AACvB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;AAChC;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,iBAAiB;IACjB,yBAAyB;IACzB,sBAAsB;IACtB,qBAAqB;AACzB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,QAAQ;IACR,YAAY;IACZ,iBAAiB;AACrB","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 5px 8px;\n    position: relative;\n    user-select: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.selected {\n    background-color: #ccc;\n}\n\n.column-item.has-children.selected::after {\n    color: #1b1b1b;\n}\n\n.column-item:hover {\n    background-color: #f0f0f0;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n}\n\n.expression-builder {\n    position: relative;\n    padding-top: 20px;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 14px;\n    right: 0;\n    height: 28px;\n    padding-top: 10px;\n}\n"],"sourceRoot":""}]);
+
+.column-item-form {
+    padding: 10px;
+}
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;AACvB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;AAChC;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,iBAAiB;IACjB,yBAAyB;IACzB,sBAAsB;IACtB,qBAAqB;AACzB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,QAAQ;IACR,YAAY;IACZ,iBAAiB;AACrB;;AAEA;IACI,aAAa;AACjB","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 5px 8px;\n    position: relative;\n    user-select: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.selected {\n    background-color: #ccc;\n}\n\n.column-item.has-children.selected::after {\n    color: #1b1b1b;\n}\n\n.column-item:hover {\n    background-color: #f0f0f0;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n}\n\n.expression-builder {\n    position: relative;\n    padding-top: 20px;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 14px;\n    right: 0;\n    height: 28px;\n    padding-top: 10px;\n}\n\n.column-item-form {\n    padding: 10px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

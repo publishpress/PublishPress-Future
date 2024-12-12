@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- Replace text fields on step settings with the new expression builder.
+- Replace text fields and input/variables selectors on step settings with the new expression builder (Issue #976).
 - Changed the border of selected steps to dashed line.
 - Moved the panel "Step Data Flow" to the developer mode.
 

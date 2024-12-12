@@ -20,13 +20,13 @@ export function UserData() {
             {
                 name: "user_login",
                 type: "string",
-                label: "User Login",
+                label: "Login",
                 description: "The login name of the user.",
             },
             {
                 name: "display_name",
                 type: "string",
-                label: "Display Name",
+                label: "Display name",
                 description: "The display name of the user.",
             },
             {
@@ -44,12 +44,12 @@ export function UserData() {
             {
                 name: "user_registered",
                 type: "datetime",
-                label: "Registration Date",
+                label: "Registration date",
                 description: "The date when the user was registered.",
             },
             {
                 name: "meta",
-                type: "object",
+                type: "meta",
                 label: "Metadata",
                 description: "The metadata of the user.",
             },

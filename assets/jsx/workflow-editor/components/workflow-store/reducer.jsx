@@ -110,7 +110,7 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
     state = setGlobalVariable(state, {
         payload: {
             name: 'user',
-            label: 'Activating User',
+            label: 'Activating user',
             type: 'user',
             runtimeOnly: true,
             description: 'The current user.',
@@ -120,7 +120,7 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
     state = setGlobalVariable(state, {
         payload: {
             name: 'trigger',
-            label: 'Activating Trigger',
+            label: 'Activating trigger',
             type: 'node',
             runtimeOnly: true,
             description: 'The node that activated the workflow.',
@@ -130,7 +130,7 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
     state = setGlobalVariable(state, {
         payload: {
             name: 'trace',
-            label: 'Execution Trace',
+            label: 'Execution trace',
             type: 'array',
             runtimeOnly: true,
             description: 'The trace of the execution of the workflow.',

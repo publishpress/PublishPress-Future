@@ -1,19 +1,5 @@
 import { useState, useCallback } from "@wordpress/element";
-
-const ColumnItem = ({ item, currentItemPath, handleClick, setCurrentDescription, onDoubleClick, path = [], index }) => {
-    const hasChildren = item.children && item.children.length > 0;
-    const currentColumnIndex = path.length;
-    const selectedItemIndex = currentItemPath[currentColumnIndex];
-
-    return <div
-        className={`column-item ${selectedItemIndex === index ? 'selected' : ''} ${hasChildren ? 'has-children' : ''}`}
-        onClick={() => handleClick([...path, index])}
-        onMouseEnter={() => setCurrentDescription(item.description)}
-        onDoubleClick={() => onDoubleClick(item)}
-    >
-        {item.name}
-    </div>;
-};
+import { ColumnItem } from "./column-item";
 
 const RenderColumns = ({ currentItemPath, currentItems, handleClick, setCurrentDescription, onDoubleClick, path = [] }) => {
     if (!currentItems) return null;
@@ -23,7 +9,14 @@ const RenderColumns = ({ currentItemPath, currentItems, handleClick, setCurrentD
     const currentItem = currentItems[selectedItemIndex];
 
     if (currentItem?.type === 'meta') {
-        console.log(currentItem);
+        currentItem.children = [
+            {
+                id: currentItem.id,
+                name: 'metaKey',
+                description: 'Type the meta key',
+                type: 'text-input'
+            }
+        ]
     }
 
     return (

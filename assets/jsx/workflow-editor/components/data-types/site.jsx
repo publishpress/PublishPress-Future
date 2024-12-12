@@ -43,7 +43,7 @@ export function SiteData() {
             },
             {
                 name: "meta",
-                type: "object",
+                type: "meta",
                 label: "Metadata",
                 description: "The metadata of the site.",
             },
