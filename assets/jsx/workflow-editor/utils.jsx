@@ -296,7 +296,7 @@ export function getExpandedVariablesList(node, globalVariables) {
     var expandedList = [];
     variablesList.forEach((variable) => {
         expandedList.push(
-            expandVariableToOptions(variable)
+            expandVariable(variable)
         );
     });
 
@@ -325,18 +325,31 @@ function getVariableProperties(variable) {
     const getDataTypeByName = select(workflowStore).getDataTypeByName;
     const dataType = getDataTypeByName(variable.type);
 
-    return dataType.propertiesSchema.map((property) => {
-        return {
+    if (!dataType?.propertiesSchema?.length) {
+        return [];
+    }
+
+    const properties = dataType.propertiesSchema.map((property) => {
+        const propertyData = {
             name: variable.name + '.' + property.name,
             label: property.label,
             type: property?.type,
             itemsType: property?.itemsType,
             description: property?.description,
+            children: [],
         };
+
+        if (dataType.type === 'object') {
+            propertyData.children = getVariableProperties(propertyData);
+        }
+
+        return propertyData;
     });
+
+    return properties;
 }
 
-function expandVariableToOptions(variable) {
+function expandVariable(variable) {
     const getDataTypeByName = select(workflowStore).getDataTypeByName;
     const dataType = getDataTypeByName(variable.type);
 

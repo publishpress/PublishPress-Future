@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add new variables selector and an expression builder (Issue #976).
 - Add support to metadata in the variables resolvers and post type variables (Issue #1069, #939).
 - Add the site ID to the site data type schema.
+- Add the post author property to the post data type schema in the workflow editor (Issue #947).
 
 ### Changed
 

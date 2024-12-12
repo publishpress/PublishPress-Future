@@ -63,7 +63,7 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
         if (editorRef.current) {
             const editor = editorRef.current.editor;
             const cursorPosition = editor.getCursorPosition();
-            editor.session.insert(cursorPosition, `{{${item.id}}}`);
+            editor.session.insert(cursorPosition, `{{${item.name}}}`);
         }
     }, [editorRef]);
 

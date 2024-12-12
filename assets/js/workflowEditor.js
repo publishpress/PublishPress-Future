@@ -39797,7 +39797,7 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     if (editorRef.current) {
       var editor = editorRef.current.editor;
       var cursorPosition = editor.getCursorPosition();
-      editor.session.insert(cursorPosition, "{{".concat(item.id, "}}"));
+      editor.session.insert(cursorPosition, "{{".concat(item.name, "}}"));
     }
   }, [editorRef]);
   return /*#__PURE__*/React.createElement("div", {
@@ -50887,7 +50887,7 @@ function getExpandedVariablesList(node, globalVariables) {
   var variablesList = getVariablesList(node, globalVariables);
   var expandedList = [];
   variablesList.forEach(function (variable) {
-    expandedList.push(expandVariableToOptions(variable));
+    expandedList.push(expandVariable(variable));
   });
   return expandedList;
 }
@@ -50907,19 +50907,29 @@ function convertVariableToOptions(variable) {
   };
 }
 function getVariableProperties(variable) {
+  var _dataType$propertiesS;
   var getDataTypeByName = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.select)(_components_workflow_store__WEBPACK_IMPORTED_MODULE_2__.store).getDataTypeByName;
   var dataType = getDataTypeByName(variable.type);
-  return dataType.propertiesSchema.map(function (property) {
-    return {
+  if (!(dataType !== null && dataType !== void 0 && (_dataType$propertiesS = dataType.propertiesSchema) !== null && _dataType$propertiesS !== void 0 && _dataType$propertiesS.length)) {
+    return [];
+  }
+  var properties = dataType.propertiesSchema.map(function (property) {
+    var propertyData = {
       name: variable.name + '.' + property.name,
       label: property.label,
       type: property === null || property === void 0 ? void 0 : property.type,
       itemsType: property === null || property === void 0 ? void 0 : property.itemsType,
-      description: property === null || property === void 0 ? void 0 : property.description
+      description: property === null || property === void 0 ? void 0 : property.description,
+      children: []
     };
+    if (dataType.type === 'object') {
+      propertyData.children = getVariableProperties(propertyData);
+    }
+    return propertyData;
   });
+  return properties;
 }
-function expandVariableToOptions(variable) {
+function expandVariable(variable) {
   var getDataTypeByName = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.select)(_components_workflow_store__WEBPACK_IMPORTED_MODULE_2__.store).getDataTypeByName;
   var dataType = getDataTypeByName(variable.type);
   var option = convertVariableToOptions(variable);
