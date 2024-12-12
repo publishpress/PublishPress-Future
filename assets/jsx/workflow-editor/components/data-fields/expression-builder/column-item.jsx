@@ -1,6 +1,7 @@
 import { __ } from "@wordpress/i18n";
 import { useState } from "@wordpress/element";
 import { TextControl, Button } from "@wordpress/components";
+import { select } from "@wordpress/data-controls";
 
 const ColumnItemMeta = ({ item, onClick }) => {
     const [metaKey, setMetaKey] = useState('');
@@ -27,7 +28,7 @@ const ColumnItemMeta = ({ item, onClick }) => {
 const ColumnItemVariable = ({
     item,
     currentItemPath,
-    handleClick,
+    onClick,
     setCurrentDescription,
     setCurrentVariableId,
     onDoubleClick,
@@ -43,9 +44,11 @@ const ColumnItemVariable = ({
         setCurrentVariableId(item.id);
     }
 
+    console.log(currentItemPath);
+
     return <div
         className={`column-item ${selectedItemIndex === index ? 'selected' : ''} ${hasChildren ? 'has-children' : ''}`}
-        onClick={() => handleClick([...path, index])}
+        onClick={() => onClick([...path, index])}
         onMouseEnter={onMouseEnter}
         onDoubleClick={() => onDoubleClick(item)}
     >
@@ -56,7 +59,7 @@ const ColumnItemVariable = ({
 export const ColumnItem = ({
     item,
     currentItemPath,
-    handleClick,
+    onClick,
     setCurrentDescription,
     setCurrentVariableId,
     onDoubleClick,
@@ -70,7 +73,7 @@ export const ColumnItem = ({
     return <ColumnItemVariable
         item={item}
         currentItemPath={currentItemPath}
-        handleClick={handleClick}
+        onClick={onClick}
         setCurrentDescription={setCurrentDescription}
         setCurrentVariableId={setCurrentVariableId}
         onDoubleClick={onDoubleClick}

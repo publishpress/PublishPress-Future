@@ -4,7 +4,7 @@ import { ColumnItem } from "./column-item";
 const RenderColumns = ({
     currentItemPath,
     currentItems,
-    handleClick,
+    onClick,
     setCurrentDescription,
     onDoubleClick,
     path = [],
@@ -42,7 +42,7 @@ const RenderColumns = ({
                         key={`column-item-${path.join('-')}-${index}`}
                         item={item}
                         currentItemPath={currentItemPath}
-                        handleClick={handleClick}
+                        onClick={onClick}
                         setCurrentDescription={setCurrentDescription}
                         setCurrentVariableId={setCurrentVariableId}
                         onDoubleClick={onDoubleClick}
@@ -57,7 +57,7 @@ const RenderColumns = ({
                     currentItemPath={currentItemPath}
                     currentItems={currentItem.children}
                     path={[...path, selectedItemIndex]}
-                    handleClick={handleClick}
+                    onClick={onClick}
                     setCurrentDescription={setCurrentDescription}
                     setCurrentVariableId={setCurrentVariableId}
                     onDoubleClick={onDoubleClick}
@@ -75,7 +75,7 @@ export const ColumnsContainer = ({
 }) => {
     const [currentItemPath, setCurrentItemPath] = useState([]);
 
-    const handleClick = useCallback((path) => {
+    const onClick = useCallback((path) => {
         setCurrentItemPath(path);
 
         const container = document.querySelector('.columns-container');
@@ -91,7 +91,7 @@ export const ColumnsContainer = ({
             <RenderColumns
                 currentItems={items}
                 currentItemPath={currentItemPath}
-                handleClick={handleClick}
+                onClick={onClick}
                 onDoubleClick={onDoubleClick}
                 setCurrentDescription={setCurrentDescription}
                 setCurrentVariableId={setCurrentVariableId}

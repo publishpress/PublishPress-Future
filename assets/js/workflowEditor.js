@@ -39561,6 +39561,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_data_controls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data-controls */ "./node_modules/@wordpress/data-controls/build-module/index.js");
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
@@ -39571,6 +39572,7 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
 
 
 
@@ -39603,7 +39605,7 @@ var ColumnItemMeta = function ColumnItemMeta(_ref) {
 var ColumnItemVariable = function ColumnItemVariable(_ref2) {
   var item = _ref2.item,
     currentItemPath = _ref2.currentItemPath,
-    handleClick = _ref2.handleClick,
+    _onClick2 = _ref2.onClick,
     setCurrentDescription = _ref2.setCurrentDescription,
     setCurrentVariableId = _ref2.setCurrentVariableId,
     _onDoubleClick = _ref2.onDoubleClick,
@@ -39617,10 +39619,11 @@ var ColumnItemVariable = function ColumnItemVariable(_ref2) {
     setCurrentDescription("".concat(item.description));
     setCurrentVariableId(item.id);
   };
+  console.log(currentItemPath);
   return /*#__PURE__*/React.createElement("div", {
     className: "column-item ".concat(selectedItemIndex === index ? 'selected' : '', " ").concat(hasChildren ? 'has-children' : ''),
     onClick: function onClick() {
-      return handleClick([].concat(_toConsumableArray(path), [index]));
+      return _onClick2([].concat(_toConsumableArray(path), [index]));
     },
     onMouseEnter: onMouseEnter,
     onDoubleClick: function onDoubleClick() {
@@ -39631,7 +39634,7 @@ var ColumnItemVariable = function ColumnItemVariable(_ref2) {
 var ColumnItem = function ColumnItem(_ref3) {
   var item = _ref3.item,
     currentItemPath = _ref3.currentItemPath,
-    handleClick = _ref3.handleClick,
+    onClick = _ref3.onClick,
     setCurrentDescription = _ref3.setCurrentDescription,
     setCurrentVariableId = _ref3.setCurrentVariableId,
     onDoubleClick = _ref3.onDoubleClick,
@@ -39647,7 +39650,7 @@ var ColumnItem = function ColumnItem(_ref3) {
   return /*#__PURE__*/React.createElement(ColumnItemVariable, {
     item: item,
     currentItemPath: currentItemPath,
-    handleClick: handleClick,
+    onClick: onClick,
     setCurrentDescription: setCurrentDescription,
     setCurrentVariableId: setCurrentVariableId,
     onDoubleClick: onDoubleClick,
@@ -39689,7 +39692,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 var _RenderColumns = function RenderColumns(_ref) {
   var currentItemPath = _ref.currentItemPath,
     currentItems = _ref.currentItems,
-    handleClick = _ref.handleClick,
+    onClick = _ref.onClick,
     setCurrentDescription = _ref.setCurrentDescription,
     onDoubleClick = _ref.onDoubleClick,
     _ref$path = _ref.path,
@@ -39721,7 +39724,7 @@ var _RenderColumns = function RenderColumns(_ref) {
       key: "column-item-".concat(path.join('-'), "-").concat(index),
       item: item,
       currentItemPath: currentItemPath,
-      handleClick: handleClick,
+      onClick: onClick,
       setCurrentDescription: setCurrentDescription,
       setCurrentVariableId: setCurrentVariableId,
       onDoubleClick: onDoubleClick,
@@ -39732,7 +39735,7 @@ var _RenderColumns = function RenderColumns(_ref) {
     currentItemPath: currentItemPath,
     currentItems: currentItem.children,
     path: [].concat(_toConsumableArray(path), [selectedItemIndex]),
-    handleClick: handleClick,
+    onClick: onClick,
     setCurrentDescription: setCurrentDescription,
     setCurrentVariableId: setCurrentVariableId,
     onDoubleClick: onDoubleClick
@@ -39747,7 +39750,7 @@ var ColumnsContainer = function ColumnsContainer(_ref2) {
     _useState2 = _slicedToArray(_useState, 2),
     currentItemPath = _useState2[0],
     setCurrentItemPath = _useState2[1];
-  var handleClick = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (path) {
+  var onClick = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (path) {
     setCurrentItemPath(path);
     var container = document.querySelector('.columns-container');
     if (container) {
@@ -39761,7 +39764,7 @@ var ColumnsContainer = function ColumnsContainer(_ref2) {
   }, /*#__PURE__*/React.createElement(_RenderColumns, {
     currentItems: items,
     currentItemPath: currentItemPath,
-    handleClick: handleClick,
+    onClick: onClick,
     onDoubleClick: onDoubleClick,
     setCurrentDescription: setCurrentDescription,
     setCurrentVariableId: setCurrentVariableId
