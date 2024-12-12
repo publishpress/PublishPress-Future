@@ -14,7 +14,7 @@ const RenderColumns = ({ currentItemPath, currentItems, handleClick, setCurrentD
                 id: currentItem.id,
                 name: 'metaKey',
                 description: 'Type the meta key',
-                type: 'text-input'
+                type: 'meta-key-input'
             }
         ]
     }

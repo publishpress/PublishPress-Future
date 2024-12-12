@@ -39561,28 +39561,54 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-var ColumnItemVariable = function ColumnItemVariable(_ref) {
+var ColumnItemMeta = function ColumnItemMeta(_ref) {
   var item = _ref.item,
-    currentItemPath = _ref.currentItemPath,
-    handleClick = _ref.handleClick,
-    setCurrentDescription = _ref.setCurrentDescription,
-    _onDoubleClick = _ref.onDoubleClick,
-    _ref$path = _ref.path,
-    path = _ref$path === void 0 ? [] : _ref$path,
-    index = _ref.index;
+    _onClick = _ref.onClick;
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+    _useState2 = _slicedToArray(_useState, 2),
+    metaKey = _useState2[0],
+    setMetaKey = _useState2[1];
+  var metaItem = {
+    id: item.id + '.' + metaKey
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "column-item-form"
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+    label: item.name,
+    value: metaKey,
+    onChange: function onChange(value) {
+      return setMetaKey(value);
+    },
+    help: item.description
+  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    variant: "secondary",
+    onClick: function onClick() {
+      _onClick(metaItem);
+    }
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Insert', 'post-expirator')));
+};
+var ColumnItemVariable = function ColumnItemVariable(_ref2) {
+  var item = _ref2.item,
+    currentItemPath = _ref2.currentItemPath,
+    handleClick = _ref2.handleClick,
+    setCurrentDescription = _ref2.setCurrentDescription,
+    _onDoubleClick = _ref2.onDoubleClick,
+    _ref2$path = _ref2.path,
+    path = _ref2$path === void 0 ? [] : _ref2$path,
+    index = _ref2.index;
   var hasChildren = item.children && item.children.length > 0;
   var currentColumnIndex = path.length;
   var selectedItemIndex = currentItemPath[currentColumnIndex];
@@ -39592,45 +39618,27 @@ var ColumnItemVariable = function ColumnItemVariable(_ref) {
       return handleClick([].concat(_toConsumableArray(path), [index]));
     },
     onMouseEnter: function onMouseEnter() {
-      return setCurrentDescription(item.description);
+      return setCurrentDescription("".concat(item.description, " {{").concat(item.id, "}}"));
     },
     onDoubleClick: function onDoubleClick() {
       return _onDoubleClick(item);
     }
   }, item.name);
 };
-var ColumnItem = function ColumnItem(_ref2) {
-  var item = _ref2.item,
-    currentItemPath = _ref2.currentItemPath,
-    handleClick = _ref2.handleClick,
-    setCurrentDescription = _ref2.setCurrentDescription,
-    onDoubleClick = _ref2.onDoubleClick,
-    _ref2$path = _ref2.path,
-    path = _ref2$path === void 0 ? [] : _ref2$path,
-    index = _ref2.index;
-  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
-    _useState2 = _slicedToArray(_useState, 2),
-    metaKey = _useState2[0],
-    setMetaKey = _useState2[1];
-  if ((item === null || item === void 0 ? void 0 : item.type) === 'text-input') {
-    var metaItem = {
-      id: item.id + '.' + metaKey
-    };
-    return /*#__PURE__*/React.createElement("div", {
-      className: "column-item-form"
-    }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-      label: item.name,
-      value: metaKey,
-      onChange: function onChange(value) {
-        return setMetaKey(value);
-      },
-      help: item.description
-    }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-      variant: "secondary",
-      onClick: function onClick() {
-        onDoubleClick(metaItem);
-      }
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Insert', 'post-expirator')));
+var ColumnItem = function ColumnItem(_ref3) {
+  var item = _ref3.item,
+    currentItemPath = _ref3.currentItemPath,
+    handleClick = _ref3.handleClick,
+    setCurrentDescription = _ref3.setCurrentDescription,
+    onDoubleClick = _ref3.onDoubleClick,
+    _ref3$path = _ref3.path,
+    path = _ref3$path === void 0 ? [] : _ref3$path,
+    index = _ref3.index;
+  if ((item === null || item === void 0 ? void 0 : item.type) === 'meta-key-input') {
+    return /*#__PURE__*/React.createElement(ColumnItemMeta, {
+      item: item,
+      onClick: onDoubleClick
+    });
   }
   return /*#__PURE__*/React.createElement(ColumnItemVariable, {
     item: item,
@@ -39690,7 +39698,7 @@ var _RenderColumns = function RenderColumns(_ref) {
       id: currentItem.id,
       name: 'metaKey',
       description: 'Type the meta key',
-      type: 'text-input'
+      type: 'meta-key-input'
     }];
   }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
