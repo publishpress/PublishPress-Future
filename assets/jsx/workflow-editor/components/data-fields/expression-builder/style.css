@@ -4,6 +4,7 @@
     border: 1px solid #ccc;
     overflow-x: auto;
     white-space: nowrap;
+    max-height: 212px;
 }
 
 .column {
@@ -18,7 +19,7 @@
 
 .column-item {
     cursor: pointer;
-    padding: 5px 8px;
+    padding: 2px 6px;
     position: relative;
     user-select: none;
     -webkit-user-select: none;
@@ -59,6 +60,11 @@
     border: 1px solid #ccc;
 }
 
+.ace_editor {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
 .ace_editor.ace_autocomplete {
     z-index: 999999999;
 }
@@ -82,7 +88,7 @@
 
 .column-item-form {
     padding: 10px;
-    max-width: 270px;
+    max-width: 202px;
 }
 
 .column-item-form p {

@@ -123,7 +123,7 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
                             enableLiveAutocompletion: false,
                         }}
                         height="200px"
-                        width="560px"
+                        width="600px"
                         placeholder={settings?.placeholder || ''}
                     />
 
