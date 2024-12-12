@@ -36,7 +36,7 @@ const ColumnItemVariable = ({
     index
 }) => {
     const hasChildren = item.children && item.children.length > 0;
-    const currentColumnIndex = path.length;
+    const currentColumnIndex = path.length - 1;
     const selectedItemIndex = currentItemPath[currentColumnIndex];
 
     const onMouseEnter = () => {
@@ -44,11 +44,9 @@ const ColumnItemVariable = ({
         setCurrentVariableId(item.id);
     }
 
-    console.log(currentItemPath);
-
     return <div
         className={`column-item ${selectedItemIndex === index ? 'selected' : ''} ${hasChildren ? 'has-children' : ''}`}
-        onClick={() => onClick([...path, index])}
+        onClick={() => onClick(path, currentColumnIndex, index)}
         onMouseEnter={onMouseEnter}
         onDoubleClick={() => onDoubleClick(item)}
     >

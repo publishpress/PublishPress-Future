@@ -75,8 +75,12 @@ export const ColumnsContainer = ({
 }) => {
     const [currentItemPath, setCurrentItemPath] = useState([]);
 
-    const onClick = useCallback((path) => {
-        setCurrentItemPath(path);
+    const onClick = useCallback((path, currentColumnIndex, index) => {
+        // Remove the items from the path that are after the current column index
+        const newPath = path.slice(0, currentColumnIndex + 1);
+        newPath.push(index);
+
+        setCurrentItemPath(newPath);
 
         const container = document.querySelector('.columns-container');
         if (container) {
