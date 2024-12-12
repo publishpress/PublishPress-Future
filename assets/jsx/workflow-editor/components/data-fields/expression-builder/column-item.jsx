@@ -10,7 +10,7 @@ const ColumnItemVariable = ({ item, currentItemPath, handleClick, setCurrentDesc
     return <div
         className={`column-item ${selectedItemIndex === index ? 'selected' : ''} ${hasChildren ? 'has-children' : ''}`}
         onClick={() => handleClick([...path, index])}
-        onMouseEnter={() => setCurrentDescription(item.description)}
+        onMouseEnter={() => setCurrentDescription(`${item.description} {{${item.id}}}`)}
         onDoubleClick={() => onDoubleClick(item)}
     >
         {item.name}
