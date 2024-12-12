@@ -19,8 +19,8 @@ const RenderColumns = ({
     const addMetaKeyInputChildren = (item) => {
         item.children = [
             {
-                id: item.id,
-                name: 'metaKey',
+                name: item.name,
+                label: 'Metadata key',
                 description: 'Type the meta key and click on the button to insert it.',
                 type: 'meta-key-input'
             }
@@ -60,7 +60,7 @@ const RenderColumns = ({
                     onClick={onClick}
                     setCurrentDescription={setCurrentDescription}
                     setCurrentVariableId={setCurrentVariableId}
-                    onDoubleClick={onDoubleClick}
+                onDoubleClick={onDoubleClick}
                 />
             )}
         </>

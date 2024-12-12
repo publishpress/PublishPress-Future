@@ -5,8 +5,8 @@ import { ExpressionBuilder } from "./expression-builder";
 export function DebugData({ name, label, defaultValue, onChange, variables = [] }) {
     let debugVariables = [
         {
-            id: "input",
-            name: __("All received input", "post-expirator"),
+            name: "input",
+            label: __("All received input", "post-expirator"),
             description: __("All received input from the previous steps.", "post-expirator"),
         },
         ...variables,

@@ -296,13 +296,13 @@ export function getExpandedVariableOptionsForSelect(node, globalVariables) {
 
     var options = [];
     mappedNodeInputs.forEach((variable) => {
-        const optionsToAdd = getOptionsForVariable(variable);
+        const optionsToAdd = expandVariableToOptions(variable);
 
         options.push(optionsToAdd);
     });
 
     globalVariablesToList.forEach((variable) => {
-        const optionsToAdd = getOptionsForVariable(variable);
+        const optionsToAdd = expandVariableToOptions(variable);
 
         options.push(optionsToAdd);
     });
@@ -317,30 +317,41 @@ export function getVariablesList(node, globalVariables) {
     return [...mappedNodeInputs, ...globalVariablesToList];
 }
 
-function getOptionsForVariable(variable) {
-    const getDataTypeByName = select(workflowStore).getDataTypeByName;
-    const dataType = getDataTypeByName(variable.type);
-
-    const option = {
-        id: variable.name,
-        name: variable.label,
+function convertVariableToOptions(variable) {
+    return {
+        name: variable.name,
+        label: variable.label,
         children: [],
-        type: variable?.type,
+        type: variable.type,
         itemsType: variable?.itemsType,
         description: variable?.description,
     };
+}
+
+function getVariableProperties(variable) {
+    const getDataTypeByName = select(workflowStore).getDataTypeByName;
+    const dataType = getDataTypeByName(variable.type);
+
+    return dataType.propertiesSchema.map((property) => {
+        return {
+            name: variable.name + '.' + property.name,
+            label: property.label,
+            type: property?.type,
+            itemsType: property?.itemsType,
+            description: property?.description,
+        };
+    });
+}
+
+function expandVariableToOptions(variable) {
+    const getDataTypeByName = select(workflowStore).getDataTypeByName;
+    const dataType = getDataTypeByName(variable.type);
+
+    const option = convertVariableToOptions(variable);
 
     // If the variable is an object, add its properties as children
     if (dataType.type === 'object') {
-        option.children = dataType.propertiesSchema.map((property) => {
-            return {
-                id: variable.name + '.' + property.name,
-                name: property.label,
-                type: property.type,
-                itemsType: property.itemsType,
-                description: property.description,
-            };
-        });
+        option.children = getVariableProperties(variable);
     }
 
     return option;

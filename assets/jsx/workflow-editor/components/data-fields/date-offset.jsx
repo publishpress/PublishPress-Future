@@ -87,7 +87,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
     // Filter out hidden date sources
     if (settings && settings?.hideDateSources) {
         dateSourceOptions = dateSourceOptions.filter((option) => {
-            return !settings.hideDateSources.includes(option.id);
+            return !settings.hideDateSources.includes(option.name);
         });
     }
 

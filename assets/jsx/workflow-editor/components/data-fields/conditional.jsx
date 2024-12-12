@@ -32,14 +32,14 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
             if (variable.children) {
                 for (const child of variable.children) {
                     allVariables.push({
-                        name: child.id,
-                        label: child.name,
+                        name: child.name,
+                        label: child.label,
                     });
                 }
             } else {
                 allVariables.push({
-                    name: variable.id,
-                    label: variable.name,
+                    name: variable.name,
+                    label: variable.label,
                 });
             }
         }

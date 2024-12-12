@@ -66,6 +66,12 @@ export function PostData() {
                 description: "The permalink of the post.",
             },
             {
+                name: "author",
+                type: "user",
+                label: "Author",
+                description: "The author of the post.",
+            },
+            {
                 name: "meta",
                 type: "meta",
                 label: "Metadata",

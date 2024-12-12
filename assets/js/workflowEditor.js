@@ -38926,8 +38926,8 @@ var Conditional = function Conditional(_ref) {
             for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
               var child = _step2.value;
               allVariables.push({
-                name: child.id,
-                label: child.name
+                name: child.name,
+                label: child.label
               });
             }
           } catch (err) {
@@ -38937,8 +38937,8 @@ var Conditional = function Conditional(_ref) {
           }
         } else {
           allVariables.push({
-            name: variable.id,
-            label: variable.name
+            name: variable.name,
+            label: variable.label
           });
         }
       }
@@ -39161,7 +39161,7 @@ function DateOffset(_ref) {
   // Filter out hidden date sources
   if (settings && settings !== null && settings !== void 0 && settings.hideDateSources) {
     dateSourceOptions = dateSourceOptions.filter(function (option) {
-      return !settings.hideDateSources.includes(option.id);
+      return !settings.hideDateSources.includes(option.name);
     });
   }
   var onChangeSetting = function onChangeSetting(_ref2) {
@@ -39343,8 +39343,8 @@ function DebugData(_ref) {
     _ref$variables = _ref.variables,
     variables = _ref$variables === void 0 ? [] : _ref$variables;
   var debugVariables = [{
-    id: "input",
-    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("All received input", "post-expirator"),
+    name: "input",
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("All received input", "post-expirator"),
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("All received input from the previous steps.", "post-expirator")
   }].concat(_toConsumableArray(variables));
   var defaultDebugOption = {
@@ -39453,96 +39453,6 @@ function DebugLevels(_ref) {
 
 /***/ }),
 
-/***/ "./assets/jsx/workflow-editor/components/data-fields/email-recipient.jsx":
-/*!*******************************************************************************!*\
-  !*** ./assets/jsx/workflow-editor/components/data-fields/email-recipient.jsx ***!
-  \*******************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   EmailRecipient: () => (/* binding */ EmailRecipient),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _variables_tree_select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../variables-tree-select */ "./assets/jsx/workflow-editor/components/variables-tree-select/index.jsx");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils */ "./assets/jsx/workflow-editor/utils.jsx");
-/* harmony import */ var _expression_builder__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./expression-builder */ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/index.jsx");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-
-
-
-
-
-function EmailRecipient(_ref) {
-  var name = _ref.name,
-    label = _ref.label,
-    defaultValue = _ref.defaultValue,
-    onChange = _ref.onChange,
-    settings = _ref.settings,
-    _ref$variables = _ref.variables,
-    variables = _ref$variables === void 0 ? [] : _ref$variables;
-  // variables = filterVariableOptionsByDataType(variables, ['email']);
-
-  var recipientOptions = [].concat(_toConsumableArray(variables), [{
-    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Custom Addresses", "post-expirator"),
-    id: "custom"
-  }]);
-  var onChangeSetting = function onChangeSetting(_ref2) {
-    var settingName = _ref2.settingName,
-      value = _ref2.value;
-    var newValue = _objectSpread({}, defaultValue);
-    newValue[settingName] = value;
-    if (settingName === "recipient" && value !== "custom") {
-      newValue.custom = "";
-    }
-    if (onChange) {
-      onChange(name, newValue);
-    }
-  };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalVStack, null, /*#__PURE__*/React.createElement(_variables_tree_select__WEBPACK_IMPORTED_MODULE_1__.VariablesTreeSelect, {
-    tree: recipientOptions,
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Email Recipient", "post-expirator"),
-    selectedId: defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.recipient,
-    onChange: function onChange(value) {
-      return onChangeSetting({
-        settingName: "recipient",
-        value: value
-      });
-    }
-  }), (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.recipient) === "custom" && /*#__PURE__*/React.createElement(_expression_builder__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    name: name + "-custom",
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Custom Email Addresses", "post-expirator"),
-    defaultValue: defaultValue || "",
-    onChange: function onChange(settingsName, value) {
-      return onChangeSetting({
-        settingName: "custom",
-        value: value.custom
-      });
-    },
-    propertyName: "custom",
-    variables: variables
-  })));
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EmailRecipient);
-
-/***/ }),
-
 /***/ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/column-item.jsx":
 /*!**********************************************************************************************!*\
   !*** ./assets/jsx/workflow-editor/components/data-fields/expression-builder/column-item.jsx ***!
@@ -39562,10 +39472,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_data_controls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data-controls */ "./node_modules/@wordpress/data-controls/build-module/index.js");
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -39584,12 +39490,14 @@ var ColumnItemMeta = function ColumnItemMeta(_ref) {
     metaKey = _useState2[0],
     setMetaKey = _useState2[1];
   var metaItem = {
-    id: item.id + '.' + metaKey
+    name: item.name + '.' + metaKey,
+    label: 'Metadata key',
+    description: 'Type the meta key and click on the button to insert it.'
   };
   return /*#__PURE__*/React.createElement("div", {
     className: "column-item-form"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-    label: item.name,
+    label: item.label,
     value: metaKey,
     onChange: function onChange(value) {
       return setMetaKey(value);
@@ -39613,23 +39521,22 @@ var ColumnItemVariable = function ColumnItemVariable(_ref2) {
     path = _ref2$path === void 0 ? [] : _ref2$path,
     index = _ref2.index;
   var hasChildren = item.children && item.children.length > 0;
-  var currentColumnIndex = path.length;
+  var currentColumnIndex = path.length - 1;
   var selectedItemIndex = currentItemPath[currentColumnIndex];
   var onMouseEnter = function onMouseEnter() {
     setCurrentDescription("".concat(item.description));
-    setCurrentVariableId(item.id);
+    setCurrentVariableId(item.name);
   };
-  console.log(currentItemPath);
   return /*#__PURE__*/React.createElement("div", {
     className: "column-item ".concat(selectedItemIndex === index ? 'selected' : '', " ").concat(hasChildren ? 'has-children' : ''),
     onClick: function onClick() {
-      return _onClick2([].concat(_toConsumableArray(path), [index]));
+      return _onClick2(path, currentColumnIndex, index);
     },
     onMouseEnter: onMouseEnter,
     onDoubleClick: function onDoubleClick() {
       return _onDoubleClick(item);
     }
-  }, item.name);
+  }, item.label);
 };
 var ColumnItem = function ColumnItem(_ref3) {
   var item = _ref3.item,
@@ -39704,8 +39611,8 @@ var _RenderColumns = function RenderColumns(_ref) {
   var currentItem = currentItems[selectedItemIndex];
   var addMetaKeyInputChildren = function addMetaKeyInputChildren(item) {
     item.children = [{
-      id: item.id,
-      name: 'metaKey',
+      name: item.name,
+      label: 'Metadata key',
       description: 'Type the meta key and click on the button to insert it.',
       type: 'meta-key-input'
     }];
@@ -39750,8 +39657,11 @@ var ColumnsContainer = function ColumnsContainer(_ref2) {
     _useState2 = _slicedToArray(_useState, 2),
     currentItemPath = _useState2[0],
     setCurrentItemPath = _useState2[1];
-  var onClick = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (path) {
-    setCurrentItemPath(path);
+  var onClick = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (path, currentColumnIndex, index) {
+    // Remove the items from the path that are after the current column index
+    var newPath = path.slice(0, currentColumnIndex + 1);
+    newPath.push(index);
+    setCurrentItemPath(newPath);
     var container = document.querySelector('.columns-container');
     if (container) {
       setTimeout(function () {
@@ -41068,6 +40978,11 @@ function PostData() {
       type: "string",
       label: "Permalink",
       description: "The permalink of the post."
+    }, {
+      name: "author",
+      type: "user",
+      label: "Author",
+      description: "The author of the post."
     }, {
       name: "meta",
       type: "meta",
@@ -44940,15 +44855,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_fields_text__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../data-fields/text */ "./assets/jsx/workflow-editor/components/data-fields/text.jsx");
 /* harmony import */ var _data_fields_taxonomy_terms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../data-fields/taxonomy-terms */ "./assets/jsx/workflow-editor/components/data-fields/taxonomy-terms.jsx");
 /* harmony import */ var _data_fields_post_status__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../data-fields/post-status */ "./assets/jsx/workflow-editor/components/data-fields/post-status.jsx");
-/* harmony import */ var _data_fields_email_recipient__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../data-fields/email-recipient */ "./assets/jsx/workflow-editor/components/data-fields/email-recipient.jsx");
-/* harmony import */ var _data_fields_textarea__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../data-fields/textarea */ "./assets/jsx/workflow-editor/components/data-fields/textarea.jsx");
-/* harmony import */ var _data_fields_post_input__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../data-fields/post-input */ "./assets/jsx/workflow-editor/components/data-fields/post-input.jsx");
-/* harmony import */ var _data_fields_manual_workflow_input__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../data-fields/manual-workflow-input */ "./assets/jsx/workflow-editor/components/data-fields/manual-workflow-input.jsx");
-/* harmony import */ var _data_fields_list__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../data-fields/list */ "./assets/jsx/workflow-editor/components/data-fields/list.jsx");
-/* harmony import */ var _data_fields_conditional__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../data-fields/conditional */ "./assets/jsx/workflow-editor/components/data-fields/conditional.jsx");
-/* harmony import */ var _data_fields_debug_levels__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../data-fields/debug-levels */ "./assets/jsx/workflow-editor/components/data-fields/debug-levels.jsx");
-/* harmony import */ var _data_fields_expression_builder__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../data-fields/expression-builder */ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/index.jsx");
-
+/* harmony import */ var _data_fields_textarea__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../data-fields/textarea */ "./assets/jsx/workflow-editor/components/data-fields/textarea.jsx");
+/* harmony import */ var _data_fields_post_input__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../data-fields/post-input */ "./assets/jsx/workflow-editor/components/data-fields/post-input.jsx");
+/* harmony import */ var _data_fields_manual_workflow_input__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../data-fields/manual-workflow-input */ "./assets/jsx/workflow-editor/components/data-fields/manual-workflow-input.jsx");
+/* harmony import */ var _data_fields_list__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../data-fields/list */ "./assets/jsx/workflow-editor/components/data-fields/list.jsx");
+/* harmony import */ var _data_fields_conditional__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../data-fields/conditional */ "./assets/jsx/workflow-editor/components/data-fields/conditional.jsx");
+/* harmony import */ var _data_fields_debug_levels__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../data-fields/debug-levels */ "./assets/jsx/workflow-editor/components/data-fields/debug-levels.jsx");
+/* harmony import */ var _data_fields_expression_builder__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../data-fields/expression-builder */ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/index.jsx");
 
 
 
@@ -44981,21 +44894,19 @@ var MappedField = function MappedField(props) {
     case "text":
       return /*#__PURE__*/React.createElement(_data_fields_text__WEBPACK_IMPORTED_MODULE_5__["default"], props);
     case "textarea":
-      return /*#__PURE__*/React.createElement(_data_fields_textarea__WEBPACK_IMPORTED_MODULE_9__["default"], props);
-    case "emailRecipient":
-      return /*#__PURE__*/React.createElement(_data_fields_email_recipient__WEBPACK_IMPORTED_MODULE_8__["default"], props);
+      return /*#__PURE__*/React.createElement(_data_fields_textarea__WEBPACK_IMPORTED_MODULE_8__["default"], props);
     case "postInput":
-      return /*#__PURE__*/React.createElement(_data_fields_post_input__WEBPACK_IMPORTED_MODULE_10__["default"], props);
+      return /*#__PURE__*/React.createElement(_data_fields_post_input__WEBPACK_IMPORTED_MODULE_9__["default"], props);
     case "manualWorkflowInput":
-      return /*#__PURE__*/React.createElement(_data_fields_manual_workflow_input__WEBPACK_IMPORTED_MODULE_11__["default"], props);
+      return /*#__PURE__*/React.createElement(_data_fields_manual_workflow_input__WEBPACK_IMPORTED_MODULE_10__["default"], props);
     case "list":
-      return /*#__PURE__*/React.createElement(_data_fields_list__WEBPACK_IMPORTED_MODULE_12__["default"], props);
+      return /*#__PURE__*/React.createElement(_data_fields_list__WEBPACK_IMPORTED_MODULE_11__["default"], props);
     case "conditional":
-      return /*#__PURE__*/React.createElement(_data_fields_conditional__WEBPACK_IMPORTED_MODULE_13__["default"], props);
+      return /*#__PURE__*/React.createElement(_data_fields_conditional__WEBPACK_IMPORTED_MODULE_12__["default"], props);
     case "debugLevels":
-      return /*#__PURE__*/React.createElement(_data_fields_debug_levels__WEBPACK_IMPORTED_MODULE_14__["default"], props);
+      return /*#__PURE__*/React.createElement(_data_fields_debug_levels__WEBPACK_IMPORTED_MODULE_13__["default"], props);
     case "expression":
-      return /*#__PURE__*/React.createElement(_data_fields_expression_builder__WEBPACK_IMPORTED_MODULE_15__["default"], props);
+      return /*#__PURE__*/React.createElement(_data_fields_expression_builder__WEBPACK_IMPORTED_MODULE_14__["default"], props);
   }
   return /*#__PURE__*/React.createElement("i", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Field type %s is not implemented', 'publihspress-future-pro'), props.type));
 };
@@ -50978,11 +50889,11 @@ function getExpandedVariableOptionsForSelect(node, globalVariables) {
   var globalVariablesToList = getGlobalVariablesExpanded(globalVariables);
   var options = [];
   mappedNodeInputs.forEach(function (variable) {
-    var optionsToAdd = getOptionsForVariable(variable);
+    var optionsToAdd = expandVariableToOptions(variable);
     options.push(optionsToAdd);
   });
   globalVariablesToList.forEach(function (variable) {
-    var optionsToAdd = getOptionsForVariable(variable);
+    var optionsToAdd = expandVariableToOptions(variable);
     options.push(optionsToAdd);
   });
   return options;
@@ -50992,29 +50903,37 @@ function getVariablesList(node, globalVariables) {
   var globalVariablesToList = getGlobalVariablesExpanded(globalVariables);
   return [].concat(_toConsumableArray(mappedNodeInputs), _toConsumableArray(globalVariablesToList));
 }
-function getOptionsForVariable(variable) {
-  var getDataTypeByName = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.select)(_components_workflow_store__WEBPACK_IMPORTED_MODULE_2__.store).getDataTypeByName;
-  var dataType = getDataTypeByName(variable.type);
-  var option = {
-    id: variable.name,
-    name: variable.label,
+function convertVariableToOptions(variable) {
+  return {
+    name: variable.name,
+    label: variable.label,
     children: [],
-    type: variable === null || variable === void 0 ? void 0 : variable.type,
+    type: variable.type,
     itemsType: variable === null || variable === void 0 ? void 0 : variable.itemsType,
     description: variable === null || variable === void 0 ? void 0 : variable.description
   };
+}
+function getVariableProperties(variable) {
+  var getDataTypeByName = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.select)(_components_workflow_store__WEBPACK_IMPORTED_MODULE_2__.store).getDataTypeByName;
+  var dataType = getDataTypeByName(variable.type);
+  return dataType.propertiesSchema.map(function (property) {
+    return {
+      name: variable.name + '.' + property.name,
+      label: property.label,
+      type: property === null || property === void 0 ? void 0 : property.type,
+      itemsType: property === null || property === void 0 ? void 0 : property.itemsType,
+      description: property === null || property === void 0 ? void 0 : property.description
+    };
+  });
+}
+function expandVariableToOptions(variable) {
+  var getDataTypeByName = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.select)(_components_workflow_store__WEBPACK_IMPORTED_MODULE_2__.store).getDataTypeByName;
+  var dataType = getDataTypeByName(variable.type);
+  var option = convertVariableToOptions(variable);
 
   // If the variable is an object, add its properties as children
   if (dataType.type === 'object') {
-    option.children = dataType.propertiesSchema.map(function (property) {
-      return {
-        id: variable.name + '.' + property.name,
-        name: property.label,
-        type: property.type,
-        itemsType: property.itemsType,
-        description: property.description
-      };
-    });
+    option.children = getVariableProperties(variable);
   }
   return option;
 }

@@ -6,7 +6,6 @@ import RayColor from "../data-fields/ray-color";
 import Text from "../data-fields/text";
 import TaxonomyTerms from "../data-fields/taxonomy-terms";
 import PostStatus from "../data-fields/post-status";
-import EmailRecipient from "../data-fields/email-recipient";
 import Textarea from "../data-fields/textarea";
 import PostInput from "../data-fields/post-input";
 import ManualWorkflowInput from "../data-fields/manual-workflow-input";
@@ -48,10 +47,6 @@ export const MappedField = (props) => {
         case "textarea":
             return (
                 <Textarea {...props} />
-            );
-        case "emailRecipient":
-            return (
-                <EmailRecipient {...props} />
             );
         case "postInput":
             return (

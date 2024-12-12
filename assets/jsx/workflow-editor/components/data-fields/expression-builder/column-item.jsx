@@ -7,13 +7,15 @@ const ColumnItemMeta = ({ item, onClick }) => {
     const [metaKey, setMetaKey] = useState('');
 
     const metaItem = {
-        id: item.id + '.' + metaKey,
+        name: item.name + '.' + metaKey,
+        label: 'Metadata key',
+        description: 'Type the meta key and click on the button to insert it.',
     }
 
     return (
         <div className="column-item-form">
             <TextControl
-                label={item.name}
+                label={item.label}
                 value={metaKey}
                 onChange={(value) => setMetaKey(value)}
                 help={item.description}
@@ -41,7 +43,7 @@ const ColumnItemVariable = ({
 
     const onMouseEnter = () => {
         setCurrentDescription(`${item.description}`);
-        setCurrentVariableId(item.id);
+        setCurrentVariableId(item.name);
     }
 
     return <div
@@ -50,7 +52,7 @@ const ColumnItemVariable = ({
         onMouseEnter={onMouseEnter}
         onDoubleClick={() => onDoubleClick(item)}
     >
-        {item.name}
+        {item.label}
     </div>;
 };
 
