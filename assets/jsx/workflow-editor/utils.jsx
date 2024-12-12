@@ -290,24 +290,17 @@ export function mapNodeInputs(node) {
     return uniqueMappedInputs;
 }
 
-export function getExpandedVariableOptionsForSelect(node, globalVariables) {
-    const mappedNodeInputs = mapNodeInputs(node);
-    const globalVariablesToList = getGlobalVariablesExpanded(globalVariables);
+export function getExpandedVariablesList(node, globalVariables) {
+    const variablesList = getVariablesList(node, globalVariables);
 
-    var options = [];
-    mappedNodeInputs.forEach((variable) => {
-        const optionsToAdd = expandVariableToOptions(variable);
-
-        options.push(optionsToAdd);
+    var expandedList = [];
+    variablesList.forEach((variable) => {
+        expandedList.push(
+            expandVariableToOptions(variable)
+        );
     });
 
-    globalVariablesToList.forEach((variable) => {
-        const optionsToAdd = expandVariableToOptions(variable);
-
-        options.push(optionsToAdd);
-    });
-
-    return options;
+    return expandedList;
 }
 
 export function getVariablesList(node, globalVariables) {

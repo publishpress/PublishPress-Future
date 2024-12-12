@@ -45167,7 +45167,7 @@ var NodeSettingsPanel = function NodeSettingsPanel(_ref) {
     nodeSettings = {};
   }
   var settingsSchema = (nodeType === null || nodeType === void 0 ? void 0 : nodeType.settingsSchema) || {};
-  var variableListOptions = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.getExpandedVariableOptionsForSelect)(node, globalVariables);
+  var variableListOptions = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.getExpandedVariablesList)(node, globalVariables);
   var settingsPanels = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(function () {
     return settingsSchema.map(function (settingPanel) {
       return /*#__PURE__*/React.createElement(_persistent_panel_body__WEBPACK_IMPORTED_MODULE_7__["default"], {
@@ -50601,7 +50601,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   addBodyClasses: () => (/* binding */ addBodyClasses),
 /* harmony export */   createNewNode: () => (/* binding */ createNewNode),
 /* harmony export */   filterVariableOptionsByDataType: () => (/* binding */ filterVariableOptionsByDataType),
-/* harmony export */   getExpandedVariableOptionsForSelect: () => (/* binding */ getExpandedVariableOptionsForSelect),
+/* harmony export */   getExpandedVariablesList: () => (/* binding */ getExpandedVariablesList),
 /* harmony export */   getGlobalVariablesExpanded: () => (/* binding */ getGlobalVariablesExpanded),
 /* harmony export */   getId: () => (/* binding */ getId),
 /* harmony export */   getNodeIncomers: () => (/* binding */ getNodeIncomers),
@@ -50884,19 +50884,13 @@ function mapNodeInputs(node) {
   });
   return uniqueMappedInputs;
 }
-function getExpandedVariableOptionsForSelect(node, globalVariables) {
-  var mappedNodeInputs = mapNodeInputs(node);
-  var globalVariablesToList = getGlobalVariablesExpanded(globalVariables);
-  var options = [];
-  mappedNodeInputs.forEach(function (variable) {
-    var optionsToAdd = expandVariableToOptions(variable);
-    options.push(optionsToAdd);
+function getExpandedVariablesList(node, globalVariables) {
+  var variablesList = getVariablesList(node, globalVariables);
+  var expandedList = [];
+  variablesList.forEach(function (variable) {
+    expandedList.push(expandVariableToOptions(variable));
   });
-  globalVariablesToList.forEach(function (variable) {
-    var optionsToAdd = expandVariableToOptions(variable);
-    options.push(optionsToAdd);
-  });
-  return options;
+  return expandedList;
 }
 function getVariablesList(node, globalVariables) {
   var mappedNodeInputs = mapNodeInputs(node);
