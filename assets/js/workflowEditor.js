@@ -39890,7 +39890,7 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     onDoubleClick: onDoubleClick
   })), currentDescription && /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("code", {
     className: "expression-builder-variable-name"
-  }, "{{".concat(currentVariableId, "}}")), ": ", currentDescription))));
+  }, "{{".concat(currentVariableId, "}}")), ": ", currentDescription), !currentDescription && /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Hover over a variable to see its description.", "post-expirator")))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ExpressionBuilder);
 

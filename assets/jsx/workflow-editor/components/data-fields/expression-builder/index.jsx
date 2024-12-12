@@ -155,6 +155,10 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
                             </code>: {currentDescription}
                         </p>
                     )}
+
+                    {!currentDescription && (
+                        <p>{__("Hover over a variable to see its description.", "post-expirator")}</p>
+                    )}
                 </div>
             </Popover>
         )}
