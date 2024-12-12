@@ -20,6 +20,7 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
     const editorRef = useRef(null);
 
     const [currentDescription, setCurrentDescription] = useState();
+    const [currentVariableId, setCurrentVariableId] = useState();
     const [isOpen, setIsOpen] = useState(false);
 
     if (! defaultValue) {
@@ -138,12 +139,17 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
                         <ColumnsContainer
                             items={variables}
                             setCurrentDescription={setCurrentDescription}
+                            setCurrentVariableId={setCurrentVariableId}
                             onDoubleClick={onDoubleClick}
                         />
                     </div>
 
                     {currentDescription && (
-                        <p>{currentDescription}</p>
+                        <p>
+                            <code className="expression-builder-variable-name">
+                                {`{{${currentVariableId}}}`}
+                            </code>: {currentDescription}
+                        </p>
                     )}
                 </div>
             </Popover>

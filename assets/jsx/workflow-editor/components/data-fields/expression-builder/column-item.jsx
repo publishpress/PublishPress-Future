@@ -24,27 +24,59 @@ const ColumnItemMeta = ({ item, onClick }) => {
     );
 }
 
-const ColumnItemVariable = ({ item, currentItemPath, handleClick, setCurrentDescription, onDoubleClick, path = [], index }) => {
+const ColumnItemVariable = ({
+    item,
+    currentItemPath,
+    handleClick,
+    setCurrentDescription,
+    setCurrentVariableId,
+    onDoubleClick,
+    path = [],
+    index
+}) => {
     const hasChildren = item.children && item.children.length > 0;
     const currentColumnIndex = path.length;
     const selectedItemIndex = currentItemPath[currentColumnIndex];
 
+    const onMouseEnter = () => {
+        setCurrentDescription(`${item.description}`);
+        setCurrentVariableId(item.id);
+    }
+
     return <div
         className={`column-item ${selectedItemIndex === index ? 'selected' : ''} ${hasChildren ? 'has-children' : ''}`}
         onClick={() => handleClick([...path, index])}
-        onMouseEnter={() => setCurrentDescription(`${item.description} {{${item.id}}}`)}
+        onMouseEnter={onMouseEnter}
         onDoubleClick={() => onDoubleClick(item)}
     >
         {item.name}
     </div>;
 };
 
-export const ColumnItem = ({ item, currentItemPath, handleClick, setCurrentDescription, onDoubleClick, path = [], index }) => {
+export const ColumnItem = ({
+    item,
+    currentItemPath,
+    handleClick,
+    setCurrentDescription,
+    setCurrentVariableId,
+    onDoubleClick,
+    path = [],
+    index
+}) => {
     if (item?.type === 'meta-key-input') {
         return <ColumnItemMeta item={item} onClick={onDoubleClick} />;
     }
 
-    return <ColumnItemVariable item={item} currentItemPath={currentItemPath} handleClick={handleClick} setCurrentDescription={setCurrentDescription} onDoubleClick={onDoubleClick} path={path} index={index} />;
+    return <ColumnItemVariable
+        item={item}
+        currentItemPath={currentItemPath}
+        handleClick={handleClick}
+        setCurrentDescription={setCurrentDescription}
+        setCurrentVariableId={setCurrentVariableId}
+        onDoubleClick={onDoubleClick}
+        path={path}
+        index={index}
+    />;
 };
 
 export default ColumnItem;

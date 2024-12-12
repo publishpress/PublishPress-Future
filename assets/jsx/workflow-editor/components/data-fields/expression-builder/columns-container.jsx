@@ -1,7 +1,15 @@
 import { useState, useCallback } from "@wordpress/element";
 import { ColumnItem } from "./column-item";
 
-const RenderColumns = ({ currentItemPath, currentItems, handleClick, setCurrentDescription, onDoubleClick, path = [] }) => {
+const RenderColumns = ({
+    currentItemPath,
+    currentItems,
+    handleClick,
+    setCurrentDescription,
+    onDoubleClick,
+    path = [],
+    setCurrentVariableId
+}) => {
     if (!currentItems) return null;
 
     const currentColumnIndex = path.length;
@@ -36,6 +44,7 @@ const RenderColumns = ({ currentItemPath, currentItems, handleClick, setCurrentD
                         currentItemPath={currentItemPath}
                         handleClick={handleClick}
                         setCurrentDescription={setCurrentDescription}
+                        setCurrentVariableId={setCurrentVariableId}
                         onDoubleClick={onDoubleClick}
                         path={[...path, index]}
                         index={index}
@@ -50,6 +59,7 @@ const RenderColumns = ({ currentItemPath, currentItems, handleClick, setCurrentD
                     path={[...path, selectedItemIndex]}
                     handleClick={handleClick}
                     setCurrentDescription={setCurrentDescription}
+                    setCurrentVariableId={setCurrentVariableId}
                     onDoubleClick={onDoubleClick}
                 />
             )}
@@ -57,7 +67,12 @@ const RenderColumns = ({ currentItemPath, currentItems, handleClick, setCurrentD
     );
 };
 
-export const ColumnsContainer = ({ items, setCurrentDescription, onDoubleClick }) => {
+export const ColumnsContainer = ({
+    items,
+    setCurrentDescription,
+    onDoubleClick,
+    setCurrentVariableId
+}) => {
     const [currentItemPath, setCurrentItemPath] = useState([]);
 
     const handleClick = useCallback((path) => {
@@ -79,6 +94,7 @@ export const ColumnsContainer = ({ items, setCurrentDescription, onDoubleClick }
                 handleClick={handleClick}
                 onDoubleClick={onDoubleClick}
                 setCurrentDescription={setCurrentDescription}
+                setCurrentVariableId={setCurrentVariableId}
             />
         </div>
     );

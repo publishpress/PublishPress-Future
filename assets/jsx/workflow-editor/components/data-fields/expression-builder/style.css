@@ -84,3 +84,7 @@
 .column-item-form p {
     text-wrap: auto;
 }
+
+.expression-builder-variable-name {
+    margin-left: 5px;
+}
