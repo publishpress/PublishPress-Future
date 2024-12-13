@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed the arrow indicator from the workflow title and added a new Status column to the workflows list screen (Issue #970).
 - Post's variable resolver now also accept a property without `post_` prefix.
 - User's variable resolver now also accept a property without `user_` prefix.
+- Changed the options in the "Debug Data" field to be more intuitive allowing a custom data expression to be selected.
 
 ### Fixed
 
