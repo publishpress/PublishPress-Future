@@ -23,6 +23,7 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminI
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostMetaChanged;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostPublished;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostStatusChanged;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated;
@@ -197,6 +198,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             CoreOnManuallyEnabledForPost::getNodeTypeName() => new CoreOnManuallyEnabledForPost(),
             FutureLegacyAction::getNodeTypeName() => new FutureLegacyAction($this->hooks),
             CoreOnCronSchedule::getNodeTypeName() => new CoreOnCronSchedule(),
+            CoreOnPostMetaChanged::getNodeTypeName() => new CoreOnPostMetaChanged(),
         ];
 
         if ($this->settingsFacade->getExperimentalFeaturesStatus()) {
