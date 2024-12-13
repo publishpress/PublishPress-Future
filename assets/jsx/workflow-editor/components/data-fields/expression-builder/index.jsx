@@ -2,10 +2,11 @@ import {
     Button,
     Modal,
     __experimentalHStack as HStack,
-    __experimentalHeading as Heading
+    __experimentalHeading as Heading,
+    TextareaControl
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { useState, useRef, useCallback } from "@wordpress/element";
+import { useState, useRef, useCallback, useEffect } from "@wordpress/element";
 import NodeIcon from "../../node-icon";
 import ColumnsContainer from "./columns-container";
 
@@ -25,9 +26,12 @@ export const ExpressionBuilder = ({
     propertyName = "expression",
     settings = {},
     description = '',
-    isInline = false
+    isInline = false,
+    readOnlyPreview = false,
+    singleVariableOnly = false,
 }) => {
-    const editorRef = useRef(null);
+    const editorFullRef = useRef(null);
+    const editorSmallRef = useRef(null);
 
     const [currentDescription, setCurrentDescription] = useState();
     const [currentVariableId, setCurrentVariableId] = useState();
@@ -56,8 +60,8 @@ export const ExpressionBuilder = ({
             });
         }
 
-        if (editorRef.current) {
-            editorRef.current.editor.getSession().setAnnotations(annotations);
+        if (editorFullRef.current) {
+            // editorFullRef.current.editor.getSession().setAnnotations(annotations);
         }
     }, [defaultValue]);
 
@@ -66,16 +70,27 @@ export const ExpressionBuilder = ({
     }, [setIsOpen]);
 
     const onDoubleClick = useCallback((item) => {
-        if (editorRef.current) {
-            const editor = editorRef.current.editor;
-            const cursorPosition = editor.getCursorPosition();
-            editor.session.insert(cursorPosition, `{{${item.name}}}`);
+        if (editorFullRef.current) {
+            const editor = editorFullRef.current.editor;
+
+            if (! singleVariableOnly) {
+                const cursorPosition = editor.getCursorPosition();
+                editor.session.insert(cursorPosition, `{{${item.name}}}`);
+            } else {
+                editor.session.setValue(`{{${item.name}}}`);
+            }
         }
-    }, [editorRef]);
+    }, [editorFullRef, singleVariableOnly]);
 
     const editorProps = {
         $blockScrolling: true,
     };
+
+    useEffect(() => {
+        if (editorSmallRef.current) {
+            editorSmallRef.current.editor.setOption("indentedSoftWrap", false);
+        }
+    }, []);
 
     return <div className={`expression-builder ${isOpen ? 'expression-builder-open' : ''} ${isInline ? 'expression-builder-inline' : ''}`}>
 
@@ -96,11 +111,15 @@ export const ExpressionBuilder = ({
         )}
 
         <AceEditor
+            ref={editorSmallRef}
             mode="handlebars"
             theme="textmate"
             name="expression-builder-small"
             value={defaultValue[propertyName] || ''}
+            readOnly={readOnlyPreview}
+            className={readOnlyPreview ? 'read-only-editor' : ''}
             editorProps={editorProps}
+            wrapEnabled={true}
             onChange={(value) => onChangeSetting({ settingName: propertyName, value })}
             setOptions={{
                 enableBasicAutocompletion: false,
@@ -109,6 +128,7 @@ export const ExpressionBuilder = ({
                 showPrintMargin: false,
                 showLineNumbers: false,
                 showInvisibles: false,
+                highlightActiveLine: false,
             }}
             height="92px"
             width="244px"
@@ -121,18 +141,31 @@ export const ExpressionBuilder = ({
                 onRequestClose={onClose}
                 className="expression-builder-modal"
             >
-                <div style={{ padding: '20px', minWidth: '600px' }}>
+                <div style={{ minWidth: '600px' }}>
+                    {singleVariableOnly && (
+                        <p>{__("Single variable mode. Double click on a variable below to add it to your expression.", "post-expirator")}</p>
+                    )}
+
+                    {!singleVariableOnly && (
+                        <p>{__("Type your expression here or use the variables below.", "post-expirator")}</p>
+                    )}
+
                     <AceEditor
-                        ref={editorRef}
+                        ref={editorFullRef}
                         mode="handlebars"
                         theme="textmate"
                         name="expression-builder-full"
+                        className={singleVariableOnly ? 'read-only-editor' : ''}
+                        wrapEnabled={true}
                         onChange={(value) => onChangeSetting({ settingName: propertyName, value })}
                         value={defaultValue[propertyName] || ''}
                         editorProps={editorProps}
+                        readOnly={singleVariableOnly}
                         setOptions={{
                             enableBasicAutocompletion: false,
                             enableLiveAutocompletion: false,
+                            showLineNumbers: !singleVariableOnly,
+                            showGutter: !singleVariableOnly,
                         }}
                         height="200px"
                         width="600px"
@@ -142,7 +175,9 @@ export const ExpressionBuilder = ({
                     <div className="expression-builder-modal-variables" style={{ maxWidth: '600px', overflowX: 'auto' }}>
                         <Heading level={2} className="components-truncate components-text components-heading block-editor-inspector-popover-header__heading">{__("Variables", "post-expirator")}</Heading>
 
-                        <p>{__("Position the cursor where you want to add a variable and double click on a variable to add it to your expression.", "post-expirator")}</p>
+                        {! singleVariableOnly && (
+                            <p>{__("Position the cursor where you want to add a variable and double click on a variable to add it to your expression.", "post-expirator")}</p>
+                        )}
 
                         <ColumnsContainer
                             items={variables}

@@ -38857,9 +38857,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   Conditional: () => (/* binding */ Conditional),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react_querybuilder__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-querybuilder */ "./node_modules/react-querybuilder/dist/react-querybuilder.mjs");
-/* harmony import */ var react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-querybuilder/parseJsonLogic */ "./node_modules/react-querybuilder/dist/parseJsonLogic.js");
-/* harmony import */ var react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_querybuilder__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-querybuilder */ "./node_modules/react-querybuilder/dist/react-querybuilder.mjs");
+/* harmony import */ var react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-querybuilder/parseJsonLogic */ "./node_modules/react-querybuilder/dist/parseJsonLogic.js");
+/* harmony import */ var react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
@@ -38869,9 +38869,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _react_querybuilder_dnd__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @react-querybuilder/dnd */ "./node_modules/@react-querybuilder/dnd/dist/react-querybuilder_dnd.mjs");
-/* harmony import */ var _expression_builder__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./expression-builder */ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/index.jsx");
-/* harmony import */ var react_querybuilder_dist_query_builder_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-querybuilder/dist/query-builder.css */ "./node_modules/react-querybuilder/dist/query-builder.css");
+/* harmony import */ var _react_querybuilder_dnd__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @react-querybuilder/dnd */ "./node_modules/@react-querybuilder/dnd/dist/react-querybuilder_dnd.mjs");
+/* harmony import */ var react_ace__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-ace */ "./node_modules/react-ace/lib/index.js");
+/* harmony import */ var ace_builds_src_noconflict_mode_handlebars__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ace-builds/src-noconflict/mode-handlebars */ "./node_modules/ace-builds/src-noconflict/mode-handlebars.js");
+/* harmony import */ var ace_builds_src_noconflict_mode_handlebars__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_mode_handlebars__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var ace_builds_src_noconflict_theme_textmate__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ace-builds/src-noconflict/theme-textmate */ "./node_modules/ace-builds/src-noconflict/theme-textmate.js");
+/* harmony import */ var ace_builds_src_noconflict_theme_textmate__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_theme_textmate__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var ace_builds_src_noconflict_ext_language_tools__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ace-builds/src-noconflict/ext-language_tools */ "./node_modules/ace-builds/src-noconflict/ext-language_tools.js");
+/* harmony import */ var ace_builds_src_noconflict_ext_language_tools__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(ace_builds_src_noconflict_ext_language_tools__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _expression_builder__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./expression-builder */ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/index.jsx");
+/* harmony import */ var react_querybuilder_dist_query_builder_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-querybuilder/dist/query-builder.css */ "./node_modules/react-querybuilder/dist/query-builder.css");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -38894,17 +38901,23 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-var FieldExpressionBuilder = function FieldExpressionBuilder(_ref) {
+
+
+
+
+var ConditionalExpressionBuilder = function ConditionalExpressionBuilder(_ref) {
   var options = _ref.options,
     value = _ref.value,
     handleOnChange = _ref.handleOnChange,
-    context = _ref.context;
+    context = _ref.context,
+    readOnlyPreview = _ref.readOnlyPreview,
+    singleVariableOnly = _ref.singleVariableOnly;
   var onChange = function onChange(name, value) {
     if (handleOnChange) {
       handleOnChange(value.expression);
     }
   };
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_expression_builder__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_expression_builder__WEBPACK_IMPORTED_MODULE_9__["default"], {
     name: context.name,
     label: context.label,
     defaultValue: {
@@ -38912,20 +38925,49 @@ var FieldExpressionBuilder = function FieldExpressionBuilder(_ref) {
     },
     onChange: onChange,
     variables: context.options,
-    isInline: true
+    isInline: true,
+    readOnlyPreview: readOnlyPreview || false,
+    singleVariableOnly: singleVariableOnly || false
   }));
 };
-var Conditional = function Conditional(_ref2) {
-  var name = _ref2.name,
-    label = _ref2.label,
-    defaultValue = _ref2.defaultValue,
-    onChange = _ref2.onChange,
-    variables = _ref2.variables;
+var FieldExpressionBuilder = function FieldExpressionBuilder(_ref2) {
+  var options = _ref2.options,
+    value = _ref2.value,
+    handleOnChange = _ref2.handleOnChange,
+    context = _ref2.context;
+  return /*#__PURE__*/React.createElement(ConditionalExpressionBuilder, {
+    options: options,
+    value: value,
+    handleOnChange: handleOnChange,
+    context: context,
+    readOnlyPreview: true,
+    singleVariableOnly: true
+  });
+};
+var ValueExpressionBuilder = function ValueExpressionBuilder(_ref3) {
+  var options = _ref3.options,
+    value = _ref3.value,
+    handleOnChange = _ref3.handleOnChange,
+    context = _ref3.context;
+  return /*#__PURE__*/React.createElement(ConditionalExpressionBuilder, {
+    options: options,
+    value: value,
+    handleOnChange: handleOnChange,
+    context: context,
+    readOnlyPreview: false
+  });
+};
+var Conditional = function Conditional(_ref4) {
+  var name = _ref4.name,
+    label = _ref4.label,
+    defaultValue = _ref4.defaultValue,
+    onChange = _ref4.onChange,
+    variables = _ref4.variables;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     isPopoverVisible = _useState2[0],
     setIsPopoverVisible = _useState2[1];
-  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_7__.parseJsonLogic)(defaultValue !== null && defaultValue !== void 0 && defaultValue.json ? defaultValue.json : '')),
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_11__.parseJsonLogic)(defaultValue !== null && defaultValue !== void 0 && defaultValue.json ? defaultValue.json : '')),
     _useState4 = _slicedToArray(_useState3, 2),
     query = _useState4[0],
     setQuery = _useState4[1];
@@ -38936,6 +38978,7 @@ var Conditional = function Conditional(_ref2) {
     }),
     isPro = _useSelect.isPro;
   var allVariables = variables;
+  var editorRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var convertLegacyVariables = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (legacyQuery) {
     if (!legacyQuery) return;
     var wrapFieldValue = function wrapFieldValue(field) {
@@ -38958,19 +39001,18 @@ var Conditional = function Conditional(_ref2) {
     if (legacyQuery.rules) {
       _processRules(legacyQuery.rules);
     }
-    console.log(legacyQuery);
   }, []);
   var onClose = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
-    var jsonCondition = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_8__.formatQuery)(query, {
+    var jsonCondition = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_12__.formatQuery)(query, {
       format: 'jsonlogic',
       parseNumbers: true
     });
-    var naturalLanguageCondition = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_8__.formatQuery)(query, {
+    var naturalLanguageCondition = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_12__.formatQuery)(query, {
       format: 'natural_language',
       parseNumbers: true,
       fields: allVariables,
       getOperators: function getOperators() {
-        return react_querybuilder__WEBPACK_IMPORTED_MODULE_8__.defaultOperators;
+        return react_querybuilder__WEBPACK_IMPORTED_MODULE_12__.defaultOperators;
       }
     });
     var newValue = _objectSpread({}, defaultValue);
@@ -38983,21 +39025,44 @@ var Conditional = function Conditional(_ref2) {
   }, [query, allVariables, onChange, name, defaultValue]);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     convertLegacyVariables(query);
+    if (editorRef.current) {
+      editorRef.current.editor.setOption("indentedSoftWrap", false);
+    }
   }, []);
+  var editorProps = {
+    $blockScrolling: true
+  };
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
     onClick: function onClick() {
       return setIsPopoverVisible(true);
     },
     variant: "secondary"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Edit condition', 'post-expirator')), (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.natural) && /*#__PURE__*/React.createElement("div", {
-    className: "condition-natural-language"
-  }, defaultValue.natural), !isPro && /*#__PURE__*/React.createElement("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Edit condition', 'post-expirator')), (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.natural) && /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    ref: editorRef,
+    mode: "handlebars",
+    theme: "textmate",
+    name: "expression-builder-natural-language",
+    className: "read-only-editor settings-panel",
+    wrapEnabled: true,
+    value: (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.natural) || '',
+    editorProps: editorProps,
+    readOnly: true,
+    setOptions: {
+      enableBasicAutocompletion: false,
+      enableLiveAutocompletion: false,
+      showGutter: false,
+      showPrintMargin: false,
+      showLineNumbers: false,
+      showInvisibles: false,
+      highlightActiveLine: false
+    }
+  }), !isPro && /*#__PURE__*/React.createElement("div", {
     className: "condition-pro-features-notice"
   }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('This conditional will only be evaluated in the Pro version. In the Free version, it will always return true.', 'post-expirator'))), isPopoverVisible && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Modal, {
     onClose: onClose,
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Condition', 'post-expirator'),
     onRequestClose: onClose
-  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Create a condition ', 'post-expirator')), /*#__PURE__*/React.createElement(_react_querybuilder_dnd__WEBPACK_IMPORTED_MODULE_9__.QueryBuilderDnD, null, /*#__PURE__*/React.createElement(react_querybuilder__WEBPACK_IMPORTED_MODULE_8__.QueryBuilder, {
+  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Create a condition ', 'post-expirator')), /*#__PURE__*/React.createElement(_react_querybuilder_dnd__WEBPACK_IMPORTED_MODULE_13__.QueryBuilderDnD, null, /*#__PURE__*/React.createElement(react_querybuilder__WEBPACK_IMPORTED_MODULE_12__.QueryBuilder, {
     fields: allVariables,
     onQueryChange: setQuery,
     query: query,
@@ -39019,7 +39084,7 @@ var Conditional = function Conditional(_ref2) {
     },
     controlElements: {
       fieldSelector: FieldExpressionBuilder,
-      valueEditor: FieldExpressionBuilder
+      valueEditor: ValueExpressionBuilder
     },
     context: {
       options: allVariables,
@@ -39798,8 +39863,13 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     _ref$description = _ref.description,
     description = _ref$description === void 0 ? '' : _ref$description,
     _ref$isInline = _ref.isInline,
-    isInline = _ref$isInline === void 0 ? false : _ref$isInline;
-  var editorRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
+    isInline = _ref$isInline === void 0 ? false : _ref$isInline,
+    _ref$readOnlyPreview = _ref.readOnlyPreview,
+    readOnlyPreview = _ref$readOnlyPreview === void 0 ? false : _ref$readOnlyPreview,
+    _ref$singleVariableOn = _ref.singleVariableOnly,
+    singleVariableOnly = _ref$singleVariableOn === void 0 ? false : _ref$singleVariableOn;
+  var editorFullRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
+  var editorSmallRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(),
     _useState2 = _slicedToArray(_useState, 2),
     currentDescription = _useState2[0],
@@ -39834,23 +39904,32 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
         type: "error"
       });
     }
-    if (editorRef.current) {
-      editorRef.current.editor.getSession().setAnnotations(annotations);
+    if (editorFullRef.current) {
+      // editorFullRef.current.editor.getSession().setAnnotations(annotations);
     }
   }, [defaultValue]);
   var onClose = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useCallback)(function () {
     setIsOpen(false);
   }, [setIsOpen]);
   var onDoubleClick = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useCallback)(function (item) {
-    if (editorRef.current) {
-      var editor = editorRef.current.editor;
-      var cursorPosition = editor.getCursorPosition();
-      editor.session.insert(cursorPosition, "{{".concat(item.name, "}}"));
+    if (editorFullRef.current) {
+      var editor = editorFullRef.current.editor;
+      if (!singleVariableOnly) {
+        var cursorPosition = editor.getCursorPosition();
+        editor.session.insert(cursorPosition, "{{".concat(item.name, "}}"));
+      } else {
+        editor.session.setValue("{{".concat(item.name, "}}"));
+      }
     }
-  }, [editorRef]);
+  }, [editorFullRef, singleVariableOnly]);
   var editorProps = {
     $blockScrolling: true
   };
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
+    if (editorSmallRef.current) {
+      editorSmallRef.current.editor.setOption("indentedSoftWrap", false);
+    }
+  }, []);
   return /*#__PURE__*/React.createElement("div", {
     className: "expression-builder ".concat(isOpen ? 'expression-builder-open' : '', " ").concat(isInline ? 'expression-builder-inline' : '')
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
@@ -39868,11 +39947,15 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     level: 3,
     className: "expression-builder-small-heading"
   }, label), description && /*#__PURE__*/React.createElement("p", null, description), /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    ref: editorSmallRef,
     mode: "handlebars",
     theme: "textmate",
     name: "expression-builder-small",
     value: defaultValue[propertyName] || '',
+    readOnly: readOnlyPreview,
+    className: readOnlyPreview ? 'read-only-editor' : '',
     editorProps: editorProps,
+    wrapEnabled: true,
     onChange: function onChange(value) {
       return onChangeSetting({
         settingName: propertyName,
@@ -39885,7 +39968,8 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
       showGutter: false,
       showPrintMargin: false,
       showLineNumbers: false,
-      showInvisibles: false
+      showInvisibles: false,
+      highlightActiveLine: false
     },
     height: "92px",
     width: "244px",
@@ -39896,14 +39980,15 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     className: "expression-builder-modal"
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      padding: '20px',
       minWidth: '600px'
     }
-  }, /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    ref: editorRef,
+  }, singleVariableOnly && /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Single variable mode. Double click on a variable below to add it to your expression.", "post-expirator")), !singleVariableOnly && /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Type your expression here or use the variables below.", "post-expirator")), /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    ref: editorFullRef,
     mode: "handlebars",
     theme: "textmate",
     name: "expression-builder-full",
+    className: singleVariableOnly ? 'read-only-editor' : '',
+    wrapEnabled: true,
     onChange: function onChange(value) {
       return onChangeSetting({
         settingName: propertyName,
@@ -39912,9 +39997,12 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     },
     value: defaultValue[propertyName] || '',
     editorProps: editorProps,
+    readOnly: singleVariableOnly,
     setOptions: {
       enableBasicAutocompletion: false,
-      enableLiveAutocompletion: false
+      enableLiveAutocompletion: false,
+      showLineNumbers: !singleVariableOnly,
+      showGutter: !singleVariableOnly
     },
     height: "200px",
     width: "600px",
@@ -39928,7 +40016,7 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalHeading, {
     level: 2,
     className: "components-truncate components-text components-heading block-editor-inspector-popover-header__heading"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Variables", "post-expirator")), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Position the cursor where you want to add a variable and double click on a variable to add it to your expression.", "post-expirator")), /*#__PURE__*/React.createElement(_columns_container__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Variables", "post-expirator")), !singleVariableOnly && /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Position the cursor where you want to add a variable and double click on a variable to add it to your expression.", "post-expirator")), /*#__PURE__*/React.createElement(_columns_container__WEBPACK_IMPORTED_MODULE_4__["default"], {
     items: variables,
     setCurrentDescription: setCurrentDescription,
     setCurrentVariableId: setCurrentVariableId,
@@ -52484,7 +52572,17 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.columns-container {
     top: 0 !important;
     right: 0 !important;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;IACnB,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;IAC5B,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,iBAAiB;IACjB,yBAAyB;IACzB,sBAAsB;IACtB,qBAAqB;AACzB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;AACvB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,QAAQ;IACR,YAAY;IACZ,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,gBAAgB;AACpB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,wBAAwB;IACxB,uBAAuB;IACvB,uBAAuB;IACvB,6BAA6B;AACjC;;AAEA;IACI,iBAAiB;IACjB,mBAAmB;AACvB","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n    max-height: 212px;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n    overflow-y: scroll;\n    max-height: 270px;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 2px 6px;\n    position: relative;\n    user-select: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.selected {\n    background-color: #ccc;\n}\n\n.column-item.has-children.selected::after {\n    color: #1b1b1b;\n}\n\n.column-item:hover {\n    background-color: #f0f0f0;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n}\n\n.components-modal__screen-overlay {\n    z-index: 999999998;\n}\n\n.expression-builder {\n    position: relative;\n    padding-top: 20px;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 14px;\n    right: 0;\n    height: 28px;\n    padding-top: 10px;\n}\n\n.column-item-form {\n    padding: 10px;\n    max-width: 202px;\n}\n\n.column-item-form p {\n    text-wrap: auto;\n}\n\n.expression-builder-variable-name {\n    margin-left: 5px;\n}\n\n.expression-builder-inline {\n    padding-top: 0 !important;\n}\n\n.expression-builder-inline .ace_editor {\n    margin-top: 0 !important;\n    height: 40px !important;\n    width: 240px !important;\n    margin-right: 40px !important;\n}\n\n.expression-builder-inline > button {\n    top: 0 !important;\n    right: 0 !important;\n}\n"],"sourceRoot":""}]);
+
+.ace_editor.settings-panel {
+    width: 246px !important;
+    height: 180px !important;
+    margin-top: 10px !important;
+}
+
+.ace_editor.read-only-editor {
+    background-color: #f3f3f3 !important;
+}
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;IACnB,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;IAC5B,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,iBAAiB;IACjB,yBAAyB;IACzB,sBAAsB;IACtB,qBAAqB;AACzB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;AACvB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,QAAQ;IACR,YAAY;IACZ,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,gBAAgB;AACpB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,wBAAwB;IACxB,uBAAuB;IACvB,uBAAuB;IACvB,6BAA6B;AACjC;;AAEA;IACI,iBAAiB;IACjB,mBAAmB;AACvB;;AAEA;IACI,uBAAuB;IACvB,wBAAwB;IACxB,2BAA2B;AAC/B;;AAEA;IACI,oCAAoC;AACxC","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n    max-height: 212px;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n    overflow-y: scroll;\n    max-height: 270px;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 2px 6px;\n    position: relative;\n    user-select: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.selected {\n    background-color: #ccc;\n}\n\n.column-item.has-children.selected::after {\n    color: #1b1b1b;\n}\n\n.column-item:hover {\n    background-color: #f0f0f0;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n}\n\n.components-modal__screen-overlay {\n    z-index: 999999998;\n}\n\n.expression-builder {\n    position: relative;\n    padding-top: 20px;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 14px;\n    right: 0;\n    height: 28px;\n    padding-top: 10px;\n}\n\n.column-item-form {\n    padding: 10px;\n    max-width: 202px;\n}\n\n.column-item-form p {\n    text-wrap: auto;\n}\n\n.expression-builder-variable-name {\n    margin-left: 5px;\n}\n\n.expression-builder-inline {\n    padding-top: 0 !important;\n}\n\n.expression-builder-inline .ace_editor {\n    margin-top: 0 !important;\n    height: 40px !important;\n    width: 240px !important;\n    margin-right: 40px !important;\n}\n\n.expression-builder-inline > button {\n    top: 0 !important;\n    right: 0 !important;\n}\n\n.ace_editor.settings-panel {\n    width: 246px !important;\n    height: 180px !important;\n    margin-top: 10px !important;\n}\n\n.ace_editor.read-only-editor {\n    background-color: #f3f3f3 !important;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

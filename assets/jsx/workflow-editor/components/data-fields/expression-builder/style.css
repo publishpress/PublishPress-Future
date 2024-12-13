@@ -114,3 +114,13 @@
     top: 0 !important;
     right: 0 !important;
 }
+
+.ace_editor.settings-panel {
+    width: 246px !important;
+    height: 180px !important;
+    margin-top: 10px !important;
+}
+
+.ace_editor.read-only-editor {
+    background-color: #f3f3f3 !important;
+}

@@ -1,18 +1,23 @@
 import { QueryBuilder, formatQuery, defaultOperators } from 'react-querybuilder';
 import { parseJsonLogic } from 'react-querybuilder/parseJsonLogic';
-import { useState, useCallback, useEffect } from '@wordpress/element';
+import { useState, useCallback, useEffect, useRef } from '@wordpress/element';
 import { Button, Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as editorStore } from '../editor-store';
 import { useSelect } from '@wordpress/data';
 import { QueryBuilderDnD } from '@react-querybuilder/dnd';
 
+import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/mode-handlebars";
+import "ace-builds/src-noconflict/theme-textmate";
+import "ace-builds/src-noconflict/ext-language_tools";
+
 import ExpressionBuilder from './expression-builder';
 
 
 import 'react-querybuilder/dist/query-builder.css';
 
-const FieldExpressionBuilder = ({ options, value, handleOnChange, context }) => {
+const ConditionalExpressionBuilder = ({ options, value, handleOnChange, context, readOnlyPreview, singleVariableOnly }) => {
     const onChange = (name, value) => {
         if (handleOnChange) {
             handleOnChange(value.expression);
@@ -27,8 +32,31 @@ const FieldExpressionBuilder = ({ options, value, handleOnChange, context }) => 
             onChange={onChange}
             variables={context.options}
             isInline={true}
+            readOnlyPreview={readOnlyPreview || false}
+            singleVariableOnly={singleVariableOnly || false}
         />
     </div>;
+};
+
+const FieldExpressionBuilder = ({ options, value, handleOnChange, context }) => {
+    return <ConditionalExpressionBuilder
+        options={options}
+        value={value}
+        handleOnChange={handleOnChange}
+        context={context}
+        readOnlyPreview={true}
+        singleVariableOnly={true}
+    />;
+};
+
+const ValueExpressionBuilder = ({ options, value, handleOnChange, context }) => {
+    return <ConditionalExpressionBuilder
+        options={options}
+        value={value}
+        handleOnChange={handleOnChange}
+        context={context}
+        readOnlyPreview={false}
+    />;
 };
 
 export const Conditional = ({ name, label, defaultValue, onChange, variables }) => {
@@ -48,6 +76,8 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
     }));
 
     let allVariables = variables;
+
+    const editorRef = useRef(null);
 
     const convertLegacyVariables = useCallback((legacyQuery) => {
         if (!legacyQuery) return;
@@ -75,8 +105,6 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         if (legacyQuery.rules) {
             processRules(legacyQuery.rules);
         }
-
-        console.log(legacyQuery);
     }, []);
 
     const onClose = useCallback(() => {
@@ -111,7 +139,15 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
 
     useEffect(() => {
         convertLegacyVariables(query);
+
+        if (editorRef.current) {
+            editorRef.current.editor.setOption("indentedSoftWrap", false);
+        }
     }, []);
+
+    const editorProps = {
+        $blockScrolling: true,
+    };
 
     return (
         <div>
@@ -120,7 +156,26 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
             </Button>
 
             {defaultValue?.natural && (
-                <div className="condition-natural-language">{defaultValue.natural}</div>
+                <AceEditor
+                    ref={editorRef}
+                    mode="handlebars"
+                    theme="textmate"
+                    name="expression-builder-natural-language"
+                    className="read-only-editor settings-panel"
+                    wrapEnabled={true}
+                    value={defaultValue?.natural || ''}
+                    editorProps={editorProps}
+                    readOnly={true}
+                    setOptions={{
+                        enableBasicAutocompletion: false,
+                        enableLiveAutocompletion: false,
+                        showGutter: false,
+                        showPrintMargin: false,
+                        showLineNumbers: false,
+                        showInvisibles: false,
+                        highlightActiveLine: false,
+                    }}
+                />
             )}
 
             {! isPro && (
@@ -157,7 +212,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                             }}
                             controlElements={{
                                 fieldSelector: FieldExpressionBuilder,
-                                valueEditor: FieldExpressionBuilder,
+                                valueEditor: ValueExpressionBuilder,
                             }}
                             context={{
                                 options: allVariables,
