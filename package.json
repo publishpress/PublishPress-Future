@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@microlink/react-json-view": "^1.23.1",
+    "@react-querybuilder/dnd": "^8.0.0",
     "@wordpress/a11y": "^3.54.0",
     "@wordpress/api-fetch": "^6.32.0",
     "@wordpress/components": "^23.9.0",
@@ -38,6 +39,8 @@
     "path-browserify": "^1.0.1",
     "postcss-loader": "^7",
     "react-ace": "^13.0.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-querybuilder": "^7.7.0",
     "react-select": "^5.7.0",
     "reactflow": "^11.10.4",

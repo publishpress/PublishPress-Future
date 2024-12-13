@@ -1,13 +1,35 @@
 import { QueryBuilder, formatQuery, defaultOperators } from 'react-querybuilder';
 import { parseJsonLogic } from 'react-querybuilder/parseJsonLogic';
-import { useState, useMemo, useCallback } from '@wordpress/element';
-import { Button, Popover } from '@wordpress/components';
+import { useState, useCallback, useEffect } from '@wordpress/element';
+import { Button, Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as editorStore } from '../editor-store';
 import { useSelect } from '@wordpress/data';
+import { QueryBuilderDnD } from '@react-querybuilder/dnd';
+
+import ExpressionBuilder from './expression-builder';
+
 
 import 'react-querybuilder/dist/query-builder.css';
-import { __experimentalHStack as HStack, __experimentalHeading as Heading } from '@wordpress/components';
+
+const FieldExpressionBuilder = ({ options, value, handleOnChange, context }) => {
+    const onChange = (name, value) => {
+        if (handleOnChange) {
+            handleOnChange(value.expression);
+        }
+    }
+
+    return <div>
+        <ExpressionBuilder
+            name={context.name}
+            label={context.label}
+            defaultValue={{expression: value}}
+            onChange={onChange}
+            variables={context.options}
+            isInline={true}
+        />
+    </div>;
+};
 
 export const Conditional = ({ name, label, defaultValue, onChange, variables }) => {
     const [isPopoverVisible, setIsPopoverVisible] = useState(false);
@@ -25,29 +47,37 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         isPro: select(editorStore).isPro(),
     }));
 
-    const allVariables = useMemo(() => {
-        let allVariables = [];
+    let allVariables = variables;
 
-        for (const variable of variables) {
-            if (variable.children) {
-                for (const child of variable.children) {
-                    allVariables.push({
-                        name: child.name,
-                        label: child.label,
-                    });
+    const convertLegacyVariables = useCallback((legacyQuery) => {
+        if (!legacyQuery) return;
+
+        const wrapFieldValue = (field) => {
+            if (typeof field !== 'string') return field;
+            if (field.startsWith('{{') && field.endsWith('}}')) return field;
+            return `{{${field}}}`;
+        };
+
+        const processRules = (rules) => {
+            if (!Array.isArray(rules)) return;
+
+            rules.forEach(rule => {
+                if (rule.rules) {
+                    // Recursively process nested rule groups
+                    processRules(rule.rules);
+                } else if (rule.field) {
+                    // Update the field value if it's not properly wrapped
+                    rule.field = wrapFieldValue(rule.field);
                 }
-            } else {
-                allVariables.push({
-                    name: variable.name,
-                    label: variable.label,
-                });
-            }
+            });
+        };
+
+        if (legacyQuery.rules) {
+            processRules(legacyQuery.rules);
         }
 
-        return allVariables;
-    }, [variables]);
-
-    const togglePopover = useCallback(() => setIsPopoverVisible((prev) => !prev), []);
+        console.log(legacyQuery);
+    }, []);
 
     const onClose = useCallback(() => {
         const jsonCondition = formatQuery(
@@ -76,12 +106,16 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
             onChange(name, newValue);
         }
 
-        togglePopover();
+        setIsPopoverVisible(false);
     }, [query, allVariables, onChange, name, defaultValue]);
+
+    useEffect(() => {
+        convertLegacyVariables(query);
+    }, []);
 
     return (
         <div>
-            <Button onClick={togglePopover} variant="secondary">
+            <Button onClick={() => setIsPopoverVisible(true)} variant="secondary">
                 {__('Edit condition', 'post-expirator')}
             </Button>
 
@@ -96,17 +130,15 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
             )}
 
             {isPopoverVisible && (
-                <Popover onClose={onClose}>
-                    <div style={{ padding: '20px', minWidth: '400px' }} onKeyUp={(e) => {
-                        if (e.key === 'Enter') {
-                            onClose();
-                        }
-                    }}>
-                        <HStack>
-                            <Heading level={2} className="block-editor-inspector-popover-header__heading">{__('Condition', 'post-expirator')}</Heading>
-                            <Button onClick={onClose} icon="no-alt" className='block-editor-inspector-popover-header__action' />
-                        </HStack>
-
+                <Modal
+                    onClose={onClose}
+                    title={__('Condition', 'post-expirator')}
+                    onRequestClose={onClose}
+                >
+                    <p>
+                        {__('Create a condition ', 'post-expirator')}
+                    </p>
+                    <QueryBuilderDnD>
                         <QueryBuilder
                             fields={allVariables}
                             onQueryChange={setQuery}
@@ -115,6 +147,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                             parseNumbers="strict-limited"
                             showCombinatorsBetweenRules
                             showNotToggle
+                            enableDragAndDrop={true}
                             controlClassnames={{
                                 queryBuilder: 'queryBuilder-branches',
                             }}
@@ -122,13 +155,21 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                                 addGroup: { label: __('Add Group', 'post-expirator') },
                                 addRule: { label: __('Add Rule', 'post-expirator') }
                             }}
+                            controlElements={{
+                                fieldSelector: FieldExpressionBuilder,
+                                valueEditor: FieldExpressionBuilder,
+                            }}
+                            context={{
+                                options: allVariables,
+                                name: name,
+                                label: label
+                            }}
                         />
-                    </div>
-                </Popover>
+                    </QueryBuilderDnD>
+                </Modal>
             )}
         </div>
     );
-    return <QueryBuilder />;
 };
 
 export default Conditional;

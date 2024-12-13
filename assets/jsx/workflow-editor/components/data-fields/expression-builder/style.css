@@ -98,3 +98,19 @@
 .expression-builder-variable-name {
     margin-left: 5px;
 }
+
+.expression-builder-inline {
+    padding-top: 0 !important;
+}
+
+.expression-builder-inline .ace_editor {
+    margin-top: 0 !important;
+    height: 40px !important;
+    width: 240px !important;
+    margin-right: 40px !important;
+}
+
+.expression-builder-inline > button {
+    top: 0 !important;
+    right: 0 !important;
+}

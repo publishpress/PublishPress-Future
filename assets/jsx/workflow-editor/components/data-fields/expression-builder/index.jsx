@@ -16,7 +16,17 @@ import "ace-builds/src-noconflict/ext-language_tools";
 
 import './style.css';
 
-export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variables = [], propertyName = "expression", settings = {}, description }) => {
+export const ExpressionBuilder = ({
+    name,
+    label = '',
+    defaultValue,
+    onChange,
+    variables = [],
+    propertyName = "expression",
+    settings = {},
+    description = '',
+    isInline = false
+}) => {
     const editorRef = useRef(null);
 
     const [currentDescription, setCurrentDescription] = useState();
@@ -67,7 +77,7 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
         $blockScrolling: true,
     };
 
-    return <div className="expression-builder">
+    return <div className={`expression-builder ${isOpen ? 'expression-builder-open' : ''} ${isInline ? 'expression-builder-inline' : ''}`}>
 
         <Button
             variant="secondary"
@@ -77,7 +87,9 @@ export const ExpressionBuilder = ({ name, label, defaultValue, onChange, variabl
             title={__("Edit", "post-expirator")}
         />
 
-        <Heading level={3} className="expression-builder-small-heading">{label}</Heading>
+        {! isInline && label && (
+            <Heading level={3} className="expression-builder-small-heading">{label}</Heading>
+        )}
 
         {description && (
             <p>{description}</p>

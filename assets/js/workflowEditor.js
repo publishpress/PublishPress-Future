@@ -38857,9 +38857,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   Conditional: () => (/* binding */ Conditional),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react_querybuilder__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-querybuilder */ "./node_modules/react-querybuilder/dist/react-querybuilder.mjs");
-/* harmony import */ var react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-querybuilder/parseJsonLogic */ "./node_modules/react-querybuilder/dist/parseJsonLogic.js");
-/* harmony import */ var react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_querybuilder__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-querybuilder */ "./node_modules/react-querybuilder/dist/react-querybuilder.mjs");
+/* harmony import */ var react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-querybuilder/parseJsonLogic */ "./node_modules/react-querybuilder/dist/parseJsonLogic.js");
+/* harmony import */ var react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
@@ -38869,14 +38869,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react_querybuilder_dist_query_builder_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-querybuilder/dist/query-builder.css */ "./node_modules/react-querybuilder/dist/query-builder.css");
+/* harmony import */ var _react_querybuilder_dnd__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @react-querybuilder/dnd */ "./node_modules/@react-querybuilder/dnd/dist/react-querybuilder_dnd.mjs");
+/* harmony import */ var _expression_builder__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./expression-builder */ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/index.jsx");
+/* harmony import */ var react_querybuilder_dist_query_builder_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-querybuilder/dist/query-builder.css */ "./node_modules/react-querybuilder/dist/query-builder.css");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t.return || t.return(); } finally { if (u) throw o; } } }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -38892,17 +38893,39 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-var Conditional = function Conditional(_ref) {
-  var name = _ref.name,
-    label = _ref.label,
-    defaultValue = _ref.defaultValue,
-    onChange = _ref.onChange,
-    variables = _ref.variables;
+
+var FieldExpressionBuilder = function FieldExpressionBuilder(_ref) {
+  var options = _ref.options,
+    value = _ref.value,
+    handleOnChange = _ref.handleOnChange,
+    context = _ref.context;
+  var onChange = function onChange(name, value) {
+    if (handleOnChange) {
+      handleOnChange(value.expression);
+    }
+  };
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_expression_builder__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    name: context.name,
+    label: context.label,
+    defaultValue: {
+      expression: value
+    },
+    onChange: onChange,
+    variables: context.options,
+    isInline: true
+  }));
+};
+var Conditional = function Conditional(_ref2) {
+  var name = _ref2.name,
+    label = _ref2.label,
+    defaultValue = _ref2.defaultValue,
+    onChange = _ref2.onChange,
+    variables = _ref2.variables;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     isPopoverVisible = _useState2[0],
     setIsPopoverVisible = _useState2[1];
-  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_6__.parseJsonLogic)(defaultValue !== null && defaultValue !== void 0 && defaultValue.json ? defaultValue.json : '')),
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)((0,react_querybuilder_parseJsonLogic__WEBPACK_IMPORTED_MODULE_7__.parseJsonLogic)(defaultValue !== null && defaultValue !== void 0 && defaultValue.json ? defaultValue.json : '')),
     _useState4 = _slicedToArray(_useState3, 2),
     query = _useState4[0],
     setQuery = _useState4[1];
@@ -38912,59 +38935,42 @@ var Conditional = function Conditional(_ref) {
       };
     }),
     isPro = _useSelect.isPro;
-  var allVariables = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
-    var allVariables = [];
-    var _iterator = _createForOfIteratorHelper(variables),
-      _step;
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var variable = _step.value;
-        if (variable.children) {
-          var _iterator2 = _createForOfIteratorHelper(variable.children),
-            _step2;
-          try {
-            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-              var child = _step2.value;
-              allVariables.push({
-                name: child.name,
-                label: child.label
-              });
-            }
-          } catch (err) {
-            _iterator2.e(err);
-          } finally {
-            _iterator2.f();
-          }
-        } else {
-          allVariables.push({
-            name: variable.name,
-            label: variable.label
-          });
+  var allVariables = variables;
+  var convertLegacyVariables = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (legacyQuery) {
+    if (!legacyQuery) return;
+    var wrapFieldValue = function wrapFieldValue(field) {
+      if (typeof field !== 'string') return field;
+      if (field.startsWith('{{') && field.endsWith('}}')) return field;
+      return "{{".concat(field, "}}");
+    };
+    var _processRules = function processRules(rules) {
+      if (!Array.isArray(rules)) return;
+      rules.forEach(function (rule) {
+        if (rule.rules) {
+          // Recursively process nested rule groups
+          _processRules(rule.rules);
+        } else if (rule.field) {
+          // Update the field value if it's not properly wrapped
+          rule.field = wrapFieldValue(rule.field);
         }
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
+      });
+    };
+    if (legacyQuery.rules) {
+      _processRules(legacyQuery.rules);
     }
-    return allVariables;
-  }, [variables]);
-  var togglePopover = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
-    return setIsPopoverVisible(function (prev) {
-      return !prev;
-    });
+    console.log(legacyQuery);
   }, []);
   var onClose = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
-    var jsonCondition = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.formatQuery)(query, {
+    var jsonCondition = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_8__.formatQuery)(query, {
       format: 'jsonlogic',
       parseNumbers: true
     });
-    var naturalLanguageCondition = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.formatQuery)(query, {
+    var naturalLanguageCondition = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_8__.formatQuery)(query, {
       format: 'natural_language',
       parseNumbers: true,
       fields: allVariables,
       getOperators: function getOperators() {
-        return react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.defaultOperators;
+        return react_querybuilder__WEBPACK_IMPORTED_MODULE_8__.defaultOperators;
       }
     });
     var newValue = _objectSpread({}, defaultValue);
@@ -38973,35 +38979,25 @@ var Conditional = function Conditional(_ref) {
     if (onChange) {
       onChange(name, newValue);
     }
-    togglePopover();
+    setIsPopoverVisible(false);
   }, [query, allVariables, onChange, name, defaultValue]);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    convertLegacyVariables(query);
+  }, []);
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-    onClick: togglePopover,
+    onClick: function onClick() {
+      return setIsPopoverVisible(true);
+    },
     variant: "secondary"
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Edit condition', 'post-expirator')), (defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.natural) && /*#__PURE__*/React.createElement("div", {
     className: "condition-natural-language"
   }, defaultValue.natural), !isPro && /*#__PURE__*/React.createElement("div", {
     className: "condition-pro-features-notice"
-  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('This conditional will only be evaluated in the Pro version. In the Free version, it will always return true.', 'post-expirator'))), isPopoverVisible && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Popover, {
-    onClose: onClose
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: '20px',
-      minWidth: '400px'
-    },
-    onKeyUp: function onKeyUp(e) {
-      if (e.key === 'Enter') {
-        onClose();
-      }
-    }
-  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalHStack, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalHeading, {
-    level: 2,
-    className: "block-editor-inspector-popover-header__heading"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Condition', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-    onClick: onClose,
-    icon: "no-alt",
-    className: "block-editor-inspector-popover-header__action"
-  })), /*#__PURE__*/React.createElement(react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.QueryBuilder, {
+  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('This conditional will only be evaluated in the Pro version. In the Free version, it will always return true.', 'post-expirator'))), isPopoverVisible && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Modal, {
+    onClose: onClose,
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Condition', 'post-expirator'),
+    onRequestClose: onClose
+  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Create a condition ', 'post-expirator')), /*#__PURE__*/React.createElement(_react_querybuilder_dnd__WEBPACK_IMPORTED_MODULE_9__.QueryBuilderDnD, null, /*#__PURE__*/React.createElement(react_querybuilder__WEBPACK_IMPORTED_MODULE_8__.QueryBuilder, {
     fields: allVariables,
     onQueryChange: setQuery,
     query: query,
@@ -39009,6 +39005,7 @@ var Conditional = function Conditional(_ref) {
     parseNumbers: "strict-limited",
     showCombinatorsBetweenRules: true,
     showNotToggle: true,
+    enableDragAndDrop: true,
     controlClassnames: {
       queryBuilder: 'queryBuilder-branches'
     },
@@ -39019,9 +39016,17 @@ var Conditional = function Conditional(_ref) {
       addRule: {
         label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Add Rule', 'post-expirator')
       }
+    },
+    controlElements: {
+      fieldSelector: FieldExpressionBuilder,
+      valueEditor: FieldExpressionBuilder
+    },
+    context: {
+      options: allVariables,
+      name: name,
+      label: label
     }
   }))));
-  return /*#__PURE__*/React.createElement(react_querybuilder__WEBPACK_IMPORTED_MODULE_7__.QueryBuilder, null);
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Conditional);
 
@@ -39325,12 +39330,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _expression_builder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./expression-builder */ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/index.jsx");
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
 
 
 
@@ -39342,11 +39350,10 @@ function DebugData(_ref) {
     onChange = _ref.onChange,
     _ref$variables = _ref.variables,
     variables = _ref$variables === void 0 ? [] : _ref$variables;
-  var debugVariables = [{
-    name: "input",
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("All received input", "post-expirator"),
-    description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("All received input from the previous steps.", "post-expirator")
-  }].concat(_toConsumableArray(variables));
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(),
+    _useState2 = _slicedToArray(_useState, 2),
+    selectedOption = _useState2[0],
+    setSelectedOption = _useState2[1];
   var defaultDebugOption = {
     expression: "{{input}}"
   };
@@ -39370,12 +39377,45 @@ function DebugData(_ref) {
       expression: defaultValue.customData
     };
   }
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalVStack, null, /*#__PURE__*/React.createElement(_expression_builder__WEBPACK_IMPORTED_MODULE_2__.ExpressionBuilder, {
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
+    var _defaultValue4;
+    if (((_defaultValue4 = defaultValue) === null || _defaultValue4 === void 0 ? void 0 : _defaultValue4.expression) === "{{input}}") {
+      setSelectedOption("input");
+    } else {
+      setSelectedOption("custom-data");
+    }
+  }, []);
+  var radioOptions = [{
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("All received input", "post-expirator"),
+    value: "input"
+  }, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Custom data", "post-expirator"),
+    value: "custom-data"
+  }];
+  var onChangeRadio = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useCallback)(function (value) {
+    setSelectedOption(value);
+    if (value === "input") {
+      onChangeSetting(name, {
+        expression: "{{input}}"
+      });
+    } else {
+      defaultValue.expression = '';
+      onChangeSetting(name, {
+        expression: defaultValue.expression
+      });
+    }
+  }, [onChangeSetting, name, defaultValue]);
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalVStack, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RadioControl, {
+    options: radioOptions,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Select the data to output", "post-expirator"),
+    selected: selectedOption,
+    onChange: onChangeRadio
+  }), selectedOption === "custom-data" && /*#__PURE__*/React.createElement(_expression_builder__WEBPACK_IMPORTED_MODULE_2__.ExpressionBuilder, {
     name: name,
     label: label,
     defaultValue: defaultValue || defaultDebugOption,
     onChange: onChangeSetting,
-    variables: debugVariables
+    variables: variables
   })));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DebugData);
@@ -39584,6 +39624,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _column_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./column-item */ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/column-item.jsx");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
@@ -39594,9 +39635,15 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 var _RenderColumns = function RenderColumns(_ref) {
+  var _currentItem, _currentItem2;
   var currentItemPath = _ref.currentItemPath,
     currentItems = _ref.currentItems,
     onClick = _ref.onClick,
@@ -39610,22 +39657,24 @@ var _RenderColumns = function RenderColumns(_ref) {
   var selectedItemIndex = currentItemPath[currentColumnIndex];
   var currentItem = currentItems[selectedItemIndex];
   var addMetaKeyInputChildren = function addMetaKeyInputChildren(item) {
-    item.children = [{
-      name: item.name,
-      label: 'Metadata key',
-      description: 'Type the meta key and click on the button to insert it.',
-      type: 'meta-key-input'
-    }];
+    return _objectSpread(_objectSpread({}, item), {}, {
+      children: [{
+        name: item.name,
+        label: 'Metadata key',
+        description: 'Type the meta key and click on the button to insert it.',
+        type: 'meta-key-input'
+      }]
+    });
   };
-  if ((currentItem === null || currentItem === void 0 ? void 0 : currentItem.type) === 'meta') {
-    addMetaKeyInputChildren(currentItem);
+  if (((_currentItem = currentItem) === null || _currentItem === void 0 ? void 0 : _currentItem.type) === 'meta') {
+    currentItem = addMetaKeyInputChildren(currentItem);
   }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "column",
     key: "column-".concat(path.join('-'))
   }, currentItems.map(function (item, index) {
     if (item.type === 'meta') {
-      addMetaKeyInputChildren(item);
+      item = addMetaKeyInputChildren(item);
     }
     return /*#__PURE__*/React.createElement(_column_item__WEBPACK_IMPORTED_MODULE_1__.ColumnItem, {
       key: "column-item-".concat(path.join('-'), "-").concat(index),
@@ -39638,7 +39687,7 @@ var _RenderColumns = function RenderColumns(_ref) {
       path: [].concat(_toConsumableArray(path), [index]),
       index: index
     });
-  })), selectedItemIndex !== undefined && (currentItem === null || currentItem === void 0 ? void 0 : currentItem.children) && /*#__PURE__*/React.createElement(_RenderColumns, {
+  })), selectedItemIndex !== undefined && ((_currentItem2 = currentItem) === null || _currentItem2 === void 0 ? void 0 : _currentItem2.children) && /*#__PURE__*/React.createElement(_RenderColumns, {
     currentItemPath: currentItemPath,
     currentItems: currentItem.children,
     path: [].concat(_toConsumableArray(path), [selectedItemIndex]),
@@ -39736,7 +39785,8 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 var ExpressionBuilder = function ExpressionBuilder(_ref) {
   var name = _ref.name,
-    label = _ref.label,
+    _ref$label = _ref.label,
+    label = _ref$label === void 0 ? '' : _ref$label,
     defaultValue = _ref.defaultValue,
     onChange = _ref.onChange,
     _ref$variables = _ref.variables,
@@ -39745,7 +39795,10 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     propertyName = _ref$propertyName === void 0 ? "expression" : _ref$propertyName,
     _ref$settings = _ref.settings,
     settings = _ref$settings === void 0 ? {} : _ref$settings,
-    description = _ref.description;
+    _ref$description = _ref.description,
+    description = _ref$description === void 0 ? '' : _ref$description,
+    _ref$isInline = _ref.isInline,
+    isInline = _ref$isInline === void 0 ? false : _ref$isInline;
   var editorRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(),
     _useState2 = _slicedToArray(_useState, 2),
@@ -39799,7 +39852,7 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     $blockScrolling: true
   };
   return /*#__PURE__*/React.createElement("div", {
-    className: "expression-builder"
+    className: "expression-builder ".concat(isOpen ? 'expression-builder-open' : '', " ").concat(isInline ? 'expression-builder-inline' : '')
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
     variant: "secondary",
     onClick: function onClick() {
@@ -39811,7 +39864,7 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
       size: 18
     }),
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Edit", "post-expirator")
-  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalHeading, {
+  }), !isInline && label && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalHeading, {
     level: 3,
     className: "expression-builder-small-heading"
   }, label), description && /*#__PURE__*/React.createElement("p", null, description), /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -52415,7 +52468,23 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.columns-container {
 .expression-builder-variable-name {
     margin-left: 5px;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;IACnB,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;IAC5B,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,iBAAiB;IACjB,yBAAyB;IACzB,sBAAsB;IACtB,qBAAqB;AACzB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;AACvB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,QAAQ;IACR,YAAY;IACZ,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,gBAAgB;AACpB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n    max-height: 212px;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n    overflow-y: scroll;\n    max-height: 270px;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 2px 6px;\n    position: relative;\n    user-select: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.selected {\n    background-color: #ccc;\n}\n\n.column-item.has-children.selected::after {\n    color: #1b1b1b;\n}\n\n.column-item:hover {\n    background-color: #f0f0f0;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n}\n\n.components-modal__screen-overlay {\n    z-index: 999999998;\n}\n\n.expression-builder {\n    position: relative;\n    padding-top: 20px;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 14px;\n    right: 0;\n    height: 28px;\n    padding-top: 10px;\n}\n\n.column-item-form {\n    padding: 10px;\n    max-width: 202px;\n}\n\n.column-item-form p {\n    text-wrap: auto;\n}\n\n.expression-builder-variable-name {\n    margin-left: 5px;\n}\n"],"sourceRoot":""}]);
+
+.expression-builder-inline {
+    padding-top: 0 !important;
+}
+
+.expression-builder-inline .ace_editor {
+    margin-top: 0 !important;
+    height: 40px !important;
+    width: 240px !important;
+    margin-right: 40px !important;
+}
+
+.expression-builder-inline > button {
+    top: 0 !important;
+    right: 0 !important;
+}
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;IACnB,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;IAC5B,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,iBAAiB;IACjB,yBAAyB;IACzB,sBAAsB;IACtB,qBAAqB;AACzB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;AACvB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,QAAQ;IACR,YAAY;IACZ,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,gBAAgB;AACpB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,wBAAwB;IACxB,uBAAuB;IACvB,uBAAuB;IACvB,6BAA6B;AACjC;;AAEA;IACI,iBAAiB;IACjB,mBAAmB;AACvB","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n    max-height: 212px;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n    overflow-y: scroll;\n    max-height: 270px;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 2px 6px;\n    position: relative;\n    user-select: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.selected {\n    background-color: #ccc;\n}\n\n.column-item.has-children.selected::after {\n    color: #1b1b1b;\n}\n\n.column-item:hover {\n    background-color: #f0f0f0;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n}\n\n.components-modal__screen-overlay {\n    z-index: 999999998;\n}\n\n.expression-builder {\n    position: relative;\n    padding-top: 20px;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 14px;\n    right: 0;\n    height: 28px;\n    padding-top: 10px;\n}\n\n.column-item-form {\n    padding: 10px;\n    max-width: 202px;\n}\n\n.column-item-form p {\n    text-wrap: auto;\n}\n\n.expression-builder-variable-name {\n    margin-left: 5px;\n}\n\n.expression-builder-inline {\n    padding-top: 0 !important;\n}\n\n.expression-builder-inline .ace_editor {\n    margin-top: 0 !important;\n    height: 40px !important;\n    width: 240px !important;\n    margin-right: 40px !important;\n}\n\n.expression-builder-inline > button {\n    top: 0 !important;\n    right: 0 !important;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -74351,6 +74420,1199 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	} else {}
 }());
 
+
+/***/ }),
+
+/***/ "./node_modules/@react-querybuilder/dnd/dist/react-querybuilder_dnd.mjs":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@react-querybuilder/dnd/dist/react-querybuilder_dnd.mjs ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   InlineCombinatorDnD: () => (/* binding */ InlineCombinatorDnD),
+/* harmony export */   QueryBuilderDnD: () => (/* binding */ QueryBuilderDnD),
+/* harmony export */   QueryBuilderDndWithoutProvider: () => (/* binding */ QueryBuilderDndWithoutProvider),
+/* harmony export */   RuleDnD: () => (/* binding */ RuleDnD),
+/* harmony export */   RuleGroupDnD: () => (/* binding */ RuleGroupDnD),
+/* harmony export */   useInlineCombinatorDnD: () => (/* binding */ useInlineCombinatorDnD),
+/* harmony export */   useReactDnD: () => (/* binding */ useReactDnD),
+/* harmony export */   useRuleDnD: () => (/* binding */ useRuleDnD),
+/* harmony export */   useRuleGroupDnD: () => (/* binding */ useRuleGroupDnD)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_querybuilder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-querybuilder */ "./node_modules/react-querybuilder/dist/react-querybuilder.mjs");
+// ../../utils/react-compiler/react-compiler-runtime.ts
+
+var $empty = Symbol["for"]("react.memo_cache_sentinel");
+function c(size) {
+  return react__WEBPACK_IMPORTED_MODULE_0__.useMemo(
+    function() {
+      var $ = Array.from({ length: size });
+      for (var ii = 0; ii < size; ii++) {
+        $[ii] = $empty;
+      }
+      $[$empty] = true;
+      return $;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+}
+
+// src/InlineCombinatorDnD.tsx
+
+
+
+
+// src/QueryBuilderDndContext.ts
+
+
+var rule = react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.defaultControlElements.rule;
+var ruleGroup = react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.defaultControlElements.ruleGroup;
+var combinatorSelector = react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.defaultControlElements.combinatorSelector;
+var QueryBuilderDndContext = /* @__PURE__ */ (0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)({ baseControls: { rule, ruleGroup, combinatorSelector } });
+
+// src/InlineCombinatorDnD.tsx
+function _typeof(o) {
+  "@babel/helpers - typeof";
+  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
+    return typeof o2;
+  } : function(o2) {
+    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
+  }, _typeof(o);
+}
+var _excluded = ["component"];
+function _slicedToArray(r, e) {
+  return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
+}
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+  }
+}
+function _arrayLikeToArray(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+function _iterableToArrayLimit(r, l) {
+  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (null != t) {
+    var e, n, i, u, a = [], f = true, o = false;
+    try {
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = false;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = true) ;
+    } catch (r2) {
+      o = true, n = r2;
+    } finally {
+      try {
+        if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+      } finally {
+        if (o) throw n;
+      }
+    }
+    return a;
+  }
+}
+function _arrayWithHoles(r) {
+  if (Array.isArray(r)) return r;
+}
+function ownKeys(e, r) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r && (o = o.filter(function(r2) {
+      return Object.getOwnPropertyDescriptor(e, r2).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread(e) {
+  for (var r = 1; r < arguments.length; r++) {
+    var t = null != arguments[r] ? arguments[r] : {};
+    r % 2 ? ownKeys(Object(t), true).forEach(function(r2) {
+      _defineProperty(e, r2, t[r2]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r2) {
+      Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
+    });
+  }
+  return e;
+}
+function _defineProperty(e, r, t) {
+  return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
+}
+function _toPropertyKey(t) {
+  var i = _toPrimitive(t, "string");
+  return "symbol" == _typeof(i) ? i : i + "";
+}
+function _toPrimitive(t, r) {
+  if ("object" != _typeof(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != _typeof(i)) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+function _objectWithoutProperties(e, t) {
+  if (null == e) return {};
+  var o, r, i = _objectWithoutPropertiesLoose(e, t);
+  if (Object.getOwnPropertySymbols) {
+    var s = Object.getOwnPropertySymbols(e);
+    for (r = 0; r < s.length; r++) o = s[r], t.includes(o) || {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
+  }
+  return i;
+}
+function _objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
+  var t = {};
+  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+    if (e.includes(n)) continue;
+    t[n] = r[n];
+  }
+  return t;
+}
+var InlineCombinatorDnD = function InlineCombinatorDnD2(t0) {
+  var $ = c(18);
+  var props;
+  var CombinatorSelectorComponent;
+  if ($[0] !== t0) {
+    var _t = t0;
+    CombinatorSelectorComponent = _t.component;
+    props = _objectWithoutProperties(_t, _excluded);
+    _t;
+    $[0] = t0;
+    $[1] = props;
+    $[2] = CombinatorSelectorComponent;
+  } else {
+    props = $[1];
+    CombinatorSelectorComponent = $[2];
+  }
+  var _useContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(QueryBuilderDndContext), canDrop = _useContext.canDrop, useDrop = _useContext.useDrop;
+  var t1;
+  if ($[3] !== props || $[4] !== CombinatorSelectorComponent || $[5] !== useDrop || $[6] !== canDrop) {
+    t1 = _objectSpread(_objectSpread({}, props), {}, { component: CombinatorSelectorComponent, useDrop, canDrop });
+    $[3] = props;
+    $[4] = CombinatorSelectorComponent;
+    $[5] = useDrop;
+    $[6] = canDrop;
+    $[7] = t1;
+  } else {
+    t1 = $[7];
+  }
+  var _useInlineCombinatorD = useInlineCombinatorDnD(t1), dropRef = _useInlineCombinatorD.dropRef, dropMonitorId = _useInlineCombinatorD.dropMonitorId, isOver = _useInlineCombinatorD.isOver;
+  var t2 = props.schema.suppressStandardClassnames || react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.standardClassnames.betweenRules;
+  var t3 = isOver && !props.schema.classNames.dndOver || false;
+  var t4 = isOver && !props.schema.suppressStandardClassnames && react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.standardClassnames.dndOver || false;
+  var t5;
+  if ($[8] !== t2 || $[9] !== t3 || $[10] !== t4) {
+    t5 = [t2, t3, t4].filter(_temp);
+    $[8] = t2;
+    $[9] = t3;
+    $[10] = t4;
+    $[11] = t5;
+  } else {
+    t5 = $[11];
+  }
+  var wrapperClassName = t5.join(" ");
+  var t6;
+  if ($[12] !== props || $[13] !== CombinatorSelectorComponent || $[14] !== dropRef || $[15] !== wrapperClassName || $[16] !== dropMonitorId) {
+    t6 = (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", { ref: dropRef, className: wrapperClassName, "data-dropmonitorid": dropMonitorId, "data-testid": react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.TestID.inlineCombinator, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(CombinatorSelectorComponent, _objectSpread(_objectSpread({}, props), {}, { testID: react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.TestID.combinators })) }, "dnd");
+    $[12] = props;
+    $[13] = CombinatorSelectorComponent;
+    $[14] = dropRef;
+    $[15] = wrapperClassName;
+    $[16] = dropMonitorId;
+    $[17] = t6;
+  } else {
+    t6 = $[17];
+  }
+  return t6;
+};
+var useInlineCombinatorDnD = function useInlineCombinatorDnD2(_ref) {
+  var path = _ref.path, _canDrop = _ref.canDrop, schema = _ref.schema, useDrop = _ref.useDrop, rules = _ref.rules;
+  var dropRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var hoveringItem = (rules !== null && rules !== void 0 ? rules : (
+    /* istanbul ignore next */
+    []
+  ))[path.at(-1) - 1];
+  var _useDrop = useDrop(function() {
+    return { accept: ["rule", "ruleGroup"], canDrop: function canDrop(dragging) {
+      var itemPath = dragging.path;
+      if (dragging && typeof _canDrop === "function" && !_canDrop({ dragging, hovering: _objectSpread(_objectSpread({}, hoveringItem), {}, { path, qbId: schema.qbId }) })) {
+        return false;
+      }
+      var parentHoverPath = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.getParentPath)(path);
+      var parentItemPath = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.getParentPath)(itemPath);
+      var hoverIndex = path.at(-1);
+      var itemIndex = itemPath.at(-1);
+      return !// 1) the item is an ancestor of the drop target,
+      ((0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.isAncestor)(itemPath, path) || // 2) the item is hovered over itself (which should never
+      // happen since combinators don't have drag handles),
+      (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.pathsAreEqual)(itemPath, path) || (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.pathsAreEqual)(parentHoverPath, parentItemPath) && hoverIndex - 1 === itemIndex || // 3) independentCombinators is true and the drop target is just above the hovering item
+      schema.independentCombinators && (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.pathsAreEqual)(parentHoverPath, parentItemPath) && hoverIndex === itemIndex - 1);
+    }, collect: function collect(monitor) {
+      var _monitor$getHandlerId, _monitor$getDropResul;
+      return { isOver: monitor.canDrop() && monitor.isOver(), dropMonitorId: (_monitor$getHandlerId = monitor.getHandlerId()) !== null && _monitor$getHandlerId !== void 0 ? _monitor$getHandlerId : "", dropEffect: ((_monitor$getDropResul = monitor.getDropResult()) !== null && _monitor$getDropResul !== void 0 ? _monitor$getDropResul : {}).dropEffect };
+    }, drop: function drop2() {
+      var qbId = schema.qbId, getQuery = schema.getQuery, dispatchQuery = schema.dispatchQuery;
+      return { type: "inlineCombinator", path, qbId, getQuery, dispatchQuery };
+    } };
+  }, [path, schema.independentCombinators]), _useDrop2 = _slicedToArray(_useDrop, 2), _useDrop2$ = _useDrop2[0], isOver = _useDrop2$.isOver, dropMonitorId = _useDrop2$.dropMonitorId, drop = _useDrop2[1];
+  drop(dropRef);
+  return { dropRef, dropMonitorId, isOver };
+};
+function _temp(c2) {
+  return typeof c2 === "string";
+}
+
+// src/QueryBuilderDnD.tsx
+
+
+
+
+// src/RuleDnD.tsx
+
+
+
+
+// src/dropEffectListener.ts
+var dropEffectListener = "move";
+if (typeof document !== "undefined") {
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Alt") {
+      dropEffectListener = "copy";
+    }
+  });
+  document.addEventListener("keyup", function(e) {
+    if (e.key === "Alt") {
+      dropEffectListener = "move";
+    }
+  });
+}
+if (typeof window !== "undefined") {
+  window.addEventListener("blur", function() {
+    dropEffectListener = "move";
+  });
+}
+
+// src/useDragCommon.ts
+
+function _typeof2(o) {
+  "@babel/helpers - typeof";
+  return _typeof2 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
+    return typeof o2;
+  } : function(o2) {
+    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
+  }, _typeof2(o);
+}
+function _toConsumableArray(r) {
+  return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray2(r) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray2(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray2(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray2(r, a) : void 0;
+  }
+}
+function _iterableToArray(r) {
+  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
+}
+function _arrayWithoutHoles(r) {
+  if (Array.isArray(r)) return _arrayLikeToArray2(r);
+}
+function _arrayLikeToArray2(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+function ownKeys2(e, r) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r && (o = o.filter(function(r2) {
+      return Object.getOwnPropertyDescriptor(e, r2).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread2(e) {
+  for (var r = 1; r < arguments.length; r++) {
+    var t = null != arguments[r] ? arguments[r] : {};
+    r % 2 ? ownKeys2(Object(t), true).forEach(function(r2) {
+      _defineProperty2(e, r2, t[r2]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys2(Object(t)).forEach(function(r2) {
+      Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
+    });
+  }
+  return e;
+}
+function _defineProperty2(e, r, t) {
+  return (r = _toPropertyKey2(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
+}
+function _toPropertyKey2(t) {
+  var i = _toPrimitive2(t, "string");
+  return "symbol" == _typeof2(i) ? i : i + "";
+}
+function _toPrimitive2(t, r) {
+  if ("object" != _typeof2(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != _typeof2(i)) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+var useDragCommon = function useDragCommon2(_ref) {
+  var type = _ref.type, path = _ref.path, disabled = _ref.disabled, actions = _ref.actions, schema = _ref.schema, useDrag = _ref.useDrag;
+  return useDrag(function() {
+    return { type, item: function item() {
+      return _objectSpread2(_objectSpread2({}, (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.findPath)(path, schema.getQuery())), {}, { path, qbId: schema.qbId });
+    }, canDrag: !disabled, collect: function collect(monitor) {
+      var _monitor$getHandlerId;
+      return { isDragging: !disabled && monitor.isDragging(), dragMonitorId: (_monitor$getHandlerId = monitor.getHandlerId()) !== null && _monitor$getHandlerId !== void 0 ? _monitor$getHandlerId : "" };
+    }, end: function end(item, monitor_0) {
+      var dropResult = monitor_0.getDropResult();
+      if (!dropResult) return;
+      var parentHoverPath = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.getParentPath)(dropResult.path);
+      var hoverIndex = dropResult.path.at(-1);
+      var destinationPath = dropResult.type === "ruleGroup" ? [].concat(_toConsumableArray(dropResult.path), [0]) : dropResult.type === "inlineCombinator" ? [].concat(_toConsumableArray(parentHoverPath), [hoverIndex]) : [].concat(_toConsumableArray(parentHoverPath), [hoverIndex + 1]);
+      if (schema.qbId === dropResult.qbId) {
+        actions.moveRule(item.path, destinationPath, dropResult.dropEffect === "copy");
+      } else {
+        var otherBuilderQuery = dropResult.getQuery();
+        if (otherBuilderQuery) {
+          dropResult.dispatchQuery((0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.insert)(otherBuilderQuery, item, destinationPath));
+          if (dropResult.dropEffect !== "copy") {
+            actions.onRuleRemove(item.path);
+          }
+        }
+      }
+    } };
+  }, [disabled, path]);
+};
+
+// src/RuleDnD.tsx
+function _typeof3(o) {
+  "@babel/helpers - typeof";
+  return _typeof3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
+    return typeof o2;
+  } : function(o2) {
+    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
+  }, _typeof3(o);
+}
+function _slicedToArray2(r, e) {
+  return _arrayWithHoles2(r) || _iterableToArrayLimit2(r, e) || _unsupportedIterableToArray3(r, e) || _nonIterableRest2();
+}
+function _nonIterableRest2() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray3(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray3(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray3(r, a) : void 0;
+  }
+}
+function _arrayLikeToArray3(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+function _iterableToArrayLimit2(r, l) {
+  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (null != t) {
+    var e, n, i, u, a = [], f = true, o = false;
+    try {
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = false;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = true) ;
+    } catch (r2) {
+      o = true, n = r2;
+    } finally {
+      try {
+        if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+      } finally {
+        if (o) throw n;
+      }
+    }
+    return a;
+  }
+}
+function _arrayWithHoles2(r) {
+  if (Array.isArray(r)) return r;
+}
+function ownKeys3(e, r) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r && (o = o.filter(function(r2) {
+      return Object.getOwnPropertyDescriptor(e, r2).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread3(e) {
+  for (var r = 1; r < arguments.length; r++) {
+    var t = null != arguments[r] ? arguments[r] : {};
+    r % 2 ? ownKeys3(Object(t), true).forEach(function(r2) {
+      _defineProperty3(e, r2, t[r2]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys3(Object(t)).forEach(function(r2) {
+      Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
+    });
+  }
+  return e;
+}
+function _defineProperty3(e, r, t) {
+  return (r = _toPropertyKey3(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
+}
+function _toPropertyKey3(t) {
+  var i = _toPrimitive3(t, "string");
+  return "symbol" == _typeof3(i) ? i : i + "";
+}
+function _toPrimitive3(t, r) {
+  if ("object" != _typeof3(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != _typeof3(i)) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+var RuleDnD = function RuleDnD2(props) {
+  var $ = c(11);
+  var rqbDndContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(QueryBuilderDndContext);
+  var canDrop = rqbDndContext.canDrop, useDrag = rqbDndContext.useDrag, useDrop = rqbDndContext.useDrop;
+  var disabled = !!props.parentDisabled || !!props.disabled;
+  var t0;
+  if ($[0] !== props || $[1] !== disabled || $[2] !== useDrag || $[3] !== useDrop || $[4] !== canDrop) {
+    t0 = _objectSpread3(_objectSpread3({}, props), {}, { disabled, useDrag, useDrop, canDrop });
+    $[0] = props;
+    $[1] = disabled;
+    $[2] = useDrag;
+    $[3] = useDrop;
+    $[4] = canDrop;
+    $[5] = t0;
+  } else {
+    t0 = $[5];
+  }
+  var dndRefs = useRuleDnD(t0);
+  var BaseRuleComponent = rqbDndContext.baseControls.rule;
+  var t1;
+  if ($[6] !== props || $[7] !== dndRefs || $[8] !== BaseRuleComponent || $[9] !== rqbDndContext) {
+    t1 = (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(QueryBuilderDndContext.Provider, { value: rqbDndContext, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(BaseRuleComponent, _objectSpread3(_objectSpread3({}, props), dndRefs)) });
+    $[6] = props;
+    $[7] = dndRefs;
+    $[8] = BaseRuleComponent;
+    $[9] = rqbDndContext;
+    $[10] = t1;
+  } else {
+    t1 = $[10];
+  }
+  return t1;
+};
+var accept = ["rule", "ruleGroup"];
+var useRuleDnD = function useRuleDnD2(params) {
+  var path = params.path, rule2 = params.rule, disabled = params.disabled, schema = params.schema, actions = params.actions, useDrag = params.useDrag, useDrop = params.useDrop, _canDrop = params.canDrop;
+  var dndRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var dragRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var _useDragCommon = useDragCommon({ type: "rule", path, disabled, independentCombinators: schema.independentCombinators, moveRule: actions.moveRule, schema, actions, useDrag }), _useDragCommon2 = _slicedToArray2(_useDragCommon, 3), _useDragCommon2$ = _useDragCommon2[0], isDragging = _useDragCommon2$.isDragging, dragMonitorId = _useDragCommon2$.dragMonitorId, drag = _useDragCommon2[1], preview = _useDragCommon2[2];
+  var _useDrop = useDrop(function() {
+    return { accept, canDrop: function canDrop(dragging) {
+      if (dragging && typeof _canDrop === "function" && !_canDrop({ dragging, hovering: _objectSpread3(_objectSpread3({}, rule2), {}, { path, qbId: schema.qbId }) })) {
+        return false;
+      }
+      if (schema.qbId !== dragging.qbId) return true;
+      var parentHoverPath = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.getParentPath)(path);
+      var parentItemPath = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.getParentPath)(dragging.path);
+      var hoverIndex = path.at(-1);
+      var itemIndex = dragging.path.at(-1);
+      return !// 1) item is ancestor of drop target,
+      ((0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.isAncestor)(dragging.path, path) || // 2) item is hovered over itself or the previous item
+      (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.pathsAreEqual)(parentHoverPath, parentItemPath) && (hoverIndex === itemIndex || hoverIndex === itemIndex - 1 || schema.independentCombinators && hoverIndex === itemIndex - 2));
+    }, collect: function collect(monitor) {
+      var _monitor$getHandlerId, _monitor$getDropResul, _monitor$getDropResul2;
+      return { isOver: monitor.canDrop() && monitor.isOver(), dropMonitorId: (_monitor$getHandlerId = monitor.getHandlerId()) !== null && _monitor$getHandlerId !== void 0 ? _monitor$getHandlerId : "", dropEffect: (_monitor$getDropResul = (_monitor$getDropResul2 = monitor.getDropResult()) === null || _monitor$getDropResul2 === void 0 ? void 0 : _monitor$getDropResul2.dropEffect) !== null && _monitor$getDropResul !== void 0 ? _monitor$getDropResul : dropEffectListener };
+    }, drop: function drop2() {
+      var qbId = schema.qbId, getQuery = schema.getQuery, dispatchQuery = schema.dispatchQuery;
+      return { type: "rule", path, qbId, getQuery, dispatchQuery };
+    } };
+  }, [disabled, schema.independentCombinators, actions.moveRule, path]), _useDrop2 = _slicedToArray2(_useDrop, 2), _useDrop2$ = _useDrop2[0], isOver = _useDrop2$.isOver, dropMonitorId = _useDrop2$.dropMonitorId, dropEffect = _useDrop2$.dropEffect, drop = _useDrop2[1];
+  drag(dragRef);
+  preview(drop(dndRef));
+  return { isDragging, dragMonitorId, isOver, dropMonitorId, dndRef, dragRef, dropEffect };
+};
+
+// src/RuleGroupDnD.tsx
+
+
+
+function _typeof4(o) {
+  "@babel/helpers - typeof";
+  return _typeof4 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
+    return typeof o2;
+  } : function(o2) {
+    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
+  }, _typeof4(o);
+}
+function _slicedToArray3(r, e) {
+  return _arrayWithHoles3(r) || _iterableToArrayLimit3(r, e) || _unsupportedIterableToArray4(r, e) || _nonIterableRest3();
+}
+function _nonIterableRest3() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray4(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray4(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray4(r, a) : void 0;
+  }
+}
+function _arrayLikeToArray4(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+function _iterableToArrayLimit3(r, l) {
+  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (null != t) {
+    var e, n, i, u, a = [], f = true, o = false;
+    try {
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = false;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = true) ;
+    } catch (r2) {
+      o = true, n = r2;
+    } finally {
+      try {
+        if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+      } finally {
+        if (o) throw n;
+      }
+    }
+    return a;
+  }
+}
+function _arrayWithHoles3(r) {
+  if (Array.isArray(r)) return r;
+}
+function ownKeys4(e, r) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r && (o = o.filter(function(r2) {
+      return Object.getOwnPropertyDescriptor(e, r2).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread4(e) {
+  for (var r = 1; r < arguments.length; r++) {
+    var t = null != arguments[r] ? arguments[r] : {};
+    r % 2 ? ownKeys4(Object(t), true).forEach(function(r2) {
+      _defineProperty4(e, r2, t[r2]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys4(Object(t)).forEach(function(r2) {
+      Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
+    });
+  }
+  return e;
+}
+function _defineProperty4(e, r, t) {
+  return (r = _toPropertyKey4(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
+}
+function _toPropertyKey4(t) {
+  var i = _toPrimitive4(t, "string");
+  return "symbol" == _typeof4(i) ? i : i + "";
+}
+function _toPrimitive4(t, r) {
+  if ("object" != _typeof4(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != _typeof4(i)) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+var RuleGroupDnD = function RuleGroupDnD2(props) {
+  var $ = c(10);
+  var rqbDndContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(QueryBuilderDndContext);
+  var canDrop = rqbDndContext.canDrop, useDrag = rqbDndContext.useDrag, useDrop = rqbDndContext.useDrop;
+  var disabled = !!props.parentDisabled || !!props.disabled;
+  var t0;
+  if ($[0] !== props || $[1] !== disabled || $[2] !== useDrag || $[3] !== useDrop || $[4] !== canDrop) {
+    t0 = _objectSpread4(_objectSpread4({}, props), {}, { disabled, useDrag, useDrop, canDrop });
+    $[0] = props;
+    $[1] = disabled;
+    $[2] = useDrag;
+    $[3] = useDrop;
+    $[4] = canDrop;
+    $[5] = t0;
+  } else {
+    t0 = $[5];
+  }
+  var dndRefs = useRuleGroupDnD(t0);
+  var BaseRuleGroupComponent = rqbDndContext.baseControls.ruleGroup;
+  var t1;
+  if ($[6] !== props || $[7] !== dndRefs || $[8] !== BaseRuleGroupComponent) {
+    t1 = (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(BaseRuleGroupComponent, _objectSpread4(_objectSpread4({}, props), dndRefs));
+    $[6] = props;
+    $[7] = dndRefs;
+    $[8] = BaseRuleGroupComponent;
+    $[9] = t1;
+  } else {
+    t1 = $[9];
+  }
+  return t1;
+};
+var accept2 = ["rule", "ruleGroup"];
+var useRuleGroupDnD = function useRuleGroupDnD2(params) {
+  var disabled = params.disabled, path = params.path, ruleGroup2 = params.ruleGroup, schema = params.schema, actions = params.actions, useDrag = params.useDrag, useDrop = params.useDrop, _canDrop = params.canDrop;
+  var previewRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var dragRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var dropRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var _useDragCommon = useDragCommon({ type: "ruleGroup", path, disabled, independentCombinators: schema.independentCombinators, moveRule: actions.moveRule, schema, actions, useDrag }), _useDragCommon2 = _slicedToArray3(_useDragCommon, 3), _useDragCommon2$ = _useDragCommon2[0], isDragging = _useDragCommon2$.isDragging, dragMonitorId = _useDragCommon2$.dragMonitorId, drag = _useDragCommon2[1], preview = _useDragCommon2[2];
+  var _useDrop = useDrop(function() {
+    return { accept: accept2, canDrop: function canDrop(dragging) {
+      if (disabled || dragging && typeof _canDrop === "function" && !_canDrop({ dragging, hovering: _objectSpread4(_objectSpread4({}, ruleGroup2), {}, { path, qbId: schema.qbId }) })) {
+        return false;
+      }
+      if (schema.qbId !== dragging.qbId) return true;
+      var parentItemPath = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.getParentPath)(dragging.path);
+      var itemIndex = dragging.path.at(-1);
+      return !// 1) item is ancestor of drop target,
+      ((0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.isAncestor)(dragging.path, path) || // 2) item is first child and is dropped on its own group header,
+      (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.pathsAreEqual)(path, parentItemPath) && itemIndex === 0 || // 3) the group is dropped on itself
+      (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.pathsAreEqual)(path, dragging.path));
+    }, collect: function collect(monitor) {
+      var _monitor$getHandlerId, _monitor$getDropResul, _monitor$getDropResul2;
+      return { isOver: monitor.canDrop() && monitor.isOver(), dropMonitorId: (_monitor$getHandlerId = monitor.getHandlerId()) !== null && _monitor$getHandlerId !== void 0 ? _monitor$getHandlerId : "", dropEffect: (_monitor$getDropResul = (_monitor$getDropResul2 = monitor.getDropResult()) === null || _monitor$getDropResul2 === void 0 ? void 0 : _monitor$getDropResul2.dropEffect) !== null && _monitor$getDropResul !== void 0 ? _monitor$getDropResul : dropEffectListener };
+    }, drop: function drop2(_item, monitor_0) {
+      var _monitor_0$getDropRes;
+      var qbId = schema.qbId, getQuery = schema.getQuery, dispatchQuery = schema.dispatchQuery;
+      return (_monitor_0$getDropRes = monitor_0.getDropResult()) !== null && _monitor_0$getDropRes !== void 0 ? _monitor_0$getDropRes : { type: "ruleGroup", path, qbId, getQuery, dispatchQuery };
+    } };
+  }, [disabled, actions.moveRule, path]), _useDrop2 = _slicedToArray3(_useDrop, 2), _useDrop2$ = _useDrop2[0], isOver = _useDrop2$.isOver, dropMonitorId = _useDrop2$.dropMonitorId, dropEffect = _useDrop2$.dropEffect, drop = _useDrop2[1];
+  if (path.length > 0) {
+    drag(dragRef);
+    preview(previewRef);
+  }
+  drop(dropRef);
+  return { isDragging, dragMonitorId, isOver, dropMonitorId, previewRef, dragRef, dropRef, dropEffect };
+};
+
+// src/QueryBuilderDnD.tsx
+function _typeof5(o) {
+  "@babel/helpers - typeof";
+  return _typeof5 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
+    return typeof o2;
+  } : function(o2) {
+    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
+  }, _typeof5(o);
+}
+function _regeneratorRuntime() {
+  "use strict";
+  _regeneratorRuntime = function _regeneratorRuntime2() {
+    return e;
+  };
+  var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function(t2, e2, r2) {
+    t2[e2] = r2.value;
+  }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c2 = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag";
+  function define(t2, e2, r2) {
+    return Object.defineProperty(t2, e2, { value: r2, enumerable: true, configurable: true, writable: true }), t2[e2];
+  }
+  try {
+    define({}, "");
+  } catch (t2) {
+    define = function define2(t3, e2, r2) {
+      return t3[e2] = r2;
+    };
+  }
+  function wrap(t2, e2, r2, n2) {
+    var i2 = e2 && e2.prototype instanceof Generator ? e2 : Generator, a2 = Object.create(i2.prototype), c3 = new Context(n2 || []);
+    return o(a2, "_invoke", { value: makeInvokeMethod(t2, r2, c3) }), a2;
+  }
+  function tryCatch(t2, e2, r2) {
+    try {
+      return { type: "normal", arg: t2.call(e2, r2) };
+    } catch (t3) {
+      return { type: "throw", arg: t3 };
+    }
+  }
+  e.wrap = wrap;
+  var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {};
+  function Generator() {
+  }
+  function GeneratorFunction() {
+  }
+  function GeneratorFunctionPrototype() {
+  }
+  var p = {};
+  define(p, a, function() {
+    return this;
+  });
+  var d = Object.getPrototypeOf, v = d && d(d(values([])));
+  v && v !== r && n.call(v, a) && (p = v);
+  var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p);
+  function defineIteratorMethods(t2) {
+    ["next", "throw", "return"].forEach(function(e2) {
+      define(t2, e2, function(t3) {
+        return this._invoke(e2, t3);
+      });
+    });
+  }
+  function AsyncIterator(t2, e2) {
+    function invoke(r3, o2, i2, a2) {
+      var c3 = tryCatch(t2[r3], t2, o2);
+      if ("throw" !== c3.type) {
+        var u2 = c3.arg, h2 = u2.value;
+        return h2 && "object" == _typeof5(h2) && n.call(h2, "__await") ? e2.resolve(h2.__await).then(function(t3) {
+          invoke("next", t3, i2, a2);
+        }, function(t3) {
+          invoke("throw", t3, i2, a2);
+        }) : e2.resolve(h2).then(function(t3) {
+          u2.value = t3, i2(u2);
+        }, function(t3) {
+          return invoke("throw", t3, i2, a2);
+        });
+      }
+      a2(c3.arg);
+    }
+    var r2;
+    o(this, "_invoke", { value: function value(t3, n2) {
+      function callInvokeWithMethodAndArg() {
+        return new e2(function(e3, r3) {
+          invoke(t3, n2, e3, r3);
+        });
+      }
+      return r2 = r2 ? r2.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
+    } });
+  }
+  function makeInvokeMethod(e2, r2, n2) {
+    var o2 = h;
+    return function(i2, a2) {
+      if (o2 === f) throw Error("Generator is already running");
+      if (o2 === s) {
+        if ("throw" === i2) throw a2;
+        return { value: t, done: true };
+      }
+      for (n2.method = i2, n2.arg = a2; ; ) {
+        var c3 = n2.delegate;
+        if (c3) {
+          var u2 = maybeInvokeDelegate(c3, n2);
+          if (u2) {
+            if (u2 === y) continue;
+            return u2;
+          }
+        }
+        if ("next" === n2.method) n2.sent = n2._sent = n2.arg;
+        else if ("throw" === n2.method) {
+          if (o2 === h) throw o2 = s, n2.arg;
+          n2.dispatchException(n2.arg);
+        } else "return" === n2.method && n2.abrupt("return", n2.arg);
+        o2 = f;
+        var p2 = tryCatch(e2, r2, n2);
+        if ("normal" === p2.type) {
+          if (o2 = n2.done ? s : l, p2.arg === y) continue;
+          return { value: p2.arg, done: n2.done };
+        }
+        "throw" === p2.type && (o2 = s, n2.method = "throw", n2.arg = p2.arg);
+      }
+    };
+  }
+  function maybeInvokeDelegate(e2, r2) {
+    var n2 = r2.method, o2 = e2.iterator[n2];
+    if (o2 === t) return r2.delegate = null, "throw" === n2 && e2.iterator["return"] && (r2.method = "return", r2.arg = t, maybeInvokeDelegate(e2, r2), "throw" === r2.method) || "return" !== n2 && (r2.method = "throw", r2.arg = new TypeError("The iterator does not provide a '" + n2 + "' method")), y;
+    var i2 = tryCatch(o2, e2.iterator, r2.arg);
+    if ("throw" === i2.type) return r2.method = "throw", r2.arg = i2.arg, r2.delegate = null, y;
+    var a2 = i2.arg;
+    return a2 ? a2.done ? (r2[e2.resultName] = a2.value, r2.next = e2.nextLoc, "return" !== r2.method && (r2.method = "next", r2.arg = t), r2.delegate = null, y) : a2 : (r2.method = "throw", r2.arg = new TypeError("iterator result is not an object"), r2.delegate = null, y);
+  }
+  function pushTryEntry(t2) {
+    var e2 = { tryLoc: t2[0] };
+    1 in t2 && (e2.catchLoc = t2[1]), 2 in t2 && (e2.finallyLoc = t2[2], e2.afterLoc = t2[3]), this.tryEntries.push(e2);
+  }
+  function resetTryEntry(t2) {
+    var e2 = t2.completion || {};
+    e2.type = "normal", delete e2.arg, t2.completion = e2;
+  }
+  function Context(t2) {
+    this.tryEntries = [{ tryLoc: "root" }], t2.forEach(pushTryEntry, this), this.reset(true);
+  }
+  function values(e2) {
+    if (e2 || "" === e2) {
+      var r2 = e2[a];
+      if (r2) return r2.call(e2);
+      if ("function" == typeof e2.next) return e2;
+      if (!isNaN(e2.length)) {
+        var o2 = -1, i2 = function next() {
+          for (; ++o2 < e2.length; ) if (n.call(e2, o2)) return next.value = e2[o2], next.done = false, next;
+          return next.value = t, next.done = true, next;
+        };
+        return i2.next = i2;
+      }
+    }
+    throw new TypeError(_typeof5(e2) + " is not iterable");
+  }
+  return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: true }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: true }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function(t2) {
+    var e2 = "function" == typeof t2 && t2.constructor;
+    return !!e2 && (e2 === GeneratorFunction || "GeneratorFunction" === (e2.displayName || e2.name));
+  }, e.mark = function(t2) {
+    return Object.setPrototypeOf ? Object.setPrototypeOf(t2, GeneratorFunctionPrototype) : (t2.__proto__ = GeneratorFunctionPrototype, define(t2, u, "GeneratorFunction")), t2.prototype = Object.create(g), t2;
+  }, e.awrap = function(t2) {
+    return { __await: t2 };
+  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c2, function() {
+    return this;
+  }), e.AsyncIterator = AsyncIterator, e.async = function(t2, r2, n2, o2, i2) {
+    void 0 === i2 && (i2 = Promise);
+    var a2 = new AsyncIterator(wrap(t2, r2, n2, o2), i2);
+    return e.isGeneratorFunction(r2) ? a2 : a2.next().then(function(t3) {
+      return t3.done ? t3.value : a2.next();
+    });
+  }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function() {
+    return this;
+  }), define(g, "toString", function() {
+    return "[object Generator]";
+  }), e.keys = function(t2) {
+    var e2 = Object(t2), r2 = [];
+    for (var n2 in e2) r2.push(n2);
+    return r2.reverse(), function next() {
+      for (; r2.length; ) {
+        var t3 = r2.pop();
+        if (t3 in e2) return next.value = t3, next.done = false, next;
+      }
+      return next.done = true, next;
+    };
+  }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e2) {
+    if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = false, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e2) for (var r2 in this) "t" === r2.charAt(0) && n.call(this, r2) && !isNaN(+r2.slice(1)) && (this[r2] = t);
+  }, stop: function stop() {
+    this.done = true;
+    var t2 = this.tryEntries[0].completion;
+    if ("throw" === t2.type) throw t2.arg;
+    return this.rval;
+  }, dispatchException: function dispatchException(e2) {
+    if (this.done) throw e2;
+    var r2 = this;
+    function handle(n2, o3) {
+      return a2.type = "throw", a2.arg = e2, r2.next = n2, o3 && (r2.method = "next", r2.arg = t), !!o3;
+    }
+    for (var o2 = this.tryEntries.length - 1; o2 >= 0; --o2) {
+      var i2 = this.tryEntries[o2], a2 = i2.completion;
+      if ("root" === i2.tryLoc) return handle("end");
+      if (i2.tryLoc <= this.prev) {
+        var c3 = n.call(i2, "catchLoc"), u2 = n.call(i2, "finallyLoc");
+        if (c3 && u2) {
+          if (this.prev < i2.catchLoc) return handle(i2.catchLoc, true);
+          if (this.prev < i2.finallyLoc) return handle(i2.finallyLoc);
+        } else if (c3) {
+          if (this.prev < i2.catchLoc) return handle(i2.catchLoc, true);
+        } else {
+          if (!u2) throw Error("try statement without catch or finally");
+          if (this.prev < i2.finallyLoc) return handle(i2.finallyLoc);
+        }
+      }
+    }
+  }, abrupt: function abrupt(t2, e2) {
+    for (var r2 = this.tryEntries.length - 1; r2 >= 0; --r2) {
+      var o2 = this.tryEntries[r2];
+      if (o2.tryLoc <= this.prev && n.call(o2, "finallyLoc") && this.prev < o2.finallyLoc) {
+        var i2 = o2;
+        break;
+      }
+    }
+    i2 && ("break" === t2 || "continue" === t2) && i2.tryLoc <= e2 && e2 <= i2.finallyLoc && (i2 = null);
+    var a2 = i2 ? i2.completion : {};
+    return a2.type = t2, a2.arg = e2, i2 ? (this.method = "next", this.next = i2.finallyLoc, y) : this.complete(a2);
+  }, complete: function complete(t2, e2) {
+    if ("throw" === t2.type) throw t2.arg;
+    return "break" === t2.type || "continue" === t2.type ? this.next = t2.arg : "return" === t2.type ? (this.rval = this.arg = t2.arg, this.method = "return", this.next = "end") : "normal" === t2.type && e2 && (this.next = e2), y;
+  }, finish: function finish(t2) {
+    for (var e2 = this.tryEntries.length - 1; e2 >= 0; --e2) {
+      var r2 = this.tryEntries[e2];
+      if (r2.finallyLoc === t2) return this.complete(r2.completion, r2.afterLoc), resetTryEntry(r2), y;
+    }
+  }, "catch": function _catch(t2) {
+    for (var e2 = this.tryEntries.length - 1; e2 >= 0; --e2) {
+      var r2 = this.tryEntries[e2];
+      if (r2.tryLoc === t2) {
+        var n2 = r2.completion;
+        if ("throw" === n2.type) {
+          var o2 = n2.arg;
+          resetTryEntry(r2);
+        }
+        return o2;
+      }
+    }
+    throw Error("illegal catch attempt");
+  }, delegateYield: function delegateYield(e2, r2, n2) {
+    return this.delegate = { iterator: values(e2), resultName: r2, nextLoc: n2 }, "next" === this.method && (this.arg = t), y;
+  } }, e;
+}
+function asyncGeneratorStep(n, t, e, r, o, a, c2) {
+  try {
+    var i = n[a](c2), u = i.value;
+  } catch (n2) {
+    return void e(n2);
+  }
+  i.done ? t(u) : Promise.resolve(u).then(r, o);
+}
+function _asyncToGenerator(n) {
+  return function() {
+    var t = this, e = arguments;
+    return new Promise(function(r, o) {
+      var a = n.apply(t, e);
+      function _next(n2) {
+        asyncGeneratorStep(a, r, o, _next, _throw, "next", n2);
+      }
+      function _throw(n2) {
+        asyncGeneratorStep(a, r, o, _next, _throw, "throw", n2);
+      }
+      _next(void 0);
+    });
+  };
+}
+function _slicedToArray4(r, e) {
+  return _arrayWithHoles4(r) || _iterableToArrayLimit4(r, e) || _unsupportedIterableToArray5(r, e) || _nonIterableRest4();
+}
+function _nonIterableRest4() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray5(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray5(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray5(r, a) : void 0;
+  }
+}
+function _arrayLikeToArray5(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+function _iterableToArrayLimit4(r, l) {
+  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (null != t) {
+    var e, n, i, u, a = [], f = true, o = false;
+    try {
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = false;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = true) ;
+    } catch (r2) {
+      o = true, n = r2;
+    } finally {
+      try {
+        if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+      } finally {
+        if (o) throw n;
+      }
+    }
+    return a;
+  }
+}
+function _arrayWithHoles4(r) {
+  if (Array.isArray(r)) return r;
+}
+function ownKeys5(e, r) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r && (o = o.filter(function(r2) {
+      return Object.getOwnPropertyDescriptor(e, r2).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread5(e) {
+  for (var r = 1; r < arguments.length; r++) {
+    var t = null != arguments[r] ? arguments[r] : {};
+    r % 2 ? ownKeys5(Object(t), true).forEach(function(r2) {
+      _defineProperty5(e, r2, t[r2]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys5(Object(t)).forEach(function(r2) {
+      Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
+    });
+  }
+  return e;
+}
+function _defineProperty5(e, r, t) {
+  return (r = _toPropertyKey5(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
+}
+function _toPropertyKey5(t) {
+  var i = _toPrimitive5(t, "string");
+  return "symbol" == _typeof5(i) ? i : i + "";
+}
+function _toPrimitive5(t, r) {
+  if ("object" != _typeof5(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != _typeof5(i)) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+var QueryBuilderDnD = function QueryBuilderDnD2(props) {
+  var $ = c(24);
+  var controlClassnames = props.controlClassnames, controlElements = props.controlElements, debugMode = props.debugMode, enableDragAndDropProp = props.enableDragAndDrop, enableMountQueryChange = props.enableMountQueryChange, translations = props.translations, canDrop = props.canDrop;
+  var t0 = enableDragAndDropProp !== null && enableDragAndDropProp !== void 0 ? enableDragAndDropProp : true;
+  var t1;
+  if ($[0] !== translations) {
+    t1 = translations !== null && translations !== void 0 ? translations : {};
+    $[0] = translations;
+    $[1] = t1;
+  } else {
+    t1 = $[1];
+  }
+  var t2;
+  if ($[2] !== controlClassnames || $[3] !== controlElements || $[4] !== debugMode || $[5] !== t0 || $[6] !== enableMountQueryChange || $[7] !== t1) {
+    t2 = { controlClassnames, controlElements, debugMode, enableDragAndDrop: t0, enableMountQueryChange, translations: t1 };
+    $[2] = controlClassnames;
+    $[3] = controlElements;
+    $[4] = debugMode;
+    $[5] = t0;
+    $[6] = enableMountQueryChange;
+    $[7] = t1;
+    $[8] = t2;
+  } else {
+    t2 = $[8];
+  }
+  var rqbContext = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.useMergedContext)(t2);
+  var enableDragAndDrop = rqbContext.enableDragAndDrop;
+  var dnd = useReactDnD(props.dnd);
+  var key = enableDragAndDrop && dnd ? "dnd" : "no-dnd";
+  if (!enableDragAndDrop || !dnd) {
+    var _t;
+    if ($[9] !== rqbContext || $[10] !== debugMode || $[11] !== props.children || $[12] !== key) {
+      _t = (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.QueryBuilderContext.Provider, { value: _objectSpread5(_objectSpread5({}, rqbContext), {}, { enableDragAndDrop: false, debugMode }), children: props.children }, key);
+      $[9] = rqbContext;
+      $[10] = debugMode;
+      $[11] = props.children;
+      $[12] = key;
+      $[13] = _t;
+    } else {
+      _t = $[13];
+    }
+    return _t;
+  }
+  var DndProvider = dnd.DndProvider, HTML5Backend = dnd.HTML5Backend;
+  var t3;
+  if ($[14] !== rqbContext || $[15] !== enableDragAndDrop || $[16] !== debugMode || $[17] !== dnd || $[18] !== canDrop || $[19] !== props.children || $[20] !== key || $[21] !== HTML5Backend || $[22] !== DndProvider) {
+    t3 = (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(DndProvider, { backend: HTML5Backend, debugMode, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.QueryBuilderContext.Provider, { value: _objectSpread5(_objectSpread5({}, rqbContext), {}, { enableDragAndDrop, debugMode }), children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(QueryBuilderDndWithoutProvider, { dnd, canDrop, children: props.children }) }, key) }, key);
+    $[14] = rqbContext;
+    $[15] = enableDragAndDrop;
+    $[16] = debugMode;
+    $[17] = dnd;
+    $[18] = canDrop;
+    $[19] = props.children;
+    $[20] = key;
+    $[21] = HTML5Backend;
+    $[22] = DndProvider;
+    $[23] = t3;
+  } else {
+    t3 = $[23];
+  }
+  return t3;
+};
+var QueryBuilderDndWithoutProvider = function QueryBuilderDndWithoutProvider2(props) {
+  var _props$controlElement7, _props$controlElement8, _props$controlElement9, _rqbContext$controlEl4, _rqbContext$controlEl5, _rqbContext$controlEl6;
+  var rqbContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.QueryBuilderContext);
+  var rqbDndContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(QueryBuilderDndContext);
+  var dnd = useReactDnD(props.dnd);
+  var debugMode = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.usePreferProp)(false, props.debugMode, rqbContext.debugMode);
+  var canDrop = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.usePreferAnyProp)(void 0, props.canDrop, rqbDndContext.canDrop);
+  var enableDragAndDrop = (0,react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.usePreferProp)(true, props.enableDragAndDrop, rqbContext.enableDragAndDrop);
+  var key = enableDragAndDrop && dnd ? "dnd" : "no-dnd";
+  var baseControls = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function() {
+    var _ref, _props$controlElement, _props$controlElement2, _rqbContext$controlEl, _ref2, _props$controlElement3, _props$controlElement4, _rqbContext$controlEl2, _ref3, _props$controlElement5, _props$controlElement6, _rqbContext$controlEl3;
+    return { rule: (_ref = (_props$controlElement = (_props$controlElement2 = props.controlElements) === null || _props$controlElement2 === void 0 ? void 0 : _props$controlElement2.rule) !== null && _props$controlElement !== void 0 ? _props$controlElement : (_rqbContext$controlEl = rqbContext.controlElements) === null || _rqbContext$controlEl === void 0 ? void 0 : _rqbContext$controlEl.rule) !== null && _ref !== void 0 ? _ref : rqbDndContext.baseControls.rule, ruleGroup: (_ref2 = (_props$controlElement3 = (_props$controlElement4 = props.controlElements) === null || _props$controlElement4 === void 0 ? void 0 : _props$controlElement4.ruleGroup) !== null && _props$controlElement3 !== void 0 ? _props$controlElement3 : (_rqbContext$controlEl2 = rqbContext.controlElements) === null || _rqbContext$controlEl2 === void 0 ? void 0 : _rqbContext$controlEl2.ruleGroup) !== null && _ref2 !== void 0 ? _ref2 : rqbDndContext.baseControls.ruleGroup, combinatorSelector: (_ref3 = (_props$controlElement5 = (_props$controlElement6 = props.controlElements) === null || _props$controlElement6 === void 0 ? void 0 : _props$controlElement6.combinatorSelector) !== null && _props$controlElement5 !== void 0 ? _props$controlElement5 : (_rqbContext$controlEl3 = rqbContext.controlElements) === null || _rqbContext$controlEl3 === void 0 ? void 0 : _rqbContext$controlEl3.combinatorSelector) !== null && _ref3 !== void 0 ? _ref3 : rqbDndContext.baseControls.combinatorSelector };
+  }, [(_props$controlElement7 = props.controlElements) === null || _props$controlElement7 === void 0 ? void 0 : _props$controlElement7.combinatorSelector, (_props$controlElement8 = props.controlElements) === null || _props$controlElement8 === void 0 ? void 0 : _props$controlElement8.rule, (_props$controlElement9 = props.controlElements) === null || _props$controlElement9 === void 0 ? void 0 : _props$controlElement9.ruleGroup, (_rqbContext$controlEl4 = rqbContext.controlElements) === null || _rqbContext$controlEl4 === void 0 ? void 0 : _rqbContext$controlEl4.combinatorSelector, (_rqbContext$controlEl5 = rqbContext.controlElements) === null || _rqbContext$controlEl5 === void 0 ? void 0 : _rqbContext$controlEl5.rule, (_rqbContext$controlEl6 = rqbContext.controlElements) === null || _rqbContext$controlEl6 === void 0 ? void 0 : _rqbContext$controlEl6.ruleGroup, rqbDndContext.baseControls.combinatorSelector, rqbDndContext.baseControls.rule, rqbDndContext.baseControls.ruleGroup]);
+  var newContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function() {
+    return _objectSpread5(_objectSpread5({}, rqbContext), {}, { controlElements: _objectSpread5(_objectSpread5({}, rqbContext.controlElements), {}, { ruleGroup: RuleGroupDnD, rule: RuleDnD, inlineCombinator: InlineCombinatorDnD }) });
+  }, [rqbContext]);
+  if (!enableDragAndDrop || !dnd) {
+    return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.QueryBuilderContext.Provider, { value: _objectSpread5(_objectSpread5({}, rqbContext), {}, { enableDragAndDrop: false, debugMode }), children: props.children }, key);
+  }
+  var DndContext = dnd.DndContext, useDrag = dnd.useDrag, useDrop = dnd.useDrop;
+  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(DndContext.Consumer, { children: function children() {
+    return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.QueryBuilderContext.Provider, { value: newContext, children: /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(QueryBuilderDndContext.Provider, { value: { useDrag, useDrop, baseControls, canDrop }, children: props.children }) }, key);
+  } }, key);
+};
+var didWarnEnabledDndWithoutReactDnD = false;
+var useReactDnD = function useReactDnD2(dndParam) {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(dndParam !== null && dndParam !== void 0 ? dndParam : null), _useState2 = _slicedToArray4(_useState, 2), dnd = _useState2[0], setDnd = _useState2[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function() {
+    var didCancel = false;
+    var getDnD = /* @__PURE__ */ function() {
+      var _ref4 = _asyncToGenerator(/* @__PURE__ */ _regeneratorRuntime().mark(function _callee() {
+        var _yield$Promise$all, _yield$Promise$all2, reactDnD, reactDnDHTML5Be;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return Promise.all([__webpack_require__.e(/*! import() */ "vendors-node_modules_react-dnd_dist_index_js").then(__webpack_require__.bind(__webpack_require__, /*! react-dnd */ "./node_modules/react-dnd/dist/index.js"))["catch"](function() {
+                return null;
+              }), __webpack_require__.e(/*! import() */ "vendors-node_modules_react-dnd-html5-backend_dist_index_js").then(__webpack_require__.bind(__webpack_require__, /*! react-dnd-html5-backend */ "./node_modules/react-dnd-html5-backend/dist/index.js"))["catch"](function() {
+                return null;
+              })]);
+            case 2:
+              _yield$Promise$all = _context.sent;
+              _yield$Promise$all2 = _slicedToArray4(_yield$Promise$all, 2);
+              reactDnD = _yield$Promise$all2[0];
+              reactDnDHTML5Be = _yield$Promise$all2[1];
+              if (!didCancel) {
+                if (reactDnD && reactDnDHTML5Be) {
+                  setDnd(function() {
+                    return _objectSpread5(_objectSpread5({}, reactDnD), reactDnDHTML5Be);
+                  });
+                } else {
+                  if ( true && !didWarnEnabledDndWithoutReactDnD) {
+                    console.error(react_querybuilder__WEBPACK_IMPORTED_MODULE_2__.messages.errorEnabledDndWithoutReactDnD);
+                    didWarnEnabledDndWithoutReactDnD = true;
+                  }
+                }
+              }
+            case 7:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee);
+      }));
+      return function getDnD2() {
+        return _ref4.apply(this, arguments);
+      };
+    }();
+    if (!dnd) {
+      getDnD();
+    }
+    return function() {
+      didCancel = true;
+    };
+  }, [dnd]);
+  return dnd;
+};
+
+/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+//# sourceMappingURL=react-querybuilder_dnd.mjs.map
 
 /***/ }),
 
