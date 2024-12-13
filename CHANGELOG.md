@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Post's variable resolver now also accept a property without `post_` prefix.
 - User's variable resolver now also accept a property without `user_` prefix.
 - Changed the options in the "Debug Data" field to be more intuitive allowing a custom data expression to be selected.
+- The conditional step now uses the new expression builder.
+- Improved the UI in the conditional step settings.
 
 ### Fixed
 
