@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add new Post is Published trigger (Issue #944).
 - Add new Post Status Changes trigger (Issue #945).
 - Add new Post is Scheduled trigger (Issue #946).
+- Add new Post Meta Changed trigger (Issue #1059).
 - Add new variables selector and an expression builder (Issue #976).
 - Add support to metadata in the variables resolvers and post type variables (Issue #1069, #939).
 - Add the site ID to the site data type schema.
