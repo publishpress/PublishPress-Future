@@ -123,22 +123,16 @@ class CoreOnPostStatusChanged implements NodeTypeInterface
     {
         return [
             [
-                'name' => 'post',
+                'name' => 'postBefore',
                 'type' => 'post',
-                'label' => __("Post", "post-expirator"),
-                'description' => __("The post that triggered this action.", "post-expirator"),
+                'label' => __("Post Before Update", "post-expirator"),
+                'description' => __("The post that was saved, with the old properties.", "post-expirator"),
             ],
             [
-                'name' => 'metaKey',
-                'type' => 'string',
-                'label' => __("Meta key", "post-expirator"),
-                'description' => __("The meta key that was changed.", "post-expirator"),
-            ],
-            [
-                'name' => 'metaValue',
-                'type' => 'string',
-                'label' => __("Meta value", "post-expirator"),
-                'description' => __("The new meta value.", "post-expirator"),
+                'name' => 'postAfter',
+                'type' => 'post',
+                'label' => __("Post After Update", "post-expirator"),
+                'description' => __("The post that was saved, with the new properties.", "post-expirator"),
             ]
         ];
     }
