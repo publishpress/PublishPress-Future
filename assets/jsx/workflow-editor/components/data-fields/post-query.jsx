@@ -62,7 +62,6 @@ export function PostQuery({
                 )}
 
                 {/* More than one post input? */}
-
                 {showCustomQueryFields && (
                     <>
                         <InlineMultiSelect

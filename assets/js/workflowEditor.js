@@ -41140,32 +41140,32 @@ function PostData() {
     type: "object",
     objectType: "post",
     propertiesSchema: [{
-      name: "post_title",
+      name: "title",
       type: "string",
       label: "Title",
       description: "The title of the post."
     }, {
-      name: "post_content",
+      name: "content",
       type: "string",
       label: "Content",
       description: "The content of the post."
     }, {
-      name: "post_content_text",
+      name: "content_text",
       type: "string",
       label: "Content (Plain Text)",
       description: "The content of the post in plain text."
     }, {
-      name: "post_excerpt",
+      name: "excerpt",
       type: "string",
       label: "Excerpt",
       description: "The excerpt of the post."
     }, {
-      name: "post_status",
+      name: "status",
       type: "string",
       label: "Post Status",
       description: "The status of the post."
     }, {
-      name: "post_type",
+      name: "type",
       type: "string",
       label: "Post Type",
       description: "The type of the post."
@@ -41175,12 +41175,12 @@ function PostData() {
       label: "ID",
       description: "The unique identifier for the post."
     }, {
-      name: "post_date",
+      name: "date",
       type: "datetime",
       label: "Publish Date",
       description: "The date when the post was published."
     }, {
-      name: "post_modified",
+      name: "modified",
       type: "datetime",
       label: "Modification Date",
       description: "The date when the post was last modified."
@@ -41313,12 +41313,12 @@ function UserData() {
       label: "ID",
       description: "The unique identifier for the user."
     }, {
-      name: "user_email",
+      name: "email",
       type: "email",
       label: "Email",
       description: "The email address of the user."
     }, {
-      name: "user_login",
+      name: "login",
       type: "string",
       label: "Login",
       description: "The login name of the user."
@@ -41338,7 +41338,7 @@ function UserData() {
       label: "Capabilities",
       description: "The capabilities of the user."
     }, {
-      name: "user_registered",
+      name: "registered",
       type: "datetime",
       label: "Registration date",
       description: "The date when the user was registered."
