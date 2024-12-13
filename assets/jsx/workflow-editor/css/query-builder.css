@@ -1,0 +1,12 @@
+.components-checkbox-control.is-checked .components-checkbox-control__label {
+    font-weight: bold;
+}
+
+.queryBuilder-dragHandle {
+    font-size: 18px;
+    color: #9a9a9a;
+}
+
+.queryBuilder-dragHandle:hover {
+    color: #000;
+}

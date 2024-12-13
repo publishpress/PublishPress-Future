@@ -105,14 +105,16 @@
 
 .expression-builder-inline .ace_editor {
     margin-top: 0 !important;
-    height: 40px !important;
-    width: 240px !important;
     margin-right: 40px !important;
+    margin-bottom: 0 !important;
+    height: 40px !important;
+    width: 300px !important;
 }
 
 .expression-builder-inline > button {
     top: 0 !important;
     right: 0 !important;
+    height: 40px !important;
 }
 
 .ace_editor.settings-panel {

@@ -166,8 +166,9 @@ export const ExpressionBuilder = ({
                             enableLiveAutocompletion: false,
                             showLineNumbers: !singleVariableOnly,
                             showGutter: !singleVariableOnly,
+                            highlightActiveLine: !singleVariableOnly,
                         }}
-                        height="200px"
+                        height={singleVariableOnly ? '40px' : '200px'}
                         width="600px"
                         placeholder={settings?.placeholder || ''}
                     />

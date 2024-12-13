@@ -1,7 +1,7 @@
 import { QueryBuilder, formatQuery, defaultOperators } from 'react-querybuilder';
 import { parseJsonLogic } from 'react-querybuilder/parseJsonLogic';
 import { useState, useCallback, useEffect, useRef } from '@wordpress/element';
-import { Button, Modal } from '@wordpress/components';
+import { Button, CheckboxControl, Dashicon, Modal, SelectControl, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as editorStore } from '../editor-store';
 import { useSelect } from '@wordpress/data';
@@ -14,8 +14,8 @@ import "ace-builds/src-noconflict/ext-language_tools";
 
 import ExpressionBuilder from './expression-builder';
 
-
 import 'react-querybuilder/dist/query-builder.css';
+import '../../css/query-builder.css';
 
 const ConditionalExpressionBuilder = ({ options, value, handleOnChange, context, readOnlyPreview, singleVariableOnly }) => {
     const onChange = (name, value) => {
@@ -56,6 +56,59 @@ const ValueExpressionBuilder = ({ options, value, handleOnChange, context }) => 
         handleOnChange={handleOnChange}
         context={context}
         readOnlyPreview={false}
+    />;
+};
+
+const NotToggle = ({ checked, handleOnChange }) => {
+    const [isNot, setIsNot] = useState(checked || false);
+
+    useEffect(() => {
+        setIsNot(checked || false);
+    }, [checked]);
+
+    const handleToggle = () => {
+        const newValue = !isNot;
+        setIsNot(newValue);
+        handleOnChange(newValue);
+    }
+
+    return (
+        <CheckboxControl
+            label={__('Not', 'post-expirator')}
+            checked={isNot}
+            onChange={handleToggle}
+            className={isNot ? 'is-checked' : ''}
+        />
+    );
+};
+
+const AddElementButton = ({ label, handleOnClick }) => {
+    return <Button onClick={handleOnClick} variant="secondary">
+        {label}
+    </Button>;
+};
+
+const RemoveElementButton = ({ label, handleOnClick }) => {
+    return <Button onClick={handleOnClick} variant="secondary">
+        <Dashicon icon="trash" size={16} />
+    </Button>;
+};
+
+const CombinatorSelector = ({ label, value, options, handleOnChange }) => {
+    return <SelectControl
+        label={label}
+        value={value}
+        options={options}
+        onChange={handleOnChange}
+    />;
+};
+
+const OperatorSelector = ({ label, value, options, handleOnChange }) => {
+    return <SelectControl
+        label={label}
+        value={value}
+        options={options}
+        onChange={handleOnChange}
     />;
 };
 
@@ -145,9 +198,15 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         }
     }, []);
 
+    const getDefaultField = useCallback((field) => {
+        return '{{global.user.id}}';
+    }, []);
+
     const editorProps = {
         $blockScrolling: true,
     };
+
+
 
     return (
         <div>
@@ -191,7 +250,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                     onRequestClose={onClose}
                 >
                     <p>
-                        {__('Create a condition ', 'post-expirator')}
+                        {__('Create a condition adding rules and groups. You can also add a NOT condition to any rule or group.', 'post-expirator')}
                     </p>
                     <QueryBuilderDnD>
                         <QueryBuilder
@@ -213,12 +272,20 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                             controlElements={{
                                 fieldSelector: FieldExpressionBuilder,
                                 valueEditor: ValueExpressionBuilder,
+                                notToggle: NotToggle,
+                                addRuleAction: AddElementButton,
+                                addGroupAction: AddElementButton,
+                                removeGroupAction: RemoveElementButton,
+                                removeRuleAction: RemoveElementButton,
+                                combinatorSelector: CombinatorSelector,
+                                operatorSelector: OperatorSelector,
                             }}
                             context={{
                                 options: allVariables,
                                 name: name,
                                 label: label
                             }}
+                            getDefaultField={getDefaultField}
                         />
                     </QueryBuilderDnD>
                 </Modal>
