@@ -12,13 +12,13 @@ export function UserData() {
                 description: "The unique identifier for the user.",
             },
             {
-                name: "user_email",
+                name: "email",
                 type: "email",
                 label: "Email",
                 description: "The email address of the user.",
             },
             {
-                name: "user_login",
+                name: "login",
                 type: "string",
                 label: "Login",
                 description: "The login name of the user.",
@@ -42,7 +42,7 @@ export function UserData() {
                 description: "The capabilities of the user.",
             },
             {
-                name: "user_registered",
+                name: "registered",
                 type: "datetime",
                 label: "Registration date",
                 description: "The date when the user was registered.",
