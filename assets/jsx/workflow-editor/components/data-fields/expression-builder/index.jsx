@@ -141,7 +141,7 @@ export const ExpressionBuilder = ({
                 onRequestClose={onClose}
                 className="expression-builder-modal"
             >
-                <div style={{ minWidth: '600px' }}>
+                <div style={{ minWidth: '600px', maxWidth: '600px' }}>
                     {singleVariableOnly && (
                         <p>{__("Single variable mode. Double click on a variable below to add it to your expression.", "post-expirator")}</p>
                     )}
