@@ -5,11 +5,11 @@ namespace PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
 
-class CorePostMetaAdd implements NodeTypeInterface
+class CorePostMetaDelete implements NodeTypeInterface
 {
     public static function getNodeTypeName(): string
     {
-        return "action/core.post-meta-add";
+        return "action/core.post-meta-delete";
     }
 
     public function getElementaryType(): string
@@ -24,17 +24,17 @@ class CorePostMetaAdd implements NodeTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "postMetaAdd";
+        return "postMetaDelete";
     }
 
     public function getLabel(): string
     {
-        return __("Add post meta", "post-expirator");
+        return __("Delete post meta", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This step adds post meta to a post.", "post-expirator");
+        return __("This step deletes post meta from a post.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -77,26 +77,19 @@ class CorePostMetaAdd implements NodeTypeInterface
             ],
             [
                 "label" => __("Meta", "post-expirator"),
-                "description" => __("The meta to add to the post.", "post-expirator"),
+                "description" => __("The meta to delete from the post.", "post-expirator"),
                 "fields" => [
-                    [
-                        "name" => "isSingle",
-                        "type" => "toggle",
-                        "label" => __("Is single", "post-expirator"),
-                        "description" => __("Whether the meta is a single value or an array.", "post-expirator"),
-                        "default" => true,
-                    ],
                     [
                         "name" => "metaKey",
                         "type" => "text",
                         "label" => __("Meta key", "post-expirator"),
-                        "description" => __("The meta key to add to the post.", "post-expirator"),
+                        "description" => __("The meta key to delete from the post.", "post-expirator"),
                     ],
                     [
                         "name" => "metaValue",
                         "type" => "expression",
                         "label" => __("Meta value", "post-expirator"),
-                        "description" => __("The meta value to add to the post.", "post-expirator"),
+                        "description" => __("Specify the meta value to delete from the post. If empty, all meta with the same key will be deleted.", "post-expirator"),
                     ],
                 ],
             ],

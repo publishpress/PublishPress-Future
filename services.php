@@ -95,6 +95,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\Cor
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostMetaAdd;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHandler;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\WorkflowEngine;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaDelete;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
@@ -988,7 +989,14 @@ return [
                     );
                     break;
 
-                    // Advanced
+                case CorePostMetaDelete::getNodeTypeName():
+                    $nodeRunner = new CorePostMetaDelete(
+                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::LOGGER)
+                    );
+                    break;
+
+                // Advanced
                 case CoreSchedule::getNodeTypeName():
                     $nodeRunner = new CoreSchedule(
                         $container->get(ServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR),
