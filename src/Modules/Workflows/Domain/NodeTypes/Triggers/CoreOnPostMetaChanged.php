@@ -151,7 +151,7 @@ class CoreOnPostMetaChanged implements NodeTypeInterface
             [
                 'name' => 'metaValue',
                 'type' => 'string',
-                'label' => __("Meta value", "post-expirator"),
+                'label' => __("New meta value", "post-expirator"),
                 'description' => __("The new meta value.", "post-expirator"),
             ],
             [
