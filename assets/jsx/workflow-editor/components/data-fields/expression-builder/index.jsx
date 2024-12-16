@@ -79,6 +79,12 @@ export const ExpressionBuilder = ({
             } else {
                 editor.session.setValue(`{{${item.name}}}`);
             }
+
+            editor.focus();
+
+            if (singleVariableOnly) {
+                setIsOpen(false);
+            }
         }
     }, [editorFullRef, singleVariableOnly]);
 

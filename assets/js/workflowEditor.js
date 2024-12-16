@@ -39998,6 +39998,10 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
       } else {
         editor.session.setValue("{{".concat(item.name, "}}"));
       }
+      editor.focus();
+      if (singleVariableOnly) {
+        setIsOpen(false);
+      }
     }
   }, [editorFullRef, singleVariableOnly]);
   var editorProps = {
@@ -40058,7 +40062,8 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     className: "expression-builder-modal"
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      minWidth: '600px'
+      minWidth: '600px',
+      maxWidth: '600px'
     }
   }, singleVariableOnly && /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Single variable mode. Double click on a variable below to add it to your expression.", "post-expirator")), !singleVariableOnly && /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Type your expression here or use the variables below.", "post-expirator")), /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_5__["default"], {
     ref: editorFullRef,
