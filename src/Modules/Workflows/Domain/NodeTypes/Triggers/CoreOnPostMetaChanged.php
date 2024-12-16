@@ -143,6 +143,18 @@ class CoreOnPostMetaChanged implements NodeTypeInterface
                 'description' => __("The post that triggered this action.", "post-expirator"),
             ],
             [
+                'name' => 'action',
+                'type' => 'string',
+                'label' => __("Action", "post-expirator"),
+                'description' => __("The action taken when the meta key is changed.", "post-expirator"),
+            ],
+            [
+                'name' => 'metaId',
+                'type' => 'integer',
+                'label' => __("Meta ID", "post-expirator"),
+                'description' => __("The meta ID.", "post-expirator"),
+            ],
+            [
                 'name' => 'metaKey',
                 'type' => 'string',
                 'label' => __("Meta key", "post-expirator"),
