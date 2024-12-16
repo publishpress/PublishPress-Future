@@ -44,6 +44,10 @@ class PostResolver implements VariableResolverInterface
             case 'title':
                 return $this->post->post_title;
 
+            case 'post_name':
+            case 'slug':
+                return $this->post->post_name;
+
             case 'post_content':
             case 'content':
                 return $this->hooks->applyFilters(
@@ -52,15 +56,15 @@ class PostResolver implements VariableResolverInterface
                 );
 
             case 'post_content_text':
-                case 'content_text':
-                    return wp_strip_all_tags(
-                        strip_shortcodes(
-                        $this->hooks->applyFilters(
-                                HooksAbstract::FILTER_THE_CONTENT,
-                                $this->post->post_content
-                            )
+            case 'content_text':
+                return wp_strip_all_tags(
+                    strip_shortcodes(
+                    $this->hooks->applyFilters(
+                            HooksAbstract::FILTER_THE_CONTENT,
+                            $this->post->post_content
                         )
-                    );
+                    )
+                );
 
             case 'post_excerpt':
             case 'excerpt':
@@ -130,13 +134,23 @@ class PostResolver implements VariableResolverInterface
                 'id',
                 'ID',
                 'post_title',
+                'title  ',
+                'post_name',
+                'slug',
                 'post_content',
+                'content',
                 'post_content_text',
+                'content_text',
                 'post_excerpt',
+                'excerpt',
                 'post_type',
+                'type',
                 'post_status',
+                'status',
                 'post_date',
+                'date',
                 'post_modified',
+                'modified',
                 'permalink',
                 'meta',
                 'post_author',

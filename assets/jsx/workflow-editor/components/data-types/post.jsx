@@ -66,6 +66,12 @@ export function PostData() {
                 description: "The permalink of the post.",
             },
             {
+                name: "slug",
+                type: "string",
+                label: "Slug",
+                description: "The slug (or post name)of the post.",
+            },
+            {
                 name: "author",
                 type: "user",
                 label: "Author",
