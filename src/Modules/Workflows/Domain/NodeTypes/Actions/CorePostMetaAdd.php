@@ -80,6 +80,13 @@ class CorePostMetaAdd implements NodeTypeInterface
                 "description" => __("The meta to add to the post.", "post-expirator"),
                 "fields" => [
                     [
+                        "name" => "isSingle",
+                        "type" => "toggle",
+                        "label" => __("Is single", "post-expirator"),
+                        "description" => __("Whether the meta is a single value or an array.", "post-expirator"),
+                        "default" => true,
+                    ],
+                    [
                         "name" => "metaKey",
                         "type" => "text",
                         "label" => __("Meta key", "post-expirator"),
@@ -90,12 +97,6 @@ class CorePostMetaAdd implements NodeTypeInterface
                         "type" => "expression",
                         "label" => __("Meta value", "post-expirator"),
                         "description" => __("The meta value to add to the post.", "post-expirator"),
-                    ],
-                    [
-                        "name" => "isSingle",
-                        "type" => "checkbox",
-                        "label" => __("Is single", "post-expirator"),
-                        "description" => __("Whether the meta is a single value or an array.", "post-expirator"),
                     ],
                 ],
             ],

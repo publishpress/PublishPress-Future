@@ -40889,6 +40889,53 @@ function Textarea(_ref) {
 
 /***/ }),
 
+/***/ "./assets/jsx/workflow-editor/components/data-fields/toggle.jsx":
+/*!**********************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-fields/toggle.jsx ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Toggle: () => (/* binding */ Toggle),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+function Toggle(_ref) {
+  var name = _ref.name,
+    label = _ref.label,
+    defaultValue = _ref.defaultValue,
+    onChange = _ref.onChange,
+    settings = _ref.settings,
+    _ref$variables = _ref.variables,
+    variables = _ref$variables === void 0 ? [] : _ref$variables;
+  var onChangeSetting = function onChangeSetting(_ref2) {
+    var value = _ref2.value;
+    if (onChange) {
+      onChange(name, value);
+    }
+  };
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalVStack, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
+    label: label,
+    checked: defaultValue || false,
+    onChange: function onChange(value) {
+      return onChangeSetting({
+        value: value
+      });
+    }
+  })));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Toggle);
+
+/***/ }),
+
 /***/ "./assets/jsx/workflow-editor/components/data-types/array.jsx":
 /*!********************************************************************!*\
   !*** ./assets/jsx/workflow-editor/components/data-types/array.jsx ***!
@@ -45083,6 +45130,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_fields_conditional__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../data-fields/conditional */ "./assets/jsx/workflow-editor/components/data-fields/conditional.jsx");
 /* harmony import */ var _data_fields_debug_levels__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../data-fields/debug-levels */ "./assets/jsx/workflow-editor/components/data-fields/debug-levels.jsx");
 /* harmony import */ var _data_fields_expression_builder__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../data-fields/expression-builder */ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/index.jsx");
+/* harmony import */ var _data_fields_toggle__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../data-fields/toggle */ "./assets/jsx/workflow-editor/components/data-fields/toggle.jsx");
+
 
 
 
@@ -45108,6 +45157,8 @@ var MappedField = function MappedField(props) {
       return /*#__PURE__*/React.createElement(_data_fields_taxonomy_terms__WEBPACK_IMPORTED_MODULE_6__["default"], props);
     case "dateOffset":
       return /*#__PURE__*/React.createElement(_data_fields_date_offset__WEBPACK_IMPORTED_MODULE_2__.DateOffset, props);
+    case "toggle":
+      return /*#__PURE__*/React.createElement(_data_fields_toggle__WEBPACK_IMPORTED_MODULE_15__["default"], props);
     case "debugData":
       return /*#__PURE__*/React.createElement(_data_fields_debug_data__WEBPACK_IMPORTED_MODULE_3__["default"], props);
     case "rayColor":

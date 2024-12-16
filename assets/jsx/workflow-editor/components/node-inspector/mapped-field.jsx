@@ -13,6 +13,7 @@ import List from "../data-fields/list";
 import Conditional from "../data-fields/conditional";
 import DebugLevels from "../data-fields/debug-levels";
 import ExpressionBuilder from "../data-fields/expression-builder";
+import Toggle from "../data-fields/toggle";
 
 export const MappedField = (props) => {
     switch (props.type) {
@@ -31,6 +32,10 @@ export const MappedField = (props) => {
         case "dateOffset":
             return (
                 <DateOffset {...props} />
+            );
+        case "toggle":
+            return (
+                <Toggle {...props} />
             );
         case "debugData":
             return (
