@@ -29,6 +29,7 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostSt
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostScheduled;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaAdd;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypeInterface;
@@ -221,6 +222,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             CorePostChangeStatus::getNodeTypeName() => new CorePostChangeStatus(),
             CoreSendEmail::getNodeTypeName() => new CoreSendEmail(),
             CorePostDeactivateWorkflow::getNodeTypeName() => new CorePostDeactivateWorkflow(),
+            CorePostMetaAdd::getNodeTypeName() => new CorePostMetaAdd(),
         ];
 
         return $nodesInstances;
