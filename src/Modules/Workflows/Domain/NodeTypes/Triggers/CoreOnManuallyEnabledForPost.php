@@ -81,7 +81,7 @@ class CoreOnManuallyEnabledForPost implements NodeTypeInterface
             [
                 "label" => __("Post Query", "post-expirator"),
                 "description" => __(
-                    "Specify the criteria for posts that will trigger this action. Leave blank to include all posts.",
+                    "Specify the criteria for posts that will trigger this action.",
                     "post-expirator"
                 ),
                 "fields" => [
