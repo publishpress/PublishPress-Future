@@ -87,6 +87,12 @@ class CoreOnPostMetaChanged implements NodeTypeInterface
                             "postStatus" => [],
                         ],
                     ],
+                ]
+            ],
+            [
+                "label" => __("Meta settings", "post-expirator"),
+                "description" => __("Specify the criteria for the meta to watch for changes.", "post-expirator"),
+                "fields" => [
                     [
                         "name" => "metaKeys",
                         "type" => "text",
