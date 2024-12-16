@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add the site ID to the site data type schema.
 - Add the post author property to the post data type schema in the workflow editor (Issue #947).
 - Add the post slug property to the post data type schema in the workflow editor.
+- Add the Post Meta Add step to the workflow editor (Issue #732).
 
 ### Changed
 
