@@ -12,6 +12,8 @@ abstract class HooksAbstract
 
     public const ACTION_SAVE_POST = 'save_post';
 
+    public const ACTION_PRE_POST_UPDATE = 'pre_post_update';
+
     public const ACTION_POST_UPDATED = 'post_updated';
 
     public const ACTION_INIT = 'init';

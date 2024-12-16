@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add support to metadata in the variables resolvers and post type variables (Issue #1069, #939).
 - Add the site ID to the site data type schema.
 - Add the post author property to the post data type schema in the workflow editor (Issue #947).
+- Add the post slug property to the post data type schema in the workflow editor.
 
 ### Changed
 
@@ -33,6 +34,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix error when the date or time format is empty in the settings page (Issue #212).
 - Fix empty title and label in the future action panel when custom title and label are not set (Issue #1075).
 - Fix the width of the checkbox in the future action panel (#1076).
+- Fix the permalink in the Post Updated trigger for the post before variable.
 
 ### Developers
 

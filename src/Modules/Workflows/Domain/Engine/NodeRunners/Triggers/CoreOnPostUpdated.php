@@ -53,6 +53,11 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
      */
     private $logger;
 
+    /**
+     * @var array
+     */
+    private $postPermalinkCache = [];
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
@@ -77,6 +82,7 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
         $this->step = $step;
         $this->workflowId = $workflowId;
 
+        $this->hooks->addAction(HooksAbstract::ACTION_PRE_POST_UPDATE, [$this, 'cachePermalink'], 10, 2);
         $this->hooks->addAction(HooksAbstract::ACTION_POST_UPDATED, [$this, 'triggerCallback'], 10, 3);
     }
 
@@ -122,8 +128,15 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
 
                 $this->variablesHandler->setVariable($nodeSlug, [
                     'postId' => new IntegerResolver($postId),
-                    'postBefore' => new PostResolver($postBefore, $this->hooks),
-                    'postAfter' => new PostResolver($postAfter, $this->hooks),
+                    'postBefore' => new PostResolver(
+                        $postBefore,
+                        $this->hooks,
+                        $this->postPermalinkCache[$postBefore->ID] ?? ''
+                    ),
+                    'postAfter' => new PostResolver(
+                        $postAfter,
+                        $this->hooks
+                    ),
                 ]);
 
                 $this->nodeRunnerProcessor->triggerCallbackIsRunning();
@@ -142,5 +155,15 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
             $postAfter,
             $postBefore
         );
+    }
+
+    /**
+     * Cache the permalink of the post when it is updated because
+     * the post revolver will always return the new permalink of the post.
+     * We use this to make sure the post before results the old permalink.
+     */
+    public function cachePermalink($postId, $data)
+    {
+        $this->postPermalinkCache[$postId] = get_permalink($postId);
     }
 }

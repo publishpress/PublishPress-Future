@@ -18,10 +18,19 @@ class PostResolver implements VariableResolverInterface
      */
     private $hooks;
 
-    public function __construct(object $post, HookableInterface $hooks)
-    {
+    /**
+     * @var string
+     */
+    private $cachedPermalink;
+
+    public function __construct(
+        object $post,
+        HookableInterface $hooks,
+        string $cachedPermalink = ''
+    ) {
         $this->post = $post;
         $this->hooks = $hooks;
+        $this->cachedPermalink = $cachedPermalink;
     }
 
     public function getType(): string
@@ -87,6 +96,10 @@ class PostResolver implements VariableResolverInterface
                 return $this->post->post_modified;
 
             case 'permalink':
+                if (! empty($this->cachedPermalink)) {
+                    return $this->cachedPermalink;
+                }
+
                 return $this->getPermalink($this->post->ID);
 
             case 'meta':
