@@ -420,8 +420,8 @@ export function filterVariableOptionsByDataType(variables, expectedDataTypes) {
             });
 
             validVariable = {
-                id: variable.id,
-                name: variable.name,
+                id: variable.name,
+                name: variable.label,
                 children: validChildren,
                 type: variable.type,
             };
@@ -433,7 +433,12 @@ export function filterVariableOptionsByDataType(variables, expectedDataTypes) {
             }
         } else {
             if (variableHasValidDataType) {
-                filteredVariables.push(variable);
+                filteredVariables.push({
+                    id: variable.name,
+                    name: variable.label,
+                    children: [],
+                    type: variable.type,
+                });
             }
         }
     });
