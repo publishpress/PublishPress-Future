@@ -99,8 +99,9 @@ class CoreOnPostMetaChanged implements NodeTypeInterface
                         "name" => "metaKeys",
                         "type" => "text",
                         "label" => __("Meta keys", "post-expirator"),
-                        "description" => __("The meta keys (separated by commas) to watch for changes.", "post-expirator"),
+                        "description" => __("This field allow you to choose the post meta that will trigger this action.", "post-expirator"),
                         "default" => [],
+                        'helpUrl' => 'https://publishpress.com/knowledge-base/future-postmeta-field',
                     ]
                 ]
             ]

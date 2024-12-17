@@ -80,7 +80,10 @@ export const MappedField = (props) => {
     }
 
     return (
-        <i>{sprintf(__('Field type %s is not implemented', 'publihspress-future-pro'), props.type)}</i>
+        <div className="description">
+            <i className="dashicons dashicons-warning" />
+            {sprintf(__('Field type %s is not implemented', 'publihspress-future-pro'), props.type)}
+        </div>
     );
 }
 

@@ -61,6 +61,7 @@ export const NodeSettingsPanel = ({ node }) => {
                                     type={field.type}
                                     name={field.name}
                                     description={field?.description}
+                                    helpUrl={field?.helpUrl}
                                     label={field.label}
                                     defaultValue={nodeSettings?.[field.name]}
                                     onChange={onChangeSetting}

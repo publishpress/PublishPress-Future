@@ -39638,6 +39638,33 @@ function DebugLevels(_ref) {
 
 /***/ }),
 
+/***/ "./assets/jsx/workflow-editor/components/data-fields/description-text.jsx":
+/*!********************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-fields/description-text.jsx ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DescriptionText: () => (/* binding */ DescriptionText)
+/* harmony export */ });
+/* harmony import */ var _help_link__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./help-link */ "./assets/jsx/workflow-editor/components/data-fields/help-link.jsx");
+
+var DescriptionText = function DescriptionText(_ref) {
+  var text = _ref.text,
+    helpUrl = _ref.helpUrl,
+    _ref$className = _ref.className,
+    className = _ref$className === void 0 ? 'description margin-top' : _ref$className;
+  return /*#__PURE__*/React.createElement("p", {
+    className: className
+  }, text, helpUrl && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(_help_link__WEBPACK_IMPORTED_MODULE_0__.HelpLink, {
+    url: helpUrl
+  })));
+};
+
+/***/ }),
+
 /***/ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/column-item.jsx":
 /*!**********************************************************************************************!*\
   !*** ./assets/jsx/workflow-editor/components/data-fields/expression-builder/column-item.jsx ***!
@@ -40118,6 +40145,35 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Hover over a variable to see its description.", "post-expirator")))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ExpressionBuilder);
+
+/***/ }),
+
+/***/ "./assets/jsx/workflow-editor/components/data-fields/help-link.jsx":
+/*!*************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-fields/help-link.jsx ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   HelpLink: () => (/* binding */ HelpLink)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+
+var HelpLink = function HelpLink(_ref) {
+  var url = _ref.url,
+    label = _ref.label;
+  if (!label) {
+    label = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Learn more', 'post-expirator');
+  }
+  return /*#__PURE__*/React.createElement("a", {
+    href: url,
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, label);
+};
 
 /***/ }),
 
@@ -40820,6 +40876,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _description_text__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./description-text */ "./assets/jsx/workflow-editor/components/data-fields/description-text.jsx");
+
 
 
 
@@ -40830,7 +40888,9 @@ function Text(_ref) {
     onChange = _ref.onChange,
     settings = _ref.settings,
     _ref$variables = _ref.variables,
-    variables = _ref$variables === void 0 ? [] : _ref$variables;
+    variables = _ref$variables === void 0 ? [] : _ref$variables,
+    helpUrl = _ref.helpUrl,
+    description = _ref.description;
   var onChangeSetting = function onChangeSetting(_ref2) {
     var value = _ref2.value;
     if (onChange) {
@@ -40850,6 +40910,9 @@ function Text(_ref) {
       });
     },
     placeholder: placeholder
+  }), description && /*#__PURE__*/React.createElement(_description_text__WEBPACK_IMPORTED_MODULE_2__.DescriptionText, {
+    text: description,
+    helpUrl: helpUrl
   })));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Text);
@@ -45242,7 +45305,11 @@ var MappedField = function MappedField(props) {
     case "expression":
       return /*#__PURE__*/React.createElement(_data_fields_expression_builder__WEBPACK_IMPORTED_MODULE_14__["default"], props);
   }
-  return /*#__PURE__*/React.createElement("i", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Field type %s is not implemented', 'publihspress-future-pro'), props.type));
+  return /*#__PURE__*/React.createElement("div", {
+    className: "description"
+  }, /*#__PURE__*/React.createElement("i", {
+    className: "dashicons dashicons-warning"
+  }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Field type %s is not implemented', 'publihspress-future-pro'), props.type));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MappedField);
 
@@ -45517,6 +45584,7 @@ var NodeSettingsPanel = function NodeSettingsPanel(_ref) {
           type: field.type,
           name: field.name,
           description: field === null || field === void 0 ? void 0 : field.description,
+          helpUrl: field === null || field === void 0 ? void 0 : field.helpUrl,
           label: field.label,
           defaultValue: (_nodeSettings = nodeSettings) === null || _nodeSettings === void 0 ? void 0 : _nodeSettings[field.name],
           onChange: onChangeSetting,
