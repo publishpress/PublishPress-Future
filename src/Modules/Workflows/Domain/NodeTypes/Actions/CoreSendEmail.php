@@ -122,12 +122,12 @@ class CoreSendEmail implements NodeTypeInterface
                     [
                         "rule" => "required",
                         "field" => "recipient.expression",
-                        "label" => __("Email Recipient", "post-expirator"),
+                        "label" => __("Recipient", "post-expirator"),
                     ],
                     [
                         "rule" => "dataType",
                         "field" => "recipient.expression",
-                        "label" => __("Custom Email Address", "post-expirator"),
+                        "label" => __("Recipient", "post-expirator"),
                         "type" => "emailList",
                     ],
 
