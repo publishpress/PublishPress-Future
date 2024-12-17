@@ -130,6 +130,8 @@ abstract class HooksAbstract
 
     public const FILTER_EXPIRATION_DATA_AS_ARRAY = 'publishpressfuture_expiration_data_as_array';
 
+    public const FILTER_DISPLAY_BULK_ACTION_SYNC = 'publishpressfuture_display_bulk_action_sync';
+
     public static function getActionLegacyMultisiteDelete($blogId)
     {
         return self::ACTION_LEGACY_MULTISITE_DELETE_PREFIX . $blogId;

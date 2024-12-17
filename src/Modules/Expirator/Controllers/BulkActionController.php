@@ -104,7 +104,11 @@ class BulkActionController implements InitializableInterface
 
     public function filterBulkActions($actions)
     {
-        $actions[self::BULK_ACTION_SYNC] = __('Update Future Actions from Post Metadata', 'post-expirator');
+        $displayTheOption = $this->hooks->applyFilters(HooksAbstract::FILTER_DISPLAY_BULK_ACTION_SYNC, false);
+
+        if ($displayTheOption) {
+            $actions[self::BULK_ACTION_SYNC] = __('Update Future Actions from Post Metadata', 'post-expirator');
+        }
 
         return $actions;
     }
