@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add the Post Meta Add step to the workflow editor (Issue #732).
 - Add the Post Meta Delete step to the workflow editor (Issue #732).
 - Add the option to change manually enabled workflows in the bulk edit screen (Issue #942).
+- Add the "Save as current status" shortcut to the workflow editor (CTRL/CMD + S) (Issue #1084).
 
 ### Changed
 

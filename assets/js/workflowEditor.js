@@ -43656,6 +43656,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SHORTCUT_AUTO_LAYOUT: () => (/* binding */ SHORTCUT_AUTO_LAYOUT),
 /* harmony export */   SHORTCUT_FIT_VIEW: () => (/* binding */ SHORTCUT_FIT_VIEW),
+/* harmony export */   SHORTCUT_SAVE_AS_CURRENT_STATUS: () => (/* binding */ SHORTCUT_SAVE_AS_CURRENT_STATUS),
 /* harmony export */   SHORTCUT_TOGGLE_ADVANCED_SETTINGS: () => (/* binding */ SHORTCUT_TOGGLE_ADVANCED_SETTINGS),
 /* harmony export */   SHORTCUT_TOGGLE_DEVELOPER_MODE: () => (/* binding */ SHORTCUT_TOGGLE_DEVELOPER_MODE),
 /* harmony export */   SHORTCUT_TOGGLE_FULLSCREEN: () => (/* binding */ SHORTCUT_TOGGLE_FULLSCREEN),
@@ -43669,6 +43670,7 @@ var SHORTCUT_AUTO_LAYOUT = "publishpress-future/workflow-editor/auto-layout";
 var SHORTCUT_TOGGLE_SIDEBAR = "publishpress-future/workflow-editor/toggle-sidebar";
 var SHORTCUT_TOGGLE_DEVELOPER_MODE = "publishpress-future/workflow-editor/toggle-developer-mode";
 var SHORTCUT_TOGGLE_ADVANCED_SETTINGS = "publishpress-future/workflow-editor/toggle-advanced-settings";
+var SHORTCUT_SAVE_AS_CURRENT_STATUS = "publishpress-future/workflow-editor/save-as-current-status";
 
 /***/ }),
 
@@ -43685,14 +43687,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/keyboard-shortcuts */ "./node_modules/@wordpress/keyboard-shortcuts/build-module/index.js");
 /* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../constants */ "./assets/jsx/workflow-editor/constants.jsx");
-/* harmony import */ var _flow_editor_auto_layout_constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../flow-editor/auto-layout/constants */ "./assets/jsx/workflow-editor/components/flow-editor/auto-layout/constants.jsx");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./constants */ "./assets/jsx/workflow-editor/components/keyboard-shortcuts/constants.jsx");
-/* harmony import */ var reactflow__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! reactflow */ "./node_modules/@reactflow/core/dist/esm/index.mjs");
+/* harmony import */ var _workflow_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../workflow-store */ "./assets/jsx/workflow-editor/components/workflow-store/index.jsx");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../constants */ "./assets/jsx/workflow-editor/constants.jsx");
+/* harmony import */ var _flow_editor_auto_layout_constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../flow-editor/auto-layout/constants */ "./assets/jsx/workflow-editor/components/flow-editor/auto-layout/constants.jsx");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./constants */ "./assets/jsx/workflow-editor/components/keyboard-shortcuts/constants.jsx");
+/* harmony import */ var reactflow__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! reactflow */ "./node_modules/@reactflow/core/dist/esm/index.mjs");
+
 
 
 
@@ -43702,13 +43706,28 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var KeyboardShortcuts = function KeyboardShortcuts() {
-  var _useDispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useDispatch)(_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.store),
+  var _useDispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_6__.useDispatch)(_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.store),
     registerShortcut = _useDispatch.registerShortcut;
-  var _useDispatch2 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useDispatch)(_editor_store__WEBPACK_IMPORTED_MODULE_1__.store),
+  var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_6__.useSelect)(function (select) {
+      var _select = select(_workflow_store__WEBPACK_IMPORTED_MODULE_2__.store),
+        isSavingWorkflow = _select.isSavingWorkflow,
+        isAutosavingWorkflow = _select.isAutosavingWorkflow;
+      var isSaving = isSavingWorkflow() || isAutosavingWorkflow();
+      return {
+        isSaving: isSaving
+      };
+    }, []),
+    isSaving = _useSelect.isSaving;
+  var _useDispatch2 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_6__.useDispatch)(_editor_store__WEBPACK_IMPORTED_MODULE_1__.store),
     toggleFeature = _useDispatch2.toggleFeature;
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
+  var _useDispatch3 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_6__.useDispatch)(_workflow_store__WEBPACK_IMPORTED_MODULE_2__.store),
+    takeScreenshot = _useDispatch3.takeScreenshot,
+    saveAsCurrentStatus = _useDispatch3.saveAsCurrentStatus;
+  var _futureWorkflowEditor = futureWorkflowEditor,
+    enableWorkflowScreenshot = _futureWorkflowEditor.enableWorkflowScreenshot;
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
     registerShortcut({
-      name: _constants__WEBPACK_IMPORTED_MODULE_6__.SHORTCUT_TOGGLE_FULLSCREEN,
+      name: _constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_TOGGLE_FULLSCREEN,
       category: "global",
       description: "Toggle fullscreen mode",
       keyCombination: {
@@ -43717,7 +43736,7 @@ var KeyboardShortcuts = function KeyboardShortcuts() {
       }
     });
     registerShortcut({
-      name: _constants__WEBPACK_IMPORTED_MODULE_6__.SHORTCUT_TOGGLE_DEVELOPER_MODE,
+      name: _constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_TOGGLE_DEVELOPER_MODE,
       category: "global",
       description: "Toggle developer mode",
       keyCombination: {
@@ -43726,7 +43745,7 @@ var KeyboardShortcuts = function KeyboardShortcuts() {
       }
     });
     registerShortcut({
-      name: _constants__WEBPACK_IMPORTED_MODULE_6__.SHORTCUT_TOGGLE_ADVANCED_SETTINGS,
+      name: _constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_TOGGLE_ADVANCED_SETTINGS,
       category: "global",
       description: "Toggle advanced settings",
       keyCombination: {
@@ -43735,7 +43754,7 @@ var KeyboardShortcuts = function KeyboardShortcuts() {
       }
     });
     registerShortcut({
-      name: _constants__WEBPACK_IMPORTED_MODULE_6__.SHORTCUT_FIT_VIEW,
+      name: _constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_FIT_VIEW,
       category: "global",
       description: "Fit view",
       keyCombination: {
@@ -43744,7 +43763,7 @@ var KeyboardShortcuts = function KeyboardShortcuts() {
       }
     });
     registerShortcut({
-      name: _constants__WEBPACK_IMPORTED_MODULE_6__.SHORTCUT_TOGGLE_INSERTER,
+      name: _constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_TOGGLE_INSERTER,
       category: "global",
       description: "Toggle inserter",
       keyCombination: {
@@ -43753,7 +43772,7 @@ var KeyboardShortcuts = function KeyboardShortcuts() {
       }
     });
     registerShortcut({
-      name: _constants__WEBPACK_IMPORTED_MODULE_6__.SHORTCUT_AUTO_LAYOUT,
+      name: _constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_AUTO_LAYOUT,
       category: "global",
       description: "Auto layout",
       keyCombination: {
@@ -43762,7 +43781,7 @@ var KeyboardShortcuts = function KeyboardShortcuts() {
       }
     });
     registerShortcut({
-      name: _constants__WEBPACK_IMPORTED_MODULE_6__.SHORTCUT_TOGGLE_SIDEBAR,
+      name: _constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_TOGGLE_SIDEBAR,
       category: "global",
       description: "Toggle sidebar",
       keyCombination: {
@@ -43770,31 +43789,55 @@ var KeyboardShortcuts = function KeyboardShortcuts() {
         character: "s"
       }
     });
+    registerShortcut({
+      name: _constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_SAVE_AS_CURRENT_STATUS,
+      category: "global",
+      description: "Save as current status",
+      keyCombination: {
+        modifier: "primary",
+        character: "s"
+      }
+    });
   }, []);
-  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_6__.SHORTCUT_TOGGLE_FULLSCREEN, function () {
-    toggleFeature(_constants__WEBPACK_IMPORTED_MODULE_3__.FEATURE_FULLSCREEN_MODE);
+  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_TOGGLE_FULLSCREEN, function () {
+    toggleFeature(_constants__WEBPACK_IMPORTED_MODULE_4__.FEATURE_FULLSCREEN_MODE);
   });
-  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_6__.SHORTCUT_TOGGLE_DEVELOPER_MODE, function () {
-    toggleFeature(_constants__WEBPACK_IMPORTED_MODULE_3__.FEATURE_DEVELOPER_MODE);
+  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_TOGGLE_DEVELOPER_MODE, function () {
+    toggleFeature(_constants__WEBPACK_IMPORTED_MODULE_4__.FEATURE_DEVELOPER_MODE);
   });
-  var reactflow = (0,reactflow__WEBPACK_IMPORTED_MODULE_7__.useReactFlow)();
-  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_6__.SHORTCUT_FIT_VIEW, function () {
+  var reactflow = (0,reactflow__WEBPACK_IMPORTED_MODULE_8__.useReactFlow)();
+  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_FIT_VIEW, function () {
     reactflow.fitView();
   });
-  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_6__.SHORTCUT_TOGGLE_INSERTER, function () {
-    toggleFeature(_constants__WEBPACK_IMPORTED_MODULE_3__.FEATURE_INSERTER);
+  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_TOGGLE_INSERTER, function () {
+    toggleFeature(_constants__WEBPACK_IMPORTED_MODULE_4__.FEATURE_INSERTER);
   });
-  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_6__.SHORTCUT_AUTO_LAYOUT, function () {
-    var customEvent = new CustomEvent(_flow_editor_auto_layout_constants__WEBPACK_IMPORTED_MODULE_4__.CUSTOM_EVENT_AUTO_LAYOUT, {
+  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_AUTO_LAYOUT, function () {
+    var customEvent = new CustomEvent(_flow_editor_auto_layout_constants__WEBPACK_IMPORTED_MODULE_5__.CUSTOM_EVENT_AUTO_LAYOUT, {
       detail: {
-        direction: _flow_editor_auto_layout_constants__WEBPACK_IMPORTED_MODULE_4__.AUTO_LAYOUT_DIRECTION_DOWN
+        direction: _flow_editor_auto_layout_constants__WEBPACK_IMPORTED_MODULE_5__.AUTO_LAYOUT_DIRECTION_DOWN
       }
     });
     document.dispatchEvent(customEvent);
   });
-  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_6__.SHORTCUT_TOGGLE_SIDEBAR, function () {});
-  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_6__.SHORTCUT_TOGGLE_ADVANCED_SETTINGS, function () {
-    toggleFeature(_constants__WEBPACK_IMPORTED_MODULE_3__.FEATURE_ADVANCED_SETTINGS);
+  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_TOGGLE_SIDEBAR, function () {});
+  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_TOGGLE_ADVANCED_SETTINGS, function () {
+    toggleFeature(_constants__WEBPACK_IMPORTED_MODULE_4__.FEATURE_ADVANCED_SETTINGS);
+  });
+  (0,_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_0__.useShortcut)(_constants__WEBPACK_IMPORTED_MODULE_7__.SHORTCUT_SAVE_AS_CURRENT_STATUS, function (e) {
+    e.preventDefault();
+    if (isSaving) {
+      return;
+    }
+    if (enableWorkflowScreenshot) {
+      takeScreenshot().then(function (dataUrl) {
+        saveAsCurrentStatus({
+          screenshot: dataUrl
+        });
+      });
+    } else {
+      saveAsCurrentStatus();
+    }
   });
   return null;
 };

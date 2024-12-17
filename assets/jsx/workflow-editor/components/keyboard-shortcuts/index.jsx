@@ -3,6 +3,7 @@ import {
     store as shortcutStore,
 } from "@wordpress/keyboard-shortcuts";
 import { store as editorStore } from "../editor-store";
+import { store as workflowStore } from "../workflow-store";
 import { useEffect } from "@wordpress/element";
 import {
     FEATURE_ADVANCED_SETTINGS,
@@ -14,7 +15,7 @@ import {
     CUSTOM_EVENT_AUTO_LAYOUT,
     AUTO_LAYOUT_DIRECTION_DOWN,
 } from "../flow-editor/auto-layout/constants";
-import { useDispatch } from "@wordpress/data";
+import { useDispatch, useSelect } from "@wordpress/data";
 import {
     SHORTCUT_TOGGLE_FULLSCREEN,
     SHORTCUT_FIT_VIEW,
@@ -23,13 +24,41 @@ import {
     SHORTCUT_TOGGLE_SIDEBAR,
     SHORTCUT_TOGGLE_DEVELOPER_MODE,
     SHORTCUT_TOGGLE_ADVANCED_SETTINGS,
+    SHORTCUT_SAVE_AS_CURRENT_STATUS,
 } from "./constants";
 import { useReactFlow } from "reactflow";
 
 export const KeyboardShortcuts = () => {
     const { registerShortcut } = useDispatch(shortcutStore);
 
-    const { toggleFeature } = useDispatch(editorStore);
+    const {
+        isSaving,
+    } = useSelect(
+        (select) => {
+            const {
+                isSavingWorkflow,
+                isAutosavingWorkflow,
+            } = select(workflowStore);
+
+            const isSaving = isSavingWorkflow() || isAutosavingWorkflow();
+
+            return {
+                isSaving,
+            };
+        },
+        []
+    );
+
+    const {
+        toggleFeature,
+    } = useDispatch(editorStore);
+
+    const {
+        takeScreenshot,
+        saveAsCurrentStatus,
+    } = useDispatch(workflowStore);
+
+    const { enableWorkflowScreenshot } = futureWorkflowEditor;
 
     useEffect(() => {
         registerShortcut({
@@ -101,6 +130,16 @@ export const KeyboardShortcuts = () => {
                 character: "s",
             },
         });
+
+        registerShortcut({
+            name: SHORTCUT_SAVE_AS_CURRENT_STATUS,
+            category: "global",
+            description: "Save as current status",
+            keyCombination: {
+                modifier: "primary",
+                character: "s",
+            },
+        });
     }, []);
 
     useShortcut(SHORTCUT_TOGGLE_FULLSCREEN, () => {
@@ -137,5 +176,22 @@ export const KeyboardShortcuts = () => {
         toggleFeature(FEATURE_ADVANCED_SETTINGS);
     });
 
+    useShortcut(SHORTCUT_SAVE_AS_CURRENT_STATUS, (e) => {
+        e.preventDefault();
+
+        if (isSaving) {
+            return;
+        }
+
+        if (enableWorkflowScreenshot) {
+            takeScreenshot().then((dataUrl) => {
+                saveAsCurrentStatus({screenshot: dataUrl});
+            });
+        } else {
+            saveAsCurrentStatus();
+        }
+    });
+
     return null;
 };
+
