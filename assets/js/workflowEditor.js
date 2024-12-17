@@ -39128,7 +39128,9 @@ var Conditional = function Conditional(_ref9) {
     }
   }), !isPro && /*#__PURE__*/React.createElement("div", {
     className: "condition-pro-features-notice"
-  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('This conditional will only be evaluated in the Pro version. In the Free version, it will always return true.', 'post-expirator'))), isPopoverVisible && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Modal, {
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "description margin-top"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('This conditional will only be evaluated in the Pro version. In the Free version, it will always return true.', 'post-expirator'))), isPopoverVisible && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Modal, {
     onClose: onClose,
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Condition', 'post-expirator'),
     onRequestClose: onClose
@@ -40022,13 +40024,15 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     className: "expression-builder-button",
     icon: /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_3__["default"], {
       icon: "braces",
-      size: 18
+      iconSize: 16
     }),
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Edit", "post-expirator")
   }), !isInline && label && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalHeading, {
     level: 3,
     className: "expression-builder-small-heading"
-  }, label), description && /*#__PURE__*/React.createElement("p", null, description), /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, label), description && /*#__PURE__*/React.createElement("p", {
+    className: "description"
+  }, description), /*#__PURE__*/React.createElement(react_ace__WEBPACK_IMPORTED_MODULE_5__["default"], {
     ref: editorSmallRef,
     mode: "handlebars",
     theme: "textmate",
@@ -40105,9 +40109,13 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     setCurrentDescription: setCurrentDescription,
     setCurrentVariableId: setCurrentVariableId,
     onDoubleClick: onDoubleClick
-  })), currentDescription && /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("code", {
+  })), currentDescription && /*#__PURE__*/React.createElement("p", {
+    className: "description margin-top"
+  }, /*#__PURE__*/React.createElement("code", {
     className: "expression-builder-variable-name"
-  }, "{{".concat(currentVariableId, "}}")), ": ", currentDescription), !currentDescription && /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Hover over a variable to see its description.", "post-expirator")))));
+  }, "{{".concat(currentVariableId, "}}")), ": ", currentDescription), !currentDescription && /*#__PURE__*/React.createElement("p", {
+    className: "description margin-top"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Hover over a variable to see its description.", "post-expirator")))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ExpressionBuilder);
 
@@ -40381,6 +40389,11 @@ function PostQuery(_ref) {
     }
   }, []);
   var postTypeFieldLabel = isPostTypeRequired ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Type', 'post-expirator') + ' *' : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Type', 'post-expirator');
+  var descriptions = {
+    postType: (settings === null || settings === void 0 ? void 0 : settings.postTypeDescription) || null,
+    postId: (settings === null || settings === void 0 ? void 0 : settings.postIdDescription) || null,
+    postStatus: (settings === null || settings === void 0 ? void 0 : settings.postStatusDescription) || null
+  };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalVStack, null, acceptsInput && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.RadioControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post selection', 'post-expirator'),
     selected: ((_defaultValue2 = defaultValue) === null || _defaultValue2 === void 0 ? void 0 : _defaultValue2.postSource) || defaultPostSource,
@@ -40409,7 +40422,11 @@ function PostQuery(_ref) {
         value: value
       });
     }
-  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FormTokenField, {
+  }), (descriptions === null || descriptions === void 0 ? void 0 : descriptions.postType) && /*#__PURE__*/React.createElement("p", {
+    className: "description"
+  }, descriptions.postType), isPostTypeRequired && /*#__PURE__*/React.createElement("p", {
+    className: "description"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('* Required field', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FormTokenField, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post ID', 'post-expirator'),
     value: ((_defaultValue4 = defaultValue) === null || _defaultValue4 === void 0 ? void 0 : _defaultValue4.postId) || [],
     onChange: function onChange(value) {
@@ -40418,7 +40435,9 @@ function PostQuery(_ref) {
         value: value
       });
     }
-  }), !hidePostStatus && /*#__PURE__*/React.createElement(_inline_multi_select__WEBPACK_IMPORTED_MODULE_3__.InlineMultiSelect, {
+  }), (descriptions === null || descriptions === void 0 ? void 0 : descriptions.postId) && /*#__PURE__*/React.createElement("p", {
+    className: "description"
+  }, descriptions.postId), !hidePostStatus && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_inline_multi_select__WEBPACK_IMPORTED_MODULE_3__.InlineMultiSelect, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Post Status', 'post-expirator'),
     value: ((_defaultValue5 = defaultValue) === null || _defaultValue5 === void 0 ? void 0 : _defaultValue5.postStatus) || [],
     suggestions: postStatuses,
@@ -40430,9 +40449,9 @@ function PostQuery(_ref) {
         value: value
       });
     }
-  })), isPostTypeRequired && /*#__PURE__*/React.createElement("p", {
+  }), (descriptions === null || descriptions === void 0 ? void 0 : descriptions.postStatus) && /*#__PURE__*/React.createElement("p", {
     className: "description"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('* Required field', 'post-expirator'))));
+  }, descriptions.postStatus)))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PostQuery);
 
@@ -42670,7 +42689,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 function BracesIcon(_ref) {
   var _ref$size = _ref.size,
-    size = _ref$size === void 0 ? 24 : _ref$size;
+    size = _ref$size === void 0 ? 16 : _ref$size;
   return /*#__PURE__*/React.createElement(_base__WEBPACK_IMPORTED_MODULE_0__["default"], {
     size: size
   }, /*#__PURE__*/React.createElement("svg", {
@@ -44857,8 +44876,8 @@ function NodeIcon(_ref) {
     _ref$showColors = _ref.showColors,
     showColors = _ref$showColors === void 0 ? false : _ref$showColors,
     className = _ref.className,
-    _ref$size = _ref.size,
-    size = _ref$size === void 0 ? 20 : _ref$size,
+    _ref$iconSize = _ref.iconSize,
+    iconSize = _ref$iconSize === void 0 ? 20 : _ref$iconSize,
     _ref$onClick = _ref.onClick,
     onClick = _ref$onClick === void 0 ? function () {} : _ref$onClick,
     _ref$style = _ref.style,
@@ -44967,7 +44986,7 @@ function NodeIcon(_ref) {
   });
   var renderedIcon = /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Icon, {
     icon: icon && icon.src ? icon.src : icon,
-    size: size
+    size: iconSize
   });
   var spanStyle = showColors ? _objectSpread(_objectSpread({}, style), {}, {
     backgroundColor: icon && icon.background,
@@ -45680,18 +45699,18 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Currently this step is being skipped. Upgrade to Pro to unlock this feature.', 'post-expirator')
   }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
     icon: 'lock',
-    size: 8
+    iconSize: 8
   })), nodeHasErrors && /*#__PURE__*/React.createElement("div", {
     className: "react-flow__node-error",
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('This node has errors', 'post-expirator')
   }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
     icon: 'exclamation',
-    size: 8
+    iconSize: 8
   }))), /*#__PURE__*/React.createElement("div", {
     className: "react-flow__node-header"
   }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
     icon: nodeType.icon.src,
-    size: 14
+    iconSize: 14
   }), /*#__PURE__*/React.createElement("div", {
     className: "react-flow__node-label"
   }, nodeLabel)), isAdvancedSettingsEnabled && nodeAttributes.length > 0 && /*#__PURE__*/React.createElement("div", {
@@ -46405,7 +46424,7 @@ function ProFeatureButton(_ref) {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Upgrade to Pro to unlock this feature.", "post-expirator")
   }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
     icon: 'lock',
-    size: 14
+    iconSize: 14
   }));
 }
 
@@ -51947,7 +51966,19 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.edit-post-post-status .components-bas
     overflow: auto;
     text-wrap: wrap;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/inspector.css"],"names":[],"mappings":"AAAA;IACI,UAAU;AACd;;AAEA;;IAEI,gBAAgB;AACpB;;AAEA;IACI,gBAAgB;IAChB,oBAAoB;AACxB;;AAEA;IACI,YAAY;IACZ,uBAAuB;AAC3B;;AAEA;IACI,gBAAgB;IAChB,cAAc;IACd,eAAe;IACf,kBAAkB;IAClB,kBAAkB;IAClB,YAAY;IACZ,uBAAuB;AAC3B;;;AAGA;IACI,uBAAuB;IACvB,cAAc;IACd,aAAa;IACb,aAAa;AACjB;;AAEA;IACI,uBAAuB;IACvB,cAAc;IACd,aAAa;IACb,aAAa;AACjB;;AAEA;IACI,mBAAmB;IACnB,aAAa;IACb,YAAY;IACZ,uBAAuB;IACvB,WAAW;AACf;;AAEA;IACI,cAAc;IACd,YAAY;IACZ,cAAc;IACd,kBAAkB;IAClB,WAAW;AACf;;AAEA;IACI,uBAAuB;IACvB,cAAc;IACd,aAAa;IACb,aAAa;AACjB;;AAEA;IACI,YAAY;AAChB;;AAEA;IACI,cAAc;IACd,eAAe;IACf,oBAAoB;AACxB;;AAEA;IACI,cAAc;IACd,eAAe;IACf,oBAAoB;AACxB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,SAAS;IACT,cAAc;AAClB;;;AAGA;IACI,cAAc;IACd,eAAe;IACf,gBAAgB;IAChB,eAAe;AACnB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,gBAAgB;IAChB,eAAe;IACf,gBAAgB;IAChB,eAAe;AACnB;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,2BAA2B;AAC/B;;AAEA;IACI,iBAAiB;AACrB;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,WAAW;AACf;;AAEA;IACI,WAAW;IACX,yBAAyB;IACzB,iBAAiB;IACjB,gBAAgB;AACpB;;AAEA;;IAEI,gBAAgB;IAChB,yBAAyB;IACzB,gBAAgB;AACpB;;AAEA;IACI,iBAAiB;IACjB,eAAe;IACf,mBAAmB;IACnB,YAAY;AAChB;;AAEA;IACI,kBAAkB;IAClB,gBAAgB;IAChB,iBAAiB;AACrB;;AAEA;IACI,gBAAgB;IAChB,qBAAqB;IACrB,cAAc;IACd,eAAe;AACnB","sourcesContent":[".edit-post-post-status .components-base-control {\n    flex: auto;\n}\n\n.editor-post-title__panel,\n.editor-post-description__panel {\n    padding-top: 8px;\n}\n\n.editor-post-status__panel {\n    margin-top: 16px;\n    gap: 16px !important;\n}\n\n.editor-post-status__panel button {\n    flex-grow: 1;\n    justify-content: center;\n}\n\n.workflow-editor-element-inspector__warning {\n    background: #fff;\n    display: block;\n    font-size: 13px;\n    padding: 32px 36px;\n    text-align: center;\n    flex-grow: 1;\n    justify-content: center;\n}\n\n\n.workflow-editor-inspector-card {\n    align-items: flex-start;\n    color: #1e1e1e;\n    display: flex;\n    padding: 16px;\n}\n\n.workflow-editor-inspector-card {\n    align-items: flex-start;\n    color: #1e1e1e;\n    display: flex;\n    padding: 16px;\n}\n\n.workflow-editor-inspector-icon {\n    align-items: center;\n    display: flex;\n    height: 24px;\n    justify-content: center;\n    width: 24px;\n}\n\n.workflow-editor-inspector-card .workflow-editor-inspector-icon {\n    flex: 0 0 24px;\n    height: 24px;\n    margin-left: 0;\n    margin-right: 12px;\n    width: 24px;\n}\n\n.workflow-editor-inspector-card {\n    align-items: flex-start;\n    color: #1e1e1e;\n    display: flex;\n    padding: 16px;\n}\n\n.workflow-editor-inspector-card__content {\n    flex-grow: 1;\n}\n\n.workflow-editor-inspector-inspector h2, .workflow-editor-inspector-inspector h3 {\n    color: #1e1e1e;\n    font-size: 13px;\n    margin-bottom: 1.5em;\n}\n\n.interface-complementary-area h2 {\n    color: #1e1e1e;\n    font-size: 13px;\n    margin-bottom: 1.5em;\n}\n\n.workflow-editor-inspector-card__title.workflow-editor-inspector-card__title {\n    font-size: 13px;\n    line-height: 1.4;\n    margin: 0;\n    padding: 3px 0;\n}\n\n\n.workflow-editor-inspector-card__description {\n    display: block;\n    font-size: 13px;\n    line-height: 1.4;\n    margin-top: 4px;\n}\n\n.workflow-editor-inspector-icon.has-colors svg {\n    fill: currentColor;\n}\n\n.workflow-editor-inspector-icon svg {\n    max-height: 24px;\n    max-width: 24px;\n    min-height: 20px;\n    min-width: 20px;\n}\n\n.workflow-editor-validation-notification {\n    display: flex;\n    flex-direction: row;\n    align-items: flex-start;\n    justify-content: flex-start;\n}\n\n.workflow-editor-validation-panel .node-icon {\n    margin-right: 5px;\n}\n\n.workflow-editor-validation-notification.workflow-editor-success .node-icon * {\n    color: #46b450;\n}\n\n.workflow-editor-validation-notification.workflow-editor-error .node-icon * {\n    color: #d90f0f;\n}\n\n.edit-post-sidebar__panel .components-h-stack {\n    width: 100%;\n}\n\n.workflow-editor-inspector-card__content table {\n    width: 100%;\n    border-collapse: collapse;\n    border-spacing: 0;\n    margin-top: 20px;\n}\n\n.workflow-editor-inspector-card__content table th,\n.workflow-editor-inspector-card__content table td {\n    padding: 2px 3px;\n    border: 1px solid #e1e1e1;\n    text-align: left;\n}\n\n.workflow-editor-data-flow-variable ul {\n    margin-left: 40px;\n    margin-top: 6px;\n    margin-bottom: 11px;\n    padding: 2px;\n}\n\n.workflow-editor-data-flow-variable ul li {\n    margin-bottom: 2px;\n    list-style: disc;\n    line-height: 16px;\n}\n\n.workflow-editor-data-flow-variable ul code {\n    max-width: 204px;\n    display: inline-block;\n    overflow: auto;\n    text-wrap: wrap;\n}\n"],"sourceRoot":""}]);
+
+p.settings-field-description,
+p.description {
+    margin-top: -14px !important;
+    font-size: 12px;
+    font-style: normal;
+    color: rgb(117, 117, 117);
+}
+
+p.description.margin-top {
+    margin-top: 8px !important;
+}
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/inspector.css"],"names":[],"mappings":"AAAA;IACI,UAAU;AACd;;AAEA;;IAEI,gBAAgB;AACpB;;AAEA;IACI,gBAAgB;IAChB,oBAAoB;AACxB;;AAEA;IACI,YAAY;IACZ,uBAAuB;AAC3B;;AAEA;IACI,gBAAgB;IAChB,cAAc;IACd,eAAe;IACf,kBAAkB;IAClB,kBAAkB;IAClB,YAAY;IACZ,uBAAuB;AAC3B;;;AAGA;IACI,uBAAuB;IACvB,cAAc;IACd,aAAa;IACb,aAAa;AACjB;;AAEA;IACI,uBAAuB;IACvB,cAAc;IACd,aAAa;IACb,aAAa;AACjB;;AAEA;IACI,mBAAmB;IACnB,aAAa;IACb,YAAY;IACZ,uBAAuB;IACvB,WAAW;AACf;;AAEA;IACI,cAAc;IACd,YAAY;IACZ,cAAc;IACd,kBAAkB;IAClB,WAAW;AACf;;AAEA;IACI,uBAAuB;IACvB,cAAc;IACd,aAAa;IACb,aAAa;AACjB;;AAEA;IACI,YAAY;AAChB;;AAEA;IACI,cAAc;IACd,eAAe;IACf,oBAAoB;AACxB;;AAEA;IACI,cAAc;IACd,eAAe;IACf,oBAAoB;AACxB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,SAAS;IACT,cAAc;AAClB;;;AAGA;IACI,cAAc;IACd,eAAe;IACf,gBAAgB;IAChB,eAAe;AACnB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,gBAAgB;IAChB,eAAe;IACf,gBAAgB;IAChB,eAAe;AACnB;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,2BAA2B;AAC/B;;AAEA;IACI,iBAAiB;AACrB;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,WAAW;AACf;;AAEA;IACI,WAAW;IACX,yBAAyB;IACzB,iBAAiB;IACjB,gBAAgB;AACpB;;AAEA;;IAEI,gBAAgB;IAChB,yBAAyB;IACzB,gBAAgB;AACpB;;AAEA;IACI,iBAAiB;IACjB,eAAe;IACf,mBAAmB;IACnB,YAAY;AAChB;;AAEA;IACI,kBAAkB;IAClB,gBAAgB;IAChB,iBAAiB;AACrB;;AAEA;IACI,gBAAgB;IAChB,qBAAqB;IACrB,cAAc;IACd,eAAe;AACnB;;AAEA;;IAEI,4BAA4B;IAC5B,eAAe;IACf,kBAAkB;IAClB,yBAAyB;AAC7B;;AAEA;IACI,0BAA0B;AAC9B","sourcesContent":[".edit-post-post-status .components-base-control {\n    flex: auto;\n}\n\n.editor-post-title__panel,\n.editor-post-description__panel {\n    padding-top: 8px;\n}\n\n.editor-post-status__panel {\n    margin-top: 16px;\n    gap: 16px !important;\n}\n\n.editor-post-status__panel button {\n    flex-grow: 1;\n    justify-content: center;\n}\n\n.workflow-editor-element-inspector__warning {\n    background: #fff;\n    display: block;\n    font-size: 13px;\n    padding: 32px 36px;\n    text-align: center;\n    flex-grow: 1;\n    justify-content: center;\n}\n\n\n.workflow-editor-inspector-card {\n    align-items: flex-start;\n    color: #1e1e1e;\n    display: flex;\n    padding: 16px;\n}\n\n.workflow-editor-inspector-card {\n    align-items: flex-start;\n    color: #1e1e1e;\n    display: flex;\n    padding: 16px;\n}\n\n.workflow-editor-inspector-icon {\n    align-items: center;\n    display: flex;\n    height: 24px;\n    justify-content: center;\n    width: 24px;\n}\n\n.workflow-editor-inspector-card .workflow-editor-inspector-icon {\n    flex: 0 0 24px;\n    height: 24px;\n    margin-left: 0;\n    margin-right: 12px;\n    width: 24px;\n}\n\n.workflow-editor-inspector-card {\n    align-items: flex-start;\n    color: #1e1e1e;\n    display: flex;\n    padding: 16px;\n}\n\n.workflow-editor-inspector-card__content {\n    flex-grow: 1;\n}\n\n.workflow-editor-inspector-inspector h2, .workflow-editor-inspector-inspector h3 {\n    color: #1e1e1e;\n    font-size: 13px;\n    margin-bottom: 1.5em;\n}\n\n.interface-complementary-area h2 {\n    color: #1e1e1e;\n    font-size: 13px;\n    margin-bottom: 1.5em;\n}\n\n.workflow-editor-inspector-card__title.workflow-editor-inspector-card__title {\n    font-size: 13px;\n    line-height: 1.4;\n    margin: 0;\n    padding: 3px 0;\n}\n\n\n.workflow-editor-inspector-card__description {\n    display: block;\n    font-size: 13px;\n    line-height: 1.4;\n    margin-top: 4px;\n}\n\n.workflow-editor-inspector-icon.has-colors svg {\n    fill: currentColor;\n}\n\n.workflow-editor-inspector-icon svg {\n    max-height: 24px;\n    max-width: 24px;\n    min-height: 20px;\n    min-width: 20px;\n}\n\n.workflow-editor-validation-notification {\n    display: flex;\n    flex-direction: row;\n    align-items: flex-start;\n    justify-content: flex-start;\n}\n\n.workflow-editor-validation-panel .node-icon {\n    margin-right: 5px;\n}\n\n.workflow-editor-validation-notification.workflow-editor-success .node-icon * {\n    color: #46b450;\n}\n\n.workflow-editor-validation-notification.workflow-editor-error .node-icon * {\n    color: #d90f0f;\n}\n\n.edit-post-sidebar__panel .components-h-stack {\n    width: 100%;\n}\n\n.workflow-editor-inspector-card__content table {\n    width: 100%;\n    border-collapse: collapse;\n    border-spacing: 0;\n    margin-top: 20px;\n}\n\n.workflow-editor-inspector-card__content table th,\n.workflow-editor-inspector-card__content table td {\n    padding: 2px 3px;\n    border: 1px solid #e1e1e1;\n    text-align: left;\n}\n\n.workflow-editor-data-flow-variable ul {\n    margin-left: 40px;\n    margin-top: 6px;\n    margin-bottom: 11px;\n    padding: 2px;\n}\n\n.workflow-editor-data-flow-variable ul li {\n    margin-bottom: 2px;\n    list-style: disc;\n    line-height: 16px;\n}\n\n.workflow-editor-data-flow-variable ul code {\n    max-width: 204px;\n    display: inline-block;\n    overflow: auto;\n    text-wrap: wrap;\n}\n\np.settings-field-description,\np.description {\n    margin-top: -14px !important;\n    font-size: 12px;\n    font-style: normal;\n    color: rgb(117, 117, 117);\n}\n\np.description.margin-top {\n    margin-top: 8px !important;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -52721,9 +52752,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.columns-container {
 
 .expression-builder .expression-builder-button {
     position: absolute;
-    top: 14px;
+    top: 12px;
     right: 0;
-    height: 28px;
+    height: 24px;
     padding-top: 10px;
 }
 
@@ -52767,7 +52798,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.columns-container {
 .ace_editor.read-only-editor {
     background-color: #f3f3f3 !important;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;IACnB,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;IAC5B,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,iBAAiB;IACjB,yBAAyB;IACzB,sBAAsB;IACtB,qBAAqB;AACzB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;AACvB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,QAAQ;IACR,YAAY;IACZ,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,gBAAgB;AACpB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,wBAAwB;IACxB,6BAA6B;IAC7B,2BAA2B;IAC3B,uBAAuB;IACvB,uBAAuB;AAC3B;;AAEA;IACI,iBAAiB;IACjB,mBAAmB;IACnB,uBAAuB;AAC3B;;AAEA;IACI,uBAAuB;IACvB,wBAAwB;IACxB,2BAA2B;AAC/B;;AAEA;IACI,oCAAoC;AACxC","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n    max-height: 212px;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n    overflow-y: scroll;\n    max-height: 270px;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 2px 6px;\n    position: relative;\n    user-select: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.selected {\n    background-color: #ccc;\n}\n\n.column-item.has-children.selected::after {\n    color: #1b1b1b;\n}\n\n.column-item:hover {\n    background-color: #f0f0f0;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n}\n\n.components-modal__screen-overlay {\n    z-index: 999999998;\n}\n\n.expression-builder {\n    position: relative;\n    padding-top: 20px;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 14px;\n    right: 0;\n    height: 28px;\n    padding-top: 10px;\n}\n\n.column-item-form {\n    padding: 10px;\n    max-width: 202px;\n}\n\n.column-item-form p {\n    text-wrap: auto;\n}\n\n.expression-builder-variable-name {\n    margin-left: 5px;\n}\n\n.expression-builder-inline {\n    padding-top: 0 !important;\n}\n\n.expression-builder-inline .ace_editor {\n    margin-top: 0 !important;\n    margin-right: 40px !important;\n    margin-bottom: 0 !important;\n    height: 40px !important;\n    width: 300px !important;\n}\n\n.expression-builder-inline > button {\n    top: 0 !important;\n    right: 0 !important;\n    height: 40px !important;\n}\n\n.ace_editor.settings-panel {\n    width: 246px !important;\n    height: 180px !important;\n    margin-top: 10px !important;\n}\n\n.ace_editor.read-only-editor {\n    background-color: #f3f3f3 !important;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;IACnB,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;IAC5B,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,iBAAiB;IACjB,yBAAyB;IACzB,sBAAsB;IACtB,qBAAqB;AACzB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;AACvB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,QAAQ;IACR,YAAY;IACZ,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,gBAAgB;AACpB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,wBAAwB;IACxB,6BAA6B;IAC7B,2BAA2B;IAC3B,uBAAuB;IACvB,uBAAuB;AAC3B;;AAEA;IACI,iBAAiB;IACjB,mBAAmB;IACnB,uBAAuB;AAC3B;;AAEA;IACI,uBAAuB;IACvB,wBAAwB;IACxB,2BAA2B;AAC/B;;AAEA;IACI,oCAAoC;AACxC","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n    max-height: 212px;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n    overflow-y: scroll;\n    max-height: 270px;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 2px 6px;\n    position: relative;\n    user-select: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.selected {\n    background-color: #ccc;\n}\n\n.column-item.has-children.selected::after {\n    color: #1b1b1b;\n}\n\n.column-item:hover {\n    background-color: #f0f0f0;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n}\n\n.components-modal__screen-overlay {\n    z-index: 999999998;\n}\n\n.expression-builder {\n    position: relative;\n    padding-top: 20px;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 12px;\n    right: 0;\n    height: 24px;\n    padding-top: 10px;\n}\n\n.column-item-form {\n    padding: 10px;\n    max-width: 202px;\n}\n\n.column-item-form p {\n    text-wrap: auto;\n}\n\n.expression-builder-variable-name {\n    margin-left: 5px;\n}\n\n.expression-builder-inline {\n    padding-top: 0 !important;\n}\n\n.expression-builder-inline .ace_editor {\n    margin-top: 0 !important;\n    margin-right: 40px !important;\n    margin-bottom: 0 !important;\n    height: 40px !important;\n    width: 300px !important;\n}\n\n.expression-builder-inline > button {\n    top: 0 !important;\n    right: 0 !important;\n    height: 40px !important;\n}\n\n.ace_editor.settings-panel {\n    width: 246px !important;\n    height: 180px !important;\n    margin-top: 10px !important;\n}\n\n.ace_editor.read-only-editor {\n    background-color: #f3f3f3 !important;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

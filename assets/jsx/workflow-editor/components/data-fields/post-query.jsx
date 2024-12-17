@@ -10,7 +10,7 @@ export function PostQuery({
     label,
     defaultValue,
     onChange,
-    settings
+    settings,
 }) {
     const postTypes = futureWorkflowEditor.postTypes;
     const postStatuses = futureWorkflowEditor.postStatuses;
@@ -46,6 +46,12 @@ export function PostQuery({
 
     const postTypeFieldLabel = isPostTypeRequired ? __('Post Type', 'post-expirator') + ' *' : __('Post Type', 'post-expirator');
 
+    const descriptions = {
+        postType: settings?.postTypeDescription || null,
+        postId: settings?.postIdDescription || null,
+        postStatus: settings?.postStatusDescription || null,
+    };
+
     return (
         <>
             <VStack>
@@ -73,27 +79,41 @@ export function PostQuery({
                             onChange={(value) => onChangeSetting({ settingName: "postType", value })}
                         />
 
+                        {descriptions?.postType && (
+                            <p className="description">{descriptions.postType}</p>
+                        )}
+
+                        {isPostTypeRequired && (
+                            <p className="description">{__('* Required field', 'post-expirator')}</p>
+                        )}
+
                         <FormTokenField
                             label={__('Post ID', 'post-expirator')}
                             value={defaultValue?.postId || []}
                             onChange={(value) => onChangeSetting({ settingName: "postId", value })}
                         />
 
+                        {descriptions?.postId && (
+                            <p className="description">{descriptions.postId}</p>
+                        )}
+
                         {!hidePostStatus && (
-                            <InlineMultiSelect
-                                label={__('Post Status', 'post-expirator')}
-                                value={defaultValue?.postStatus || []}
-                                suggestions={postStatuses}
-                                expandOnFocus={true}
-                                autoSelectFirstMatch={true}
-                                onChange={(value) => onChangeSetting({ settingName: "postStatus", value })}
-                            />
+                            <>
+                                <InlineMultiSelect
+                                    label={__('Post Status', 'post-expirator')}
+                                    value={defaultValue?.postStatus || []}
+                                    suggestions={postStatuses}
+                                    expandOnFocus={true}
+                                    autoSelectFirstMatch={true}
+                                    onChange={(value) => onChangeSetting({ settingName: "postStatus", value })}
+                                />
+
+                                {descriptions?.postStatus && (
+                                    <p className="description">{descriptions.postStatus}</p>
+                                )}
+                            </>
                         )}
                     </>
-                )}
-
-                {isPostTypeRequired && (
-                    <p className="description">{__('* Required field', 'post-expirator')}</p>
                 )}
             </VStack>
         </>

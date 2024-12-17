@@ -104,7 +104,7 @@ export const ExpressionBuilder = ({
             variant="secondary"
             onClick={() => setIsOpen(true)}
             className="expression-builder-button"
-            icon={<NodeIcon icon="braces" size={18} />}
+            icon={<NodeIcon icon="braces" iconSize={16} />}
             title={__("Edit", "post-expirator")}
         />
 
@@ -113,7 +113,7 @@ export const ExpressionBuilder = ({
         )}
 
         {description && (
-            <p>{description}</p>
+            <p className="description">{description}</p>
         )}
 
         <AceEditor
@@ -195,7 +195,7 @@ export const ExpressionBuilder = ({
                     </div>
 
                     {currentDescription && (
-                        <p>
+                        <p className="description margin-top">
                             <code className="expression-builder-variable-name">
                                 {`{{${currentVariableId}}}`}
                             </code>: {currentDescription}
@@ -203,7 +203,7 @@ export const ExpressionBuilder = ({
                     )}
 
                     {!currentDescription && (
-                        <p>{__("Hover over a variable to see its description.", "post-expirator")}</p>
+                        <p className="description margin-top">{__("Hover over a variable to see its description.", "post-expirator")}</p>
                     )}
                 </div>
             </Modal>

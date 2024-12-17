@@ -79,6 +79,9 @@ class CoreOnPostUpdated implements NodeTypeInterface
                         "settings" => [
                             "acceptsInput" => false,
                             "isPostTypeRequired" => true,
+                            "postTypeDescription" => __("Select the post types that will trigger this action.", "post-expirator"),
+                            "postIdDescription" => __("Enter one or more post IDs. Leave empty to include all posts.", "post-expirator"),
+                            "postStatusDescription" => __("If selected, only posts with these statuses will trigger this action.", "post-expirator"),
                         ],
                         "default" => [
                             "postSource" => "custom",

@@ -239,7 +239,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
 
             {! isPro && (
                 <div className="condition-pro-features-notice">
-                    <p>{__('This conditional will only be evaluated in the Pro version. In the Free version, it will always return true.', 'post-expirator')}</p>
+                    <p className="description margin-top">{__('This conditional will only be evaluated in the Pro version. In the Free version, it will always return true.', 'post-expirator')}</p>
                 </div>
             )}
 
