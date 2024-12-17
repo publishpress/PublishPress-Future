@@ -151,10 +151,12 @@ class ShortcodeController implements InitializableInterface
 
         $defaultDateTimeFormat = $this->dateTimeFacade->getDefaultDateTimeFormat();
 
-        return $this->dateTimeFacade->getWpDate(
-            $attrs['format'],
+        $output = $this->dateTimeFacade->getWpDate(
+            trim($attrs['format']),
             $expirationDateTs,
             $defaultDateTimeFormat
         );
+
+        return $output;
     }
 }
