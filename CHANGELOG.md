@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add the post slug property to the post data type schema in the workflow editor.
 - Add the Post Meta Add step to the workflow editor (Issue #732).
 - Add the Post Meta Delete step to the workflow editor (Issue #732).
+- Add the option to change manually enabled workflows in the bulk edit screen (Issue #942).
 
 ### Changed
 

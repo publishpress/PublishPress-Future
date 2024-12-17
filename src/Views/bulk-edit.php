@@ -8,6 +8,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
     <div class="inline-edit-col">
         <div class="inline-edit-group">
             <div id="publishpress-future-bulk-edit"></div>
+            <div id="publishpress-future-bulk-edit-manual-trigger"></div>
         </div>
     </div>
 </fieldset>

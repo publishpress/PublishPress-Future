@@ -711,7 +711,10 @@ return [
             $container->get(ServicesAbstract::MIGRATIONS_FACTORY),
             $container->get(ServicesAbstract::PLUGIN_VERSION),
             $container->get(ServicesAbstract::CRON),
-            $container->get(ServicesAbstract::LOGGER)
+            $container->get(ServicesAbstract::LOGGER),
+            $container->get(ServicesAbstract::SANITIZATION),
+            $container->get(ServicesAbstract::REQUEST),
+            $container->get(ServicesAbstract::CURRENT_USER_MODEL_FACTORY)
         );
     },
 

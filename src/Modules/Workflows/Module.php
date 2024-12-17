@@ -6,6 +6,8 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Framework\WordPress\Facade\RequestFacade;
+use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
@@ -69,6 +71,21 @@ class Module implements InitializableInterface
      */
     private $logger;
 
+    /**
+     * @var SanitizationFacade
+     */
+    private $sanitization;
+
+    /**
+     * @var RequestFacade
+     */
+    private $request;
+
+    /**
+     * @var CurrentUserModel
+     */
+    private $currentUserModel;
+
     public function __construct(
         HookableInterface $hooksFacade,
         RestApiManagerInterface $restApiManager,
@@ -80,7 +97,10 @@ class Module implements InitializableInterface
         \Closure $migrationsFactory,
         string $pluginVersion,
         CronInterface $cron,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        SanitizationFacade $sanitization,
+        RequestFacade $request,
+        \Closure $currentUserModelFactory
     ) {
         $this->hooks = $hooksFacade;
         $this->restApiManager = $restApiManager;
@@ -93,6 +113,10 @@ class Module implements InitializableInterface
         $this->pluginVersion = $pluginVersion;
         $this->cron = $cron;
         $this->logger = $logger;
+        $this->sanitization = $sanitization;
+        $this->request = $request;
+        $this->currentUserModel = $currentUserModelFactory();
+
         /*
          * We initialize the engine in the constructor because it requires
          * the init hook has not been fired yet. The initialize method runs in the init hook.
@@ -127,7 +151,13 @@ class Module implements InitializableInterface
             ),
             new Controllers\RestApi($this->hooks, $this->restApiManager),
             new Controllers\FutureLegacyAction($this->hooks, $this->logger),
-            new Controllers\ManualPostTrigger($this->hooks, $this->logger),
+            new Controllers\ManualPostTrigger(
+                $this->hooks,
+                $this->logger,
+                $this->sanitization,
+                $this->request,
+                $this->currentUserModel
+            ),
             new Controllers\ScheduledActions(
                 $this->hooks,
                 $this->nodeTypesModel,

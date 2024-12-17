@@ -12,16 +12,20 @@ import * as selectors from './selectors';
 import * as actions from './actions';
 import { default as controls} from './controls';
 
-export const store = createReduxStore(
-    STORE_NAME,
-    {
-        reducer,
-        actions,
-        selectors,
-        controls,
-    }
-);
+// Only create the store if not already created
+if (! window.futureWorkflowManualSelectionStore) {
+    window.futureWorkflowManualSelectionStore = createReduxStore(
+        STORE_NAME,
+        {
+            reducer,
+            actions,
+            selectors,
+            controls,
+        }
+    );
 
-register(store);
+    register(window.futureWorkflowManualSelectionStore);
+}
 
+export const store = window.futureWorkflowManualSelectionStore;
 export default store;
