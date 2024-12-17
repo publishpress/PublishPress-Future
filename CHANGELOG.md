@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Changed the options in the "Debug Data" field to be more intuitive allowing a custom data expression to be selected.
 - The conditional step now uses the new expression builder.
 - Improved the UI in the conditional step settings.
+- Added field descriptions to the post query step settings panel (Issue #1081).
 
 ### Fixed
 
