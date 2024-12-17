@@ -76,6 +76,9 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\Core
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsSet;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostUnstick;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreSendEmail;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostMetaAdd;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostMetaDelete;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostMetaUpdate;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\CorePostQuery;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\CoreSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\RayDebug;
@@ -92,10 +95,8 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\Cor
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnSavePost;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\FutureLegacyAction;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostPublished;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostMetaAdd;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHandler;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\WorkflowEngine;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaDelete;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
@@ -991,6 +992,13 @@ return [
 
                 case CorePostMetaDelete::getNodeTypeName():
                     $nodeRunner = new CorePostMetaDelete(
+                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::LOGGER)
+                    );
+                    break;
+
+                case CorePostMetaUpdate::getNodeTypeName():
+                    $nodeRunner = new CorePostMetaUpdate(
                         $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::LOGGER)
                     );
