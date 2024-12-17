@@ -28,6 +28,8 @@ $metaboxCheckboxLabel = $settingsFacade->getMetaboxCheckboxLabel();
 $timeFormat = $settingsFacade->getTimeFormatForDatePicker();
 $columnStyle = $settingsFacade->getColumnStyle();
 
+$shortcodeWrapper = $settingsFacade->getShortcodeWrapper();
+$shortcodeWrapperClass = $settingsFacade->getShortcodeWrapperClass();
 ?>
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
     <div class="pp-column-left">
@@ -385,39 +387,95 @@ $columnStyle = $settingsFacade->getColumnStyle();
 
             <h3><?php
                 esc_html_e('Shortcode', 'post-expirator'); ?></h3>
-            <p><?php
-                // translators: %s is the shortcode code wrapped in code tags
-                echo sprintf(esc_html__('Valid %s attributes:', 'post-expirator'), '<code>[futureaction]</code>'); ?></p>
-            <ul class="pe-list">
-                <li>
-                    <p><?php
-                        echo sprintf(
-                            // translators: %1$s and %2$s are code tags that wrap the shortcode attribute names
-                            esc_html__(
-                                '%1$stype%2$s - valid options are %1$sfull%2$s (default), %1$sdate%2$s, %1$stime%2$s',
+
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="shortcode-wrapper">
+                            <?php esc_html_e('Shortcode Wrapper', 'post-expirator'); ?>
+                        </label>
+                    </th>
+                    <td>
+                        <?php
+                        $wrapperOptions = [
+                            '' => '— None —',
+                            'p' => '&lt;p&gt;',
+                            'div' => '&lt;div&gt;',
+                            'span' => '&lt;span&gt;',
+                        ];
+                        ?>
+                        <div class="pp-settings-field-row">
+                            <select name="shortcode-wrapper" id="shortcode-wrapper">
+                                <?php foreach ($wrapperOptions as $value => $label) : ?>
+                                    <option value="<?php echo esc_attr($value); ?>" <?php echo $value === $shortcodeWrapper ? 'selected' : ''; ?>><?php echo esc_html($label); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <p class="description">
+                            <?php esc_html_e(
+                                'This will wrap the shortcode output in the selected HTML tag.',
                                 'post-expirator'
-                            ),
-                            '<code>',
-                            '</code>'
-                        ); ?></p>
-                </li>
-                <li>
-                    <p><?php
-                        echo sprintf(
-                            // translators: %s is a code tag that wraps the shortcode attribute dateformat
-                            esc_html__('%s - format set here will override the value set on the settings page', 'post-expirator'),
-                            '<code>dateformat</code>'
-                        ); ?></p>
-                </li>
-                <li>
-                    <p><?php
-                        echo sprintf(
-                            // translators: %s is a code tag that wraps the shortcode attribute timeformat
-                            esc_html__('%s - format set here will override the value set on the settings page', 'post-expirator'),
-                            '<code>timeformat</code>'
-                        ); ?></p>
-                </li>
-            </ul>
+                            ); ?>
+                        </p>
+                    </td>
+                </tr>
+                <tr valign="top" id="shortcode-wrapper-class-row" style="display: none;">
+                    <th scope="row">
+                        <label for="shortcode-wrapper-class">
+                            <?php esc_html_e('Wrapper Class', 'post-expirator'); ?>
+                        </label>
+                    </th>
+                    <td>
+                        <input type="text" name="shortcode-wrapper-class" id="shortcode-wrapper-class" value="<?php echo esc_attr($shortcodeWrapperClass); ?>" size="25" />
+                        <p class="description">
+                            <?php esc_html_e('This will add the selected class to the wrapper tag.', 'post-expirator'); ?>
+                        </p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label>
+                            <?php esc_html_e('Attributes', 'post-expirator'); ?>
+                        </label>
+                    </th>
+                    <td>
+                        <p><?php
+                        // translators: %s is the shortcode code wrapped in code tags
+                            echo sprintf(esc_html__('Valid %s attributes:', 'post-expirator'), '<code>[futureaction]</code>'); ?>
+                        </p>
+                        <ul class="pe-list">
+                            <li>
+                                <p><?php
+                                    echo sprintf(
+                                        // translators: %1$s and %2$s are code tags that wrap the shortcode attribute names
+                                        esc_html__(
+                                            '%1$stype%2$s - valid options are %1$sfull%2$s (default), %1$sdate%2$s, %1$stime%2$s',
+                                            'post-expirator'
+                                        ),
+                                        '<code>',
+                                        '</code>'
+                                    ); ?></p>
+                            </li>
+                            <li>
+                                <p><?php
+                                    echo sprintf(
+                                        // translators: %s is a code tag that wraps the shortcode attribute dateformat
+                                        esc_html__('%s - format set here will override the value set on the settings page', 'post-expirator'),
+                                        '<code>dateformat</code>'
+                                    ); ?></p>
+                            </li>
+                            <li>
+                                <p><?php
+                                    echo sprintf(
+                                        // translators: %s is a code tag that wraps the shortcode attribute timeformat
+                                        esc_html__('%s - format set here will override the value set on the settings page', 'post-expirator'),
+                                        '<code>timeformat</code>'
+                                    ); ?></p>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
 
             <p class="submit">
                 <input
@@ -436,5 +494,22 @@ $columnStyle = $settingsFacade->getColumnStyle();
     }
     ?>
 </div>
+<script>
+    jQuery(document).ready(function($) {
+        function handleStatusWrapperClassRow() {
+            if ($('#shortcode-wrapper').val() === '') {
+                $('#shortcode-wrapper-class-row').hide();
+            } else {
+                $('#shortcode-wrapper-class-row').show();
+            }
+        }
+
+        $('#shortcode-wrapper').on('change', function() {
+            handleStatusWrapperClassRow();
+        });
+
+        handleStatusWrapperClassRow();
+    });
+</script>
 <?php
 // phpcs:enable

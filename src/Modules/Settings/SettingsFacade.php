@@ -531,6 +531,26 @@ class SettingsFacade
         $this->options->updateOption('workflowScreenshot', $value);
     }
 
+    public function getShortcodeWrapper(): string
+    {
+        return $this->options->getOption('shortcodeWrapper', '');
+    }
+
+    public function setShortcodeWrapper(string $value): void
+    {
+        $this->options->updateOption('shortcodeWrapper', sanitize_text_field($value));
+    }
+
+    public function getShortcodeWrapperClass(): string
+    {
+        return $this->options->getOption('shortcodeWrapperClass', '');
+    }
+
+    public function setShortcodeWrapperClass(string $value): void
+    {
+        $this->options->updateOption('shortcodeWrapperClass', sanitize_text_field($value));
+    }
+
     public function getGeneralSettings(): array
     {
         $settings = [
@@ -589,6 +609,8 @@ class SettingsFacade
             'showInPostFooter' => $this->getShowInPostFooter(),
             'footerContents' => $this->getFooterContents(),
             'footerStyle' => $this->getFooterStyle(),
+            'shortcodeWrapper' => $this->getShortcodeWrapper(),
+            'shortcodeWrapperClass' => $this->getShortcodeWrapperClass(),
         ];
 
         $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_DISPLAY, $settings);
@@ -607,6 +629,8 @@ class SettingsFacade
         $this->setShowInPostFooter($settings['showInPostFooter'] ?? false);
         $this->setFooterContents($settings['footerContents'] ?? '');
         $this->setFooterStyle($settings['footerStyle'] ?? '');
+        $this->setShortcodeWrapper($settings['shortcodeWrapper'] ?? '');
+        $this->setShortcodeWrapperClass($settings['shortcodeWrapperClass'] ?? '');
 
         do_action(HooksAbstract::ACTION_SETTINGS_SET_DISPLAY, $settings);
     }

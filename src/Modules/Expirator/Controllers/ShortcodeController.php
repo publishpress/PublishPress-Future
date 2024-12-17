@@ -119,6 +119,8 @@ class ShortcodeController implements InitializableInterface
                 'timeformat' => $this->settingsFacade->getDefaultTimeFormat(),
                 'type' => 'full',
                 'tz' => date('T'), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+                'wrapper' => '',
+                'class' => '',
             ),
             $attrs
         );
@@ -149,6 +151,14 @@ class ShortcodeController implements InitializableInterface
             $attrs['format'] = $attrs['timeformat'];
         }
 
+        if (!isset($attrs['wrapper']) || empty($attrs['wrapper'])) {
+            $attrs['wrapper'] = $this->settingsFacade->getShortcodeWrapper();
+        }
+
+        if (!isset($attrs['class']) || empty($attrs['class'])) {
+            $attrs['class'] = $this->settingsFacade->getShortcodeWrapperClass();
+        }
+
         $defaultDateTimeFormat = $this->dateTimeFacade->getDefaultDateTimeFormat();
 
         $output = $this->dateTimeFacade->getWpDate(
@@ -156,6 +166,15 @@ class ShortcodeController implements InitializableInterface
             $expirationDateTs,
             $defaultDateTimeFormat
         );
+
+        if (!empty($attrs['wrapper'])) {
+            $output = sprintf(
+                '<%1$s class="%2$s">%3$s</%1$s>',
+                esc_html($attrs['wrapper']),
+                esc_attr($attrs['class']),
+                $output
+            );
+        }
 
         return $output;
     }
