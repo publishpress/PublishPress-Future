@@ -76,6 +76,7 @@
 .expression-builder {
     position: relative;
     padding-top: 20px;
+    width: 100%;
 }
 
 .expression-builder .expression-builder-button {
@@ -83,7 +84,11 @@
     top: 12px;
     right: 0;
     height: 24px;
-    padding-top: 10px;
+    padding-top: 4px;
+    width: 24px !important;
+    display: inline-block;
+    min-width: 24px;
+    padding-left: 4px;
 }
 
 .column-item-form {
@@ -125,4 +130,13 @@
 
 .ace_editor.read-only-editor {
     background-color: #f3f3f3 !important;
+}
+
+.ace_content {
+    top: 5px;
+}
+
+.expression-builder-modal .description:last-of-type {
+    min-height: 40px !important;
+    margin-top: 10px !important;
 }

@@ -3,7 +3,7 @@ import { parseJsonLogic } from 'react-querybuilder/parseJsonLogic';
 import { useState, useCallback, useEffect, useRef } from '@wordpress/element';
 import { Button, CheckboxControl, Dashicon, Modal, SelectControl, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { store as editorStore } from '../editor-store';
+import { store as editorStore } from '../../editor-store';
 import { useSelect } from '@wordpress/data';
 import { QueryBuilderDnD } from '@react-querybuilder/dnd';
 
@@ -12,10 +12,11 @@ import "ace-builds/src-noconflict/mode-handlebars";
 import "ace-builds/src-noconflict/theme-textmate";
 import "ace-builds/src-noconflict/ext-language_tools";
 
-import ExpressionBuilder from './expression-builder';
+import ExpressionBuilder from '../expression-builder';
 
 import 'react-querybuilder/dist/query-builder.css';
-import '../../css/query-builder.css';
+import '../../../css/query-builder.css';
+import './style.css';
 
 const ConditionalExpressionBuilder = ({ options, value, handleOnChange, context, readOnlyPreview, singleVariableOnly }) => {
     const onChange = (name, value) => {
@@ -34,6 +35,9 @@ const ConditionalExpressionBuilder = ({ options, value, handleOnChange, context,
             isInline={true}
             readOnlyPreview={readOnlyPreview || false}
             singleVariableOnly={singleVariableOnly || false}
+            oneLinePreview={true}
+            wrapOnPreview={false}
+            wrapOnEditor={false}
         />
     </div>;
 };
@@ -89,7 +93,7 @@ const AddElementButton = ({ label, handleOnClick }) => {
 };
 
 const RemoveElementButton = ({ label, handleOnClick }) => {
-    return <Button onClick={handleOnClick} variant="secondary">
+    return <Button onClick={handleOnClick} variant="secondary" className="conditional-editor-modal-remove-element">
         <Dashicon icon="trash" size={16} />
     </Button>;
 };
@@ -109,6 +113,7 @@ const OperatorSelector = ({ label, value, options, handleOnChange }) => {
         value={value}
         options={options}
         onChange={handleOnChange}
+        className="conditional-editor-modal-operator-selector"
     />;
 };
 
@@ -209,7 +214,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
 
 
     return (
-        <div>
+        <div className='conditional-editor'>
             <Button onClick={() => setIsPopoverVisible(true)} variant="secondary">
                 {__('Edit condition', 'post-expirator')}
             </Button>
@@ -248,6 +253,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                     onClose={onClose}
                     title={__('Condition', 'post-expirator')}
                     onRequestClose={onClose}
+                    className="conditional-editor-modal"
                 >
                     <p>
                         {__('Create a condition adding rules and groups. You can also add a NOT condition to any rule or group.', 'post-expirator')}

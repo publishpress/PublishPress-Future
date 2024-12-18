@@ -401,6 +401,10 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         if (isset($node['data']['settings']['schedule']['uniqueIdExpression'])) {
             $uniqueIdExpression = $node['data']['settings']['schedule']['uniqueIdExpression'];
 
+            if (is_array($uniqueIdExpression)) {
+                $uniqueIdExpression = $uniqueIdExpression['expression'];
+            }
+
             if (! empty($uniqueIdExpression)) {
                 $uniqueId = [
                     'custom' => $this->variablesHandler->replacePlaceholdersInText($uniqueIdExpression),

@@ -29,6 +29,9 @@ export const ExpressionBuilder = ({
     isInline = false,
     readOnlyPreview = false,
     singleVariableOnly = false,
+    wrapOnPreview = false,
+    wrapOnEditor = false,
+    oneLinePreview = false,
 }) => {
     const editorFullRef = useRef(null);
     const editorSmallRef = useRef(null);
@@ -93,10 +96,10 @@ export const ExpressionBuilder = ({
     };
 
     useEffect(() => {
-        if (editorSmallRef.current) {
+        if (wrapOnPreview && editorSmallRef.current) {
             editorSmallRef.current.editor.setOption("indentedSoftWrap", false);
         }
-    }, []);
+    }, [wrapOnPreview, editorSmallRef]);
 
     return <div className={`expression-builder ${isOpen ? 'expression-builder-open' : ''} ${isInline ? 'expression-builder-inline' : ''}`}>
 
@@ -125,7 +128,7 @@ export const ExpressionBuilder = ({
             readOnly={readOnlyPreview}
             className={readOnlyPreview ? 'read-only-editor' : ''}
             editorProps={editorProps}
-            wrapEnabled={true}
+            wrapEnabled={wrapOnPreview}
             onChange={(value) => onChangeSetting({ settingName: propertyName, value })}
             setOptions={{
                 enableBasicAutocompletion: false,
@@ -136,8 +139,8 @@ export const ExpressionBuilder = ({
                 showInvisibles: false,
                 highlightActiveLine: false,
             }}
-            height="92px"
-            width="244px"
+            height={oneLinePreview ? '30px' : '92px'}
+            width="100%"
             placeholder={settings?.placeholder || ''}
         />
 
@@ -162,7 +165,7 @@ export const ExpressionBuilder = ({
                         theme="textmate"
                         name="expression-builder-full"
                         className={singleVariableOnly ? 'read-only-editor' : ''}
-                        wrapEnabled={true}
+                        wrapEnabled={wrapOnEditor}
                         onChange={(value) => onChangeSetting({ settingName: propertyName, value })}
                         value={defaultValue[propertyName] || ''}
                         editorProps={editorProps}
@@ -174,8 +177,8 @@ export const ExpressionBuilder = ({
                             showGutter: !singleVariableOnly,
                             highlightActiveLine: !singleVariableOnly,
                         }}
-                        height={singleVariableOnly ? '40px' : '200px'}
-                        width="600px"
+                        height={singleVariableOnly ? '30px' : '200px'}
+                        width="100%"
                         placeholder={settings?.placeholder || ''}
                     />
 
