@@ -37,16 +37,25 @@
     color: #ccc;
 }
 
+.column-item:hover {
+    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+    color: var(--wp-components-color-accent-inverted, #fff);
+    opacity: 0.4;
+}
+
 .selected {
-    background-color: #ccc;
+    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+    color: var(--wp-components-color-accent-inverted, #fff);
 }
 
 .column-item.has-children.selected::after {
-    color: #1b1b1b;
+    color: var(--wp-components-color-accent-inverted, #fff);
 }
 
-.column-item:hover {
-    background-color: #f0f0f0;
+.column-item.selected:hover {
+    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+    color: var(--wp-components-color-accent-inverted, #fff);
+    opacity: 0.8;
 }
 
 #expression-editor-full {
