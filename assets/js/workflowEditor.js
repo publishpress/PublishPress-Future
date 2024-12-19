@@ -49383,67 +49383,82 @@ function saveAsCurrentStatus() {
   var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
     screenshot = _ref2.screenshot;
   return /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    var wasNewWorkflow, editedWorkflow, newWorkflow;
+    var editedWorkflow, wasNewWorkflow, _editedWorkflow, newWorkflow;
     return _regeneratorRuntime().wrap(function _callee2$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
           _context3.next = 2;
+          return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_name__WEBPACK_IMPORTED_MODULE_2__.STORE_NAME).getEditedWorkflow();
+        case 2:
+          editedWorkflow = _context3.sent;
+          if (!(editedWorkflow.status === 'auto-draft')) {
+            _context3.next = 7;
+            break;
+          }
+          _context3.next = 6;
+          return saveAsDraft({
+            screenshot: screenshot
+          });
+        case 6:
+          return _context3.abrupt("return");
+        case 7:
+          _context3.next = 9;
           return {
             type: 'SAVE_AS_CURRENT_STATUS_START'
           };
-        case 2:
-          _context3.prev = 2;
-          _context3.next = 5;
-          return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_name__WEBPACK_IMPORTED_MODULE_2__.STORE_NAME).isNewWorkflow();
-        case 5:
-          wasNewWorkflow = _context3.sent;
-          _context3.next = 8;
-          return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_name__WEBPACK_IMPORTED_MODULE_2__.STORE_NAME).getEditedWorkflow();
-        case 8:
-          editedWorkflow = _context3.sent;
-          if (screenshot) {
-            editedWorkflow.screenshot = screenshot;
-          }
+        case 9:
+          _context3.prev = 9;
           _context3.next = 12;
+          return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_name__WEBPACK_IMPORTED_MODULE_2__.STORE_NAME).isNewWorkflow();
+        case 12:
+          wasNewWorkflow = _context3.sent;
+          _context3.next = 15;
+          return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_name__WEBPACK_IMPORTED_MODULE_2__.STORE_NAME).getEditedWorkflow();
+        case 15:
+          _editedWorkflow = _context3.sent;
+          if (screenshot) {
+            _editedWorkflow.screenshot = screenshot;
+          }
+          _context3.next = 19;
           return (0,_wordpress_data_controls__WEBPACK_IMPORTED_MODULE_1__.apiFetch)({
-            path: "".concat(apiUrl, "/workflows/").concat(parseInt(editedWorkflow.id)),
+            path: "".concat(apiUrl, "/workflows/").concat(parseInt(_editedWorkflow.id)),
             method: 'PUT',
             headers: {
               'X-WP-Nonce': nonce
             },
-            body: JSON.stringify(editedWorkflow)
+            body: JSON.stringify(_editedWorkflow)
           });
-        case 12:
+        case 19:
           newWorkflow = _context3.sent;
           // Add the workflow id to the url, keeping current state in the history
           if (wasNewWorkflow) {
             addWorkflowIdToUrl(newWorkflow.id);
           }
-          _context3.next = 16;
+          _context3.next = 23;
           return {
             type: 'SAVE_AS_CURRENT_STATUS_SUCCESS',
             payload: newWorkflow
           };
-        case 16:
+        case 23:
           (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.dispatch)('core/notices').createSuccessNotice((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Workflow saved.', 'post-expirator'), {
             type: 'snackbar',
             isDismissible: true
           });
-          _context3.next = 24;
+          _context3.next = 31;
           break;
-        case 19:
-          _context3.prev = 19;
-          _context3.t0 = _context3["catch"](2);
+        case 26:
+          _context3.prev = 26;
+          _context3.t0 = _context3["catch"](9);
           (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.dispatch)('core/notices').createErrorNotice((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Unable to save workflow. Please, try again.', 'post-expirator'));
-          _context3.next = 24;
+          _context3.next = 31;
           return {
             type: 'SAVE_AS_CURRENT_STATUS_FAILURE'
           };
-        case 24:
+        case 31:
         case "end":
           return _context3.stop();
       }
-    }, _callee2, null, [[2, 19]]);
+    }, _callee2, null, [[9, 26]]);
   })();
 }
 function publishWorkflow() {

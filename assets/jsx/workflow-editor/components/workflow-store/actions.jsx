@@ -104,6 +104,13 @@ export function* saveAsDraft({ screenshot } = {}) {
 }
 
 export function* saveAsCurrentStatus({ screenshot } = {}) {
+    const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+
+    if (editedWorkflow.status === 'auto-draft') {
+        yield saveAsDraft({ screenshot });
+        return;
+    }
+
     yield {type: 'SAVE_AS_CURRENT_STATUS_START'};
 
     try {
