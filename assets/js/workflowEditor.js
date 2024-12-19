@@ -45859,18 +45859,31 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
       size: 8
     });
   }
+
+  // Unfocus the tolbar button when the node is selected
+  var nodeRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (selected && isSingularElementSelected) {
+      setTimeout(function () {
+        jQuery(nodeRef.current.parentNode).focus();
+      }, 100);
+    }
+  }, [selected, isSingularElementSelected]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, selected && isSingularElementSelected && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Popover, {
     placement: "top-start",
     offset: 14
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Toolbar, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Step actions', 'post-expirator'),
     className: "components-accessible-toolbar block-editor-block-contextual-toolbar react-flow__node-toolbar"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.ToolbarGroup, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.ToolbarButton, {
     icon: 'trash',
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Delete', 'post-expirator'),
-    onClick: onClickDeleteNode
+    onClick: onClickDeleteNode,
+    accessibleWhenDisabled: true
   }))))), /*#__PURE__*/React.createElement("div", {
     className: "react-flow__node-body " + nodeClassName,
-    onDoubleClick: onDoubleClick
+    onDoubleClick: onDoubleClick,
+    ref: nodeRef
   }, targetHandles, /*#__PURE__*/React.createElement("div", {
     className: "react-flow__node-top"
   }, nodeTypeIcon, topText), /*#__PURE__*/React.createElement("div", {

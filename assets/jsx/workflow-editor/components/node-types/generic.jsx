@@ -1,5 +1,5 @@
 import { Handle, Position } from 'reactflow';
-import { memo } from '@wordpress/element';
+import { memo, useEffect, useRef } from '@wordpress/element';
 import NodeIcon from '../node-icon';
 import { useSelect, useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
@@ -188,17 +188,32 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
         nodeTypeIcon = <PlayIcon size={8} />;
     }
 
+
+    // Unfocus the tolbar button when the node is selected
+    const nodeRef = useRef(null);
+    useEffect(() => {
+        if (selected && isSingularElementSelected) {
+            setTimeout(() => {
+                jQuery(nodeRef.current.parentNode).focus();
+            }, 100);
+        }
+    }, [selected, isSingularElementSelected]);
+
     return (
         <>
             {selected && isSingularElementSelected && (
                 <>
                     <Popover placement="top-start" offset={14}>
-                        <Toolbar className="components-accessible-toolbar block-editor-block-contextual-toolbar react-flow__node-toolbar">
+                        <Toolbar
+                            label={__('Step actions', 'post-expirator')}
+                            className="components-accessible-toolbar block-editor-block-contextual-toolbar react-flow__node-toolbar"
+                        >
                             <ToolbarGroup>
                                 <ToolbarButton
                                     icon={'trash'}
                                     label={__('Delete', 'post-expirator')}
                                     onClick={onClickDeleteNode}
+                                    accessibleWhenDisabled={true}
                                 />
                             </ToolbarGroup>
                         </Toolbar>
@@ -206,7 +221,11 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                 </>
             )}
 
-            <div className={"react-flow__node-body " + nodeClassName} onDoubleClick={onDoubleClick}>
+            <div
+                className={"react-flow__node-body " + nodeClassName}
+                onDoubleClick={onDoubleClick}
+                ref={nodeRef}
+            >
                 {targetHandles}
                 <div className='react-flow__node-top'>
                     {nodeTypeIcon}
