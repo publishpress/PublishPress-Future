@@ -443,7 +443,7 @@ const setSelectedEdges = (state, action) => {
 }
 
 const unselectAll = (state, action) => {
-    setTimeout(() => jQuery('.react-flow__pane').click(), 200);
+    setTimeout(() => jQuery('.react-flow__pane').trigger('click'), 200);
 
     return {
         ...state,

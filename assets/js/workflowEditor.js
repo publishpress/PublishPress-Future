@@ -50324,7 +50324,7 @@ var setSelectedEdges = function setSelectedEdges(state, action) {
 };
 var unselectAll = function unselectAll(state, action) {
   setTimeout(function () {
-    return jQuery('.react-flow__pane').click();
+    return jQuery('.react-flow__pane').trigger('click');
   }, 200);
   return _objectSpread(_objectSpread({}, state), {}, {
     selectedNodes: [],
