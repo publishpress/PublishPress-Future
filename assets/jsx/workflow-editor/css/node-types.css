@@ -214,24 +214,33 @@
 
 /* GENERIC ACTION */
 
+.react-flow__node-unknownNode {
+    background-color: #afafaf;
+    border: 1px solid #bbbbbb;
+}
+
 .react-flow__node-genericAction {
     background-color: #89bae4;
     border: 1px solid #7199bc;
 }
 
+.react-flow__node-unknownNode .react-flow__handle,
 .react-flow__node-genericAction .react-flow__handle {
     background-color: #fff;
     border: 1px solid #7199bc;
 }
 
+.react-flow__node-unknownNode .react-flow__node-slug,
 .react-flow__node-genericAction .react-flow__node-slug {
     color: #8a62be;
 }
 
+.react-flow__node-unknownNode .react-flow__node-top,
 .react-flow__node-genericAction .react-flow__node-top {
     border-bottom: 1px solid #7199bc;
 }
 
+.react-flow__node-unknownNode .react-flow__node-slug,
 .react-flow__node-genericAction .react-flow__node-slug {
     color: #526e87;
 }
@@ -417,3 +426,4 @@ body.workflow-editor.is-free .react-flow__node-handle-name.handle-area-source-ou
 body.workflow-editor.is-free .react-flow__node-handle-name.handle-area-source-true {
     color: #000;
 }
+

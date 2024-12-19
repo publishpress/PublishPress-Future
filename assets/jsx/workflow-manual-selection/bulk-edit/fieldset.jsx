@@ -34,7 +34,6 @@ export function Fieldset({context, onChange}) {
                 'X-WP-Nonce': nonce,
             },
         }).then((response) => {
-            console.log(response);
             setWorkflowsWithManualTrigger(response.workflowsWithManualTrigger);
         });
     }, []);

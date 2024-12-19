@@ -1224,7 +1224,6 @@ function Fieldset(_ref) {
         'X-WP-Nonce': nonce
       }
     }).then(function (response) {
-      console.log(response);
       setWorkflowsWithManualTrigger(response.workflowsWithManualTrigger);
     });
   }, []);

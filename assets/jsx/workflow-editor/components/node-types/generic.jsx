@@ -40,7 +40,65 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
         openGeneralSidebar,
     } = useDispatch(editorStore);
 
-    const nodeType = getNodeTypeByName(data.name);
+    let nodeType = getNodeTypeByName(data.name);
+
+    if (! nodeType || ! nodeType.handleSchema) {
+        nodeType = {
+            "id": Math.floor(Math.random() * 1000000),
+            "type": "generic",
+            "elementaryType": "action",
+            "name": data.name,
+            "label": sprintf(__('Unknown node: %s', 'post-expirator'), data.name),
+            "description": __('This is a placeholder node for a node that does not exist.', 'post-expirator'),
+            "baseSlug": "deletePost",
+            "initiatlAttributes": [],
+            "category": "post",
+            "disabled": false,
+            "isDisabled": false,
+            "frecency": 1,
+            "icon": {
+                "src": "media-document",
+                "background": "#ffffff",
+                "foreground": "#1e1e1e"
+            },
+            "version": 1,
+            "settingsSchema": [],
+            "outputSchema": [
+                {
+                    "name": "input",
+                    "type": "input",
+                    "label": "Step input",
+                    "description": "The input data for this step."
+                }
+            ],
+            "className": "react-flow__node-unknownNode",
+            "handleSchema": {
+                "target": [
+                    {
+                        "id": "input",
+                        "left": "50%"
+                    }
+                ],
+                "source": [
+                    {
+                        "id": "output",
+                        "left": "50%",
+                        "label": "Next"
+                    }
+                ]
+            },
+            "isProFeature": false,
+            "validationSchema": {
+                "connections": {
+                    "rules": []
+                },
+                "settings": {
+                    "rules": []
+                }
+            }
+        };
+    }
+
     const nodeLabel = nodeType.label || data.label || __('Node', 'post-expirator');
     const nodeClassName = nodeType?.className || 'react-flow__node-genericNode';
 

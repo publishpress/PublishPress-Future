@@ -53,6 +53,10 @@ export function* setupEditor(workflowId) {
     }
 };
 
+function addWorkflowIdToUrl(workflowId) {
+    window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${parseInt(workflowId)}`);
+}
+
 export function* saveAsDraft({ screenshot } = {}) {
     yield {type: 'SAVE_AS_DRAFT_START'};
 
@@ -78,7 +82,7 @@ export function* saveAsDraft({ screenshot } = {}) {
 
         // Add the workflow id to the url, keeping current state in the history
         if (wasNewWorkflow) {
-            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${parseInt(newWorkflow.id)}`);
+            addWorkflowIdToUrl(newWorkflow.id);
         }
 
         yield {type: 'SAVE_AS_DRAFT_SUCCESS', payload: newWorkflow};
@@ -103,6 +107,7 @@ export function* saveAsCurrentStatus({ screenshot } = {}) {
     yield {type: 'SAVE_AS_CURRENT_STATUS_START'};
 
     try {
+        const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
         const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
 
         if (screenshot) {
@@ -117,6 +122,11 @@ export function* saveAsCurrentStatus({ screenshot } = {}) {
             },
             body: JSON.stringify(editedWorkflow),
         });
+
+        // Add the workflow id to the url, keeping current state in the history
+        if (wasNewWorkflow) {
+            addWorkflowIdToUrl(newWorkflow.id);
+        }
 
         yield {type: 'SAVE_AS_CURRENT_STATUS_SUCCESS', payload: newWorkflow};
 
@@ -161,7 +171,7 @@ export function* publishWorkflow({ screenshot } = {}) {
 
         // Add the workflow id to the url, keeping current state in the history
         if (wasNewWorkflow) {
-            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${parseInt(newWorkflow.id)}`);
+            addWorkflowIdToUrl(newWorkflow.id);
         }
 
         yield {type: 'PUBLISH_WORKFLOW_SUCCESS', payload: newWorkflow};
@@ -207,7 +217,7 @@ export function* switchToDraft({ screenshot } = {}) {
 
         // Add the workflow id to the url, keeping current state in the history
         if (wasNewWorkflow) {
-            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${parseInt(newWorkflow.id)}`);
+            addWorkflowIdToUrl(newWorkflow.id);
         }
 
         yield {type: 'SWITCH_TO_DRAFT_SUCCESS', payload: newWorkflow};
