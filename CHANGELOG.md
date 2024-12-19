@@ -49,6 +49,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Deprecated the method `get_timezone_offset` in the class `PostExpirator_Util`.
 - Deprecated the method `sanitize_array_of_integers` in the class `PostExpirator_Util`.
 - Add new param $metaValue to the method `deleteMeta` in the class `PublishPress\Future\Framework\WordPress\Models\PostModel`.
+- Remove the `steps` property from the workflow data type schema.
 
 ## [4.2.0] - 09 Dec, 2024
 

@@ -30,14 +30,8 @@ export function WorkflowData() {
                 description: "The date when the workflow was last modified.",
             },
             {
-                name: "steps",
-                type: "node",
-                label: "Steps",
-                description: "The steps of the workflow.",
-            },
-            {
                 name: "meta",
-                type: "object",
+                type: "meta",
                 label: "Metadata",
                 description: "The metadata of the workflow.",
             },

@@ -166,7 +166,6 @@ class WorkflowEngine implements WorkflowEngineInterface
                         'title' => $workflow->getTitle(),
                         'description' => $workflow->getDescription(),
                         'modified_at' => $workflow->getModifiedAt(),
-                        'steps' => $workflow->getNodes(),
                     ]
                 ),
                 'execution_id' => $this->getExecutionId(),
