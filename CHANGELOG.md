@@ -7,17 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Add new Post is Published trigger (Issue #944).
-- Add new Post Status Changes trigger (Issue #945).
-- Add new Post is Scheduled trigger (Issue #946).
-- Add new Post Meta Changed trigger (Issue #1059).
 - Add new variables selector and an expression builder (Issue #976).
 - Add support to metadata in the variables resolvers and post type variables (Issue #1069, #939).
 - Add the site ID to the site data type schema.
 - Add the post author property to the post data type schema in the workflow editor (Issue #947).
 - Add the post slug property to the post data type schema in the workflow editor.
-- Add the Post Meta Add step to the workflow editor (Issue #732).
-- Add the Post Meta Delete step to the workflow editor (Issue #732).
+- Add new Post is Published trigger - PRO (Issue #944).
+- Add new Post Status Changes trigger - PRO (Issue #945).
+- Add new Post is Scheduled trigger - PRO (Issue #946).
+- Add new Post Meta Changed trigger - PRO (Issue #1059).
+- Add the Post Meta Add step to the workflow editor - PRO (Issue #732).
+- Add the Post Meta Delete step to the workflow editor - PRO (Issue #732).
+- Add the Post Meta Update step to the workflow editor - PRO (Issue #732).
 - Add the option to change manually enabled workflows in the bulk edit screen (Issue #942).
 - Add the "Save as current status" shortcut to the workflow editor (CTRL/CMD + S) (Issue #1084).
 - Add new display settings to customize the shortcode output (Issue #203).
