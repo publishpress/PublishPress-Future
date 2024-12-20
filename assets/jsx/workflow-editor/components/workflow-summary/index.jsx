@@ -10,13 +10,11 @@ import useScrollToTop from '../scrolled-to-top';
 
 export const WorkflowSummary = () => {
     const {
-        workflowTitle,
-        workflowDescription,
+        workflow,
         isLoadingWorkflow,
     } = useSelect((select) => {
         return {
-            workflowTitle: select(workflowStore).getEditedWorkflowAttribute('title'),
-            workflowDescription: select(workflowStore).getEditedWorkflowAttribute('description'),
+            workflow: select(workflowStore).getWorkflow(),
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
         }
     });
@@ -48,7 +46,7 @@ export const WorkflowSummary = () => {
                 <PanelRow className="editor-post-title__panel">
                     <TextControl
                         label={__('Title', 'post-expirator')}
-                        value={workflowTitle}
+                        value={workflow.title}
                         onChange={onChangeTitle}
                         disabled={isLoadingWorkflow}
                     />
@@ -57,7 +55,7 @@ export const WorkflowSummary = () => {
                 <PanelRow className="editor-post-description__panel">
                     <TextareaControl
                         label={__('Description', 'post-expirator')}
-                        value={workflowDescription}
+                        value={workflow.description}
                         onChange={onChangeDescription}
                         disabled={isLoadingWorkflow}
                     />

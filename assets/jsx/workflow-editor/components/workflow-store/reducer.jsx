@@ -383,6 +383,10 @@ const setEditedWorkflowAttribute = (state, action) => {
 
     return {
         ...state,
+        workflow: {
+            ...state.workflow,
+            [key]: value,
+        },
         editedWorkflowAttributes: {
             ...state.editedWorkflowAttributes,
             [key]: value,
