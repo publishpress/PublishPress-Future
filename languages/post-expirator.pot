@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 4.3.0-beta.3\n"
+"Project-Id-Version: PublishPress Future 4.3.0-beta.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-12-17T21:07:04+00:00\n"
+"POT-Creation-Date: 2024-12-20T19:02:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -200,7 +200,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:393
 #: src/Modules/Expirator/Controllers/QuickEditController.php:322
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:49
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:150
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:151
 msgid "Action"
 msgstr ""
 
@@ -1299,7 +1299,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:70
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:64
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:144
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:145
 #: src/Modules/Workflows/Models/NodeTypesModel.php:79
 msgid "Post"
 msgstr ""
@@ -1396,7 +1396,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:116
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnInit.php:97
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:167
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:193
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:194
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:156
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:156
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:157
@@ -1460,7 +1460,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:92
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:85
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:85
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:162
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:163
 msgid "Meta key"
 msgstr ""
 
@@ -1481,7 +1481,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:143
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:136
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:136
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:156
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:157
 msgid "Meta ID"
 msgstr ""
 
@@ -1715,7 +1715,7 @@ msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:110
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:122
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:118
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:119
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:105
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:105
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:105
@@ -1726,7 +1726,7 @@ msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:116
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:128
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:124
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:125
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:111
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:111
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:111
@@ -1937,38 +1937,38 @@ msgid "Meta keys"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:102
-msgid "The meta keys (separated by commas) to watch for changes."
+msgid "This field allow you to choose the post meta that will trigger this action."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:145
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:146
 msgid "The post that triggered this action."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:151
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:152
 msgid "The action taken when the meta key is changed: 'added', 'updated' or 'deleted'."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:157
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:158
 msgid "The meta ID."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:163
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:164
 msgid "The meta key that was changed."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:168
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:169
 msgid "New meta value"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:169
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:170
 msgid "The new meta value."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:174
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:175
 msgid "Old meta value"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:175
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:176
 msgid "The meta value before the change."
 msgstr ""
 
