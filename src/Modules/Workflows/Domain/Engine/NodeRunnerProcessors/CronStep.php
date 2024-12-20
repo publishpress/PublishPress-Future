@@ -50,6 +50,8 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
     public const DATE_SOURCE_STEP = 'step';
 
+    public const DATE_SOURCE_CUSTOM = 'custom';
+
     public const SCHEDULE_RECURRENCE_SINGLE = 'single';
 
     public const SCHEDULE_RECURRENCE_CUSTOM = 'custom';
@@ -361,6 +363,8 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                     $timestamp = $this->variablesHandler->getVariable('global.trigger.activation_timestamp');
                 } elseif (self::DATE_SOURCE_STEP === $dateSource) {
                     $timestamp = time();
+                } elseif (self::DATE_SOURCE_CUSTOM === $dateSource) {
+                    $timestamp = $this->variablesHandler->replacePlaceholdersInText($nodeSettings['schedule']['customDateSource']['expression']);
                 } else {
                     $timestamp = $this->variablesHandler->getVariable($dateSource);
                 }
