@@ -789,7 +789,8 @@ return [
             $container->get(ServicesAbstract::WORKFLOW_ENGINE),
             $container->get(ServicesAbstract::PLUGIN_VERSION),
             $container->get(ServicesAbstract::WORKFLOW_ENGINE),
-            $container->get(ServicesAbstract::LOGGER)
+            $container->get(ServicesAbstract::LOGGER),
+            $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
         );
     },
 

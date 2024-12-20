@@ -107,6 +107,11 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
      */
     private $logger;
 
+    /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
+
     public function __construct(
         HooksFacade $hooks,
         NodeRunnerProcessorInterface $generalNodeRunnerProcessor,
@@ -116,7 +121,8 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         WorkflowEngineInterface $engine,
         string $pluginVersion,
         WorkflowEngineInterface $workflowEngine,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
         $this->generalNodeRunnerProcessor = $generalNodeRunnerProcessor;
@@ -127,6 +133,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
         $this->pluginVersion = $pluginVersion;
         $this->workflowEngine = $workflowEngine;
         $this->logger = $logger;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
     public function setup(array $step, callable $actionCallback): void
@@ -694,7 +701,9 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                     } else if ($type === 'post') {
                         $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass(
                             $resolverArgument,
-                            $this->hooks
+                            $this->hooks,
+                            '',
+                            $this->expirablePostModelFactory
                         );
                     } else {
                         $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass(
