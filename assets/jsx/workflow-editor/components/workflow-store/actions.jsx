@@ -64,7 +64,7 @@ export function* saveAsDraft({ screenshot } = {}) {
 
     try {
         const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
-        const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+        const editedWorkflow = yield select(STORE_NAME).getWorkflow();
 
         const workflowToSave = {
             ...editedWorkflow,
@@ -105,7 +105,7 @@ export function* saveAsDraft({ screenshot } = {}) {
 }
 
 export function* saveAsCurrentStatus({ screenshot } = {}) {
-    const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+    const editedWorkflow = yield select(STORE_NAME).getWorkflow();
 
     if (editedWorkflow.status === 'auto-draft') {
         yield saveAsDraft({ screenshot });
@@ -116,7 +116,7 @@ export function* saveAsCurrentStatus({ screenshot } = {}) {
 
     try {
         const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
-        const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+        const editedWorkflow = yield select(STORE_NAME).getWorkflow();
 
         const workflowToSave = {
             ...editedWorkflow,
@@ -160,7 +160,7 @@ export function* publishWorkflow({ screenshot } = {}) {
 
     try {
         const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
-        const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+        const editedWorkflow = yield select(STORE_NAME).getWorkflow();
 
         const workflowToSave = {
             ...editedWorkflow,
@@ -205,7 +205,7 @@ export function* switchToDraft({ screenshot } = {}) {
 
     try {
         const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
-        const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+        const editedWorkflow = yield select(STORE_NAME).getWorkflow();
 
         const workflowToSave = {
             ...editedWorkflow,
@@ -314,7 +314,7 @@ export const setEditedWorkflowAttribute = (key, value) => {
 export function* deleteWorkflow () {
     yield {type: 'DELETE_WORKFLOW_START'};
 
-    const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+    const editedWorkflow = yield select(STORE_NAME).getWorkflow();
 
     try {
         const newWorkflow = yield apiFetch({

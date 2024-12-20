@@ -24,9 +24,8 @@ export const NodeDetailsPanel = ({ node }) => {
 
     const onChangeLabel = useCallback((name, value) => {
         const newNode = {
-            ...node,
+            id: node.id,
             data: {
-                ...node.data,
                 label: value,
             },
         };

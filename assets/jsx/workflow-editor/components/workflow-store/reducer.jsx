@@ -59,7 +59,7 @@ export const DEFAULT_STATE = {
 const loadWorkflowStart = (state, action) => {
     return {
         ...state,
-        isLoadingWorkflow: true,
+        isLoadingWorkflow: true
     };
 }
 
@@ -182,7 +182,7 @@ const loadWorkflowSuccess = (state, action) => {
 
     state = _setInitialStateForGlobalVariables(state, payload);
 
-    unselectAll();
+    unselectAll(state);
 
     return {
         ...state,
@@ -518,19 +518,36 @@ const updateNode = (state, action) => {
         if (node.id === payload.id) {
             return {
                 ...node,
-                ...payload
+                ...payload,
+                data: {
+                    ...node.data,
+                    ...payload.data,
+                    settings: {
+                        ...node.data.settings,
+                        ...payload.data.settings,
+                    },
+                },
             };
         }
 
         return node;
     });
 
+    const newWorkflow = {
+        ...state.workflow,
+        flow: {
+            ...state.workflow.flow,
+            nodes: updatedNodes,
+        },
+    };
+
     return {
         ...state,
-        workflow: {
-            ...state.workflow,
+        workflow: newWorkflow,
+        editedWorkflowAttributes: {
+            ...state.editedWorkflowAttributes,
             flow: {
-                ...state.workflow.flow,
+                ...state.editedWorkflowAttributes.flow,
                 nodes: updatedNodes,
             },
         },

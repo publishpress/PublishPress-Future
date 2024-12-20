@@ -47,13 +47,13 @@ export const getEditedWorkflowAttributes = (state) => {
 };
 
 export const getEditedWorkflowAttribute = (state, key) => {
-    const attributes = state.editedWorkflowAttributes;
+    const attributes = state.workflow;
 
     if (!attributes.hasOwnProperty(key)) {
         return state.workflow[key];
     }
 
-    return state.editedWorkflowAttributes[key];
+    return state.workflow[key];
 };
 
 export const isLoadingWorkflow = (state) => {
@@ -62,13 +62,6 @@ export const isLoadingWorkflow = (state) => {
 
 export const isCreatingWorkflow = (state) => {
     return !! state.isCreatingWorkflow;
-}
-
-export const getEditedWorkflow = (state) => {
-    return {
-        ...state.workflow,
-        ...state.editedWorkflowAttributes,
-    };
 }
 
 export const isEditedWorkflowDirty = (state) => {

@@ -32,18 +32,15 @@ export const KeyboardShortcuts = () => {
     const { registerShortcut } = useDispatch(shortcutStore);
 
     const {
-        isSaving,
+        isEditedWorkflowSaveable,
     } = useSelect(
         (select) => {
             const {
-                isSavingWorkflow,
-                isAutosavingWorkflow,
+                isEditedWorkflowSaveable,
             } = select(workflowStore);
 
-            const isSaving = isSavingWorkflow() || isAutosavingWorkflow();
-
             return {
-                isSaving,
+                isEditedWorkflowSaveable,
             };
         },
         []
@@ -179,7 +176,7 @@ export const KeyboardShortcuts = () => {
     useShortcut(SHORTCUT_SAVE_AS_CURRENT_STATUS, (e) => {
         e.preventDefault();
 
-        if (isSaving) {
+        if (! isEditedWorkflowSaveable) {
             return;
         }
 
