@@ -99,7 +99,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
         };
     }
 
-    const nodeLabel = nodeType.label || data.label || __('Node', 'post-expirator');
+    const nodeLabel = data.label || nodeType.label || __('Node', 'post-expirator');
     const nodeClassName = nodeType?.className || 'react-flow__node-genericNode';
 
     let targetHandles = null;

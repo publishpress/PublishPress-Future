@@ -3,19 +3,19 @@ export const getPostType = (state) => {
 };
 
 export const getNodes = (state) => {
-    return state.nodes;
+    return state.workflow.flow.nodes;
 };
 
 export const getEdges = (state) => {
-    return state.edges;
+    return state.workflow.flow.edges;
 };
 
 export const getNodeById = (state, id) => {
-    return state.nodes.find(node => node.id === id);
+    return state.workflow.flow.nodes.find(node => node.id === id);
 };
 
 export const getEdgeById = (state, id) => {
-    return state.edges.find(edge => edge.id === id);
+    return state.workflow.flow.edges.find(edge => edge.id === id);
 };
 
 export const getSelectedNodes = (state) => {

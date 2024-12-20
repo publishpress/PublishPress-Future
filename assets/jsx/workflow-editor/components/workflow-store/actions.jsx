@@ -57,19 +57,20 @@ function addWorkflowIdToUrl(workflowId) {
     window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${parseInt(workflowId)}`);
 }
 
+// FIXME: This is not working as expected. The state we get from the store is not updated if the
+// inspector is open or was not closed after the changes.
 export function* saveAsDraft({ screenshot } = {}) {
     yield {type: 'SAVE_AS_DRAFT_START'};
 
     try {
         const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
-
-        yield dispatch(STORE_NAME).setEditedWorkflowAttribute('status', 'draft');
-
         const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
 
-        if (screenshot) {
-            editedWorkflow.screenshot = screenshot;
-        }
+        const workflowToSave = {
+            ...editedWorkflow,
+            status: 'draft',
+            ...(screenshot ? { screenshot } : {})
+        };
 
         const newWorkflow = yield apiFetch({
             path: `${apiUrl}/workflows/${parseInt(editedWorkflow.id)}`,
@@ -77,7 +78,7 @@ export function* saveAsDraft({ screenshot } = {}) {
             headers: {
                 'X-WP-Nonce': nonce,
             },
-            body: JSON.stringify(editedWorkflow),
+            body: JSON.stringify(workflowToSave),
         });
 
         // Add the workflow id to the url, keeping current state in the history
@@ -117,9 +118,10 @@ export function* saveAsCurrentStatus({ screenshot } = {}) {
         const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
         const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
 
-        if (screenshot) {
-            editedWorkflow.screenshot = screenshot;
-        }
+        const workflowToSave = {
+            ...editedWorkflow,
+            ...(screenshot ? { screenshot } : {}),
+        };
 
         const newWorkflow = yield apiFetch({
             path: `${apiUrl}/workflows/${parseInt(editedWorkflow.id)}`,
@@ -127,7 +129,7 @@ export function* saveAsCurrentStatus({ screenshot } = {}) {
             headers: {
                 'X-WP-Nonce': nonce,
             },
-            body: JSON.stringify(editedWorkflow),
+            body: JSON.stringify(workflowToSave),
         });
 
         // Add the workflow id to the url, keeping current state in the history
@@ -158,14 +160,13 @@ export function* publishWorkflow({ screenshot } = {}) {
 
     try {
         const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
-
-        yield dispatch(STORE_NAME).setEditedWorkflowAttribute('status', 'publish');
-
         const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
 
-        if (screenshot) {
-            editedWorkflow.screenshot = screenshot;
-        }
+        const workflowToSave = {
+            ...editedWorkflow,
+            status: 'publish',
+            ...(screenshot ? { screenshot } : {}),
+        };
 
         const newWorkflow = yield apiFetch({
             path: `${apiUrl}/workflows/${parseInt(editedWorkflow.id)}`,
@@ -173,7 +174,7 @@ export function* publishWorkflow({ screenshot } = {}) {
             headers: {
                 'X-WP-Nonce': nonce,
             },
-            body: JSON.stringify(editedWorkflow),
+            body: JSON.stringify(workflowToSave),
         });
 
         // Add the workflow id to the url, keeping current state in the history
@@ -204,14 +205,13 @@ export function* switchToDraft({ screenshot } = {}) {
 
     try {
         const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
-
-        yield dispatch(STORE_NAME).setEditedWorkflowAttribute('status', 'draft');
-
         const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
 
-        if (screenshot) {
-            editedWorkflow.screenshot = screenshot;
-        }
+        const workflowToSave = {
+            ...editedWorkflow,
+            status: 'draft',
+            ...(screenshot ? { screenshot } : {}),
+        };
 
         const newWorkflow = yield apiFetch({
             path: `${apiUrl}/workflows/${parseInt(editedWorkflow.id)}`,
@@ -219,7 +219,7 @@ export function* switchToDraft({ screenshot } = {}) {
             headers: {
                 'X-WP-Nonce': nonce,
             },
-            body: JSON.stringify(editedWorkflow),
+            body: JSON.stringify(workflowToSave),
         });
 
         // Add the workflow id to the url, keeping current state in the history
