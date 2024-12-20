@@ -83,6 +83,12 @@ export function PostData() {
                 label: "Metadata",
                 description: "The metadata of the post.",
             },
+            {
+                name: "future",
+                type: "future_action",
+                label: "Future Action",
+                description: "The future action properties of the post.",
+            }
         ],
     };
 }

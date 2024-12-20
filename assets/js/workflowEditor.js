@@ -38836,7 +38836,7 @@ function WorkflowEditorApp() {
     setTriggerCategories(nodeTypeCategories);
     setActionCategories(nodeTypeCategories);
     setAdvancedCategories(nodeTypeCategories);
-    var dataTypes = [(0,_data_types__WEBPACK_IMPORTED_MODULE_5__.PostData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.BooleanData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.DatetimeData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.IntegerData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.StringData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.EmailData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.InputData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.WorkflowData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.UserData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.SiteData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.NodeData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.ArrayData)()];
+    var dataTypes = [(0,_data_types__WEBPACK_IMPORTED_MODULE_5__.PostData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.BooleanData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.DatetimeData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.IntegerData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.StringData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.EmailData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.InputData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.WorkflowData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.UserData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.SiteData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.NodeData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.ArrayData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.FutureActionData)(), (0,_data_types__WEBPACK_IMPORTED_MODULE_5__.TermsArrayData)()];
     setDataTypes(dataTypes);
   }, [workflowId]);
   return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.StrictMode, null, /*#__PURE__*/React.createElement(_layout_layout__WEBPACK_IMPORTED_MODULE_1__.WorkflowEditorLayout, null));
@@ -39741,14 +39741,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_data_controls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data-controls */ "./node_modules/@wordpress/data-controls/build-module/index.js");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-
 
 
 
@@ -39886,7 +39884,7 @@ var _RenderColumns = function RenderColumns(_ref) {
   var currentColumnIndex = path.length;
   var selectedItemIndex = currentItemPath[currentColumnIndex];
   var currentItem = currentItems[selectedItemIndex];
-  var addMetaKeyInputChildren = function addMetaKeyInputChildren(item) {
+  var addMetaKeyInputChildren = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (item) {
     return _objectSpread(_objectSpread({}, item), {}, {
       children: [{
         name: item.name,
@@ -39895,7 +39893,7 @@ var _RenderColumns = function RenderColumns(_ref) {
         type: 'meta-key-input'
       }]
     });
-  };
+  }, []);
   if (((_currentItem = currentItem) === null || _currentItem === void 0 ? void 0 : _currentItem.type) === 'meta') {
     currentItem = addMetaKeyInputChildren(currentItem);
   }
@@ -41174,6 +41172,61 @@ function EmailData() {
 
 /***/ }),
 
+/***/ "./assets/jsx/workflow-editor/components/data-types/future-action.jsx":
+/*!****************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-types/future-action.jsx ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FutureActionData: () => (/* binding */ FutureActionData),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function FutureActionData() {
+  return {
+    name: "future_action",
+    label: "Future Action",
+    type: "object",
+    objectType: "future_action",
+    propertiesSchema: [{
+      name: "enabled",
+      type: "boolean",
+      label: "Enabled",
+      description: "Whether the future action is enabled."
+    }, {
+      name: "action",
+      type: "string",
+      label: "Action",
+      description: "The action to be performed."
+    }, {
+      name: "new_status",
+      type: "string",
+      label: "New Status",
+      description: "The new status of the post."
+    }, {
+      name: "date",
+      type: "integer",
+      label: "Date",
+      description: "The date when the future action will be performed in Unix timestamp format."
+    }, {
+      name: "date_string",
+      type: "datetime",
+      label: "Date String",
+      description: "The date when the future action will be performed."
+    }, {
+      name: "terms",
+      type: "terms_array",
+      label: "Terms",
+      description: "The terms to be used in the future action."
+    }]
+  };
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FutureActionData);
+
+/***/ }),
+
 /***/ "./assets/jsx/workflow-editor/components/data-types/index.jsx":
 /*!********************************************************************!*\
   !*** ./assets/jsx/workflow-editor/components/data-types/index.jsx ***!
@@ -41187,12 +41240,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   BooleanData: () => (/* reexport safe */ _boolean__WEBPACK_IMPORTED_MODULE_5__["default"]),
 /* harmony export */   DatetimeData: () => (/* reexport safe */ _datetime__WEBPACK_IMPORTED_MODULE_4__["default"]),
 /* harmony export */   EmailData: () => (/* reexport safe */ _email__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   FutureActionData: () => (/* reexport safe */ _future_action__WEBPACK_IMPORTED_MODULE_12__["default"]),
 /* harmony export */   InputData: () => (/* reexport safe */ _input__WEBPACK_IMPORTED_MODULE_0__["default"]),
 /* harmony export */   IntegerData: () => (/* reexport safe */ _integer__WEBPACK_IMPORTED_MODULE_3__["default"]),
 /* harmony export */   NodeData: () => (/* reexport safe */ _node__WEBPACK_IMPORTED_MODULE_10__["default"]),
 /* harmony export */   PostData: () => (/* reexport safe */ _post__WEBPACK_IMPORTED_MODULE_6__["default"]),
 /* harmony export */   SiteData: () => (/* reexport safe */ _site__WEBPACK_IMPORTED_MODULE_9__["default"]),
 /* harmony export */   StringData: () => (/* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   TermsArrayData: () => (/* reexport safe */ _terms_array__WEBPACK_IMPORTED_MODULE_13__["default"]),
 /* harmony export */   UserData: () => (/* reexport safe */ _user__WEBPACK_IMPORTED_MODULE_8__["default"]),
 /* harmony export */   WorkflowData: () => (/* reexport safe */ _workflow__WEBPACK_IMPORTED_MODULE_7__["default"])
 /* harmony export */ });
@@ -41208,6 +41263,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _site__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./site */ "./assets/jsx/workflow-editor/components/data-types/site.jsx");
 /* harmony import */ var _node__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./node */ "./assets/jsx/workflow-editor/components/data-types/node.jsx");
 /* harmony import */ var _array__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./array */ "./assets/jsx/workflow-editor/components/data-types/array.jsx");
+/* harmony import */ var _future_action__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./future-action */ "./assets/jsx/workflow-editor/components/data-types/future-action.jsx");
+/* harmony import */ var _terms_array__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./terms-array */ "./assets/jsx/workflow-editor/components/data-types/terms-array.jsx");
+
+
 
 
 
@@ -41402,6 +41461,11 @@ function PostData() {
       type: "meta",
       label: "Metadata",
       description: "The metadata of the post."
+    }, {
+      name: "future",
+      type: "future_action",
+      label: "Future Action",
+      description: "The future action properties of the post."
     }]
   };
 }
@@ -41489,6 +41553,41 @@ function StringData() {
   };
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StringData);
+
+/***/ }),
+
+/***/ "./assets/jsx/workflow-editor/components/data-types/terms-array.jsx":
+/*!**************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-types/terms-array.jsx ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TermsArrayData: () => (/* binding */ TermsArrayData),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function TermsArrayData() {
+  return {
+    name: "terms_array",
+    label: "Terms Array",
+    type: "object",
+    objectType: "terms_array",
+    propertiesSchema: [{
+      name: "ids",
+      type: "array",
+      label: "List of terms IDs",
+      description: "A list of terms IDs."
+    }, {
+      name: "labels",
+      type: "array",
+      label: "List of terms labels",
+      description: "A list of terms labels."
+    }]
+  };
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TermsArrayData);
 
 /***/ }),
 
@@ -41596,13 +41695,8 @@ function WorkflowData() {
       label: "Modification Date",
       description: "The date when the workflow was last modified."
     }, {
-      name: "steps",
-      type: "node",
-      label: "Steps",
-      description: "The steps of the workflow."
-    }, {
       name: "meta",
-      type: "object",
+      type: "meta",
       label: "Metadata",
       description: "The metadata of the workflow."
     }]
@@ -52991,16 +53085,25 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.columns-container {
     color: #ccc;
 }
 
+.column-item:hover {
+    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+    color: var(--wp-components-color-accent-inverted, #fff);
+    opacity: 0.4;
+}
+
 .selected {
-    background-color: #ccc;
+    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+    color: var(--wp-components-color-accent-inverted, #fff);
 }
 
 .column-item.has-children.selected::after {
-    color: #1b1b1b;
+    color: var(--wp-components-color-accent-inverted, #fff);
 }
 
-.column-item:hover {
-    background-color: #f0f0f0;
+.column-item.selected:hover {
+    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+    color: var(--wp-components-color-accent-inverted, #fff);
+    opacity: 0.8;
 }
 
 #expression-editor-full {
@@ -53094,7 +53197,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.columns-container {
     min-height: 40px !important;
     margin-top: 10px !important;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;IACnB,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;IAC5B,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,iBAAiB;IACjB,yBAAyB;IACzB,sBAAsB;IACtB,qBAAqB;AACzB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;AACvB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,iBAAiB;IACjB,WAAW;AACf;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,QAAQ;IACR,YAAY;IACZ,gBAAgB;IAChB,sBAAsB;IACtB,qBAAqB;IACrB,eAAe;IACf,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,gBAAgB;AACpB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,wBAAwB;IACxB,6BAA6B;IAC7B,2BAA2B;IAC3B,uBAAuB;IACvB,uBAAuB;AAC3B;;AAEA;IACI,iBAAiB;IACjB,mBAAmB;IACnB,uBAAuB;AAC3B;;AAEA;IACI,uBAAuB;IACvB,wBAAwB;IACxB,2BAA2B;AAC/B;;AAEA;IACI,oCAAoC;AACxC;;AAEA;IACI,QAAQ;AACZ;;AAEA;IACI,2BAA2B;IAC3B,2BAA2B;AAC/B","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n    max-height: 212px;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n    overflow-y: scroll;\n    max-height: 270px;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 2px 6px;\n    position: relative;\n    user-select: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.selected {\n    background-color: #ccc;\n}\n\n.column-item.has-children.selected::after {\n    color: #1b1b1b;\n}\n\n.column-item:hover {\n    background-color: #f0f0f0;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n}\n\n.components-modal__screen-overlay {\n    z-index: 999999998;\n}\n\n.expression-builder {\n    position: relative;\n    padding-top: 20px;\n    width: 100%;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 12px;\n    right: 0;\n    height: 24px;\n    padding-top: 4px;\n    width: 24px !important;\n    display: inline-block;\n    min-width: 24px;\n    padding-left: 4px;\n}\n\n.column-item-form {\n    padding: 10px;\n    max-width: 202px;\n}\n\n.column-item-form p {\n    text-wrap: auto;\n}\n\n.expression-builder-variable-name {\n    margin-left: 5px;\n}\n\n.expression-builder-inline {\n    padding-top: 0 !important;\n}\n\n.expression-builder-inline .ace_editor {\n    margin-top: 0 !important;\n    margin-right: 40px !important;\n    margin-bottom: 0 !important;\n    height: 40px !important;\n    width: 300px !important;\n}\n\n.expression-builder-inline > button {\n    top: 0 !important;\n    right: 0 !important;\n    height: 40px !important;\n}\n\n.ace_editor.settings-panel {\n    width: 246px !important;\n    height: 180px !important;\n    margin-top: 10px !important;\n}\n\n.ace_editor.read-only-editor {\n    background-color: #f3f3f3 !important;\n}\n\n.ace_content {\n    top: 5px;\n}\n\n.expression-builder-modal .description:last-of-type {\n    min-height: 40px !important;\n    margin-top: 10px !important;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;IACnB,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;IAC5B,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,iBAAiB;IACjB,yBAAyB;IACzB,sBAAsB;IACtB,qBAAqB;AACzB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,mFAAmF;IACnF,uDAAuD;IACvD,YAAY;AAChB;;AAEA;IACI,mFAAmF;IACnF,uDAAuD;AAC3D;;AAEA;IACI,uDAAuD;AAC3D;;AAEA;IACI,mFAAmF;IACnF,uDAAuD;IACvD,YAAY;AAChB;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;AACvB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,iBAAiB;IACjB,WAAW;AACf;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,QAAQ;IACR,YAAY;IACZ,gBAAgB;IAChB,sBAAsB;IACtB,qBAAqB;IACrB,eAAe;IACf,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,gBAAgB;AACpB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,wBAAwB;IACxB,6BAA6B;IAC7B,2BAA2B;IAC3B,uBAAuB;IACvB,uBAAuB;AAC3B;;AAEA;IACI,iBAAiB;IACjB,mBAAmB;IACnB,uBAAuB;AAC3B;;AAEA;IACI,uBAAuB;IACvB,wBAAwB;IACxB,2BAA2B;AAC/B;;AAEA;IACI,oCAAoC;AACxC;;AAEA;IACI,QAAQ;AACZ;;AAEA;IACI,2BAA2B;IAC3B,2BAA2B;AAC/B","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n    max-height: 212px;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n    overflow-y: scroll;\n    max-height: 270px;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 2px 6px;\n    position: relative;\n    user-select: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.column-item:hover {\n    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));\n    color: var(--wp-components-color-accent-inverted, #fff);\n    opacity: 0.4;\n}\n\n.selected {\n    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));\n    color: var(--wp-components-color-accent-inverted, #fff);\n}\n\n.column-item.has-children.selected::after {\n    color: var(--wp-components-color-accent-inverted, #fff);\n}\n\n.column-item.selected:hover {\n    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));\n    color: var(--wp-components-color-accent-inverted, #fff);\n    opacity: 0.8;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n}\n\n.components-modal__screen-overlay {\n    z-index: 999999998;\n}\n\n.expression-builder {\n    position: relative;\n    padding-top: 20px;\n    width: 100%;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 12px;\n    right: 0;\n    height: 24px;\n    padding-top: 4px;\n    width: 24px !important;\n    display: inline-block;\n    min-width: 24px;\n    padding-left: 4px;\n}\n\n.column-item-form {\n    padding: 10px;\n    max-width: 202px;\n}\n\n.column-item-form p {\n    text-wrap: auto;\n}\n\n.expression-builder-variable-name {\n    margin-left: 5px;\n}\n\n.expression-builder-inline {\n    padding-top: 0 !important;\n}\n\n.expression-builder-inline .ace_editor {\n    margin-top: 0 !important;\n    margin-right: 40px !important;\n    margin-bottom: 0 !important;\n    height: 40px !important;\n    width: 300px !important;\n}\n\n.expression-builder-inline > button {\n    top: 0 !important;\n    right: 0 !important;\n    height: 40px !important;\n}\n\n.ace_editor.settings-panel {\n    width: 246px !important;\n    height: 180px !important;\n    margin-top: 10px !important;\n}\n\n.ace_editor.read-only-editor {\n    background-color: #f3f3f3 !important;\n}\n\n.ace_content {\n    top: 5px;\n}\n\n.expression-builder-modal .description:last-of-type {\n    min-height: 40px !important;\n    margin-top: 10px !important;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

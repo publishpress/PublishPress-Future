@@ -15,12 +15,20 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
      */
     protected $tester;
 
+    /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
+
     public function setUp() :void
     {
         // Before...
         parent::setUp();
 
         // Your set up methods here.
+        $this->expirablePostModelFactory = function ($postId) {
+            return new stdClass();
+        };
     }
 
     public function tearDown() :void
@@ -35,7 +43,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
     {
         $hooks = new HooksFacade();
 
-        $resolver = new PostResolver(new stdClass, $hooks);
+        $resolver = new PostResolver(new stdClass, $hooks, '', $this->expirablePostModelFactory);
 
         $this->assertEquals('post', $resolver->getType());
     }
@@ -47,7 +55,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $hooks = new HooksFacade();
 
-        $resolver = new PostResolver($post, $hooks);
+        $resolver = new PostResolver($post, $hooks, '', $this->expirablePostModelFactory);
 
         $this->assertEquals('23', $resolver->getValueAsString('ID'));
         $this->assertEquals('23', $resolver->getValueAsString('id'));
@@ -59,7 +67,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $hooks = new HooksFacade();
 
-        $resolver = new PostResolver($post, $hooks);
+        $resolver = new PostResolver($post, $hooks, '', $this->expirablePostModelFactory);
 
         $this->assertEquals('', $resolver->getValueAsString('non_existent_key'));
     }
@@ -71,7 +79,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $hooks = new HooksFacade();
 
-        $resolver = new PostResolver($post, $hooks);
+        $resolver = new PostResolver($post, $hooks, '', $this->expirablePostModelFactory);
 
         $this->assertEquals('', $resolver->getValueAsString('ID'));
     }
@@ -83,7 +91,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $hooks = new HooksFacade();
 
-        $resolver = new PostResolver($post, $hooks);
+        $resolver = new PostResolver($post, $hooks, '', $this->expirablePostModelFactory);
 
         $this->assertEquals('', $resolver->getValueAsString('ID'));
     }
@@ -95,7 +103,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $hooks = new HooksFacade();
 
-        $resolver = new PostResolver($post, $hooks);
+        $resolver = new PostResolver($post, $hooks, '', $this->expirablePostModelFactory);
 
         $this->assertEquals('', $resolver->getValueAsString('ID'));
     }
@@ -107,7 +115,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $hooks = new HooksFacade();
 
-        $resolver = new PostResolver($post, $hooks);
+        $resolver = new PostResolver($post, $hooks, '', $this->expirablePostModelFactory);
 
         $this->assertTrue(isset($resolver->ID));
         $this->assertTrue(isset($resolver->id));
@@ -119,7 +127,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $hooks = new HooksFacade();
 
-        $resolver = new PostResolver($post, $hooks);
+        $resolver = new PostResolver($post, $hooks, '', $this->expirablePostModelFactory);
 
         $this->assertFalse(isset($resolver->non_existent_key));
     }
@@ -131,7 +139,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $hooks = new HooksFacade();
 
-        $resolver = new PostResolver($post, $hooks);
+        $resolver = new PostResolver($post, $hooks, '', $this->expirablePostModelFactory);
 
         $resolver->ID = 24;
 
@@ -145,7 +153,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $hooks = new HooksFacade();
 
-        $resolver = new PostResolver($post, $hooks);
+        $resolver = new PostResolver($post, $hooks, '', $this->expirablePostModelFactory);
 
         unset($resolver->ID);
 
@@ -159,7 +167,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $hooks = new HooksFacade();
 
-        $resolver = new PostResolver($post, $hooks);
+        $resolver = new PostResolver($post, $hooks, '', $this->expirablePostModelFactory);
 
         $this->assertEquals('23', (string)$resolver);
     }
@@ -171,7 +179,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $hooks = new HooksFacade();
 
-        $resolver = new PostResolver($post, $hooks);
+        $resolver = new PostResolver($post, $hooks, '', $this->expirablePostModelFactory);
 
         $this->assertEquals(['type' => 'post', 'value' => 23], $resolver->compact());
     }
@@ -184,7 +192,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $hooks = new HooksFacade();
 
-        $resolver = new PostResolver($post, $hooks);
+        $resolver = new PostResolver($post, $hooks, '', $this->expirablePostModelFactory);
 
         $this->assertEquals('Test content', $resolver->getValue('post_content_text'));
         $this->assertEquals("<p>Test content</p>\n", $resolver->getValue('post_content'));

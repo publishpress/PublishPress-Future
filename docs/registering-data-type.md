@@ -48,3 +48,11 @@ The `type` properties are any of the data types already defined in the `data-typ
 
 3. Import and export the data type in the `index.jsx` file in the `data-types` folder.
 4. Add the data type to the `dataTypes` array in the `WorkflowEditorApp` component in the `app.jsx` file.
+
+## Registering custom data type in the workflow engine
+
+To register a custom data type in the workflow engine, you need to create a new class that implements the `VariableResolverInterface` interface.
+
+The class should be located in the `src/Modules/Workflows/Domain/Engine/VariableResolvers` folder and should be named after the data type, e.g. `MyTypeResolver.php`.
+
+Add the new variable resolver to the `$resolversMap` array in the method `expandArguments` in the `src/Modules/Workflows/Domain/Engine/NodeRunnerProcessors/CronStep` class (until we have a variable resolver factory).

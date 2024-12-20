@@ -58,18 +58,25 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
      */
     private $postPermalinkCache = [];
 
+    /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         InputValidatorsInterface $postQueryValidator,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->postQueryValidator = $postQueryValidator;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
     public static function getNodeTypeName(): string
@@ -82,8 +89,8 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
         $this->step = $step;
         $this->workflowId = $workflowId;
 
-        $this->hooks->addAction(HooksAbstract::ACTION_PRE_POST_UPDATE, [$this, 'cachePermalink'], 10, 2);
-        $this->hooks->addAction(HooksAbstract::ACTION_POST_UPDATED, [$this, 'triggerCallback'], 10, 3);
+        $this->hooks->addAction(HooksAbstract::ACTION_PRE_POST_UPDATE, [$this, 'cachePermalink'], 15, 2);
+        $this->hooks->addAction(HooksAbstract::ACTION_POST_UPDATED, [$this, 'triggerCallback'], 15, 3);
     }
 
     public function triggerCallback($postId, $postAfter, $postBefore)
@@ -131,11 +138,14 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
                     'postBefore' => new PostResolver(
                         $postBefore,
                         $this->hooks,
-                        $this->postPermalinkCache[$postBefore->ID] ?? ''
+                        $this->postPermalinkCache[$postBefore->ID] ?? '',
+                        $this->expirablePostModelFactory
                     ),
                     'postAfter' => new PostResolver(
                         $postAfter,
-                        $this->hooks
+                        $this->hooks,
+                        $this->postPermalinkCache[$postAfter->ID] ?? '',
+                        $this->expirablePostModelFactory
                     ),
                 ]);
 

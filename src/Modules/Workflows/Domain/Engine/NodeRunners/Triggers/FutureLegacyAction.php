@@ -43,16 +43,23 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
      */
     private $logger;
 
+    /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
     public static function getNodeTypeName(): string
@@ -81,7 +88,7 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
                 $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
 
                 $this->variablesHandler->setVariable($nodeSlug, [
-                    'post' => new PostResolver($post, $this->hooks),
+                    'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
                 ]);
 
                 $this->nodeRunnerProcessor->triggerCallbackIsRunning();

@@ -9,6 +9,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayR
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\DatetimeResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\EmailResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\FutureActionResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
@@ -633,8 +634,8 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                     'site' => SiteResolver::class,
                     'user' => UserResolver::class,
                     'workflow' => WorkflowResolver::class,
+                    'future_action' => FutureActionResolver::class,
                 ];
-
 
                 if (! $isLegacyCompact) {
                     $resolverArgument = $value['value'] ?? null;
