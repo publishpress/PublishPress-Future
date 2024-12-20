@@ -23,16 +23,16 @@ export const NodeSettingsPanel = ({ node }) => {
     } = useDispatch(workflowStore);
 
     const onChangeSetting = (fieldName, value) => {
-        if (! node.data?.settings) {
-            node.data.settings = {};
-        }
+        const newNode = {
+            id: node.id,
+            data: {
+                settings: {
+                    [fieldName]: value,
+                },
+            },
+        };
 
-        node.data.settings = {
-            ...node.data.settings,
-            [fieldName]: value
-        }
-
-        updateNode(node);
+        updateNode(newNode);
     };
 
     let nodeSettings = node.data?.settings;

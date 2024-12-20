@@ -175,3 +175,7 @@ p.description {
 p.description.margin-top {
     margin-top: 8px !important;
 }
+
+.components-panel__row .components-base-control {
+    width: 100%;
+}
