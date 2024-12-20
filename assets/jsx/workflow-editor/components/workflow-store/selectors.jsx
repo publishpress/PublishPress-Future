@@ -75,10 +75,6 @@ export const isEditedWorkflowDirty = (state) => {
     return Object.keys(state.editedWorkflowAttributes).length > 0;
 }
 
-export const isWorkflowFlowEmpty = (state) => {
-    return state.workflow.flow.trim() === '';
-}
-
 export const isNewWorkflow = (state) => {
     return !! state.isNewWorkflow;
 }
