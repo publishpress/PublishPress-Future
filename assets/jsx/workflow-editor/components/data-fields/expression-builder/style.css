@@ -145,6 +145,10 @@
     top: 5px;
 }
 
+#expression-builder-full .ace_content {
+    top: 0 !important;
+}
+
 .expression-builder-modal .description:last-of-type {
     min-height: 40px !important;
     margin-top: 10px !important;
