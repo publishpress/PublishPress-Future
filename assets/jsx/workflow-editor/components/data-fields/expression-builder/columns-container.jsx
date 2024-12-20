@@ -16,7 +16,7 @@ const RenderColumns = ({
     const selectedItemIndex = currentItemPath[currentColumnIndex];
     let currentItem = currentItems[selectedItemIndex];
 
-    const addMetaKeyInputChildren = (item) => {
+    const addMetaKeyInputChildren = useCallback((item) => {
         return {
             ...item,
             children: [
@@ -28,7 +28,7 @@ const RenderColumns = ({
                 }
             ]
         }
-    }
+    }, []);
 
     if (currentItem?.type === 'meta') {
         currentItem = addMetaKeyInputChildren(currentItem);

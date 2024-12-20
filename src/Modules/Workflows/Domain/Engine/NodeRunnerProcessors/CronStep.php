@@ -9,6 +9,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayR
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\DatetimeResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\EmailResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\FutureActionResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
@@ -48,6 +49,8 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
     public const DATE_SOURCE_EVENT = 'event';
 
     public const DATE_SOURCE_STEP = 'step';
+
+    public const DATE_SOURCE_CUSTOM = 'custom';
 
     public const SCHEDULE_RECURRENCE_SINGLE = 'single';
 
@@ -360,6 +363,8 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                     $timestamp = $this->variablesHandler->getVariable('global.trigger.activation_timestamp');
                 } elseif (self::DATE_SOURCE_STEP === $dateSource) {
                     $timestamp = time();
+                } elseif (self::DATE_SOURCE_CUSTOM === $dateSource) {
+                    $timestamp = $this->variablesHandler->replacePlaceholdersInText($nodeSettings['schedule']['customDateSource']['expression']);
                 } else {
                     $timestamp = $this->variablesHandler->getVariable($dateSource);
                 }
@@ -633,8 +638,8 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                     'site' => SiteResolver::class,
                     'user' => UserResolver::class,
                     'workflow' => WorkflowResolver::class,
+                    'future_action' => FutureActionResolver::class,
                 ];
-
 
                 if (! $isLegacyCompact) {
                     $resolverArgument = $value['value'] ?? null;

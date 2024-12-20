@@ -1,7 +1,6 @@
 import { __ } from "@wordpress/i18n";
 import { useState } from "@wordpress/element";
 import { TextControl, Button } from "@wordpress/components";
-import { select } from "@wordpress/data-controls";
 
 const ColumnItemMeta = ({ item, onClick }) => {
     const [metaKey, setMetaKey] = useState('');

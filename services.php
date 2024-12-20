@@ -838,7 +838,8 @@ return [
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
                     );
                     break;
 
@@ -848,7 +849,8 @@ return [
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
                     );
                     break;
 
@@ -885,7 +887,8 @@ return [
                         $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
                     );
                     break;
 
@@ -894,7 +897,8 @@ return [
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
-                        $container->get(ServicesAbstract::LOGGER)
+                        $container->get(ServicesAbstract::LOGGER),
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
                     );
                     break;
 

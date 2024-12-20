@@ -23,14 +23,21 @@ class PostResolver implements VariableResolverInterface
      */
     private $cachedPermalink;
 
+    /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
+
     public function __construct(
         object $post,
         HookableInterface $hooks,
-        string $cachedPermalink = ''
+        string $cachedPermalink = '',
+        \Closure $expirablePostModelFactory
     ) {
         $this->post = $post;
         $this->hooks = $hooks;
         $this->cachedPermalink = $cachedPermalink;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
     public function getType(): string
@@ -108,6 +115,9 @@ class PostResolver implements VariableResolverInterface
             case 'post_author':
             case 'author':
                 return new UserResolver($this->post->post_author);
+
+            case 'future':
+                return new FutureActionResolver($this->post, $this->expirablePostModelFactory);
         }
 
         return '';
@@ -168,6 +178,7 @@ class PostResolver implements VariableResolverInterface
                 'meta',
                 'post_author',
                 'author',
+                'future',
             ]
         );
     }
