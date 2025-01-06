@@ -32,7 +32,7 @@ class PostResolver implements VariableResolverInterface
         object $post,
         HookableInterface $hooks,
         string $cachedPermalink = '',
-        \Closure $expirablePostModelFactory
+        \Closure $expirablePostModelFactory = null
     ) {
         $this->post = $post;
         $this->hooks = $hooks;
