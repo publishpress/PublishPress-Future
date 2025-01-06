@@ -76,7 +76,7 @@
     "source-map-explorer": "^2.5.3",
     "style-loader": "^4.0.0",
     "underscore": "^1.12.1",
-    "webpack": "^5.90.0",
+    "webpack": "^5.94.0",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^5.1.4",
     "ws": "^8.17.1"
