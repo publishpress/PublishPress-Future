@@ -19,7 +19,15 @@ export const DEFAULT_STATE = {
         id: 0,
         title: '',
         description: '',
-        flow: '',
+        flow: {
+            nodes: [],
+            edges: [],
+            viewport: {
+                x: 0,
+                y: 0,
+                zoom: 2,
+            },
+        },
         status: 'auto-draft',
         debugRayShowQueries: false,
         debugRayShowEmails: false,
@@ -27,8 +35,6 @@ export const DEFAULT_STATE = {
         debugRayShowCurrentRunningStep: false,
     },
     editedWorkflowAttributes: {},
-    nodes: [],
-    edges: [],
     initialViewport: {
         x: 0,
         y: 0,
@@ -53,7 +59,7 @@ export const DEFAULT_STATE = {
 const loadWorkflowStart = (state, action) => {
     return {
         ...state,
-        isLoadingWorkflow: true,
+        isLoadingWorkflow: true
     };
 }
 
@@ -93,6 +99,7 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
             label: 'Site',
             type: 'site',
             runtimeOnly: true,
+            description: 'The current site.',
         }
     });
 
@@ -102,33 +109,37 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
             label: 'Workflow',
             type: 'workflow',
             runtimeOnly: false,
+            description: 'The current workflow.',
         }
     });
 
     state = setGlobalVariable(state, {
         payload: {
             name: 'user',
-            label: 'Activating User',
+            label: 'Activating user',
             type: 'user',
             runtimeOnly: true,
+            description: 'The current user.',
         }
     });
 
     state = setGlobalVariable(state, {
         payload: {
             name: 'trigger',
-            label: 'Activating Trigger',
+            label: 'Activating trigger',
             type: 'node',
             runtimeOnly: true,
+            description: 'The node that activated the workflow.',
         }
     });
 
     state = setGlobalVariable(state, {
         payload: {
             name: 'trace',
-            label: 'Execution Trace',
+            label: 'Execution trace',
             type: 'array',
             runtimeOnly: true,
+            description: 'The trace of the execution of the workflow.',
         }
     });
 
@@ -138,6 +149,7 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
             label: 'Execution ID',
             type: 'string',
             runtimeOnly: true,
+            description: 'The unique identifier for the execution of the workflow.',
         }
     });
 
@@ -170,18 +182,23 @@ const loadWorkflowSuccess = (state, action) => {
 
     state = _setInitialStateForGlobalVariables(state, payload);
 
-    unselectAll();
+    unselectAll(state);
 
     return {
         ...state,
         isLoadingWorkflow: false,
-        workflow: payload,
+        workflow: {
+            ...payload,
+            flow: {
+                ...payload.flow,
+                nodes,
+                edges,
+            },
+        },
         editedWorkflowAttributes: {},
         isNewWorkflow: payload.status === 'auto-draft',
-        nodes,
-        edges,
         initialViewport,
-        isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
+        isEditedWorkflowEmpty: edges.length === 0 && nodes.length === 0,
         isCurrentWorkflowPublished: payload.status === 'publish',
     };
 }
@@ -210,13 +227,18 @@ const createWorkflowSuccess = (state, action) => {
 
     return {
         ...state,
-        nodes,
         isCreatingWorkflow: false,
         isLoadingWorkflow: false,
-        workflow: payload,
+        workflow: {
+            ...payload,
+            flow: {
+                ...payload.flow,
+                nodes,
+            },
+        },
         editedWorkflowAttributes: {},
         isNewWorkflow: payload.status === 'auto-draft',
-        isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
+        isEditedWorkflowEmpty: state.workflow.flow.edges.length === 0 && state.workflow.flow.nodes.length === 0,
         isCurrentWorkflowPublished: payload.status === 'publish',
     };
 }
@@ -245,7 +267,7 @@ const saveAsDraftSuccess = (state, action) => {
         workflow: payload,
         editedWorkflowAttributes: {},
         isNewWorkflow: payload.status === 'auto-draft',
-        isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
+        isEditedWorkflowEmpty: state.workflow.flow.edges.length === 0 && state.workflow.flow.nodes.length === 0,
         isCurrentWorkflowPublished: payload.status === 'publish',
     };
 }
@@ -277,8 +299,9 @@ const switchToDraftSuccess = (state, action) => {
         isSavingWorkflow: false,
         workflow: newWorkflow,
         isNewWorkflow: false,
-        isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
+        isEditedWorkflowEmpty: state.workflow.flow.edges.length === 0 && state.workflow.flow.nodes.length === 0,
         isCurrentWorkflowPublished: newWorkflow.status === 'publish',
+        editedWorkflowAttributes: {},
     };
 }
 
@@ -301,7 +324,7 @@ const saveAsCurrentStatusSuccess = (state, action) => {
 
     const newWorkflow = {
         ...state.workflow,
-        status: payload.status,
+        ...payload,
     };
 
     return {
@@ -309,8 +332,9 @@ const saveAsCurrentStatusSuccess = (state, action) => {
         isSavingWorkflow: false,
         workflow: newWorkflow,
         isNewWorkflow: false,
-        isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
-        isCurrentWorkflowPublished: newWorkflow.status === 'publish',
+        isEditedWorkflowEmpty: state.workflow.flow.edges.length === 0 && state.workflow.flow.nodes.length === 0,
+        isCurrentWorkflowPublished: state.workflow.status === 'publish',
+        editedWorkflowAttributes: {},
     };
 }
 
@@ -341,8 +365,9 @@ const publishWorkflowSuccess = (state, action) => {
         isSavingWorkflow: false,
         workflow: newWorkflow,
         isNewWorkflow: false,
-        isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
+        isEditedWorkflowEmpty: state.workflow.flow.edges.length === 0 && state.workflow.flow.nodes.length === 0,
         isCurrentWorkflowPublished: newWorkflow.status === 'publish',
+        editedWorkflowAttributes: {},
     };
 }
 
@@ -358,11 +383,15 @@ const setEditedWorkflowAttribute = (state, action) => {
 
     return {
         ...state,
+        workflow: {
+            ...state.workflow,
+            [key]: value,
+        },
         editedWorkflowAttributes: {
             ...state.editedWorkflowAttributes,
             [key]: value,
         },
-        isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
+        isEditedWorkflowEmpty: Object.keys(state.editedWorkflowAttributes).length === 0,
     };
 }
 
@@ -380,7 +409,13 @@ const setNodes = (state, action) => {
 
     return {
         ...state,
-        nodes: payload,
+        workflow: {
+            ...state.workflow,
+            flow: {
+                ...state.workflow.flow,
+                nodes: payload,
+            },
+        },
     };
 }
 
@@ -388,13 +423,19 @@ const addNode = (state, action) => {
     const { payload } = action;
 
     const newNodes = [
-        ...state.nodes,
+        ...state.workflow.flow.nodes,
         payload,
     ];
 
     return {
         ...state,
-        nodes: newNodes,
+        workflow: {
+            ...state.workflow,
+            flow: {
+                ...state.workflow.flow,
+                nodes: newNodes,
+            },
+        },
     };
 }
 
@@ -405,7 +446,13 @@ const setEdges = (state, action) => {
 
     return {
         ...state,
-        edges: updatedEdges,
+        workflow: {
+            ...state.workflow,
+            flow: {
+                ...state.workflow.flow,
+                edges: updatedEdges,
+            },
+        },
     };
 }
 
@@ -414,7 +461,7 @@ const setInitialViewport = (state, action) => {
 
     return {
         ...state,
-        viewport: payload,
+        initialViewport: payload,
     };
 }
 
@@ -437,7 +484,7 @@ const setSelectedEdges = (state, action) => {
 }
 
 const unselectAll = (state, action) => {
-    setTimeout(() => jQuery('.react-flow__pane').click(), 200);
+    setTimeout(() => jQuery('.react-flow__pane').trigger('click'), 200);
 
     return {
         ...state,
@@ -471,19 +518,43 @@ const updateNode = (state, action) => {
     const { payload } = action;
 
     // Update the settings of the node with the given ID
-    const updatedNodes = state.nodes.map(node => {
+    const updatedNodes = state.workflow.flow.nodes.map(node => {
         if (node.id === payload.id) {
             return {
-                ...payload
+                ...node,
+                ...payload,
+                data: {
+                    ...node.data,
+                    ...payload.data,
+                    settings: {
+                        ...node.data.settings,
+                        ...payload.data.settings,
+                    },
+                },
             };
         }
 
         return node;
     });
 
+    const newWorkflow = {
+        ...state.workflow,
+        flow: {
+            ...state.workflow.flow,
+            nodes: updatedNodes,
+        },
+    };
+
     return {
         ...state,
-        nodes: updatedNodes
+        workflow: newWorkflow,
+        editedWorkflowAttributes: {
+            ...state.editedWorkflowAttributes,
+            flow: {
+                ...state.editedWorkflowAttributes.flow,
+                nodes: updatedNodes,
+            },
+        },
     };
 }
 
@@ -509,7 +580,7 @@ const addDataType = (state, action) => {
 }
 
 const setGlobalVariable = (state, action) => {
-    const { name, label, type, value, runtimeOnly } = action.payload;
+    const { name, label, type, value, runtimeOnly, description } = action.payload;
 
     const globalVariables = {
         ...state.globalVariables
@@ -521,6 +592,7 @@ const setGlobalVariable = (state, action) => {
         value,
         label,
         runtimeOnly,
+        description,
     };
 
     return {
@@ -699,13 +771,19 @@ const removeNode = (state, action) => {
     const { payload } = action;
 
     // Remove the edges that are connected to the node
-    const newEdges = state.edges.filter(edge => edge.source !== payload && edge.target !== payload);
-    const newNodes = state.nodes.filter(node => node.id !== payload);
+    const newEdges = state.workflow.flow.edges.filter(edge => edge.source !== payload && edge.target !== payload);
+    const newNodes = state.workflow.flow.nodes.filter(node => node.id !== payload);
 
     return {
         ...state,
-        nodes: newNodes,
-        edges: newEdges,
+        workflow: {
+            ...state.workflow,
+            flow: {
+                ...state.workflow.flow,
+                nodes: newNodes,
+                edges: newEdges,
+            },
+        },
         selectedNodes: [],
         selectedEdges: [],
     };
@@ -714,22 +792,34 @@ const removeNode = (state, action) => {
 const removeEdge = (state, action) => {
     const { payload } = action;
 
-    const newEdges = state.edges.filter(edge => edge.id !== payload);
+    const newEdges = state.workflow.flow.edges.filter(edge => edge.id !== payload);
 
     return {
         ...state,
-        edges: newEdges,
+        workflow: {
+            ...state.workflow,
+            flow: {
+                ...state.workflow.flow,
+                edges: newEdges,
+            },
+        },
         selectedNodes: [],
         selectedEdges: [],
     };
 }
 
 const removePlaceholderNodes = (state, action) => {
-    const newNodes = state.nodes.filter(node => node.data.elementaryType !== NODE_TYPE_PLACEHOLDER);
+    const newNodes = state.workflow.flow.nodes.filter(node => node.data.elementaryType !== NODE_TYPE_PLACEHOLDER);
 
     return {
         ...state,
-        nodes: newNodes,
+        workflow: {
+            ...state.workflow,
+            flow: {
+                ...state.workflow.flow,
+                nodes: newNodes,
+            },
+        },
     };
 }
 
@@ -854,6 +944,10 @@ export const reducer = (state = DEFAULT_STATE, action) => {
     }
 
     return state;
+}
+
+function addWorkflowIdToUrl(workflowId) {
+    window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${parseInt(workflowId)}`);
 }
 
 export default reducer;

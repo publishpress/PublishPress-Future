@@ -107,7 +107,7 @@ class ConditionalSplit implements NodeTypeInterface
                 "name" => "branch",
                 "type" => "string",
                 "label" => __("Branch", "post-expirator"),
-                "description" => __("The current branch on this step.", "post-expirator"),
+                "description" => __("The current branch on this step: 'true' or 'false'.", "post-expirator"),
             ],
         ];
     }

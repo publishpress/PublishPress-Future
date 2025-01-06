@@ -6,60 +6,89 @@ export function PostData() {
         objectType: "post",
         propertiesSchema: [
             {
-                name: "post_title",
+                name: "title",
                 type: "string",
                 label: "Title",
+                description: "The title of the post.",
             },
             {
-                name: "post_content",
+                name: "content",
                 type: "string",
                 label: "Content",
+                description: "The content of the post.",
             },
             {
-                name: "post_content_text",
+                name: "content_text",
                 type: "string",
                 label: "Content (Plain Text)",
+                description: "The content of the post in plain text.",
             },
             {
-                name: "post_excerpt",
+                name: "excerpt",
                 type: "string",
                 label: "Excerpt",
+                description: "The excerpt of the post.",
             },
             {
-                name: "post_status",
+                name: "status",
                 type: "string",
                 label: "Post Status",
+                description: "The status of the post.",
             },
             {
-                name: "post_type",
+                name: "type",
                 type: "string",
                 label: "Post Type",
+                description: "The type of the post.",
             },
             {
                 name: "id",
                 type: "integer",
                 label: "ID",
+                description: "The unique identifier for the post.",
             },
             {
-                name: "post_date",
+                name: "date",
                 type: "datetime",
                 label: "Publish Date",
+                description: "The date when the post was published.",
             },
             {
-                name: "post_modified",
+                name: "modified",
                 type: "datetime",
                 label: "Modification Date",
+                description: "The date when the post was last modified.",
             },
             {
                 name: "permalink",
                 type: "string",
                 label: "Permalink",
+                description: "The permalink of the post.",
+            },
+            {
+                name: "slug",
+                type: "string",
+                label: "Slug",
+                description: "The slug (or post name)of the post.",
+            },
+            {
+                name: "author",
+                type: "user",
+                label: "Author",
+                description: "The author of the post.",
             },
             {
                 name: "meta",
-                type: "object",
+                type: "meta",
                 label: "Metadata",
+                description: "The metadata of the post.",
             },
+            {
+                name: "future",
+                type: "future_action",
+                label: "Future Action",
+                description: "The future action properties of the post.",
+            }
         ],
     };
 }

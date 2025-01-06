@@ -216,6 +216,7 @@ export function getGlobalVariablesExpanded(globalVariables) {
             type: variable.type,
             label: variable.label,
             source: VARIABLE_SOURCE_GLOBAL,
+            description: variable.description,
         });
     });
 
@@ -289,46 +290,74 @@ export function mapNodeInputs(node) {
     return uniqueMappedInputs;
 }
 
-export function getExpandedVariableOptionsForSelect(node, globalVariables) {
+export function getExpandedVariablesList(node, globalVariables) {
+    const variablesList = getVariablesList(node, globalVariables);
+
+    var expandedList = [];
+    variablesList.forEach((variable) => {
+        expandedList.push(
+            expandVariable(variable)
+        );
+    });
+
+    return expandedList;
+}
+
+function getVariablesList(node, globalVariables) {
     const mappedNodeInputs = mapNodeInputs(node);
     const globalVariablesToList = getGlobalVariablesExpanded(globalVariables);
 
-    var options = [];
-    mappedNodeInputs.forEach((variable) => {
-        const optionsToAdd = getOptionsForVariable(variable);
-
-        options.push(optionsToAdd);
-    });
-
-    globalVariablesToList.forEach((variable) => {
-        const optionsToAdd = getOptionsForVariable(variable);
-
-        options.push(optionsToAdd);
-    });
-
-    return options;
+    return [...mappedNodeInputs, ...globalVariablesToList];
 }
 
-function getOptionsForVariable(variable) {
+function convertVariableToOptions(variable) {
+    return {
+        name: variable.name,
+        label: variable.label,
+        children: [],
+        type: variable.type,
+        itemsType: variable?.itemsType,
+        description: variable?.description,
+    };
+}
+
+function getVariableProperties(variable) {
     const getDataTypeByName = select(workflowStore).getDataTypeByName;
     const dataType = getDataTypeByName(variable.type);
 
-    const option = {
-        id: variable.name,
-        name: variable.label,
-        children: [],
-        type: variable?.type,
-        itemsType: variable?.itemsType,
-    };
+    if (!dataType?.propertiesSchema?.length) {
+        return [];
+    }
+
+    const properties = dataType.propertiesSchema.map((property) => {
+        const propertyData = {
+            name: variable.name + '.' + property.name,
+            label: property.label,
+            type: property?.type,
+            itemsType: property?.itemsType,
+            description: property?.description,
+            children: [],
+        };
+
+        if (dataType.type === 'object') {
+            propertyData.children = getVariableProperties(propertyData);
+        }
+
+        return propertyData;
+    });
+
+    return properties;
+}
+
+function expandVariable(variable) {
+    const getDataTypeByName = select(workflowStore).getDataTypeByName;
+    const dataType = getDataTypeByName(variable.type);
+
+    const option = convertVariableToOptions(variable);
 
     // If the variable is an object, add its properties as children
     if (dataType.type === 'object') {
-        option.children = dataType.propertiesSchema.map((property) => {
-            return {
-                id: variable.name + '.' + property.name,
-                name: variable.label + ' -> ' + property.label,
-            };
-        });
+        option.children = getVariableProperties(variable);
     }
 
     return option;
@@ -391,8 +420,8 @@ export function filterVariableOptionsByDataType(variables, expectedDataTypes) {
             });
 
             validVariable = {
-                id: variable.id,
-                name: variable.name,
+                id: variable.name,
+                name: variable.label,
                 children: validChildren,
                 type: variable.type,
             };
@@ -404,7 +433,12 @@ export function filterVariableOptionsByDataType(variables, expectedDataTypes) {
             }
         } else {
             if (variableHasValidDataType) {
-                filteredVariables.push(variable);
+                filteredVariables.push({
+                    id: variable.name,
+                    name: variable.label,
+                    children: [],
+                    type: variable.type,
+                });
             }
         }
     });

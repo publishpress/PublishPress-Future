@@ -3,19 +3,19 @@ export const getPostType = (state) => {
 };
 
 export const getNodes = (state) => {
-    return state.nodes;
+    return state.workflow.flow.nodes;
 };
 
 export const getEdges = (state) => {
-    return state.edges;
+    return state.workflow.flow.edges;
 };
 
 export const getNodeById = (state, id) => {
-    return state.nodes.find(node => node.id === id);
+    return state.workflow.flow.nodes.find(node => node.id === id);
 };
 
 export const getEdgeById = (state, id) => {
-    return state.edges.find(edge => edge.id === id);
+    return state.workflow.flow.edges.find(edge => edge.id === id);
 };
 
 export const getSelectedNodes = (state) => {
@@ -47,13 +47,13 @@ export const getEditedWorkflowAttributes = (state) => {
 };
 
 export const getEditedWorkflowAttribute = (state, key) => {
-    const attributes = state.editedWorkflowAttributes;
+    const attributes = state.workflow;
 
     if (!attributes.hasOwnProperty(key)) {
         return state.workflow[key];
     }
 
-    return state.editedWorkflowAttributes[key];
+    return state.workflow[key];
 };
 
 export const isLoadingWorkflow = (state) => {
@@ -64,19 +64,8 @@ export const isCreatingWorkflow = (state) => {
     return !! state.isCreatingWorkflow;
 }
 
-export const getEditedWorkflow = (state) => {
-    return {
-        ...state.workflow,
-        ...state.editedWorkflowAttributes,
-    };
-}
-
 export const isEditedWorkflowDirty = (state) => {
     return Object.keys(state.editedWorkflowAttributes).length > 0;
-}
-
-export const isWorkflowFlowEmpty = (state) => {
-    return state.workflow.flow.trim() === '';
 }
 
 export const isNewWorkflow = (state) => {

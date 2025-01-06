@@ -66,7 +66,7 @@ class LogAdd implements NodeTypeInterface
                 "fields" => [
                     [
                         "name" => "message",
-                        "type" => "textarea",
+                        "type" => "expression",
                         "label" => __("Message", "post-expirator"),
                     ],
                     [

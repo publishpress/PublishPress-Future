@@ -44,9 +44,6 @@ class WorkflowResolver implements VariableResolverInterface
             case 'modified_at':
                 return (string)$this->workflow['modified_at'];
 
-            case 'steps':
-                return (array)$this->workflow['steps'];
-
             case 'meta':
                 return new WorkflowMetaResolver($this->workflow['ID']);
         }
@@ -85,7 +82,6 @@ class WorkflowResolver implements VariableResolverInterface
                 'title',
                 'description',
                 'modified_at',
-                'steps',
                 'meta',
             ]
         );

@@ -2,6 +2,7 @@
 
 namespace PublishPress\Future\Modules\Workflows\Controllers;
 
+use PhpParser\Node\ClosureUse;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
@@ -9,6 +10,9 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 use PublishPress\Future\Core\HooksAbstract as FutureCoreHooksAbstract;
 use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Framework\WordPress\Facade\RequestFacade;
+use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
+use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Models\PostModel;
 use PublishPress\Future\Modules\Workflows\Models\PostTypesModel;
@@ -32,10 +36,33 @@ class ManualPostTrigger implements InitializableInterface
      */
     private $logger;
 
-    public function __construct(HookableInterface $hooks, LoggerInterface $logger)
-    {
+    /**
+     * @var SanitizationFacade
+     */
+    private $sanitization;
+
+    /**
+     * @var RequestFacade
+     */
+    private $request;
+
+    /**
+     * @var CurrentUserModel
+     */
+    private $currentUserModel;
+
+    public function __construct(
+        HookableInterface $hooks,
+        LoggerInterface $logger,
+        SanitizationFacade $sanitization,
+        RequestFacade $request,
+        CurrentUserModel $currentUserModel
+    ) {
         $this->hooks = $hooks;
         $this->logger = $logger;
+        $this->sanitization = $sanitization;
+        $this->request = $request;
+        $this->currentUserModel = $currentUserModel;
     }
 
     public function initialize()
@@ -54,8 +81,19 @@ class ManualPostTrigger implements InitializableInterface
         );
 
         $this->hooks->addAction(
+            FutureCoreHooksAbstract::ACTION_ADMIN_INIT,
+            [$this, 'processBulkEditUpdate']
+        );
+
+        $this->hooks->addAction(
             FutureCoreHooksAbstract::ACTION_ADMIN_PRINT_SCRIPTS_EDIT,
             [$this, 'enqueueQuickEditScripts']
+        );
+
+        // Bulk Edit
+        $this->hooks->addAction(
+            FutureCoreHooksAbstract::ACTION_ADMIN_PRINT_SCRIPTS_EDIT,
+            [$this, 'enqueueBulkEditScripts']
         );
 
         // Block Editor
@@ -193,6 +231,49 @@ class ManualPostTrigger implements InitializableInterface
             );
         } catch (Throwable $th) {
             $this->logger->error('Error enqueuing quick edit scripts: ' . $th->getMessage());
+        }
+    }
+
+    public function enqueueBulkEditScripts()
+    {
+        try {
+            // Only enqueue scripts if we are in the post list table
+
+            if (get_current_screen()->base !== 'edit') {
+                return;
+            }
+
+            wp_enqueue_style("wp-components");
+
+            wp_enqueue_script("wp-components");
+            wp_enqueue_script("wp-plugins");
+            wp_enqueue_script("wp-element");
+            wp_enqueue_script("wp-data");
+
+            wp_enqueue_script(
+                "future_workflow_manual_selection_script_bulk_edit",
+                Plugin::getScriptUrl('workflowManualSelectionBulkEdit'),
+                [
+                    "wp-plugins",
+                    "wp-components",
+                    "wp-element",
+                    "wp-data",
+                ],
+                PUBLISHPRESS_FUTURE_VERSION,
+                true
+            );
+
+            wp_localize_script(
+                "future_workflow_manual_selection_script_bulk_edit",
+                "futureWorkflowManualSelection",
+                [
+                    "nonce" => wp_create_nonce("wp_rest"),
+                    "apiUrl" => rest_url("publishpress-future/v1"),
+                    "postType" => get_post_type(),
+                ]
+            );
+        } catch (Throwable $th) {
+            $this->logger->error('Error enqueuing bulk edit scripts: ' . $th->getMessage());
         }
     }
 
@@ -432,6 +513,60 @@ class ManualPostTrigger implements InitializableInterface
             );
         } catch (Throwable $th) {
             $this->logger->error('Error enqueuing scripts: ' . $th->getMessage());
+        }
+    }
+
+    public function processBulkEditUpdate()
+    {
+        try {
+            // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $doAction = isset($_GET['action']) ? $this->sanitization->sanitizeKey($_GET['action']) : '';
+
+            if (
+                ('edit' !== $doAction)
+                || (! isset($_REQUEST['future_action_bulk_view']))
+                || ($_REQUEST['future_action_bulk_view'] !== 'bulk-edit')
+            ) {
+                return;
+            }
+
+            if (! $this->currentUserModel->userCanExpirePosts()) {
+                return;
+            }
+
+            $this->request->checkAdminReferer('bulk-posts');
+
+            $this->saveBulkEditData();
+            // phpcs:enable
+        } catch (Throwable $th) {
+            $this->logger->error('Error processing bulk edit update: ' . $th->getMessage());
+        }
+    }
+
+    private function saveBulkEditData()
+    {
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.NonceVerification.Recommended
+        $strategy = $_REQUEST['future_workflow_manual_strategy'] ?? 'no-change';
+        $postIds = array_map('intval', (array)$_REQUEST['post']);
+        $selectedWorkflows = array_map('intval', (array)$_REQUEST['future_workflow_manual_trigger']);
+
+        if (empty($postIds) || $strategy === 'no-change') {
+            return;
+        }
+
+        $postModel = new PostModel();
+
+        foreach ($postIds as $postId) {
+            $postId = (int)$postId;
+
+            $loaded = $postModel->load($postId);
+
+            if (! $loaded) {
+                continue;
+            }
+
+            $postModel->setManuallyEnabledWorkflows($selectedWorkflows);
         }
     }
 }

@@ -1,0 +1,15 @@
+.conditional-editor-modal .expression-builder-button {
+    width: 34px !important;
+    padding-top: 10px !important;
+}
+
+.conditional-editor-modal-remove-element {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.conditional-editor-modal-operator-selector {
+    height: 41px !important;
+    min-height: 40px;
+    margin-top: 7px;
+}

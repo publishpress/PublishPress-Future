@@ -1,5 +1,5 @@
 import { Handle, Position } from 'reactflow';
-import { memo } from '@wordpress/element';
+import { memo, useEffect, useRef } from '@wordpress/element';
 import NodeIcon from '../node-icon';
 import { useSelect, useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
@@ -40,8 +40,66 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
         openGeneralSidebar,
     } = useDispatch(editorStore);
 
-    const nodeType = getNodeTypeByName(data.name);
-    const nodeLabel = nodeType.label || data.label || __('Node', 'post-expirator');
+    let nodeType = getNodeTypeByName(data.name);
+
+    if (! nodeType || ! nodeType.handleSchema) {
+        nodeType = {
+            "id": Math.floor(Math.random() * 1000000),
+            "type": "generic",
+            "elementaryType": "action",
+            "name": data.name,
+            "label": sprintf(__('Unknown node: %s', 'post-expirator'), data.name),
+            "description": __('This is a placeholder node for a node that does not exist.', 'post-expirator'),
+            "baseSlug": "deletePost",
+            "initiatlAttributes": [],
+            "category": "post",
+            "disabled": false,
+            "isDisabled": false,
+            "frecency": 1,
+            "icon": {
+                "src": "media-document",
+                "background": "#ffffff",
+                "foreground": "#1e1e1e"
+            },
+            "version": 1,
+            "settingsSchema": [],
+            "outputSchema": [
+                {
+                    "name": "input",
+                    "type": "input",
+                    "label": "Step input",
+                    "description": "The input data for this step."
+                }
+            ],
+            "className": "react-flow__node-unknownNode",
+            "handleSchema": {
+                "target": [
+                    {
+                        "id": "input",
+                        "left": "50%"
+                    }
+                ],
+                "source": [
+                    {
+                        "id": "output",
+                        "left": "50%",
+                        "label": "Next"
+                    }
+                ]
+            },
+            "isProFeature": false,
+            "validationSchema": {
+                "connections": {
+                    "rules": []
+                },
+                "settings": {
+                    "rules": []
+                }
+            }
+        };
+    }
+
+    const nodeLabel = data.label || nodeType.label || __('Node', 'post-expirator');
     const nodeClassName = nodeType?.className || 'react-flow__node-genericNode';
 
     let targetHandles = null;
@@ -130,17 +188,32 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
         nodeTypeIcon = <PlayIcon size={8} />;
     }
 
+
+    // Unfocus the tolbar button when the node is selected
+    const nodeRef = useRef(null);
+    useEffect(() => {
+        if (selected && isSingularElementSelected) {
+            setTimeout(() => {
+                jQuery(nodeRef.current.parentNode).focus();
+            }, 100);
+        }
+    }, [selected, isSingularElementSelected]);
+
     return (
         <>
             {selected && isSingularElementSelected && (
                 <>
                     <Popover placement="top-start" offset={14}>
-                        <Toolbar className="components-accessible-toolbar block-editor-block-contextual-toolbar react-flow__node-toolbar">
+                        <Toolbar
+                            label={__('Step actions', 'post-expirator')}
+                            className="components-accessible-toolbar block-editor-block-contextual-toolbar react-flow__node-toolbar"
+                        >
                             <ToolbarGroup>
                                 <ToolbarButton
                                     icon={'trash'}
                                     label={__('Delete', 'post-expirator')}
                                     onClick={onClickDeleteNode}
+                                    accessibleWhenDisabled={true}
                                 />
                             </ToolbarGroup>
                         </Toolbar>
@@ -148,7 +221,11 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                 </>
             )}
 
-            <div className={"react-flow__node-body " + nodeClassName} onDoubleClick={onDoubleClick}>
+            <div
+                className={"react-flow__node-body " + nodeClassName}
+                onDoubleClick={onDoubleClick}
+                ref={nodeRef}
+            >
                 {targetHandles}
                 <div className='react-flow__node-top'>
                     {nodeTypeIcon}
@@ -163,7 +240,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                                 <div className='react-flow__node-pro-badge'
                                     title={__('Currently this step is being skipped. Upgrade to Pro to unlock this feature.', 'post-expirator')}
                                 >
-                                    <NodeIcon icon={'lock'} size={8} />
+                                    <NodeIcon icon={'lock'} iconSize={8} />
                                 </div>
                             )}
 
@@ -171,7 +248,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                                 <div className='react-flow__node-error'
                                     title={__('This node has errors', 'post-expirator')}
                                 >
-                                    <NodeIcon icon={'exclamation'} size={8} />
+                                    <NodeIcon icon={'exclamation'} iconSize={8} />
                                 </div>
                             )}
 
@@ -179,7 +256,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                     )}
 
                     <div className='react-flow__node-header'>
-                        <NodeIcon icon={nodeType.icon.src} size={14} />
+                        <NodeIcon icon={nodeType.icon.src} iconSize={14} />
                         <div className="react-flow__node-label">{nodeLabel}</div>
                     </div>
                     {isAdvancedSettingsEnabled && nodeAttributes.length > 0 &&

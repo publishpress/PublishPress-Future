@@ -25,7 +25,7 @@ export default function ProFeatureButton({ link }) {
             }}
             title={__("Upgrade to Pro to unlock this feature.", "post-expirator")}
         >
-            <NodeIcon icon={'lock'} size={14} />
+            <NodeIcon icon={'lock'} iconSize={14} />
         </div>
     );
 }

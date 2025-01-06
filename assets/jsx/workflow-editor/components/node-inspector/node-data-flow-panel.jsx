@@ -80,7 +80,7 @@ export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
     };
 
     return (
-        <PersistentPanelBody title={__("Step Data Flow", "post-expirator")}>
+        <PersistentPanelBody title={__("Step Data Flow", "post-expirator")} className="workflow-editor-dev-panel">
             <PanelRow className="workflow-editor-inspector-card__handles-schema">
                 <h3>{__('Inputs', 'post-expirator')}</h3>
                 <div>

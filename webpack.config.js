@@ -18,6 +18,7 @@ module.exports = {
         workflowManualSelectionQuickEdit: "./assets/jsx/workflow-manual-selection/quick-edit/index.jsx",
         workflowManualSelectionClassicEditor: "./assets/jsx/workflow-manual-selection/classic-editor/index.jsx",
         workflowManualSelectionBlockEditor: "./assets/jsx/workflow-manual-selection/block-editor/index.jsx",
+        workflowManualSelectionBulkEdit: "./assets/jsx/workflow-manual-selection/bulk-edit/index.jsx",
         futureActions: "./assets/jsx/future-actions.jsx",
         backupPanel: "./assets/jsx/backup-panel/index.jsx"
     },

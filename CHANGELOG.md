@@ -3,6 +3,56 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## UNRELEASED
+
+### Added
+
+- Add new variables selector and an expression builder (Issue #976).
+- Add support to metadata in the variables resolvers and post type variables (Issue #1069, #939).
+- Add the site ID to the site data type schema.
+- Add the post author property to the post data type schema in the workflow editor (Issue #947).
+- Add the post slug property to the post data type schema in the workflow editor.
+- Add new Post is Published trigger - PRO (Issue #944).
+- Add new Post Status Changes trigger - PRO (Issue #945).
+- Add new Post is Scheduled trigger - PRO (Issue #946).
+- Add new Post Meta Changed trigger - PRO (Issue #1059).
+- Add the Post Meta Add step to the workflow editor - PRO (Issue #732).
+- Add the Post Meta Delete step to the workflow editor - PRO (Issue #732).
+- Add the Post Meta Update step to the workflow editor - PRO (Issue #732).
+- Add the option to change manually enabled workflows in the bulk edit screen (Issue #942).
+- Add the "Save as current status" shortcut to the workflow editor (CTRL/CMD + S) (Issue #1084).
+- Add new display settings to customize the shortcode output (Issue #203).
+- Add new step setting field to customize the step label in the workflow editor (Issue #1090).
+
+### Changed
+
+- Replace text fields and input/variables selectors on step settings with the new expression builder (Issue #976).
+- Changed the border of selected steps to dashed line.
+- Moved the panel "Step Data Flow" to the developer mode.
+- Removed the arrow indicator from the workflow title and added a new Status column to the workflows list screen (Issue #970).
+- Post's variable resolver now also accept a property without `post_` prefix.
+- User's variable resolver now also accept a property without `user_` prefix.
+- Changed the options in the "Debug Data" field to be more intuitive allowing a custom data expression to be selected.
+- The conditional step now uses the new expression builder.
+- Improved the UI in the conditional step settings.
+- Added field descriptions to the post query step settings panel (Issue #1081).
+
+### Fixed
+
+- Fix error when the date or time format is empty in the settings page (Issue #212).
+- Fix empty title and label in the future action panel when custom title and label are not set (Issue #1075).
+- Fix the width of the checkbox in the future action panel (#1076).
+- Fix the permalink in the Post Updated trigger for the post before variable.
+
+### Developers
+
+- Deprecated the method `get_wp_date` in the class `PostExpirator_Util` and use the method `getWpDate` from the class `PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade instead.
+- Deprecated the method `wp_timezone_string` in the class `PostExpirator_Util` and use the method `getTimezoneString` from the class `PublishPress\Future\Framework\System\DateTimeHandler` instead.
+- Deprecated the method `get_timezone_offset` in the class `PostExpirator_Util`.
+- Deprecated the method `sanitize_array_of_integers` in the class `PostExpirator_Util`.
+- Add new param $metaValue to the method `deleteMeta` in the class `PublishPress\Future\Framework\WordPress\Models\PostModel`.
+- Remove the `steps` property from the workflow data type schema.
+
 ## [4.2.0] - 09 Dec, 2024
 
 ### Added

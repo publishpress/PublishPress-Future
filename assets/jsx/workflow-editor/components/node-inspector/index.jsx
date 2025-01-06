@@ -16,6 +16,7 @@ import ObjectGroupIcon from "../icons/object-group";
 import LinesLeaningIcon from "../icons/lines-leaning";
 import NodeDevInfoPanel from "../node-dev-info-panel";
 import useScrollToTop from "../scrolled-to-top";
+import NodeDetailsPanel from "./node-details-panel";
 
 export const NodeInspector = () => {
     const {
@@ -145,18 +146,19 @@ export const NodeInspector = () => {
                 <>
                     <NodeInspectorCard node={selectedNode} />
 
+                    <NodeDetailsPanel node={selectedNode} />
+
                     {nodeHasSettings && (
                         <NodeSettingsPanel node={selectedNode} />
                     )}
 
                     <NodeValidationPanel errors={nodeErrors} />
 
-                    {isAdvancedSettingsEnabled && (selectedNodeHasInput || selectedNodeHasOutput) && (
-                        <NodeDataFlowPanel inputSchema={mappedNodeInputSchema} outputSchema={mappedNodeOutputSchema} />
-                    )}
-
                     {isDeveloperModeEnabled && (
-                        <NodeDevInfoPanel node={selectedNode} nodeType={nodeType} />
+                        <>
+                            <NodeDataFlowPanel inputSchema={mappedNodeInputSchema} outputSchema={mappedNodeOutputSchema} />
+                            <NodeDevInfoPanel node={selectedNode} nodeType={nodeType} />
+                        </>
                     )}
 
                     <div className="components-tools-panel"></div>

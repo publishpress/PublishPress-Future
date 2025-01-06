@@ -86,6 +86,7 @@ export const FlowEditor = (props) => {
         removePlaceholderNodes,
         setDraggingFromHandle,
         setIsConnectingNodes,
+        unselectAll,
     } = useDispatch(workflowStore);
 
     const {
@@ -274,10 +275,12 @@ export const FlowEditor = (props) => {
     );
 
     const onNodesDelete = useCallback(() => {
+        unselectAll();
         updateFlowInEditedWorkflow();
     });
 
     const onEdgesDelete = useCallback(() => {
+        unselectAll();
         updateFlowInEditedWorkflow();
     });
 

@@ -74,31 +74,32 @@ class CoreSendEmail implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Message", "post-expirator"),
-                "description" => __("The email message", "post-expirator"),
+                "label" => __("Email Message", "post-expirator"),
+                "description" => __("The email message configuration", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "recipient",
-                        "type" => "emailRecipient",
+                        "type" => "expression",
                         "label" => __("Recipient", "post-expirator"),
+                        "description" => __("A comma-separated list of email addresses to send the message to.", "post-expirator"),
                         "default" => [
-                            "recipient" => "global.site.admin_email",
+                            "expression" => "{{global.site.admin_email}}",
                         ],
                     ],
                     [
                         "name" => "subject",
-                        "type" => "textarea",
+                        "type" => "expression",
                         "label" => __("Subject", "post-expirator"),
-                        "settings" => [
-                            "placeholder" => self::getDefaultSubject(),
+                        "default" => [
+                            "expression" => self::getDefaultSubject(),
                         ],
                     ],
                     [
                         "name" => "message",
-                        "type" => "textarea",
+                        "type" => "expression",
                         "label" => __("Message", "post-expirator"),
-                        "settings" => [
-                            "placeholder" => self::getDefaultMessage(),
+                        "default" => [
+                            "expression" => self::getDefaultMessage(),
                         ],
                     ]
                 ],
@@ -120,22 +121,13 @@ class CoreSendEmail implements NodeTypeInterface
                 "rules" => [
                     [
                         "rule" => "required",
-                        "field" => "recipient.recipient",
-                        "label" => __("Email Recipient", "post-expirator"),
-                    ],
-                    [
-                        "rule" => "required",
-                        "field" => "recipient.custom",
-                        "label" => __("Custom Email Address", "post-expirator"),
-                        "condition" => [
-                            "field" => "recipient.recipient",
-                            "value" => "custom",
-                        ],
+                        "field" => "recipient.expression",
+                        "label" => __("Recipient", "post-expirator"),
                     ],
                     [
                         "rule" => "dataType",
-                        "field" => "recipient.custom",
-                        "label" => __("Custom Email Address", "post-expirator"),
+                        "field" => "recipient.expression",
+                        "label" => __("Recipient", "post-expirator"),
                         "type" => "emailList",
                     ],
 
