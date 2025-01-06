@@ -1,0 +1,138 @@
+.components-button svg {
+    height: 100%;
+}
+
+#wpfooter {
+    display: none !important;
+}
+
+.react-flow {
+    width: 100% !important;
+}
+
+.components-menu-items__item-icon.has-icon-right {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.react-flow__node-default.selectable.selected,
+.react-flow__node-default.selectable:focus,
+.react-flow__node-default.selectable:focus-visible,
+.react-flow__node-input.selectable.selected,
+.react-flow__node-input.selectable:focus,
+.react-flow__node-input.selectable:focus-visible,
+.react-flow__node-output.selectable.selected,
+.react-flow__node-output.selectable:focus,
+.react-flow__node-output.selectable:focus-visible,
+.react-flow__node-group.selectable.selected,
+.react-flow__node-group.selectable:focus,
+.react-flow__node-group.selectable:focus-visible {
+    box-shadow: 0 0 0 2px #1a192b;
+}
+
+/* .react-flow {
+    background-color: #e1e1e1 !important;
+} */
+
+.settings-field-description {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.settings-field-help-popover {
+    font-size: 12px;
+    color: #666;
+    width: 320px;
+    padding: 16px;
+    position: relative;
+    padding-top: 50px;
+}
+
+.settings-field-help-popover button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.workflow-editor-inspector-card__handles-schema {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.workflow-editor-inspector-card__handles-schema code {
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    background: #ebebeb;
+    color: #696969;
+}
+
+.workflow-editor-inspector-card__handles-schema h3 {
+    margin-bottom: 4px !important;
+}
+
+.workflow-editor-global-variables-description {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.workflow-editor-global-variables-label {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: calc(8px);
+    padding: 0px;
+}
+.workflow-editor-global-var-list {
+    margin: 0;
+    padding: 5px;
+    border: 1px solid var(--wp-components-color-gray-600, #949494);
+}
+
+.workflow-editor-global-var-list ul {
+    list-style: disc;
+    margin-left: 30px;
+}
+
+.workflow-editor-global-var-list ul li {
+    margin-bottom: 0;
+}
+
+.edit-post-editor__inserter-panel-content {
+    height: 100%;
+}
+
+.block-editor-inserter__content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+    overflow-y: hidden;
+    position: relative;
+}
+
+.block-editor-inserter__panel-content {
+    overflow-y: auto;
+}
+
+.interface-interface-skeleton__footer {
+    min-height: 25px;
+    padding: 3px 20px;
+    box-sizing: border-box;
+}
+
+.interface-interface-skeleton__secondary-sidebar {
+    box-shadow: 1px 1px 0 0 rgba(0, 0, 0, .133);
+    outline: 1px solid #0000;
+}
+
+.editor-inserter-sidebar *, .editor-inserter-sidebar :after, .editor-inserter-sidebar :before {
+    box-sizing: inherit;
+}

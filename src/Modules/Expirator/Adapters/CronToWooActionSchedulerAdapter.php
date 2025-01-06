@@ -1,16 +1,17 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator\Adapters;
 
 use ActionScheduler;
-use ActionScheduler_Store;
 use Exception;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
+use Throwable;
 
 use function as_enqueue_async_action;
 use function as_get_scheduled_actions;
@@ -27,6 +28,17 @@ class CronToWooActionSchedulerAdapter implements CronInterface
     public const SCHEDULED_ACTION_GROUP = 'publishpress-future';
 
     public const IDENTIFIER = 'woo-action-scheduler';
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    public function __construct(
+        LoggerInterface $logger = null
+    ) {
+        $this->logger = $logger;
+    }
 
     /**
      * @return string
@@ -64,18 +76,20 @@ class CronToWooActionSchedulerAdapter implements CronInterface
         if ($actionId) {
             try {
                 ActionScheduler::store()->cancel_action($actionId);
-            } catch (Exception $exception) {
+            } catch (Throwable $e) {
                 ActionScheduler::logger()->log(
                     $actionId,
                     sprintf(
                         /* translators: %1$s is the name of the hook to be cancelled, %2$s is the exception message. */
                         __('Caught exception while cancelling action "%1$s": %2$s', 'action-scheduler'),
                         $action,
-                        $exception->getMessage()
+                        $e->getMessage()
                     )
                 );
 
                 $actionId = null;
+
+                throw $e;
             }
         }
 

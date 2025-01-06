@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\VersionNotices;
@@ -107,8 +107,16 @@ class Module implements ModuleInterface
                                     'id' => 'future_page_publishpress-future-scheduled-actions'
                                 ],
                                 [
-                                    'base' => 'future_page_publishpress_future_pro_features_ads',
-                                    'id' => 'future_page_publishpress_future_pro_features_ads'
+                                    'base' => 'edit',
+                                    'id' => 'edit-ppfuture_workflow'
+                                ],
+                                [
+                                    'base' => 'admin_page_publishpress-future-scheduled-actions',
+                                    'id' => 'admin_page_publishpress-future-scheduled-actions'
+                                ],
+                                [
+                                    'base' => 'future_page_future-backup',
+                                    'id' => 'future_page_future-backup'
                                 ]
                             ]
                         ];

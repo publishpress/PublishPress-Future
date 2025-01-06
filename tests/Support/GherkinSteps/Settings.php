@@ -3,6 +3,8 @@
 namespace Tests\Support\GherkinSteps;
 
 use PostExpirator_Util;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 
 trait Settings
 {
@@ -321,10 +323,13 @@ trait Settings
     {
         global $currentExpirationDate;
 
+        $container = Container::getInstance();
+        $dateTimeFacade = $container->get(ServicesAbstract::DATETIME);
+
         $dateFormat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
         $timeFormat = get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
 
-        $fullDate = PostExpirator_Util::get_wp_date("$dateFormat $timeFormat", $currentExpirationDate->getTimestamp());
+        $fullDate = $dateTimeFacade->getWpDate("$dateFormat $timeFormat", $currentExpirationDate->getTimestamp());
 
         $this->see($fullDate, '.entry-content p');
     }
@@ -336,9 +341,12 @@ trait Settings
     {
         global $currentExpirationDate;
 
+        $container = Container::getInstance();
+        $dateTimeFacade = $container->get(ServicesAbstract::DATETIME);
+
         $dateFormat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
 
-        $date = PostExpirator_Util::get_wp_date($dateFormat, $currentExpirationDate->getTimestamp());
+        $date = $dateTimeFacade->getWpDate($dateFormat, $currentExpirationDate->getTimestamp());
 
         $this->see($date, '.entry-content p');
     }
@@ -350,9 +358,12 @@ trait Settings
     {
         global $currentExpirationDate;
 
+        $container = Container::getInstance();
+        $dateTimeFacade = $container->get(ServicesAbstract::DATETIME);
+
         $timeFormat = get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
 
-        $time = PostExpirator_Util::get_wp_date($timeFormat, $currentExpirationDate->getTimestamp());
+        $time = $dateTimeFacade->getWpDate($timeFormat, $currentExpirationDate->getTimestamp());
 
         $this->see($time, '.entry-content p');
     }
@@ -396,7 +407,10 @@ trait Settings
     {
         global $currentExpirationDate;
 
-        $date = PostExpirator_Util::get_wp_date($dateFormat, $currentExpirationDate->getTimestamp());
+        $container = Container::getInstance();
+        $dateTimeFacade = $container->get(ServicesAbstract::DATETIME);
+
+        $date = $dateTimeFacade->getWpDate($dateFormat, $currentExpirationDate->getTimestamp());
 
         $this->see($date, '.entry-content p');
     }
@@ -425,7 +439,10 @@ trait Settings
     {
         global $currentExpirationDate;
 
-        $time = PostExpirator_Util::get_wp_date($timeFormat, $currentExpirationDate->getTimestamp());
+        $container = Container::getInstance();
+        $dateTimeFacade = $container->get(ServicesAbstract::DATETIME);
+
+        $time = $dateTimeFacade->getWpDate($timeFormat, $currentExpirationDate->getTimestamp());
 
         $this->see($time, '.entry-content p');
     }

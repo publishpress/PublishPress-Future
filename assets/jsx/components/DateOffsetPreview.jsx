@@ -5,7 +5,9 @@ import {
     Fragment
 } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
-import { apiFetch } from '&wp';
+import { __ } from '@wordpress/i18n';
+
+const { apiFetch } = wp;
 
 require('./css/dateOffsetPreview.css');
 
@@ -51,7 +53,7 @@ export const DateOffsetPreview = ({
                 setValidationErrorCallback(result.message);
 
                 if (result.isValid) {
-                    setOffsetPreview(result.preview);
+                    setOffsetPreview(result.calculatedTime);
                     setCurrentTime(result.currentTime);
                 } else {
                     setOffsetPreview('');

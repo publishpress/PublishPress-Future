@@ -1,18 +1,19 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Settings\Controllers;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreAbstractHooks;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\InitializableInterface;
-use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
-use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
+use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -54,12 +55,18 @@ class Controller implements InitializableInterface
     private $migrationsFactory;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
      * @param \Closure $settingsPostTypesModelFactory
      * @param \Closure $taxonomiesModelFactory
      * @param $actionsModel
      * @param \Closure $migrationsFactory
+     * @param LoggerInterface $logger
      */
     public function __construct(
         HookableInterface $hooks,
@@ -67,7 +74,8 @@ class Controller implements InitializableInterface
         $settingsPostTypesModelFactory,
         $taxonomiesModelFactory,
         $actionsModel,
-        $migrationsFactory
+        $migrationsFactory,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->settings = $settings;
@@ -75,6 +83,7 @@ class Controller implements InitializableInterface
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
         $this->actionsModel = $actionsModel;
         $this->migrationsFactory = $migrationsFactory;
+        $this->logger = $logger;
     }
 
     public function initialize()
@@ -84,7 +93,7 @@ class Controller implements InitializableInterface
             [$this, 'onFilterDebugEnabled']
         );
         $this->hooks->addAction(
-            CoreAbstractHooks::ACTION_ADMIN_ENQUEUE_SCRIPT,
+            CoreAbstractHooks::ACTION_ADMIN_ENQUEUE_SCRIPTS,
             [$this, 'onAdminEnqueueScript'],
             15
         );
@@ -96,6 +105,12 @@ class Controller implements InitializableInterface
             CoreAbstractHooks::ACTION_INIT,
             [$this, 'initMigrations'],
             20
+        );
+        $this->hooks->addFilter(
+            CoreAbstractHooks::FILTER_ADMIN_TITLE,
+            [$this, 'onFilterAdminTitle'],
+            10,
+            2
         );
     }
 
@@ -141,163 +156,233 @@ class Controller implements InitializableInterface
 
     public function onAdminEnqueueScript($screenId)
     {
-        if ($screenId !== 'toplevel_page_publishpress-future') {
-            return;
-        }
+        try {
+            if ($screenId !== 'toplevel_page_publishpress-future') {
+                return;
+            }
 
-        wp_enqueue_style(
-            'pe-footer',
-            POSTEXPIRATOR_BASEURL . 'assets/css/footer.css',
-            false,
-            POSTEXPIRATOR_VERSION
-        );
-        wp_enqueue_style(
-            'pe-settings',
-            POSTEXPIRATOR_BASEURL . 'assets/css/settings.css',
-            ['pe-footer'],
-            POSTEXPIRATOR_VERSION
-        );
-        wp_enqueue_style(
-            'pe-jquery-ui',
-            POSTEXPIRATOR_BASEURL . 'assets/css/lib/jquery-ui/jquery-ui.min.css',
-            ['pe-settings'],
-            POSTEXPIRATOR_VERSION
-        );
-        wp_enqueue_style(
-            'pp-wordpress-banners-style',
-            POSTEXPIRATOR_BASEURL . 'assets/vendor/wordpress-banners/css/style.css',
-            false,
-            POSTEXPIRATOR_VERSION
-        );
-
-        // phpcs:disable WordPress.Security.NonceVerification.Recommended
-        if (
-            (isset($_GET['page']) && $_GET['page'] === 'publishpress-future')
-            && (
-                (! isset($_GET['tab']) || empty($_GET['tab']))
-                || (isset($_GET['tab']) && $_GET['tab'] === 'defaults')
-            )
-        ) {
-            //phpcs:enable WordPress.Security.NonceVerification.Recommended
-            wp_enqueue_script(
-                'publishpressfuture-settings-panel',
-                POSTEXPIRATOR_BASEURL . 'assets/js/settings-post-types.js',
-                ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-element', 'wp-hooks', 'wp-api-fetch', 'wp-html-entities'],
-                POSTEXPIRATOR_VERSION,
-                true
+            wp_enqueue_style(
+                'pe-footer',
+                POSTEXPIRATOR_BASEURL . 'assets/css/footer.css',
+                false,
+                PUBLISHPRESS_FUTURE_VERSION
+            );
+            wp_enqueue_style(
+                'pe-settings',
+                POSTEXPIRATOR_BASEURL . 'assets/css/settings.css',
+                ['pe-footer'],
+                PUBLISHPRESS_FUTURE_VERSION
+            );
+            wp_enqueue_style(
+                'pe-jquery-ui',
+                POSTEXPIRATOR_BASEURL . 'assets/css/lib/jquery-ui/jquery-ui.min.css',
+                ['pe-settings'],
+                PUBLISHPRESS_FUTURE_VERSION
+            );
+            wp_enqueue_style(
+                'pp-wordpress-banners-style',
+                POSTEXPIRATOR_BASEURL . 'assets/vendor/wordpress-banners/css/style.css',
+                false,
+                PUBLISHPRESS_FUTURE_VERSION
             );
 
-            wp_enqueue_style('wp-components');
-
-            $settingsPostTypesModelFactory = $this->settingsPostTypesModelFactory;
-            $settingsModel = $settingsPostTypesModelFactory();
-
-            $taxonomiesModelFactory = $this->taxonomiesModelFactory;
-            $taxonomiesModel = $taxonomiesModelFactory();
-
-            // translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
-            $fieldDefaultDateTimeOffsetDescription = esc_html__(
-                'Set the offset to use for the default action date and time. For information on formatting, see %1$s
-                . For example, you could enter %2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, use only terms in English.',
-                'post-expirator'
-            );
-
-            wp_localize_script(
-                'publishpressfuture-settings-panel',
-                'publishpressFutureSettingsConfig',
-                [
-                    'text' => [
-                        'settingsSectionTitle' => __('Default Values', 'post-expirator'),
-                        'settingsSectionDescription' => __(
-                            'Use the values below to set the default actions/values to be used for each for the corresponding post types.  These values can all be overwritten when creating/editing the post/page.',
-                            'post-expirator'
-                        ),
-                        'fieldActive' => __('Active', 'post-expirator'),
-                        'fieldActiveLabel' => __('Activate the PublishPress Future actions for this post type', 'post-expirator'),
-                        'fieldHowToExpire' => __('Default Action', 'post-expirator'),
-                        'fieldHowToExpireDescription' => __(
-                            'Select the default action for the post type.',
-                            'post-expirator'
-                        ),
-                        'fieldTaxonomyDescription' => __(
-                            'Select the taxonomy to be used for actions.',
-                            'post-expirator'
-                        ),
-                        'fieldAutoEnable' => __('Auto-enable', 'post-expirator'),
-                        'fieldAutoEnableLabel' => __('Enabled for all new posts', 'post-expirator'),
-                        'fieldTaxonomy' => __('Taxonomy', 'post-expirator'),
-                        'noItemsfound' => __('No taxonomies found for this post type. Taxonomy actions will not be available.', 'post-expirator'),
-                        'fieldWhoToNotify' => __('Who to Notify', 'post-expirator'),
-                        'fieldWhoToNotifyDescription' => __(
-                            'Enter a comma separated list of emails that you would like to be notified when the action runs.',
-                            'post-expirator'
-                        ),
-                        'fieldDefaultDateTimeOffset' => __('Default Date/Time Offset', 'post-expirator'),
-                        'fieldDefaultDateTimeOffsetDescription' => sprintf(
-                            $fieldDefaultDateTimeOffsetDescription,
-                            '<a href="https://www.php.net/manual/en/function.strtotime.php" target="_new">' . esc_html__('PHP strtotime function', 'post-expirator') . '</a>',
-                            '<code>',
-                            '</code>'
-                        ),
-                        'fieldTerm' => __('Default terms:', 'post-expirator'),
-                        'saveChanges' => __('Save changes', 'post-expirator'),
-                        'saveChangesPendingValidation' => __('Wait for the validation...', 'post-expirator'),
-                        // translators: %s is the name of the taxonomy in singular form.
-                        'errorTermsRequired' => __('Please select one or more %s', 'post-expirator'),
-                        'datePreview' => __('Date Preview', 'post-expirator'),
-                        'datePreviewCurrent' => __('Current Date', 'post-expirator'),
-                        'datePreviewComputed' => __('Computed Date', 'post-expirator'),
-                        'error' => __('Error', 'post-expirator'),
+            // phpcs:disable WordPress.Security.NonceVerification.Recommended
+            if (
+                (isset($_GET['page']) && $_GET['page'] === 'publishpress-future')
+                && (
+                    (! isset($_GET['tab']) || empty($_GET['tab']))
+                    || (isset($_GET['tab']) && $_GET['tab'] === 'defaults')
+                )
+            ) {
+                //phpcs:enable WordPress.Security.NonceVerification.Recommended
+                wp_enqueue_script(
+                    'publishpressfuture-settings-panel',
+                    Plugin::getScriptUrl('settingsPostTypes'),
+                    [
+                        'wp-i18n',
+                        'wp-components',
+                        'wp-url',
+                        'wp-data',
+                        'wp-element',
+                        'wp-hooks',
+                        'wp-api-fetch',
+                        'wp-html-entities',
                     ],
-                    'settings' => $settingsModel->getPostTypesSettings(),
-                    'expireTypeList' => $this->actionsModel->getActionsAsOptionsForAllPostTypes(false),
-                    'statusesList' => $this->actionsModel->getStatusesAsOptionsForAllPostTypes(),
-                    'taxonomiesList' => $this->convertPostTypesListIntoOptionsList(
-                        $taxonomiesModel->getTaxonomiesByPostType(false)
-                    ),
-                    'nonce' => wp_create_nonce('postexpirator_menu_defaults'),
-                    'referrer' => esc_html(remove_query_arg('_wp_http_referer')),
-                ]
-            );
-        }
+                    PUBLISHPRESS_FUTURE_VERSION,
+                    true
+                );
 
-        // phpcs:disable WordPress.Security.NonceVerification.Recommended
-        if (
-            (isset($_GET['page']) && $_GET['page'] === 'publishpress-future')
-            && (isset($_GET['tab']) && $_GET['tab'] === 'general')
-        ) {
-            //phpcs:enable WordPress.Security.NonceVerification.Recommended
-            wp_enqueue_script(
-                'publishpressfuture-settings-general-panel',
-                POSTEXPIRATOR_BASEURL . 'assets/js/settings-general.js',
-                [
-                    'wp-i18n',
-                    'wp-components',
-                    'wp-url',
-                    'wp-data',
-                    'wp-element',
-                    'wp-hooks',
-                    'wp-api-fetch',
-                    'wp-html-entities'
-                ],
-                POSTEXPIRATOR_VERSION,
-                true
-            );
+                wp_enqueue_style('wp-components');
 
-            wp_enqueue_style('wp-components');
+                $settingsPostTypesModelFactory = $this->settingsPostTypesModelFactory;
+                $settingsModel = $settingsPostTypesModelFactory();
 
-            wp_localize_script(
-                'publishpressfuture-settings-general-panel',
-                'publishpressFutureSettingsGeneralConfig',
-                [
-                    'text' => [
-                        'datePreview' => __('Date Preview', 'post-expirator'),
-                        'datePreviewCurrent' => __('Current Date', 'post-expirator'),
-                        'datePreviewComputed' => __('Computed Date', 'post-expirator'),
-                        'error' => __('Error', 'post-expirator'),
+                $taxonomiesModelFactory = $this->taxonomiesModelFactory;
+                $taxonomiesModel = $taxonomiesModelFactory();
+
+                // translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
+                $fieldDefaultDateTimeOffsetDescription = esc_html__(
+                    'Set the offset to use for the default action date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, use only terms in English.',
+                    'post-expirator'
+                );
+
+                wp_localize_script(
+                    'publishpressfuture-settings-panel',
+                    'publishpressFutureSettingsConfig',
+                    [
+                        'text' => [
+                            'settingsSectionTitle' => __('Default Values', 'post-expirator'),
+                            'settingsSectionDescription' => __(
+                                'Use the values below to set the default actions/values to be used for each for the corresponding post types.  These values can all be overwritten when creating/editing the post/page.',
+                                'post-expirator'
+                            ),
+                            'fieldActive' => __('Active', 'post-expirator'),
+                            'fieldActiveLabel' => __('Activate the PublishPress Future actions for this post type', 'post-expirator'),
+                            'fieldHowToExpire' => __('Default Action', 'post-expirator'),
+                            'fieldHowToExpireDescription' => __(
+                                'Select the default action for the post type.',
+                                'post-expirator'
+                            ),
+                            'fieldTaxonomyDescription' => __(
+                                'Select the taxonomy to be used for actions.',
+                                'post-expirator'
+                            ),
+                            'fieldAutoEnable' => __('Auto-enable', 'post-expirator'),
+                            'fieldAutoEnableLabel' => __('Enabled for all new posts', 'post-expirator'),
+                            'fieldTaxonomy' => __('Taxonomy', 'post-expirator'),
+                            'noItemsfound' => __('No taxonomies found for this post type. Taxonomy actions will not be available.', 'post-expirator'),
+                            'fieldWhoToNotify' => __('Who to Notify', 'post-expirator'),
+                            'fieldWhoToNotifyDescription' => __(
+                                'Enter a comma separated list of emails that you would like to be notified when the action runs.',
+                                'post-expirator'
+                            ),
+                            'fieldDefaultDateTimeOffset' => __('Default Date/Time Offset', 'post-expirator'),
+                            'fieldDefaultDateTimeOffsetDescription' => sprintf(
+                                $fieldDefaultDateTimeOffsetDescription,
+                                '<a href="https://www.php.net/manual/en/function.strtotime.php" target="_new">' . esc_html__('PHP strtotime function', 'post-expirator') . '</a>',
+                                '<code>',
+                                '</code>'
+                            ),
+                            'fieldTerm' => __('Default terms:', 'post-expirator'),
+                            'saveChanges' => __('Save changes', 'post-expirator'),
+                            'saveChangesPendingValidation' => __('Wait for the validation...', 'post-expirator'),
+                            // translators: %s is the name of the taxonomy in singular form.
+                            'errorTermsRequired' => __('Please select one or more %s', 'post-expirator'),
+                            'datePreview' => __('Date Preview', 'post-expirator'),
+                            'datePreviewCurrent' => __('Current Date', 'post-expirator'),
+                            'datePreviewComputed' => __('Computed Date', 'post-expirator'),
+                            'error' => __('Error', 'post-expirator'),
+                        ],
+                        'settings' => $settingsModel->getPostTypesSettings(),
+                        'expireTypeList' => $this->actionsModel->getActionsAsOptionsForAllPostTypes(false),
+                        'statusesList' => $this->actionsModel->getStatusesAsOptionsForAllPostTypes(),
+                        'taxonomiesList' => $this->convertPostTypesListIntoOptionsList(
+                            $taxonomiesModel->getTaxonomiesByPostType(false)
+                        ),
+                        'nonce' => wp_create_nonce('postexpirator_menu_defaults'),
+                        'referrer' => esc_html(remove_query_arg('_wp_http_referer')),
+                    ]
+                );
+            }
+
+            // phpcs:disable WordPress.Security.NonceVerification.Recommended
+            if (
+                (isset($_GET['page']) && $_GET['page'] === 'publishpress-future')
+                && (isset($_GET['tab']) && $_GET['tab'] === 'general')
+            ) {
+                //phpcs:enable WordPress.Security.NonceVerification.Recommended
+                wp_enqueue_script(
+                    'publishpressfuture-settings-general-panel',
+                    Plugin::getScriptUrl('settingsGeneral'),
+                    [
+                        'wp-i18n',
+                        'wp-components',
+                        'wp-url',
+                        'wp-data',
+                        'wp-element',
+                        'wp-hooks',
+                        'wp-api-fetch',
+                        'wp-html-entities'
                     ],
-                ]
-            );
+                    PUBLISHPRESS_FUTURE_VERSION,
+                    true
+                );
+
+                wp_enqueue_style('wp-components');
+
+                wp_localize_script(
+                    'publishpressfuture-settings-general-panel',
+                    'publishpressFutureSettingsGeneralConfig',
+                    [
+                        'text' => [
+                            'datePreview' => __('Date Preview', 'post-expirator'),
+                            'datePreviewCurrent' => __('Current Date', 'post-expirator'),
+                            'datePreviewComputed' => __('Computed Date', 'post-expirator'),
+                            'error' => __('Error', 'post-expirator'),
+                        ],
+                    ]
+                );
+            }
+
+            if (! isset($_GET['tab']) || $_GET['tab'] === 'advanced') {
+                wp_enqueue_script(
+                    'publishpress-future-settings-advanced-panel',
+                    Plugin::getScriptUrl('settingsAdvanced'),
+                    [
+                        'wp-components',
+                        'wp-url',
+                        'wp-data',
+                        'wp-element',
+                        'wp-api-fetch',
+                    ],
+                    PUBLISHPRESS_FUTURE_VERSION,
+                    true
+                );
+
+                wp_enqueue_script('wp-url');
+                wp_enqueue_script('wp-element');
+                wp_enqueue_script('wp-api-fetch');
+                wp_enqueue_script('wp-data');
+
+                wp_localize_script(
+                    'publishpress-future-settings-advanced-panel',
+                    'publishpressFutureSettingsAdvanced',
+                    [
+                        'text' => [
+                            'scheduledStepsCleanup' => __('Scheduled Workflow Steps Cleanup', 'post-expirator'),
+                            'scheduledStepsCleanupEnable' => __(
+                                'Automatically remove scheduled workflow steps',
+                                'post-expirator'
+                            ),
+                            'scheduledStepsCleanupEnableDesc' => __(
+                                'Automatically remove scheduled workflow steps that have been marked as failed, completed, or cancelled.',
+                                'post-expirator'
+                            ),
+                            'scheduledStepsCleanupDisable' => __(
+                                'Retain all scheduled workflow steps',
+                                'post-expirator'
+                            ),
+                            'scheduledStepsCleanupDisableDesc' => __(
+                                'Retain all scheduled workflow steps indefinitely, including those marked as failed, completed, or cancelled. This may impact database performance over time.',
+                                'post-expirator'
+                            ),
+                            'scheduledStepsCleanupRetention' => __('Retention', 'post-expirator'),
+                            'scheduledStepsCleanupRetentionDesc' => __(
+                                'The duration, in days, for which completed, failed, and canceled scheduled workflow steps will be preserved before automatic removal.',
+                                'post-expirator'
+                            ),
+                            'days' => __('days', 'post-expirator'),
+                        ],
+                        'settings' => [
+                            'scheduledStepsCleanupStatus' => $this->settings->getScheduledWorkflowStepsCleanupStatus(),
+                            'scheduledStepsCleanupRetention' => $this->settings->getScheduledWorkflowStepsCleanupRetention(),
+                        ],
+                        'settingsTab' => $_GET['tab'] ?? 'defaults',
+                    ]
+                );
+            }
+        } catch (Throwable $th) {
+            $this->logger->error('Error enqueuing scripts: ' . $th->getMessage());
         }
     }
 
@@ -307,6 +392,7 @@ class Controller implements InitializableInterface
             'defaults',
             'general',
             'display',
+            'notifications',
             'diagnostics',
             'viewdebug',
             'advanced',
@@ -343,8 +429,12 @@ class Controller implements InitializableInterface
 
     public function initMigrations()
     {
-        $factory = $this->migrationsFactory;
-        $factory();
+        try {
+            $factory = $this->migrationsFactory;
+            $factory();
+        } catch (Throwable $th) {
+            $this->logger->error('Error initializing migrations: ' . $th->getMessage());
+        }
     }
 
     private function convertTermsToIds($taxonomy, $terms)
@@ -467,5 +557,50 @@ class Controller implements InitializableInterface
         }
 
         $this->hooks->doAction(CoreAbstractHooks::ACTION_PURGE_PLUGIN_CACHE);
+    }
+
+    public function saveTabAdvanced()
+    {
+         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+         $experimentalFeaturesStatus = isset($_POST['future-experimental-features'])
+         // phpcs:ignore WordPress.Security.NonceVerification.Missing
+         ? (int) $_POST['future-experimental-features']
+         : 0;
+        $this->settings->setExperimentalFeaturesStatus($experimentalFeaturesStatus);
+
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $stepScheduleCompressedArgsStatus = isset($_POST['future-step-schedule-compressed-args'])
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            ? (int) $_POST['future-step-schedule-compressed-args']
+            : 0;
+        $this->settings->setStepScheduleCompressedArgsStatus($stepScheduleCompressedArgsStatus);
+
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $stepScheduleCleanupStatus = isset($_POST['future-step-schedule-cleanup'])
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            ? (bool) $_POST['future-step-schedule-cleanup']
+            : false;
+        $this->settings->setScheduledWorkflowStepsCleanupStatus($stepScheduleCleanupStatus);
+
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $stepScheduleCleanupRetention = isset($_POST['future-step-schedule-cleanup-retention'])
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            ? (int) $_POST['future-step-schedule-cleanup-retention']
+            : 30;
+
+        if ($stepScheduleCleanupRetention < 1) {
+            $stepScheduleCleanupRetention = 30;
+        }
+
+        $this->settings->setScheduledWorkflowStepsCleanupRetention($stepScheduleCleanupRetention);
+    }
+
+    public function onFilterAdminTitle($adminTitle, $title)
+    {
+        if (isset($_GET['page']) && $_GET['page'] === 'publishpress-future') {
+            return str_replace($title, __('Action Settings', 'post-expirator'), $adminTitle);
+        }
+
+        return $adminTitle;
     }
 }

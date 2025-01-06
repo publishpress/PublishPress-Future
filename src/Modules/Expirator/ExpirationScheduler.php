@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator;
@@ -256,14 +256,14 @@ class ExpirationScheduler implements SchedulerInterface
 
             $this->logger->debug($message);
 
-            $this->deleteExpirationPostMeta($postId);
+            $this->disableExpirationPostMeta($postId);
         }
     }
 
-    protected function deleteExpirationPostMeta($postId)
+    protected function disableExpirationPostMeta($postId)
     {
         $postModelFactory = $this->postModelFactory;
         $postModel = $postModelFactory($postId);
-        $postModel->deleteExpirationPostMeta();
+        $postModel->disableExpiration();
     }
 }

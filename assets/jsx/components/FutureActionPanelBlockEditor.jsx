@@ -1,4 +1,5 @@
 import { FutureActionPanel } from './';
+import './css/block-editor.css';
 
 export const FutureActionPanelBlockEditor = (props) => {
     const { PluginDocumentSettingPanel } = wp.editPost;
@@ -79,6 +80,7 @@ export const FutureActionPanelBlockEditor = (props) => {
                     strings={props.strings}
                     onDataIsValid={onDataIsValid}
                     hideCalendarByDefault={props.hideCalendarByDefault}
+                    showTitle={false}
                     onDataIsInvalid={onDataIsInvalid} />
             </div>
         </PluginDocumentSettingPanel>

@@ -1,11 +1,12 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Debug\Controllers;
 
+use PostExpirator_Util;
 use PublishPress\Future\Core\HooksAbstract as CoreAbstractHooks;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
@@ -40,6 +41,11 @@ class Controller implements InitializableInterface
             CoreAbstractHooks::ACTION_DEACTIVATE_PLUGIN,
             [$this, 'onDeactivatePlugin']
         );
+
+        $this->hooks->addAction(
+            CoreAbstractHooks::ACTION_ADMIN_INIT,
+            [$this, 'onDownloadLog']
+        );
     }
 
     public function onDebugLog($message)
@@ -54,5 +60,24 @@ class Controller implements InitializableInterface
         if (! $preserveData) {
             $this->logger->dropDatabaseTable();
         }
+    }
+
+    public function onDownloadLog()
+    {
+        if (! isset($_GET['action']) || $_GET['action'] !== 'publishpress_future_debug_log') {
+            return;
+        }
+
+        if (! current_user_can('manage_options')) {
+            wp_die(__('You do not have sufficient permissions to access this page.', 'post-expirator'), '', ['response' => 403]);
+        }
+
+        if (! isset($_GET['nonce']) || ! wp_verify_nonce($_GET['nonce'], 'publishpress_future_download_log')) {
+            wp_die(__('Invalid nonce.', 'post-expirator'), '', ['response' => 403]);
+        }
+
+        require_once __DIR__ . '/../Views/raw-debug-log.html.php';
+
+        exit;
     }
 }

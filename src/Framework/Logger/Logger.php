@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Framework\Logger;
@@ -35,13 +35,20 @@ class Logger implements LoggerInterface
      */
     private $settings;
 
+    /**
+     * @var string
+     */
+    private $requestId;
+
     public function __construct($databaseFacade, $siteFacade, $settingsFacade)
     {
         $this->db = $databaseFacade;
         $this->site = $siteFacade;
         $this->settings = $settingsFacade;
 
-        // FIXME: Rename the table to something like ppfuture_debug_log.
+        $this->requestId = uniqid();
+
+        // FIXME: Rename the table to something like ppfuture_debug_log and use a schema class.
         $this->dbTableName = $this->db->getTablePrefix() . 'postexpirator_debug';
 
         $this->initialize();
@@ -99,6 +106,11 @@ class Logger implements LoggerInterface
         $this->log(LogLevel::EMERGENCY, $message, $context);
     }
 
+    public function isDownloadLogRequested()
+    {
+        return is_admin() && isset($_GET['action']) && $_GET['action'] === 'publishpress_future_debug_log';
+    }
+
     /**
      * Logs with an arbitrary level.
      *
@@ -114,13 +126,19 @@ class Logger implements LoggerInterface
             return;
         }
 
+        // Do not log when downloading the log itself.
+        if ($this->isDownloadLogRequested()) {
+            return;
+        }
+
         $levelDescription = strtoupper($level);
 
         $databaseTableName = $this->getDatabaseTableName();
 
         $fullMessage = sprintf(
-            '%s: %s',
+            '%s %s: %s',
             $levelDescription,
+            $this->requestId,
             $message
         );
 
@@ -186,6 +204,10 @@ class Logger implements LoggerInterface
     public function error($message, $context = [])
     {
         $this->log(LogLevel::ERROR, $message, $context);
+
+        if (function_exists('error_log')) {
+            error_log('PUBLISHPRESS FUTURE - ' . $message);
+        }
     }
 
     /**
@@ -249,7 +271,39 @@ class Logger implements LoggerInterface
     {
         $databaseTableName = $this->getDatabaseTableName();
 
-        return (array)$this->db->getResults("SELECT * FROM $databaseTableName ORDER BY `id`");
+        return (array)$this->db->getResults("SELECT * FROM $databaseTableName ORDER BY `id`", 'ARRAY_A');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function fetchLatest($limit = 100)
+    {
+        $databaseTableName = $this->getDatabaseTableName();
+
+        $list = (array)$this->db->getResults("SELECT * FROM $databaseTableName ORDER BY `id` DESC LIMIT $limit", 'ARRAY_A');
+
+        return array_reverse($list);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTotalLogs()
+    {
+        $databaseTableName = $this->getDatabaseTableName();
+
+        return (int)$this->db->getVar("SELECT COUNT(*) FROM $databaseTableName");
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getLogSizeInBytes()
+    {
+        $databaseTableName = $this->getDatabaseTableName();
+
+        return $this->db->getVar("SELECT SUM(LENGTH(`message`)) FROM $databaseTableName");
     }
 
     /**

@@ -5,28 +5,29 @@
  * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
  * Description: PublishPress Future allows you to schedule automatic changes to posts, pages and other content types.
  * Author: PublishPress
- * Version: 3.4.4
+ * Version: 4.3.0-beta.5
  * Author URI: http://publishpress.com
  * Text Domain: post-expirator
  * Domain Path: /languages
- * Requires at least: 6.1
- * Requires PHP: 7.2.5
+ * Requires at least: 6.7
+ * Requires PHP: 7.4
  */
 
 namespace PublishPress\Future;
 
-use Exception;
 use PublishPress\Future\Core\Autoloader;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
 global $wp_version;
 
-$min_php_version = '7.2.5';
-$min_wp_version  = '6.1';
+$min_php_version = '7.4';
+$min_wp_version  = '6.7';
 
 // If the PHP or WP version is not compatible, terminate the plugin execution.
 $invalid_php_version = version_compare(phpversion(), $min_php_version, '<');
@@ -50,13 +51,21 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         }
 
         if (! defined('PUBLISHPRESS_FUTURE_VERSION')) {
-            define('PUBLISHPRESS_FUTURE_VERSION', '3.4.4');
+            define('PUBLISHPRESS_FUTURE_VERSION', '4.3.0-beta.5');
+        }
+
+        if (! defined('PUBLISHPRESS_FUTURE_PLUGIN_FILE')) {
+            define('PUBLISHPRESS_FUTURE_PLUGIN_FILE', __FILE__);
+        }
+
+        if (! defined('PUBLISHPRESS_FUTURE_ASSETS_URL')) {
+            define('PUBLISHPRESS_FUTURE_ASSETS_URL', plugins_url('assets', __FILE__));
         }
 
         if (! defined('PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH')) {
             $vendorPath = __DIR__ . '/lib/vendor';
-            if (defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO') && PUBLISHPRESS_FUTURE_LOADED_BY_PRO) {
-                $vendorPath = \PUBLISHPRESS_FUTURE_PRO_VENDOR_DIR;
+            if (defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO') && constant('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')) {
+                $vendorPath = constant('PUBLISHPRESS_FUTURE_PRO_VENDOR_DIR');
             }
 
             define('PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH', $vendorPath);
@@ -67,6 +76,10 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
              * @deprecated Since 3.1.0. Use PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH instead.
              */
             define('PUBLISHPRESS_FUTURE_VENDOR_PATH', PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH);
+        }
+
+        if (! defined('PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL')) {
+            define('PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL', false);
         }
 
         $autoloadFilePath = PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH . '/autoload.php';
@@ -110,17 +123,34 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         HooksFacade::registerActivationHook(__FILE__, __NAMESPACE__ . '\\install');
         HooksFacade::registerDeactivationHook(__FILE__, __NAMESPACE__ . '\\uninstall');
 
+        add_action('plugins_loaded', function () {
+            load_plugin_textdomain('post-expirator', false, basename(dirname(__FILE__)) . '/languages/');
+        });
+
         add_action('init', function () {
             try {
                 loadDependencies();
 
                 $container = Container::getInstance();
                 $container->get(ServicesAbstract::PLUGIN)->initialize();
-            } catch (Exception $e) {
-                logCatchException($e);
+            } catch (Throwable $e) {
+                $isLogged = false;
+
+                if (is_object($container)) {
+                    $logger = $container->get(ServicesAbstract::LOGGER);
+
+                    if ($logger instanceof LoggerInterface) {
+                        $logger->error('Caught ' . get_class($e) . ': ' . $e->getMessage() . ' on file ' . $e->getFile() . ', line ' . $e->getLine());
+                        $isLogged = true;
+                    }
+                }
+
+                if (! $isLogged) {
+                    logError('PUBLISHPRESS FUTURE', $e);
+                }
             }
         }, 10, 0);
-    } catch (Exception $e) {
-        logCatchException($e);
+    } catch (Throwable $e) {
+        logError('PUBLISHPRESS FUTURE - Error starting the plugin', $e);
     }
 }

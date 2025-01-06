@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Framework\Logger;
@@ -114,7 +114,27 @@ interface LoggerInterface
     public function fetchAll();
 
     /**
+     * @return array
+     */
+    public function fetchLatest($limit = 100);
+
+    /**
+     * @return int
+     */
+    public function getTotalLogs();
+
+    /**
+     * @return int
+     */
+    public function getLogSizeInBytes();
+
+    /**
      * @return void
      */
     public function dropDatabaseTable();
+
+    /**
+     * @return bool
+     */
+    public function isDownloadLogRequested();
 }

@@ -351,3 +351,39 @@ p.description,
 #diagnostics-database-schema-check ul li {
     list-style-type: disc;
 }
+
+.pp-debug-log textarea {
+    width: 100%;
+    height: 500px;
+    font-size: 12px;
+    font-family: monospace;
+    background-color: #f9f9f9;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    padding: 10px;
+    text-wrap: nowrap;
+}
+
+.pp-debug-log-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.pp-debug-log-count {
+    margin-bottom: 10px;
+}
+
+.pp-debug-log-count select {
+    margin-left: 5px;
+}
+
+.pp-settings-title {
+    display: inline-block;
+    margin-right: 5px !important;
+}
+
+#pe-settings-tabs {
+    margin-top: 10px;
+}

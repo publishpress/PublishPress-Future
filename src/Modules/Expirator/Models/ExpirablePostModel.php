@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator\Models;
 
 use Closure;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
 use PublishPress\Future\Framework\WordPress\Models\PostModel;
-use PublishPress\Future\Modules\Debug\DebugInterface;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
@@ -115,7 +115,6 @@ class ExpirablePostModel extends PostModel
 
     /**
      * @param int $postId
-     * @param \PublishPress\Future\Modules\Debug\DebugInterface $debug
      * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
      * @param \PublishPress\Future\Framework\WordPress\Facade\HooksFacade $hooks
      * @param \PublishPress\Future\Framework\WordPress\Facade\UsersFacade $users
@@ -129,7 +128,6 @@ class ExpirablePostModel extends PostModel
      */
     public function __construct(
         $postId,
-        DebugInterface $debug,
         $options,
         $hooks,
         $users,
@@ -139,12 +137,13 @@ class ExpirablePostModel extends PostModel
         $termModelFactory,
         $expirationActionFactory,
         $actionArgsModelFactory,
-        $defaultDataModelFactory
+        $defaultDataModelFactory,
+        LoggerInterface $logger
     ) {
-        parent::__construct($postId, $termModelFactory, $debug, $hooks);
+        parent::__construct($postId, $termModelFactory, $hooks, $logger);
 
         $this->postId = $postId;
-        $this->debug = $debug;
+        $this->logger = $logger;
         $this->options = $options;
         $this->scheduler = $scheduler;
         $this->users = $users;
@@ -160,14 +159,23 @@ class ExpirablePostModel extends PostModel
 
     public function getExpirationDataAsArray()
     {
-        return [
+        $data = [
             'expireType' => $this->getExpirationType(),
             'newStatus' => $this->getExpirationNewStatus(),
             'category' => $this->getExpirationCategoryIDs(),
             'categoryTaxonomy' => $this->getExpirationTaxonomy(),
             'enabled' => $this->isExpirationEnabled(),
             'date' => $this->getExpirationDateAsUnixTime(),
+            'extraData' => [],
         ];
+
+        $data = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_EXPIRATION_DATA_AS_ARRAY,
+            $data,
+            $this->postId
+        );
+
+        return $data;
     }
 
     /**
@@ -404,13 +412,13 @@ class ExpirablePostModel extends PostModel
         $postId = $this->getPostId();
 
         if (! $this->isExpirationEnabled() && ! $force) {
-            $this->debug->log($postId . ' -> Tried to run action but future action is NOT ACTIVATED for the post');
+            $this->logger->debug($postId . ' -> Tried to run action but future action is NOT ACTIVATED for the post');
 
             return false;
         }
 
         if (! $this->isExpirationEnabled() && $force) {
-            $this->debug->log(
+            $this->logger->debug(
                 $postId . ' -> Future action is not activated for the post, but $force = true'
             );
         }
@@ -425,13 +433,13 @@ class ExpirablePostModel extends PostModel
         $expirationAction = $this->getExpirationAction();
 
         if (! $expirationAction) {
-            $this->debug->log($postId . ' -> Future action cancelled, expiration action is not found');
+            $this->logger->debug($postId . ' -> Future action cancelled, expiration action is not found');
 
             return false;
         }
 
         if (! $expirationAction instanceof ExpirationActionInterface) {
-            $this->debug->log($postId . ' -> Future action cancelled, expiration action is not valid');
+            $this->logger->debug($postId . ' -> Future action cancelled, expiration action is not valid');
 
             return false;
         }
@@ -439,13 +447,13 @@ class ExpirablePostModel extends PostModel
         $result = $expirationAction->execute();
 
         if (! is_bool($result)) {
-            $this->debug->log($postId . ' -> ACTION ' . $expirationAction . ' returned a non boolean value');
+            $this->logger->debug($postId . ' -> ACTION ' . $expirationAction . ' returned a non boolean value');
 
             return false;
         }
 
         if (! $result) {
-            $this->debug->log(
+            $this->logger->debug(
                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                 $postId . ' -> FAILED ' . print_r($this->getExpirationDataAsArray(), true)
             );
@@ -453,7 +461,7 @@ class ExpirablePostModel extends PostModel
             return false;
         }
 
-        $this->debug->log(
+        $this->logger->debug(
             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
             $postId . ' -> PROCESSED ' . print_r($this->getExpirationDataAsArray(), true)
         );
@@ -627,7 +635,7 @@ class ExpirablePostModel extends PostModel
         );
 
         if (empty($emailBody)) {
-            $this->debug->log($this->getPostId() . ' -> Tried to send email, but notification text is empty');
+            $this->logger->debug($this->getPostId() . ' -> Tried to send email, but notification text is empty');
 
             return false;
         }
@@ -764,12 +772,12 @@ class ExpirablePostModel extends PostModel
         $emailSent = false;
 
         if (! empty($emailAddresses)) {
-            $this->debug->log($this->getPostId() . ' -> SENDING EMAIL TO (' . implode(', ', $emailAddresses) . ')');
+            $this->logger->debug($this->getPostId() . ' -> SENDING EMAIL TO (' . implode(', ', $emailAddresses) . ')');
 
             // Send each email.
             foreach ($emailAddresses as $email) {
                 if (empty($email)) {
-                    $this->debug->log($this->getPostId() . ' -> EMPTY EMAIL ADDRESS, SKIPPING');
+                    $this->logger->debug($this->getPostId() . ' -> EMPTY EMAIL ADDRESS, SKIPPING');
 
                     continue;
                 }
@@ -782,7 +790,7 @@ class ExpirablePostModel extends PostModel
                     $emailAttachments
                 );
 
-                $this->debug->log(
+                $this->logger->debug(
                     sprintf(
                         '%d -> %s (%s)',
                         $this->getPostId(),
@@ -817,6 +825,11 @@ class ExpirablePostModel extends PostModel
         }
 
         return $timestamp;
+    }
+
+    public function disableExpiration()
+    {
+        $this->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, '0');
     }
 
     public function hasActionScheduledInPostMeta()
@@ -927,6 +940,20 @@ class ExpirablePostModel extends PostModel
         return $hash;
     }
 
+    public function getExtraData($key = null) {
+        $args = $this->actionArgsModel->getArgs();
+
+        if (is_null($key)) {
+            return $args;
+        }
+
+        if (! isset($args[$key])) {
+            return null;
+        }
+
+        return $args[$key];
+    }
+
     private function removeLegacyMetadataHash()
     {
         $this->deleteMeta(self::LEGACY_FLAG_METADATA_HASH);
@@ -935,5 +962,33 @@ class ExpirablePostModel extends PostModel
     private function registerNoticeMessage($postId, $message)
     {
         set_transient('post-expirator-notice-' . $postId, $message, MINUTE_IN_SECONDS);
+    }
+
+    public function shouldAutoEnable(): bool
+    {
+        return $this->defaultDataModel->isAutoEnabled();
+    }
+
+    public function setupFutureActionWithDefaultData()
+    {
+        $defaultExpire = $this->defaultDataModel->getActionDateParts($this->postId);
+
+        if (empty($defaultExpire['ts'])) {
+            return;
+        }
+
+        $opts = [
+            'expireType' => $this->defaultDataModel->getAction(),
+            'newStatus' => $this->defaultDataModel->getNewStatus(),
+            'category' => $this->defaultDataModel->getTerms(),
+            'categoryTaxonomy' => (string)$this->defaultDataModel->getTaxonomy(),
+        ];
+
+        $this->hooks->doAction(
+            HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
+            $this->postId,
+            $defaultExpire['ts'],
+            $opts
+        );
     }
 }

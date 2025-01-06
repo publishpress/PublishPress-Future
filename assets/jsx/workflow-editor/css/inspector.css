@@ -1,0 +1,181 @@
+.edit-post-post-status .components-base-control {
+    flex: auto;
+}
+
+.editor-post-title__panel,
+.editor-post-description__panel {
+    padding-top: 8px;
+}
+
+.editor-post-status__panel {
+    margin-top: 16px;
+    gap: 16px !important;
+}
+
+.editor-post-status__panel button {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.workflow-editor-element-inspector__warning {
+    background: #fff;
+    display: block;
+    font-size: 13px;
+    padding: 32px 36px;
+    text-align: center;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+
+.workflow-editor-inspector-card {
+    align-items: flex-start;
+    color: #1e1e1e;
+    display: flex;
+    padding: 16px;
+}
+
+.workflow-editor-inspector-card {
+    align-items: flex-start;
+    color: #1e1e1e;
+    display: flex;
+    padding: 16px;
+}
+
+.workflow-editor-inspector-icon {
+    align-items: center;
+    display: flex;
+    height: 24px;
+    justify-content: center;
+    width: 24px;
+}
+
+.workflow-editor-inspector-card .workflow-editor-inspector-icon {
+    flex: 0 0 24px;
+    height: 24px;
+    margin-left: 0;
+    margin-right: 12px;
+    width: 24px;
+}
+
+.workflow-editor-inspector-card {
+    align-items: flex-start;
+    color: #1e1e1e;
+    display: flex;
+    padding: 16px;
+}
+
+.workflow-editor-inspector-card__content {
+    flex-grow: 1;
+}
+
+.workflow-editor-inspector-inspector h2, .workflow-editor-inspector-inspector h3 {
+    color: #1e1e1e;
+    font-size: 13px;
+    margin-bottom: 1.5em;
+}
+
+.interface-complementary-area h2 {
+    color: #1e1e1e;
+    font-size: 13px;
+    margin-bottom: 1.5em;
+}
+
+.workflow-editor-inspector-card__title.workflow-editor-inspector-card__title {
+    font-size: 13px;
+    line-height: 1.4;
+    margin: 0;
+    padding: 3px 0;
+}
+
+
+.workflow-editor-inspector-card__description {
+    display: block;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-top: 4px;
+}
+
+.workflow-editor-inspector-icon.has-colors svg {
+    fill: currentColor;
+}
+
+.workflow-editor-inspector-icon svg {
+    max-height: 24px;
+    max-width: 24px;
+    min-height: 20px;
+    min-width: 20px;
+}
+
+.workflow-editor-validation-notification {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.workflow-editor-validation-panel .node-icon {
+    margin-right: 5px;
+}
+
+.workflow-editor-validation-notification.workflow-editor-success .node-icon * {
+    color: #46b450;
+}
+
+.workflow-editor-validation-notification.workflow-editor-error .node-icon * {
+    color: #d90f0f;
+}
+
+.edit-post-sidebar__panel .components-h-stack {
+    width: 100%;
+}
+
+.workflow-editor-inspector-card__content table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 20px;
+}
+
+.workflow-editor-inspector-card__content table th,
+.workflow-editor-inspector-card__content table td {
+    padding: 2px 3px;
+    border: 1px solid #e1e1e1;
+    text-align: left;
+}
+
+.workflow-editor-data-flow-variable ul {
+    margin-left: 40px;
+    margin-top: 6px;
+    margin-bottom: 11px;
+    padding: 2px;
+}
+
+.workflow-editor-data-flow-variable ul li {
+    margin-bottom: 2px;
+    list-style: disc;
+    line-height: 16px;
+}
+
+.workflow-editor-data-flow-variable ul code {
+    max-width: 204px;
+    display: inline-block;
+    overflow: auto;
+    text-wrap: wrap;
+}
+
+p.settings-field-description,
+p.description {
+    margin-top: -14px !important;
+    font-size: 12px;
+    font-style: normal;
+    color: rgb(117, 117, 117);
+}
+
+p.description.margin-top {
+    margin-top: 8px !important;
+}
+
+.components-panel__row .components-base-control {
+    width: 100%;
+}

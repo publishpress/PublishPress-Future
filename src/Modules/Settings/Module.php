@@ -1,15 +1,14 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Settings;
 
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\ModuleInterface;
-use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
-use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Settings\Controllers\Controller;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -52,12 +51,18 @@ class Module implements ModuleInterface
     private $migrationsFactory;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
      * @param \Closure $settingsPostTypesModelFactory
      * @param \Closure $taxonomiesModelFactory
      * @param \PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel $actionsModel
      * @param \Closure $migrationsFactoy
+     * @param LoggerInterface $logger
      */
     public function __construct(
         HookableInterface $hooks,
@@ -65,7 +70,8 @@ class Module implements ModuleInterface
         $settingsPostTypesModelFactory,
         $taxonomiesModelFactory,
         $actionsModel,
-        $migrationsFactoy
+        $migrationsFactoy,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->settings = $settings;
@@ -73,6 +79,7 @@ class Module implements ModuleInterface
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
         $this->actionsModel = $actionsModel;
         $this->migrationsFactory = $migrationsFactoy;
+        $this->logger = $logger;
 
         $this->controller = $this->getController();
     }
@@ -93,7 +100,8 @@ class Module implements ModuleInterface
             $this->settingsPostTypesModelFactory,
             $this->taxonomiesModelFactory,
             $this->actionsModel,
-            $this->migrationsFactory
+            $this->migrationsFactory,
+            $this->logger
         );
     }
 }

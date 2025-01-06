@@ -45,3 +45,6 @@
 - phpstan.neon
 - codeception.yml
 - CHANGELOG.md
+- gh_token.txt
+- .env
+- .env.example

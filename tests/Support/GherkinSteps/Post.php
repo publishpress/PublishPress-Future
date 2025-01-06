@@ -411,10 +411,13 @@ trait Post
      */
     public function iSeeThePostsWillExpireTomorrowAtNoon($postSlugs)
     {
+        $container = Container::getInstance();
+        $dateTimeFacade = $container->get(Services::DATETIME);
+
         $tomorrowDate = $this->getTomorrowDateAtNoon();
 
         $format = get_option('date_format') . ' ' . get_option('time_format');
-        $dateString = PostExpirator_Util::get_wp_date($format, $tomorrowDate->format('U'));
+        $dateString = $dateTimeFacade->getWpDate($format, $tomorrowDate->format('U'));
 
         $postSlugs = explode(',', $postSlugs);
         $postSlugs = array_map('trim', $postSlugs);
@@ -432,10 +435,13 @@ trait Post
      */
     public function iSeeThePostsWillExpireInSevenDaysAtNoon($postSlugs)
     {
+        $container = Container::getInstance();
+        $dateTimeFacade = $container->get(Services::DATETIME);
+
         $nextWeekDate = $this->getNextWeekDateAtNoon();
 
         $format = get_option('date_format') . ' ' . get_option('time_format');
-        $dateString = PostExpirator_Util::get_wp_date($format, $nextWeekDate->format('U'));
+        $dateString = $dateTimeFacade->getWpDate($format, $nextWeekDate->format('U'));
 
         $postSlugs = explode(',', $postSlugs);
         $postSlugs = array_map('trim', $postSlugs);

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator\Migrations;
@@ -59,7 +59,10 @@ class V30104ArgsColumnLength implements MigrationInterface
     public function formatLogActionColumn($text, $row)
     {
         if ($row['hook'] === self::HOOK) {
-            return __('Change args column length to 1000 in the table _ppfuture_actions_args after v3.1.4', 'publishpress-future');
+            return __(
+                'Change args column length to 1000 in the table _ppfuture_actions_args after v3.1.4',
+                'publishpress-future'
+            );
         }
 
         return $text;

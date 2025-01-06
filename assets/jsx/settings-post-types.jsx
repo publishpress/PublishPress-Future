@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 import {
@@ -15,7 +15,9 @@ import { StrictMode, useState, useEffect } from "@wordpress/element";
 
 import { createRoot } from 'react-dom/client';
 
-import {
+import { render } from "react-dom";
+
+const {
     nonce,
     referrer,
     settings,
@@ -23,8 +25,7 @@ import {
     taxonomiesList,
     text,
     statusesList
-} from "&config.settings-post-types";
-import { render } from "react-dom";
+} = window.publishpressFutureSettingsConfig;
 
 const SettingsFormPanel = (props) => {
     const [formValidationStatusPerPostType, setFormValidationStatusPerPostType] = useState({});
@@ -118,6 +119,9 @@ const SettingsFormPanel = (props) => {
 };
 
 const container = document.getElementById("publishpress-future-settings-post-types");
-const component = (<SettingsFormPanel />);
 
-createRoot(container).render(component);
+if (container) {
+    const component = (<SettingsFormPanel />);
+
+    createRoot(container).render(component);
+}

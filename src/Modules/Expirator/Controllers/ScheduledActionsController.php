@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator\Controllers;
@@ -9,9 +9,13 @@ namespace PublishPress\Future\Modules\Expirator\Controllers;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
-use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\Tables\ScheduledActionsTable as ScheduledActionsTable;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
+use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
+use PublishPress\Future\Modules\Workflows\Module;
+use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -37,16 +41,30 @@ class ScheduledActionsController implements InitializableInterface
     private $scheduledActionsTableFactory;
 
     /**
+     * @var SettingsFacade
+     */
+    private $settingsFacade;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @param HookableInterface $hooksFacade
      */
     public function __construct(
         HookableInterface $hooksFacade,
         \Closure $actionArgsModelFactory,
-        \Closure $scheduledActionsTableFactory
+        \Closure $scheduledActionsTableFactory,
+        SettingsFacade $settingsFacade,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooksFacade;
         $this->actionArgsModelFactory = $actionArgsModelFactory;
         $this->scheduledActionsTableFactory = $scheduledActionsTableFactory;
+        $this->settingsFacade = $settingsFacade;
+        $this->logger = $logger;
     }
 
     public function initialize()
@@ -85,37 +103,49 @@ class ScheduledActionsController implements InitializableInterface
             10,
             3
         );
+
+        $this->hooks->addFilter(
+            CoreHooksAbstract::FILTER_ADMIN_TITLE,
+            [$this, 'onFilterAdminTitle'],
+            10,
+            2
+        );
     }
 
     public function onAdminMenu()
     {
-        add_menu_page(
-            __('PublishPress Future', 'post-expirator'),
-            __('Future', 'post-expirator'),
-            'manage_options',
-            'publishpress-future',
-            [\PostExpirator_Display::getInstance(), 'settings_tabs'],
-            'dashicons-clock',
-            74
-        );
-        add_submenu_page(
-            'publishpress-future',
-            __('Action Settings', 'post-expirator'),
-            __('Action Settings', 'post-expirator'),
-            'manage_options',
-            'publishpress-future',
-            [\PostExpirator_Display::getInstance(), 'settings_tabs']
-        );
+        try {
+            add_menu_page(
+                __('PublishPress Future', 'post-expirator'),
+                __('Future', 'post-expirator'),
+                'manage_options',
+                'publishpress-future',
+                [\PostExpirator_Display::getInstance(), 'settings_tabs'],
+                'dashicons-clock',
+                74
+            );
 
-        $hook_suffix = add_submenu_page(
-            'publishpress-future',
-            __('Scheduled Actions', 'post-expirator'),
-            __('Scheduled Actions', 'post-expirator'),
-            'manage_options',
-            'publishpress-future-scheduled-actions',
-            [$this, 'renderScheduledActionsTemplate']
-        );
-        add_action('load-' . $hook_suffix, [$this, 'processAdminUi']);
+            add_submenu_page(
+                'publishpress-future',
+                __('Action Settings', 'post-expirator'),
+                __('Action Settings', 'post-expirator'),
+                'manage_options',
+                'publishpress-future',
+                [\PostExpirator_Display::getInstance(), 'settings_tabs']
+            );
+
+            $hook_suffix = add_submenu_page(
+                "edit.php?post_type=" . Module::POST_TYPE_WORKFLOW,
+                __('Scheduled Actions', 'post-expirator'),
+                __('Scheduled Actions', 'post-expirator'),
+                'manage_options',
+                'publishpress-future-scheduled-actions',
+                [$this, 'renderScheduledActionsTemplate']
+            );
+            add_action('load-' . $hook_suffix, [$this, 'processAdminUi']);
+        } catch (Throwable $th) {
+            $this->logger->error('Error adding scheduled actions menu: ' . $th->getMessage());
+        }
     }
 
     public function renderScheduledActionsTemplate()
@@ -176,11 +206,17 @@ class ScheduledActionsController implements InitializableInterface
         }
 
         // Add nonce field
-        $screenSettings .= wp_nonce_field('publishpressfuture_actions_log_format', 'publishpressfuture_actions_log_format_nonce', true, false);
+        $screenSettings .= wp_nonce_field(
+            'publishpressfuture_actions_log_format',
+            'publishpressfuture_actions_log_format_nonce',
+            true,
+            false
+        );
 
         $screenSettings .= '<fieldset class="metabox-prefs">';
         $screenSettings .= '<legend>' . esc_html__('Log format', 'post-expirator') . '</legend>';
         $screenSettings .= '<label for="' . $screen->id . '_log_format_list">';
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $screenSettings .= '<input type="radio" id="' . $screen->id . '_log_format_list" name="publishpressfuture_actions_log_format" value="list" ' . checked(
             $userLogFormat,
             'list',
@@ -190,6 +226,7 @@ class ScheduledActionsController implements InitializableInterface
         $screenSettings .= '</label>';
         $screenSettings .= '&nbsp;';
         $screenSettings .= '<label for="' . $screen->id . '_log_format_popup">';
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $screenSettings .= '<input type="radio" id="' . $screen->id . '_log_format_popup" name="publishpressfuture_actions_log_format" value="popup" ' . checked(
             $userLogFormat,
             'popup',
@@ -229,20 +266,24 @@ class ScheduledActionsController implements InitializableInterface
 
     public function enqueueScripts($screenId)
     {
-        if ('future_page_publishpress-future-scheduled-actions' === $screenId) {
+        try {
+            if ('admin_page_publishpress-future-scheduled-actions' === $screenId) {
             wp_enqueue_style(
                 'postexpirator-css',
                 POSTEXPIRATOR_BASEURL . 'assets/css/style.css',
                 false,
-                POSTEXPIRATOR_VERSION
+                PUBLISHPRESS_FUTURE_VERSION
             );
 
             wp_enqueue_style(
                 'pe-footer',
                 POSTEXPIRATOR_BASEURL . 'assets/css/footer.css',
                 false,
-                POSTEXPIRATOR_VERSION
-            );
+                PUBLISHPRESS_FUTURE_VERSION
+                );
+            }
+        } catch (Throwable $th) {
+            $this->logger->error('Error enqueuing scripts: ' . $th->getMessage());
         }
     }
 
@@ -252,11 +293,12 @@ class ScheduledActionsController implements InitializableInterface
             return $html;
         }
 
-        if ($action->get_hook() === 'publishpressfuture_run_workflow') {
+        $hook = $action->get_hook();
+
+        if ($hook === WorkflowsHooksAbstract::ACTION_WORKFLOW_SAVED) {
             $args = $action->get_args();
 
             if (isset($args['postId']) && isset($args['workflow']) && 'expire' === $args['workflow']) {
-
                 $transientName = 'post-expirator-notice-' . (int) $args['postId'];
                 $noticeMessage = get_transient($transientName);
                 delete_transient($transientName);
@@ -269,6 +311,32 @@ class ScheduledActionsController implements InitializableInterface
             }
         }
 
+        if ($hook === WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_NODE) {
+            $html = __('Executed workflow scheduled step', 'post-expirator');
+        }
+
+        if ($hook === WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS) {
+            $days = $this->settingsFacade->getScheduledWorkflowStepsCleanupRetention();
+
+            $html = sprintf(
+                __('Cleaned up completed scheduled steps older than %d days', 'post-expirator'),
+                $days
+            );
+        }
+
+        if ($hook === WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS) {
+            $html = __('Cleaned up orphan workflow scheduled step arguments', 'post-expirator');
+        }
+
         return $html;
+    }
+
+    public function onFilterAdminTitle($adminTitle, $title)
+    {
+        if (isset($_GET['page']) && $_GET['page'] === 'publishpress-future-scheduled-actions') {
+            return str_replace($title, __('Scheduled Actions', 'post-expirator'), $adminTitle);
+        }
+
+        return $adminTitle;
     }
 }

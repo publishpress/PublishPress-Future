@@ -1,17 +1,15 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Framework\WordPress\Models;
 
-use PublishPress\Future\Core\DI\Container;
-use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
 use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentTermException;
-use PublishPress\Future\Modules\Debug\DebugInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use WP_Post;
 
@@ -37,22 +35,21 @@ class PostModel
     protected $termModelFactory;
 
     /**
-     * @var DebugInterface
-     */
-    protected $debug;
-
-    /**
      * @var HookableInterface
      */
     protected $hooks;
 
     /**
-     * @param int|\WP_Post $post
-     * @param \Closure $termModelFactory
-     * @param DebugInterface $debug
+     * @var LoggerInterface
      */
-    public function __construct($post, $termModelFactory, DebugInterface $debug, HookableInterface $hooks)
-    {
+    protected $logger;
+
+    public function __construct(
+        $post,
+        $termModelFactory,
+        HookableInterface $hooks,
+        LoggerInterface $logger
+    ) {
         if (is_object($post)) {
             $this->postInstance = $post;
             $this->postId = $post->ID;
@@ -63,8 +60,8 @@ class PostModel
         }
 
         $this->termModelFactory = $termModelFactory;
-        $this->debug = $debug;
         $this->hooks = $hooks;
+        $this->logger = $logger;
     }
 
     /**
@@ -75,13 +72,38 @@ class PostModel
      */
     public function setPostStatus($newPostStatus)
     {
-        $post = $this->getPostInstance();
+        if ($newPostStatus === 'publish') {
+            return $this->publish(false);
+        }
 
-        return $this->update(
-            [
-                'post_status' => $newPostStatus,
-            ]
-        );
+        $postData = [
+            'post_status' => $newPostStatus,
+        ];
+
+        return $this->update($postData);
+    }
+
+    /**
+     * @param bool $updateDateInFuture
+     *
+     * @return bool
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
+     */
+    public function publish($updateDateInFuture = true)
+    {
+        if ($updateDateInFuture) {
+            $postData = ['post_status' => 'publish'];
+            $currentPostDate = get_post_field('post_date', $this->getPostId());
+
+            if (strtotime($currentPostDate) > current_time('timestamp')) {
+                $postData['post_date'] = current_time('mysql');
+                $postData['post_date_gmt'] = current_time('mysql', true);
+            }
+
+            $this->update($postData);
+        }
+
+        return wp_publish_post($this->getPostId()) ? true : false;
     }
 
     /**
@@ -147,9 +169,10 @@ class PostModel
 
     /**
      * @param string|array $metaKey
+     * @param mixed $metaValue
      * @return void
      */
-    public function deleteMeta($metaKey)
+    public function deleteMeta($metaKey, $metaValue = null)
     {
         if (! is_array($metaKey)) {
             $metaKey = [$metaKey];
@@ -166,7 +189,8 @@ class PostModel
 
             \delete_post_meta(
                 $postId,
-                \sanitize_key($key)
+                \sanitize_key($key),
+                $metaValue
             );
         }
     }
@@ -269,17 +293,16 @@ class PostModel
 
     public function getTermNames($taxonomy = 'post_tag', $args = [])
     {
-        $debugIsEnabled = $this->debug->isEnabled();
         $terms = $this->getTerms($taxonomy, $args);
 
         foreach ($terms as &$term) {
             try {
                 $term = $term->getName();
             } catch (NonexistentTermException $e) {
-                if ($debugIsEnabled) {
-                    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
-                    error_log('Error: Nonexistent term: ' . print_r($term, true) . ' in ' . __METHOD__);
-                }
+                $this->logger->error(
+                    'Nonexistent term: {term} in {method}',
+                    ['term' => $term, 'method' => __METHOD__]
+                );
 
                 continue;
             }

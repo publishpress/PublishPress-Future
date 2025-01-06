@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator\Controllers;
@@ -12,11 +12,13 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
-use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
+use Throwable;
 use WP_Post;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -34,15 +36,22 @@ class ClassicEditorController implements InitializableInterface
     private $currentUserModel;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @param HookableInterface $hooksFacade
      * @param \Closure $currentUserModelFactory
      */
     public function __construct(
         HookableInterface $hooksFacade,
-        $currentUserModelFactory
+        $currentUserModelFactory,
+        LoggerInterface $logger
     ) {
         $this->hooks = $hooksFacade;
         $this->currentUserModel = $currentUserModelFactory();
+        $this->logger = $logger;
     }
 
     public function initialize()
@@ -111,43 +120,49 @@ class ClassicEditorController implements InitializableInterface
 
     public function registerClassicEditorMetabox($postType, $post)
     {
-        // Only show the metabox if the block editor is not enabled for the post type
-        if (! empty($post) && $this->isGutenbergAvailableForThePost($post)) {
-            if (! $this->classicEditorIsActiveForCurrentSession()) {
-                return;
+        try {
+            // Only show the metabox if the block editor is not enabled for the post type
+            if (! empty($post) && $this->isGutenbergAvailableForThePost($post)) {
+                if (! $this->classicEditorIsActiveForCurrentSession()) {
+                    return;
+                }
             }
-        }
 
-        $container = Container::getInstance();
-        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+            $container = Container::getInstance();
+            $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
-        $defaults = $settingsFacade->getPostTypeDefaults($postType);
-        $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
+            $defaults = $settingsFacade->getPostTypeDefaults($postType);
+            $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
 
-        // if settings are not configured, show the metabox by default only for posts and pages
-        if (
-            $hideMetabox === false
-            &&
-            (
+            $metaboxTitle = $settingsFacade->getMetaboxTitle() ?? __('Future Actions', 'post-expirator');
+
+            // if settings are not configured, show the metabox by default only for posts and pages
+            if (
+                $hideMetabox === false
+                &&
                 (
-                    ! isset($defaults['activeMetaBox'])
-                    && in_array($postType, ['post', 'page'], true)
+                    (
+                        ! isset($defaults['activeMetaBox'])
+                        && in_array($postType, ['post', 'page'], true)
+                    )
+                    || (
+                        is_array($defaults)
+                        && (in_array((string)$defaults['activeMetaBox'], ['active', '1'], true))
+                    )
                 )
-                || (
-                    is_array($defaults)
-                    && (in_array((string)$defaults['activeMetaBox'], ['active', '1'], true))
-                )
-            )
-        ) {
-            add_meta_box(
-                'expirationdatediv',
-                __('PublishPress Future', 'post-expirator'),
-                [$this, 'renderClassicEditorMetabox'],
-                $postType,
-                'side',
-                'core',
-                []
-            );
+            ) {
+                add_meta_box(
+                    'expirationdatediv',
+                    $metaboxTitle,
+                    [$this, 'renderClassicEditorMetabox'],
+                    $postType,
+                    'side',
+                    'core',
+                    []
+                );
+            }
+        } catch (Throwable $th) {
+            $this->logger->error('Error registering classic editor metabox: ' . $th->getMessage());
         }
     }
 
@@ -182,231 +197,243 @@ class ClassicEditorController implements InitializableInterface
 
     public function processMetaboxUpdate($postId)
     {
-        // Don't run if this is an auto save
-        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-            return;
+        try {
+            // Don't run if this is an auto save
+            if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+                return;
+            }
+
+            // Don't update data if the function is called for saving revision.
+            $posttype = get_post_type((int)$postId);
+            if ($posttype === 'revision') {
+                return;
+            }
+
+            if (empty($_POST['future_action_view']) || $_POST['future_action_view'] !== 'classic-editor') {
+                return;
+            }
+
+            // Don't run if was triggered by block editor.
+            // It is processed on the method "ExpirationController::handleRestAPIInit".
+            if (empty($_POST['future_action_view'])) {
+                return;
+            }
+
+
+            check_ajax_referer('__future_action', '_future_action_nonce');
+
+            // Classic editor, quick edit
+            $shouldSchedule = isset($_POST['future_action_enabled']) && $_POST['future_action_enabled'] === '1';
+
+            if (! $shouldSchedule) {
+                $this->hooks->doAction(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
+
+                return;
+            }
+
+            $expireType = isset($_POST['future_action_action']) ? sanitize_text_field($_POST['future_action_action']) : '';
+            $newStatus = isset($_POST['future_action_new_status'])
+                ? sanitize_text_field($_POST['future_action_new_status']) : 'draft';
+
+            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $newStatus = 'draft';
+            }
+
+            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $newStatus = 'private';
+            }
+
+            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $newStatus = 'trash';
+            }
+
+            $opts = [
+                'expireType' => $expireType,
+                'newStatus' => $newStatus,
+                'category' => isset($_POST['future_action_terms'])
+                    ? sanitize_text_field($_POST['future_action_terms']) : '',
+                'categoryTaxonomy' => isset($_POST['future_action_taxonomy'])
+                    ? sanitize_text_field($_POST['future_action_taxonomy']) : '',
+            ];
+
+            if (! empty($opts['category'])) {
+                $taxonomiesModelFactory = Container::getInstance()->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY);
+                $taxonomiesModel = $taxonomiesModelFactory();
+
+                $opts['category'] = $taxonomiesModel->normalizeTermsCreatingIfNecessary(
+                    $opts['categoryTaxonomy'],
+                    explode(',', $opts['category'])
+                );
+            }
+
+            $date = isset($_POST['future_action_date']) ? sanitize_text_field($_POST['future_action_date']) : '';
+            $date = strtotime($date);
+
+            $this->hooks->doAction(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $date, $opts);
+        } catch (Throwable $th) {
+            $this->logger->error('Error processing metabox update: ' . $th->getMessage());
         }
-
-        // Don't update data if the function is called for saving revision.
-        $posttype = get_post_type((int)$postId);
-        if ($posttype === 'revision') {
-            return;
-        }
-
-        if (empty($_POST['future_action_view']) || $_POST['future_action_view'] !== 'classic-editor') {
-            return;
-        }
-
-        // Don't run if was triggered by block editor.
-        // It is processed on the method "ExpirationController::handleRestAPIInit".
-        if (empty($_POST['future_action_view'])) {
-            return;
-        }
-
-
-        check_ajax_referer('__future_action', '_future_action_nonce');
-
-        // Classic editor, quick edit
-        $shouldSchedule = isset($_POST['future_action_enabled']) && $_POST['future_action_enabled'] === '1';
-
-        if (! $shouldSchedule) {
-            $this->hooks->doAction(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
-
-            return;
-        }
-
-        $expireType = isset($_POST['future_action_action']) ? sanitize_text_field($_POST['future_action_action']) : '';
-        $newStatus = isset($_POST['future_action_new_status'])
-            ? sanitize_text_field($_POST['future_action_new_status']) : 'draft';
-
-        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
-            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
-            $newStatus = 'draft';
-        }
-
-        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
-            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
-            $newStatus = 'private';
-        }
-
-        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
-            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
-            $newStatus = 'trash';
-        }
-
-        $opts = [
-            'expireType' => $expireType,
-            'newStatus' => $newStatus,
-            'category' => isset($_POST['future_action_terms'])
-                ? sanitize_text_field($_POST['future_action_terms']) : '',
-            'categoryTaxonomy' => isset($_POST['future_action_taxonomy'])
-                ? sanitize_text_field($_POST['future_action_taxonomy']) : '',
-        ];
-
-        if (! empty($opts['category'])) {
-            $taxonomiesModelFactory = Container::getInstance()->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY);
-            $taxonomiesModel = $taxonomiesModelFactory();
-
-            $opts['category'] = $taxonomiesModel->normalizeTermsCreatingIfNecessary(
-                $opts['categoryTaxonomy'],
-                explode(',', $opts['category'])
-            );
-        }
-
-        $date = isset($_POST['future_action_date']) ? sanitize_text_field($_POST['future_action_date']) : '';
-        $date = strtotime($date);
-
-        $this->hooks->doAction(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $date, $opts);
     }
 
     public function enqueueScripts()
     {
-        $currentScreen = get_current_screen();
+        try {
 
-        if (
-            $currentScreen->base !== 'post'
-            // Add support to the Event Espresso plugin
-            && $currentScreen->id !== 'espresso_events'
-        ) {
-            return;
-        }
+            $currentScreen = get_current_screen();
 
-        $isNewPostPage = $currentScreen->action === 'add';
-        $isEditPostPage = ! empty($_GET['action']) && ($_GET['action'] === 'edit'); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, Generic.Files.LineLength.TooLong
+            if (
+                $currentScreen->base !== 'post'
+                // Add support to the Event Espresso plugin
+                && $currentScreen->id !== 'espresso_events'
+            ) {
+                return;
+            }
 
-        if (! $isEditPostPage && ! $isNewPostPage) {
-            return;
-        }
+            $isNewPostPage = $currentScreen->action === 'add';
+            $isEditPostPage = ! empty($_GET['action']) && ($_GET['action'] === 'edit'); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, Generic.Files.LineLength.TooLong
 
-        $container = Container::getInstance();
-        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
-        $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
-        $postType = $currentScreen->post_type;
+            if (! $isEditPostPage && ! $isNewPostPage) {
+                return;
+            }
 
-        $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
+            $container = Container::getInstance();
+            $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+            $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
+            $postType = $currentScreen->post_type;
 
-        if (! in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1', true])) {
-            return;
-        }
+            $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
 
-        $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
-        if ($hideMetabox) {
-            return;
-        }
+            if (! in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1', true])) {
+                return;
+            }
 
-        wp_enqueue_script("wp-components");
-        wp_enqueue_script("wp-plugins");
-        wp_enqueue_script("wp-element");
-        wp_enqueue_script("wp-data");
+            $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
+            if ($hideMetabox) {
+                return;
+            }
 
-        wp_enqueue_script(
-            'publishpress-future-classic-editor',
-            POSTEXPIRATOR_BASEURL . 'assets/js/classic-editor.js',
-            [
-                'wp-i18n',
-                'wp-components',
-                'wp-url',
-                'wp-data',
-                'wp-api-fetch',
-                'wp-element',
-                'inline-edit-post',
-                'wp-html-entities',
-                'wp-plugins'
-            ],
-            PUBLISHPRESS_FUTURE_VERSION,
-            true
-        );
+            wp_enqueue_script("wp-components");
+            wp_enqueue_script("wp-plugins");
+            wp_enqueue_script("wp-element");
+            wp_enqueue_script("wp-data");
 
-        wp_enqueue_style(
-            'publishpress-future-classic-editor',
-            POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
-            ['wp-components'],
-            PUBLISHPRESS_FUTURE_VERSION
-        );
+            wp_enqueue_script(
+                'publishpress-future-classic-editor',
+                Plugin::getScriptUrl('classicEditor'),
+                [
+                    'wp-i18n',
+                    'wp-components',
+                    'wp-url',
+                    'wp-data',
+                    'wp-api-fetch',
+                    'wp-element',
+                    'inline-edit-post',
+                    'wp-html-entities',
+                    'wp-plugins'
+                ],
+                PUBLISHPRESS_FUTURE_VERSION,
+                true
+            );
 
-        $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
-        $defaultDataModel = $defaultDataModelFactory->create($postType);
+            wp_enqueue_style(
+                'publishpress-future-classic-editor',
+                POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
+                ['wp-components'],
+                PUBLISHPRESS_FUTURE_VERSION
+            );
 
-        $debug = $container->get(ServicesAbstract::DEBUG);
+            $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
+            $defaultDataModel = $defaultDataModelFactory->create($postType);
 
-        $taxonomyPluralName = '';
-        if (! empty($postTypeDefaultConfig['taxonomy'])) {
-            $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
-            $taxonomyPluralName = $taxonomy->label;
-        }
+            $debug = $container->get(ServicesAbstract::DEBUG);
 
-        $taxonomyTerms = [];
-        if (! empty($postTypeDefaultConfig['taxonomy'])) {
-            $taxonomyTerms = get_terms([
-                'taxonomy' => $postTypeDefaultConfig['taxonomy'],
-                'hide_empty' => false,
-            ]);
-        }
+            $taxonomyPluralName = '';
+            if (! empty($postTypeDefaultConfig['taxonomy'])) {
+                $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
+                $taxonomyPluralName = $taxonomy->label;
+            }
 
-        $defaultExpirationDate = $defaultDataModel->getActionDateParts();
+            $taxonomyTerms = [];
+            if (! empty($postTypeDefaultConfig['taxonomy'])) {
+                $taxonomyTerms = get_terms([
+                    'taxonomy' => $postTypeDefaultConfig['taxonomy'],
+                    'hide_empty' => false,
+                ]);
+            }
 
-        wp_localize_script(
-            'publishpress-future-classic-editor',
-            'publishpressFutureClassicEditorConfig',
-            [
-                'postTypeDefaultConfig' => $postTypeDefaultConfig,
-                'defaultDate' => $defaultExpirationDate['iso'],
-                'is12Hour' => get_option('time_format') !== 'H:i',
-                'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
-                'startOfWeek' => get_option('start_of_week', 0),
-                'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
-                'statusesSelectOptions' => $actionsModel->getStatusesAsOptionsForPostType($postType),
-                'isDebugEnabled' => $debug->isEnabled(),
-                'taxonomyName' => $taxonomyPluralName,
-                'taxonomyTerms' => $taxonomyTerms,
-                'postType' => $currentScreen->post_type,
-                'isNewPost' => $isNewPostPage,
-                'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
-                'strings' => [
-                    'category' => __('Category', 'post-expirator'),
-                    'panelTitle' => __('PublishPress Future', 'post-expirator'),
-                    'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
-                    'action' => __('Action', 'post-expirator'),
-                    'showCalendar' => __('Show Calendar', 'post-expirator'),
-                    'hideCalendar' => __('Hide Calendar', 'post-expirator'),
-                    'loading' => __('Loading', 'post-expirator'),
-                    // translators: the text between {{}} is the link to the settings page.
-                    'timezoneSettingsHelp' => __(
-                        'Timezone is controlled by the {WordPress Settings}.',
-                        'post-expirator'
-                    ),
-                    // translators: %s is the name of the taxonomy in plural form.
-                    'noTermsFound' => sprintf(
+            $defaultExpirationDate = $defaultDataModel->getActionDateParts();
+
+            $metaboxTitle = $settingsFacade->getMetaboxTitle() ?? __('Future Actions', 'post-expirator');
+            $metaboxCheckboxLabel = $settingsFacade->getMetaboxCheckboxLabel() ?? __('Enable Future Action', 'post-expirator');
+
+            wp_localize_script(
+                'publishpress-future-classic-editor',
+                'publishpressFutureClassicEditorConfig',
+                [
+                    'postTypeDefaultConfig' => $postTypeDefaultConfig,
+                    'defaultDate' => $defaultExpirationDate['iso'],
+                    'is12Hour' => get_option('time_format') !== 'H:i',
+                    'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
+                    'startOfWeek' => get_option('start_of_week', 0),
+                    'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
+                    'statusesSelectOptions' => $actionsModel->getStatusesAsOptionsForPostType($postType),
+                    'isDebugEnabled' => $debug->isEnabled(),
+                    'taxonomyName' => $taxonomyPluralName,
+                    'taxonomyTerms' => $taxonomyTerms,
+                    'postType' => $currentScreen->post_type,
+                    'isNewPost' => $isNewPostPage,
+                    'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
+                    'strings' => [
+                        'category' => __('Category', 'post-expirator'),
+                        'panelTitle' => $metaboxTitle,
+                        'enablePostExpiration' => $metaboxCheckboxLabel,
+                        'action' => __('Action', 'post-expirator'),
+                        'showCalendar' => __('Show Calendar', 'post-expirator'),
+                        'hideCalendar' => __('Hide Calendar', 'post-expirator'),
+                        'loading' => __('Loading', 'post-expirator'),
+                        // translators: the text between {{}} is the link to the settings page.
+                        'timezoneSettingsHelp' => __(
+                            'Timezone is controlled by the {WordPress Settings}.',
+                            'post-expirator'
+                        ),
                         // translators: %s is the name of the taxonomy in plural form.
-                        __('No %s found.', 'post-expirator'),
-                        strtolower($taxonomyPluralName)
-                    ),
-                    'noTaxonomyFound' => __(
-                        'You must assign a taxonomy to this post type to use this feature.',
-                        'post-expirator'
-                    ),
-                    // translators: %s is the name of the taxonomy in plural form.
-                    'newTerms' => __('New %s', 'post-expirator'),
-                    // translators: %s is the name of the taxonomy in plural form.
-                    'removeTerms' => __('%s to remove', 'post-expirator'),
-                    // translators: %s is the name of the taxonomy in plural form.
-                    'addTerms' => __('%s to add', 'post-expirator'),
-                    // translators: %s is the name of the taxonomy in singular form.
-                    'addTermsPlaceholder' => sprintf(
-                        __('Search for %s', 'post-expirator'),
-                        strtolower($taxonomyPluralName)
-                    ),
-                    'errorActionRequired' => __('Select an action', 'post-expirator'),
-                    'errorDateRequired' => __('Select a date', 'post-expirator'),
-                    'errorDateInPast' => __('Date cannot be in the past', 'post-expirator'),
-                    'errorTermsRequired' => sprintf(
+                        'noTermsFound' => sprintf(
+                            // translators: %s is the name of the taxonomy in plural form.
+                            __('No %s found.', 'post-expirator'),
+                            strtolower($taxonomyPluralName)
+                        ),
+                        'noTaxonomyFound' => __(
+                            'You must assign a taxonomy to this post type to use this feature.',
+                            'post-expirator'
+                        ),
+                        // translators: %s is the name of the taxonomy in plural form.
+                        'newTerms' => __('New %s', 'post-expirator'),
+                        // translators: %s is the name of the taxonomy in plural form.
+                        'removeTerms' => __('%s to remove', 'post-expirator'),
+                        // translators: %s is the name of the taxonomy in plural form.
+                        'addTerms' => __('%s to add', 'post-expirator'),
                         // translators: %s is the name of the taxonomy in singular form.
-                        __('Please select one or more %s', 'post-expirator'),
-                        strtolower($taxonomyPluralName)
-                    ),
-                    'newStatus' => __('New status', 'post-expirator'),
+                        'addTermsPlaceholder' => sprintf(
+                            __('Search for %s', 'post-expirator'),
+                            strtolower($taxonomyPluralName)
+                        ),
+                        'errorActionRequired' => __('Select an action', 'post-expirator'),
+                        'errorDateRequired' => __('Select a date', 'post-expirator'),
+                        'errorDateInPast' => __('Date cannot be in the past', 'post-expirator'),
+                        'errorTermsRequired' => sprintf(
+                            // translators: %s is the name of the taxonomy in singular form.
+                            __('Please select one or more %s', 'post-expirator'),
+                            strtolower($taxonomyPluralName)
+                        ),
+                        'newStatus' => __('New status', 'post-expirator'),
+                    ]
                 ]
-            ]
-        );
+            );
+        } catch (Throwable $th) {
+            $this->logger->error('Error enqueuing scripts: ' . $th->getMessage());
+        }
     }
 }

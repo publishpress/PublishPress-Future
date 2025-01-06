@@ -3,13 +3,14 @@
 use PublishPress\Future\Modules\Settings\HooksAbstract;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 
 $container = Container::getInstance();
 $hooks = $container->get(ServicesAbstract::HOOKS);
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-print '<p>' . esc_html__(
+echo '<p>' . esc_html__(
     'Below is a dump of the debugging table, this should be useful for troubleshooting.',
     'post-expirator'
 ) . '</p>';
@@ -19,35 +20,119 @@ $showSideBar = $hooks->applyFilters(
     ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
 );
 
-print '<div class="pp-columns-wrapper' . ($showSideBar ? ' pp-enable-sidebar' : '') . '">';
-print '<div class="pp-column-left">';
+echo '<div class="pp-columns-wrapper' . ($showSideBar ? ' pp-enable-sidebar' : '') . '">';
+echo '<div class="pp-column-left">';
 
-$debug = new PostExpiratorDebug();
-$results = $debug->getTable();
+$currentLogCount = isset($_GET['log_count']) ? (int)$_GET['log_count'] : 500;
+/**
+ * @var LoggerInterface $logger
+ */
+$logger = Container::getInstance()->get(ServicesAbstract::LOGGER);
+$results = $logger->fetchLatest($currentLogCount);
+$totalLogs = $logger->getTotalLogs();
+$logSizeInBytes = $logger->getLogSizeInBytes();
 
 if (empty($results)) {
-    print '<p>' . esc_html__('Debugging table is currently empty.', 'post-expirator') . '</p>';
-
-    return;
+    echo '<p>' . esc_html__('Debugging table is currently empty.', 'post-expirator') . '</p>';
 }
-print '<table class="form-table"><tbody><tr><td>';
-print '<table class="post-expirator-debug striped wp-list-table widefat fixed table-view-list">';
-print '<thead>';
-print '<tr><th class="post-expirator-timestamp">' . esc_html__('Timestamp', 'post-expirator') . '</th>';
-print '<th>' . esc_html__('Message', 'post-expirator') . '</th></tr>';
-print '</thead>';
-print '<tbody>';
-foreach ($results as $result) {
-    print '<tr><td>' . esc_html($result->timestamp) . '</td>';
-    print '<td>' . esc_html($result->message) . '</td></tr>';
-}
-print '</tbody>';
-print '</table>';
-print '</td></tr></tbody></table>';
 
-print '</div>';
+if (! empty($results)) {
+
+    echo '<div class="pp-debug-log">';
+
+    $logCountOptions = [
+        500 => '500',
+        700 => '700',
+        1000 => '1000',
+        2500 => '2000',
+        5000 => '5000',
+        7500 => '7500',
+        10000 => '10000'
+    ];
+
+    echo '<div class="pp-debug-log-count">';
+    echo '<form method="get">';
+    echo '<input type="hidden" name="page" value="publishpress-future">';
+    echo '<input type="hidden" name="tab" value="viewdebug">';
+    echo '<label for="log-count">' . esc_html__('Number of logs to display:', 'post-expirator') . '</label>';
+    echo '<select id="log-count" name="log_count" onchange="this.form.submit()">';
+    foreach ($logCountOptions as $value => $label) {
+        $selected = $currentLogCount === $value ? ' selected' : '';
+        echo '<option value="' . esc_attr($value) . '"' . $selected . '>' . esc_html($label) . '</option>';
+    }
+    echo '</select>';
+    echo '</form>';
+    echo '</div>';
+
+
+
+    echo '<textarea readonly>';
+    foreach ($results as $result) {
+        printf("%s: %s\n", $result['timestamp'], esc_html($result['message']));
+    }
+    echo '</textarea>';
+
+    $totalDisplayedLogs = count($results);
+
+    if ($totalLogs > $totalDisplayedLogs) {
+        echo '<p id="debug-log-length">' . sprintf(
+        // translators: %s is the number of results in the debug log. %s is the size of the log in the most appropriate unit.
+        esc_html__('Showing the latest %d of %d results. The approximate size of the log is %s.', 'post-expirator'),
+        $totalDisplayedLogs,
+        $totalLogs,
+            PostExpirator_Util::formatBytes($logSizeInBytes)
+        ) . '</p>';
+    } else {
+        echo '<p id="debug-log-length">' . sprintf(
+            // translators: %s is the size of the log in the most appropriate unit.
+            esc_html__('Showing all %d results. The approximate size of the log is %s.', 'post-expirator'),
+            $totalLogs,
+            PostExpirator_Util::formatBytes($logSizeInBytes)
+        ) . '</p>';
+    }
+
+    echo '<div class="pp-debug-log-actions">';
+
+    $nonce = wp_create_nonce('publishpress_future_download_log');
+
+    echo '<button id="copy-debug-log" class="button">' . esc_html__('Copy Debug Log', 'post-expirator') . '</button>';
+
+    echo '<a href="' . esc_url(add_query_arg([
+        'action' => 'publishpress_future_debug_log',
+        'nonce' => $nonce,
+    ], admin_url('admin.php'))) . '" class="button">'
+        . esc_html__('Download Entire Log', 'post-expirator') . '</a>';
+
+    echo '</div>';
+
+    // Add JavaScript to handle copying
+    ?>
+    <script>
+    document.getElementById('copy-debug-log').addEventListener('click', function() {
+        const debugLog = document.querySelector('.pp-debug-log textarea');
+        debugLog.select();
+        document.execCommand('copy');
+        alert('<?php echo esc_js(__('Debug log copied to clipboard!', 'post-expirator')); ?>');
+    });
+    </script>
+    <?php
+
+    echo '</div>';
+
+    // Add JavaScript to auto-scroll textarea to the end
+    ?>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const debugLog = document.querySelector('.pp-debug-log textarea');
+        debugLog.scrollTop = debugLog.scrollHeight;
+    });
+    </script>
+    <?php
+}
+
+echo '</div>';
 
 if ($showSideBar) {
     include __DIR__ . '/ad-banner-right-sidebar.php';
 }
-print '</div>';
+echo '</div>';

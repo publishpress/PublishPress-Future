@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator\Controllers;
@@ -15,6 +15,8 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
+use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -31,12 +33,21 @@ class PostListController implements InitializableInterface
     private $actionArgsSchema;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @param HookableInterface $hooksFacade
      */
-    public function __construct(HookableInterface $hooksFacade, DBTableSchemaInterface $actionArgsSchema)
-    {
+    public function __construct(
+        HookableInterface $hooksFacade,
+        DBTableSchemaInterface $actionArgsSchema,
+        LoggerInterface $logger
+    ) {
         $this->hooks = $hooksFacade;
         $this->actionArgsSchema = $actionArgsSchema;
+        $this->logger = $logger;
     }
 
     public function initialize()
@@ -99,16 +110,20 @@ class PostListController implements InitializableInterface
     {
         global $post;
 
-        $container = Container::getInstance();
-        $settings = $container->get(ServicesAbstract::SETTINGS);
+        $output = '';
 
-        ob_start();
-        PostExpirator_Display::getInstance()->render_template('expire-column', [
-            'id' => $post->ID,
-            'postType' => $post->post_type,
-            'columnStyle' => $settings->getColumnStyle(),
-        ]);
-        $output = ob_get_clean();
+        if (! empty($post) && isset($post->ID) && $post->ID > 0) {
+            $container = Container::getInstance();
+            $settings = $container->get(ServicesAbstract::SETTINGS);
+
+            ob_start();
+            PostExpirator_Display::getInstance()->render_template('expire-column', [
+                'id' => $post->ID,
+                'postType' => $post->post_type,
+                'columnStyle' => $settings->getColumnStyle(),
+            ]);
+            $output = ob_get_clean();
+        }
 
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $this->hooks->applyFilters(ExpiratorHooks::FILTER_POSTS_FUTURE_ACTION_COLUMN_OUTPUT, $output);
@@ -116,12 +131,16 @@ class PostListController implements InitializableInterface
 
     public function manageSortableColumns()
     {
-        $container = Container::getInstance();
-        $postTypesModel = new PostTypesModel($container);
-        $postTypes = $postTypesModel->getPostTypes();
+        try {
+            $container = Container::getInstance();
+            $postTypesModel = new PostTypesModel($container);
+            $postTypes = $postTypesModel->getPostTypes();
 
-        foreach ($postTypes as $postType) {
-            $this->hooks->addFilter('manage_edit-' . $postType . '_sortable_columns', [$this, 'sortableColumn']);
+            foreach ($postTypes as $postType) {
+                $this->hooks->addFilter('manage_edit-' . $postType . '_sortable_columns', [$this, 'sortableColumn']);
+            }
+        } catch (Throwable $th) {
+            $this->logger->error('Error managing sortable columns: ' . $th->getMessage());
         }
     }
 
@@ -180,13 +199,17 @@ class PostListController implements InitializableInterface
 
     public function enqueueScripts($screenId)
     {
-        if ('edit.php' === $screenId) {
-            wp_enqueue_style(
-                'postexpirator-edit',
-                POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
-                false,
-                POSTEXPIRATOR_VERSION
-            );
+        try {
+            if ('edit.php' === $screenId) {
+                wp_enqueue_style(
+                    'postexpirator-edit',
+                    POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
+                    false,
+                    PUBLISHPRESS_FUTURE_VERSION
+                );
+            }
+        } catch (Throwable $th) {
+            $this->logger->error('Error enqueuing scripts: ' . $th->getMessage());
         }
     }
 }

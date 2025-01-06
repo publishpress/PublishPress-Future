@@ -1,18 +1,26 @@
 <?php
 
 /**
- * Copyright (c) 2022-2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Settings\Models;
 
 use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
 class TaxonomiesModel
 {
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     private function getPostTypes()
     {
         $container = Container::getInstance();
@@ -81,8 +89,13 @@ class TaxonomiesModel
                 }
 
                 if (is_wp_error($newTerm)) {
-                    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                    error_log('PUBLISHPRESS FUTURE: ' . $newTerm->get_error_message());
+                    $this->logger->error(
+                        sprintf(
+                            'Error creating term for taxonomy %1$s: %2$s',
+                            $taxonomy,
+                            $newTerm->get_error_message()
+                        )
+                    );
                     return 0;
                 }
 

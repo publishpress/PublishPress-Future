@@ -119,6 +119,7 @@ if (! function_exists('postexpirator_schedule_event')) {
      */
     function postexpirator_schedule_event($postId, $timestamp, $opts)
     {
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         _deprecated_function(__FUNCTION__, '2.8.0', 'Use the PublishPress\Future\Modules\Expirator\HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION hook instead');
 
         do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $timestamp, $opts);
@@ -136,6 +137,7 @@ if (! function_exists('postexpirator_unschedule_event')) {
      */
     function postexpirator_unschedule_event($postId)
     {
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         _deprecated_function(__FUNCTION__, '2.8.0', 'Use the PublishPress\Future\Modules\Expirator\HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION hook instead');
 
         do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);

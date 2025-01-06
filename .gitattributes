@@ -22,6 +22,7 @@
 /dist export-ignore
 /vendor export-ignore
 /version.txt export-ignore
+/assets/adobe-animate export-ignore
 Gruntfile.js export-ignore
 README-build.md export-ignore
 README.md export-ignore

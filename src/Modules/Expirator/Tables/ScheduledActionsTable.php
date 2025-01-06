@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator\Tables;
@@ -9,6 +9,7 @@ namespace PublishPress\Future\Modules\Expirator\Tables;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
@@ -24,7 +25,9 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
     private $hooks;
 
     /**
-     * Array of seconds for common time periods, like week or month, alongside an internationalised string representation, i.e. "Day" or "Days"
+     * Array of seconds for common time periods, like week or month,
+     * alongside an internationalised string representation, i.e.
+     * "Day" or "Days".
      *
      * @var array
      */
@@ -116,8 +119,11 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         wp_enqueue_script('jquery-ui-dialog');
         wp_enqueue_script(
             'publishpress-future-future-actions',
-            Container::getInstance()->get(ServicesAbstract::BASE_URL) . '/assets/js/future-actions.js',
-            ['jquery', 'jquery-ui-dialog'],
+            Plugin::getScriptUrl('futureActions'),
+            [
+                'jquery',
+                'jquery-ui-dialog',
+            ],
             PUBLISHPRESS_FUTURE_VERSION,
             true
         );
@@ -323,11 +329,13 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
     public function column_status(array $row)
     {
         $icons = [
-            \ActionScheduler_Store::STATUS_COMPLETE => 'dashicons dashicons-yes-alt action-scheduler-status-icon-complete',
+            \ActionScheduler_Store::STATUS_COMPLETE =>
+                'dashicons dashicons-yes-alt action-scheduler-status-icon-complete',
             \ActionScheduler_Store::STATUS_PENDING => 'dashicons dashicons-clock action-scheduler-status-icon-pending',
             \ActionScheduler_Store::STATUS_RUNNING => 'dashicons dashicons-update action-scheduler-status-icon-running',
             \ActionScheduler_Store::STATUS_FAILED => 'dashicons dashicons-warning action-scheduler-status-icon-failed',
-            \ActionScheduler_Store::STATUS_CANCELED => 'dashicons dashicons-marker action-scheduler-status-icon-canceled',
+            \ActionScheduler_Store::STATUS_CANCELED =>
+                'dashicons dashicons-marker action-scheduler-status-icon-canceled',
         ];
 
         $iconClass = 'dashicons dashicons-editor-help';
@@ -440,6 +448,13 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         return $this->hooks->applyFilters('action_scheduler_list_table_column_args', $columnHtml, $row);
     }
 
+    public function column_recurrence( $row ) {
+        $action = $this->store->fetch_action( $row['ID'] );
+        $html = $this->get_recurrence( $action );
+
+        return $this->hooks->applyFilters('action_scheduler_list_table_column_recurrence', $html, $row);
+    }
+
     private function render_expiration_hook_args(array $row)
     {
         $actionData = $this->getActionData($row);
@@ -449,8 +464,8 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             esc_html__('%1$s: [%2$d] %3$s%4$s%5$s', 'post-expirator'),
             esc_html($actionData['postTypeLabel']),
             $actionData['postId'],
-            '<a href="' . esc_url($actionData['postLink']) . '">',
-            esc_html($actionData['postTitle']),
+            '<a href="' . esc_url($actionData['postLink'] ?? '') . '">',
+            esc_html($actionData['postTitle'] ?? ''),
             '</a>'
         );
 
@@ -673,13 +688,13 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             return __('Async', 'post-expirator');
         }
 
-        if (! method_exists($schedule, 'get_date') || ! $schedule->get_date()) {
+        if (! method_exists($schedule, 'next') || ! $schedule->next()) {
             return '0000-00-00 00:00:00';
         }
 
-        $next_timestamp = $schedule->get_date()->getTimestamp();
+        $next_timestamp = $schedule->next()->getTimestamp();
 
-        $gmt_schedule_display_string = $schedule->get_date()->format('Y-m-d H:i:s O');
+        $gmt_schedule_display_string = $schedule->next()->format('Y-m-d H:i:s O');
         $schedule_display_string .= wp_date('Y-m-d H:i:s O', $next_timestamp);
         $schedule_display_string .= '<br/>';
 

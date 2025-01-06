@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator\Models;
 
 use PublishPress\Future\Core\HooksAbstract;
+use PublishPress\Future\Framework\System\DateTimeHandlerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
-use PublishPress\Future\Modules\Debug\HooksAbstract as DebugHooksAbstract;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
@@ -50,15 +50,26 @@ class PostTypeDefaultDataModel
     private $hooks;
 
     /**
+     * @var DateTimeHandlerInterface
+     */
+    private $dateTimeHandler;
+
+    /**
      * @param \PublishPress\Future\Modules\Settings\SettingsFacade $settings
      * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options,
      */
-    public function __construct($settings, $options, string $postType, HooksFacade $hooks)
-    {
+    public function __construct(
+        SettingsFacade $settings,
+        OptionsFacade $options,
+        string $postType,
+        HooksFacade $hooks,
+        DateTimeHandlerInterface $dateTimeHandler
+    ) {
         $this->settings = $settings;
         $this->options = $options;
         $this->postType = $postType;
         $this->hooks = $hooks;
+        $this->dateTimeHandler = $dateTimeHandler;
 
         $this->hooks->addAction(HooksAbstract::ACTION_PURGE_PLUGIN_CACHE, [$this, 'purgeCache']);
     }
@@ -119,20 +130,25 @@ class PostTypeDefaultDataModel
 
         $baseDate = $this->hooks->applyFilters(
             ExpiratorHooksAbstract::FILTER_ACTION_BASE_DATE_STRING,
-            gmdate('Y-m-d H:i:s'),
+            $this->dateTimeHandler->getCurrentTime(true),
             $this->postType,
             $postId
         );
 
         if ($baseDate === '0000-00-00 00:00:00') {
-            $baseDate = gmdate('Y-m-d H:i:s');
+            $baseDate = $this->dateTimeHandler->getCurrentTime(true);
         }
 
-        $baseDate = strtotime($baseDate);
+        if (! is_numeric($baseDate)) {
+            $baseDate = strtotime($baseDate);
+        }
 
-        $calculatedDate = strtotime($dateTimeOffset, (int)$baseDate);
+        $calculatedDate = $this->dateTimeHandler->getCalculatedTimeWithOffset(
+            (int)$baseDate,
+            $dateTimeOffset
+        );
 
-        if (false === $calculatedDate) {
+        if (empty($calculatedDate)) {
             // translators: %s is the date/time offset and %s is the post type.
             $errorMessage = esc_html__('Invalid date/time offset "%s" for post type "%s". Please ensure you use only English terms for the date/time offset, such as "3 months" or "1 week".', 'post-expirator');
 
@@ -144,7 +160,7 @@ class PostTypeDefaultDataModel
                 )
             );
 
-            $calculatedDate = time();
+            $calculatedDate = $this->dateTimeHandler->getCurrentTime(true);
         }
 
         return $this->extractDateParts($calculatedDate);

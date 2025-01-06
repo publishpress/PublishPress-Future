@@ -3,7 +3,8 @@ import { createStore } from './data';
 import { isGutenbergEnabled } from './utils';
 import { select } from '@wordpress/data';
 import { createRoot } from 'react-dom/client';
-import {
+
+const {
     postType,
     isNewPost,
     actionsSelectOptions,
@@ -16,7 +17,7 @@ import {
     defaultDate,
     statusesSelectOptions,
     hideCalendarByDefault
-} from "&config.classic-editor";
+} = window.publishpressFutureClassicEditorConfig;
 
 if (! isGutenbergEnabled()) {
     const storeName = 'publishpress-future/future-action';
@@ -25,6 +26,7 @@ if (! isGutenbergEnabled()) {
         createStore({
             name: storeName,
             defaultState: {
+                postId: document.getElementById('post_ID') ? parseInt(document.getElementById('post_ID').value, 10) : 0,
                 autoEnable: postTypeDefaultConfig.autoEnable,
                 action: postTypeDefaultConfig.expireType,
                 newStatus: postTypeDefaultConfig.newStatus,
@@ -36,21 +38,23 @@ if (! isGutenbergEnabled()) {
     }
 
     const container = document.getElementById("publishpress-future-classic-editor");
-    const component = (
-        <FutureActionPanelClassicEditor
-            storeName={storeName}
-            postType={postType}
-            isNewPost={isNewPost}
-            actionsSelectOptions={actionsSelectOptions}
-            statusesSelectOptions={statusesSelectOptions}
-            is12Hour={is12Hour}
-            timeFormat={timeFormat}
-            startOfWeek={startOfWeek}
-            strings={strings}
-            taxonomyName={taxonomyName}
-            hideCalendarByDefault={hideCalendarByDefault}
-        />
-    );
+    if (container) {
+        const component = (
+            <FutureActionPanelClassicEditor
+                storeName={storeName}
+                postType={postType}
+                isNewPost={isNewPost}
+                actionsSelectOptions={actionsSelectOptions}
+                statusesSelectOptions={statusesSelectOptions}
+                is12Hour={is12Hour}
+                timeFormat={timeFormat}
+                startOfWeek={startOfWeek}
+                strings={strings}
+                taxonomyName={taxonomyName}
+                hideCalendarByDefault={hideCalendarByDefault}
+            />
+        );
 
-    createRoot(container).render(component);
+        createRoot(container).render(component);
+    }
 }

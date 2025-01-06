@@ -1,11 +1,12 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator\Models;
 
+use PublishPress\Future\Framework\System\DateTimeHandlerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
@@ -30,14 +31,24 @@ class PostTypeDefaultDataModelFactory
     private $hooks;
 
     /**
+     * @var DateTimeHandlerInterface
+     */
+    private $dateTimeHandler;
+
+    /**
      * @param \PublishPress\Future\Modules\Settings\SettingsFacade $settings
      * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
      */
-    public function __construct($settings, $options, HooksFacade $hooks)
-    {
+    public function __construct(
+        SettingsFacade $settings,
+        OptionsFacade $options,
+        HooksFacade $hooks,
+        DateTimeHandlerInterface $dateTimeHandler
+    ) {
         $this->settings = $settings;
         $this->options = $options;
         $this->hooks = $hooks;
+        $this->dateTimeHandler = $dateTimeHandler;
     }
 
     public function create(string $postType)
@@ -46,7 +57,8 @@ class PostTypeDefaultDataModelFactory
             $this->settings,
             $this->options,
             $postType,
-            $this->hooks
+            $this->hooks,
+            $this->dateTimeHandler
         );
     }
 }

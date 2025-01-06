@@ -8,6 +8,7 @@ show_help() {
     echo "- update: Update the docker image for the dev-workspace container"
     echo "- build: Build the docker image"
     echo "- build-push: Build and push the docker image to the registry"
+    echo "- stop: Stop the dev-workspace container"
 }
 
 if [ -z "$1" ]; then
@@ -34,6 +35,9 @@ case "$1" in
         ;;
     "build-push")
         $BIN_PATH/build-push-docker-image $IMAGE_NAME
+        ;;
+    "stop")
+        sh $BIN_PATH/stop-container
         ;;
     *)
         show_help

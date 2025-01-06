@@ -520,23 +520,11 @@ msgstr ""
 msgid "Default Date/Time Offset"
 msgstr "Standaard datum/tijd offset"
 
-#: src/Modules/Settings/Controllers/Controller.php:241
-#, fuzzy
-#| msgid ""
-#| "Set the offset to use for the default expiration date and time. For "
-#| "information on formatting, see %1$s. For example, you could enter %2$s+1 "
-#| "month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
-#| "Thursday%7$s."
-msgid ""
-"Set the offset to use for the default action date and time. For information "
-"on formatting, see %1$s\n"
-"                                    . For example, you could enter %2$s+1 "
-"month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
-"Thursday%7$s. Please, use only terms in English."
-msgstr ""
-"Stel de offset in voor de standaard vervaldatum en -tijd. Voor informatie "
-"over de lay-out, zie %1$s. Je kunt bijvoorbeeld %2$s+1 month%3$s of %4$s+1 "
-"week 2 days 4 hours 2 seconds%5$s of %6$snext Thursday%7$s invoeren."
+#. translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
+#: src/Modules/Settings/Controllers/Controller.php:224
+#: src/Views/menu-general.php:76
+msgid "Set the offset to use for the default action date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, use only terms in English."
+msgstr "Stel de offset in voor de standaard vervaldatum en -tijd. Voor informatie over de lay-out, zie %1$s. Je kunt bijvoorbeeld %2$s+1 month%3$s of %4$s+1 week 2 days 4 hours 2 seconds%5$s of %6$snext Thursday%7$s invoeren."
 
 #: src/Modules/Settings/Controllers/Controller.php:246
 #: src/Views/menu-general.php:115
@@ -705,14 +693,6 @@ msgstr "Future documentatie"
 #: src/Views/menu-advanced.php:23
 msgid "Advanced Options"
 msgstr "Geavanceerde opties"
-
-#: src/Views/menu-advanced.php:25
-msgid ""
-"Please do not update anything here unless you know what it entails. For "
-"advanced users only."
-msgstr ""
-"Update hier niets, tenzij je weet wat het inhoudt. Alleen voor gevorderde "
-"gebruikers."
 
 #: src/Views/menu-advanced.php:35
 msgid "Block Editor Support"
@@ -1043,24 +1023,6 @@ msgstr ""
 "De standaardindeling die moet worden gebruikt bij het weergeven van de "
 "verlooptijd binnen een bericht met behulp van de shortcode of in de footer.  "
 "Zie voor informatie over geldige opmaakopties: %s."
-
-#: src/Views/menu-general.php:110
-#, fuzzy
-#| msgid ""
-#| "Set the offset to use for the default expiration date and time. For "
-#| "information on formatting, see %1$s. For example, you could enter %2$s+1 "
-#| "month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
-#| "Thursday%7$s."
-msgid ""
-"Set the offset to use for the default action date and time. For information "
-"on formatting, see %1$s\n"
-"                                        . For example, you could enter "
-"%2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
-"Thursday%7$s. Please, use only terms in English."
-msgstr ""
-"Stel de offset in voor de standaard vervaldatum en -tijd. Voor informatie "
-"over de lay-out, zie %1$s. Je kunt bijvoorbeeld %2$s+1 month%3$s of %4$s+1 "
-"week 2 days 4 hours 2 seconds%5$s of %6$snext Thursday%7$s invoeren."
 
 #: src/Views/menu-general.php:129
 #, fuzzy

@@ -1,21 +1,36 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Settings;
 
+use PostExpirator_Facade;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
+use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\ChangePostStatus;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use WP_Role;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
 class SettingsFacade
 {
+    public const OPTION_STEP_SCHEDULE_COMPRESSED_ARGS = 'ppfuture_scheduled_step_args_compression_status';
+
+    public const OPTION_SCHEDULED_STEP_CLEANUP_STATUS = 'ppfuture_scheduled_step_cleanup_status';
+
+    public const OPTION_FINISHED_SCHEDULED_STEP_RETENTION = 'ppfuture_finished_scheduled_step_retention';
+
+    public const OPTION_EXPERIMENTAL_ENABLED = 'ppfuture_experimental_status';
+
+    public const OPTION_METABOX_TITLE = 'expirationdateMetaboxTitle';
+
+    public const OPTION_METABOX_CHECKBOX_LABEL = 'expirationdateMetaboxCheckboxLabel';
+
     /**
      * @var HookableInterface
      */
@@ -77,6 +92,15 @@ class SettingsFacade
             $this->options->getOptionsWithPrefix('postexpirator')
         );
 
+        $allOptions = array_merge(
+            $allOptions,
+            [
+                self::OPTION_STEP_SCHEDULE_COMPRESSED_ARGS,
+                self::OPTION_SCHEDULED_STEP_CLEANUP_STATUS,
+                self::OPTION_FINISHED_SCHEDULED_STEP_RETENTION,
+            ]
+        );
+
         $allOptions = array_keys($allOptions);
 
         foreach ($allOptions as $optionName) {
@@ -120,17 +144,31 @@ class SettingsFacade
         return (bool)$this->options->getOption('expirationdatePreserveData', $default);
     }
 
+    public function setSettingPreserveData(bool $value): void
+    {
+        $this->options->updateOption('expirationdatePreserveData', $value);
+    }
+
     /**
      * @param bool $default
      * @return bool
      */
     public function getDebugIsEnabled($default = false)
     {
+        if (defined('PUBLISHPRESS_FUTURE_FORCE_DEBUG') && constant('PUBLISHPRESS_FUTURE_FORCE_DEBUG')) {
+            return true;
+        }
+
         if (! isset($this->cache['debugIsEnabled'])) {
             $this->cache['debugIsEnabled'] = (bool)$this->options->getOption('expirationdateDebug', $default);
         }
 
         return (bool)$this->cache['debugIsEnabled'];
+    }
+
+    public function getSendEmailNotification()
+    {
+        return (bool)$this->options->getOption('expirationdateEmailNotification', POSTEXPIRATOR_EMAILNOTIFICATION);
     }
 
     public function getSendEmailNotificationToAdmins()
@@ -227,9 +265,18 @@ class SettingsFacade
             $this->cache['postTypeDefaults'] = [];
         }
 
+        $defaults = apply_filters(HooksAbstract::FILTER_SETTINGS_POST_TYPE_DEFAULTS, $defaults, $postType);
+
         $this->cache['postTypeDefaults'][$postType] = $defaults;
 
         return $this->cache['postTypeDefaults'][$postType];
+    }
+
+    public function setPostTypeDefaults(string $postType, array $defaults): void
+    {
+        $this->options->updateOption('expirationdateDefaults' . ucfirst($postType), $defaults);
+
+        do_action(HooksAbstract::ACTION_SETTINGS_SET_POST_TYPE_DEFAULTS, $defaults, $postType);
     }
 
     /**
@@ -265,9 +312,24 @@ class SettingsFacade
         return $defaultDateOffsetOption;
     }
 
+    public function setGeneralDateTimeOffset(string $value): void
+    {
+        $value = sanitize_text_field($value);
+        $value = html_entity_decode($value, ENT_QUOTES);
+        $value = preg_replace('/["\'`]/', '', $value);
+
+        $this->options->updateOption('expirationdateDefaultDate', 'custom');
+        $this->options->updateOption('expirationdateDefaultDateCustom', $value);
+    }
+
     public function getColumnStyle()
     {
         return $this->options->getOption('expirationdateColumnStyle', 'verbose');
+    }
+
+    public function setColumnStyle(string $value): void
+    {
+        $this->options->updateOption('expirationdateColumnStyle', $value);
     }
 
     public function getTimeFormatForDatePicker()
@@ -275,8 +337,327 @@ class SettingsFacade
         return $this->options->getOption('expirationdateTimeFormatForDatePicker', 'inherited');
     }
 
+    public function setTimeFormatForDatePicker(string $value): void
+    {
+        $this->options->updateOption('expirationdateTimeFormatForDatePicker', $value);
+    }
+
     public function getHideCalendarByDefault()
     {
         return (bool)$this->options->getOption('expirationdateHideCalendarByDefault', false);
+    }
+
+    public function setHideCalendarByDefault(bool $value): void
+    {
+        $this->options->updateOption('expirationdateHideCalendarByDefault', $value);
+    }
+
+    public function getStepScheduleCompressedArgsStatus(): bool
+    {
+        return (bool)$this->options->getOption(self::OPTION_STEP_SCHEDULE_COMPRESSED_ARGS, false);
+    }
+
+    public function getScheduledWorkflowStepsCleanupStatus(): bool
+    {
+        return (bool)$this->options->getOption(self::OPTION_SCHEDULED_STEP_CLEANUP_STATUS, true);
+    }
+
+    public function getScheduledWorkflowStepsCleanupRetention(): int
+    {
+        return (int)$this->options->getOption(self::OPTION_FINISHED_SCHEDULED_STEP_RETENTION, 30);
+    }
+
+    public function getExperimentalFeaturesStatus(): bool
+    {
+        $value = (bool)$this->options->getOption(self::OPTION_EXPERIMENTAL_ENABLED, false);
+        return $value && PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL;
+    }
+
+    public function setExperimentalFeaturesStatus(bool $value): void
+    {
+        $value = $value && PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL;
+        $this->options->updateOption(self::OPTION_EXPERIMENTAL_ENABLED, $value);
+    }
+
+    public function setStepScheduleCompressedArgsStatus(bool $value): void
+    {
+        $this->options->updateOption(self::OPTION_STEP_SCHEDULE_COMPRESSED_ARGS, $value);
+    }
+
+    public function setScheduledWorkflowStepsCleanupStatus(bool $value): void
+    {
+        $this->options->updateOption(self::OPTION_SCHEDULED_STEP_CLEANUP_STATUS, $value);
+    }
+
+    public function setScheduledWorkflowStepsCleanupRetention(int $value): void
+    {
+        $this->options->updateOption(self::OPTION_FINISHED_SCHEDULED_STEP_RETENTION, $value);
+    }
+
+    public function getMetaboxTitle(): ?string
+    {
+        $option = $this->options->getOption(self::OPTION_METABOX_TITLE, null);
+        return empty($option) ? null : $option;
+    }
+
+    public function getMetaboxCheckboxLabel(): ?string
+    {
+        $option = $this->options->getOption(self::OPTION_METABOX_CHECKBOX_LABEL, null);
+        return empty($option) ? null : $option;
+    }
+
+    public function setMetaboxTitle(string $value): void
+    {
+        $this->options->updateOption(self::OPTION_METABOX_TITLE, $value);
+    }
+
+    public function setMetaboxCheckboxLabel(string $value): void
+    {
+        $this->options->updateOption(self::OPTION_METABOX_CHECKBOX_LABEL, $value);
+    }
+
+    public function setSendEmailNotification(bool $value): void
+    {
+        $this->options->updateOption('expirationdateEmailNotification', $value);
+    }
+
+    public function setSendEmailNotificationToAdmins(bool $value): void
+    {
+        $this->options->updateOption('expirationdateEmailNotificationAdmins', $value);
+    }
+
+    public function setEmailNotificationAddressesList(array $value): void
+    {
+        $this->options->updateOption('expirationdateEmailNotificationList', implode(',', $value));
+    }
+
+    public function getDefaultDateFormat(): string
+    {
+        return $this->options->getOption('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
+    }
+
+    public function setDefaultDateFormat(string $value): void
+    {
+        $this->options->updateOption('expirationdateDefaultDateFormat', $value);
+    }
+
+    public function getDefaultTimeFormat(): string
+    {
+        return $this->options->getOption('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
+    }
+
+    public function setDefaultTimeFormat(string $value): void
+    {
+        $this->options->updateOption('expirationdateDefaultTimeFormat', $value);
+    }
+
+    public function getShowInPostFooter(): bool
+    {
+        return (bool)$this->options->getOption('expirationdateDisplayFooter', POSTEXPIRATOR_FOOTERDISPLAY);
+    }
+
+    public function setShowInPostFooter(bool $value): void
+    {
+        $this->options->updateOption('expirationdateDisplayFooter', $value);
+    }
+
+    public function getFooterContents(): string
+    {
+        return $this->options->getOption('expirationdateFooterContents', POSTEXPIRATOR_FOOTERCONTENTS);
+    }
+
+    public function setFooterContents(string $value): void
+    {
+        $this->options->updateOption('expirationdateFooterContents', $value);
+    }
+
+    public function getFooterStyle(): string
+    {
+        return $this->options->getOption('expirationdateFooterStyle', POSTEXPIRATOR_FOOTERSTYLE);
+    }
+
+    public function setFooterStyle(string $value): void
+    {
+        $this->options->updateOption('expirationdateFooterStyle', $value);
+    }
+
+    public function getAllowUserRoles(): array
+    {
+        $userRoles = wp_roles()->get_names();
+
+        $allowedUserRoles = [];
+
+        $pluginFacade = PostExpirator_Facade::getInstance();
+
+        foreach ($userRoles as $userRoleName => $userRoleLabel)
+        {
+            if ($pluginFacade->user_role_can_expire_posts($userRoleName)) {
+                $allowedUserRoles[] = $userRoleName;
+            }
+        }
+
+        return $allowedUserRoles;
+    }
+
+    public function setAllowUserRoles(array $value): void
+    {
+        $userRoles = array_keys(wp_roles()->get_names());
+        $capability = CapabilitiesAbstract::EXPIRE_POST;
+
+        foreach ($userRoles as $roleName) {
+            $role = get_role($roleName);
+
+            if (! is_a($role, WP_Role::class)) {
+                continue;
+            }
+
+            // TODO: only allow roles that can edit posts. Filter in the form as well, adding a description.
+            if ($roleName === 'administrator' || in_array($roleName, $value, true)) {
+                $role->add_cap($capability);
+                continue;
+            }
+
+            $role->remove_cap($capability);
+        }
+    }
+
+    public function getWorkflowScreenshotStatus(): bool
+    {
+        return (bool)$this->options->getOption('workflowScreenshot', false);
+    }
+
+    public function setWorkflowScreenshotStatus(bool $value): void
+    {
+        $this->options->updateOption('workflowScreenshot', $value);
+    }
+
+    public function getShortcodeWrapper(): string
+    {
+        return $this->options->getOption('shortcodeWrapper', '');
+    }
+
+    public function setShortcodeWrapper(string $value): void
+    {
+        $this->options->updateOption('shortcodeWrapper', sanitize_text_field($value));
+    }
+
+    public function getShortcodeWrapperClass(): string
+    {
+        return $this->options->getOption('shortcodeWrapperClass', '');
+    }
+
+    public function setShortcodeWrapperClass(string $value): void
+    {
+        $this->options->updateOption('shortcodeWrapperClass', sanitize_text_field($value));
+    }
+
+    public function getGeneralSettings(): array
+    {
+        $settings = [
+            'defaultDateTimeOffset' => $this->getGeneralDateTimeOffset(),
+            'hideCalendarByDefault' => $this->getHideCalendarByDefault(),
+            'allowUserRoles' => $this->getAllowUserRoles(),
+            'workflowScreenshot' => $this->getWorkflowScreenshotStatus(),
+        ];
+
+        $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_GENERAL, $settings);
+
+        return $settings;
+    }
+
+    public function setGeneralSettings(array $settings): void
+    {
+        $this->setGeneralDateTimeOffset($settings['defaultDateTimeOffset'] ?? '');
+        $this->setHideCalendarByDefault($settings['hideCalendarByDefault'] ?? false);
+        $this->setAllowUserRoles($settings['allowUserRoles'] ?? []);
+        $this->setWorkflowScreenshotStatus($settings['workflowScreenshot'] ?? false);
+
+        do_action(HooksAbstract::ACTION_SETTINGS_SET_GENERAL, $settings);
+    }
+
+    public function getNotificationsSettings(): array
+    {
+        $settings = [
+            'enableEmailNotification' => $this->getSendEmailNotification(),
+            'enableEmailNotificationToAdmins' => $this->getSendEmailNotificationToAdmins(),
+            'emailNotificationAddressesList' => $this->getEmailNotificationAddressesList(),
+        ];
+
+        $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_NOTIFICATIONS, $settings);
+
+        return $settings;
+    }
+
+    public function setNotificationsSettings(array $settings): void
+    {
+        $this->setSendEmailNotification($settings['enableEmailNotification'] ?? false);
+        $this->setSendEmailNotificationToAdmins($settings['enableEmailNotificationToAdmins'] ?? false);
+        $this->setEmailNotificationAddressesList($settings['emailNotificationAddressesList'] ?? []);
+
+        do_action(HooksAbstract::ACTION_SETTINGS_SET_NOTIFICATIONS, $settings);
+    }
+
+    public function getDisplaySettings(): array
+    {
+        $settings = [
+            'defaultDateFormat' => $this->getDefaultDateFormat(),
+            'defaultTimeFormat' => $this->getDefaultTimeFormat(),
+            'metaboxTitle' => $this->getMetaboxTitle(),
+            'metaboxCheckboxLabel' => $this->getMetaboxCheckboxLabel(),
+            'columnStyle' => $this->getColumnStyle(),
+            'timeFormatForDatePicker' => $this->getTimeFormatForDatePicker(),
+            'showInPostFooter' => $this->getShowInPostFooter(),
+            'footerContents' => $this->getFooterContents(),
+            'footerStyle' => $this->getFooterStyle(),
+            'shortcodeWrapper' => $this->getShortcodeWrapper(),
+            'shortcodeWrapperClass' => $this->getShortcodeWrapperClass(),
+        ];
+
+        $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_DISPLAY, $settings);
+
+        return $settings;
+    }
+
+    public function setDisplaySettings(array $settings): void
+    {
+        $this->setDefaultDateFormat($settings['defaultDateFormat'] ?? '');
+        $this->setDefaultTimeFormat($settings['defaultTimeFormat'] ?? '');
+        $this->setMetaboxTitle($settings['metaboxTitle'] ?? '');
+        $this->setMetaboxCheckboxLabel($settings['metaboxCheckboxLabel'] ?? '');
+        $this->setColumnStyle($settings['columnStyle'] ?? '');
+        $this->setTimeFormatForDatePicker($settings['timeFormatForDatePicker'] ?? '');
+        $this->setShowInPostFooter($settings['showInPostFooter'] ?? false);
+        $this->setFooterContents($settings['footerContents'] ?? '');
+        $this->setFooterStyle($settings['footerStyle'] ?? '');
+        $this->setShortcodeWrapper($settings['shortcodeWrapper'] ?? '');
+        $this->setShortcodeWrapperClass($settings['shortcodeWrapperClass'] ?? '');
+
+        do_action(HooksAbstract::ACTION_SETTINGS_SET_DISPLAY, $settings);
+    }
+
+    public function getAdvancedSettings(): array
+    {
+        $settings = [
+            'stepScheduleCompressedArgs' => $this->getStepScheduleCompressedArgsStatus(),
+            'scheduledWorkflowStepsCleanup' => $this->getScheduledWorkflowStepsCleanupStatus(),
+            'scheduledWorkflowStepsCleanupRetention' => $this->getScheduledWorkflowStepsCleanupRetention(),
+            'experimentalFeatures' => $this->getExperimentalFeaturesStatus(),
+            'preserveDataDeactivating' => $this->getSettingPreserveData(),
+        ];
+
+        $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_ADVANCED, $settings);
+
+        return $settings;
+    }
+
+    public function setAdvancedSettings(array $settings): void
+    {
+        $this->setStepScheduleCompressedArgsStatus($settings['stepScheduleCompressedArgs'] ?? false);
+        $this->setScheduledWorkflowStepsCleanupStatus($settings['scheduledWorkflowStepsCleanup'] ?? true);
+        $this->setScheduledWorkflowStepsCleanupRetention($settings['scheduledWorkflowStepsCleanupRetention'] ?? 30);
+        $this->setExperimentalFeaturesStatus($settings['experimentalFeatures'] ?? false);
+        $this->setSettingPreserveData($settings['preserveDataDeactivating'] ?? false);
+
+        do_action(HooksAbstract::ACTION_SETTINGS_SET_ADVANCED, $settings);
     }
 }

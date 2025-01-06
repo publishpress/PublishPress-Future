@@ -1,0 +1,918 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-12-20T19:02:49+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: post-expirator\n"
+
+#: components/data-fields/conditional/index.jsx:81
+msgid "Not"
+msgstr ""
+
+#: components/data-fields/conditional/index.jsx:219
+msgid "Edit condition"
+msgstr ""
+
+#: components/data-fields/conditional/index.jsx:247
+msgid "This conditional will only be evaluated in the Pro version. In the Free version, it will always return true."
+msgstr ""
+
+#: components/data-fields/conditional/index.jsx:254
+msgid "Condition"
+msgstr ""
+
+#: components/data-fields/conditional/index.jsx:259
+msgid "Create a condition adding rules and groups. You can also add a NOT condition to any rule or group."
+msgstr ""
+
+#: components/data-fields/conditional/index.jsx:275
+msgid "Add Group"
+msgstr ""
+
+#: components/data-fields/conditional/index.jsx:276
+msgid "Add Rule"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:96
+msgid "As soon as possible"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:97
+msgid "On a specific date"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:98
+msgid "Relative to a specific date"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:102
+msgid "Selected in the calendar"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:103
+msgid "When the trigger is activated"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:104
+msgid "When the step is activated"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:105
+#: components/data-fields/date-offset.jsx:192
+msgid "Custom date source"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:167
+msgid "When to run"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:176
+msgid "Date source"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:200
+msgid "Click the button to choose a custom date source from variables that can provide a date."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:210
+msgid "Offset"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:217
+msgid "Date Preview"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:218
+msgid "Current Date"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:219
+msgid "Computed Date"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:228
+msgid "Error: "
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:233
+msgid "Click for more information"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:241
+msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:263
+msgid "Repeating Action"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:278
+msgid "Unique ID Expression"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:284
+msgid "Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}}, {{global.user.ID}} or {{global.execution_id}} to make sure the ID is unique."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:293
+msgid "Priority"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:296
+msgid "Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first."
+msgstr ""
+
+#: components/data-fields/debug-data.jsx:39
+msgid "All received input"
+msgstr ""
+
+#: components/data-fields/debug-data.jsx:43
+msgid "Custom data"
+msgstr ""
+
+#: components/data-fields/debug-data.jsx:64
+msgid "Select the data to output"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:7
+msgid "Debug"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:8
+msgid "Info"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:9
+msgid "Notice"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:10
+msgid "Warning"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:11
+msgid "Error"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:12
+msgid "Critical"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:13
+msgid "Alert"
+msgstr ""
+
+#: components/data-fields/debug-levels.jsx:28
+msgid "Level"
+msgstr ""
+
+#: components/data-fields/expression-builder/column-item.jsx:23
+msgid "Insert"
+msgstr ""
+
+#: components/data-fields/expression-builder/index.jsx:111
+msgid "Edit"
+msgstr ""
+
+#: components/data-fields/expression-builder/index.jsx:155
+msgid "Single variable mode. Double click on a variable below to add it to your expression."
+msgstr ""
+
+#: components/data-fields/expression-builder/index.jsx:159
+msgid "Type your expression here or use the variables below."
+msgstr ""
+
+#: components/data-fields/expression-builder/index.jsx:186
+msgid "Variables"
+msgstr ""
+
+#: components/data-fields/expression-builder/index.jsx:189
+msgid "Position the cursor where you want to add a variable and double click on a variable to add it to your expression."
+msgstr ""
+
+#: components/data-fields/expression-builder/index.jsx:209
+msgid "Hover over a variable to see its description."
+msgstr ""
+
+#: components/data-fields/help-link.jsx:5
+msgid "Learn more"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:47
+msgid "Post Type"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:60
+msgid "Post selection"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:63
+msgid "Post received as input"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:64
+msgid "Custom query"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:87
+msgid "* Required field"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:91
+msgid "Post ID"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:103
+msgid "Post Status"
+msgstr ""
+
+#: components/data-fields/post-status.jsx:40
+msgid "New Status"
+msgstr ""
+
+#: components/data-fields/ray-color.jsx:13
+msgid "No color"
+msgstr ""
+
+#: components/data-fields/ray-color.jsx:14
+msgid "Green"
+msgstr ""
+
+#: components/data-fields/ray-color.jsx:15
+msgid "Orange"
+msgstr ""
+
+#: components/data-fields/ray-color.jsx:16
+msgid "Red"
+msgstr ""
+
+#: components/data-fields/ray-color.jsx:17
+msgid "Blue"
+msgstr ""
+
+#: components/data-fields/ray-color.jsx:18
+msgid "Purple"
+msgstr ""
+
+#: components/data-fields/ray-color.jsx:19
+msgid "Gray"
+msgstr ""
+
+#: components/data-fields/recurrence.jsx:15
+msgid "Non-repeating"
+msgstr ""
+
+#: components/data-fields/recurrence.jsx:16
+msgid "Custom interval in seconds"
+msgstr ""
+
+#: components/data-fields/taxonomy-terms.jsx:60
+msgid "Taxonomy"
+msgstr ""
+
+#: components/data-fields/taxonomy-terms.jsx:69
+msgid "Select the terms"
+msgstr ""
+
+#: components/data-fields/taxonomy-terms.jsx:73
+msgid "Specific terms"
+msgstr ""
+
+#: components/data-fields/taxonomy-terms.jsx:80
+#: components/data-fields/taxonomy-terms.jsx:94
+msgid "Terms"
+msgstr ""
+
+#: components/flow-editor/index.jsx:320
+msgid "Applying auto layout."
+msgstr ""
+
+#: components/flow-editor/index.jsx:345
+msgid "Auto layout applied."
+msgstr ""
+
+#: components/fullscreen-mode-close.jsx:43
+msgid "Back"
+msgstr ""
+
+#: components/inspector-card/index.jsx:48
+#: components/secondary-sidebar/node-card.jsx:22
+msgid "Pro"
+msgstr ""
+
+#: components/inspector-card/index.jsx:59
+#: components/node-types/generic.jsx:241
+#: components/secondary-sidebar/node-card.jsx:35
+msgid "Currently this step is being skipped. Upgrade to Pro to unlock this feature."
+msgstr ""
+
+#: components/layout/header.jsx:129
+msgid "Add"
+msgstr ""
+
+#: components/layout/header.jsx:129
+msgid "Close"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/layout/header.jsx:140
+#: components/layout/header.jsx:145
+msgid "Auto Layout"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/layout/header.jsx:157
+msgid "Upgrade to Pro and unlock more features"
+msgstr ""
+
+#: components/layout/header.jsx:160
+msgid "Upgrade to Pro"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/left-toolbar/redo.jsx:31
+msgid "Redo"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/left-toolbar/undo.jsx:31
+msgid "Undo"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/more-menu/menu-dropdown.jsx:11
+msgid "Options"
+msgstr ""
+
+#: components/more-menu/menu-feature-toggle.jsx:32
+msgid "Feature deactivated"
+msgstr ""
+
+#: components/more-menu/menu-feature-toggle.jsx:34
+msgid "Feature activated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:23
+msgctxt "noun"
+msgid "View"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:27
+msgid "Fullscreen mode"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:28
+msgid "Work without distraction"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:29
+msgid "Fullscreen mode activated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:30
+msgid "Fullscreen mode deactivated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:36
+msgid "Advanced Settings"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:37
+msgid "Display advanced settings for the workflow, triggers and steps"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:38
+msgid "Advanced settings mode activated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:39
+msgid "Advanced settings mode deactivated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:45
+msgid "Display a mini map"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:46
+msgid "Display a mini map in the bottom of the editor, triggers and steps"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:47
+#: components/more-menu/menu-items-view.jsx:55
+msgid "Mini map activated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:48
+#: components/more-menu/menu-items-view.jsx:56
+msgid "Mini map deactivated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:53
+msgid "Display the controls panel"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:54
+msgid "Display the controls panel with buttons to zoon in, zoom out, fit the view and lock the viewport"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:59
+msgid "Tools"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:63
+msgid "Developer mode"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:64
+msgid "Work in developer mode"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:65
+msgid "Developer mode activated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:66
+msgid "Developer mode deactivated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:72
+msgid "Welcome guide"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:73
+msgid "Display the welcome guide"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:74
+msgid "Welcome guide activated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:75
+msgid "Welcome guide deactivated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:83
+msgid "Help"
+msgstr ""
+
+#: components/node-dev-info-panel/index.jsx:18
+msgid "Loading..."
+msgstr ""
+
+#: components/node-dev-info-panel/index.jsx:23
+msgid "Developer Info"
+msgstr ""
+
+#: components/node-dev-info-panel/index.jsx:30
+#: components/node-inspector/node-inspector-card.jsx:18
+#: components/node-types/generic.jsx:102
+msgid "Node"
+msgstr ""
+
+#: components/node-dev-info-panel/index.jsx:43
+msgid "Node Type"
+msgstr ""
+
+#: components/node-inspector/index.jsx:102
+msgid "No element selected."
+msgstr ""
+
+#: components/node-inspector/index.jsx:110
+msgid "Multiple and different elements selected."
+msgstr ""
+
+#: components/node-inspector/index.jsx:120
+msgid "%d steps selected"
+msgstr ""
+
+#: components/node-inspector/index.jsx:123
+msgid "Multiple steps selected."
+msgstr ""
+
+#: components/node-inspector/index.jsx:134
+msgid "%d connections selected"
+msgstr ""
+
+#: components/node-inspector/index.jsx:137
+msgid "Multiple connections selected."
+msgstr ""
+
+#: components/node-inspector/index.jsx:171
+msgid "Connection"
+msgstr ""
+
+#: components/node-inspector/index.jsx:172
+msgid "The connection between nodes in the workflow. Signifies the path along which data or control flow one node to another."
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:83
+msgid "Step Data Flow"
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:85
+msgid "Inputs"
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:89
+msgid "This step receives the following input from previous step:"
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:100
+msgid "This step does not receive any input from previous step."
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:105
+msgid "Outputs"
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:109
+msgid "This step outputs the following data:"
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:120
+msgid "This step does not output any data."
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:125
+msgid "Global Variables"
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:129
+msgid "No global variables are declared"
+msgstr ""
+
+#: components/node-inspector/node-details-panel.jsx:37
+msgid "Step Details"
+msgstr ""
+
+#: components/node-inspector/node-details-panel.jsx:41
+msgid "Step Label"
+msgstr ""
+
+#: components/node-inspector/node-details-panel.jsx:47
+msgid "This is the label that will be displayed in the workflow editor."
+msgstr ""
+
+#: components/node-inspector/node-inspector-card.jsx:19
+msgid "No description"
+msgstr ""
+
+#: components/node-types/generic.jsx:51
+msgid "Unknown node: %s"
+msgstr ""
+
+#: components/node-types/generic.jsx:52
+msgid "This is a placeholder node for a node that does not exist."
+msgstr ""
+
+#: components/node-types/generic.jsx:155
+msgid "Step"
+msgstr ""
+
+#: components/node-types/generic.jsx:157
+msgid "Action"
+msgstr ""
+
+#. translators: Patterns tab title in the block inserter.
+#: components/node-types/generic.jsx:159
+#: components/secondary-sidebar/tabs.jsx:30
+msgid "Advanced"
+msgstr ""
+
+#: components/node-types/generic.jsx:161
+msgid "Trigger"
+msgstr ""
+
+#: components/node-types/generic.jsx:208
+msgid "Step actions"
+msgstr ""
+
+#: components/node-types/generic.jsx:214
+#: components/workflow-delete-button/index.jsx:39
+msgid "Delete"
+msgstr ""
+
+#: components/node-types/generic.jsx:249
+msgid "This node has errors"
+msgstr ""
+
+#: components/node-types/node-placeholder.jsx:31
+msgid "Add a step"
+msgstr ""
+
+#: components/node-types/node-placeholder.jsx:33
+msgid "Search for actions"
+msgstr ""
+
+#: components/node-types/placeholder.jsx:168
+msgid "Search for steps"
+msgstr ""
+
+#: components/node-types/placeholder.jsx:194
+#: components/node-types/trigger-placeholder.jsx:13
+#: components/secondary-sidebar/menu.jsx:201
+msgid "Search for triggers and steps"
+msgstr ""
+
+#: components/node-types/trigger-placeholder.jsx:11
+msgid "Click to add a trigger"
+msgstr ""
+
+#: components/node-validation-panel/index.jsx:14
+msgid "Validation"
+msgstr ""
+
+#: components/node-validation-panel/index.jsx:31
+msgid "All checks have passed for this step."
+msgstr ""
+
+#: components/node-validator/index.jsx:55
+msgid "This step requires a connection from a previous step."
+msgstr ""
+
+#: components/node-validator/index.jsx:65
+msgid "This step requires a connection to a following step."
+msgstr ""
+
+#: components/node-validator/index.jsx:128
+#: components/node-validator/index.jsx:139
+msgid "The field %s is required."
+msgstr ""
+
+#: components/node-validator/index.jsx:160
+msgid "The field %s must be a valid email address."
+msgstr ""
+
+#: components/node-validator/index.jsx:176
+msgid "The field %s must be a valid email address list separated by commas."
+msgstr ""
+
+#: components/node-validator/index.jsx:190
+msgid "The field %s must be an integer."
+msgstr ""
+
+#: components/node-validator/index.jsx:205
+msgid "The field %s must be an integer list separated by commas."
+msgstr ""
+
+#: components/pro-feature-button/index.jsx:26
+msgid "Upgrade to Pro to unlock this feature."
+msgstr ""
+
+#: components/secondary-sidebar/inserter-listbox/group.jsx:14
+msgid "Use left and right arrow keys to move through steps"
+msgstr ""
+
+#: components/secondary-sidebar/inserter-no-results.jsx:14
+msgid "No results found."
+msgstr ""
+
+#. translators: %d: number of results.
+#: components/secondary-sidebar/inserter-search-results.jsx:101
+msgid "%d result found."
+msgid_plural "%d results found."
+msgstr[0] ""
+msgstr[1] ""
+
+#: components/secondary-sidebar/inserter-search-results.jsx:116
+#: components/secondary-sidebar/inserter-search-results.jsx:123
+msgid "Nodes"
+msgstr ""
+
+#: components/secondary-sidebar/menu.jsx:73
+#: components/secondary-sidebar/menu.jsx:110
+msgid "A tip for using the workflow editor"
+msgstr ""
+
+#: components/secondary-sidebar/node-card.jsx:37
+msgid "Drag this node to preview its options in your workflow."
+msgstr ""
+
+#. translators: %d: Number of blocks.
+#: components/secondary-sidebar/node-draggable-chip.jsx:27
+msgid "%d block"
+msgid_plural "%d blocks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: components/secondary-sidebar/nodes-tab.jsx:80
+#: components/secondary-sidebar/nodes-tab.jsx:85
+msgctxt "nodes"
+msgid "Most used"
+msgstr ""
+
+#. translators: Blocks tab title in the block inserter.
+#: components/secondary-sidebar/tabs.jsx:20
+msgid "Triggers"
+msgstr ""
+
+#. translators: Patterns tab title in the block inserter.
+#: components/secondary-sidebar/tabs.jsx:25
+msgid "Actions"
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:10
+msgid "Select multiple steps by pressing <kbd>cmd</kbd> and clicking on each step in the workflow."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:16
+msgid "Drag steps from the inserter and drop them directly into your workflow for easy customization."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:17
+msgid "Simply double-click any step to bring up the settings sidebar for quick adjustments."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:18
+msgid "Double-click the workflow pane to increase the zoom level for a closer look."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:20
+msgid "Hold down the <kbd>shift</kbd> key and double-click the workflow pane to decrease the zoom level."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:26
+msgid "Easily add new steps by clicking on a step's handle and dragging it. Drop it in the workflow pane to see a floating inserter where you can type and search for the step you need."
+msgstr ""
+
+#: components/settings-sidebar/plugin-sidebar.jsx:39
+msgid "(no name)"
+msgstr ""
+
+#. translators: Default label for the Workflow sidebar tab, not selected.
+#: components/settings-sidebar/settings-header.jsx:23
+msgctxt "noun"
+msgid "Workflow"
+msgstr ""
+
+#: components/settings-sidebar/settings-header.jsx:37
+msgid "Element"
+msgstr ""
+
+#: components/settings-sidebar/settings-sidebar.jsx:50
+msgid "Close settings"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/settings-sidebar/settings-sidebar.jsx:54
+msgid "Settings"
+msgstr ""
+
+#: components/welcome-guide/index.jsx:21
+msgid "Welcome to the workflow editor"
+msgstr ""
+
+#: components/welcome-guide/index.jsx:22
+msgid "Get started"
+msgstr ""
+
+#: components/workflow-debug-ray-panel/index.jsx:50
+msgid "Ray Debug"
+msgstr ""
+
+#: components/workflow-debug-ray-panel/index.jsx:55
+msgid "Enable or disable the different types of debug information that is shown in Ray when this workflow is activated."
+msgstr ""
+
+#: components/workflow-debug-ray-panel/index.jsx:59
+msgid "Show Queries"
+msgstr ""
+
+#: components/workflow-debug-ray-panel/index.jsx:66
+msgid "Show Emails"
+msgstr ""
+
+#: components/workflow-debug-ray-panel/index.jsx:73
+msgid "Show WordPress Errors"
+msgstr ""
+
+#: components/workflow-debug-ray-panel/index.jsx:80
+msgid "Show current running step"
+msgstr ""
+
+#: components/workflow-delete-button/index.jsx:24
+msgid "Are you sure you want to delete this workflow?"
+msgstr ""
+
+#: components/workflow-delete-button/index.jsx:39
+msgid "Move to trash"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/workflow-publish-button/index.jsx:84
+msgid "Publish"
+msgstr ""
+
+#: components/workflow-publish-button/index.jsx:84
+msgid "Update"
+msgstr ""
+
+#: components/workflow-publish-button/index.jsx:95
+msgid "Autosaving..."
+msgstr ""
+
+#: components/workflow-publish-button/index.jsx:95
+msgid "Updating..."
+msgstr ""
+
+#: components/workflow-publish-button/index.jsx:97
+msgid "Updated"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/workflow-save-draft-button/index.jsx:87
+msgid "Save draft"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/workflow-save-draft-button/index.jsx:90
+msgid "Save"
+msgstr ""
+
+#: components/workflow-save-draft-button/index.jsx:99
+msgid "Autosaving"
+msgstr ""
+
+#: components/workflow-save-draft-button/index.jsx:99
+msgid "Saving"
+msgstr ""
+
+#: components/workflow-save-draft-button/index.jsx:101
+msgid "Saved"
+msgstr ""
+
+#: components/workflow-store/actions.jsx:30
+msgid "Unable to create a new workflow. Please try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:49
+msgid "Unable to load the workflow. Please try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:92
+msgid "Workflow saved as draft."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:100
+#: components/workflow-store/actions.jsx:151
+msgid "Unable to save workflow. Please, try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:143
+msgid "Workflow saved."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:188
+msgid "Workflow published."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:196
+msgid "Unable to publish the workflow. Please, try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:233
+msgid "Workflow switched to draft."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:241
+msgid "Unable to switch workflow to draft. Please, try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:331
+msgid "Workflow deleted. Redirecting..."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:342
+msgid "Unable to delete the workflow. Please, try again."
+msgstr ""
+
+#: components/workflow-summary/index.jsx:42
+msgid "Summary"
+msgstr ""
+
+#: components/workflow-summary/index.jsx:48
+msgid "Title"
+msgstr ""
+
+#: components/workflow-summary/index.jsx:57
+msgid "Description"
+msgstr ""
+
+#: components/workflow-switch-to-draft-button/index.jsx:37
+msgid "Are you sure you want to unpublish this workflow?"
+msgstr ""
+
+#: components/workflow-switch-to-draft-button/index.jsx:62
+msgid "Draft"
+msgstr ""
+
+#: components/workflow-switch-to-draft-button/index.jsx:62
+msgid "Switch to draft"
+msgstr ""

@@ -23,3 +23,10 @@ ray.php
 
 /tests-*
 /tests/.env
+assets/js/*.map
+webpack-bundle-stats.json
+webpack-bundle-stats.html
+webpack-bundle-stats-*.json
+webpack-bundle-stats-*.html
+gh_token.txt
+.env
