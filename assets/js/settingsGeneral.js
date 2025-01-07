@@ -490,7 +490,7 @@ var FutureActionPanel = function FutureActionPanel(props) {
           _part$split2 = _slicedToArray(_part$split, 2),
           before = _part$split2[0],
           after = _part$split2[1];
-        result.push(/*#__PURE__*/React.createElement("a", {
+        result.push( /*#__PURE__*/React.createElement("a", {
           href: href,
           target: target,
           key: href
@@ -1445,7 +1445,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     onChange: onChangeActive
   }))];
   if (isActive) {
-    settingsRows.push(/*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
       label: props.text.fieldAutoEnable,
       key: 'expirationdate_autoenable-' + props.postType
     }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.CheckboxControl, {
@@ -1454,7 +1454,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
       label: props.text.fieldAutoEnableLabel,
       onChange: onChangeAutoEnabled
     })));
-    settingsRows.push(/*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
       label: props.text.fieldTaxonomy,
       key: 'expirationdate_taxonomy-' + props.postType
     }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
@@ -1466,7 +1466,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
       data: props.postType,
       onChange: onChangeTaxonomy
     })));
-    settingsRows.push(/*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
       label: props.text.fieldHowToExpire,
       key: 'expirationdate_expiretype-' + props.postType
     }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
@@ -1493,7 +1493,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
       expandOnFocus: true,
       autoSelectFirstMatch: true
     })));
-    settingsRows.push(/*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
       label: props.text.fieldDefaultDateTimeOffset,
       key: 'expired-custom-date-' + props.postType
     }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.TextControl, {
@@ -1513,7 +1513,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
       setHasPendingValidationCallback: setHasPendingValidation,
       setHasValidDataCallback: setHasValidData
     })));
-    settingsRows.push(/*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
       label: props.text.fieldWhoToNotify,
       key: 'expirationdate_emailnotification-' + props.postType
     }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.TextControl, {
@@ -1572,7 +1572,7 @@ var PostTypesSettingsPanels = function PostTypesSettingsPanels(props) {
     var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
       postType = _Object$entries$_i[0],
       postTypeSettings = _Object$entries$_i[1];
-    panels.push(/*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.PostTypeSettingsPanel, {
+    panels.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.PostTypeSettingsPanel, {
       legend: postTypeSettings.label,
       text: props.text,
       postType: postType,
@@ -1599,7 +1599,7 @@ var PostTypesSettingsPanels = function PostTypesSettingsPanels(props) {
       _postType = _Object$entries2$_i[0],
       _postTypeSettings = _Object$entries2$_i[1];
     selected = currentTab === _postType;
-    tabs.push(/*#__PURE__*/React.createElement("a", {
+    tabs.push( /*#__PURE__*/React.createElement("a", {
       href: "#".concat(_postType, "-panel"),
       className: "nav-tab " + (selected ? 'nav-tab-active' : ''),
       key: "".concat(_postType, "-tab"),
@@ -3100,7 +3100,7 @@ module.exports = wp.url;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
 /*!*****************************************!*\
   !*** ./assets/jsx/settings-general.jsx ***!

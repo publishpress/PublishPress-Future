@@ -221,7 +221,7 @@ module.exports = wp.element;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
 /*!******************************************!*\
   !*** ./assets/jsx/settings-advanced.jsx ***!
@@ -237,7 +237,7 @@ if ('advanced' === settingsTab) {
   var scheduledStepsCleanupContainer = document.getElementById('scheduled-steps-cleanup-settings');
   if (scheduledStepsCleanupContainer) {
     var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot)(scheduledStepsCleanupContainer);
-    root.render(/*#__PURE__*/React.createElement(_workflow_editor_settings_scheduled_steps_cleanup__WEBPACK_IMPORTED_MODULE_1__.ScheduledStepsCleanupSettings, null));
+    root.render( /*#__PURE__*/React.createElement(_workflow_editor_settings_scheduled_steps_cleanup__WEBPACK_IMPORTED_MODULE_1__.ScheduledStepsCleanupSettings, null));
   }
 }
 })();

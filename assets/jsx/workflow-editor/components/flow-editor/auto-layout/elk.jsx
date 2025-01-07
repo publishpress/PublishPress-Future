@@ -1,7 +1,5 @@
 import ELK from "elkjs";
-import { AUTO_LAYOUT_DIRECTION_DOWN, AUTO_LAYOUT_DIRECTION_RIGHT } from "./constants";
-import { store as editorStore } from "../../editor-store";
-import { select } from "@wordpress/data";
+import { AUTO_LAYOUT_DIRECTION_RIGHT } from "./constants";
 
 export const useLayoutedElements = ({
     nodes,
@@ -9,8 +7,6 @@ export const useLayoutedElements = ({
     onLayout,
     onAnimationFrame = () => null
 }) => {
-    const getNodeTypeByName = select(editorStore).getNodeTypeByName;
-
     return ({ direction }) => {
         // Elk has a *huge* amount of options to configure. To see everything you can
         // tweak check out:
