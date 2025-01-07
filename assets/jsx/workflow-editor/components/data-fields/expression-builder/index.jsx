@@ -186,7 +186,7 @@ export const ExpressionBuilder = ({
                         <Heading level={2} className="components-truncate components-text components-heading block-editor-inspector-popover-header__heading">{__("Variables", "post-expirator")}</Heading>
 
                         {! singleVariableOnly && (
-                            <p>{__("Position the cursor where you want to add a variable and double click on a variable to add it to your expression.", "post-expirator")}</p>
+                            <p>{__("Double-click on any variable to add it to your expression.", "post-expirator")}</p>
                         )}
 
                         <ColumnsContainer
