@@ -55,6 +55,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix the first save of a workflow to transit from auto-saved to draft (Issue #1086).
 - Fix warning about deprecated jQuery click() method in the workflow editor.
 - Fix the auto-layout algorithm to avoid overlapping edges and correctly dimension each node and spacing between nodes (Issue #1102).
+- Fix the warning about deprecated method `next` in the class `ActionScheduler_Schedule` (Issue #1107).
 
 ### Developers
 
