@@ -12,17 +12,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add the site ID to the site data type schema.
 - Add the post author property to the post data type schema in the workflow editor (Issue #947).
 - Add the post slug property to the post data type schema in the workflow editor.
-- Add new Post is Published trigger - PRO (Issue #944).
-- Add new Post Status Changes trigger - PRO (Issue #945).
-- Add new Post is Scheduled trigger - PRO (Issue #946).
-- Add new Post Meta Changed trigger - PRO (Issue #1059).
-- Add the Post Meta Add step to the workflow editor - PRO (Issue #732).
-- Add the Post Meta Delete step to the workflow editor - PRO (Issue #732).
-- Add the Post Meta Update step to the workflow editor - PRO (Issue #732).
+- Add new trigger: Post is Published - PRO (Issue #944).
+- Add new trigger: Post Status Changes - PRO (Issue #945).
+- Add new trigger: Post is Scheduled - PRO (Issue #946).
+- Add new trigger: Post Meta Changed - PRO (Issue #1059).
+- Add new action: Post Meta Add - PRO (Issue #732).
+- Add new action: Post Meta Delete - PRO (Issue #732).
+- Add new action: Post Meta Update - PRO (Issue #732).
 - Add the option to change manually enabled workflows in the bulk edit screen (Issue #942).
 - Add the "Save as current status" shortcut to the workflow editor (CTRL/CMD + S) (Issue #1084).
 - Add new display settings to customize the shortcode output (Issue #203).
 - Add new step setting field to customize the step label in the workflow editor (Issue #1090).
+- Add Future Action data support in the workflow editor, allowing to reference future actions in expressions (Issue #948).
 
 ### Changed
 
@@ -36,6 +37,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The conditional step now uses the new expression builder.
 - Improved the UI in the conditional step settings.
 - Added field descriptions to the post query step settings panel (Issue #1081).
+- Only display the bulk edit option "Update Future Action from Post Metadata" if feature is enabled (Issue #622).
+- Updated language files.
+- Remove focus from the toolbar Delete button when workflow step is selected (Issue #1083).
+- Improved the text in the variables selector modal.
 
 ### Fixed
 
@@ -43,6 +48,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix empty title and label in the future action panel when custom title and label are not set (Issue #1075).
 - Fix the width of the checkbox in the future action panel (#1076).
 - Fix the permalink in the Post Updated trigger for the post before variable.
+- Fix the variable names in the "Add extra terms to post" step (Issue #1079).
+- Fix the validation message for the recipient field in the Send Email step (Issue #1078).
+- Fix the date format in the shortcode.
+- Fix loading a workflow that doesn't have a specific step type (Issue #883).
+- Fix the first save of a workflow to transit from auto-saved to draft (Issue #1086).
+- Fix warning about deprecated jQuery click() method in the workflow editor.
+- Fix the auto-layout algorithm to avoid overlapping edges and correctly dimension each node and spacing between nodes (Issue #1102).
 
 ### Developers
 
