@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Copyright (c) 2024, Ramble Ventures
+ * @Copyright (c) 2025, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator\Interfaces;
