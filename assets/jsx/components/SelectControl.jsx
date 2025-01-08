@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, Ramble Ventures
+ * Copyright (c) 2025, Ramble Ventures
  */
 import { Fragment } from "@wordpress/element";
 import { SelectControl as WPSelectControl } from "@wordpress/components";

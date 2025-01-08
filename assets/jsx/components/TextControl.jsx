@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, Ramble Ventures
+ * Copyright (c) 2025, Ramble Ventures
  */
 import { Fragment } from "@wordpress/element";
 import { TextControl as WPTextControl } from "@wordpress/components";

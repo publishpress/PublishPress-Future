@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin Name: PublishPress Future
  * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
@@ -11,6 +10,12 @@
  * Domain Path: /languages
  * Requires at least: 6.7
  * Requires PHP: 7.4
+ *
+ *
+ * @package     PublishPress\Future
+ * @author      PublishPress
+ * @copyright   Copyright (c) 2025, PublishPress
+ * @license     GPLv2 or later
  */
 
 namespace PublishPress\Future;
