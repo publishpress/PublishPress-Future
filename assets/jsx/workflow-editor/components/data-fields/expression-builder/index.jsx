@@ -152,7 +152,7 @@ export const ExpressionBuilder = ({
             >
                 <div style={{ minWidth: '600px', maxWidth: '600px' }}>
                     {singleVariableOnly && (
-                        <p>{__("Single variable mode. Double click on a variable below to add it to your expression.", "post-expirator")}</p>
+                        <p>{__("Single variable mode. Select a variable from the list below.", "post-expirator")}</p>
                     )}
 
                     {!singleVariableOnly && (
@@ -184,6 +184,10 @@ export const ExpressionBuilder = ({
 
                     <div className="expression-builder-modal-variables" style={{ maxWidth: '600px', overflowX: 'auto' }}>
                         <Heading level={2} className="components-truncate components-text components-heading block-editor-inspector-popover-header__heading">{__("Variables", "post-expirator")}</Heading>
+
+                        {singleVariableOnly && (
+                            <p>{__("Double-click on a variable to select it.", "post-expirator")}</p>
+                        )}
 
                         {! singleVariableOnly && (
                             <p>{__("Double-click on any variable to add it to your expression.", "post-expirator")}</p>
