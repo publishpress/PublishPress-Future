@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-12-20T19:02:49+00:00\n"
+"POT-Creation-Date: 2025-01-08T16:03:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -182,7 +182,7 @@ msgid "Edit"
 msgstr ""
 
 #: components/data-fields/expression-builder/index.jsx:155
-msgid "Single variable mode. Double click on a variable below to add it to your expression."
+msgid "Single variable mode. Select a variable from the list below."
 msgstr ""
 
 #: components/data-fields/expression-builder/index.jsx:159
@@ -194,10 +194,14 @@ msgid "Variables"
 msgstr ""
 
 #: components/data-fields/expression-builder/index.jsx:189
-msgid "Position the cursor where you want to add a variable and double click on a variable to add it to your expression."
+msgid "Double-click on a variable to select it."
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:209
+#: components/data-fields/expression-builder/index.jsx:193
+msgid "Double-click on any variable to add it to your expression."
+msgstr ""
+
+#: components/data-fields/expression-builder/index.jsx:213
 msgid "Hover over a variable to see its description."
 msgstr ""
 
