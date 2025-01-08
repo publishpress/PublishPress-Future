@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2024, Ramble Ventures
+ * Copyright (c) 2025, Ramble Ventures
  */
 
 namespace PublishPress\Future\Framework\WordPress\Models;
@@ -169,9 +169,10 @@ class PostModel
 
     /**
      * @param string|array $metaKey
+     * @param mixed $metaValue
      * @return void
      */
-    public function deleteMeta($metaKey)
+    public function deleteMeta($metaKey, $metaValue = null)
     {
         if (! is_array($metaKey)) {
             $metaKey = [$metaKey];
@@ -188,7 +189,8 @@ class PostModel
 
             \delete_post_meta(
                 $postId,
-                \sanitize_key($key)
+                \sanitize_key($key),
+                $metaValue
             );
         }
     }

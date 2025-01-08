@@ -18,10 +18,26 @@ class PostResolver implements VariableResolverInterface
      */
     private $hooks;
 
-    public function __construct(object $post, HookableInterface $hooks)
-    {
+    /**
+     * @var string
+     */
+    private $cachedPermalink;
+
+    /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
+
+    public function __construct(
+        object $post,
+        HookableInterface $hooks,
+        string $cachedPermalink = '',
+        \Closure $expirablePostModelFactory = null
+    ) {
         $this->post = $post;
         $this->hooks = $hooks;
+        $this->cachedPermalink = $cachedPermalink;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
     public function getType(): string
@@ -44,6 +60,10 @@ class PostResolver implements VariableResolverInterface
             case 'title':
                 return $this->post->post_title;
 
+            case 'post_name':
+            case 'slug':
+                return $this->post->post_name;
+
             case 'post_content':
             case 'content':
                 return $this->hooks->applyFilters(
@@ -52,15 +72,15 @@ class PostResolver implements VariableResolverInterface
                 );
 
             case 'post_content_text':
-                case 'content_text':
-                    return wp_strip_all_tags(
-                        strip_shortcodes(
-                        $this->hooks->applyFilters(
-                                HooksAbstract::FILTER_THE_CONTENT,
-                                $this->post->post_content
-                            )
+            case 'content_text':
+                return wp_strip_all_tags(
+                    strip_shortcodes(
+                    $this->hooks->applyFilters(
+                            HooksAbstract::FILTER_THE_CONTENT,
+                            $this->post->post_content
                         )
-                    );
+                    )
+                );
 
             case 'post_excerpt':
             case 'excerpt':
@@ -83,10 +103,21 @@ class PostResolver implements VariableResolverInterface
                 return $this->post->post_modified;
 
             case 'permalink':
+                if (! empty($this->cachedPermalink)) {
+                    return $this->cachedPermalink;
+                }
+
                 return $this->getPermalink($this->post->ID);
 
             case 'meta':
                 return new PostMetaResolver($this->post->ID);
+
+            case 'post_author':
+            case 'author':
+                return new UserResolver($this->post->post_author);
+
+            case 'future':
+                return new FutureActionResolver($this->post, $this->expirablePostModelFactory);
         }
 
         return '';
@@ -126,15 +157,28 @@ class PostResolver implements VariableResolverInterface
                 'id',
                 'ID',
                 'post_title',
+                'title  ',
+                'post_name',
+                'slug',
                 'post_content',
+                'content',
                 'post_content_text',
+                'content_text',
                 'post_excerpt',
+                'excerpt',
                 'post_type',
+                'type',
                 'post_status',
+                'status',
                 'post_date',
+                'date',
                 'post_modified',
+                'modified',
                 'permalink',
                 'meta',
+                'post_author',
+                'author',
+                'future',
             ]
         );
     }

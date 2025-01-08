@@ -172,3 +172,20 @@ body.espresso-admin #publishpress-future-classic-editor .components-input-contro
     min-width: 30px;
     padding: 0 4px;
 }
+
+.pp-future-workflow-status-icon {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.pp-future-workflow-status-icon.active {
+    color: #46b450;
+}
+
+.pp-future-workflow-status-icon.inactive {
+    color: #dc3232;
+}
+
+.wp-list-table .column-workflow_status {
+    width: 75px;
+}

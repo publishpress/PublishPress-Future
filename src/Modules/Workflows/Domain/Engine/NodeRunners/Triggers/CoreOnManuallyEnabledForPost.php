@@ -55,18 +55,25 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
      */
     private $logger;
 
+    /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         InputValidatorsInterface $postQueryValidator,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->postQueryValidator = $postQueryValidator;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
     public static function getNodeTypeName(): string
@@ -121,7 +128,7 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
                     $nodeSlug,
                     [
                         'postId' => new IntegerResolver($postId),
-                        'post' => new PostResolver($post, $this->hooks),
+                        'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
                     ]
                 );
 

@@ -1,4 +1,5 @@
 import { FutureActionPanel } from './';
+import './css/block-editor.css';
 
 export const FutureActionPanelBlockEditor = (props) => {
     const { PluginDocumentSettingPanel } = wp.editPost;

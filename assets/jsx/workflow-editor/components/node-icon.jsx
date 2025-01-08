@@ -22,8 +22,16 @@ import WebsiteIcon from './icons/website';
 import ExclamationIcon from './icons/exclamation';
 import LockIcon from './icons/lock';
 import ShopIcon from './icons/shop';
+import BracesIcon from './icons/braces';
 
-export function NodeIcon({ icon, showColors = false, className, size = 20, onClick = () => {}, style = {} }) {
+export function NodeIcon({
+	icon,
+	showColors = false,
+	className,
+	iconSize = 20,
+	onClick = () => {},
+	style = {},
+}) {
 	const iconSrc = icon?.src || icon;
 
 	switch (iconSrc) {
@@ -118,13 +126,18 @@ export function NodeIcon({ icon, showColors = false, className, size = 20, onCli
 				src: ShopIcon,
 			};
 			break;
+		case 'braces':
+			icon = {
+				src: BracesIcon,
+			};
+			break;
 	}
 
 	const mergedClassName = classnames(className, 'node-icon', {
 		'has-colors': showColors,
 	});
 
-	const renderedIcon = <Icon icon={icon && icon.src ? icon.src : icon} size={size} />;
+	const renderedIcon = <Icon icon={icon && icon.src ? icon.src : icon} size={iconSize} />;
 	const spanStyle = showColors
 		? {
 			...style,

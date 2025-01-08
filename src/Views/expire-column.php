@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2024, Ramble Ventures
+ * Copyright (c) 2025, Ramble Ventures
  */
 
 use PublishPress\Future\Core\DI\Container;
@@ -43,7 +43,13 @@ $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
         $format = get_option('date_format') . ' ' . get_option('time_format');
         $container = Container::getInstance();
 
-        $formatedDate = $container->get(ServicesAbstract::DATETIME)->getWpDate($format, $actionDateUnix);
+        $defaultDateTimeFormat = $container->get(ServicesAbstract::DATETIME)->getDefaultDateTimeFormat();
+
+        $formatedDate = $container->get(ServicesAbstract::DATETIME)->getWpDate(
+            $format,
+            $actionDateUnix,
+            $defaultDateTimeFormat
+        );
 
         if (is_object($action)) {
             ?><span class="dashicons dashicons-clock icon-scheduled" aria-hidden="true"></span> <?php

@@ -43,15 +43,15 @@ var useLayoutedElements = function useLayoutedElements(_ref) {
     // - https://www.eclipse.org/elk/reference/options.html
     var opts = {
       'elk.direction': direction,
-      'elk.algorithm': 'layered',
-      'elk.layered.spacing.nodeNodeBetweenLayers': '70',
-      // Vertical spacing between nodes/layers
-      'elk.spacing.nodeNode': '70' // Horizontal spacing between nodes
+      'elk.algorithm': 'mrtree',
+      'elk.spacing.nodeNode': '60'
     };
     var getLayoutedElements = /*#__PURE__*/function () {
-      var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(nodes, edges) {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(nodes, edges) {
         var options,
           isHorizontal,
+          getNodeList,
+          getEdgeList,
           graph,
           elk,
           layoutedGraph,
@@ -61,27 +61,51 @@ var useLayoutedElements = function useLayoutedElements(_ref) {
             case 0:
               options = _args.length > 2 && _args[2] !== undefined ? _args[2] : {};
               isHorizontal = (options === null || options === void 0 ? void 0 : options['elk.direction']) === _constants__WEBPACK_IMPORTED_MODULE_1__.AUTO_LAYOUT_DIRECTION_RIGHT;
-              graph = {
-                id: 'root',
-                layoutOptions: options,
-                children: nodes.map(function (node) {
+              getNodeList = function getNodeList(nodes) {
+                return nodes.map(function (node) {
+                  var nodeElement = document.querySelector("div[data-id=\"".concat(node.id, "\"]"));
+                  var width = (nodeElement === null || nodeElement === void 0 ? void 0 : nodeElement.offsetWidth) || 127;
+                  var height = (nodeElement === null || nodeElement === void 0 ? void 0 : nodeElement.offsetHeight) || 62;
                   return _objectSpread(_objectSpread({}, node), {}, {
                     // Adjust the target and source handle positions based on the layout
                     // direction.
                     targetPosition: isHorizontal ? 'left' : 'top',
                     sourcePosition: isHorizontal ? 'right' : 'bottom',
                     // Hardcode a width and height for elk to use when layouting.
-                    width: 150,
-                    height: 50
+                    width: width,
+                    height: height
                   });
-                }),
-                edges: edges
+                });
+              };
+              getEdgeList = function getEdgeList(edges) {
+                // Sort grouping by source node
+                var edgesList = edges.sort(function (edgeA, edgeB) {
+                  return edgeA.source.localeCompare(edgeB.source);
+                });
+
+                // Sort conditional split edges to avoid crossing the connections
+                edgesList = edgesList.sort(function (edgeA, edgeB) {
+                  if (edgeA.sourceHandle === 'false' && edgeB.sourceHandle === 'true') {
+                    return 1;
+                  }
+                  if (edgeA.sourceHandle === 'true' && edgeB.sourceHandle === 'false') {
+                    return -1;
+                  }
+                  return 0;
+                });
+                return edgesList;
+              };
+              graph = {
+                id: 'root',
+                layoutOptions: options,
+                children: getNodeList(nodes),
+                edges: getEdgeList(edges)
               };
               elk = new (elkjs__WEBPACK_IMPORTED_MODULE_0___default())();
-              _context.prev = 4;
-              _context.next = 7;
+              _context.prev = 6;
+              _context.next = 9;
               return elk.layout(graph);
-            case 7:
+            case 9:
               layoutedGraph = _context.sent;
               return _context.abrupt("return", {
                 nodes: layoutedGraph.children.map(function (node_1) {
@@ -96,15 +120,15 @@ var useLayoutedElements = function useLayoutedElements(_ref) {
                 }),
                 edges: layoutedGraph.edges
               });
-            case 11:
-              _context.prev = 11;
-              _context.t0 = _context["catch"](4);
+            case 13:
+              _context.prev = 13;
+              _context.t0 = _context["catch"](6);
               return _context.abrupt("return", console.error(_context.t0));
-            case 14:
+            case 16:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[4, 11]]);
+        }, _callee, null, [[6, 13]]);
       }));
       return function getLayoutedElements(_x, _x2) {
         return _ref3.apply(this, arguments);

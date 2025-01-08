@@ -67,7 +67,7 @@ class CoreOnSavePost implements NodeTypeInterface
             [
                 "label" => __("Post Query", "post-expirator"),
                 "description" => __(
-                    "Specify the criteria for posts that will trigger this action. Leave blank to include all posts.",
+                    "Specify the criteria for posts that will trigger this action.",
                     "post-expirator"
                 ),
                 "fields" => [
@@ -82,6 +82,9 @@ class CoreOnSavePost implements NodeTypeInterface
                         "settings" => [
                             "acceptsInput" => false,
                             "isPostTypeRequired" => true,
+                            "postTypeDescription" => __("Select the post types that will trigger this action.", "post-expirator"),
+                            "postIdDescription" => __("Enter one or more post IDs. Leave empty to include all posts.", "post-expirator"),
+                            "postStatusDescription" => __("If selected, only posts with these statuses will trigger this action.", "post-expirator"),
                         ],
                         "default" => [
                             "postSource" => "custom",

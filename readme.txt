@@ -7,7 +7,7 @@ Requires at least: 6.7
 Requires PHP: 7.4
 Tested up to: 6.7
 License: GPLv2 or later
-Stable tag: 4.2.0
+Stable tag: 4.3.0
 
 PublishPress Future can make scheduled changes to your content. You can unpublish posts, move posts to a new status, update the categories, and more.
 
@@ -172,6 +172,69 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 == Changelog ==
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
+
+## [4.3.0] - 08 Jan, 2025
+
+### Added
+
+- Add new variables selector and an expression builder (Issue #976).
+- Add support to metadata in the variables resolvers and post type variables (Issue #1069, #939).
+- Add the site ID to the site data type schema.
+- Add the post author property to the post data type schema in the workflow editor (Issue #947).
+- Add the post slug property to the post data type schema in the workflow editor.
+- Add new trigger: Post is Published - PRO (Issue #944).
+- Add new trigger: Post Status Changes - PRO (Issue #945).
+- Add new trigger: Post is Scheduled - PRO (Issue #946).
+- Add new trigger: Post Meta Changed - PRO (Issue #1059).
+- Add new action: Post Meta Add - PRO (Issue #732).
+- Add new action: Post Meta Delete - PRO (Issue #732).
+- Add new action: Post Meta Update - PRO (Issue #732).
+- Add the option to change manually enabled workflows in the bulk edit screen (Issue #942).
+- Add the "Save as current status" shortcut to the workflow editor (CTRL/CMD + S) (Issue #1084).
+- Add new display settings to customize the shortcode output (Issue #203).
+- Add new step setting field to customize the step label in the workflow editor (Issue #1090).
+- Add Future Action data support in the workflow editor, allowing to reference future actions in expressions (Issue #948).
+
+### Changed
+
+- Replace text fields and input/variables selectors on step settings with the new expression builder (Issue #976).
+- Changed the border of selected steps to dashed line.
+- Moved the panel "Step Data Flow" to the developer mode.
+- Removed the arrow indicator from the workflow title and added a new Status column to the workflows list screen (Issue #970).
+- Post's variable resolver now also accept a property without `post_` prefix.
+- User's variable resolver now also accept a property without `user_` prefix.
+- Changed the options in the "Debug Data" field to be more intuitive allowing a custom data expression to be selected.
+- The conditional step now uses the new expression builder.
+- Improved the UI in the conditional step settings.
+- Added field descriptions to the post query step settings panel (Issue #1081).
+- Only display the bulk edit option "Update Future Action from Post Metadata" if feature is enabled (Issue #622).
+- Updated language files.
+- Remove focus from the toolbar Delete button when workflow step is selected (Issue #1083).
+- Improved the text in the variables selector modal.
+
+### Fixed
+
+- Fix error when the date or time format is empty in the settings page (Issue #212).
+- Fix empty title and label in the future action panel when custom title and label are not set (Issue #1075).
+- Fix the width of the checkbox in the future action panel (#1076).
+- Fix the permalink in the Post Updated trigger for the post before variable.
+- Fix the variable names in the "Add extra terms to post" step (Issue #1079).
+- Fix the validation message for the recipient field in the Send Email step (Issue #1078).
+- Fix the date format in the shortcode.
+- Fix loading a workflow that doesn't have a specific step type (Issue #883).
+- Fix the first save of a workflow to transit from auto-saved to draft (Issue #1086).
+- Fix warning about deprecated jQuery click() method in the workflow editor.
+- Fix the auto-layout algorithm to avoid overlapping edges and correctly dimension each node and spacing between nodes (Issue #1102).
+- Fix the warning about deprecated method `next` in the class `ActionScheduler_Schedule` (Issue #1107).
+
+### Developers
+
+- Deprecated the method `get_wp_date` in the class `PostExpirator_Util` and use the method `getWpDate` from the class `PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade instead.
+- Deprecated the method `wp_timezone_string` in the class `PostExpirator_Util` and use the method `getTimezoneString` from the class `PublishPress\Future\Framework\System\DateTimeHandler` instead.
+- Deprecated the method `get_timezone_offset` in the class `PostExpirator_Util`.
+- Deprecated the method `sanitize_array_of_integers` in the class `PostExpirator_Util`.
+- Add new param $metaValue to the method `deleteMeta` in the class `PublishPress\Future\Framework\WordPress\Models\PostModel`.
+- Remove the `steps` property from the workflow data type schema.
 
 ## [4.2.0] - 09 Dec, 2024
 
@@ -348,23 +411,3 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 - The method 'PublishPress\Future\Modules\Workflows\Models\WorkflowModel::getStepFromRoutineTreeRecursively' now always returns an array.
 - Add new filter 'action_scheduler_list_table_column_recurrence' to filter the recurrence column in the scheduled actions list.
 - Add new method 'getNodeById' to the class 'PublishPress\Future\Modules\Workflows\Models\WorkflowModel'.
-
-## [3.4.4] - 21 Aug, 2024
-
-### Fixed
-
-- Improve notice message when scheduled action runs after pressing "run" (PR #896).
-- Fixed support for the Event Espresso plugin (PR #900).
-- Fixed React warning about createRoot being deprecated.
-- Fixed empty fieldset displayed when the bos is disabled for the post type (Issue #792).
-- Update language files.
-
-### Changed
-
-- Add tabs for post types in the post types settings page (PR #895).
-
-### Added
-
-- Added computed date preview to the general settings page (PR #897).
-- Added option to hide the calendar by default in the future action panel (PR #899).
-- Added new filter `publishpressfuture_posts_future_action_column_output` to the Future Action column.

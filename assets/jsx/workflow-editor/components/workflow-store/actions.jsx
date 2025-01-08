@@ -53,19 +53,24 @@ export function* setupEditor(workflowId) {
     }
 };
 
+function addWorkflowIdToUrl(workflowId) {
+    window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${parseInt(workflowId)}`);
+}
+
+// FIXME: This is not working as expected. The state we get from the store is not updated if the
+// inspector is open or was not closed after the changes.
 export function* saveAsDraft({ screenshot } = {}) {
     yield {type: 'SAVE_AS_DRAFT_START'};
 
     try {
         const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
+        const editedWorkflow = yield select(STORE_NAME).getWorkflow();
 
-        yield dispatch(STORE_NAME).setEditedWorkflowAttribute('status', 'draft');
-
-        const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
-
-        if (screenshot) {
-            editedWorkflow.screenshot = screenshot;
-        }
+        const workflowToSave = {
+            ...editedWorkflow,
+            status: 'draft',
+            ...(screenshot ? { screenshot } : {})
+        };
 
         const newWorkflow = yield apiFetch({
             path: `${apiUrl}/workflows/${parseInt(editedWorkflow.id)}`,
@@ -73,12 +78,12 @@ export function* saveAsDraft({ screenshot } = {}) {
             headers: {
                 'X-WP-Nonce': nonce,
             },
-            body: JSON.stringify(editedWorkflow),
+            body: JSON.stringify(workflowToSave),
         });
 
         // Add the workflow id to the url, keeping current state in the history
         if (wasNewWorkflow) {
-            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${parseInt(newWorkflow.id)}`);
+            addWorkflowIdToUrl(newWorkflow.id);
         }
 
         yield {type: 'SAVE_AS_DRAFT_SUCCESS', payload: newWorkflow};
@@ -100,14 +105,23 @@ export function* saveAsDraft({ screenshot } = {}) {
 }
 
 export function* saveAsCurrentStatus({ screenshot } = {}) {
+    const editedWorkflow = yield select(STORE_NAME).getWorkflow();
+
+    if (editedWorkflow.status === 'auto-draft') {
+        yield saveAsDraft({ screenshot });
+        return;
+    }
+
     yield {type: 'SAVE_AS_CURRENT_STATUS_START'};
 
     try {
-        const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+        const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
+        const editedWorkflow = yield select(STORE_NAME).getWorkflow();
 
-        if (screenshot) {
-            editedWorkflow.screenshot = screenshot;
-        }
+        const workflowToSave = {
+            ...editedWorkflow,
+            ...(screenshot ? { screenshot } : {}),
+        };
 
         const newWorkflow = yield apiFetch({
             path: `${apiUrl}/workflows/${parseInt(editedWorkflow.id)}`,
@@ -115,8 +129,13 @@ export function* saveAsCurrentStatus({ screenshot } = {}) {
             headers: {
                 'X-WP-Nonce': nonce,
             },
-            body: JSON.stringify(editedWorkflow),
+            body: JSON.stringify(workflowToSave),
         });
+
+        // Add the workflow id to the url, keeping current state in the history
+        if (wasNewWorkflow) {
+            addWorkflowIdToUrl(newWorkflow.id);
+        }
 
         yield {type: 'SAVE_AS_CURRENT_STATUS_SUCCESS', payload: newWorkflow};
 
@@ -141,14 +160,13 @@ export function* publishWorkflow({ screenshot } = {}) {
 
     try {
         const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
+        const editedWorkflow = yield select(STORE_NAME).getWorkflow();
 
-        yield dispatch(STORE_NAME).setEditedWorkflowAttribute('status', 'publish');
-
-        const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
-
-        if (screenshot) {
-            editedWorkflow.screenshot = screenshot;
-        }
+        const workflowToSave = {
+            ...editedWorkflow,
+            status: 'publish',
+            ...(screenshot ? { screenshot } : {}),
+        };
 
         const newWorkflow = yield apiFetch({
             path: `${apiUrl}/workflows/${parseInt(editedWorkflow.id)}`,
@@ -156,12 +174,12 @@ export function* publishWorkflow({ screenshot } = {}) {
             headers: {
                 'X-WP-Nonce': nonce,
             },
-            body: JSON.stringify(editedWorkflow),
+            body: JSON.stringify(workflowToSave),
         });
 
         // Add the workflow id to the url, keeping current state in the history
         if (wasNewWorkflow) {
-            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${parseInt(newWorkflow.id)}`);
+            addWorkflowIdToUrl(newWorkflow.id);
         }
 
         yield {type: 'PUBLISH_WORKFLOW_SUCCESS', payload: newWorkflow};
@@ -187,14 +205,13 @@ export function* switchToDraft({ screenshot } = {}) {
 
     try {
         const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
+        const editedWorkflow = yield select(STORE_NAME).getWorkflow();
 
-        yield dispatch(STORE_NAME).setEditedWorkflowAttribute('status', 'draft');
-
-        const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
-
-        if (screenshot) {
-            editedWorkflow.screenshot = screenshot;
-        }
+        const workflowToSave = {
+            ...editedWorkflow,
+            status: 'draft',
+            ...(screenshot ? { screenshot } : {}),
+        };
 
         const newWorkflow = yield apiFetch({
             path: `${apiUrl}/workflows/${parseInt(editedWorkflow.id)}`,
@@ -202,12 +219,12 @@ export function* switchToDraft({ screenshot } = {}) {
             headers: {
                 'X-WP-Nonce': nonce,
             },
-            body: JSON.stringify(editedWorkflow),
+            body: JSON.stringify(workflowToSave),
         });
 
         // Add the workflow id to the url, keeping current state in the history
         if (wasNewWorkflow) {
-            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${parseInt(newWorkflow.id)}`);
+            addWorkflowIdToUrl(newWorkflow.id);
         }
 
         yield {type: 'SWITCH_TO_DRAFT_SUCCESS', payload: newWorkflow};
@@ -297,7 +314,7 @@ export const setEditedWorkflowAttribute = (key, value) => {
 export function* deleteWorkflow () {
     yield {type: 'DELETE_WORKFLOW_START'};
 
-    const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+    const editedWorkflow = yield select(STORE_NAME).getWorkflow();
 
     try {
         const newWorkflow = yield apiFetch({

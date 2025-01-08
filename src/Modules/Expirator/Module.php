@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2024, Ramble Ventures
+ * Copyright (c) 2025, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator;
@@ -17,6 +17,7 @@ use PublishPress\Future\Framework\WordPress\Facade\RequestFacade;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\System\DateTimeHandlerInterface;
+use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
@@ -114,6 +115,11 @@ class Module implements ModuleInterface
      */
     private $taxonomiesModelFactory;
 
+    /**
+     * @var DateTimeFacade
+     */
+    private $dateTimeFacade;
+
     public function __construct(
         \PublishPress\Future\Core\HookableInterface $hooks,
         SiteFacade $site,
@@ -131,7 +137,8 @@ class Module implements ModuleInterface
         LoggerInterface $logger,
         DateTimeHandlerInterface $dateTimeHandler,
         PostTypeDefaultDataModelFactory $defaultDataModelFactory,
-        \Closure $taxonomiesModelFactory
+        \Closure $taxonomiesModelFactory,
+        DateTimeFacade $dateTimeFacade
     ) {
         $this->hooks = $hooks;
         $this->site = $site;
@@ -150,6 +157,7 @@ class Module implements ModuleInterface
         $this->dateTimeHandler = $dateTimeHandler;
         $this->defaultDataModelFactory = $defaultDataModelFactory;
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
+        $this->dateTimeFacade = $dateTimeFacade;
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
         $this->controllers['quick_edit'] = $this->factoryQuickEditController();
@@ -241,7 +249,11 @@ class Module implements ModuleInterface
 
     private function factoryShortcodeController()
     {
-        return new Controllers\ShortcodeController($this->hooks);
+        return new Controllers\ShortcodeController(
+            $this->hooks,
+            $this->dateTimeFacade,
+            $this->settingsFacade
+        );
     }
 
     private function factoryPostsListController()
@@ -255,7 +267,11 @@ class Module implements ModuleInterface
 
     private function factoryContentController()
     {
-        return new Controllers\ContentController($this->hooks);
+        return new Controllers\ContentController(
+            $this->hooks,
+            $this->settingsFacade,
+            $this->dateTimeFacade
+        );
     }
 
     private function factoryPluginsListController()

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2024, Ramble Ventures
+ * Copyright (c) 2025, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Settings;
@@ -396,12 +396,14 @@ class SettingsFacade
 
     public function getMetaboxTitle(): ?string
     {
-        return $this->options->getOption(self::OPTION_METABOX_TITLE, null);
+        $option = $this->options->getOption(self::OPTION_METABOX_TITLE, null);
+        return empty($option) ? null : $option;
     }
 
     public function getMetaboxCheckboxLabel(): ?string
     {
-        return $this->options->getOption(self::OPTION_METABOX_CHECKBOX_LABEL, null);
+        $option = $this->options->getOption(self::OPTION_METABOX_CHECKBOX_LABEL, null);
+        return empty($option) ? null : $option;
     }
 
     public function setMetaboxTitle(string $value): void
@@ -529,6 +531,26 @@ class SettingsFacade
         $this->options->updateOption('workflowScreenshot', $value);
     }
 
+    public function getShortcodeWrapper(): string
+    {
+        return $this->options->getOption('shortcodeWrapper', '');
+    }
+
+    public function setShortcodeWrapper(string $value): void
+    {
+        $this->options->updateOption('shortcodeWrapper', sanitize_text_field($value));
+    }
+
+    public function getShortcodeWrapperClass(): string
+    {
+        return $this->options->getOption('shortcodeWrapperClass', '');
+    }
+
+    public function setShortcodeWrapperClass(string $value): void
+    {
+        $this->options->updateOption('shortcodeWrapperClass', sanitize_text_field($value));
+    }
+
     public function getGeneralSettings(): array
     {
         $settings = [
@@ -587,6 +609,8 @@ class SettingsFacade
             'showInPostFooter' => $this->getShowInPostFooter(),
             'footerContents' => $this->getFooterContents(),
             'footerStyle' => $this->getFooterStyle(),
+            'shortcodeWrapper' => $this->getShortcodeWrapper(),
+            'shortcodeWrapperClass' => $this->getShortcodeWrapperClass(),
         ];
 
         $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_DISPLAY, $settings);
@@ -605,6 +629,8 @@ class SettingsFacade
         $this->setShowInPostFooter($settings['showInPostFooter'] ?? false);
         $this->setFooterContents($settings['footerContents'] ?? '');
         $this->setFooterStyle($settings['footerStyle'] ?? '');
+        $this->setShortcodeWrapper($settings['shortcodeWrapper'] ?? '');
+        $this->setShortcodeWrapperClass($settings['shortcodeWrapperClass'] ?? '');
 
         do_action(HooksAbstract::ACTION_SETTINGS_SET_DISPLAY, $settings);
     }

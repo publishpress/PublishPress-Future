@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-19T15:23:56+00:00\n"
-"PO-Revision-Date: 2024-11-20 23:08+0100\n"
+"POT-Creation-Date: 2024-12-09T15:08:10+00:00\n"
+"PO-Revision-Date: 2024-12-10 13:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -116,11 +116,12 @@ msgstr "Expresión de ID única"
 #: components/data-fields/date-offset.jsx:233
 msgid ""
 "Define a custom expression for a unique task ID. Use placeholders like "
-"{{onSavePost1.post.ID}} or {{global.user.ID}} to make sure the ID is unique."
+"{{onSavePost1.post.ID}}, {{global.user.ID}} or {{global.execution_id}} to "
+"make sure the ID is unique."
 msgstr ""
 "Define una expresión personalizada para un ID de tarea único. Utiliza "
-"marcadores de posición como {{onSavePost1.post.ID}} o {{global.user.ID}} "
-"para asegurarte de que el ID sea único."
+"marcadores de posición como {{onSavePost1.post.ID}}, {{global.user.ID}} o "
+"{{global.execution_id}} para asegurarte de que el ID sea único."
 
 #: components/data-fields/date-offset.jsx:239
 msgid "Priority"
@@ -138,7 +139,12 @@ msgstr ""
 msgid "All received input"
 msgstr "Todas las entradas recibidas"
 
-#: components/data-fields/debug-data.jsx:35
+#: components/data-fields/debug-data.jsx:22
+#: components/data-fields/debug-data.jsx:49
+msgid "Custom data"
+msgstr "Datos personalizados"
+
+#: components/data-fields/debug-data.jsx:41
 msgid "Data to output"
 msgstr "Datos de salida"
 
@@ -178,33 +184,41 @@ msgstr "Nivel"
 msgid "Custom Addresses"
 msgstr "Direcciones personalizadas"
 
-#: components/data-fields/email-recipient.jsx:35
+#: components/data-fields/email-recipient.jsx:34
 msgid "Email Recipient"
 msgstr "Correo electrónico del destinatario"
 
-#: components/data-fields/email-recipient.jsx:42
+#: components/data-fields/email-recipient.jsx:41
 msgid "Custom Email Addresses"
 msgstr "Direcciones de correo electrónico personalizadas"
 
-#: components/data-fields/post-query.jsx:44
-msgid "Post selection"
-msgstr "Selección de entradas"
-
-#: components/data-fields/post-query.jsx:47
-msgid "Post received as input"
-msgstr "Entrada recibida como entrada"
-
-#: components/data-fields/post-query.jsx:48
-msgid "Custom query"
-msgstr "Consulta personalizada"
-
-#: components/data-fields/post-query.jsx:59
+#: components/data-fields/post-query.jsx:46
 msgid "Post Type"
 msgstr "Tipo de entrada"
 
-#: components/data-fields/post-query.jsx:74
+#: components/data-fields/post-query.jsx:53
+msgid "Post selection"
+msgstr "Selección de entradas"
+
+#: components/data-fields/post-query.jsx:56
+msgid "Post received as input"
+msgstr "Entrada recibida como entrada"
+
+#: components/data-fields/post-query.jsx:57
+msgid "Custom query"
+msgstr "Consulta personalizada"
+
+#: components/data-fields/post-query.jsx:77
+msgid "Post ID"
+msgstr "ID de la entrada"
+
+#: components/data-fields/post-query.jsx:83
 msgid "Post Status"
 msgstr "Estado de la entrada"
+
+#: components/data-fields/post-query.jsx:94
+msgid "* Required field"
+msgstr "* Campo obligatorio"
 
 #: components/data-fields/post-status.jsx:40
 msgid "New Status"
@@ -288,25 +302,25 @@ msgstr ""
 "Actualmente este paso está omitido. Actualiza a Pro para desbloquear esta "
 "característica."
 
-#: components/layout/header.jsx:133
+#: components/layout/header.jsx:129
 msgid "Add"
 msgstr "Añadir"
 
-#: components/layout/header.jsx:133
+#: components/layout/header.jsx:129
 msgid "Close"
 msgstr "Cerrar"
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/layout/header.jsx:144 components/layout/header.jsx:149
+#: components/layout/header.jsx:140 components/layout/header.jsx:145
 msgid "Auto Layout"
 msgstr "Diseño automático"
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/layout/header.jsx:161
+#: components/layout/header.jsx:157
 msgid "Upgrade to Pro and unlock more features"
 msgstr "Actualiza a Pro y desbloquea más características"
 
-#: components/layout/header.jsx:164
+#: components/layout/header.jsx:160
 msgid "Upgrade to Pro"
 msgstr "Actualiza a Pro"
 
@@ -800,45 +814,45 @@ msgid "Move to trash"
 msgstr "Mover a la papelera"
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/workflow-publish-button/index.jsx:82
+#: components/workflow-publish-button/index.jsx:84
 msgid "Publish"
 msgstr "Publicar"
 
-#: components/workflow-publish-button/index.jsx:82
+#: components/workflow-publish-button/index.jsx:84
 msgid "Update"
 msgstr "Actualizar"
 
-#: components/workflow-publish-button/index.jsx:93
+#: components/workflow-publish-button/index.jsx:95
 msgid "Autosaving..."
 msgstr "Guardando automáticamente…"
 
-#: components/workflow-publish-button/index.jsx:93
+#: components/workflow-publish-button/index.jsx:95
 msgid "Updating..."
 msgstr "Actualizando…"
 
-#: components/workflow-publish-button/index.jsx:95
+#: components/workflow-publish-button/index.jsx:97
 msgid "Updated"
 msgstr "Actualizado"
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/workflow-save-draft-button/index.jsx:85
+#: components/workflow-save-draft-button/index.jsx:87
 msgid "Save draft"
 msgstr "Guardar borrador"
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/workflow-save-draft-button/index.jsx:88
+#: components/workflow-save-draft-button/index.jsx:90
 msgid "Save"
 msgstr "Guardar"
 
-#: components/workflow-save-draft-button/index.jsx:97
+#: components/workflow-save-draft-button/index.jsx:99
 msgid "Autosaving"
 msgstr "Guardando automáticamente"
 
-#: components/workflow-save-draft-button/index.jsx:97
+#: components/workflow-save-draft-button/index.jsx:99
 msgid "Saving"
 msgstr "Guardando"
 
-#: components/workflow-save-draft-button/index.jsx:99
+#: components/workflow-save-draft-button/index.jsx:101
 msgid "Saved"
 msgstr "Guardado"
 
@@ -867,30 +881,30 @@ msgstr ""
 msgid "Workflow saved."
 msgstr "Flujo de trabajo guardado."
 
-#: components/workflow-store/actions.jsx:169
+#: components/workflow-store/actions.jsx:170
 msgid "Workflow published."
 msgstr "Flujo de trabajo publicado."
 
-#: components/workflow-store/actions.jsx:177
+#: components/workflow-store/actions.jsx:178
 msgid "Unable to publish the workflow. Please, try again."
 msgstr ""
 "No se ha podido publicar el flujo de trabajo. Por favor, inténtalo de nuevo."
 
-#: components/workflow-store/actions.jsx:214
+#: components/workflow-store/actions.jsx:216
 msgid "Workflow switched to draft."
 msgstr "Flujo de trabajo cambiado a borrador."
 
-#: components/workflow-store/actions.jsx:222
+#: components/workflow-store/actions.jsx:224
 msgid "Unable to switch workflow to draft. Please, try again."
 msgstr ""
 "No se ha podido cambiar el flujo de trabajo a borrador. Por favor, inténtalo "
 "de nuevo."
 
-#: components/workflow-store/actions.jsx:312
+#: components/workflow-store/actions.jsx:314
 msgid "Workflow deleted. Redirecting..."
 msgstr "Flujo de trabajo eliminado. Redirigiendo…"
 
-#: components/workflow-store/actions.jsx:323
+#: components/workflow-store/actions.jsx:325
 msgid "Unable to delete the workflow. Please, try again."
 msgstr ""
 "No se ha podido borrar el flujo de trabajo. Por favor, inténtalo de nuevo."
@@ -907,15 +921,15 @@ msgstr "Título"
 msgid "Description"
 msgstr "Descripción"
 
-#: components/workflow-switch-to-draft-button/index.jsx:35
+#: components/workflow-switch-to-draft-button/index.jsx:37
 msgid "Are you sure you want to unpublish this workflow?"
 msgstr ""
 "¿Estás seguro de querer anular la publicación de este flujo de trabajo?"
 
-#: components/workflow-switch-to-draft-button/index.jsx:56
+#: components/workflow-switch-to-draft-button/index.jsx:62
 msgid "Draft"
 msgstr "Borrador"
 
-#: components/workflow-switch-to-draft-button/index.jsx:56
+#: components/workflow-switch-to-draft-button/index.jsx:62
 msgid "Switch to draft"
 msgstr "Cambiar a borrador"

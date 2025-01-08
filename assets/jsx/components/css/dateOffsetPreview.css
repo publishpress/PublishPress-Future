@@ -1,7 +1,10 @@
 .publishpress-future-date-preview .publishpress-future-date-preview-value {
     font-family: monospace;
     background-color: #e7e7e7;
-    padding: 2px 4px;
+    padding: 4px 6px;
+    display: inline-block;
+    min-width: 140px;
+    min-height: 20px;
 }
 
 .publishpress-future-date-preview.compact .publishpress-future-date-preview-label {

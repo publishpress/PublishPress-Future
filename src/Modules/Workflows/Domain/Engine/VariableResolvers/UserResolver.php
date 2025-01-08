@@ -17,6 +17,8 @@ class UserResolver implements VariableResolverInterface
     {
         if (is_object($user)) {
             $this->user = $user;
+        } elseif (is_numeric($user)) {
+            $this->user = get_user_by('ID', $user);
         } else {
             $this->user = null;
         }
@@ -104,7 +106,9 @@ class UserResolver implements VariableResolverInterface
                 'id',
                 'ID',
                 'user_login',
+                'login',
                 'user_email',
+                'email',
                 'roles',
                 'caps',
                 'display_name',

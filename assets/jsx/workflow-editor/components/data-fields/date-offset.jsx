@@ -9,7 +9,7 @@ import {
     __experimentalVStack as VStack,
 } from "@wordpress/components";
 import { VariablesTreeSelect } from "../variables-tree-select";
-import { useState } from "@wordpress/element";
+import { useState, useMemo } from "@wordpress/element";
 import { useSelect } from "@wordpress/data";
 import { store as editorStore } from "../editor-store";
 import { FEATURE_ADVANCED_SETTINGS } from "../../constants";
@@ -19,6 +19,7 @@ import { Slot } from "@wordpress/components";
 import ProFeatureButton from "../pro-feature-button";
 import Recurrence from "./recurrence";
 import ProFeatureField from "../pro-feature-field";
+import ExpressionBuilder from "./expression-builder";
 
 /**
  *  When to execute:
@@ -39,13 +40,33 @@ import ProFeatureField from "../pro-feature-field";
  *
  */
 export function DateOffset({ name, label, defaultValue, onChange, variables = [], settings }) {
-    variables = filterVariableOptionsByDataType(variables, ['datetime']);
+    const allVariables = useMemo(() => {
+        return variables;
+    }, [variables]);
 
     const defaultSpecificDate = new Date();
     defaultSpecificDate.setDate(defaultSpecificDate.getDate() + 3);
 
     const defaultRepeatDate = new Date();
     defaultRepeatDate.setDate(defaultRepeatDate.getDate() + 7);
+
+    const variablesTree = variables.map((variable) => {
+        const mapChildren = (children) => {
+            if (!children) return undefined;
+
+            return children.map(child => ({
+                name: child.label,
+                id: child.name,
+                children: mapChildren(child.children)
+            }));
+        };
+
+        return {
+            name: variable.label,
+            id: variable.name,
+            children: mapChildren(variable.children)
+        };
+    });
 
     defaultValue = {
         whenToRun: "now",
@@ -81,13 +102,21 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
         { name: __("Selected in the calendar", "post-expirator"), id: "calendar" },
         { name: __("When the trigger is activated", "post-expirator"), id: "event"},
         { name: __("When the step is activated", "post-expirator"), id: "step"},
-        ...variables
+        { name: __("Custom date source", "post-expirator"), id: "custom"},
     ];
+
+    const validDateSources = ['calendar', 'event', 'step', 'custom'];
+    const isLegacyDateSource = !validDateSources.includes(defaultValue.dateSource);
+
+    if (isLegacyDateSource) {
+        defaultValue.customDateSource = defaultValue.dateSource;
+        defaultValue.dateSource = 'custom';
+    }
 
     // Filter out hidden date sources
     if (settings && settings?.hideDateSources) {
         dateSourceOptions = dateSourceOptions.filter((option) => {
-            return !settings.hideDateSources.includes(option.id);
+            return !settings.hideDateSources.includes(option.name);
         });
     }
 
@@ -154,6 +183,24 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                             <DatePicker
                                 currentDate={defaultValue.specificDate}
                                 onChange={(value) => onChangeSetting({ settingName: "specificDate", value })}
+                            />
+                        )}
+
+                        {defaultValue.dateSource === 'custom' && (
+                            <ExpressionBuilder
+                                name="customDateSource"
+                                label={__("Custom date source", "post-expirator")}
+                                defaultValue={defaultValue.customDateSource}
+                                onChange={(settingName, value) => {
+                                    onChangeSetting({ settingName: 'customDateSource', value });
+                                }}
+                                variables={allVariables}
+                                singleVariableOnly={true}
+                                readOnlyPreview={true}
+                                description={__("Click the button to choose a custom date source from variables that can provide a date.", "post-expirator")}
+                                wrapOnPreview={false}
+                                wrapOnEditor={false}
+                                oneLinePreview={true}
                             />
                         )}
 
@@ -226,11 +273,18 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                     <>
                         {!hidePreventDuplicateScheduling && (
                             <PanelRow>
-                                <TextControl
+                                <ExpressionBuilder
+                                    name="uniqueIdExpression"
                                     label={__("Unique ID Expression", "post-expirator")}
-                                    value={defaultValue.uniqueIdExpression ?? ''}
-                                    onChange={(value) => onChangeSetting({ settingName: "uniqueIdExpression", value })}
-                                    help={__("Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}}, {{global.user.ID}} or {{global.execution_id}} to make sure the ID is unique.", "post-expirator")}
+                                    defaultValue={defaultValue.uniqueIdExpression ?? ''}
+                                    onChange={(settingName, value) => {
+                                        onChangeSetting({ settingName: 'uniqueIdExpression', value: value });
+                                    }}
+                                    variables={allVariables}
+                                    description={__("Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}}, {{global.user.ID}} or {{global.execution_id}} to make sure the ID is unique.", "post-expirator")}
+                                    oneLinePreview={true}
+                                    wrapOnPreview={false}
+                                    wrapOnEditor={false}
                                 />
                             </PanelRow>
                         )}

@@ -3,7 +3,7 @@ import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useMemo } from "@wordpress/element";
-import { getExpandedVariableOptionsForSelect } from "../../utils";
+import { getExpandedVariablesList } from "../../utils";
 import MappedField from "./mapped-field";
 import PersistentPanelBody from "../persistent-panel-body";
 
@@ -23,16 +23,16 @@ export const NodeSettingsPanel = ({ node }) => {
     } = useDispatch(workflowStore);
 
     const onChangeSetting = (fieldName, value) => {
-        if (! node.data?.settings) {
-            node.data.settings = {};
-        }
+        const newNode = {
+            id: node.id,
+            data: {
+                settings: {
+                    [fieldName]: value,
+                },
+            },
+        };
 
-        node.data.settings = {
-            ...node.data.settings,
-            [fieldName]: value
-        }
-
-        updateNode(node);
+        updateNode(newNode);
     };
 
     let nodeSettings = node.data?.settings;
@@ -42,7 +42,7 @@ export const NodeSettingsPanel = ({ node }) => {
     }
     const settingsSchema = nodeType?.settingsSchema || {};
 
-    const variableListOptions = getExpandedVariableOptionsForSelect(node, globalVariables);
+    const variableListOptions = getExpandedVariablesList(node, globalVariables);
 
     const settingsPanels = useMemo(() => {
         return settingsSchema.map((settingPanel) => {
@@ -61,6 +61,7 @@ export const NodeSettingsPanel = ({ node }) => {
                                     type={field.type}
                                     name={field.name}
                                     description={field?.description}
+                                    helpUrl={field?.helpUrl}
                                     label={field.label}
                                     defaultValue={nodeSettings?.[field.name]}
                                     onChange={onChangeSetting}

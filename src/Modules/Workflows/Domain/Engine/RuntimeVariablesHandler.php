@@ -5,6 +5,8 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\VariableResolverInterface;
 
+use function wp_json_encode;
+
 class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
 {
     /**
@@ -50,6 +52,10 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
 
         foreach ($variables as $variable) {
             $value = $this->getVariable($variable);
+
+            if (is_array($value) || is_object($value)) {
+                $value = wp_json_encode($value);
+            }
 
             $text = str_replace('{{' . $variable . '}}', $value, $text);
         }

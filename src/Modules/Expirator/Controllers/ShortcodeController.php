@@ -1,17 +1,18 @@
 <?php
 
 /**
- * Copyright (c) 2024, Ramble Ventures
+ * Copyright (c) 2025, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator\Controllers;
 
-use PostExpirator_Util;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Settings\HooksAbstract;
+use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -22,9 +23,24 @@ class ShortcodeController implements InitializableInterface
      */
     private $hooks;
 
-    public function __construct(HookableInterface $hooks)
-    {
+    /**
+     * @var DateTimeFacade
+     */
+    private $dateTimeFacade;
+
+    /**
+     * @var SettingsFacade
+     */
+    private $settingsFacade;
+
+    public function __construct(
+        HookableInterface $hooks,
+        DateTimeFacade $dateTimeFacade,
+        SettingsFacade $settingsFacade
+    ) {
         $this->hooks = $hooks;
+        $this->dateTimeFacade = $dateTimeFacade;
+        $this->settingsFacade = $settingsFacade;
     }
 
     public function initialize()
@@ -99,10 +115,12 @@ class ShortcodeController implements InitializableInterface
 
         $attrs = shortcode_atts(
             array(
-                'dateformat' => get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT),
-                'timeformat' => get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT),
+                'dateformat' => $this->settingsFacade->getDefaultDateFormat(),
+                'timeformat' => $this->settingsFacade->getDefaultTimeFormat(),
                 'type' => 'full',
                 'tz' => date('T'), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+                'wrapper' => '',
+                'class' => '',
             ),
             $attrs
         );
@@ -133,6 +151,31 @@ class ShortcodeController implements InitializableInterface
             $attrs['format'] = $attrs['timeformat'];
         }
 
-        return PostExpirator_Util::get_wp_date($attrs['format'], $expirationDateTs);
+        if (!isset($attrs['wrapper']) || empty($attrs['wrapper'])) {
+            $attrs['wrapper'] = $this->settingsFacade->getShortcodeWrapper();
+        }
+
+        if (!isset($attrs['class']) || empty($attrs['class'])) {
+            $attrs['class'] = $this->settingsFacade->getShortcodeWrapperClass();
+        }
+
+        $defaultDateTimeFormat = $this->dateTimeFacade->getDefaultDateTimeFormat();
+
+        $output = $this->dateTimeFacade->getWpDate(
+            trim($attrs['format']),
+            $expirationDateTs,
+            $defaultDateTimeFormat
+        );
+
+        if (!empty($attrs['wrapper'])) {
+            $output = sprintf(
+                '<%1$s class="%2$s">%3$s</%1$s>',
+                esc_html($attrs['wrapper']),
+                esc_attr($attrs['class']),
+                $output
+            );
+        }
+
+        return $output;
     }
 }

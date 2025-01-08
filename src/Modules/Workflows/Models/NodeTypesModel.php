@@ -23,8 +23,15 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminI
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostMetaChanged;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostPublished;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostStatusChanged;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostScheduled;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaAdd;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaDelete;
+    use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaUpdate;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypeInterface;
@@ -188,9 +195,13 @@ class NodeTypesModel implements NodeTypesModelInterface
         $nodesInstances = [
             CoreOnSavePost::getNodeTypeName() => new CoreOnSavePost(),
             CoreOnPostUpdated::getNodeTypeName() => new CoreOnPostUpdated(),
+            CoreOnPostPublished::getNodeTypeName() => new CoreOnPostPublished(),
+            CoreOnPostScheduled::getNodeTypeName() => new CoreOnPostScheduled(),
+            CoreOnPostStatusChanged::getNodeTypeName() => new CoreOnPostStatusChanged(),
             CoreOnManuallyEnabledForPost::getNodeTypeName() => new CoreOnManuallyEnabledForPost(),
             FutureLegacyAction::getNodeTypeName() => new FutureLegacyAction($this->hooks),
             CoreOnCronSchedule::getNodeTypeName() => new CoreOnCronSchedule(),
+            CoreOnPostMetaChanged::getNodeTypeName() => new CoreOnPostMetaChanged(),
         ];
 
         if ($this->settingsFacade->getExperimentalFeaturesStatus()) {
@@ -213,6 +224,9 @@ class NodeTypesModel implements NodeTypesModelInterface
             CorePostChangeStatus::getNodeTypeName() => new CorePostChangeStatus(),
             CoreSendEmail::getNodeTypeName() => new CoreSendEmail(),
             CorePostDeactivateWorkflow::getNodeTypeName() => new CorePostDeactivateWorkflow(),
+            CorePostMetaAdd::getNodeTypeName() => new CorePostMetaAdd(),
+            CorePostMetaDelete::getNodeTypeName() => new CorePostMetaDelete(),
+            CorePostMetaUpdate::getNodeTypeName() => new CorePostMetaUpdate(),
         ];
 
         return $nodesInstances;

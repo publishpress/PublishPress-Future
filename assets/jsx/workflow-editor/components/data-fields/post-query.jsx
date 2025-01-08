@@ -10,7 +10,7 @@ export function PostQuery({
     label,
     defaultValue,
     onChange,
-    settings
+    settings,
 }) {
     const postTypes = futureWorkflowEditor.postTypes;
     const postStatuses = futureWorkflowEditor.postStatuses;
@@ -28,6 +28,7 @@ export function PostQuery({
     const isPostTypeRequired = settings && settings?.isPostTypeRequired === true;
     const defaultPostSource =acceptsInput ? 'input' : 'custom';
     const showCustomQueryFields = defaultValue?.postSource === 'custom' || ! acceptsInput;
+    const hidePostStatus = settings && settings?.hidePostStatus === true;
 
     // Set default setting
     useEffect(() => {
@@ -45,6 +46,12 @@ export function PostQuery({
 
     const postTypeFieldLabel = isPostTypeRequired ? __('Post Type', 'post-expirator') + ' *' : __('Post Type', 'post-expirator');
 
+    const descriptions = {
+        postType: settings?.postTypeDescription || null,
+        postId: settings?.postIdDescription || null,
+        postStatus: settings?.postStatusDescription || null,
+    };
+
     return (
         <>
             <VStack>
@@ -61,7 +68,6 @@ export function PostQuery({
                 )}
 
                 {/* More than one post input? */}
-
                 {showCustomQueryFields && (
                     <>
                         <InlineMultiSelect
@@ -73,25 +79,41 @@ export function PostQuery({
                             onChange={(value) => onChangeSetting({ settingName: "postType", value })}
                         />
 
+                        {descriptions?.postType && (
+                            <p className="description">{descriptions.postType}</p>
+                        )}
+
+                        {isPostTypeRequired && (
+                            <p className="description">{__('* Required field', 'post-expirator')}</p>
+                        )}
+
                         <FormTokenField
                             label={__('Post ID', 'post-expirator')}
                             value={defaultValue?.postId || []}
                             onChange={(value) => onChangeSetting({ settingName: "postId", value })}
                         />
 
-                        <InlineMultiSelect
-                            label={__('Post Status', 'post-expirator')}
-                            value={defaultValue?.postStatus || []}
-                            suggestions={postStatuses}
-                            expandOnFocus={true}
-                            autoSelectFirstMatch={true}
-                            onChange={(value) => onChangeSetting({ settingName: "postStatus", value })}
-                        />
-                    </>
-                )}
+                        {descriptions?.postId && (
+                            <p className="description">{descriptions.postId}</p>
+                        )}
 
-                {isPostTypeRequired && (
-                    <p className="description">{__('* Required field', 'post-expirator')}</p>
+                        {!hidePostStatus && (
+                            <>
+                                <InlineMultiSelect
+                                    label={__('Post Status', 'post-expirator')}
+                                    value={defaultValue?.postStatus || []}
+                                    suggestions={postStatuses}
+                                    expandOnFocus={true}
+                                    autoSelectFirstMatch={true}
+                                    onChange={(value) => onChangeSetting({ settingName: "postStatus", value })}
+                                />
+
+                                {descriptions?.postStatus && (
+                                    <p className="description">{descriptions.postStatus}</p>
+                                )}
+                            </>
+                        )}
+                    </>
                 )}
             </VStack>
         </>
@@ -99,29 +121,3 @@ export function PostQuery({
 }
 
 export default PostQuery;
-
-
-/*
-Complex query, maybe for the conditional node type?
-
-* post new status
-* post old status
-* post author (one or more)
-* post author role (one or more)
-* post author capability (one or more)
-* post taxonomy (one or more, taxonomy and terms)
-* post title (equals, contains, starts with, ends with)
-* post content (equals, contains, starts with, ends with)
-* post excerpt (equals, contains, starts with, ends with)
-* post date (before, after, between)
-* post modified date (before, after, between)
-* post parent
-* post slug (equals, contains, starts with, ends with)
-* meta data (key, value, compare)
-* user meta data (key, value, compare)
-* user role (one or more)
-* user capability (one or more)
-* user email (equals, contains, starts with, ends with)
-* user login (equals, contains, starts with, ends with)
-* user nicename (equals, contains, starts with, ends with)
-*/

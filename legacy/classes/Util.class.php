@@ -14,6 +14,7 @@ class PostExpirator_Util
      * Check if Block Editor is active.
      * Must only be used after plugins_loaded action is fired.
      *
+     * @deprecated 4.3.0
      * @return bool
      */
     public static function is_gutenberg_active()
@@ -56,6 +57,9 @@ class PostExpirator_Util
         return false;
     }
 
+    /**
+     * @deprecated 4.3.0
+     */
     public static function wp_timezone_string()
     {
         $tzString = wp_timezone_string();
@@ -67,6 +71,9 @@ class PostExpirator_Util
         return $tzString;
     }
 
+    /**
+     * @deprecated 4.3.0
+     */
     public static function get_timezone_offset()
     {
         $timezone = wp_timezone();
@@ -84,6 +91,9 @@ class PostExpirator_Util
         return $container->get(ServicesAbstract::DATETIME)->getWpDate($format, $timestamp);
     }
 
+    /**
+     * @deprecated 4.3.0
+     */
     public static function sanitize_array_of_integers($array)
     {
         return array_map('intval', (array)$array);

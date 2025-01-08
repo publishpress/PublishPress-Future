@@ -1,7 +1,11 @@
 <?php
-
 /**
- * Copyright (c) 2024, Ramble Ventures
+ * PublishPress Future: Schedule Post Changes
+ *
+ * @package     PublishPress\Future
+ * @author      PublishPress
+ * @copyright   Copyright (c) 2025, PublishPress
+ * @license     GPLv2 or later
  */
 
 defined('ABSPATH') or die('Direct access not allowed.');

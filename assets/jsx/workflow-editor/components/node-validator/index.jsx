@@ -7,6 +7,11 @@ import { nodeHasIncomers, nodeHasOutgoers, getNodeIncomers, getNodeIncomersRecur
 import isEmail from "validator/lib/isEmail";
 import isInt from "validator/lib/isInt";
 
+function isVariable(value) {
+    const trimmedValue = value.trim();
+    return trimmedValue.startsWith('{{') && trimmedValue.endsWith('}}');
+}
+
 export function NodeValidator({})
 {
     const {
@@ -163,7 +168,7 @@ export function NodeValidator({})
                                 for (let i = 0; i < emails.length; i++) {
                                     email = emails[i].trim();
 
-                                    if (!isEmail(email)) {
+                                    if (!isEmail(email) && ! isVariable(email)) {
                                         addNodeError(
                                             node.id,
                                             `${fieldName}-emailList`,

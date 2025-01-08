@@ -1333,13 +1333,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var store = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.createReduxStore)(_name__WEBPACK_IMPORTED_MODULE_1__.STORE_NAME, {
-  reducer: _reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
-  actions: _actions__WEBPACK_IMPORTED_MODULE_4__,
-  selectors: _selectors__WEBPACK_IMPORTED_MODULE_3__,
-  controls: _controls__WEBPACK_IMPORTED_MODULE_5__["default"]
-});
-(0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.register)(store);
+
+// Only create the store if not already created
+if (!window.futureWorkflowManualSelectionStore) {
+  window.futureWorkflowManualSelectionStore = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.createReduxStore)(_name__WEBPACK_IMPORTED_MODULE_1__.STORE_NAME, {
+    reducer: _reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
+    actions: _actions__WEBPACK_IMPORTED_MODULE_4__,
+    selectors: _selectors__WEBPACK_IMPORTED_MODULE_3__,
+    controls: _controls__WEBPACK_IMPORTED_MODULE_5__["default"]
+  });
+  (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.register)(window.futureWorkflowManualSelectionStore);
+}
+var store = window.futureWorkflowManualSelectionStore;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
 
 /***/ }),
@@ -2105,7 +2110,7 @@ module.exports = wp.url;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
 /*!*******************************************************************!*\
   !*** ./assets/jsx/workflow-manual-selection/quick-edit/index.jsx ***!

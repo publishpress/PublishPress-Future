@@ -54,18 +54,25 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
      */
     private $logger;
 
+    /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         InputValidatorsInterface $postQueryValidator,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->postQueryValidator = $postQueryValidator;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
     public static function getNodeTypeName(): string
@@ -78,7 +85,7 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
         $this->step = $step;
         $this->workflowId = $workflowId;
 
-        $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'triggerCallback'], 10, 3);
+        $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'triggerCallback'], 15, 3);
     }
 
     public function triggerCallback($postId, $post, $update)
@@ -128,7 +135,7 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
             function ($step, $stepSlug, $postId, $post, $update) {
                 $this->variablesHandler->setVariable($stepSlug, [
                     'postId' => new IntegerResolver($postId),
-                    'post' => new PostResolver($post, $this->hooks),
+                    'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
                     'update' => new BooleanResolver($update),
                 ]);
 

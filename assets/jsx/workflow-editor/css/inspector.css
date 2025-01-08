@@ -163,3 +163,19 @@
     overflow: auto;
     text-wrap: wrap;
 }
+
+p.settings-field-description,
+p.description {
+    margin-top: -14px !important;
+    font-size: 12px;
+    font-style: normal;
+    color: rgb(117, 117, 117);
+}
+
+p.description.margin-top {
+    margin-top: 8px !important;
+}
+
+.components-panel__row .components-base-control {
+    width: 100%;
+}

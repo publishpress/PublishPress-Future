@@ -15,7 +15,9 @@ import {
     UserData,
     SiteData,
     NodeData,
-    ArrayData
+    ArrayData,
+    FutureActionData,
+    TermsArrayData
 } from "./data-types";
 
 const { workflowId, nodeTypeCategories, nodeTypes } = window.futureWorkflowEditor;
@@ -62,6 +64,8 @@ export default function WorkflowEditorApp() {
             SiteData(),
             NodeData(),
             ArrayData(),
+            FutureActionData(),
+            TermsArrayData(),
         ]
         setDataTypes(dataTypes);
     }, [workflowId]);
