@@ -132,10 +132,7 @@ class WorkflowEditor implements InitializableInterface
 
         wp_enqueue_style(
             "future_workflow_admin_style",
-            plugins_url(
-                "/assets/css/workflow-editor.css",
-                PUBLISHPRESS_FUTURE_PLUGIN_FILE
-            ),
+            Plugin::getAssetUrl('css/workflow-editor.css'),
             ["wp-components", "wp-edit-post", "wp-editor"],
             PUBLISHPRESS_FUTURE_VERSION
         );

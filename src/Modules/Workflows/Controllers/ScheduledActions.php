@@ -8,6 +8,7 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
@@ -452,10 +453,7 @@ class ScheduledActions implements InitializableInterface
 
         wp_enqueue_style(
             "future_actions_admin_style",
-            plugins_url(
-                "assets/css/future-actions.css",
-                PUBLISHPRESS_FUTURE_PLUGIN_FILE
-            ),
+            Plugin::getAssetUrl("css/future-actions.css"),
             ["wp-components", "wp-edit-post", "wp-editor"],
             PUBLISHPRESS_FUTURE_VERSION
         );

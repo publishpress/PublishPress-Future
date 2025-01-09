@@ -11,6 +11,7 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
@@ -203,7 +204,7 @@ class PostListController implements InitializableInterface
             if ('edit.php' === $screenId) {
                 wp_enqueue_style(
                     'postexpirator-edit',
-                    POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
+                    Plugin::getAssetUrl('css/edit.css'),
                     false,
                     PUBLISHPRESS_FUTURE_VERSION
                 );
