@@ -28,11 +28,13 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $wpdb->query(
             $wpdb->prepare(
-                "DELETE FROM %i AS scheduled_steps
+                "DELETE FROM %i
                 WHERE NOT EXISTS(
-                    SELECT 1 FROM %i AS scheduler_actions
-                    WHERE scheduled_steps.action_id = scheduler_actions.action_id
+                    SELECT 1 FROM %i
+                    WHERE %i.action_id = %i.action_id
                 )",
+                $tableSchema->getTableName(),
+                $wpdb->prefix . 'actionscheduler_actions',
                 $tableSchema->getTableName(),
                 $wpdb->prefix . 'actionscheduler_actions'
             )
