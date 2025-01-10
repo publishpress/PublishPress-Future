@@ -211,6 +211,11 @@ $shortcodeWrapperClass = $settingsFacade->getShortcodeWrapperClass();
 
             <h3><?php
                 esc_html_e('Future Actions Editor', 'post-expirator'); ?></h3>
+
+            <p class="description">
+                <?php esc_html_e('This controls the time format used to select dates for Future Actions.', 'post-expirator'); ?>
+            </p>
+
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row">
