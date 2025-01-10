@@ -14,6 +14,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RestApiManagerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
+use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 
 class Module implements InitializableInterface
 {

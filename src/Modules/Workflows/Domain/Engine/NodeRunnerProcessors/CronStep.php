@@ -62,6 +62,10 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
     public const UNSCHEDULE_FUTURE_ACTION_DELAY = 5;
 
+    public const DUPLICATE_HANDLING_SKIP = 'skip';
+    public const DUPLICATE_HANDLING_CREATE_NEW = 'create-new';
+    public const DUPLICATE_HANDLING_REPLACE = 'replace';
+
     /**
      * @var HooksFacade
      */
@@ -150,6 +154,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
             $recurrence = $nodeSettings['schedule']['recurrence'] ?? self::SCHEDULE_RECURRENCE_SINGLE;
             $whenToRun = $nodeSettings['schedule']['whenToRun'] ?? self::WHEN_TO_RUN_NOW;
+            $duplicateHandling = $nodeSettings['schedule']['duplicateHandling'] ?? 'skip';
 
             // Schedule
             if (self::SCHEDULE_RECURRENCE_SINGLE === $recurrence && self::WHEN_TO_RUN_NOW === $whenToRun) {
@@ -213,14 +218,45 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                 return;
             }
 
-            if ($scheduledActionsModel->hasRowWithActionUIDHash($actionUIDHash)) {
-                // It should be unique, so if the action is already scheduled, we don't need to schedule it again.
-                $this->addDebugLogMessage(
-                    'Step %s is already scheduled based on its ID, skipping',
-                    $stepSlug
-                );
+            switch ($duplicateHandling) {
+                case self::DUPLICATE_HANDLING_SKIP:
+                    if ($scheduledActionsModel->hasRowWithActionUIDHash($actionUIDHash)) {
+                        // It should be unique, so if the action is already scheduled we should not schedule it.
+                        $this->addDebugLogMessage(
+                            'Step %s is already scheduled based on its ID, skipping',
+                            $stepSlug
+                        );
 
-                return;
+                        return;
+                    }
+                    break;
+
+                case self::DUPLICATE_HANDLING_CREATE_NEW:
+                    // If the action is already scheduled, we should create a new one.
+                    $this->addDebugLogMessage(
+                        'Step %s is already scheduled based on its ID, creating a new one',
+                        $stepSlug
+                    );
+
+                    // TODO: Make sure the action is not duplicated for the same step and execution ID.
+                    // Is the execution ID the same for multiple calls to the same action hook?
+                    // Use a session ID instead?
+                    break;
+
+                case self::DUPLICATE_HANDLING_REPLACE:
+                    // If the action is already scheduled, we should replace it.
+                    $this->addDebugLogMessage(
+                        'Step %s is already scheduled based on its ID, unscheduling to replace it',
+                        $stepSlug
+                    );
+
+                    $actionId = $scheduledActionsModel->getActionIdByActionUIDHash($actionUIDHash);
+
+                    if ($actionId) {
+                        $scheduledActionsModel->cancelActionById($actionId);
+                    }
+
+                    break;
             }
 
             if ($isSingleAction) {

@@ -70,6 +70,16 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
 
     public function hasRowWithActionUIDHash(string $actionUIDHash): bool
     {
+        $actionId = $this->getActionIdByActionUIDHash($actionUIDHash);
+
+        return !is_null($actionId);
+    }
+
+    /**
+     * @since 4.3.1
+     */
+    public function getActionIdByActionUIDHash(string $actionUIDHash): ?int
+    {
         global $wpdb;
 
         $container = Container::getInstance();
@@ -80,7 +90,7 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         $tableSchema = $container->get(ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA);
 
         if (! $tableSchema->isTableExistent()) {
-            return false;
+            return null;
         }
 
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
@@ -98,9 +108,11 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
             )
         );
 
-        $hasRow = !is_null($row);
+        if (is_null($row)) {
+            return null;
+        }
 
-        return $hasRow;
+        return $row->action_id;
     }
 
     public function cancelWorkflowScheduledActions(int $workflowId): void
@@ -159,6 +171,25 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
                     AND asa.status = 'pending'",
                 $workflowId,
                 $stepId
+            )
+        );
+        // phpcs:enable
+    }
+
+    /**
+     * @since 4.3.1
+     */
+    public function cancelActionById(int $actionId): void
+    {
+        global $wpdb;
+
+        // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching
+        $wpdb->query(
+            $wpdb->prepare(
+                "UPDATE {$wpdb->prefix}actionscheduler_actions
+                SET status = 'canceled'
+                WHERE action_id = %d",
+                $actionId
             )
         );
         // phpcs:enable

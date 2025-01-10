@@ -13,13 +13,30 @@ import { useState, useMemo } from "@wordpress/element";
 import { useSelect } from "@wordpress/data";
 import { store as editorStore } from "../editor-store";
 import { FEATURE_ADVANCED_SETTINGS } from "../../constants";
-import { filterVariableOptionsByDataType } from "../../utils";
 import { DateOffsetPreview } from "../../../components/DateOffsetPreview";
 import { Slot } from "@wordpress/components";
-import ProFeatureButton from "../pro-feature-button";
 import Recurrence from "./recurrence";
 import ProFeatureField from "../pro-feature-field";
 import ExpressionBuilder from "./expression-builder";
+
+const duplicateHandlingOptions = [
+    { name: __("Skip task if already exists", "post-expirator"), id: "skip" },
+    { name: __("Create new task", "post-expirator"), id: "create-new" },
+    { name: __("Replace existing task", "post-expirator"), id: "replace" },
+];
+
+const whenToRunOptions = [
+    { name: __("As soon as possible", "post-expirator"), id: "now" },
+    { name: __("On a specific date", "post-expirator"), id: "date" },
+    { name: __("Relative to a specific date", "post-expirator"), id: "offset" },
+];
+
+let dateSourceOptions = [
+    { name: __("Selected in the calendar", "post-expirator"), id: "calendar" },
+    { name: __("When the trigger is activated", "post-expirator"), id: "event"},
+    { name: __("When the step is activated", "post-expirator"), id: "step"},
+    { name: __("Custom date source", "post-expirator"), id: "custom"},
+];
 
 /**
  *  When to execute:
@@ -92,18 +109,6 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
         };
     });
 
-    const whenToRunOptions = [
-        { name: __("As soon as possible", "post-expirator"), id: "now" },
-        { name: __("On a specific date", "post-expirator"), id: "date" },
-        { name: __("Relative to a specific date", "post-expirator"), id: "offset" },
-    ];
-
-    let dateSourceOptions = [
-        { name: __("Selected in the calendar", "post-expirator"), id: "calendar" },
-        { name: __("When the trigger is activated", "post-expirator"), id: "event"},
-        { name: __("When the step is activated", "post-expirator"), id: "step"},
-        { name: __("Custom date source", "post-expirator"), id: "custom"},
-    ];
 
     const validDateSources = ['calendar', 'event', 'step', 'custom'];
     const isLegacyDateSource = !validDateSources.includes(defaultValue.dateSource);
@@ -268,6 +273,17 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                     onChangeSetting,
                     defaultValue,
                 }} />
+
+                {! hidePreventDuplicateScheduling && (
+                    <PanelRow>
+                        <TreeSelect
+                            label={__("Duplicate handling", "post-expirator")}
+                            tree={duplicateHandlingOptions}
+                            selectedId={defaultValue.duplicateHandling || 'skip'}
+                            onChange={(value) => onChangeSetting({ settingName: "duplicateHandling", value })}
+                        />
+                    </PanelRow>
+                )}
 
                 {isAdvancedSettingsEnabled && (
                     <>
