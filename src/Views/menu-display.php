@@ -188,7 +188,7 @@ $shortcodeWrapperClass = $settingsFacade->getShortcodeWrapperClass();
                                 <?php esc_html_e('Detailed', 'post-expirator'); ?>
                             </label>
                             <p class="description offset">
-                                <?php esc_html_e('Displays all information in the Future Action column.', 'post-expirator'); ?>
+                                <?php esc_html_e('Displays all information in the Future Action column on the "Posts" screen.', 'post-expirator'); ?>
                             </p>
                         </div>
 
@@ -200,7 +200,7 @@ $shortcodeWrapperClass = $settingsFacade->getShortcodeWrapperClass();
                             <label for="future-action-column-style-simple"><?php
                                                                             esc_html_e('Simplified', 'post-expirator'); ?></label>
                             <p class="description offset">
-                                <?php esc_html_e('Displays only the icon and date/time.', 'post-expirator'); ?>
+                                <?php esc_html_e('Displays only the icon and date/time in the Future Action column on the "Posts" screen.', 'post-expirator'); ?>
                             </p>
                         </div>
                     </td>
