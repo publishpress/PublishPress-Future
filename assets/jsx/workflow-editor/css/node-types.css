@@ -43,13 +43,14 @@
 }
 
 .react-flow__node-description {
-    font-size: 9px;
-    color: #0000008f;
+    font-size: 8px;
+    color: #0000008a;
     margin-top: 5px;
     max-width: 140px;
-    background: #ffffff5c;
-    padding: 6px;
+    background: #ffffff7a;
+    padding: 0px 6px !important;
     overflow-wrap: break-word;
+    border-radius: 10px;
 }
 
 .react-flow__node-inner-body.with-description {
