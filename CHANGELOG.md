@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Add new option to the Schedule workflow step to select the behavior when a duplicate scheduled action is found (Issue #956).
 
+### Changed
+
+- Change the workflow step custom label to be a step description and still display the original step label (Issue #956).
+- Changed text and description of fields in the Settings page (Issues #1097, #1103, #1104).
+
 ### Fixed
 
 - Fix SQL syntax error in MariaDB lower than 11.6 when deleting orphan scheduled steps (Issue #1087).
