@@ -99,7 +99,8 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
         };
     }
 
-    const nodeLabel = data.label || nodeType.label || __('Node', 'post-expirator');
+    const nodeDescription = data?.label;
+    const nodeLabel = nodeType.label || __('Node', 'post-expirator');
     const nodeClassName = nodeType?.className || 'react-flow__node-genericNode';
 
     let targetHandles = null;
@@ -232,7 +233,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                     {topText}
                 </div>
 
-                <div className='react-flow__node-inner-body'>
+                <div className={nodeDescription ? 'react-flow__node-inner-body with-description' : 'react-flow__node-inner-body'}>
 
                     {(nodeHasErrors || (nodeType.isProFeature && !isPro)) && (
                         <div className='react-flow__node-marker-wrapper'>
@@ -255,10 +256,15 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                         </div>
                     )}
 
-                    <div className='react-flow__node-header'>
+                    <div className="react-flow__node-header">
                         <NodeIcon icon={nodeType.icon.src} iconSize={14} />
                         <div className="react-flow__node-label">{nodeLabel}</div>
                     </div>
+
+                    {nodeDescription && (
+                        <div className="react-flow__node-description">{nodeDescription}</div>
+                    )}
+
                     {isAdvancedSettingsEnabled && nodeAttributes.length > 0 &&
                         <div className='react-flow__node-content'>
                             <table>

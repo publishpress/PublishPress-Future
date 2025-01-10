@@ -42,6 +42,20 @@
     left: 2px;
 }
 
+.react-flow__node-description {
+    font-size: 9px;
+    color: #0000008f;
+    margin-top: 5px;
+    max-width: 140px;
+    background: #ffffff5c;
+    padding: 6px;
+    overflow-wrap: break-word;
+}
+
+.react-flow__node-inner-body.with-description {
+    padding-bottom: 4px;
+}
+
 .react-flow__node-slug {
     font-size: 8px;
     display: inline-block;

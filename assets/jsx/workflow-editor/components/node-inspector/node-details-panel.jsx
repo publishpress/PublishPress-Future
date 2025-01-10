@@ -38,13 +38,10 @@ export const NodeDetailsPanel = ({ node }) => {
             <PanelRow>
                 <Text
                     name="label"
-                    label={__("Step Label", "post-expirator")}
+                    label={__("Description", "post-expirator")}
                     defaultValue={node.data.label || ''}
-                    settings={{
-                        placeholder: nodeType.label,
-                    }}
                     onChange={onChangeLabel}
-                    description={__("This is the label that will be displayed in the workflow editor.", "post-expirator")}
+                    description={__("Add a brief description to help distinguish this step from similar ones in your workflow.", "post-expirator")}
                 />
             </PanelRow>
         </PersistentPanelBody>
