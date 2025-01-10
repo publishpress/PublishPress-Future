@@ -6,6 +6,11 @@ ul.pe-list > li {
 	margin-left: 3%;
 }
 
+ul.pe-list ul {
+    margin-left: 20px;
+    list-style: circle;
+}
+
 .pe-scroll {
 	height: 300px;
 	overflow-y: scroll;
