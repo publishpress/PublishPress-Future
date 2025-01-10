@@ -179,3 +179,7 @@ p.description.margin-top {
 .components-panel__row .components-base-control {
     width: 100%;
 }
+
+.components-form-token-field__help {
+    display: none;
+}
