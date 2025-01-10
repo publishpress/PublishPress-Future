@@ -83,7 +83,7 @@ class CorePostMetaAdd implements NodeTypeInterface
                         "name" => "isSingle",
                         "type" => "toggle",
                         "label" => __("Is single", "post-expirator"),
-                        "description" => __("Whether the meta is a single value or an array.", "post-expirator"),
+                        "description" => __("If enabled, only one meta value will be allowed. If disabled, multiple meta values can be added as an array.", "post-expirator"),
                         "default" => true,
                     ],
                     [
