@@ -193,6 +193,18 @@ export const ExpressionBuilder = ({
                             <p>{__("Double-click on any variable to add it to your expression.", "post-expirator")}</p>
                         )}
 
+                        {currentDescription && (
+                            <p className="description margin-top">
+                                <code className="expression-builder-variable-name">
+                                    {`{{${currentVariableId}}}`}
+                                </code> {currentDescription}
+                            </p>
+                        )}
+
+                        {!currentDescription && (
+                            <p className="description margin-top">{__("Hover over a variable to see its description.", "post-expirator")}</p>
+                        )}
+
                         <ColumnsContainer
                             items={variables}
                             setCurrentDescription={setCurrentDescription}
@@ -200,18 +212,6 @@ export const ExpressionBuilder = ({
                             onDoubleClick={onDoubleClick}
                         />
                     </div>
-
-                    {currentDescription && (
-                        <p className="description margin-top">
-                            <code className="expression-builder-variable-name">
-                                {`{{${currentVariableId}}}`}
-                            </code>: {currentDescription}
-                        </p>
-                    )}
-
-                    {!currentDescription && (
-                        <p className="description margin-top">{__("Hover over a variable to see its description.", "post-expirator")}</p>
-                    )}
                 </div>
             </Modal>
         )}

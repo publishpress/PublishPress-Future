@@ -153,3 +153,10 @@
     min-height: 40px !important;
     margin-top: 10px !important;
 }
+
+.expression-builder-modal-variables .description code {
+    color: #00458b;
+    margin-left: 0;
+    padding: 5px;
+    font-size: 12px;
+}
