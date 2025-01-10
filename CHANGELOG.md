@@ -12,7 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Change the workflow step custom label to be a step description and still display the original step label (Issue #956).
-- Changed text and description of fields in the Settings page (Issues #1097, #1103, #1104).
+- Changed text and description of fields in the Settings page (Issues #1097, #1103, #1104, #1105).
+- Changed the field description in the Post Query step (Issue #1100).
 
 ### Fixed
 
