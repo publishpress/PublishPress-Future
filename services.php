@@ -14,6 +14,7 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Core\Paths;
 use PublishPress\Future\Core\Plugin;
+use PublishPress\Future\Framework\Cache\GenericCacheHandler;
 use PublishPress\Future\Framework\Database\DBTableSchemaHandler;
 use PublishPress\Future\Framework\Logger\DBTableSchemas\DebugLogSchema;
 use PublishPress\Future\Framework\Logger\Logger;
@@ -1076,5 +1077,10 @@ return [
 
     ServicesAbstract::DATE_TIME_HANDLER => static function (ContainerInterface $container) {
         return new DateTimeHandler();
+    },
+
+
+    ServicesAbstract::CACHE_POSTS_WITH_FUTURE_ACTION => static function (ContainerInterface $container) {
+        return new GenericCacheHandler();
     },
 ];

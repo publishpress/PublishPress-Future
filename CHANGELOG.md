@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix SQL syntax error in MariaDB lower than 11.6 when deleting orphan scheduled steps (Issue #1087).
 - Update translations (Issue #1113).
+- Fix extra line (empty value character) on some post in the future action column (Issue #1106).
 
 ## [4.3.0] - 08 Jan, 2025
 

@@ -163,4 +163,6 @@ abstract class ServicesAbstract
     public const DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA = 'future.free/workflows/db-table-workflow-scheduled-steps-schema';
 
     public const DATE_TIME_HANDLER = 'future.free/datetime-handler';
+
+    public const CACHE_POSTS_WITH_FUTURE_ACTION = 'future.free/cache-posts-with-future-action';
 }

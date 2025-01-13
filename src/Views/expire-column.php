@@ -14,6 +14,8 @@ $container = Container::getInstance();
 $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
 $postModel = $factory($id);
 
+$cachePostsWithFutureActions = $container->get(ServicesAbstract::CACHE_POSTS_WITH_FUTURE_ACTION);
+
 $actionEnabled = $postModel->isExpirationEnabled();
 $actionDate = $postModel->getExpirationDateString(false);
 $actionDateUnix = $postModel->getExpirationDateAsUnixTime();
@@ -52,6 +54,7 @@ $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
         );
 
         if (is_object($action)) {
+            $cachePostsWithFutureActions->addValue((string) $id);
             ?><span class="dashicons dashicons-clock icon-scheduled" aria-hidden="true"></span> <?php
 
             if ($columnStyle === 'simple') {
@@ -103,11 +106,6 @@ $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
                 'post-expirator'
             );
         }
-    } else {
-        ?>
-        <span aria-hidden="true">—</span>
-        <span class="screen-reader-text"><?php echo esc_html__('No future action', 'post-expirator'); ?></span>
-        <?php
     }
     ?>
 </div>

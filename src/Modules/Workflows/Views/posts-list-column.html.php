@@ -1,8 +1,16 @@
 <?php
 
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 
 $wpDateFormat = get_option('date_format') . ' ' . get_option('time_format');
+
+$hasListedWorkflows = false;
+
+$container = Container::getInstance();
+$cachePostsWithFutureActions = $container->get(ServicesAbstract::CACHE_POSTS_WITH_FUTURE_ACTION);
 
 foreach ($enabledWorkflows as $workflowModel) :
     $schedules = $postModel->getManuallyEnabledWorkflowsSchedule($workflowModel->getId());
@@ -29,5 +37,7 @@ foreach ($enabledWorkflows as $workflowModel) :
             <span class="future-action-action-date"><?php echo esc_html(wp_date($wpDateFormat, $timestamp)); ?></span>
         </div>
         <?php
+        $hasListedWorkflows = true;
+        $cachePostsWithFutureActions->addValue((string) $postModel->getId());
     endforeach;
 endforeach;

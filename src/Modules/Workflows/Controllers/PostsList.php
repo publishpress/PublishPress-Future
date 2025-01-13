@@ -3,6 +3,7 @@
 namespace PublishPress\Future\Modules\Workflows\Controllers;
 
 use Closure;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
@@ -51,11 +52,6 @@ class PostsList implements ModuleInterface
             ExpiratorHooksAbstract::ACTION_MANAGE_PAGES_CUSTOM_COLUMN,
             [$this, 'managePostsCustomColumn']
         );
-
-        $this->hooks->addFilter(
-            ExpiratorHooksAbstract::FILTER_POSTS_FUTURE_ACTION_COLUMN_OUTPUT,
-            [$this, 'futureActionColumnOutput']
-        );
     }
 
     public function addPostColumns($columns, $postType = 'post')
@@ -87,7 +83,10 @@ class PostsList implements ModuleInterface
     private function showEmptyOutputChar()
     {
         if (! $this->freeFutureActionHasOutput) {
-            echo '—';
+            ?>
+            <span aria-hidden="true" class="3">—</span>
+            <span class="screen-reader-text"><?php echo esc_html__('No future action', 'post-expirator'); ?></span>
+            <?php
         }
     }
 
@@ -106,10 +105,8 @@ class PostsList implements ModuleInterface
 
         $enabledWorkflows = $postModel->getManuallyEnabledWorkflows();
         if (empty($enabledWorkflows)) {
-            $this->showEmptyOutputChar();
             return;
         }
-
 
         $enabledWorkflows = array_map(function ($workflowId) {
             $workflowModel = new WorkflowModel();
@@ -118,18 +115,9 @@ class PostsList implements ModuleInterface
             return $workflowModel;
         }, $enabledWorkflows);
 
-        require_once __DIR__ . '/../Views/posts-list-column.html.php';
-    }
+        $cache = $this->hooks->applyFilters(ServicesAbstract::CACHE_POSTS_WITH_FUTURE_ACTION, []);
+        $cache[] = $post->ID;
 
-    public function futureActionColumnOutput($output)
-    {
-        // Remove the '—' character from the output.
-        // We are printing it in the managePostsCustomColumn method.
-        if (strpos($output, '>—<') !== false) {
-            $this->freeFutureActionHasOutput = false;
-            return str_replace('>—<', '><', $output);
-        }
-
-        return $output;
+        include __DIR__ . '/../Views/posts-list-column.html.php';
     }
 }
