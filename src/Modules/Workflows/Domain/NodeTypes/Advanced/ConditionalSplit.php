@@ -29,12 +29,12 @@ class ConditionalSplit implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Conditional Split", "post-expirator");
+        return __("Conditional", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This step allows you to create a conditional branch.", "post-expirator");
+        return __("This step allows you to continue the workflow only if certain conditions are met. It is not required to have both a True and a False option.", "post-expirator");
     }
 
     public function getIcon(): string
