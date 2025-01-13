@@ -34,6 +34,7 @@ export const storeConfig = {
     hoveredItem: null,
     panelBodyStates: {},
     isPro: isPro,
+    currentConditionalQuery: null,
 };
 
 export const store = createReduxStore(STORE_NAME, {
@@ -213,6 +214,12 @@ export const store = createReduxStore(STORE_NAME, {
                 setPersistedPanelBodyState(action.payload.panel, action.payload.state)
 
                 return newState;
+
+            case "SET_CURRENT_CONDITIONAL_QUERY":
+                return {
+                    ...state,
+                    currentConditionalQuery: action.payload,
+                };
         }
 
         return state;
@@ -329,6 +336,12 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: { panel, state },
             };
         },
+        setCurrentConditionalQuery(query) {
+            return {
+                type: "SET_CURRENT_CONDITIONAL_QUERY",
+                payload: query,
+            };
+        },
     },
     selectors: {
         getActiveFeatures(state) {
@@ -376,7 +389,10 @@ export const store = createReduxStore(STORE_NAME, {
         },
         isPro(state) {
             return state.isPro;
-        }
+        },
+        getCurrentConditionalQuery(state) {
+            return state.currentConditionalQuery;
+        },
     },
 });
 

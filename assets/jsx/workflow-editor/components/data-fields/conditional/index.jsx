@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect, useRef } from '@wordpress/element';
 import { Button, CheckboxControl, Dashicon, Modal, SelectControl, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as editorStore } from '../../editor-store';
-import { useSelect } from '@wordpress/data';
+import { useSelect, select, useDispatch } from '@wordpress/data';
 import { QueryBuilderDnD } from '@react-querybuilder/dnd';
 
 import AceEditor from "react-ace";
@@ -76,13 +76,25 @@ const NotToggle = ({ checked, handleOnChange }) => {
         handleOnChange(newValue);
     }
 
+    const {
+        currentConditionalQuery,
+    } = useSelect((select) => ({
+        currentConditionalQuery: select(editorStore).getCurrentConditionalQuery(),
+    }));
+
+    console.log(currentConditionalQuery);
+
     return (
-        <CheckboxControl
-            label={__('Not', 'post-expirator')}
-            checked={isNot}
-            onChange={handleToggle}
-            className={isNot ? 'is-checked' : ''}
-        />
+        <>
+            {currentConditionalQuery && currentConditionalQuery.rules.length > 0 && (
+                <CheckboxControl
+                    label={__('Not', 'post-expirator')}
+                    checked={isNot}
+                    onChange={handleToggle}
+                    className={isNot ? 'is-checked' : ''}
+                />
+            )}
+        </>
     );
 };
 
@@ -132,6 +144,10 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
     } = useSelect((select) => ({
         isPro: select(editorStore).isPro(),
     }));
+
+    const {
+        setCurrentConditionalQuery,
+    } = useDispatch(editorStore);
 
     let allVariables = variables;
 
@@ -211,7 +227,9 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         $blockScrolling: true,
     };
 
-
+    useEffect(() => {
+        setCurrentConditionalQuery(query);
+    }, [query]);
 
     return (
         <div className='conditional-editor'>
@@ -256,7 +274,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                     className="conditional-editor-modal"
                 >
                     <p>
-                        {__('Create a condition adding rules and groups. You can also add a NOT condition to any rule or group.', 'post-expirator')}
+                        {__('Create rules that will continue the workflow only if certain conditions are met.', 'post-expirator')}
                     </p>
                     <QueryBuilderDnD>
                         <QueryBuilder
