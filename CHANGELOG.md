@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Changed the field description in the Post Query step (Issue #1100).
 - Changed the label of the "Schedule" workflow step to "Schedule delay" (Issue #1122).
 - Changed the label of the "On Cron Schedule" trigger to "On schedule" (Issue #1122).
+- Changed the label of the "Conditional split" workflow step to "Conditional" (Issue #1117).
+- Changed the color of the "False" branch in the "Conditional" workflow step to a slightly darker color.
 
 ### Fixed
 
