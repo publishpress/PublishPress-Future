@@ -35,7 +35,7 @@ class CoreSchedule implements NodeTypeInterface
     public function getDescription(): string
     {
         return __(
-            "This step enables actions to be scheduled. You can choose when to run the next step.", // phpcs:ignore Generic.Files.LineLength.TooLong
+            "This step allows you to run the next part of a workflow at a specific time, or relative to another date. You can also use this step to repeat the next part of the workflow.", // phpcs:ignore Generic.Files.LineLength.TooLong
             "post-expirator"
         );
     }

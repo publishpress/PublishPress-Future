@@ -34,7 +34,7 @@ class CoreOnCronSchedule implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This trigger activates upon a scheduled date, allowing recurrency.", "post-expirator");
+        return __("his trigger allows you to run a workflow at a specific time, or relative to another date. You can also use this trigger to repeat workflows.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -62,7 +62,7 @@ class CoreOnCronSchedule implements NodeTypeInterface
         return [
             [
                 "label" => __("Schedule", "post-expirator"),
-                "description" => __("A schedule to activate the workflow.", "post-expirator"),
+                "description" => __("Choose a schedule to activate the workflow.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "schedule",
