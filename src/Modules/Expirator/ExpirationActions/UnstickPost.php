@@ -79,4 +79,9 @@ class UnstickPost implements ExpirationActionInterface
     {
         return self::getLabel($postType);
     }
+
+    public function getPastExecutionLabel()
+    {
+        return __('Unsticky', 'post-expirator');
+    }
 }

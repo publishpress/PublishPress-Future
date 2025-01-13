@@ -79,4 +79,9 @@ class StickPost implements ExpirationActionInterface
     {
         return self::getLabel($postType);
     }
+
+    public function getPastExecutionLabel()
+    {
+        return __('Sticky', 'post-expirator');
+    }
 }

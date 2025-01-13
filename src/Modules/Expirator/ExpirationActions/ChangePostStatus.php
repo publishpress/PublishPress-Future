@@ -93,4 +93,9 @@ class ChangePostStatus implements ExpirationActionInterface
     {
         return self::getLabel($postType);
     }
+
+    public function getPastExecutionLabel()
+    {
+        return __('Status changed', 'post-expirator');
+    }
 }

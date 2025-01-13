@@ -96,4 +96,15 @@ class PostStatusToDraft implements ExpirationActionInterface
     {
         return self::getLabel($postType);
     }
+
+    public function getPastExecutionLabel()
+    {
+        $newPostStatus = get_post_status_object('draft');
+
+        return sprintf(
+            // translators: %s: new post status
+            __('Status changed to %s', 'post-expirator'),
+            $newPostStatus->label
+        );
+    }
 }

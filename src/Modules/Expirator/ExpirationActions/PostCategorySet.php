@@ -121,4 +121,9 @@ class PostCategorySet implements ExpirationActionInterface
     {
         return self::getLabel($postType);
     }
+
+    public function getPastExecutionLabel()
+    {
+        return __('Terms replaced', 'post-expirator');
+    }
 }

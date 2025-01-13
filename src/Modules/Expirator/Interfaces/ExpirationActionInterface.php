@@ -31,4 +31,9 @@ interface ExpirationActionInterface
      * @return string
      */
     public function getDynamicLabel($postType = '');
+
+    /**
+     * @return string
+     */
+    public function getPastExecutionLabel();
 }

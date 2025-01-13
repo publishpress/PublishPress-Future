@@ -261,7 +261,9 @@ class Module implements ModuleInterface
         return new Controllers\PostListController(
             $this->hooks,
             $this->actionArgsSchema,
-            $this->logger
+            $this->logger,
+            $this->expirablePostModelFactory,
+            $this->dateTimeFacade
         );
     }
 

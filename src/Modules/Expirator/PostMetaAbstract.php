@@ -19,4 +19,6 @@ abstract class PostMetaAbstract
     public const EXPIRATION_TERMS = '_expiration-date-categories';
 
     public const EXPIRATION_TAXONOMY = '_expiration-date-taxonomy';
+
+    public const EXPIRATION_EXECUTED_TIMESTAMP = '_expiration-executed-timestamp';
 }

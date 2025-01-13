@@ -61,6 +61,13 @@ class DateTimeFacade
         return $this->getLocalizedDate($format, $datetime->getTimestamp(), $timezone);
     }
 
+    public function getFormattedDate($timestamp, $format = null)
+    {
+        $dateTimeFormat = $format ?? $this->getDefaultDateTimeFormat();
+
+        return $this->getWpDate($dateTimeFormat, $timestamp);
+    }
+
     public function getDefaultDateFormat(): string
     {
         return $this->options->getOption('date_format');

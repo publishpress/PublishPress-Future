@@ -118,4 +118,9 @@ class PostCategoryRemoveAll implements ExpirationActionInterface
     {
         return self::getLabel($postType);
     }
+
+    public function getPastExecutionLabel()
+    {
+        return __('All terms removed', 'post-expirator');
+    }
 }

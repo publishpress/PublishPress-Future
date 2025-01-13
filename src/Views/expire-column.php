@@ -12,6 +12,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 $container = Container::getInstance();
 $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+$dateTimeFacade = $container->get(ServicesAbstract::DATETIME);
 $postModel = $factory($id);
 
 $cachePostsWithFutureActions = $container->get(ServicesAbstract::CACHE_POSTS_WITH_FUTURE_ACTION);
@@ -23,11 +24,11 @@ $actionTaxonomy = $postModel->getExpirationTaxonomy();
 $actionType = $postModel->getExpirationType();
 $action = $postModel->getExpirationAction();
 $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
-
+$lastExecutionTimestamp = $postModel->getLastExpirationTimestamp();
 ?>
 <div
     id="post-expire-column-<?php echo esc_attr($id); ?>"
-    class="post-expire-col"
+    class="post-expire-col <?php echo esc_attr($actionEnabled ? 'post-expire-col-enabled' : 'post-expire-col-disabled'); ?>"
     data-id="<?php echo esc_attr($id); ?>"
     data-action-new-status="<?php echo esc_attr($postModel->getExpirationNewStatus()); ?>"
     data-action-enabled="<?php echo esc_attr($actionEnabled ? '1' : '0'); ?>"
@@ -41,31 +42,34 @@ $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
     $iconClass = '';
     $iconTitle = '';
 
-    if ($actionEnabled) {
+    if ($actionEnabled || $lastExecutionTimestamp) {
         $format = get_option('date_format') . ' ' . get_option('time_format');
         $container = Container::getInstance();
 
-        $defaultDateTimeFormat = $container->get(ServicesAbstract::DATETIME)->getDefaultDateTimeFormat();
+        $defaultDateTimeFormat = $dateTimeFacade->getDefaultDateTimeFormat();
 
-        $formatedDate = $container->get(ServicesAbstract::DATETIME)->getWpDate(
+        $executionDate = $actionEnabled ? $actionDateUnix : $lastExecutionTimestamp;
+        $formatedDate = $dateTimeFacade->getWpDate(
             $format,
-            $actionDateUnix,
+            $executionDate,
             $defaultDateTimeFormat
         );
 
         if (is_object($action)) {
             $cachePostsWithFutureActions->addValue((string) $id);
-            ?><span class="dashicons dashicons-clock icon-scheduled" aria-hidden="true"></span> <?php
+            $iconClass = $actionEnabled ? 'dashicons-clock icon-scheduled' : 'dashicons-text-page icon-info';
+            ?><span class="dashicons <?php echo esc_attr($iconClass); ?>" aria-hidden="true"></span> <?php
 
             if ($columnStyle === 'simple') {
                 echo esc_html($formatedDate);
             } else {
+                $actionLabel = $actionEnabled ? $action->getDynamicLabel($postModel->getPostType()) : $action->getPastExecutionLabel();
                 echo sprintf(
                     // phpcs:ignore Generic.Files.LineLength.TooLong
                     // translators: %1$s opens a span tag, %2$s is the action name, %3$s ends a span tag, %4$s is the a span tag, %5$s is the a span tag, %6$s is the a span tag
                     esc_html__('%1$s%2$s%3$s on %5$s%4$s%6$s', 'post-expirator'),
                     '<span class="future-action-action-name">',
-                    esc_html($action->getDynamicLabel($postModel->getPostType())),
+                    esc_html($actionLabel),
                     '</span>',
                     esc_html($formatedDate),
                     '<span class="future-action-action-date">',

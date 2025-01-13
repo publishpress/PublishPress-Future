@@ -132,4 +132,9 @@ class PostCategoryAdd implements ExpirationActionInterface
     {
         return self::getLabel($postType);
     }
+
+    public function getPastExecutionLabel()
+    {
+        return __('Terms added', 'post-expirator');
+    }
 }

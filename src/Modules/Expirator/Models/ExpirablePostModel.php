@@ -479,6 +479,8 @@ class ExpirablePostModel extends PostModel
         $this->logOnAction($expirationLog);
         $this->registerNoticeMessage($postId, $expirationLog);
 
+        $this->addLastExpirationTimestamp();
+
         $this->hooks->doAction(HooksAbstract::ACTION_POST_EXPIRED, $postId, $expirationLog);
 
         $this->unscheduleAction();
@@ -813,6 +815,7 @@ class ExpirablePostModel extends PostModel
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TERMS);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS);
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_EXECUTED_TIMESTAMP);
         $this->deleteMeta(self::FLAG_METADATA_HASH);
         $this->deleteMeta(self::LEGACY_FLAG_METADATA_HASH);
     }
@@ -990,5 +993,23 @@ class ExpirablePostModel extends PostModel
             $defaultExpire['ts'],
             $opts
         );
+    }
+
+    public function addLastExpirationTimestamp()
+    {
+        $executionTime = time();
+
+        if ($this->getLastExpirationTimestamp()) {
+            $this->updateMeta(PostMetaAbstract::EXPIRATION_EXECUTED_TIMESTAMP, $executionTime);
+
+            return;
+        }
+
+        $this->addMeta(PostMetaAbstract::EXPIRATION_EXECUTED_TIMESTAMP, $executionTime);
+    }
+
+    public function getLastExpirationTimestamp()
+    {
+        return $this->getMeta(PostMetaAbstract::EXPIRATION_EXECUTED_TIMESTAMP, true);
     }
 }

@@ -17,6 +17,7 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
 use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -39,16 +40,30 @@ class PostListController implements InitializableInterface
     private $logger;
 
     /**
+     * @var callable
+     */
+    private $expirablePostModelFactory;
+
+    /**
+     * @var DateTimeFacade
+     */
+    private $dateTimeFacade;
+
+    /**
      * @param HookableInterface $hooksFacade
      */
     public function __construct(
         HookableInterface $hooksFacade,
         DBTableSchemaInterface $actionArgsSchema,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        callable $expirablePostModelFactory,
+        DateTimeFacade $dateTimeFacade
     ) {
         $this->hooks = $hooksFacade;
         $this->actionArgsSchema = $actionArgsSchema;
         $this->logger = $logger;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
+        $this->dateTimeFacade = $dateTimeFacade;
     }
 
     public function initialize()
@@ -59,8 +74,8 @@ class PostListController implements InitializableInterface
 
         $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_PAGES_CUSTOM_COLUMN, [$this, 'managePostsCustomColumn']);
         $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_POSTS_CUSTOM_COLUMN, [$this, 'managePostsCustomColumn']);
-        $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_PAGES_CUSTOM_COLUMN, [$this, 'showEmptyOutputChar'], 20, 2);
-        $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_POSTS_CUSTOM_COLUMN, [$this, 'showEmptyOutputChar'], 20, 2);
+        $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_PAGES_CUSTOM_COLUMN, [$this, 'showEmptyOutputCharOrLastSchedule'], 20, 2);
+        $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_POSTS_CUSTOM_COLUMN, [$this, 'showEmptyOutputCharOrLastSchedule'], 20, 2);
         $this->hooks->addAction(ExpiratorHooks::ACTION_ADMIN_INIT, [$this, 'manageSortableColumns'], 100);
         $this->hooks->addAction(ExpiratorHooks::ACTION_POSTS_ORDER_BY, [$this, 'orderByExpirationDate'], 10, 2);
         $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS, [$this, 'enqueueScripts']);
@@ -216,7 +231,7 @@ class PostListController implements InitializableInterface
         }
     }
 
-    public function showEmptyOutputChar($column, $post)
+    public function showEmptyOutputCharOrLastSchedule($column, $post)
     {
         if ($column !== 'expirationdate') {
             return;

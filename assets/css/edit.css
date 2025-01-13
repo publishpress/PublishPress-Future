@@ -31,6 +31,10 @@ div.pe-qe-fields > div {
     color: #7171d7;
 }
 
+.post-expire-col .icon-info {
+    color: #acaced;
+}
+
 .post-expire-col .icon-missed {
     color: #e08f63;
 }
@@ -188,4 +192,8 @@ body.espresso-admin #publishpress-future-classic-editor .components-input-contro
 
 .wp-list-table .column-workflow_status {
     width: 75px;
+}
+
+.post-expire-col-disabled {
+    color: #8a8a8a;
 }
