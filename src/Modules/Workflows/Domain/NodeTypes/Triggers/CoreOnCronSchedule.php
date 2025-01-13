@@ -29,12 +29,12 @@ class CoreOnCronSchedule implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("On cron schedule", "post-expirator");
+        return __("On schedule", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This trigger activates upon a cron schedule, allowing recurrency.", "post-expirator");
+        return __("This trigger activates upon a scheduled date, allowing recurrency.", "post-expirator");
     }
 
     public function getIcon(): string

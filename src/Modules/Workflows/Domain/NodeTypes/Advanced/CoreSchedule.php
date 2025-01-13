@@ -29,7 +29,7 @@ class CoreSchedule implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Schedule", "post-expirator");
+        return __("Schedule delay", "post-expirator");
     }
 
     public function getDescription(): string
