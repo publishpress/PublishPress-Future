@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Changed the "Not" field in the "Conditional" workflow step to only be displayed when there are rules (Issue #1118).
 - Changed the description of the "Conditional" workflow step conditions modal (Issue #1118).
 - Changed the validation rule message of the "Stick" and "Unstick" workflow steps (Issue #1101).
+- Changed the message in the Scheduled Actions list screen when a scheduled action is missing its original Schedule step (Issue #971).
 
 ### Fixed
 

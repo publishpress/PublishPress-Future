@@ -275,7 +275,7 @@ class ScheduledActions implements InitializableInterface
                         || ! isset($step['node']['data'])
                         || ! isset($step['node']['data']['name'])
                     ) {
-                        $html = '<span style="color: red;">' . __('Step not found in workflow.', 'post-expirator') . '</span>';
+                        $html = '<span style="color: red;">' . __('Schedule step is required for this workflow.', 'post-expirator') . '</span>';
 
                         $html .= '<br>';
                         $html .= '<strong>' . __('Workflow:', 'post-expirator') . '</strong> '
