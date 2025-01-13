@@ -18,10 +18,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Changed the label of the "On Cron Schedule" trigger to "On schedule" (Issue #1122).
 - Changed the label of the "Conditional split" workflow step to "Conditional" (Issue #1117).
 - Changed the color of the "False" branch in the "Conditional" workflow step to a slightly darker color.
+- Changed the "Not" field in the "Conditional" workflow step to only be displayed when there are rules (Issue #1118).
+- Changed the description of the "Conditional" workflow step conditions modal (Issue #1118).
 
 ### Fixed
 
 - Fix SQL syntax error in MariaDB lower than 11.6 when deleting orphan scheduled steps (Issue #1087).
+- Update translations (Issue #1113).
 
 ## [4.3.0] - 08 Jan, 2025
 
