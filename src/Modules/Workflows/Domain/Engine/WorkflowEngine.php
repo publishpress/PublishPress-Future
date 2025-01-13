@@ -312,11 +312,15 @@ class WorkflowEngine implements WorkflowEngineInterface
 
             $step = $this->currentRunningWorkflow->getPartialRoutineTreeFromNodeId($args['step']['nodeId']);
 
+            if (empty($step)) {
+                throw new \Exception('Step not found');
+            }
+
             $this->logger->debug(
                 sprintf(
                     self::LOG_PREFIX . '   - Workflow %1$d: Executing async step %2$s on action %3$d',
                     $this->currentRunningWorkflow->getId(),
-                    $step['node']['data']['slug'],
+                    $step['node']['data']['slug'] ?? 'unknown',
                     (int) $this->currentAsyncActionId
                 )
             );
