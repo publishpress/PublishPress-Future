@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-09T15:08:10+00:00\n"
-"PO-Revision-Date: 2024-12-10 13:21+0100\n"
+"POT-Creation-Date: 2025-01-08T16:03:45+00:00\n"
+"PO-Revision-Date: 2025-01-09 16:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -14,11 +14,16 @@ msgstr ""
 "X-Generator: Poedit 3.4.4\n"
 "X-Domain: publishpress-future-pro\n"
 
-#: components/data-fields/conditional.jsx:85
+#: components/data-fields/conditional/index.jsx:81
+#| msgid "Notice"
+msgid "Not"
+msgstr "Not"
+
+#: components/data-fields/conditional/index.jsx:219
 msgid "Edit condition"
 msgstr "Editar condición"
 
-#: components/data-fields/conditional.jsx:94
+#: components/data-fields/conditional/index.jsx:247
 msgid ""
 "This conditional will only be evaluated in the Pro version. In the Free "
 "version, it will always return true."
@@ -26,75 +31,96 @@ msgstr ""
 "Esta condicional solo se evaluará en la versión Pro. En la versión gratuita, "
 "siempre devolverá «verdadero»."
 
-#: components/data-fields/conditional.jsx:106
+#: components/data-fields/conditional/index.jsx:254
 msgid "Condition"
 msgstr "Condición"
 
-#: components/data-fields/conditional.jsx:122
+#: components/data-fields/conditional/index.jsx:259
+msgid ""
+"Create a condition adding rules and groups. You can also add a NOT condition "
+"to any rule or group."
+msgstr ""
+"Crea una condición añadiendo reglas y grupos. También puedes añadir una "
+"condición «NOT» a cualquier regla o grupo."
+
+#: components/data-fields/conditional/index.jsx:275
 msgid "Add Group"
 msgstr "Añadir un grupo"
 
-#: components/data-fields/conditional.jsx:123
+#: components/data-fields/conditional/index.jsx:276
 msgid "Add Rule"
 msgstr "Añadir regla"
 
-#: components/data-fields/date-offset.jsx:75
+#: components/data-fields/date-offset.jsx:96
 msgid "As soon as possible"
 msgstr "Lo antes posible"
 
-#: components/data-fields/date-offset.jsx:76
+#: components/data-fields/date-offset.jsx:97
 msgid "On a specific date"
 msgstr "En una fecha determinada"
 
-#: components/data-fields/date-offset.jsx:77
+#: components/data-fields/date-offset.jsx:98
 msgid "Relative to a specific date"
 msgstr "En relación con una fecha específica"
 
-#: components/data-fields/date-offset.jsx:81
+#: components/data-fields/date-offset.jsx:102
 msgid "Selected in the calendar"
 msgstr "Seleccionado en el calendario"
 
-#: components/data-fields/date-offset.jsx:82
+#: components/data-fields/date-offset.jsx:103
 msgid "When the trigger is activated"
 msgstr "Cuando el disparador está activado"
 
-#: components/data-fields/date-offset.jsx:83
+#: components/data-fields/date-offset.jsx:104
 msgid "When the step is activated"
 msgstr "Cuando el paso está activado"
 
-#: components/data-fields/date-offset.jsx:138
+#: components/data-fields/date-offset.jsx:105
+#: components/data-fields/date-offset.jsx:192
+msgid "Custom date source"
+msgstr "Fuente de la fecha personalizada"
+
+#: components/data-fields/date-offset.jsx:167
 msgid "When to run"
 msgstr "Cuándo ejecutar"
 
-#: components/data-fields/date-offset.jsx:147
+#: components/data-fields/date-offset.jsx:176
 msgid "Date source"
 msgstr "Fuente de la fecha"
 
-#: components/data-fields/date-offset.jsx:163
+#: components/data-fields/date-offset.jsx:200
+msgid ""
+"Click the button to choose a custom date source from variables that can "
+"provide a date."
+msgstr ""
+"Haz clic en el botón para elegir una fuente de fecha personalizada entre las "
+"variables que pueden proporcionar una fecha."
+
+#: components/data-fields/date-offset.jsx:210
 msgid "Offset"
 msgstr "Desfase"
 
-#: components/data-fields/date-offset.jsx:170
+#: components/data-fields/date-offset.jsx:217
 msgid "Date Preview"
 msgstr "Vista previa de la fecha"
 
-#: components/data-fields/date-offset.jsx:171
+#: components/data-fields/date-offset.jsx:218
 msgid "Current Date"
 msgstr "Fecha actual"
 
-#: components/data-fields/date-offset.jsx:172
+#: components/data-fields/date-offset.jsx:219
 msgid "Computed Date"
 msgstr "Fecha calculada"
 
-#: components/data-fields/date-offset.jsx:181
+#: components/data-fields/date-offset.jsx:228
 msgid "Error: "
 msgstr "Error: "
 
-#: components/data-fields/date-offset.jsx:186
+#: components/data-fields/date-offset.jsx:233
 msgid "Click for more information"
 msgstr "Haz clic para más información"
 
-#: components/data-fields/date-offset.jsx:194
+#: components/data-fields/date-offset.jsx:241
 msgid ""
 "For more information on formatting, see the %sPHP strtotime function%s. For "
 "example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 "
@@ -105,15 +131,15 @@ msgstr ""
 "4 horas 2 segundos%s o %spróximo jueves%s. Por favor, utilice sólo frases en "
 "inglés."
 
-#: components/data-fields/date-offset.jsx:216
+#: components/data-fields/date-offset.jsx:263
 msgid "Repeating Action"
 msgstr "Acción de repetición"
 
-#: components/data-fields/date-offset.jsx:230
+#: components/data-fields/date-offset.jsx:278
 msgid "Unique ID Expression"
 msgstr "Expresión de ID única"
 
-#: components/data-fields/date-offset.jsx:233
+#: components/data-fields/date-offset.jsx:284
 msgid ""
 "Define a custom expression for a unique task ID. Use placeholders like "
 "{{onSavePost1.post.ID}}, {{global.user.ID}} or {{global.execution_id}} to "
@@ -123,11 +149,11 @@ msgstr ""
 "marcadores de posición como {{onSavePost1.post.ID}}, {{global.user.ID}} o "
 "{{global.execution_id}} para asegurarte de que el ID sea único."
 
-#: components/data-fields/date-offset.jsx:239
+#: components/data-fields/date-offset.jsx:293
 msgid "Priority"
 msgstr "Prioridad"
 
-#: components/data-fields/date-offset.jsx:242
+#: components/data-fields/date-offset.jsx:296
 msgid ""
 "Sets the execution priority of the scheduled step. Lower numbers indicate "
 "higher priority and are executed first."
@@ -135,18 +161,18 @@ msgstr ""
 "Establece la prioridad de ejecución del paso programado. Los números más "
 "bajos indican mayor prioridad y se ejecutan primero."
 
-#: components/data-fields/debug-data.jsx:7
+#: components/data-fields/debug-data.jsx:39
 msgid "All received input"
 msgstr "Todas las entradas recibidas"
 
-#: components/data-fields/debug-data.jsx:22
-#: components/data-fields/debug-data.jsx:49
+#: components/data-fields/debug-data.jsx:43
 msgid "Custom data"
 msgstr "Datos personalizados"
 
-#: components/data-fields/debug-data.jsx:41
-msgid "Data to output"
-msgstr "Datos de salida"
+#: components/data-fields/debug-data.jsx:64
+#| msgid "Data to output"
+msgid "Select the data to output"
+msgstr "Seleccionar los datos de salida"
 
 #: components/data-fields/debug-levels.jsx:7
 msgid "Debug"
@@ -180,45 +206,69 @@ msgstr "Alerta"
 msgid "Level"
 msgstr "Nivel"
 
-#: components/data-fields/email-recipient.jsx:13
-msgid "Custom Addresses"
-msgstr "Direcciones personalizadas"
+#: components/data-fields/expression-builder/column-item.jsx:23
+msgid "Insert"
+msgstr "Insertar"
 
-#: components/data-fields/email-recipient.jsx:34
-msgid "Email Recipient"
-msgstr "Correo electrónico del destinatario"
+#: components/data-fields/expression-builder/index.jsx:111
+msgid "Edit"
+msgstr "Editar"
 
-#: components/data-fields/email-recipient.jsx:41
-msgid "Custom Email Addresses"
-msgstr "Direcciones de correo electrónico personalizadas"
+#: components/data-fields/expression-builder/index.jsx:155
+msgid "Single variable mode. Select a variable from the list below."
+msgstr "Modo de variable única. Selecciona una variable de la siguiente lista."
 
-#: components/data-fields/post-query.jsx:46
+#: components/data-fields/expression-builder/index.jsx:159
+msgid "Type your expression here or use the variables below."
+msgstr "Escribe aquí tu expresión o utiliza las variables de abajo."
+
+#: components/data-fields/expression-builder/index.jsx:186
+msgid "Variables"
+msgstr "Variables"
+
+#: components/data-fields/expression-builder/index.jsx:189
+msgid "Double-click on a variable to select it."
+msgstr "Haz doble clic en una variable para seleccionarla."
+
+#: components/data-fields/expression-builder/index.jsx:193
+msgid "Double-click on any variable to add it to your expression."
+msgstr "Haz doble clic en cualquier variable para añadirla a tu expresión."
+
+#: components/data-fields/expression-builder/index.jsx:213
+msgid "Hover over a variable to see its description."
+msgstr "Pasa el cursor por encima de una variable para ver su descripción."
+
+#: components/data-fields/help-link.jsx:5
+msgid "Learn more"
+msgstr "Leer más"
+
+#: components/data-fields/post-query.jsx:47
 msgid "Post Type"
 msgstr "Tipo de entrada"
 
-#: components/data-fields/post-query.jsx:53
+#: components/data-fields/post-query.jsx:60
 msgid "Post selection"
 msgstr "Selección de entradas"
 
-#: components/data-fields/post-query.jsx:56
+#: components/data-fields/post-query.jsx:63
 msgid "Post received as input"
 msgstr "Entrada recibida como entrada"
 
-#: components/data-fields/post-query.jsx:57
+#: components/data-fields/post-query.jsx:64
 msgid "Custom query"
 msgstr "Consulta personalizada"
 
-#: components/data-fields/post-query.jsx:77
+#: components/data-fields/post-query.jsx:87
+msgid "* Required field"
+msgstr "* Campo obligatorio"
+
+#: components/data-fields/post-query.jsx:91
 msgid "Post ID"
 msgstr "ID de la entrada"
 
-#: components/data-fields/post-query.jsx:83
+#: components/data-fields/post-query.jsx:103
 msgid "Post Status"
 msgstr "Estado de la entrada"
-
-#: components/data-fields/post-query.jsx:94
-msgid "* Required field"
-msgstr "* Campo obligatorio"
 
 #: components/data-fields/post-status.jsx:40
 msgid "New Status"
@@ -277,11 +327,11 @@ msgstr "Términos específicos"
 msgid "Terms"
 msgstr "Términos"
 
-#: components/flow-editor/index.jsx:317
+#: components/flow-editor/index.jsx:320
 msgid "Applying auto layout."
 msgstr "Aplicación del diseño automático."
 
-#: components/flow-editor/index.jsx:342
+#: components/flow-editor/index.jsx:345
 msgid "Auto layout applied."
 msgstr "Diseño automático aplicado."
 
@@ -294,7 +344,7 @@ msgstr "Volver"
 msgid "Pro"
 msgstr "Pro"
 
-#: components/inspector-card/index.jsx:59 components/node-types/generic.jsx:164
+#: components/inspector-card/index.jsx:59 components/node-types/generic.jsx:241
 #: components/secondary-sidebar/node-card.jsx:35
 msgid ""
 "Currently this step is being skipped. Upgrade to Pro to unlock this feature."
@@ -468,7 +518,7 @@ msgstr "Información para desarrolladores"
 
 #: components/node-dev-info-panel/index.jsx:30
 #: components/node-inspector/node-inspector-card.jsx:18
-#: components/node-types/generic.jsx:44
+#: components/node-types/generic.jsx:102
 msgid "Node"
 msgstr "Nodo"
 
@@ -476,35 +526,35 @@ msgstr "Nodo"
 msgid "Node Type"
 msgstr "Tipo de nodo"
 
-#: components/node-inspector/index.jsx:101
+#: components/node-inspector/index.jsx:102
 msgid "No element selected."
 msgstr "No hay elementos seleccionados."
 
-#: components/node-inspector/index.jsx:109
+#: components/node-inspector/index.jsx:110
 msgid "Multiple and different elements selected."
 msgstr "Múltiples y diferentes elementos seleccionados."
 
-#: components/node-inspector/index.jsx:119
+#: components/node-inspector/index.jsx:120
 msgid "%d steps selected"
 msgstr "%d pasos seleccionados"
 
-#: components/node-inspector/index.jsx:122
+#: components/node-inspector/index.jsx:123
 msgid "Multiple steps selected."
 msgstr "Múltiples pasos seleccionados."
 
-#: components/node-inspector/index.jsx:133
+#: components/node-inspector/index.jsx:134
 msgid "%d connections selected"
 msgstr "%d conexiones seleccionadas"
 
-#: components/node-inspector/index.jsx:136
+#: components/node-inspector/index.jsx:137
 msgid "Multiple connections selected."
 msgstr "Múltiples conexiones seleccionadas."
 
-#: components/node-inspector/index.jsx:169
+#: components/node-inspector/index.jsx:171
 msgid "Connection"
 msgstr "Conexión"
 
-#: components/node-inspector/index.jsx:170
+#: components/node-inspector/index.jsx:172
 msgid ""
 "The connection between nodes in the workflow. Signifies the path along which "
 "data or control flow one node to another."
@@ -548,34 +598,58 @@ msgstr "Variables globales"
 msgid "No global variables are declared"
 msgstr "No hay variable globales declaradas"
 
+#: components/node-inspector/node-details-panel.jsx:37
+msgid "Step Details"
+msgstr "Detalles del paso"
+
+#: components/node-inspector/node-details-panel.jsx:41
+msgid "Step Label"
+msgstr "Etiqueta de paso"
+
+#: components/node-inspector/node-details-panel.jsx:47
+msgid "This is the label that will be displayed in the workflow editor."
+msgstr "Esta es la etiqueta que se mostrará en el editor de flujo de trabajo."
+
 #: components/node-inspector/node-inspector-card.jsx:19
 msgid "No description"
 msgstr "Sin descripción"
 
-#: components/node-types/generic.jsx:97
+#: components/node-types/generic.jsx:51
+msgid "Unknown node: %s"
+msgstr "Nodo desconocido: %s"
+
+#: components/node-types/generic.jsx:52
+msgid "This is a placeholder node for a node that does not exist."
+msgstr "Este es un nodo marcador de posición para un nodo que no existe."
+
+#: components/node-types/generic.jsx:155
 msgid "Step"
 msgstr "Paso"
 
-#: components/node-types/generic.jsx:99
+#: components/node-types/generic.jsx:157
 msgid "Action"
 msgstr "Acción"
 
 #. translators: Patterns tab title in the block inserter.
-#: components/node-types/generic.jsx:101
+#: components/node-types/generic.jsx:159
 #: components/secondary-sidebar/tabs.jsx:30
 msgid "Advanced"
 msgstr "Avanzado"
 
-#: components/node-types/generic.jsx:103
+#: components/node-types/generic.jsx:161
 msgid "Trigger"
 msgstr "Disparador"
 
-#: components/node-types/generic.jsx:142
+#: components/node-types/generic.jsx:208
+msgid "Step actions"
+msgstr "Acciones del paso"
+
+#: components/node-types/generic.jsx:214
 #: components/workflow-delete-button/index.jsx:39
 msgid "Delete"
 msgstr "Borrar"
 
-#: components/node-types/generic.jsx:172
+#: components/node-types/generic.jsx:249
 msgid "This node has errors"
 msgstr "Este nodo tiene errores"
 
@@ -609,34 +683,34 @@ msgstr "Validación"
 msgid "All checks have passed for this step."
 msgstr "Todas las comprobaciones se han superado para este paso."
 
-#: components/node-validator/index.jsx:50
+#: components/node-validator/index.jsx:55
 msgid "This step requires a connection from a previous step."
 msgstr "Este paso requiere una conexión de un paso anterior."
 
-#: components/node-validator/index.jsx:60
+#: components/node-validator/index.jsx:65
 msgid "This step requires a connection to a following step."
 msgstr "Este paso requiere una conexión con un paso siguiente."
 
-#: components/node-validator/index.jsx:123
-#: components/node-validator/index.jsx:134
+#: components/node-validator/index.jsx:128
+#: components/node-validator/index.jsx:139
 msgid "The field %s is required."
 msgstr "El campo %s es obligatorio."
 
-#: components/node-validator/index.jsx:155
+#: components/node-validator/index.jsx:160
 msgid "The field %s must be a valid email address."
 msgstr "El campo %s debe ser una direcciones de correo electrónico valida."
 
-#: components/node-validator/index.jsx:171
+#: components/node-validator/index.jsx:176
 msgid "The field %s must be a valid email address list separated by commas."
 msgstr ""
 "El campo %s debe ser una lista válida de direcciones de correo electrónico "
 "separadas por comas."
 
-#: components/node-validator/index.jsx:185
+#: components/node-validator/index.jsx:190
 msgid "The field %s must be an integer."
 msgstr "El campo %s debe ser un número entero."
 
-#: components/node-validator/index.jsx:200
+#: components/node-validator/index.jsx:205
 msgid "The field %s must be an integer list separated by commas."
 msgstr "El campo %s debe ser una lista de números enteros separados por comas."
 
@@ -867,57 +941,57 @@ msgid "Unable to load the workflow. Please try again."
 msgstr ""
 "No se ha podido cargar el flujo de trabajo. Por favor, inténtalo de nuevo."
 
-#: components/workflow-store/actions.jsx:87
+#: components/workflow-store/actions.jsx:92
 msgid "Workflow saved as draft."
 msgstr "Flujo de trabajo guardado como borrador."
 
-#: components/workflow-store/actions.jsx:95
-#: components/workflow-store/actions.jsx:132
+#: components/workflow-store/actions.jsx:100
+#: components/workflow-store/actions.jsx:151
 msgid "Unable to save workflow. Please, try again."
 msgstr ""
 "No se ha podido guardar el flujo de trabajo. Por favor, inténtalo de nuevo."
 
-#: components/workflow-store/actions.jsx:124
+#: components/workflow-store/actions.jsx:143
 msgid "Workflow saved."
 msgstr "Flujo de trabajo guardado."
 
-#: components/workflow-store/actions.jsx:170
+#: components/workflow-store/actions.jsx:188
 msgid "Workflow published."
 msgstr "Flujo de trabajo publicado."
 
-#: components/workflow-store/actions.jsx:178
+#: components/workflow-store/actions.jsx:196
 msgid "Unable to publish the workflow. Please, try again."
 msgstr ""
 "No se ha podido publicar el flujo de trabajo. Por favor, inténtalo de nuevo."
 
-#: components/workflow-store/actions.jsx:216
+#: components/workflow-store/actions.jsx:233
 msgid "Workflow switched to draft."
 msgstr "Flujo de trabajo cambiado a borrador."
 
-#: components/workflow-store/actions.jsx:224
+#: components/workflow-store/actions.jsx:241
 msgid "Unable to switch workflow to draft. Please, try again."
 msgstr ""
 "No se ha podido cambiar el flujo de trabajo a borrador. Por favor, inténtalo "
 "de nuevo."
 
-#: components/workflow-store/actions.jsx:314
+#: components/workflow-store/actions.jsx:331
 msgid "Workflow deleted. Redirecting..."
 msgstr "Flujo de trabajo eliminado. Redirigiendo…"
 
-#: components/workflow-store/actions.jsx:325
+#: components/workflow-store/actions.jsx:342
 msgid "Unable to delete the workflow. Please, try again."
 msgstr ""
 "No se ha podido borrar el flujo de trabajo. Por favor, inténtalo de nuevo."
 
-#: components/workflow-summary/index.jsx:44
+#: components/workflow-summary/index.jsx:42
 msgid "Summary"
 msgstr "Resumen"
 
-#: components/workflow-summary/index.jsx:50
+#: components/workflow-summary/index.jsx:48
 msgid "Title"
 msgstr "Título"
 
-#: components/workflow-summary/index.jsx:59
+#: components/workflow-summary/index.jsx:57
 msgid "Description"
 msgstr "Descripción"
 
@@ -933,3 +1007,12 @@ msgstr "Borrador"
 #: components/workflow-switch-to-draft-button/index.jsx:62
 msgid "Switch to draft"
 msgstr "Cambiar a borrador"
+
+#~ msgid "Custom Addresses"
+#~ msgstr "Direcciones personalizadas"
+
+#~ msgid "Email Recipient"
+#~ msgstr "Correo electrónico del destinatario"
+
+#~ msgid "Custom Email Addresses"
+#~ msgstr "Direcciones de correo electrónico personalizadas"
