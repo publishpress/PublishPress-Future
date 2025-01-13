@@ -90,7 +90,7 @@ class CorePostStick implements NodeTypeInterface
                         "rule" => "hasIncomerOfName",
                         "name" => "advanced/core.schedule",
                         "message" => __(
-                            "The Stick Post action must be part of a Schedule flow",
+                            "Please include a \"Schedule\" step earlier in this branch of the workflow.",
                             "post-expirator"
                         ),
                     ],
