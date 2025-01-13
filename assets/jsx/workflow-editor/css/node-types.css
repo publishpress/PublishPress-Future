@@ -434,7 +434,7 @@
 }
 
 body.workflow-editor.is-free .react-flow__node-handle-name {
-    color: #cacaca;
+    color: #838383;
 }
 
 body.workflow-editor.is-free .react-flow__node-handle-name.handle-area-source-output,
