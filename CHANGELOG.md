@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Changed the color of the "False" branch in the "Conditional" workflow step to a slightly darker color.
 - Changed the "Not" field in the "Conditional" workflow step to only be displayed when there are rules (Issue #1118).
 - Changed the description of the "Conditional" workflow step conditions modal (Issue #1118).
+- Changed the validation rule message of the "Stick" and "Unstick" workflow steps (Issue #1101).
 
 ### Fixed
 
