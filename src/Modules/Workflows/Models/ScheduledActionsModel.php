@@ -58,9 +58,10 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $wpdb->query(
             $wpdb->prepare(
-                "DELETE FROM %i WHERE scheduled_date_gmt < %s AND status != 'pending'",
+                "DELETE FROM %i WHERE scheduled_date_gmt < %s AND status != 'pending' AND group_id = %d",
                 $tableSchema,
-                gmdate('Y-m-d H:i:s', time() - ($retention * DAY_IN_SECONDS))
+                gmdate('Y-m-d H:i:s', time() - ($retention * DAY_IN_SECONDS)),
+                $this->getGroupID()
             )
         );
 
@@ -98,12 +99,13 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
                 "SELECT a.*
                 FROM %i AS a
                 LEFT JOIN %i AS b ON a.action_id = b.action_id
-                WHERE a.action_uid_hash = %s AND b.status IN (%s, %s)",
+                WHERE a.action_uid_hash = %s AND b.status IN (%s, %s) AND a.group_id = %d",
                 $tableSchema->getTableName(),
                 $wpdb->prefix . 'actionscheduler_actions',
                 $actionUIDHash,
                 'pending',
-                'in-progress'
+                'in-progress',
+                $this->getGroupID()
             )
         );
 
@@ -135,8 +137,9 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
                 "UPDATE {$wpdb->prefix}actionscheduler_actions AS asa
                 INNER JOIN {$tableSchema->getTableName()} AS wss ON asa.action_id = wss.action_id
                 SET asa.status = 'canceled'
-                WHERE wss.workflow_id = %d AND asa.status = 'pending'",
-                $workflowId
+                WHERE wss.workflow_id = %d AND asa.status = 'pending' AND asa.group_id = %d",
+                $workflowId,
+                $this->getGroupID()
             )
         );
 
@@ -167,9 +170,10 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
                 SET asa.status = 'canceled'
                 WHERE JSON_EXTRACT(asa.args, '$[0].workflowId') = %s
                     AND JSON_EXTRACT(asa.args, '$[0].stepId') = %s
-                    AND asa.status = 'pending'",
+                    AND asa.status = 'pending' AND asa.group_id = %d",
                 $workflowId,
-                $stepId
+                $stepId,
+                $this->getGroupID()
             )
         );
         // phpcs:enable
@@ -187,10 +191,37 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
             $wpdb->prepare(
                 "UPDATE {$wpdb->prefix}actionscheduler_actions
                 SET status = 'canceled'
-                WHERE action_id = %d",
-                $actionId
+                WHERE action_id = %d AND group_id = %d",
+                $actionId,
+                $this->getGroupID()
             )
         );
         // phpcs:enable
+    }
+
+    private function getGroupID(): int
+    {
+        global $wpdb;
+
+        $groupName = 'publishpress-future';
+
+        $tableSchema = $wpdb->prefix . 'actionscheduler_groups';
+
+        $cacheKey = 'ppf_group_id_' . $groupName;
+        $groupId = wp_cache_get($cacheKey);
+
+        if (false === $groupId) {
+            $groupId = $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT group_id FROM %i WHERE slug = %s",
+                    $tableSchema,
+                    $groupName
+                )
+            );
+
+            wp_cache_set($cacheKey, $groupId);
+        }
+
+        return (int)$groupId;
     }
 }
