@@ -26,6 +26,7 @@
 
 .react-flow__node-header .react-flow__node-label {
     margin-left: 22px;
+    margin-right: 5px;
 }
 
 .react-flow__node-header .dashicon {

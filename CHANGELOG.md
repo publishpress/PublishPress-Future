@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Update translations (Issue #1113).
 - Fix extra line (empty value character) on some post in the future action column (Issue #1106).
 - Fix error when the step being executed is not found (Issue #1123).
+- Fix the space on right margin of the workflow editor nodes.
 
 ## [4.3.0] - 08 Jan, 2025
 
