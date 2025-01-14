@@ -2,7 +2,6 @@
 
 namespace PublishPress\Future\Modules\Workflows\Models;
 
-use Exception;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
@@ -41,7 +40,7 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         );
     }
 
-    public function deleteExpiredScheduledSteps(): void
+    public function deleteExpiredDoneActions(): void
     {
         global $wpdb;
 

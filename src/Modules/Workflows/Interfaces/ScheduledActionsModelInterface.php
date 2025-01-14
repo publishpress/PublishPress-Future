@@ -10,7 +10,7 @@ interface ScheduledActionsModelInterface
 
     public function cancelRecurringScheduledActions(int $workflowId, string $stepId): void;
 
-    public function deleteExpiredScheduledSteps(): void;
+    public function deleteExpiredDoneActions(): void;
 
     public function hasRowWithActionUIDHash(string $actionUIDHash): bool;
 

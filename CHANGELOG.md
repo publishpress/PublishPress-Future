@@ -31,6 +31,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix error when the step being executed is not found (Issue #1123).
 - Fix the space on right margin of the workflow editor nodes.
 
+### Developers
+
+- Refactor the method `deleteExpiredScheduledSteps` in the class `ScheduledActionsModel` renaming it to `deleteExpiredDoneActions`.
+
 ## [4.3.0] - 08 Jan, 2025
 
 ### Added

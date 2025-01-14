@@ -117,7 +117,7 @@ class ScheduledActions implements InitializableInterface
 
         $this->hooks->addAction(
             WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS,
-            [$this, 'deleteExpiredScheduledSteps']
+            [$this, 'deleteExpiredDoneActions']
         );
 
         $this->hooks->addAction(
@@ -537,9 +537,9 @@ class ScheduledActions implements InitializableInterface
         (new ScheduledActionsModel())->deleteOrphanWorkflowArgs();
     }
 
-    public function deleteExpiredScheduledSteps()
+    public function deleteExpiredDoneActions()
     {
-        (new ScheduledActionsModel())->deleteExpiredScheduledSteps();
+        (new ScheduledActionsModel())->deleteExpiredDoneActions();
     }
 
     /*
