@@ -29,7 +29,7 @@ class CorePostDeactivateWorkflow implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Deactivate Workflow for Post", "post-expirator");
+        return __("Deactivate workflow for post", "post-expirator");
     }
 
     public function getDescription(): string

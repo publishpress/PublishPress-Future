@@ -29,7 +29,7 @@ class CorePostTermsRemove implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Remove terms from the post", "post-expirator");
+        return __("Remove terms from post", "post-expirator");
     }
 
     public function getDescription(): string

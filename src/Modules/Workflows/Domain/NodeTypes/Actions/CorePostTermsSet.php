@@ -29,7 +29,7 @@ class CorePostTermsSet implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Replace all terms on the post", "post-expirator");
+        return __("Replace all terms on post", "post-expirator");
     }
 
     public function getDescription(): string
