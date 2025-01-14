@@ -59,7 +59,7 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $wpdb->query(
             $wpdb->prepare(
-                "DELETE FROM %i WHERE scheduled_date_gmt < %s",
+                "DELETE FROM %i WHERE scheduled_date_gmt < %s AND status != 'pending'",
                 $tableSchema,
                 gmdate('Y-m-d H:i:s', time() - ($retention * DAY_IN_SECONDS))
             )
