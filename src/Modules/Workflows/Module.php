@@ -16,7 +16,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\RestApiManagerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 
-class Module implements InitializableInterface
+final class Module implements InitializableInterface
 {
     public const POST_TYPE_WORKFLOW = "ppfuture_workflow";
 
