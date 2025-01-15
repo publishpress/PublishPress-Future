@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Add new option to the Schedule workflow step to select the behavior when a duplicate scheduled action is found (Issue #956).
+- Add daily check and notification for past-due actions, with settings to enable/disable and customize the email addresses (Issue #229).
 
 ### Changed
 
@@ -35,6 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Developers
 
 - Refactor the method `deleteExpiredScheduledSteps` in the class `ScheduledActionsModel` renaming it to `deleteExpiredDoneActions`.
+- Add new method `getExpiredPendingActions` to the class `ScheduledActionsModel`.
 
 ## [4.3.0] - 08 Jan, 2025
 

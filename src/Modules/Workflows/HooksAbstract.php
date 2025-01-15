@@ -95,4 +95,8 @@ abstract class HooksAbstract
     public const FILTER_INTERVAL_IN_SECONDS = 'publishpressfuture_interval_in_seconds';
 
     public const FILTER_THE_CONTENT = 'the_content';
+
+    public const ACTION_CHECK_EXPIRED_ACTIONS = 'publishpressfuture_check_expired_actions';
+
+    public const ACTION_WARN_ABOUT_PAST_DUE_ACTIONS = 'publishpressfuture_warn_about_past_due_actions';
 }

@@ -23,4 +23,9 @@ interface ScheduledActionsModelInterface
      * @since 4.3.1
      */
     public function cancelActionById(int $actionId): void;
+
+    /**
+     * @since 4.3.2
+     */
+    public function getPastDuePendingActions(): array;
 }

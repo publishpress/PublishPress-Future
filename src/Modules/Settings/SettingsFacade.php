@@ -660,4 +660,26 @@ class SettingsFacade
 
         do_action(HooksAbstract::ACTION_SETTINGS_SET_ADVANCED, $settings);
     }
+
+    public function getPastDueActionsNotificationStatus(): bool
+    {
+        return (bool)$this->options->getOption('pastDueActionsNotification', true);
+    }
+
+    public function setPastDueActionsNotificationStatus(bool $value): void
+    {
+        $this->options->updateOption('pastDueActionsNotification', $value);
+    }
+
+    public function setPastDueActionsNotificationAddressesList(array $value): void
+    {
+        $value = array_filter($value, 'is_email');
+
+        $this->options->updateOption('pastDueActionsNotificationList', implode(',', $value));
+    }
+
+    public function getPastDueActionsNotificationAddressesList(): array
+    {
+        return explode(',', $this->options->getOption('pastDueActionsNotificationList', ''));
+    }
 }

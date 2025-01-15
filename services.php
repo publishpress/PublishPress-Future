@@ -723,7 +723,9 @@ return [
             $container->get(ServicesAbstract::LOGGER),
             $container->get(ServicesAbstract::SANITIZATION),
             $container->get(ServicesAbstract::REQUEST),
-            $container->get(ServicesAbstract::CURRENT_USER_MODEL_FACTORY)
+            $container->get(ServicesAbstract::CURRENT_USER_MODEL_FACTORY),
+            $container->get(ServicesAbstract::OPTIONS),
+            $container->get(ServicesAbstract::EMAIL)
         );
     },
 

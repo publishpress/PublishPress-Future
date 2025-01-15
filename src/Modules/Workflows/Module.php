@@ -6,6 +6,8 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Framework\WordPress\Facade\EmailFacade;
+use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Framework\WordPress\Facade\RequestFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
@@ -87,6 +89,16 @@ final class Module implements InitializableInterface
      */
     private $currentUserModel;
 
+    /**
+     * @var OptionsFacade
+     */
+    private $options;
+
+    /**
+     * @var EmailFacade
+     */
+    private $email;
+
     public function __construct(
         HookableInterface $hooksFacade,
         RestApiManagerInterface $restApiManager,
@@ -101,7 +113,9 @@ final class Module implements InitializableInterface
         LoggerInterface $logger,
         SanitizationFacade $sanitization,
         RequestFacade $request,
-        \Closure $currentUserModelFactory
+        \Closure $currentUserModelFactory,
+        OptionsFacade $options,
+        EmailFacade $email
     ) {
         $this->hooks = $hooksFacade;
         $this->restApiManager = $restApiManager;
@@ -117,6 +131,8 @@ final class Module implements InitializableInterface
         $this->sanitization = $sanitization;
         $this->request = $request;
         $this->currentUserModel = $currentUserModelFactory();
+        $this->options = $options;
+        $this->email = $email;
 
         /*
          * We initialize the engine in the constructor because it requires
@@ -168,7 +184,18 @@ final class Module implements InitializableInterface
             ),
             new Controllers\SampleWorkflows(),
             new Controllers\PostsList($this->hooks),
-            new Controllers\Settings($this->hooks, $this->workflowScheduledStepsSchema),
+            new Controllers\Settings(
+                $this->hooks,
+                $this->workflowScheduledStepsSchema
+            ),
+            new Controllers\PastDueActions(
+                $this->hooks,
+                $this->cron,
+                $this->options,
+                $this->logger,
+                $this->email,
+                $this->settingsFacade
+            ),
         ];
 
         foreach ($controllers as $controller) {

@@ -5,6 +5,7 @@ namespace PublishPress\Future\Modules\Workflows\Models;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
+use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
 use PublishPress\Future\Modules\Workflows\Interfaces\ScheduledActionsModelInterface;
 
 class ScheduledActionsModel implements ScheduledActionsModelInterface
@@ -203,7 +204,7 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
     {
         global $wpdb;
 
-        $groupName = 'publishpress-future';
+        $groupName = CronToWooActionSchedulerAdapter::SCHEDULED_ACTION_GROUP;
 
         $tableSchema = $wpdb->prefix . 'actionscheduler_groups';
 
@@ -223,5 +224,29 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         }
 
         return (int)$groupId;
+    }
+
+    public function getPastDuePendingActions(): array
+    {
+        global $wpdb;
+
+        $tableSchema = $wpdb->prefix . 'actionscheduler_actions';
+        $groupId = $this->getGroupID();
+
+        $results = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT *
+                FROM %i
+                WHERE status = 'pending'
+                    AND group_id = %d
+                    AND scheduled_date_gmt < %s
+                ",
+                $tableSchema,
+                $groupId,
+                gmdate('Y-m-d H:i:s', time())
+            )
+        );
+
+        return $results;
     }
 }
