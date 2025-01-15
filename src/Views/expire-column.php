@@ -23,6 +23,7 @@ $actionTaxonomy = $postModel->getExpirationTaxonomy();
 $actionType = $postModel->getExpirationType();
 $action = $postModel->getExpirationAction();
 $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
+$isOverdueAction = $actionDateUnix < time() || 1;
 
 ?>
 <div
@@ -55,7 +56,9 @@ $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
 
         if (is_object($action)) {
             $cachePostsWithFutureActions->addValue((string) $id);
-            ?><span class="dashicons dashicons-clock icon-scheduled" aria-hidden="true"></span> <?php
+
+            $iconClass = $isOverdueAction ? 'dashicons dashicons-warning icon-missed' : 'dashicons dashicons-clock icon-scheduled';
+            ?><span class="<?php echo esc_attr($iconClass); ?>" aria-hidden="true"></span> <?php
 
             if ($columnStyle === 'simple') {
                 echo esc_html($formatedDate);
@@ -71,6 +74,10 @@ $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
                     '<span class="future-action-action-date">',
                     '</span>'
                 );
+
+                if ($isOverdueAction) {
+                    echo '<div class="future-action-gray">' . esc_html__('Overdue action', 'post-expirator') . '</div>';
+                }
 
                 $categoryActions = [
                     ExpirationActionsAbstract::POST_CATEGORY_ADD,
