@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Add new option to the Schedule workflow step to select the behavior when a duplicate scheduled action is found (Issue #956).
 - Add daily check and notification for past-due actions, with settings to enable/disable and customize the email addresses (Issue #229).
+- Add check for overdue actions in the Scheduled Actions list screen (Issue #232).
 
 ### Changed
 
