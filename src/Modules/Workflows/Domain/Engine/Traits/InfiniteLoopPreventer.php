@@ -9,7 +9,17 @@ trait InfiniteLoopPreventer
      */
     protected $isRunningOnNodes = [];
 
+    /**
+     * @deprecated 4.3.2 Use the method isInfiniteLoopDetected instead
+     */
     protected function isInfinityLoopDetected(int $workflowId, array $step): bool
+    {
+        _deprecated_function(__METHOD__, '4.3.2', 'isInfiniteLoopDetected');
+
+        return $this->isInfiniteLoopDetected($workflowId, $step);
+    }
+
+    protected function isInfiniteLoopDetected(int $workflowId, array $step): bool
     {
         $stepId = $step['node']['id'];
 
