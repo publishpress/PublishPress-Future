@@ -214,9 +214,9 @@ msgid "Edit"
 msgstr "Modifica"
 
 #: components/data-fields/expression-builder/index.jsx:155
-msgid "Single variable mode. Select a variable from the list below."
+msgid "Select a variable from the list below."
 msgstr ""
-"Modalità variabile singola. Seleziona una variabile dalla lista sottostante."
+"Seleziona una variabile dalla lista sottostante."
 
 #: components/data-fields/expression-builder/index.jsx:159
 msgid "Type your expression here or use the variables below."

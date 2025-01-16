@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-13T14:25:36+00:00\n"
+"POT-Creation-Date: 2025-01-16T20:13:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -78,37 +78,37 @@ msgid "The database schema could not be fixed. Please, contact the support team.
 msgstr ""
 
 #: legacy/classes/Display.class.php:336
-#: legacy/classes/Display.class.php:373
-#: legacy/classes/Display.class.php:406
+#: legacy/classes/Display.class.php:383
+#: legacy/classes/Display.class.php:416
 msgid "Saved Options!"
 msgstr ""
 
 #. translators: %1$s is the plugin name, %2$s is the star rating markup
-#: legacy/classes/Display.class.php:492
+#: legacy/classes/Display.class.php:502
 msgid "If you like %1$s, please leave us a %2$s rating. Thank you!"
 msgstr ""
 
-#: legacy/classes/Display.class.php:507
+#: legacy/classes/Display.class.php:517
 msgid "About PublishPress Future"
 msgstr ""
 
-#: legacy/classes/Display.class.php:509
+#: legacy/classes/Display.class.php:519
 msgid "About"
 msgstr ""
 
-#: legacy/classes/Display.class.php:515
+#: legacy/classes/Display.class.php:525
 msgid "Future Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:517
+#: legacy/classes/Display.class.php:527
 msgid "Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:523
+#: legacy/classes/Display.class.php:533
 msgid "Contact the PublishPress team"
 msgstr ""
 
-#: legacy/classes/Display.class.php:525
+#: legacy/classes/Display.class.php:535
 msgid "Contact"
 msgstr ""
 
@@ -116,17 +116,17 @@ msgstr ""
 msgid "No taxonomies found"
 msgstr ""
 
-#: services.php:126
+#: services.php:127
 #: src/Modules/Settings/SettingsFacade.php:117
 msgid "l F jS, Y"
 msgstr ""
 
-#: services.php:130
+#: services.php:131
 #: src/Modules/Settings/SettingsFacade.php:118
 msgid "g:ia"
 msgstr ""
 
-#: services.php:131
+#: services.php:132
 #: src/Modules/Settings/SettingsFacade.php:119
 msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
 msgstr ""
@@ -366,9 +366,14 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/PostListController.php:87
-#: src/Modules/Workflows/Controllers/PostsList.php:76
+#: src/Modules/Expirator/Controllers/PostListController.php:89
+#: src/Modules/Workflows/Controllers/PostsList.php:72
 msgid "Future Action"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/PostListController.php:235
+#: src/Modules/Workflows/Controllers/PostsList.php:88
+msgid "No future action"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:121
@@ -834,7 +839,8 @@ msgid "No taxonomies found for this post type. Taxonomy actions will not be avai
 msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:254
-#: src/Views/menu-notifications.php:104
+#: src/Views/menu-notifications.php:116
+#: src/Views/menu-notifications.php:169
 msgid "Who to Notify"
 msgstr ""
 
@@ -939,6 +945,22 @@ msgstr ""
 #: src/Modules/Workflows/Controllers/WorkflowsList.php:156
 #: src/Modules/Workflows/Views/manual-trigger-quick-edit.html.php:9
 msgid "Action Workflows"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PastDueActions.php:118
+msgid "Check and warn about past-due actions"
+msgstr ""
+
+#. translators: %s is the admin URL to the scheduled actions page
+#: src/Modules/Workflows/Controllers/PastDueActions.php:148
+msgid ""
+"You have past-due scheduled actions in PublishPress Future.\n"
+"\n"
+"Please check them at %s"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PastDueActions.php:155
+msgid "[PublishPress Future] Past-due Actions Found"
 msgstr ""
 
 #: src/Modules/Workflows/Controllers/PostType.php:49
@@ -1083,7 +1105,7 @@ msgid "Clean up completed scheduled steps older than %d days"
 msgstr ""
 
 #: src/Modules/Workflows/Controllers/ScheduledActions.php:278
-msgid "Step not found in workflow."
+msgid "Schedule step is required for this workflow."
 msgstr ""
 
 #: src/Modules/Workflows/Controllers/ScheduledActions.php:281
@@ -1407,7 +1429,7 @@ msgid "Next"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:32
-msgid "Deactivate Workflow for Post"
+msgid "Deactivate workflow for post"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:37
@@ -1544,7 +1566,7 @@ msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:92
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:92
-msgid "The Stick Post action must be part of a Schedule flow"
+msgid "Please include a \"Schedule\" step earlier in this branch of the workflow."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:32
@@ -1575,7 +1597,7 @@ msgid "Terms"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:32
-msgid "Remove terms from the post"
+msgid "Remove terms from post"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:37
@@ -1596,7 +1618,7 @@ msgid "Remove all terms"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:32
-msgid "Replace all terms on the post"
+msgid "Replace all terms on post"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:37
@@ -2158,16 +2180,16 @@ msgid "View Knowledge Base"
 msgstr ""
 
 #. translators: %1$s opens a span tag, %2$s is the action name, %3$s ends a span tag, %4$s is the a span tag, %5$s is the a span tag, %6$s is the a span tag
-#: src/Views/expire-column.php:63
+#: src/Views/expire-column.php:69
 msgid "%1$s%2$s%3$s on %5$s%4$s%6$s"
 msgstr ""
 
-#: src/Views/expire-column.php:101
-msgid "Action was not scheduled due to a configuration issue. Please attempt to schedule it again."
+#: src/Views/expire-column.php:79
+msgid "Overdue action"
 msgstr ""
 
-#: src/Views/expire-column.php:109
-msgid "No future action"
+#: src/Views/expire-column.php:111
+msgid "Action was not scheduled due to a configuration issue. Please attempt to schedule it again."
 msgstr ""
 
 #: src/Views/menu-advanced.php:26
@@ -2225,7 +2247,7 @@ msgstr ""
 #: src/Views/menu-advanced.php:135
 #: src/Views/menu-display.php:518
 #: src/Views/menu-general.php:154
-#: src/Views/menu-notifications.php:122
+#: src/Views/menu-notifications.php:186
 msgid "Save Changes"
 msgstr ""
 
@@ -2300,8 +2322,9 @@ msgstr ""
 
 #: src/Views/menu-diagnostics.php:111
 #: src/Views/menu-display.php:290
-#: src/Views/menu-notifications.php:55
-#: src/Views/menu-notifications.php:83
+#: src/Views/menu-notifications.php:67
+#: src/Views/menu-notifications.php:95
+#: src/Views/menu-notifications.php:150
 msgid "Enabled"
 msgstr ""
 
@@ -2319,8 +2342,9 @@ msgstr ""
 
 #: src/Views/menu-diagnostics.php:131
 #: src/Views/menu-display.php:301
-#: src/Views/menu-notifications.php:63
-#: src/Views/menu-notifications.php:92
+#: src/Views/menu-notifications.php:75
+#: src/Views/menu-notifications.php:104
+#: src/Views/menu-notifications.php:158
 msgid "Disabled"
 msgstr ""
 
@@ -2611,32 +2635,49 @@ msgstr ""
 msgid "Choose Which User Roles Can Use PublishPress Future"
 msgstr ""
 
-#: src/Views/menu-notifications.php:38
+#: src/Views/menu-notifications.php:50
 msgid "Email Notification"
 msgstr ""
 
-#: src/Views/menu-notifications.php:40
+#: src/Views/menu-notifications.php:52
 msgid "Whenever an action runs, an email can be sent to alert users."
 msgstr ""
 
-#: src/Views/menu-notifications.php:47
+#: src/Views/menu-notifications.php:59
 msgid "Enable Email Notification?"
 msgstr ""
 
-#: src/Views/menu-notifications.php:66
+#: src/Views/menu-notifications.php:78
 msgid "This will enable or disable the send of email notification on future action."
 msgstr ""
 
-#: src/Views/menu-notifications.php:74
+#: src/Views/menu-notifications.php:86
 msgid "Include Blog Administrators?"
 msgstr ""
 
-#: src/Views/menu-notifications.php:95
+#: src/Views/menu-notifications.php:107
 msgid "This will include all users with the role of \"Administrator\" in the email."
 msgstr ""
 
-#: src/Views/menu-notifications.php:111
+#: src/Views/menu-notifications.php:123
 msgid "Enter a comma separate list of emails that you would like to be notified when the action runs.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab."
+msgstr ""
+
+#: src/Views/menu-notifications.php:132
+msgid "Past-due Actions Notification"
+msgstr ""
+
+#: src/Views/menu-notifications.php:134
+#: src/Views/menu-notifications.php:161
+msgid "This will enable or disable the send of email notification on past-due actions."
+msgstr ""
+
+#: src/Views/menu-notifications.php:142
+msgid "Enable Past-due Actions Notification?"
+msgstr ""
+
+#: src/Views/menu-notifications.php:175
+msgid "Enter a comma separate list of emails that you would like to be notified when past-due actions are detected."
 msgstr ""
 
 #: src/Views/tabs.php:20
