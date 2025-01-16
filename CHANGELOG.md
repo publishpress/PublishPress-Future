@@ -33,12 +33,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix error when the step being executed is not found (Issue #1123).
 - Fix the space on right margin of the workflow editor nodes.
 - Fix queries in the `ScheduledActionsModel` to use the group ID.
+- Fix infinite loop detection in post related triggers when fired by a bulk edit action (Issue #943).
 
 ### Developers
 
 - Refactor the method `deleteExpiredScheduledSteps` in the class `ScheduledActionsModel` renaming it to `deleteExpiredDoneActions`.
 - Add new method `getExpiredPendingActions` to the class `ScheduledActionsModel`.
 - Deprecated the method `isInfinityLoopDetected` in the trait `InfiniteLoopPreventer` and use the method `isInfiniteLoopDetected` instead.
+- Add new argument `$uniqueId` to the method `isInfiniteLoopDetected` in the trait `InfiniteLoopPreventer` (Issue #943).
 
 ## [4.3.0] - 08 Jan, 2025
 

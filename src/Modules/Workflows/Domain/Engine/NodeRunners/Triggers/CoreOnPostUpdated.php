@@ -108,7 +108,7 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
 
         $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
 
-        if ($this->isInfiniteLoopDetected($this->workflowId, $this->step)) {
+        if ($this->isInfiniteLoopDetected($this->workflowId, $this->step, $postId)) {
             $this->logger->debug(
                 $this->nodeRunnerProcessor->prepareLogMessage(
                     'Infinite loop detected for step %s, skipping',

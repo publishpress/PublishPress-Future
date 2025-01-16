@@ -19,11 +19,11 @@ trait InfiniteLoopPreventer
         return $this->isInfiniteLoopDetected($workflowId, $step);
     }
 
-    protected function isInfiniteLoopDetected(int $workflowId, array $step): bool
+    protected function isInfiniteLoopDetected(int $workflowId, array $step, string $uniqueId = ''): bool
     {
         $stepId = $step['node']['id'];
 
-        $infiniteLoopIndex = sprintf('%s-%s', $workflowId, $stepId);
+        $infiniteLoopIndex = sprintf('%s-%s-%s', $workflowId, $stepId, $uniqueId);
 
         $isAlreadyRunning = in_array($infiniteLoopIndex, $this->isRunningOnNodes);
         $this->isRunningOnNodes[] = $infiniteLoopIndex;

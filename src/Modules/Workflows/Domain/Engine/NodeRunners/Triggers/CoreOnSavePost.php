@@ -110,7 +110,7 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
             return;
         }
 
-        if ($this->isInfiniteLoopDetected($this->workflowId, $this->step)) {
+        if ($this->isInfiniteLoopDetected($this->workflowId, $this->step, $postId)) {
             $this->logger->debug(
                 $this->nodeRunnerProcessor->prepareLogMessage(
                     'Infinite loop detected for step %s, skipping',
