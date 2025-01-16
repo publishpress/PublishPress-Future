@@ -152,7 +152,7 @@ export const ExpressionBuilder = ({
             >
                 <div style={{ minWidth: '600px', maxWidth: '600px' }}>
                     {singleVariableOnly && (
-                        <p>{__("Single variable mode. Select a variable from the list below.", "post-expirator")}</p>
+                        <p>{__("Select a variable from the list below.", "post-expirator")}</p>
                     )}
 
                     {!singleVariableOnly && (
