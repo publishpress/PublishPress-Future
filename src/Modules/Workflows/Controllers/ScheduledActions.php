@@ -447,7 +447,10 @@ class ScheduledActions implements InitializableInterface
 
     public function enqueueScripts($hook)
     {
-        if ('future_page_publishpress-future-scheduled-actions' !== $hook) {
+        if (
+            'future_page_publishpress-future-scheduled-actions' !== $hook
+            && 'admin_page_publishpress-future-scheduled-actions' !== $hook
+        ) {
             return;
         }
 

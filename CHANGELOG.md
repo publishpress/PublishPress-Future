@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix the space on right margin of the workflow editor nodes.
 - Fix queries in the `ScheduledActionsModel` to use the group ID.
 - Fix infinite loop detection in post related triggers when fired by a bulk edit action (Issue #943).
+- Fix space on the outputs of the workflow steps in the Scheduled Actions list screen.
 
 ### Developers
 
