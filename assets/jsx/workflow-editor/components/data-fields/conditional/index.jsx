@@ -82,8 +82,6 @@ const NotToggle = ({ checked, handleOnChange }) => {
         currentConditionalQuery: select(editorStore).getCurrentConditionalQuery(),
     }));
 
-    console.log(currentConditionalQuery);
-
     return (
         <>
             {currentConditionalQuery && currentConditionalQuery.rules.length > 0 && (

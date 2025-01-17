@@ -406,10 +406,10 @@ export function updateBaseSlugCounts(nodeSlug) {
     };
 }
 
-export function addNodeError(nodeId, error, message) {
+export function addNodeError(nodeId, error, message, details = '') {
     return {
         type: 'ADD_NODE_ERROR',
-        payload: {nodeId, error, message},
+        payload: {nodeId, error, message, details},
     };
 }
 

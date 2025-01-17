@@ -97,6 +97,19 @@ class RayDebug implements NodeTypeInterface
                     ],
                 ],
             ],
+            "settings" => [
+                "rules" => [
+                    [
+                        "rule" => "validExpression",
+                        "field" => "data.expression",
+                        "label" => __("Data to output", "post-expirator"),
+                        "fieldLabel" => __("Debug output > Custom data > Data to output", "post-expirator"),
+                        "allowedSlugs" => [
+                            "input",
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 

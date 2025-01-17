@@ -89,6 +89,16 @@ class LogAdd implements NodeTypeInterface
                     ],
                 ],
             ],
+            "settings" => [
+                "rules" => [
+                    [
+                        "rule" => "validExpression",
+                        "field" => "message.expression",
+                        "label" => __("Debug output", "post-expirator"),
+                        "fieldLabel" => __("Debug output > Message", "post-expirator"),
+                    ],
+                ],
+            ],
         ];
     }
 

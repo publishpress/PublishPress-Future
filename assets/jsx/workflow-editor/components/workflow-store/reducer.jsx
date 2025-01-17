@@ -720,6 +720,7 @@ const addNodeError = (state, action) => {
     theNodeErrors[payload.error] = {
         error: payload.error,
         message: payload.message,
+        details: payload?.details,
     };
 
     const nodeErrors = {

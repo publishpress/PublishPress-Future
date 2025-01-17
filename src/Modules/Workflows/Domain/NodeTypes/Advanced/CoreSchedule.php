@@ -88,8 +88,18 @@ class CoreSchedule implements NodeTypeInterface
                     [
                         "rule" => "hasOutgoingConnection",
                     ],
-                ]
-            ]
+                ],
+            ],
+            "settings" => [
+                "rules" => [
+                    [
+                        "rule" => "validExpression",
+                        "field" => "schedule.uniqueIdExpression.expression",
+                        "label" => __("Unique ID Expression", "post-expirator"),
+                        "fieldLabel" => __("Schedule > Unique ID Expression", "post-expirator"),
+                    ],
+                ],
+            ],
         ];
     }
 

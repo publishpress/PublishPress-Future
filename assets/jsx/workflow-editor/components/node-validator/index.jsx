@@ -1,7 +1,7 @@
 import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
 import { useDispatch, useSelect } from "@wordpress/data";
-import { useEffect } from "@wordpress/element";
+import { useEffect, useMemo, useCallback } from "@wordpress/element";
 import { __, sprintf } from "@wordpress/i18n";
 import { nodeHasIncomers, nodeHasOutgoers, getNodeIncomers, getNodeIncomersRecursively } from "../../utils";
 import isEmail from "validator/lib/isEmail";
@@ -30,6 +30,68 @@ export function NodeValidator({})
         addNodeError,
         resetNodeErrors,
     } = useDispatch(workflowStore);
+
+    const nodeSlugs = useMemo(() => {
+        return nodes.map((node) => {
+            return node.data.slug;
+        });
+    }, [nodes]);
+
+    // We are doing a simple validation here. Maybe we should do a more complex one using a parser in the future.
+    const isExpressionValid = useCallback((expression, ruleData) => {
+        let invalidExpression = false;
+        let detailsMessage = '';
+
+        const successfulResult = {
+            isValid: true,
+            error: null,
+        };
+
+        if (! expression?.includes('{{')) {
+            return successfulResult;
+        }
+
+        const slugs = expression.match(/{{[^}]+}}/g);
+
+        if (slugs) {
+            slugs.forEach((slug) => {
+                slug = slug.replace('{{', '').replace('}}', '');
+                slug = slug.trim();
+                slug = slug.split('.')[0];
+
+                if (slug === 'global') {
+                    return successfulResult;
+                }
+
+                if (ruleData?.allowedSlugs?.includes(slug)) {
+                    return successfulResult;
+                }
+
+                if (! nodeSlugs.includes(slug)) {
+                    invalidExpression = true;
+                    detailsMessage = sprintf(
+                        // translators: %s is the workflow step slug.
+                        __('"%s" is not a variable or step slug.', 'post-expirator'),
+                        slug
+                    );
+                }
+            });
+        }
+
+        if (invalidExpression) {
+            return {
+                isValid: false,
+                error: sprintf(
+                    // translators: %s is the field label.
+                    __('Invalid expression on %s', 'post-expirator'),
+                    ruleData?.fieldLabel
+                ),
+                details: detailsMessage,
+            }
+        }
+
+        return successfulResult;
+    }, [nodeSlugs]);
 
     useEffect(() => {
         nodes.forEach((node) => {
@@ -213,11 +275,24 @@ export function NodeValidator({})
                             }
 
                             break;
+
+                        case 'validExpression':
+                            const expressionValidation = isExpressionValid(settingValue, ruleData);
+
+                            if (!expressionValidation.isValid) {
+                                addNodeError(
+                                    node.id,
+                                    `${fieldName}-validExpression`,
+                                    expressionValidation.error,
+                                    expressionValidation.details
+                                );
+                            }
+                            break;
                     }
                 });
             }
         });
-    }, [nodes, edges]);
+    }, [nodes, edges, nodeSlugs]);
 
     return;
 }

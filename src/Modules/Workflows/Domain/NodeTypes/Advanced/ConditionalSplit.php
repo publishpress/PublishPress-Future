@@ -91,6 +91,16 @@ class ConditionalSplit implements NodeTypeInterface
                     ]
                 ],
             ],
+            "settings" => [
+                "rules" => [
+                    [
+                        "rule" => "validExpression",
+                        "field" => "conditions.natural",
+                        "label" => __("Conditions", "post-expirator"),
+                        "fieldLabel" => __("Conditions", "post-expirator"),
+                    ],
+                ],
+            ],
         ];
     }
 
