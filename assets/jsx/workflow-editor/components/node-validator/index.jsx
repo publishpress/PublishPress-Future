@@ -6,11 +6,14 @@ import { __, sprintf } from "@wordpress/i18n";
 import { nodeHasIncomers, nodeHasOutgoers, getNodeIncomers, getNodeIncomersRecursively } from "../../utils";
 import isEmail from "validator/lib/isEmail";
 import isInt from "validator/lib/isInt";
+import { debounce } from "lodash";
 
 function isVariable(value) {
     const trimmedValue = value.trim();
     return trimmedValue.startsWith('{{') && trimmedValue.endsWith('}}');
 }
+
+const DEBOUNCE_TIME = 250;
 
 export function NodeValidator({})
 {
@@ -93,7 +96,7 @@ export function NodeValidator({})
         return successfulResult;
     }, [nodeSlugs]);
 
-    useEffect(() => {
+    const validateNodes = useCallback((nodes, edges, nodeSlugs) => {
         nodes.forEach((node) => {
             const nodeType = getNodeTypeByName(node.data?.name);
             const nodeSettings = node.data?.settings || {};
@@ -292,7 +295,19 @@ export function NodeValidator({})
                 });
             }
         });
-    }, [nodes, edges, nodeSlugs]);
+    }, [getNodeTypeByName, addNodeError, resetNodeErrors, isExpressionValid]);
+
+    useEffect(() => {
+        const debounceValidation = debounce(() => {
+            validateNodes(nodes, edges, nodeSlugs);
+        }, DEBOUNCE_TIME);
+
+        debounceValidation();
+
+        return () => {
+            debounceValidation.cancel();
+        };
+    }, [nodes, edges, nodeSlugs, validateNodes]);
 
     return;
 }
