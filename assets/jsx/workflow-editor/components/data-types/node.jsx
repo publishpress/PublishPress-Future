@@ -34,6 +34,12 @@ export function NodeData() {
                 type: "string",
                 label: "Activation Time",
                 description: "The timestamp when the node was activated.",
+            },
+            {
+                name: "postId",
+                type: "integer",
+                label: "Post ID",
+                description: "The ID of the post that triggered the node.",
             }
         ],
     };

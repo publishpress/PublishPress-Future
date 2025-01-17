@@ -189,6 +189,8 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                 'stepLabel' => $node['data']['label'] ?? null,
                 'stepName' => $node['data']['name'],
                 'pluginVersion' => $this->pluginVersion,
+                // This is not always set, only for some post-related triggers. Used to keep the post ID as reference.
+                'postId' => $this->variablesHandler->getVariable('global.trigger.postId'),
             ];
 
             $compactedArgs = $this->compactArguments($step);

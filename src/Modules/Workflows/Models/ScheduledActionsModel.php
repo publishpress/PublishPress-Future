@@ -249,4 +249,26 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
 
         return $results;
     }
+
+    public function cancelByWorkflowAndPostId(int $workflowId, int $postId): void
+    {
+        global $wpdb;
+
+        $tableSchema = $wpdb->prefix . 'actionscheduler_actions';
+        $groupId = $this->getGroupID();
+
+        $wpdb->query(
+            $wpdb->prepare(
+                "UPDATE {$tableSchema} SET status = 'canceled'
+                WHERE (JSON_EXTRACT(args, '$[0].postId') = %d OR JSON_EXTRACT(extended_args, '$[0].postId') = %d)
+                    AND (JSON_EXTRACT(args, '$[0].workflowId') = %d OR JSON_EXTRACT(extended_args, '$[0].workflowId') = %d)
+                    AND group_id = %d",
+                $postId,
+                $postId,
+                $workflowId,
+                $workflowId,
+                $groupId
+            )
+        );
+    }
 }

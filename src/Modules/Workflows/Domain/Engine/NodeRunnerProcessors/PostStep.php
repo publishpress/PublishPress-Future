@@ -7,9 +7,9 @@ use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use Throwable;
+use PublishPress\Future\Modules\Workflows\Interfaces\NodePostRelatedRunnerProcessorInterface;
 
-class PostStep implements NodeRunnerProcessorInterface
+class PostStep implements NodeRunnerProcessorInterface, NodePostRelatedRunnerProcessorInterface
 {
     /**
      * @var HooksFacade
@@ -160,5 +160,14 @@ class PostStep implements NodeRunnerProcessorInterface
     private function addErrorLogMessage(string $message, ...$args): void
     {
         $this->logger->error($this->prepareLogMessage($message, ...$args));
+    }
+
+    public function setPostIdOnTriggerGlobalVariable(int $postId): void
+    {
+        // Store the postID that triggered the workflow in the global variables so
+        // we can trace it back to the post.
+        $globalVariables = $this->variablesHandler->getVariable('global');
+        $triggerVariable = $globalVariables['trigger'];
+        $triggerVariable->postId = $postId;
     }
 }

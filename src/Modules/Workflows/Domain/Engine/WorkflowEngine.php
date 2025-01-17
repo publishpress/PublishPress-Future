@@ -209,6 +209,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                         'label' => $nodeType->getLabel(),
                         'activation_timestamp' => date('Y-m-d H:i:s'),
                         'slug' => $triggerNode['data']['slug'],
+                        'postId' => null,
                     ]
                 );
 

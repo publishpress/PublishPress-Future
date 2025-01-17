@@ -9,10 +9,10 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostRe
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost as NodeType;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\NodePostRelatedRunnerProcessorInterface;
 
 class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 {
@@ -26,7 +26,7 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
     private $hooks;
 
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var NodePostRelatedRunnerProcessorInterface
      */
     private $nodeRunnerProcessor;
 
@@ -62,7 +62,7 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerProcessorInterface $nodeRunnerProcessor,
+        NodePostRelatedRunnerProcessorInterface $nodeRunnerProcessor,
         InputValidatorsInterface $postQueryValidator,
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger,
@@ -110,40 +110,48 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 
         $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
             $this->step,
-            function ($step, $postId) {
-                $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
-
-                $post = get_post($postId);
-
-                $postQueryArgs = [
-                    'post' => $post,
-                    'node' => $this->step['node'],
-                ];
-
-                if (! $this->postQueryValidator->validate($postQueryArgs)) {
-                    return false;
-                }
-
-                $this->variablesHandler->setVariable(
-                    $nodeSlug,
-                    [
-                        'postId' => new IntegerResolver($postId),
-                        'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
-                    ]
-                );
-
-                $this->logger->debug(
-                    $this->nodeRunnerProcessor->prepareLogMessage(
-                        'Trigger is running | Slug: %s | Post ID: %d',
-                        $nodeSlug,
-                        $postId
-                    )
-                );
-
-                $this->nodeRunnerProcessor->triggerCallbackIsRunning();
-                $this->nodeRunnerProcessor->runNextSteps($this->step);
-            },
+            [$this, 'fireTheTrigger'],
             $postId
         );
+    }
+
+    public function fireTheTrigger($step, $postId)
+    {
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+
+        $post = get_post($postId);
+
+        $postQueryArgs = [
+            'post' => $post,
+            'node' => $this->step['node'],
+        ];
+
+        if (! $this->postQueryValidator->validate($postQueryArgs)) {
+            return false;
+        }
+
+        // TODO: Do we really need to pass the postID if the post is already being passed?
+        $this->variablesHandler->setVariable(
+            $nodeSlug,
+            [
+                'postId' => new IntegerResolver($postId),
+                'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
+            ]
+        );
+
+        $this->nodeRunnerProcessor->setPostIdOnTriggerGlobalVariable($postId);
+
+        ray($this->variablesHandler->getAllVariables());
+
+        $this->logger->debug(
+            $this->nodeRunnerProcessor->prepareLogMessage(
+                'Trigger is running | Slug: %s | Post ID: %d',
+                $nodeSlug,
+                $postId
+            )
+        );
+
+        $this->nodeRunnerProcessor->triggerCallbackIsRunning();
+        $this->nodeRunnerProcessor->runNextSteps($this->step);
     }
 }

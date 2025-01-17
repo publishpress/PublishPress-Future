@@ -28,4 +28,9 @@ interface ScheduledActionsModelInterface
      * @since 4.3.2
      */
     public function getPastDuePendingActions(): array;
+
+    /**
+     * @since 4.3.2
+     */
+    public function cancelByWorkflowAndPostId(int $workflowId, int $postId): void;
 }

@@ -91,6 +91,14 @@ class PostModel implements PostModelInterface
 
     public function setManuallyEnabledWorkflows(array $workflowIds): void
     {
+        $currentWorkflowIds = $this->getManuallyEnabledWorkflows();
+
+        $workflowsToDisable = array_diff($currentWorkflowIds, $workflowIds);
+
+        foreach ($workflowsToDisable as $workflowId) {
+            $this->removeScheduledActionsFromDisabledWorkflows($workflowId);
+        }
+
         delete_post_meta($this->post->ID, self::META_KEY_WORKFLOW_MANUALLY_TRIGGERED);
 
         foreach ($workflowIds as $workflowId) {
@@ -118,6 +126,16 @@ class PostModel implements PostModelInterface
         });
 
         $this->setManuallyEnabledWorkflows($workflowIds);
+    }
+
+    private function removeScheduledActionsFromDisabledWorkflows(int $workflowId): void
+    {
+        // Check if the workflow has a scheduled action for this post
+        $scheduledActionsModel = new ScheduledActionsModel();
+        $scheduledActionsModel->cancelByWorkflowAndPostId($workflowId, $this->post->ID);
+
+        // $scheduledActionsModel = new ScheduledActionsModel();
+        // $scheduledActionsModel->cancelWorkflowScheduledActions($workflowId);
     }
 
     public function getManuallyEnabledWorkflowsSchedule(int $workflowId): array
