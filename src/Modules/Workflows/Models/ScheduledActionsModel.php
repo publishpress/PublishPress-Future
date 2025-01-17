@@ -100,7 +100,7 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
                 "SELECT a.*
                 FROM %i AS a
                 LEFT JOIN %i AS b ON a.action_id = b.action_id
-                WHERE a.action_uid_hash = %s AND b.status IN (%s, %s) AND a.group_id = %d",
+                WHERE a.action_uid_hash = %s AND b.status IN (%s, %s) AND b.group_id = %d",
                 $tableSchema->getTableName(),
                 $wpdb->prefix . 'actionscheduler_actions',
                 $actionUIDHash,
