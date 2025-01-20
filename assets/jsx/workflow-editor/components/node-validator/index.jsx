@@ -6,7 +6,7 @@ import { __, sprintf } from "@wordpress/i18n";
 import { nodeHasIncomers, nodeHasOutgoers, getNodeIncomers, getNodeIncomersRecursively } from "../../utils";
 import isEmail from "validator/lib/isEmail";
 import isInt from "validator/lib/isInt";
-import { debounce } from "lodash";
+import { useDebounce } from "@wordpress/compose";
 
 function isVariable(value) {
     const trimmedValue = value.trim();
@@ -297,17 +297,17 @@ export function NodeValidator({})
         });
     }, [getNodeTypeByName, addNodeError, resetNodeErrors, isExpressionValid]);
 
-    useEffect(() => {
-        const debounceValidation = debounce(() => {
-            validateNodes(nodes, edges, nodeSlugs);
-        }, DEBOUNCE_TIME);
+    const debounceValidation = useDebounce((nodes, edges, nodeSlugs) => {
+        validateNodes(nodes, edges, nodeSlugs);
+    }, DEBOUNCE_TIME);
 
-        debounceValidation();
+    useEffect(() => {
+        debounceValidation(nodes, edges, nodeSlugs);
 
         return () => {
             debounceValidation.cancel();
         };
-    }, [nodes, edges, nodeSlugs, validateNodes]);
+    }, [nodes, edges, nodeSlugs, debounceValidation]);
 
     return;
 }

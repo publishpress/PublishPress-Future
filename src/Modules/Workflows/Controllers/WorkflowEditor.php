@@ -143,13 +143,14 @@ class WorkflowEditor implements InitializableInterface
         wp_enqueue_script("wp-data");
         wp_enqueue_script("wp-plugins");
         wp_enqueue_script("wp-notices");
-
+        wp_enqueue_script("wp-compose");
         wp_enqueue_script(
             "future_workflow_editor_script",
             Plugin::getScriptUrl('workflowEditor'),
             [
                 "wp-element",
                 "wp-components",
+                "wp-compose",
                 "wp-url",
                 "wp-data",
                 "wp-api-fetch",
