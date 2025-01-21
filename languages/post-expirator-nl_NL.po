@@ -524,7 +524,7 @@ msgstr "Standaard datum/tijd offset"
 #: src/Modules/Settings/Controllers/Controller.php:224
 #: src/Views/menu-general.php:76
 msgid "Set the offset to use for the default action date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, use only terms in English."
-msgstr "Stel de offset in voor de standaard vervaldatum en -tijd. Voor informatie over de lay-out, zie %1$s. Je kunt bijvoorbeeld %2$s+1 month%3$s of %4$s+1 week 2 days 4 hours 2 seconds%5$s of %6$snext Thursday%7$s invoeren."
+msgstr "Stel de offset in voor de standaard vervaldatum en -tijd. Voor informatie over de lay-out, zie %1$s. Je kunt bijvoorbeeld %2$s+1 month%3$s of %2$s+1 week 2 days 4 hours 2 seconds%3$s of %2$snext Thursday%3$s invoeren."
 
 #: src/Modules/Settings/Controllers/Controller.php:246
 #: src/Views/menu-general.php:115
