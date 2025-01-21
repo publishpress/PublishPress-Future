@@ -17,7 +17,6 @@ import ReactFlow, {
 import {
     useCallback,
     useRef,
-    useLayoutEffect,
     useEffect,
     Platform,
     useMemo,
@@ -38,6 +37,7 @@ import { createNewNode, getId } from "../../utils";
 import NodePlaceholder from "../node-types/node-placeholder";
 import AutoLayout from "./auto-layout";
 import { __ } from "@wordpress/i18n";
+import { getExpandedVariablesList, filterVariableOptionsByDataType, getNodeById } from "../../utils";
 
 const GRID_SIZE = 10;
 
@@ -54,6 +54,8 @@ export const FlowEditor = (props) => {
         isControlsFeatureActive,
         isLoadingWorkflow,
         isConnectingNodes,
+        getNodeTypeByName,
+        globalVariables,
     } = useSelect((select) => {
         const activeComplementaryArea = select(
             "core/interface",
@@ -73,6 +75,8 @@ export const FlowEditor = (props) => {
             isControlsFeatureActive: select(editorStore).isFeatureActive(FEATURE_CONTROLS),
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
             isConnectingNodes: select(workflowStore).isConnectingNodes(),
+            getNodeTypeByName: select(editorStore).getNodeTypeByName,
+            globalVariables: select(workflowStore).getGlobalVariables(),
         };
     });
 
@@ -145,6 +149,17 @@ export const FlowEditor = (props) => {
         (changes) => {
             // TODO: Try to use the changes for handling the undo/redo state.
             setNodes(applyNodeChanges(changes, nodes));
+
+            changes.forEach((change) => {
+                const item = getNodeById(change.id, nodes);
+
+                if (! item) {
+                    return;
+                }
+
+                setDefaultNodeSettings(item);
+            });
+
             updateFlowInEditedWorkflow();
         },
         [nodes],
@@ -184,9 +199,12 @@ export const FlowEditor = (props) => {
             };
 
             setEdges(addEdge(params, edges));
+
+            setDefaultNodeSettings(params.target);
+
             updateFlowInEditedWorkflow();
         },
-        [edges],
+        [edges, nodes, setDefaultNodeSettings, updateFlowInEditedWorkflow, setEdges, addEdge],
     );
 
     // This is used to create a new node when the user connects a node to the pane.
@@ -235,6 +253,8 @@ export const FlowEditor = (props) => {
             };
 
             addNode(item);
+
+            setDefaultNodeSettings(item);
         }
 
         setIsConnectingNodes(false);
@@ -269,13 +289,78 @@ export const FlowEditor = (props) => {
                 reactFlowInstance
             });
 
+            setDefaultNodeSettings(item);
+
             removePlaceholderNodes();
         },
         [reactFlowInstance, nodes],
     );
 
+    const setDefaultNodeSettings = useCallback((item) => {
+        if (typeof item === 'string') {
+            const itemId = item;
+            item = getNodeById(itemId, nodes);
+
+            if (! item) {
+                return;
+            }
+        }
+
+        if (! item.data) {
+            return;
+        }
+
+        const nodeType = getNodeTypeByName(item.data.name);
+
+        if (! nodeType) {
+            return;
+        }
+
+        const settingsSchema = nodeType.settingsSchema;
+
+        if (! settingsSchema) {
+            return;
+        }
+
+        const variables = getExpandedVariablesList(item, globalVariables);
+
+        settingsSchema.forEach((schema) => {
+            schema?.fields.forEach((field) => {
+                if (! field.default) {
+                    return;
+                }
+
+                if (typeof field.default !== 'object') {
+                    return;
+                }
+
+                Object.keys(field.default).forEach((key) => {
+                    const defaultItem = field.default[key];
+
+                    if (! defaultItem.rule) {
+                        return;
+                    }
+
+                    if (defaultItem.rule === 'first') {
+
+                        const filteredVariables = filterVariableOptionsByDataType(variables, defaultItem.dataType);
+
+                        if (filteredVariables.length === 0) {
+                            return;
+                        }
+
+                        item.data.settings[field.name][key] = filteredVariables[0].id;
+                    }
+                });
+            });
+        });
+    }, [nodes, getNodeTypeByName, globalVariables]);
+
     const onNodesDelete = useCallback(() => {
         unselectAll();
+
+
+
         updateFlowInEditedWorkflow();
     });
 

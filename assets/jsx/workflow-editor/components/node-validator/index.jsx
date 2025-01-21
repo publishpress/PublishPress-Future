@@ -7,6 +7,7 @@ import { nodeHasIncomers, nodeHasOutgoers, getNodeIncomers, getNodeIncomersRecur
 import isEmail from "validator/lib/isEmail";
 import isInt from "validator/lib/isInt";
 import { useDebounce } from "@wordpress/compose";
+import { getExpandedVariablesList, filterVariableOptionsByDataType } from "../../utils";
 
 function isVariable(value) {
     const trimmedValue = value.trim();
@@ -21,11 +22,13 @@ export function NodeValidator({})
         nodes,
         edges,
         getNodeTypeByName,
+        globalVariables,
     } = useSelect((select) => {
         return {
             nodes: select(workflowStore).getNodes(),
             edges: select(workflowStore).getEdges(),
             getNodeTypeByName: select(editorStore).getNodeTypeByName,
+            globalVariables: select(workflowStore).getGlobalVariables(),
         }
     });
 
@@ -39,6 +42,50 @@ export function NodeValidator({})
             return node.data.slug;
         });
     }, [nodes]);
+
+    const isVariableValid = useCallback((node, variable, ruleData) => {
+        const successfulResult = {
+            isValid: true,
+            error: null,
+        };
+
+        if (variable?.rule && variable?.dataType) {
+            return successfulResult;
+        }
+
+        if (variable === '') {
+            return successfulResult;
+        }
+
+        let variables = getExpandedVariablesList(node, globalVariables);
+
+        if (ruleData?.dataType) {
+            variables = filterVariableOptionsByDataType(variables, ruleData.dataType);
+        }
+
+        let variableIsFound = false;
+        variables.forEach((existentVariable) => {
+            if (existentVariable.id === variable) {
+                variableIsFound = true;
+            }
+        });
+
+        if (variableIsFound) {
+            return successfulResult;
+        }
+
+        return {
+            isValid: false,
+            error: sprintf(
+                __('The field "%s" requires a valid variable. Please select one from the available options.', 'post-expirator'),
+                ruleData?.fieldLabel
+            ),
+            details: sprintf(
+                __('The variable "%s" is not available in the current context.', 'post-expirator'),
+                variable
+            ),
+        };
+    }, [globalVariables, getExpandedVariablesList, filterVariableOptionsByDataType, getNodeTypeByName]);
 
     // We are doing a simple validation here. Maybe we should do a more complex one using a parser in the future.
     const isExpressionValid = useCallback((expression, ruleData) => {
@@ -196,7 +243,21 @@ export function NodeValidator({})
                                     );
                                 }
                             } else {
-                                if (!settingValue || settingValue == '') {
+                                if (! settingValue || settingValue === '') {
+                                    addNodeError(
+                                        node.id,
+                                        `${fieldName}-required`,
+                                        sprintf(
+                                            __('The field %s is required.', 'post-expirator'),
+                                            fieldLabel
+                                        )
+                                    );
+                                    break;
+                                }
+
+                                // If the default value is an object with a rule, that is the default value
+                                // and it was not set by the user yet.
+                                if (typeof settingValue === 'object' && settingValue.rule) {
                                     addNodeError(
                                         node.id,
                                         `${fieldName}-required`,
@@ -277,6 +338,18 @@ export function NodeValidator({})
                                 }
                             }
 
+                            break;
+                        case 'validVariable':
+                            const variableValidation = isVariableValid(node, settingValue, ruleData);
+
+                            if (!variableValidation.isValid) {
+                                addNodeError(
+                                    node.id,
+                                    `${fieldName}-validVariable`,
+                                    variableValidation.error,
+                                    variableValidation.details
+                                );
+                            }
                             break;
 
                         case 'validExpression':

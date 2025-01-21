@@ -115,6 +115,12 @@ class CorePostQuery implements NodeTypeInterface
                         "type" => "integerList",
                         "label" => __("Post ID", "post-expirator"),
                     ],
+                    [
+                        "rule" => "validVariable",
+                        "field" => "postQuery.postId",
+                        "fieldLabel" => __("Post ID", "post-expirator"),
+                        "dataType" => "post",
+                    ],
                 ],
             ],
         ];

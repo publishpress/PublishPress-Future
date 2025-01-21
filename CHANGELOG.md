@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add daily check and notification for past-due actions, with settings to enable/disable and customize the email addresses (Issue #229).
 - Add check for overdue actions in the Scheduled Actions list screen (Issue #232).
 - Add new validation rule to check if the expression is valid in the workflow editor (Issue #742).
+- Add new validation rule to check if the value of a field has invalid variable references (Issue #969).
 
 ### Changed
 
@@ -26,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Changed the validation rule message of the "Stick" and "Unstick" workflow steps (Issue #1101).
 - Changed the message in the Scheduled Actions list screen when a scheduled action is missing its original Schedule step (Issue #971).
 - Removed the "Single variable mode" from the text in the expression builder (Issue #1118).
+- Automatically select post-related settings and defaults in workflow steps that interact with posts (Issue #969).
 
 ### Fixed
 
@@ -38,6 +40,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix infinite loop detection in post related triggers when fired by a bulk edit action (Issue #943).
 - Fix space on the outputs of the workflow steps in the Scheduled Actions list screen.
 - Fix performance issue when validating the workflow editor nodes (Issue #1137).
+- Fix the constructor of some workflow triggers (Issue 1141).
+- Fix the error related to wrong arguments passed to sprintf on nl_NL language (Issue #1138).
+
 
 ### Developers
 

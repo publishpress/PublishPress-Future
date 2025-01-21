@@ -1,3 +1,5 @@
+import { getNodeById as getNodeByIdUtils } from "../../utils";
+
 export const getPostType = (state) => {
     return state.postType;
 };
@@ -11,7 +13,7 @@ export const getEdges = (state) => {
 };
 
 export const getNodeById = (state, id) => {
-    return state.workflow.flow.nodes.find(node => node.id === id);
+    return getNodeByIdUtils(id, state.workflow.flow.nodes);
 };
 
 export const getEdgeById = (state, id) => {

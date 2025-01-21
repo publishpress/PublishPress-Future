@@ -72,6 +72,12 @@ class CorePostStick implements NodeTypeInterface
                             "Select the variable that contains the post to update. It can be a post instance or the post ID.", // phpcs:ignore Generic.Files.LineLength.TooLong
                             "post-expirator"
                         ),
+                        "default" => [
+                            "variable" => [
+                                "rule" => "first",
+                                "dataType" => "post",
+                            ]
+                        ],
                     ],
                 ],
             ],
@@ -101,6 +107,12 @@ class CorePostStick implements NodeTypeInterface
                     [
                         "rule" => "required",
                         "field" => "post.variable",
+                    ],
+                    [
+                        "rule" => "validVariable",
+                        "field" => "post.variable",
+                        "fieldLabel" => __("Post", "post-expirator"),
+                        "dataType" => "post",
                     ],
                 ],
             ],

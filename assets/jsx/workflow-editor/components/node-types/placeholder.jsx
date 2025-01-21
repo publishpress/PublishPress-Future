@@ -15,7 +15,7 @@ import {
 } from '../../constants';
 import InserterSearchResults from '../secondary-sidebar/inserter-search-results';
 import { useReactFlow, addEdge, MarkerType } from 'reactflow';
-import { createNewNode } from '../../utils';
+import { createNewNode, getNodeById } from '../../utils';
 import PlusIcon from '../icons/plus';
 
 
@@ -86,7 +86,7 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
     }
 
     const onSelectItem = (item) => {
-        const placeholderNode = nodes.find((node) => node.id === nodeId.current);
+        const placeholderNode = getNodeById(nodeId.current, nodes);
 
         const position = {
             x: placeholderNode.position.x,
