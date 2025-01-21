@@ -868,27 +868,21 @@ return [
 
                 case CoreOnPostPublished::getNodeTypeName():
                     $nodeRunner = new CoreOnPostPublished(
-                        $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
-                        $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER)
                     );
                     break;
 
                 case CoreOnPostStatusChanged::getNodeTypeName():
                     $nodeRunner = new CoreOnPostStatusChanged(
-                        $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
-                        $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER)
                     );
                     break;
 
                 case CoreOnPostScheduled::getNodeTypeName():
                     $nodeRunner = new CoreOnPostScheduled(
-                        $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
-                        $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER)
                     );
                     break;
