@@ -78,8 +78,10 @@ export const ExpressionBuilder = ({
 
             if (! singleVariableOnly) {
                 const cursorPosition = editor.getCursorPosition();
+                console.log(cursorPosition);
                 editor.session.insert(cursorPosition, `{{${item.name}}}`);
             } else {
+                console.log('single variable');
                 editor.session.setValue(`{{${item.name}}}`);
             }
 
@@ -100,6 +102,9 @@ export const ExpressionBuilder = ({
             editorSmallRef.current.editor.setOption("indentedSoftWrap", false);
         }
     }, [wrapOnPreview, editorSmallRef]);
+
+    const expression = (defaultValue[propertyName] || '').toString();
+    const placeholder = (settings?.placeholder || '').toString();
 
     return <div className={`expression-builder ${isOpen ? 'expression-builder-open' : ''} ${isInline ? 'expression-builder-inline' : ''}`}>
 
@@ -124,7 +129,7 @@ export const ExpressionBuilder = ({
             mode="handlebars"
             theme="textmate"
             name="expression-builder-small"
-            value={defaultValue[propertyName] || ''}
+            value={expression}
             readOnly={readOnlyPreview}
             className={readOnlyPreview ? 'read-only-editor' : ''}
             editorProps={editorProps}
@@ -141,7 +146,7 @@ export const ExpressionBuilder = ({
             }}
             height={oneLinePreview ? '30px' : '92px'}
             width="100%"
-            placeholder={settings?.placeholder || ''}
+            placeholder={placeholder}
         />
 
         {isOpen && (
@@ -167,7 +172,7 @@ export const ExpressionBuilder = ({
                         className={singleVariableOnly ? 'read-only-editor' : ''}
                         wrapEnabled={wrapOnEditor}
                         onChange={(value) => onChangeSetting({ settingName: propertyName, value })}
-                        value={defaultValue[propertyName] || ''}
+                        value={expression}
                         editorProps={editorProps}
                         readOnly={singleVariableOnly}
                         setOptions={{
@@ -179,7 +184,7 @@ export const ExpressionBuilder = ({
                         }}
                         height={singleVariableOnly ? '30px' : '200px'}
                         width="100%"
-                        placeholder={settings?.placeholder || ''}
+                        placeholder={placeholder}
                     />
 
                     <div className="expression-builder-modal-variables" style={{ maxWidth: '600px', overflowX: 'auto' }}>

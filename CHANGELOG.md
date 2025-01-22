@@ -42,7 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix performance issue when validating the workflow editor nodes (Issue #1137).
 - Fix the constructor of some workflow triggers (Issue 1141).
 - Fix the error related to wrong arguments passed to sprintf on nl_NL language (Issue #1138).
-
+- Fix the JS error when the expression builder is opened with an expression containing only numbers (Issue #1142).
 
 ### Developers
 
