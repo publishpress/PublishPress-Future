@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-22T19:30:32+00:00\n"
+"POT-Creation-Date: 2025-01-22T19:49:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -850,45 +850,45 @@ msgid "Move to trash"
 msgstr ""
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/workflow-publish-button/index.jsx:84
+#: components/workflow-publish-button/index.jsx:79
 msgid "Publish"
 msgstr ""
 
-#: components/workflow-publish-button/index.jsx:84
+#: components/workflow-publish-button/index.jsx:79
 msgid "Update"
 msgstr ""
 
-#: components/workflow-publish-button/index.jsx:95
+#: components/workflow-publish-button/index.jsx:90
 msgid "Autosaving..."
 msgstr ""
 
-#: components/workflow-publish-button/index.jsx:95
+#: components/workflow-publish-button/index.jsx:90
 msgid "Updating..."
 msgstr ""
 
-#: components/workflow-publish-button/index.jsx:97
+#: components/workflow-publish-button/index.jsx:92
 msgid "Updated"
 msgstr ""
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/workflow-save-draft-button/index.jsx:87
+#: components/workflow-save-draft-button/index.jsx:82
 msgid "Save draft"
 msgstr ""
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/workflow-save-draft-button/index.jsx:90
+#: components/workflow-save-draft-button/index.jsx:85
 msgid "Save"
 msgstr ""
 
-#: components/workflow-save-draft-button/index.jsx:99
+#: components/workflow-save-draft-button/index.jsx:94
 msgid "Autosaving"
 msgstr ""
 
-#: components/workflow-save-draft-button/index.jsx:99
+#: components/workflow-save-draft-button/index.jsx:94
 msgid "Saving"
 msgstr ""
 
-#: components/workflow-save-draft-button/index.jsx:101
+#: components/workflow-save-draft-button/index.jsx:96
 msgid "Saved"
 msgstr ""
 
@@ -900,40 +900,40 @@ msgstr ""
 msgid "Unable to load the workflow. Please try again."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:92
+#: components/workflow-store/actions.jsx:91
 msgid "Workflow saved as draft."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:100
-#: components/workflow-store/actions.jsx:151
+#: components/workflow-store/actions.jsx:99
+#: components/workflow-store/actions.jsx:149
 msgid "Unable to save workflow. Please, try again."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:143
+#: components/workflow-store/actions.jsx:141
 msgid "Workflow saved."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:188
+#: components/workflow-store/actions.jsx:185
 msgid "Workflow published."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:196
+#: components/workflow-store/actions.jsx:193
 msgid "Unable to publish the workflow. Please, try again."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:233
+#: components/workflow-store/actions.jsx:229
 msgid "Workflow switched to draft."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:241
+#: components/workflow-store/actions.jsx:237
 msgid "Unable to switch workflow to draft. Please, try again."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:331
+#: components/workflow-store/actions.jsx:327
 msgid "Workflow deleted. Redirecting..."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:342
+#: components/workflow-store/actions.jsx:338
 msgid "Unable to delete the workflow. Please, try again."
 msgstr ""
 
@@ -945,14 +945,14 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: components/workflow-switch-to-draft-button/index.jsx:37
+#: components/workflow-switch-to-draft-button/index.jsx:33
 msgid "Are you sure you want to unpublish this workflow?"
 msgstr ""
 
-#: components/workflow-switch-to-draft-button/index.jsx:62
+#: components/workflow-switch-to-draft-button/index.jsx:52
 msgid "Draft"
 msgstr ""
 
-#: components/workflow-switch-to-draft-button/index.jsx:62
+#: components/workflow-switch-to-draft-button/index.jsx:52
 msgid "Switch to draft"
 msgstr ""

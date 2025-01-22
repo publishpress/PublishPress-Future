@@ -137,9 +137,6 @@ class WorkflowsModel implements WorkflowsModelInterface
             $workflow->setTitle($sample['title']);
             $workflow->setDescription($sample['description']);
             $workflow->setFlow(json_decode($sample['flow'], true));
-            $workflow->setScreenshotFromFile(
-                PUBLISHPRESS_FUTURE_BASE_PATH . '/assets/images/sample-workflows/' . $sample['screenshot']
-            );
             $workflow->save();
         }
 

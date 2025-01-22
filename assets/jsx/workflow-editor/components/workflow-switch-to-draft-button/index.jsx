@@ -9,12 +9,10 @@ export function WorkflowSwitchToDraftButton() {
     const {
         isSavingWorkflow,
         isPublishedWorkflow,
-        takeScreenshot,
     } = useSelect((select) => {
         return {
             isSavingWorkflow: select(workflowStore).isSavingWorkflow(),
             isPublishedWorkflow: select(workflowStore).isPublishedWorkflow(),
-            takeScreenshot: select(workflowStore).takeScreenshot,
         };
     });
 
@@ -28,8 +26,6 @@ export function WorkflowSwitchToDraftButton() {
         return null;
     }
 
-    const { enableWorkflowScreenshot } = futureWorkflowEditor;
-
     const onSwitch = () => {
         let alertMessage;
 
@@ -42,13 +38,7 @@ export function WorkflowSwitchToDraftButton() {
         }
 
         if (window.confirm(alertMessage)) {
-            if (enableWorkflowScreenshot) {
-                takeScreenshot().then((dataUrl) => {
-                    switchToDraft({ screenshot: dataUrl });
-                });
-            } else {
-                switchToDraft();
-            }
+            switchToDraft();
         }
     };
 

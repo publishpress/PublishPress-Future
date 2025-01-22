@@ -34,7 +34,6 @@ export function WorkflowSaveDraftButton({
 		isPublished,
 		isSaveable,
 		isSaving,
-		takeScreenshot,
 	} = useSelect(
 		(select) => {
 			const {
@@ -44,7 +43,6 @@ export function WorkflowSaveDraftButton({
 				isSavingWorkflow,
 				isEditedWorkflowSaveable,
 				isAutosavingWorkflow,
-				takeScreenshot,
 			} = select(workflowStore);
 
 			return {
@@ -54,7 +52,6 @@ export function WorkflowSaveDraftButton({
 				isPublished: isCurrentWorkflowPublished(),
 				isSaving: forceIsSaving || isSavingWorkflow(),
 				isSaveable: isEditedWorkflowSaveable(),
-				takeScreenshot,
 			};
 		},
 		[forceIsDirty, forceIsSaving]
@@ -63,8 +60,6 @@ export function WorkflowSaveDraftButton({
 	const { saveAsDraft } = useDispatch(workflowStore);
 
 	const wasSaving = usePrevious(isSaving);
-
-	const { enableWorkflowScreenshot } = futureWorkflowEditor;
 
 	useEffect(() => {
 		let timeoutId;
@@ -106,13 +101,7 @@ export function WorkflowSaveDraftButton({
 	}
 
 	const onClick = () => {
-		if (enableWorkflowScreenshot) {
-			takeScreenshot().then((screenshot) => {
-				saveAsDraft({ screenshot });
-			});
-		} else {
-			saveAsDraft();
-		}
+		saveAsDraft();
 	};
 
 	// Use common Button instance for all saved states so that focus is not

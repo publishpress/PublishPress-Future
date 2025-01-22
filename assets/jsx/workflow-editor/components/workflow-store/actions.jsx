@@ -59,7 +59,7 @@ function addWorkflowIdToUrl(workflowId) {
 
 // FIXME: This is not working as expected. The state we get from the store is not updated if the
 // inspector is open or was not closed after the changes.
-export function* saveAsDraft({ screenshot } = {}) {
+export function* saveAsDraft() {
     yield {type: 'SAVE_AS_DRAFT_START'};
 
     try {
@@ -68,8 +68,7 @@ export function* saveAsDraft({ screenshot } = {}) {
 
         const workflowToSave = {
             ...editedWorkflow,
-            status: 'draft',
-            ...(screenshot ? { screenshot } : {})
+            status: 'draft'
         };
 
         const newWorkflow = yield apiFetch({
@@ -104,11 +103,11 @@ export function* saveAsDraft({ screenshot } = {}) {
     }
 }
 
-export function* saveAsCurrentStatus({ screenshot } = {}) {
+export function* saveAsCurrentStatus() {
     const editedWorkflow = yield select(STORE_NAME).getWorkflow();
 
     if (editedWorkflow.status === 'auto-draft') {
-        yield saveAsDraft({ screenshot });
+        yield saveAsDraft();
         return;
     }
 
@@ -120,7 +119,6 @@ export function* saveAsCurrentStatus({ screenshot } = {}) {
 
         const workflowToSave = {
             ...editedWorkflow,
-            ...(screenshot ? { screenshot } : {}),
         };
 
         const newWorkflow = yield apiFetch({
@@ -155,7 +153,7 @@ export function* saveAsCurrentStatus({ screenshot } = {}) {
     }
 }
 
-export function* publishWorkflow({ screenshot } = {}) {
+export function* publishWorkflow() {
     yield {type: 'PUBLISH_WORKFLOW_START'};
 
     try {
@@ -165,7 +163,6 @@ export function* publishWorkflow({ screenshot } = {}) {
         const workflowToSave = {
             ...editedWorkflow,
             status: 'publish',
-            ...(screenshot ? { screenshot } : {}),
         };
 
         const newWorkflow = yield apiFetch({
@@ -200,7 +197,7 @@ export function* publishWorkflow({ screenshot } = {}) {
     }
 }
 
-export function* switchToDraft({ screenshot } = {}) {
+export function* switchToDraft() {
     yield {type: 'SWITCH_TO_DRAFT_START'};
 
     try {
@@ -210,7 +207,6 @@ export function* switchToDraft({ screenshot } = {}) {
         const workflowToSave = {
             ...editedWorkflow,
             status: 'draft',
-            ...(screenshot ? { screenshot } : {}),
         };
 
         const newWorkflow = yield apiFetch({

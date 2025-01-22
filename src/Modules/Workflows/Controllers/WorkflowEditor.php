@@ -225,7 +225,6 @@ class WorkflowEditor implements InitializableInterface
                 "welcomeGuidePages" => $this->getWelcomeGuidePages(),
                 "isExperimentalFeaturesEnabled" => $this->settingsFacade->getExperimentalFeaturesStatus(),
                 "isPro" => $isPro,
-                "enableWorkflowScreenshot" => $this->settingsFacade->getWorkflowScreenshotStatus(),
             ]
         );
 

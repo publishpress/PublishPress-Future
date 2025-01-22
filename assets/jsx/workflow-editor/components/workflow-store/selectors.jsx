@@ -133,33 +133,6 @@ export const getDataTypeByName = (state, name) => {
     return state.dataTypes.find(dataType => dataType.name === name);
 }
 
-export async function takeScreenshot() {
-    const { enableWorkflowScreenshot } = futureWorkflowEditor;
-
-    if (!enableWorkflowScreenshot) {
-        return null;
-    }
-
-    try {
-        const { toPng } = await import('html-to-image');
-        return await toPng(document.querySelector('.react-flow'), {
-            filter: (node) => {
-                if (
-                    node?.classList?.contains('react-flow__minimap') ||
-                    node?.classList?.contains('react-flow__controls') ||
-                    node?.classList?.contains('pwe-node-edit-button')
-                ) {
-                    return false;
-                }
-                return true;
-            },
-        });
-    } catch (error) {
-        console.error('Error loading html-to-image:', error);
-        return null;
-    }
-}
-
 export function getGlobalVariables(state) {
     return state.globalVariables;
 }

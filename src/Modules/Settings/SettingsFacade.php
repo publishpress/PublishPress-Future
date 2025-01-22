@@ -521,16 +521,6 @@ class SettingsFacade
         }
     }
 
-    public function getWorkflowScreenshotStatus(): bool
-    {
-        return (bool)$this->options->getOption('workflowScreenshot', false);
-    }
-
-    public function setWorkflowScreenshotStatus(bool $value): void
-    {
-        $this->options->updateOption('workflowScreenshot', $value);
-    }
-
     public function getShortcodeWrapper(): string
     {
         return $this->options->getOption('shortcodeWrapper', '');
@@ -557,7 +547,6 @@ class SettingsFacade
             'defaultDateTimeOffset' => $this->getGeneralDateTimeOffset(),
             'hideCalendarByDefault' => $this->getHideCalendarByDefault(),
             'allowUserRoles' => $this->getAllowUserRoles(),
-            'workflowScreenshot' => $this->getWorkflowScreenshotStatus(),
         ];
 
         $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_GENERAL, $settings);
@@ -570,7 +559,6 @@ class SettingsFacade
         $this->setGeneralDateTimeOffset($settings['defaultDateTimeOffset'] ?? '');
         $this->setHideCalendarByDefault($settings['hideCalendarByDefault'] ?? false);
         $this->setAllowUserRoles($settings['allowUserRoles'] ?? []);
-        $this->setWorkflowScreenshotStatus($settings['workflowScreenshot'] ?? false);
 
         do_action(HooksAbstract::ACTION_SETTINGS_SET_GENERAL, $settings);
     }

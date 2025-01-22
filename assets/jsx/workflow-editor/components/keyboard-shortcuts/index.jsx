@@ -31,7 +31,7 @@ import { SHORTCUTS_CONFIG } from "./shortcuts";
 export const KeyboardShortcuts = () => {
     const { registerShortcut } = useDispatch(shortcutStore);
     const { toggleFeature } = useDispatch(editorStore);
-    const { takeScreenshot, saveAsCurrentStatus } = useDispatch(workflowStore);
+    const { saveAsCurrentStatus } = useDispatch(workflowStore);
     const reactflow = useReactFlow();
 
     const { isEditedWorkflowSaveable } = useSelect(
@@ -47,20 +47,13 @@ export const KeyboardShortcuts = () => {
         });
     }, []);
 
-    const handleSaveWithScreenshot =  async (e) => {
+    const handleSave =  async (e) => {
         e.preventDefault();
 
         if (!isEditedWorkflowSaveable) return;
 
         try {
-            const { enableWorkflowScreenshot } = futureWorkflowEditor;
-
-            if (enableWorkflowScreenshot) {
-                const dataUrl = await takeScreenshot();
-                await saveAsCurrentStatus({ screenshot: dataUrl });
-            } else {
-                await saveAsCurrentStatus();
-            }
+            await saveAsCurrentStatus();
         } catch (error) {
             console.error('Failed to save workflow:', error);
         }
@@ -78,7 +71,7 @@ export const KeyboardShortcuts = () => {
         }));
     });
     useShortcut(SHORTCUT_TOGGLE_ADVANCED_SETTINGS, () => toggleFeature(FEATURE_ADVANCED_SETTINGS));
-    useShortcut(SHORTCUT_SAVE_AS_CURRENT_STATUS, handleSaveWithScreenshot);
+    useShortcut(SHORTCUT_SAVE_AS_CURRENT_STATUS, handleSave);
 
     return null;
 };

@@ -93,15 +93,6 @@ class WorkflowsList implements InitializableInterface
             2
         );
 
-        if ($this->settingsFacade->getWorkflowScreenshotStatus()) {
-            $this->hooks->addAction(
-                "manage_" . Module::POST_TYPE_WORKFLOW . "_posts_custom_column",
-                [$this, "renderPreviewColumn"],
-                10,
-                2
-            );
-        }
-
         $this->hooks->addAction(
             FutureCoreHooksAbstract::ACTION_ADMIN_INIT,
             [$this, "updateWorkflowStatus"]
@@ -196,10 +187,6 @@ class WorkflowsList implements InitializableInterface
             "post-expirator"
         );
 
-        if ($this->settingsFacade->getWorkflowScreenshotStatus()) {
-            $columns["workflow_preview"] = __("Preview", "post-expirator");
-        }
-
         // Move the date column to the end
         if (isset($columns["date"])) {
             $date = $columns["date"];
@@ -285,29 +272,6 @@ class WorkflowsList implements InitializableInterface
 
         echo esc_html(implode(", ", $triggers));
     }
-
-    public function renderPreviewColumn($column, $postId)
-    {
-        if ("workflow_preview" !== $column) {
-            return;
-        }
-
-        $workflowModel = new WorkflowModel();
-        $workflowModel->load($postId);
-
-        $workflowModel->convertLegacyScreenshots();
-
-        $screenshot = $workflowModel->getScreenshotUrl('thumbnail');
-        $screenshotFull = $workflowModel->getScreenshotUrl();
-
-        if (empty($screenshotFull)) {
-            esc_html_e("No screenshot", "post-expirator");
-            return;
-        }
-
-        require __DIR__ . "/../Views/preview-column.html.php";
-    }
-
 
     public function updateWorkflowStatus()
     {

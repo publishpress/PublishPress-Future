@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Changed the message in the Scheduled Actions list screen when a scheduled action is missing its original Schedule step (Issue #971).
 - Removed the "Single variable mode" from the text in the expression builder (Issue #1118).
 - Automatically select post-related settings and defaults in workflow steps that interact with posts (Issue #969).
+- Removed the screenshot feature from the workflow editor (Issue #1135).
 
 ### Fixed
 

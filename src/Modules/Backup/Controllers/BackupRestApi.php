@@ -81,9 +81,6 @@ class BackupRestApi implements InitializableInterface
                     'workflows' => [
                         'type' => 'array',
                     ],
-                    'includeScreenshots' => [
-                        'type' => 'boolean',
-                    ],
                     'settings' => [
                         'type' => 'array',
                     ],
@@ -152,7 +149,6 @@ class BackupRestApi implements InitializableInterface
             $exportActionWorkflows = $request->get_param('exportActionWorkflows');
             $exportActionSettings = $request->get_param('exportActionSettings');
             $selectedWorkflows = $request->get_param('workflows');
-            $includeScreenshots = $request->get_param('includeScreenshots');
             $selectedSettings = $request->get_param('settings');
 
             if (! $exportActionWorkflows && ! $exportActionSettings) {
@@ -171,7 +167,7 @@ class BackupRestApi implements InitializableInterface
             ];
 
             if ($exportActionWorkflows) {
-                $exportData['workflows'] = $this->exportWorkflows($selectedWorkflows, $includeScreenshots);
+                $exportData['workflows'] = $this->exportWorkflows($selectedWorkflows);
             }
 
             if ($exportActionSettings) {
@@ -199,7 +195,7 @@ class BackupRestApi implements InitializableInterface
         }
     }
 
-    private function exportWorkflows(array $selectedWorkflowIds = [], bool $includeScreenshots = false)
+    private function exportWorkflows(array $selectedWorkflowIds = [])
     {
         /** @var WorkflowsModel $workflowsModel */
         $workflowsModel = new WorkflowsModel();
@@ -225,14 +221,6 @@ class BackupRestApi implements InitializableInterface
                 continue;
             }
 
-            if ($includeScreenshots) {
-                $screenshotUrl = $workflow->getScreenshotUrl();
-                $screenshotData = @file_get_contents($screenshotUrl);
-                $screenshotData = 'data:image/png;base64,' . base64_encode($screenshotData);
-            } else {
-                $screenshotData = null;
-            }
-
             $workflows[] = [
                 'id' => $workflow->getId(),
                 'title' => $workflow->getTitle(),
@@ -240,7 +228,6 @@ class BackupRestApi implements InitializableInterface
                 'modified_at' => $workflow->getModifiedAt(),
                 'status' => $workflow->getStatus(),
                 'flow' => $workflow->getFlow(),
-                'screenshot' => $screenshotData,
             ];
         }
 
@@ -406,10 +393,6 @@ class BackupRestApi implements InitializableInterface
             $workflowModel->setStatus('draft');
             $workflowModel->setFlow($workflow['flow']);
             $workflowModel->save();
-
-            if (isset($workflow['screenshot'])) {
-                $workflowModel->setScreenshotFromBase64($workflow['screenshot']);
-            }
         }
     }
 

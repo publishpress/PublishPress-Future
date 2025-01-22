@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-22T19:30:27+00:00\n"
+"POT-Creation-Date: 2025-01-22T19:49:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -77,38 +77,38 @@ msgstr ""
 msgid "The database schema could not be fixed. Please, contact the support team."
 msgstr ""
 
-#: legacy/classes/Display.class.php:336
-#: legacy/classes/Display.class.php:383
-#: legacy/classes/Display.class.php:416
+#: legacy/classes/Display.class.php:333
+#: legacy/classes/Display.class.php:380
+#: legacy/classes/Display.class.php:413
 msgid "Saved Options!"
 msgstr ""
 
 #. translators: %1$s is the plugin name, %2$s is the star rating markup
-#: legacy/classes/Display.class.php:502
+#: legacy/classes/Display.class.php:499
 msgid "If you like %1$s, please leave us a %2$s rating. Thank you!"
 msgstr ""
 
-#: legacy/classes/Display.class.php:517
+#: legacy/classes/Display.class.php:514
 msgid "About PublishPress Future"
 msgstr ""
 
-#: legacy/classes/Display.class.php:519
+#: legacy/classes/Display.class.php:516
 msgid "About"
 msgstr ""
 
-#: legacy/classes/Display.class.php:525
+#: legacy/classes/Display.class.php:522
 msgid "Future Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:527
+#: legacy/classes/Display.class.php:524
 msgid "Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:533
+#: legacy/classes/Display.class.php:530
 msgid "Contact the PublishPress team"
 msgstr ""
 
-#: legacy/classes/Display.class.php:535
+#: legacy/classes/Display.class.php:532
 msgid "Contact"
 msgstr ""
 
@@ -148,15 +148,15 @@ msgstr ""
 msgid "Invalid date time offset."
 msgstr ""
 
-#: src/Modules/Backup/Controllers/BackupRestApi.php:141
+#: src/Modules/Backup/Controllers/BackupRestApi.php:138
 msgid "Failed to get workflows. Check the logs for more details."
 msgstr ""
 
-#: src/Modules/Backup/Controllers/BackupRestApi.php:194
+#: src/Modules/Backup/Controllers/BackupRestApi.php:190
 msgid "Failed to export the file. Check the logs for more details."
 msgstr ""
 
-#: src/Modules/Backup/Controllers/BackupRestApi.php:391
+#: src/Modules/Backup/Controllers/BackupRestApi.php:378
 msgid "Failed to import the file. Check the logs for more details."
 msgstr ""
 
@@ -391,7 +391,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:141
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:338
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:46
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:483
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:447
 msgid "Scheduled Actions"
 msgstr ""
 
@@ -584,7 +584,7 @@ msgid "Invalid date/time offset \"%s\" for post type \"%s\". Please ensure you u
 msgstr ""
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:52
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:192
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:183
 msgid "Status"
 msgstr ""
 
@@ -790,7 +790,7 @@ msgstr ""
 
 #. translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
 #: src/Modules/Settings/Controllers/Controller.php:224
-#: src/Views/menu-general.php:41
+#: src/Views/menu-general.php:40
 msgid "Set the offset to use for the default action date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, use only terms in English."
 msgstr ""
 
@@ -850,12 +850,12 @@ msgid "Enter a comma separated list of emails that you would like to be notified
 msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:259
-#: src/Views/menu-general.php:30
+#: src/Views/menu-general.php:29
 msgid "Default Date/Time Offset"
 msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:262
-#: src/Views/menu-general.php:48
+#: src/Views/menu-general.php:47
 msgid "PHP strtotime function"
 msgstr ""
 
@@ -943,7 +943,7 @@ msgstr ""
 
 #: src/Modules/Workflows/Controllers/ManualPostTrigger.php:417
 #: src/Modules/Workflows/Controllers/PostType.php:48
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:156
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:147
 #: src/Modules/Workflows/Views/manual-trigger-quick-edit.html.php:9
 msgid "Action Workflows"
 msgstr ""
@@ -1061,27 +1061,27 @@ msgstr ""
 msgid "Notify the site admin when a post is updated."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/SampleWorkflows.php:40
+#: src/Modules/Workflows/Controllers/SampleWorkflows.php:39
 msgid "Unpublish to Draft after a week"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/SampleWorkflows.php:41
+#: src/Modules/Workflows/Controllers/SampleWorkflows.php:40
 msgid "Change the post status to Draft a week after it was published."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/SampleWorkflows.php:46
+#: src/Modules/Workflows/Controllers/SampleWorkflows.php:44
 msgid "Unpublish and change category after one week"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/SampleWorkflows.php:47
+#: src/Modules/Workflows/Controllers/SampleWorkflows.php:45
 msgid "Move the post to draft and add a category after 15 days."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/SampleWorkflows.php:52
+#: src/Modules/Workflows/Controllers/SampleWorkflows.php:49
 msgid "Add extra categories one month after publishing"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/SampleWorkflows.php:53
+#: src/Modules/Workflows/Controllers/SampleWorkflows.php:50
 msgid "Sample workflow to add extra categories one month after publishing"
 msgstr ""
 
@@ -1150,107 +1150,99 @@ msgstr ""
 msgid "[%1$s/%2$d]"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:240
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:239
 msgid "Welcome to the workflow editor"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:241
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:240
 msgid "In the PublishPress Workflow Editor, each workflow step is presented as a distinct 'node' in the workflow."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:245
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:244
 msgid "Use your imagination"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:246
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:245
 msgid "You're free to create very distinct workflows in your site, according to your needs."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:250
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:249
 msgid "A basic workflow"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:251
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:250
 msgid "Every workflow requires at least two steps connected to each other: one trigger and one action."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:255
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:254
 msgid "Add steps to your workflow"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:256
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:255
 msgid "Drag and drop steps to add them to your workflow. Connect the steps to create a workflow."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:260
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:259
 msgid "Output and input"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:261
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:260
 msgid "Linked steps can pass data forward as input to the next step."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:265
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:264
 msgid "Customize the workflow"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:266
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:265
 msgid "Click on a step to customize it. You can change the step's settings in the right sidebar."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:270
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:269
 msgid "Workflow validation"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:271
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:270
 msgid "Error messages will appear for any unfilled required settings, missed connections, or invalid values. Select the step to view the corresponding error in the sidebar."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:275
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:274
 msgid "Publish your workflow"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:276
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:275
 msgid "When you're ready, click the publish button to make your workflow live."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:280
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:279
 msgid "Need help?"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:281
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:280
 msgid "If you have any questions or need help, click the help button in the top right corner to access the support resources."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:194
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:185
 msgid "Triggers"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:200
-msgid "Preview"
-msgstr ""
-
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:225
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:383
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:384
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:212
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:347
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:348
 msgid "Deactivate"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:225
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:377
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:378
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:212
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:341
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:342
 msgid "Activate"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:267
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:254
 msgid "—"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:304
-msgid "No screenshot"
-msgstr ""
-
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:456
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:420
 msgid "Action Workflow Editor"
 msgstr ""
 
@@ -2166,16 +2158,12 @@ msgstr ""
 
 #: src/Modules/Workflows/Rest/RestApiV1.php:199
 #: src/Modules/Workflows/Rest/RestApiV1.php:225
-#: src/Modules/Workflows/Rest/RestApiV1.php:290
+#: src/Modules/Workflows/Rest/RestApiV1.php:286
 msgid "Workflow not found"
 msgstr ""
 
 #: src/Modules/Workflows/Views/editor.html.php:13
 msgid "Loading the workflow editor..."
-msgstr ""
-
-#: src/Modules/Workflows/Views/preview-column.html.php:9
-msgid "Screenshot"
 msgstr ""
 
 #: src/Views/ad-banner-right-sidebar.php:12
@@ -2293,7 +2281,7 @@ msgstr ""
 
 #: src/Views/menu-advanced.php:135
 #: src/Views/menu-display.php:518
-#: src/Views/menu-general.php:154
+#: src/Views/menu-general.php:118
 #: src/Views/menu-notifications.php:186
 msgid "Save Changes"
 msgstr ""
@@ -2630,55 +2618,35 @@ msgstr ""
 msgid "%s - Format set here will override the value set on the settings page"
 msgstr ""
 
-#: src/Views/menu-general.php:26
+#: src/Views/menu-general.php:25
 msgid "Defaults"
 msgstr ""
 
-#: src/Views/menu-general.php:59
+#: src/Views/menu-general.php:58
 msgid "Calendar Visibility"
 msgstr ""
 
-#: src/Views/menu-general.php:65
+#: src/Views/menu-general.php:64
 msgid "Remember last state"
 msgstr ""
 
-#: src/Views/menu-general.php:67
+#: src/Views/menu-general.php:66
 msgid "Shows or hides the calendar based on the last user interaction."
 msgstr ""
 
-#: src/Views/menu-general.php:72
+#: src/Views/menu-general.php:71
 msgid "Always hidden"
 msgstr ""
 
-#: src/Views/menu-general.php:74
+#: src/Views/menu-general.php:73
 msgid "The calendar is always hidden by default."
 msgstr ""
 
-#: src/Views/menu-general.php:81
-msgid "Workflow Screenshot"
-msgstr ""
-
-#: src/Views/menu-general.php:93
-msgid "Enable and take screenshots"
-msgstr ""
-
-#: src/Views/menu-general.php:96
-msgid "Enable the feature and take a screenshot of the workflow when saving."
-msgstr ""
-
-#: src/Views/menu-general.php:106
-msgid "Disable and do not take screenshots"
-msgstr ""
-
-#: src/Views/menu-general.php:109
-msgid "Disable the feature and do not take screenshots when saving workflows."
-msgstr ""
-
-#: src/Views/menu-general.php:115
+#: src/Views/menu-general.php:79
 msgid "Permissions"
 msgstr ""
 
-#: src/Views/menu-general.php:120
+#: src/Views/menu-general.php:84
 msgid "Choose Which User Roles Can Use PublishPress Future"
 msgstr ""
 

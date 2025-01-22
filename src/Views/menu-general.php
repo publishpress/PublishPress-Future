@@ -12,7 +12,6 @@ $settingsFacade = Container::getInstance()->get(ServicesAbstract::SETTINGS);
 
 $expirationdateDefaultDateCustom = $settingsFacade->getGeneralDateTimeOffset();
 $calendarHiddenByDefault = $settingsFacade->getHideCalendarByDefault();
-$workflowScreenshotStatus = $settingsFacade->getWorkflowScreenshotStatus();
 
 $userRoles = wp_roles()->get_names();
 $pluginFacade = PostExpirator_Facade::getInstance();
@@ -72,41 +71,6 @@ $pluginFacade = PostExpirator_Facade::getInstance();
                                     esc_html_e('Always hidden', 'post-expirator'); ?></label>
                         </div>
                         <p class="description"><?php esc_html_e('The calendar is always hidden by default.', 'post-expirator'); ?></p>
-                    </td>
-                </tr>
-
-                <tr valign="top">
-                    <th scope="row">
-                        <label for="workflow-screenshot"><?php
-                            esc_html_e('Workflow Screenshot', 'post-expirator'); ?></label>
-                    </th>
-                    <td>
-                        <div class="pp-settings-field-row">
-                            <input
-                                type="radio"
-                                id="workflow-screenshot-enabled"
-                                name="workflow-screenshot"
-                                value="1"
-                                <?php echo $workflowScreenshotStatus ? 'checked="checked"' : ''; ?>
-                            />
-                            <label for="workflow-screenshot-enabled"><?php
-                                esc_html_e('Enable and take screenshots', 'post-expirator'); ?></label>
-                        </div>
-                        <p class="description"><?php
-                            esc_html_e('Enable the feature and take a screenshot of the workflow when saving.', 'post-expirator'); ?></p>
-                        <div class="pp-settings-field-row">
-                            <input
-                                type="radio"
-                                id="workflow-screenshot-disabled"
-                                name="workflow-screenshot"
-                                value="0"
-                                <?php echo $workflowScreenshotStatus ? '' : 'checked="checked"'; ?>
-                            />
-                            <label for="workflow-screenshot-disabled"><?php
-                                esc_html_e('Disable and do not take screenshots', 'post-expirator'); ?></label>
-                        </div>
-                        <p class="description"><?php
-                            esc_html_e('Disable the feature and do not take screenshots when saving workflows.', 'post-expirator'); ?></p>
                     </td>
                 </tr>
             </table>

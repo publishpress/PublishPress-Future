@@ -104,7 +104,6 @@ class BackupAdminPage implements InitializableInterface
             'futureBackupPanelData',
             [
                 'apiRoot' => esc_url_raw(rest_url()),
-                'enableWorkflowScreenshot' => $this->settingsFacade->getWorkflowScreenshotStatus(),
             ]
         );
 
