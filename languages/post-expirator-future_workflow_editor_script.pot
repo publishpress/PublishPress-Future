@@ -7,36 +7,36 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-16T20:13:10+00:00\n"
+"POT-Creation-Date: 2025-01-22T19:30:32+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
 
-#: components/data-fields/conditional/index.jsx:91
+#: components/data-fields/conditional/index.jsx:89
 msgid "Not"
 msgstr ""
 
-#: components/data-fields/conditional/index.jsx:237
+#: components/data-fields/conditional/index.jsx:235
 msgid "Edit condition"
 msgstr ""
 
-#: components/data-fields/conditional/index.jsx:265
+#: components/data-fields/conditional/index.jsx:263
 msgid "This conditional will only be evaluated in the Pro version. In the Free version, it will always return true."
 msgstr ""
 
-#: components/data-fields/conditional/index.jsx:272
+#: components/data-fields/conditional/index.jsx:270
 msgid "Condition"
 msgstr ""
 
-#: components/data-fields/conditional/index.jsx:277
+#: components/data-fields/conditional/index.jsx:275
 msgid "Create rules that will continue the workflow only if certain conditions are met."
 msgstr ""
 
-#: components/data-fields/conditional/index.jsx:293
+#: components/data-fields/conditional/index.jsx:291
 msgid "Add Group"
 msgstr ""
 
-#: components/data-fields/conditional/index.jsx:294
+#: components/data-fields/conditional/index.jsx:292
 msgid "Add Rule"
 msgstr ""
 
@@ -193,31 +193,31 @@ msgstr ""
 msgid "Insert"
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:111
+#: components/data-fields/expression-builder/index.jsx:116
 msgid "Edit"
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:155
+#: components/data-fields/expression-builder/index.jsx:160
 msgid "Select a variable from the list below."
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:159
+#: components/data-fields/expression-builder/index.jsx:164
 msgid "Type your expression here or use the variables below."
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:186
+#: components/data-fields/expression-builder/index.jsx:191
 msgid "Variables"
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:189
+#: components/data-fields/expression-builder/index.jsx:194
 msgid "Double-click on a variable to select it."
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:193
+#: components/data-fields/expression-builder/index.jsx:198
 msgid "Double-click on any variable to add it to your expression."
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:205
+#: components/data-fields/expression-builder/index.jsx:210
 msgid "Hover over a variable to see its description."
 msgstr ""
 
@@ -314,11 +314,11 @@ msgstr ""
 msgid "Terms"
 msgstr ""
 
-#: components/flow-editor/index.jsx:320
+#: components/flow-editor/index.jsx:405
 msgid "Applying auto layout."
 msgstr ""
 
-#: components/flow-editor/index.jsx:345
+#: components/flow-editor/index.jsx:430
 msgid "Auto layout applied."
 msgstr ""
 
@@ -650,40 +650,59 @@ msgstr ""
 msgid "Click to add a trigger"
 msgstr ""
 
-#: components/node-validation-panel/index.jsx:14
+#: components/node-validation-panel/index.jsx:19
 msgid "Validation"
 msgstr ""
 
-#: components/node-validation-panel/index.jsx:31
+#: components/node-validation-panel/index.jsx:49
 msgid "All checks have passed for this step."
 msgstr ""
 
-#: components/node-validator/index.jsx:55
+#: components/node-validator/index.jsx:80
+msgid "The field \"%s\" requires a valid variable. Please select one from the available options."
+msgstr ""
+
+#: components/node-validator/index.jsx:84
+msgid "The variable \"%s\" is not available in the current context."
+msgstr ""
+
+#. translators: %s is the workflow step slug.
+#: components/node-validator/index.jsx:124
+msgid "\"%s\" is not a variable or step slug."
+msgstr ""
+
+#. translators: %s is the field label.
+#: components/node-validator/index.jsx:136
+msgid "Invalid expression on %s"
+msgstr ""
+
+#: components/node-validator/index.jsx:167
 msgid "This step requires a connection from a previous step."
 msgstr ""
 
-#: components/node-validator/index.jsx:65
+#: components/node-validator/index.jsx:177
 msgid "This step requires a connection to a following step."
 msgstr ""
 
-#: components/node-validator/index.jsx:128
-#: components/node-validator/index.jsx:139
+#: components/node-validator/index.jsx:240
+#: components/node-validator/index.jsx:251
+#: components/node-validator/index.jsx:265
 msgid "The field %s is required."
 msgstr ""
 
-#: components/node-validator/index.jsx:160
+#: components/node-validator/index.jsx:286
 msgid "The field %s must be a valid email address."
 msgstr ""
 
-#: components/node-validator/index.jsx:176
+#: components/node-validator/index.jsx:302
 msgid "The field %s must be a valid email address list separated by commas."
 msgstr ""
 
-#: components/node-validator/index.jsx:190
+#: components/node-validator/index.jsx:316
 msgid "The field %s must be an integer."
 msgstr ""
 
-#: components/node-validator/index.jsx:205
+#: components/node-validator/index.jsx:331
 msgid "The field %s must be an integer list separated by commas."
 msgstr ""
 
