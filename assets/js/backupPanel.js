@@ -470,7 +470,13 @@ var ExportTab = function ExportTab() {
       return setExportActionWorkflows(value);
     },
     disabled: workflows.length === 0
-  })), /*#__PURE__*/React.createElement("li", {
+  }), exportActionWorkflows && workflows.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "pe-settings-tab__backup-container"
+  }, /*#__PURE__*/React.createElement(_selectable_list__WEBPACK_IMPORTED_MODULE_5__.SelectableList, {
+    items: workflows,
+    selectedItems: selectedWorkflows,
+    onSelect: setSelectedWorkflows
+  }))), /*#__PURE__*/React.createElement("li", {
     key: "export-action-settings"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CheckboxControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Action Settings', 'post-expirator'),

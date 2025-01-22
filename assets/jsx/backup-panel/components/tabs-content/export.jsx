@@ -164,6 +164,12 @@ const ExportTab = () => {
                         onChange={(value) => setExportActionWorkflows(value)}
                         disabled={workflows.length === 0}
                     />
+
+                    {exportActionWorkflows && workflows.length > 0 && (
+                        <div className="pe-settings-tab__backup-container">
+                            <SelectableList items={workflows} selectedItems={selectedWorkflows} onSelect={setSelectedWorkflows} />
+                        </div>
+                    )}
                 </li>
                 <li key="export-action-settings">
                     <CheckboxControl
