@@ -51,6 +51,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add new method `getExpiredPendingActions` to the class `ScheduledActionsModel`.
 - Deprecated the method `isInfinityLoopDetected` in the trait `InfiniteLoopPreventer` and use the method `isInfiniteLoopDetected` instead.
 - Add new argument `$uniqueId` to the method `isInfiniteLoopDetected` in the trait `InfiniteLoopPreventer` (Issue #943).
+- Remove the methods `convertLegacyScreenshots`, `setScreenshotFromBase64`, `setScreenshotFromFile` and `getScreenshotUrl` from the class `WorkflowModel` (Issue #1135).
+- Remove the methods `convertLegacyScreenshots`, `setScreenshotFromBase64`, `setScreenshotFromFile` and `getScreenshotUrl` from the interface `WorkflowModelInterface` (Issue #1135).
+- Remove the methods `getWorkflowScreenshotStatus`, and `setWorkflowScreenshotStatus` from the class `SettingsFacade` (Issue #1135).
 
 ## [4.3.0] - 08 Jan, 2025
 
