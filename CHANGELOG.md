@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed the "Single variable mode" from the text in the expression builder (Issue #1118).
 - Automatically select post-related settings and defaults in workflow steps that interact with posts (Issue #969).
 - Removed the screenshot feature from the workflow editor (Issue #1135).
+- Changed the label and description of some workflow steps for making it more intuitive (Issue #1101).
 
 ### Fixed
 
