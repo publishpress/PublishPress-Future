@@ -243,7 +243,17 @@ export function NodeValidator({})
                                     );
                                 }
                             } else {
-                                if (! settingValue || settingValue === '') {
+                                const isEmpty = (value) => {
+                                    return value === ''
+                                        || value === null
+                                        || value === undefined
+                                        || (Array.isArray(value) && value.length === 0)
+                                        // If the default value is an object with a rule, that is the default value
+                                        // and it was not set by the user yet.
+                                        || (typeof value === 'object' && value.rule);
+                                };
+
+                                if (isEmpty(settingValue)) {
                                     addNodeError(
                                         node.id,
                                         `${fieldName}-required`,
@@ -253,19 +263,6 @@ export function NodeValidator({})
                                         )
                                     );
                                     break;
-                                }
-
-                                // If the default value is an object with a rule, that is the default value
-                                // and it was not set by the user yet.
-                                if (typeof settingValue === 'object' && settingValue.rule) {
-                                    addNodeError(
-                                        node.id,
-                                        `${fieldName}-required`,
-                                        sprintf(
-                                            __('The field %s is required.', 'post-expirator'),
-                                            fieldLabel
-                                        )
-                                    );
                                 }
                             }
                             break;
