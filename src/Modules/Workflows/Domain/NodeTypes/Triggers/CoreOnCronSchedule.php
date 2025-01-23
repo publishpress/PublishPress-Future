@@ -34,7 +34,7 @@ class CoreOnCronSchedule implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("his trigger allows you to run a workflow at a specific time, or relative to another date. You can also use this trigger to repeat workflows.", "post-expirator");
+        return __("This trigger allows you to run a workflow at a specific time, or relative to another date. You can also use this trigger to repeat workflows.", "post-expirator");
     }
 
     public function getIcon(): string
