@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-09T15:08:10+00:00\n"
-"PO-Revision-Date: 2024-12-10 12:42+0100\n"
+"POT-Creation-Date: 2025-01-22T19:49:56+00:00\n"
+"PO-Revision-Date: 2025-01-22 22:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.4\n"
 
-#: components/backup-panel.jsx:13 components/tabs-content/export.jsx:205
+#: components/backup-panel.jsx:13 components/tabs-content/export.jsx:185
 msgid "Export"
 msgstr "Esporta"
 
@@ -28,43 +28,43 @@ msgstr "Seleziona tutto"
 msgid "Unselect all"
 msgstr "Deseleziona tutto"
 
-#: components/tabs-content/export.jsx:25
+#: components/tabs-content/export.jsx:22
 msgid "Post Types"
 msgstr "Tipi di contenuto"
 
-#: components/tabs-content/export.jsx:29
+#: components/tabs-content/export.jsx:26
 msgid "General"
 msgstr "Generale"
 
-#: components/tabs-content/export.jsx:33
+#: components/tabs-content/export.jsx:30
 msgid "Notifications"
 msgstr "Notifiche"
 
-#: components/tabs-content/export.jsx:37
+#: components/tabs-content/export.jsx:34
 msgid "Display"
 msgstr "Visualizza"
 
-#: components/tabs-content/export.jsx:41
+#: components/tabs-content/export.jsx:38
 msgid "Advanced"
 msgstr "Avanzate"
 
-#: components/tabs-content/export.jsx:104
+#: components/tabs-content/export.jsx:100
 msgid "Settings exported successfully."
 msgstr "Impostazioni esportate correttamente."
 
-#: components/tabs-content/export.jsx:110
+#: components/tabs-content/export.jsx:106
 msgid "Download"
 msgstr "Scarica"
 
-#: components/tabs-content/export.jsx:127
+#: components/tabs-content/export.jsx:123
 msgid "Failed to export settings."
 msgstr "Impossibile esportare le impostazioni."
 
-#: components/tabs-content/export.jsx:160
+#: components/tabs-content/export.jsx:156
 msgid "Export Settings"
 msgstr "Esporta le impostazioni"
 
-#: components/tabs-content/export.jsx:161
+#: components/tabs-content/export.jsx:157
 msgid ""
 "Export the plugin settings and workflows to a .json file. This file can be "
 "imported later to restore the data or migrate to another site."
@@ -73,23 +73,19 @@ msgstr ""
 "Questo file potrà essere importato in seguito per ripristinare i dati o "
 "migrarli in un altro sito."
 
-#: components/tabs-content/export.jsx:166
+#: components/tabs-content/export.jsx:162
 msgid "Action Workflows"
 msgstr "Flussi di lavoro di azione"
 
-#: components/tabs-content/export.jsx:177
-msgid "Include screenshots"
-msgstr "Includi gli screenshot"
-
-#: components/tabs-content/export.jsx:190
+#: components/tabs-content/export.jsx:170
 msgid "Action Settings"
 msgstr "Impostazioni delle azioni"
 
-#: components/tabs-content/export.jsx:205
+#: components/tabs-content/export.jsx:185
 msgid "Exporting..."
 msgstr "Esportazione in corso…"
 
-#: components/tabs-content/export.jsx:209
+#: components/tabs-content/export.jsx:189
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -133,3 +129,6 @@ msgstr "File selezionato"
 #: components/tabs-content/import.jsx:139
 msgid "File size"
 msgstr "Dimensione file"
+
+#~ msgid "Include screenshots"
+#~ msgstr "Includi gli screenshot"

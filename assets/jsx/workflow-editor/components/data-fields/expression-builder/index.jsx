@@ -120,10 +120,6 @@ export const ExpressionBuilder = ({
             <Heading level={3} className="expression-builder-small-heading">{label}</Heading>
         )}
 
-        {description && (
-            <p className="description">{description}</p>
-        )}
-
         <AceEditor
             ref={editorSmallRef}
             mode="handlebars"
@@ -148,6 +144,10 @@ export const ExpressionBuilder = ({
             width="100%"
             placeholder={placeholder}
         />
+
+        {description && (
+            <p className="description">{description}</p>
+        )}
 
         {isOpen && (
             <Modal

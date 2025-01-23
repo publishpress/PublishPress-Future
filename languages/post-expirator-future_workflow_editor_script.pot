@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-22T19:49:55+00:00\n"
+"POT-Creation-Date: 2025-01-23T19:51:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -41,11 +41,11 @@ msgid "Add Rule"
 msgstr ""
 
 #: components/data-fields/date-offset.jsx:23
-msgid "Skip task if already exists"
+msgid "Skip if duplicate exists"
 msgstr ""
 
 #: components/data-fields/date-offset.jsx:24
-msgid "Create new task"
+msgid "Create additional task"
 msgstr ""
 
 #: components/data-fields/date-offset.jsx:25
@@ -77,7 +77,7 @@ msgid "When the step is activated"
 msgstr ""
 
 #: components/data-fields/date-offset.jsx:38
-#: components/data-fields/date-offset.jsx:197
+#: components/data-fields/date-offset.jsx:227
 msgid "Custom date source"
 msgstr ""
 
@@ -85,63 +85,67 @@ msgstr ""
 msgid "When to run"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:181
-msgid "Date source"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:205
-msgid "Click the button to choose a custom date source from variables that can provide a date."
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:215
-msgid "Offset"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:222
-msgid "Date Preview"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:223
-msgid "Current Date"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:224
-msgid "Computed Date"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:233
-msgid "Error: "
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:238
-msgid "Click for more information"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:246
-msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:268
-msgid "Repeating Action"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:280
+#: components/data-fields/date-offset.jsx:182
 msgid "Duplicate handling"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:294
-msgid "Unique ID Expression"
+#: components/data-fields/date-offset.jsx:186
+msgid "Define how to handle tasks that share the same identifier. This helps prevent duplicate actions, like sending the same notification twice. The identifier is customizable below."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:300
-msgid "Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}}, {{global.user.ID}} or {{global.execution_id}} to make sure the ID is unique."
+#: components/data-fields/date-offset.jsx:193
+msgid "Task Identifier Expression"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:309
+#: components/data-fields/date-offset.jsx:199
+msgid "Define an identifier to detect duplicate tasks. Use variables like {{onSavePost1.post.ID}} or {{global.execution_id}} to create unique IDs."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:211
+msgid "Date source"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:235
+msgid "Click the button to choose a custom date source from variables that can provide a date."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:245
+msgid "Offset"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:252
+msgid "Date Preview"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:253
+msgid "Current Date"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:254
+msgid "Computed Date"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:263
+msgid "Error: "
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:268
+msgid "Click for more information"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:276
+msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:298
+msgid "Repeating Action"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:310
 msgid "Priority"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:312
+#: components/data-fields/date-offset.jsx:313
 msgid "Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first."
 msgstr ""
 
@@ -685,24 +689,23 @@ msgid "This step requires a connection to a following step."
 msgstr ""
 
 #: components/node-validator/index.jsx:240
-#: components/node-validator/index.jsx:251
-#: components/node-validator/index.jsx:265
+#: components/node-validator/index.jsx:261
 msgid "The field %s is required."
 msgstr ""
 
-#: components/node-validator/index.jsx:286
+#: components/node-validator/index.jsx:283
 msgid "The field %s must be a valid email address."
 msgstr ""
 
-#: components/node-validator/index.jsx:302
+#: components/node-validator/index.jsx:299
 msgid "The field %s must be a valid email address list separated by commas."
 msgstr ""
 
-#: components/node-validator/index.jsx:316
+#: components/node-validator/index.jsx:313
 msgid "The field %s must be an integer."
 msgstr ""
 
-#: components/node-validator/index.jsx:331
+#: components/node-validator/index.jsx:328
 msgid "The field %s must be an integer list separated by commas."
 msgstr ""
 

@@ -84,13 +84,12 @@
 
 .expression-builder {
     position: relative;
-    padding-top: 20px;
     width: 100%;
 }
 
 .expression-builder .expression-builder-button {
     position: absolute;
-    top: 12px;
+    top: 0;
     right: 0;
     height: 24px;
     padding-top: 4px;
@@ -147,6 +146,10 @@
 
 #expression-builder-full .ace_content {
     top: 0 !important;
+}
+
+.expression-builder .description {
+    margin-top: 10px !important;
 }
 
 .expression-builder-modal .description:last-of-type {

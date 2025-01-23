@@ -20,8 +20,8 @@ import ProFeatureField from "../pro-feature-field";
 import ExpressionBuilder from "./expression-builder";
 
 const duplicateHandlingOptions = [
-    { name: __("Skip task if already exists", "post-expirator"), id: "skip" },
-    { name: __("Create new task", "post-expirator"), id: "create-new" },
+    { name: __("Skip if duplicate exists", "post-expirator"), id: "skip" },
+    { name: __("Create additional task", "post-expirator"), id: "create-new" },
     { name: __("Replace existing task", "post-expirator"), id: "replace" },
 ];
 
@@ -175,6 +175,36 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                     onChange={(value) => onChangeSetting({ settingName: "whenToRun", value })}
                 />
 
+                {! hidePreventDuplicateScheduling && (
+                    <>
+                        <PanelRow>
+                            <TreeSelect
+                                label={__("Duplicate handling", "post-expirator")}
+                                tree={duplicateHandlingOptions}
+                                selectedId={defaultValue.duplicateHandling || 'skip'}
+                                onChange={(value) => onChangeSetting({ settingName: "duplicateHandling", value })}
+                                help={__("Define how to handle tasks that share the same identifier. This helps prevent duplicate actions, like sending the same notification twice. The identifier is customizable below.", "post-expirator")}
+                            />
+                        </PanelRow>
+
+                        <PanelRow>
+                            <ExpressionBuilder
+                                name="uniqueIdExpression"
+                                label={__("Task Identifier Expression", "post-expirator")}
+                                defaultValue={defaultValue.uniqueIdExpression ?? ''}
+                                onChange={(settingName, value) => {
+                                    onChangeSetting({ settingName: 'uniqueIdExpression', value: value });
+                                }}
+                                variables={allVariables}
+                                description={__("Define an identifier to detect duplicate tasks. Use variables like {{onSavePost1.post.ID}} or {{global.execution_id}} to create unique IDs.", "post-expirator")}
+                                oneLinePreview={true}
+                                wrapOnPreview={false}
+                                wrapOnEditor={false}
+                            />
+                        </PanelRow>
+                    </>
+                )}
+
                 {(defaultValue.whenToRun === 'date' || defaultValue.whenToRun === 'offset') && (
                     <>
                         <VariablesTreeSelect
@@ -274,37 +304,8 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                     defaultValue,
                 }} />
 
-                {! hidePreventDuplicateScheduling && (
-                    <PanelRow>
-                        <TreeSelect
-                            label={__("Duplicate handling", "post-expirator")}
-                            tree={duplicateHandlingOptions}
-                            selectedId={defaultValue.duplicateHandling || 'skip'}
-                            onChange={(value) => onChangeSetting({ settingName: "duplicateHandling", value })}
-                        />
-                    </PanelRow>
-                )}
-
                 {isAdvancedSettingsEnabled && (
                     <>
-                        {!hidePreventDuplicateScheduling && (
-                            <PanelRow>
-                                <ExpressionBuilder
-                                    name="uniqueIdExpression"
-                                    label={__("Unique ID Expression", "post-expirator")}
-                                    defaultValue={defaultValue.uniqueIdExpression ?? ''}
-                                    onChange={(settingName, value) => {
-                                        onChangeSetting({ settingName: 'uniqueIdExpression', value: value });
-                                    }}
-                                    variables={allVariables}
-                                    description={__("Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}}, {{global.user.ID}} or {{global.execution_id}} to make sure the ID is unique.", "post-expirator")}
-                                    oneLinePreview={true}
-                                    wrapOnPreview={false}
-                                    wrapOnEditor={false}
-                                />
-                            </PanelRow>
-                        )}
-
                         <TextControl
                             label={__("Priority", "post-expirator")}
                             value={defaultValue.priority || 10}

@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 4.3.0\n"
+"Project-Id-Version: PublishPress Future 4.3.1-beta.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-22T19:49:51+00:00\n"
+"POT-Creation-Date: 2025-01-23T19:51:18+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -1293,68 +1293,28 @@ msgid "This step transitions a post to a different status."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:121
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:72
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:116
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:126
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:106
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:135
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:128
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:128
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:114
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:123
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:130
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:126
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:114
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:145
-#: src/Modules/Workflows/Models/NodeTypesModel.php:79
-msgid "Post"
+msgid "Target Post"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:65
-msgid "The post to update."
+msgid "Select which post will be moved to a different status."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:70
+msgid "Post to Change Status"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:73
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:71
-msgid "Select the variable that contains the post to update. It can be a post instance or the post ID."
+msgid "Choose the post that will be moved to a different status."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:86
@@ -1362,16 +1322,33 @@ msgstr ""
 msgid "The new status that the post will be moved to."
 msgstr ""
 
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:121
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:117
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:127
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:106
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:135
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:128
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:128
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:114
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:123
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:127
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:123
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:114
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:145
+#: src/Modules/Workflows/Models/NodeTypesModel.php:79
+msgid "Post"
+msgstr ""
+
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:135
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:140
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:141
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:120
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:149
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:142
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:142
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:128
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:137
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:144
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:140
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:141
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:137
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:128
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:162
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:113
@@ -1383,15 +1360,15 @@ msgid "Step input"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:136
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:141
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:142
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:121
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:150
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:143
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:143
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:129
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:138
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:145
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:141
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:142
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:138
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:129
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:163
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:114
@@ -1403,15 +1380,15 @@ msgid "The input data for this step."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:159
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:164
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:165
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:144
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:179
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:172
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:172
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:152
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:161
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:168
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:164
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:165
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:161
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:152
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:186
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:166
@@ -1440,13 +1417,28 @@ msgstr ""
 msgid "This step enables you to deactivate the \"Manually enabled via checkbox\" workflow after use."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:90
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:121
-msgid "Workflow"
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:68
+msgid "Select which post will have its workflow deactivated."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:73
+msgid "Post to Deactivate Workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:74
+msgid "Choose the post that will have its workflow deactivated."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:91
-msgid "Select the manually enabling workflow that will be deactivated for the selected post."
+msgid "Workflow to Deactivate"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:92
+msgid "Choose the manually enabling workflow that will be deactivated for the selected post."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:122
+msgid "Workflow"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:32
@@ -1457,12 +1449,36 @@ msgstr ""
 msgid "This step deletes a post."
 msgstr ""
 
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:65
+msgid "Select which post will be deleted."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:70
+msgid "Post to Delete"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:71
+msgid "Choose the post that will be deleted."
+msgstr ""
+
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:32
 msgid "Add post meta"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:37
 msgid "This step adds post meta to a post."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:65
+msgid "Select which post will have post meta added."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:70
+msgid "Post to Add Meta"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:71
+msgid "Choose the post that will have its meta added."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:85
@@ -1524,6 +1540,18 @@ msgstr ""
 msgid "This step deletes post meta from a post."
 msgstr ""
 
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:65
+msgid "Select which post will have post meta deleted."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:70
+msgid "Post to Delete Meta"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:71
+msgid "Choose the post that will have its meta deleted."
+msgstr ""
+
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:86
 msgid "The meta to delete from the post."
 msgstr ""
@@ -1542,6 +1570,18 @@ msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:37
 msgid "This step updates post meta for a post."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:65
+msgid "Select which post will have post meta updated."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:70
+msgid "Post to Update Meta"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:71
+msgid "Choose the post that will have its meta updated."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:86
@@ -1568,6 +1608,18 @@ msgstr ""
 msgid "This step sticks a post."
 msgstr ""
 
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:65
+msgid "Select which post will be marked as sticky."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:70
+msgid "Post to Stick"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:71
+msgid "Choose the post that will be marked as sticky. You can select a post variable or enter a post ID."
+msgstr ""
+
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:98
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:98
 msgid "Please include a \"Schedule\" step earlier in this branch of the workflow."
@@ -1581,22 +1633,34 @@ msgstr ""
 msgid "This step keeps the current taxonomy terms and adds additional terms."
 msgstr ""
 
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:65
+msgid "Select which post will have terms added."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:70
+msgid "Post to Add Terms"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:71
+msgid "Choose the post that will have its terms added."
+msgstr ""
+
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:85
 msgid "Extra terms"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:86
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:92
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:95
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:92
 msgid "The terms that will be added to the posts."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:91
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:118
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:91
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:125
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:94
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:121
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:88
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:122
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:91
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:118
 msgid "Terms"
 msgstr ""
 
@@ -1608,16 +1672,28 @@ msgstr ""
 msgid "This step removes current taxonomy terms."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:85
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:65
+msgid "Select which post will have terms removed."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:70
+msgid "Post to Remove Terms"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:71
+msgid "Choose the post that will have its terms removed."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:82
 msgid "Terms to remove"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:86
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:92
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:83
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:89
 msgid "The terms that will be removed from the posts."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:98
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:95
 msgid "Remove all terms"
 msgstr ""
 
@@ -1629,11 +1705,23 @@ msgstr ""
 msgid "This step removes the current taxonomy terms and adds new terms."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:85
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:65
+msgid "Select which post will have terms replaced."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:70
+msgid "Post to Replace Terms"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:71
+msgid "Choose the post that will have its terms replaced."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:82
 msgid "New terms"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:86
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:83
 msgid "The terms that will be added to the posts after removing all the others."
 msgstr ""
 
@@ -1643,6 +1731,18 @@ msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:37
 msgid "This step unsticks a post."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:65
+msgid "Select which post will no longer be marked as sticky."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:70
+msgid "Post to Unstick"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:71
+msgid "Choose the post that will be unmarked as sticky. You can select a post variable or enter a post ID."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:17
@@ -1884,7 +1984,7 @@ msgid "On schedule"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:37
-msgid "his trigger allows you to run a workflow at a specific time, or relative to another date. You can also use this trigger to repeat workflows."
+msgid "This trigger allows you to run a workflow at a specific time, or relative to another date. You can also use this trigger to repeat workflows."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:65
