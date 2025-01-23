@@ -61,15 +61,15 @@ class CorePostDelete implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Post", "post-expirator"),
-                "description" => __("The post to update.", "post-expirator"),
+                "label" => __("Target Post", "post-expirator"),
+                "description" => __("Select which post will be deleted.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "post",
                         "type" => "postInput",
-                        "label" => __("Post", "post-expirator"),
+                        "label" => __("Post to Delete", "post-expirator"),
                         "description" => __(
-                            "Select the variable that contains the post to update. It can be a post instance or the post ID.", // phpcs:ignore Generic.Files.LineLength.TooLong
+                            "Choose the post that will be deleted.",
                             "post-expirator"
                         ),
                         "default" => [

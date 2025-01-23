@@ -61,15 +61,15 @@ class CorePostStick implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Post", "post-expirator"),
-                "description" => __("The post to update.", "post-expirator"),
+                "label" => __("Target Post", "post-expirator"),
+                "description" => __("Select which post will be marked as sticky.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "post",
                         "type" => "postInput",
-                        "label" => __("Post", "post-expirator"),
+                        "label" => __("Post to Stick", "post-expirator"),
                         "description" => __(
-                            "Select the variable that contains the post to update. It can be a post instance or the post ID.", // phpcs:ignore Generic.Files.LineLength.TooLong
+                            "Choose the post that will be marked as sticky. You can select a post variable or enter a post ID.", // phpcs:ignore Generic.Files.LineLength.TooLong
                             "post-expirator"
                         ),
                         "default" => [

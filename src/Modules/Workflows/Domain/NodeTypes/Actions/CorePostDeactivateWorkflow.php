@@ -65,13 +65,14 @@ class CorePostDeactivateWorkflow implements NodeTypeInterface
         return [
             [
                 "label" => __("Settings", "post-expirator"),
+                "description" => __("Select which post will have its workflow deactivated.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "post",
                         "type" => "postInput",
-                        "label" => __("Post", "post-expirator"),
+                        "label" => __("Post to Deactivate Workflow", "post-expirator"),
                         "description" => __(
-                            "Select the variable that contains the post to update. It can be a post instance or the post ID.", // phpcs:ignore Generic.Files.LineLength.TooLong
+                            "Choose the post that will have its workflow deactivated.",
                             "post-expirator"
                         ),
                         "default" => [
@@ -87,9 +88,9 @@ class CorePostDeactivateWorkflow implements NodeTypeInterface
                         "default" => [
                             "variable" => "global.workflow",
                         ],
-                        "label" => __("Workflow", "post-expirator"),
+                        "label" => __("Workflow to Deactivate", "post-expirator"),
                         "description" => __(
-                            "Select the manually enabling workflow that will be deactivated for the selected post.", // phpcs:ignore Generic.Files.LineLength.TooLong
+                            "Choose the manually enabling workflow that will be deactivated for the selected post.", // phpcs:ignore Generic.Files.LineLength.TooLong
                             "post-expirator"
                         ),
                     ],
