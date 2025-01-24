@@ -9,7 +9,7 @@ import { __ } from "@wordpress/i18n";
 import { useState, useRef, useCallback, useEffect } from "@wordpress/element";
 import NodeIcon from "../../node-icon";
 import ColumnsContainer from "./columns-container";
-
+import { DescriptionText } from "../description-text";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-handlebars";
 import "ace-builds/src-noconflict/theme-textmate";
@@ -32,6 +32,7 @@ export const ExpressionBuilder = ({
     wrapOnPreview = false,
     wrapOnEditor = false,
     oneLinePreview = false,
+    helpUrl = '',
 }) => {
     const editorFullRef = useRef(null);
     const editorSmallRef = useRef(null);
@@ -146,7 +147,7 @@ export const ExpressionBuilder = ({
         />
 
         {description && (
-            <p className="description">{description}</p>
+            <DescriptionText text={description} helpUrl={helpUrl} />
         )}
 
         {isOpen && (

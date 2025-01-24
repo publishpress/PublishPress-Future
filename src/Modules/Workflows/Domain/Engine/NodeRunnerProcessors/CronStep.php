@@ -66,6 +66,8 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
     public const DUPLICATE_HANDLING_CREATE_NEW = 'create-new';
     public const DUPLICATE_HANDLING_REPLACE = 'replace';
 
+    public const DUPLICATE_HANDLING_DEFAULT = self::DUPLICATE_HANDLING_REPLACE;
+
     /**
      * @var HooksFacade
      */
@@ -154,7 +156,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
             $recurrence = $nodeSettings['schedule']['recurrence'] ?? self::SCHEDULE_RECURRENCE_SINGLE;
             $whenToRun = $nodeSettings['schedule']['whenToRun'] ?? self::WHEN_TO_RUN_NOW;
-            $duplicateHandling = $nodeSettings['schedule']['duplicateHandling'] ?? 'skip';
+            $duplicateHandling = $nodeSettings['schedule']['duplicateHandling'] ?? self::DUPLICATE_HANDLING_DEFAULT;
 
             // Schedule
             if (self::SCHEDULE_RECURRENCE_SINGLE === $recurrence && self::WHEN_TO_RUN_NOW === $whenToRun) {

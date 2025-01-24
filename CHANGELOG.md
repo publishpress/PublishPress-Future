@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Automatically select post-related settings and defaults in workflow steps that interact with posts (Issue #969).
 - Removed the screenshot feature from the workflow editor (Issue #1135).
 - Changed the label and description of some workflow steps for making it more intuitive (Issue #1101).
+- Changed the default duplicate handling on workflow stepsto "Replace existing task" (Issue #956).
 
 ### Fixed
 

@@ -18,11 +18,12 @@ import { Slot } from "@wordpress/components";
 import Recurrence from "./recurrence";
 import ProFeatureField from "../pro-feature-field";
 import ExpressionBuilder from "./expression-builder";
+import { DescriptionText } from "./description-text";
 
 const duplicateHandlingOptions = [
-    { name: __("Skip if duplicate exists", "post-expirator"), id: "skip" },
-    { name: __("Create additional task", "post-expirator"), id: "create-new" },
     { name: __("Replace existing task", "post-expirator"), id: "replace" },
+    { name: __("Create additional task", "post-expirator"), id: "create-new" },
+    { name: __("Skip if duplicate exists", "post-expirator"), id: "skip" },
 ];
 
 const whenToRunOptions = [
@@ -66,6 +67,8 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
     const defaultRepeatDate = new Date();
     defaultRepeatDate.setDate(defaultRepeatDate.getDate() + 7);
+
+    const defaultDuplicateHandling = 'replace';
 
     const variablesTree = variables.map((variable) => {
         const mapChildren = (children) => {
@@ -168,12 +171,116 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
     return (
         <>
             <VStack>
-                <TreeSelect
-                    label={__("When to run", "post-expirator")}
-                    tree={whenToRunOptions}
-                    selectedId={defaultValue.whenToRun}
-                    onChange={(value) => onChangeSetting({ settingName: "whenToRun", value })}
-                />
+                <PanelRow>
+                    <TreeSelect
+                        label={__("When to run", "post-expirator")}
+                        tree={whenToRunOptions}
+                        selectedId={defaultValue.whenToRun}
+                        onChange={(value) => onChangeSetting({ settingName: "whenToRun", value })}
+                    />
+                </PanelRow>
+
+                {(defaultValue.whenToRun === 'date' || defaultValue.whenToRun === 'offset') && (
+                    <>
+                        <PanelRow>
+                            <VariablesTreeSelect
+                                label={__("Date source", "post-expirator")}
+                                tree={dateSourceOptions}
+                                selectedId={defaultValue.dateSource}
+                                onChange={(value) => onChangeSetting({ settingName: "dateSource", value })}
+                            />
+                        </PanelRow>
+
+                        {defaultValue.dateSource === 'calendar' && (
+                            <PanelRow>
+                                <DatePicker
+                                    currentDate={defaultValue.specificDate}
+                                    onChange={(value) => onChangeSetting({ settingName: "specificDate", value })}
+                                />
+                            </PanelRow>
+                        )}
+
+                        {defaultValue.dateSource === 'custom' && (
+                            <PanelRow>
+                                <ExpressionBuilder
+                                    name="customDateSource"
+                                    label={__("Custom date source", "post-expirator")}
+                                    defaultValue={defaultValue.customDateSource}
+                                    onChange={(settingName, value) => {
+                                        onChangeSetting({ settingName: 'customDateSource', value });
+                                    }}
+                                    variables={allVariables}
+                                    singleVariableOnly={true}
+                                    readOnlyPreview={true}
+                                    description={__("Click the button to choose a custom date source from variables that can provide a date.", "post-expirator")}
+                                    wrapOnPreview={false}
+                                    wrapOnEditor={false}
+                                    oneLinePreview={true}
+                                />
+                            </PanelRow>
+                        )}
+
+                        {defaultValue.whenToRun === 'offset' && (
+                            <>
+                                <PanelRow>
+                                    <TextControl
+                                        label={__("Offset", "post-expirator")}
+                                        value={defaultValue.dateOffset}
+                                        onChange={(value) => onChangeSetting({ settingName: "dateOffset", value })}
+                                    />
+                                </PanelRow>
+
+                                <PanelRow>
+                                    <DateOffsetPreview
+                                        offset={defaultValue.dateOffset}
+                                        label={__("Date Preview", "post-expirator")}
+                                        labelDatePreview={__("Current Date", "post-expirator")}
+                                        labelOffsetPreview={__("Computed Date", "post-expirator")}
+                                        setValidationErrorCallback={onHasValidationError}
+                                        setHasPendingValidationCallback={onValidationStarted}
+                                        setHasValidDataCallback={onValidationFinished}
+                                        compactView={true}
+                                    />
+                                </PanelRow>
+
+                                {! isPreviewValid && (
+                                    <PanelRow>
+                                        <div className="publishpress-future-notice publishpress-future-notice-error">
+                                            {__("Error: ", "post-expirator")} {previewMessage}
+                                        </div>
+                                    </PanelRow>
+                                )}
+
+                                <PanelRow>
+                                    <Button variant="link" onClick={toggleHelp}>
+                                        {__("Click for more information", "post-expirator")}
+                                        {isHelpVisible && (
+                                            <Popover>
+                                                <div className="settings-field-help-popover">
+                                                    <Button variant="tertiary" icon={'no-alt'} />
+
+                                                    <div dangerouslySetInnerHTML={{
+                                                        __html: sprintf(
+                                                            __("For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English.", "post-expirator"),
+                                                            "<a href='https://www.php.net/manual/en/function.strtotime.php' target='_blank'>",
+                                                            "</a>",
+                                                            "<code>",
+                                                            "</code>",
+                                                            "<code>",
+                                                            "</code>",
+                                                            "<code>",
+                                                            "</code>",
+                                                        )
+                                                    }} />
+                                                </div>
+                                            </Popover>
+                                        )}
+                                    </Button>
+                                </PanelRow>
+                            </>
+                        )}
+                    </>
+                )}
 
                 {! hidePreventDuplicateScheduling && (
                     <>
@@ -181,7 +288,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                             <TreeSelect
                                 label={__("Duplicate handling", "post-expirator")}
                                 tree={duplicateHandlingOptions}
-                                selectedId={defaultValue.duplicateHandling || 'skip'}
+                                selectedId={defaultValue.duplicateHandling || defaultDuplicateHandling}
                                 onChange={(value) => onChangeSetting({ settingName: "duplicateHandling", value })}
                                 help={__("Define how to handle tasks that share the same identifier. This helps prevent duplicate actions, like sending the same notification twice. The identifier is customizable below.", "post-expirator")}
                             />
@@ -196,107 +303,22 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                                     onChangeSetting({ settingName: 'uniqueIdExpression', value: value });
                                 }}
                                 variables={allVariables}
-                                description={__("Define an identifier to detect duplicate tasks. Use variables like {{onSavePost1.post.ID}} or {{global.execution_id}} to create unique IDs.", "post-expirator")}
+                                description={__("Define an identifier to detect duplicate tasks creating a unique ID.", "post-expirator")}
                                 oneLinePreview={true}
                                 wrapOnPreview={false}
                                 wrapOnEditor={false}
+                                helpUrl="https://publishpress.com/docs/schedule-delay/#preventing-duplicate-scheduled-tasks-task-identification-guide"
                             />
                         </PanelRow>
                     </>
                 )}
 
-                {(defaultValue.whenToRun === 'date' || defaultValue.whenToRun === 'offset') && (
-                    <>
-                        <VariablesTreeSelect
-                            label={__("Date source", "post-expirator")}
-                            tree={dateSourceOptions}
-                            selectedId={defaultValue.dateSource}
-                            onChange={(value) => onChangeSetting({ settingName: "dateSource", value })}
-                        />
-
-                        {defaultValue.dateSource === 'calendar' && (
-                            <DatePicker
-                                currentDate={defaultValue.specificDate}
-                                onChange={(value) => onChangeSetting({ settingName: "specificDate", value })}
-                            />
-                        )}
-
-                        {defaultValue.dateSource === 'custom' && (
-                            <ExpressionBuilder
-                                name="customDateSource"
-                                label={__("Custom date source", "post-expirator")}
-                                defaultValue={defaultValue.customDateSource}
-                                onChange={(settingName, value) => {
-                                    onChangeSetting({ settingName: 'customDateSource', value });
-                                }}
-                                variables={allVariables}
-                                singleVariableOnly={true}
-                                readOnlyPreview={true}
-                                description={__("Click the button to choose a custom date source from variables that can provide a date.", "post-expirator")}
-                                wrapOnPreview={false}
-                                wrapOnEditor={false}
-                                oneLinePreview={true}
-                            />
-                        )}
-
-                        {defaultValue.whenToRun === 'offset' && (
-                            <>
-                                <TextControl
-                                    label={__("Offset", "post-expirator")}
-                                    value={defaultValue.dateOffset}
-                                    onChange={(value) => onChangeSetting({ settingName: "dateOffset", value })}
-                                />
-
-                                <DateOffsetPreview
-                                    offset={defaultValue.dateOffset}
-                                    label={__("Date Preview", "post-expirator")}
-                                    labelDatePreview={__("Current Date", "post-expirator")}
-                                    labelOffsetPreview={__("Computed Date", "post-expirator")}
-                                    setValidationErrorCallback={onHasValidationError}
-                                    setHasPendingValidationCallback={onValidationStarted}
-                                    setHasValidDataCallback={onValidationFinished}
-                                    compactView={true}
-                                />
-
-                                {! isPreviewValid && (
-                                    <div className="publishpress-future-notice publishpress-future-notice-error">
-                                        {__("Error: ", "post-expirator")} {previewMessage}
-                                    </div>
-                                )}
-
-                                <Button variant="link" onClick={toggleHelp}>
-                                    {__("Click for more information", "post-expirator")}
-                                    {isHelpVisible && (
-                                        <Popover>
-                                            <div className="settings-field-help-popover">
-                                                <Button variant="tertiary" icon={'no-alt'} />
-
-                                                <div dangerouslySetInnerHTML={{
-                                                    __html: sprintf(
-                                                        __("For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English.", "post-expirator"),
-                                                        "<a href='https://www.php.net/manual/en/function.strtotime.php' target='_blank'>",
-                                                        "</a>",
-                                                        "<code>",
-                                                        "</code>",
-                                                        "<code>",
-                                                        "</code>",
-                                                        "<code>",
-                                                        "</code>",
-                                                    )
-                                                }} />
-                                            </div>
-                                        </Popover>
-                                    )}
-                                </Button>
-                            </>
-                        )}
-                    </>
-                )}
-
                 {! isPro && (
-                    <ProFeatureField link="https://publishpress.com/links/future-workflow-inspector">
-                        <Recurrence label={__("Repeating Action", "post-expirator")} disabled={true} />
-                    </ProFeatureField>
+                    <PanelRow>
+                        <ProFeatureField link="https://publishpress.com/links/future-workflow-inspector">
+                            <Recurrence label={__("Repeating Action", "post-expirator")} disabled={true} />
+                        </ProFeatureField>
+                    </PanelRow>
                 )}
 
                 <Slot name="DateOffsetAfterDateSourceField" fillProps={{
@@ -305,14 +327,14 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                 }} />
 
                 {isAdvancedSettingsEnabled && (
-                    <>
+                    <PanelRow>
                         <TextControl
                             label={__("Priority", "post-expirator")}
                             value={defaultValue.priority || 10}
                             onChange={(value) => onChangeSetting({ settingName: "priority", value })}
                             help={__("Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first.", "post-expirator")} // phpcs:ignore Generic.Files.LineLength.TooLong
                         />
-                    </>
+                    </PanelRow>
                 )}
             </VStack>
         </>
