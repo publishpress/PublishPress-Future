@@ -62,7 +62,6 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
     public const UNSCHEDULE_FUTURE_ACTION_DELAY = 5;
 
-    public const DUPLICATE_HANDLING_SKIP = 'skip';
     public const DUPLICATE_HANDLING_CREATE_NEW = 'create-new';
     public const DUPLICATE_HANDLING_REPLACE = 'replace';
 
@@ -223,18 +222,6 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             }
 
             switch ($duplicateHandling) {
-                case self::DUPLICATE_HANDLING_SKIP:
-                    if ($scheduledActionsModel->hasRowWithActionUIDHash($actionUIDHash)) {
-                        // It should be unique, so if the action is already scheduled we should not schedule it.
-                        $this->addDebugLogMessage(
-                            'Step %s is already scheduled based on its ID, skipping',
-                            $stepSlug
-                        );
-
-                        return;
-                    }
-                    break;
-
                 case self::DUPLICATE_HANDLING_CREATE_NEW:
                     // If the action is already scheduled, we should create a new one.
                     $this->addDebugLogMessage(

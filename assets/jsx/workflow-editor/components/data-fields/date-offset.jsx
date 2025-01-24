@@ -7,6 +7,7 @@ import {
     Popover,
     Button,
     __experimentalVStack as VStack,
+    ToggleControl,
 } from "@wordpress/components";
 import { VariablesTreeSelect } from "../variables-tree-select";
 import { useState, useMemo } from "@wordpress/element";
@@ -19,12 +20,6 @@ import Recurrence from "./recurrence";
 import ProFeatureField from "../pro-feature-field";
 import ExpressionBuilder from "./expression-builder";
 import { DescriptionText } from "./description-text";
-
-const duplicateHandlingOptions = [
-    { name: __("Replace existing task", "post-expirator"), id: "replace" },
-    { name: __("Create additional task", "post-expirator"), id: "create-new" },
-    { name: __("Skip if duplicate exists", "post-expirator"), id: "skip" },
-];
 
 const whenToRunOptions = [
     { name: __("As soon as possible", "post-expirator"), id: "now" },
@@ -168,6 +163,11 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
     const isPro = futureWorkflowEditor.isPro || false;
 
+    const preventDuplicate = (defaultValue.duplicateHandling || defaultDuplicateHandling) === 'replace';
+    const preventDuplicateHelp = (preventDuplicate) ?
+        __("Skip or replace duplicate scheduled tasks to prevent multiple instances of the same task", "post-expirator") :
+        __("Allow multiple scheduled tasks to be created, even if they are duplicates", "post-expirator");
+
     return (
         <>
             <VStack>
@@ -282,37 +282,6 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                     </>
                 )}
 
-                {! hidePreventDuplicateScheduling && (
-                    <>
-                        <PanelRow>
-                            <TreeSelect
-                                label={__("Duplicate handling", "post-expirator")}
-                                tree={duplicateHandlingOptions}
-                                selectedId={defaultValue.duplicateHandling || defaultDuplicateHandling}
-                                onChange={(value) => onChangeSetting({ settingName: "duplicateHandling", value })}
-                                help={__("Define how to handle tasks that share the same identifier. This helps prevent duplicate actions, like sending the same notification twice. The identifier is customizable below.", "post-expirator")}
-                            />
-                        </PanelRow>
-
-                        <PanelRow>
-                            <ExpressionBuilder
-                                name="uniqueIdExpression"
-                                label={__("Task Identifier Expression", "post-expirator")}
-                                defaultValue={defaultValue.uniqueIdExpression ?? ''}
-                                onChange={(settingName, value) => {
-                                    onChangeSetting({ settingName: 'uniqueIdExpression', value: value });
-                                }}
-                                variables={allVariables}
-                                description={__("Define an identifier to detect duplicate tasks creating a unique ID.", "post-expirator")}
-                                oneLinePreview={true}
-                                wrapOnPreview={false}
-                                wrapOnEditor={false}
-                                helpUrl="https://publishpress.com/docs/schedule-delay/#preventing-duplicate-scheduled-tasks-task-identification-guide"
-                            />
-                        </PanelRow>
-                    </>
-                )}
-
                 {! isPro && (
                     <PanelRow>
                         <ProFeatureField link="https://publishpress.com/links/future-workflow-inspector">
@@ -327,14 +296,50 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                 }} />
 
                 {isAdvancedSettingsEnabled && (
-                    <PanelRow>
-                        <TextControl
-                            label={__("Priority", "post-expirator")}
-                            value={defaultValue.priority || 10}
-                            onChange={(value) => onChangeSetting({ settingName: "priority", value })}
-                            help={__("Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first.", "post-expirator")} // phpcs:ignore Generic.Files.LineLength.TooLong
-                        />
-                    </PanelRow>
+                    <>
+                        {! hidePreventDuplicateScheduling && (
+                            <>
+                                <PanelRow>
+                                    <ToggleControl
+                                        label={__("Prevent duplicate scheduling", "post-expirator")}
+                                        checked={preventDuplicate}
+                                        onChange={(value) => {
+                                            const newValue = (value) ? 'replace' : 'create-new';
+                                            onChangeSetting({ settingName: "duplicateHandling", value: newValue });
+                                        }}
+                                        help={preventDuplicateHelp}
+                                    />
+                                </PanelRow>
+
+                                <PanelRow>
+                                    <ExpressionBuilder
+                                        name="uniqueIdExpression"
+                                        label={__("Task Identifier Expression", "post-expirator")}
+                                        defaultValue={defaultValue.uniqueIdExpression ?? ''}
+                                        onChange={(settingName, value) => {
+                                            onChangeSetting({ settingName: 'uniqueIdExpression', value: value });
+                                        }}
+                                        variables={allVariables}
+                                        description={__("Define an identifier to detect duplicate tasks creating a unique ID.", "post-expirator")}
+                                        oneLinePreview={true}
+                                        wrapOnPreview={false}
+                                        wrapOnEditor={false}
+                                        helpUrl="https://publishpress.com/docs/schedule-delay/#preventing-duplicate-scheduled-tasks-task-identification-guide"
+                                    />
+                                </PanelRow>
+
+                            </>
+                        )}
+
+                        <PanelRow>
+                            <TextControl
+                                label={__("Priority", "post-expirator")}
+                                value={defaultValue.priority || 10}
+                                onChange={(value) => onChangeSetting({ settingName: "priority", value })}
+                                help={__("Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first.", "post-expirator")} // phpcs:ignore Generic.Files.LineLength.TooLong
+                            />
+                        </PanelRow>
+                    </>
                 )}
             </VStack>
         </>
