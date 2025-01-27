@@ -29,12 +29,12 @@ class DebugLogAppend implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Debug Log - Append", "post-expirator");
+        return __("Append to debug log", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This step transmits the flow's data to the debug log.", "post-expirator");
+        return __("This step appends the flow's data to the debug log.", "post-expirator");
     }
 
     public function getIcon(): string

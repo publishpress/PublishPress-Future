@@ -29,7 +29,7 @@ class SendRay implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Ray - Send", "post-expirator");
+        return __("Send to Ray", "post-expirator");
     }
 
     public function getDescription(): string
