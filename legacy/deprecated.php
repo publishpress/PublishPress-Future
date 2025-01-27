@@ -539,7 +539,7 @@ class_alias(
 
 /** @since 4.3.1 */
 class_alias(
-    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\SendSpatieRayRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\SendRayRunner',
     'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\RayDebug'
 );
 
@@ -643,7 +643,7 @@ class_alias(
 
 /** @since 4.3.1 */
 class_alias(
-    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendSpatieRay',
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendRay',
     'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\RayDebug'
 );
 

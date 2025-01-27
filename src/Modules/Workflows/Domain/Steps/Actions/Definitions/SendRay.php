@@ -5,7 +5,7 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
 
-class SendSpatieRay implements NodeTypeInterface
+class SendRay implements NodeTypeInterface
 {
     public static function getNodeTypeName(): string
     {
@@ -29,7 +29,7 @@ class SendSpatieRay implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Spatie Ray - Send", "post-expirator");
+        return __("Ray - Send", "post-expirator");
     }
 
     public function getDescription(): string
