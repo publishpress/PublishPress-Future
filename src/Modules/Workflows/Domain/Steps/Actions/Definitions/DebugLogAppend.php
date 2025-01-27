@@ -29,7 +29,7 @@ class DebugLogAppend implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Log - Add", "post-expirator");
+        return __("Debug Log - Append", "post-expirator");
     }
 
     public function getDescription(): string

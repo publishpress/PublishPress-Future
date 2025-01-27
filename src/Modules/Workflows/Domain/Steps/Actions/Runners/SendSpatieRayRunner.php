@@ -8,7 +8,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterfac
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 
-class SpatieRaySendRunner implements NodeRunnerInterface
+class SendSpatieRayRunner implements NodeRunnerInterface
 {
     /**
      * @var NodeRunnerProcessorInterface
