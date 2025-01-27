@@ -12,7 +12,7 @@ class ScheduleDelayRunner implements AsyncNodeRunnerInterface
     /**
      * @var AsyncNodeRunnerProcessorInterface
      */
-    private $nodeRunnerProcessor;
+    private $stepProcessor;
 
     /**
      * @var RuntimeVariablesHandlerInterface
@@ -20,10 +20,10 @@ class ScheduleDelayRunner implements AsyncNodeRunnerInterface
     private $variablesHandler;
 
     public function __construct(
-        AsyncNodeRunnerProcessorInterface $nodeRunnerProcessor,
+        AsyncNodeRunnerProcessorInterface $stepProcessor,
         RuntimeVariablesHandlerInterface $variablesHandler
     ) {
-        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->stepProcessor = $stepProcessor;
         $this->variablesHandler = $variablesHandler;
     }
 
@@ -34,10 +34,10 @@ class ScheduleDelayRunner implements AsyncNodeRunnerInterface
 
     public function setup(array $step): void
     {
-        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
+        $this->stepProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step) {
-                $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+                $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
                 $this->variablesHandler->setVariable($nodeSlug, [
                     'schedule_date' => 0,
@@ -51,7 +51,7 @@ class ScheduleDelayRunner implements AsyncNodeRunnerInterface
                     'repeat_until_times' => '',
                 ]);
 
-                $this->nodeRunnerProcessor->setup($step, '__return_true');
+                $this->stepProcessor->setup($step, '__return_true');
             }
         );
     }
@@ -61,6 +61,6 @@ class ScheduleDelayRunner implements AsyncNodeRunnerInterface
      */
     public function actionCallback(array $expandedArgs, array $originalArgs)
     {
-        $this->nodeRunnerProcessor->actionCallback($expandedArgs, $originalArgs);
+        $this->stepProcessor->actionCallback($expandedArgs, $originalArgs);
     }
 }

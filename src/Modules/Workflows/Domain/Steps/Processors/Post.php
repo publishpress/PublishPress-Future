@@ -4,12 +4,12 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Processors;
 
 use Exception;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodePostRelatedRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepPostRelatedProcessorInterface;
 
-class Post implements NodeRunnerProcessorInterface, NodePostRelatedRunnerProcessorInterface
+class Post implements StepProcessorInterface, StepPostRelatedProcessorInterface
 {
     /**
      * @var HooksFacade
@@ -33,7 +33,7 @@ class Post implements NodeRunnerProcessorInterface, NodePostRelatedRunnerProcess
 
     public function __construct(
         HooksFacade $hooks,
-        NodeRunnerProcessorInterface $generalNodeRunnerProcessor,
+        StepProcessorInterface $generalNodeRunnerProcessor,
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger
     ) {

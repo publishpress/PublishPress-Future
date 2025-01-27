@@ -9,12 +9,12 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostRe
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost as NodeType;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodePostRelatedRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepPostRelatedProcessorInterface;
 
-class OnPostWorkflowEnableRunner implements NodeTriggerRunnerInterface
+class OnPostWorkflowEnableRunner implements TriggerRunnerInterface
 {
     use InfiniteLoopPreventer;
 
@@ -26,9 +26,9 @@ class OnPostWorkflowEnableRunner implements NodeTriggerRunnerInterface
     private $hooks;
 
     /**
-     * @var NodePostRelatedRunnerProcessorInterface
+     * @var StepPostRelatedProcessorInterface
      */
-    private $nodeRunnerProcessor;
+    private $stepProcessor;
 
     /**
      * @var array
@@ -62,14 +62,14 @@ class OnPostWorkflowEnableRunner implements NodeTriggerRunnerInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodePostRelatedRunnerProcessorInterface $nodeRunnerProcessor,
+        StepPostRelatedProcessorInterface $stepProcessor,
         InputValidatorsInterface $postQueryValidator,
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger,
         \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
-        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->stepProcessor = $stepProcessor;
         $this->postQueryValidator = $postQueryValidator;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
@@ -91,11 +91,11 @@ class OnPostWorkflowEnableRunner implements NodeTriggerRunnerInterface
 
     public function triggerCallback($postId, $workflowId)
     {
-        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
+        $nodeSlug = $this->stepProcessor->getSlugFromStep($this->step);
 
         if ($this->isInfiniteLoopDetected($this->workflowId, $this->step, $postId)) {
             $this->logger->debug(
-                $this->nodeRunnerProcessor->prepareLogMessage(
+                $this->stepProcessor->prepareLogMessage(
                     'Infinite loop detected for step %s, skipping',
                     $nodeSlug
                 )
@@ -108,7 +108,7 @@ class OnPostWorkflowEnableRunner implements NodeTriggerRunnerInterface
             return;
         }
 
-        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
+        $this->stepProcessor->executeSafelyWithErrorHandling(
             $this->step,
             [$this, 'fireTheTrigger'],
             $postId
@@ -117,7 +117,7 @@ class OnPostWorkflowEnableRunner implements NodeTriggerRunnerInterface
 
     public function fireTheTrigger($step, $postId)
     {
-        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+        $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
         $post = get_post($postId);
 
@@ -139,19 +139,19 @@ class OnPostWorkflowEnableRunner implements NodeTriggerRunnerInterface
             ]
         );
 
-        $this->nodeRunnerProcessor->setPostIdOnTriggerGlobalVariable($postId);
+        $this->stepProcessor->setPostIdOnTriggerGlobalVariable($postId);
 
         ray($this->variablesHandler->getAllVariables());
 
         $this->logger->debug(
-            $this->nodeRunnerProcessor->prepareLogMessage(
+            $this->stepProcessor->prepareLogMessage(
                 'Trigger is running | Slug: %s | Post ID: %d',
                 $nodeSlug,
                 $postId
             )
         );
 
-        $this->nodeRunnerProcessor->triggerCallbackIsRunning();
-        $this->nodeRunnerProcessor->runNextSteps($this->step);
+        $this->stepProcessor->triggerCallbackIsRunning();
+        $this->stepProcessor->runNextSteps($this->step);
     }
 }

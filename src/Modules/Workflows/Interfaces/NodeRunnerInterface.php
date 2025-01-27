@@ -2,16 +2,10 @@
 
 namespace PublishPress\Future\Modules\Workflows\Interfaces;
 
-interface NodeRunnerInterface
+/**
+ * @since 4.3.1
+ * @deprecated 4.3.1 Use StepRunnerInterface instead.
+ */
+interface NodeRunnerInterface extends StepRunnerInterface
 {
-    /**
-     * The node type name.
-     */
-    public static function getNodeTypeName(): string;
-
-    /**
-     * Setup the node runner with the step and context variables, and
-     * execute the next steps if needed.
-     */
-    public function setup(array $step): void;
 }

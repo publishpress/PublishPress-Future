@@ -4,15 +4,15 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeStatus as NodeType;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 
-class ChangePostStatusRunner implements NodeRunnerInterface
+class ChangePostStatusRunner implements StepRunnerInterface
 {
     /**
      * @var NodeRunnerProcessorInterface
      */
-    private $nodeRunnerProcessor;
+    private $stepProcessor;
 
     /**
      * @var LoggerInterface
@@ -20,10 +20,10 @@ class ChangePostStatusRunner implements NodeRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $nodeRunnerProcessor,
+        NodeRunnerProcessorInterface $stepProcessor,
         LoggerInterface $logger
     ) {
-        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->stepProcessor = $stepProcessor;
         $this->logger = $logger;
     }
 
@@ -34,18 +34,18 @@ class ChangePostStatusRunner implements NodeRunnerInterface
 
     public function setup(array $step): void
     {
-        $this->nodeRunnerProcessor->setup($step, [$this, 'setupCallback']);
+        $this->stepProcessor->setup($step, [$this, 'setupCallback']);
     }
 
     public function setupCallback(int $postId, array $nodeSettings, array $step)
     {
-        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
+        $this->stepProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step) {
                 $this->logger->debug(
-                    $this->nodeRunnerProcessor->prepareLogMessage(
+                    $this->stepProcessor->prepareLogMessage(
                         'Step %1$s is a Pro feature, skipping',
-                        $this->nodeRunnerProcessor->getSlugFromStep($step)
+                        $this->stepProcessor->getSlugFromStep($step)
                     )
                 );
             }

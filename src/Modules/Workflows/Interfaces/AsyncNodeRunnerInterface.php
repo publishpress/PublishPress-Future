@@ -2,7 +2,9 @@
 
 namespace PublishPress\Future\Modules\Workflows\Interfaces;
 
-interface AsyncNodeRunnerInterface
+/**
+ * @deprecated 4.3.1 Use AsyncStepRunnerInterface instead.
+ */
+interface AsyncNodeRunnerInterface extends AsyncStepRunnerInterface
 {
-    public function actionCallback(array $expandedArgs, array $originalArgs);
 }

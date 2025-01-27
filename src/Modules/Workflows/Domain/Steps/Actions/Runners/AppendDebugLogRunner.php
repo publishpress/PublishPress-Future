@@ -3,17 +3,17 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\LogAdd as NodeTypeLogAdd;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 
-class DebugLogAppendRunner implements NodeRunnerInterface
+class AppendDebugLogRunner implements StepRunnerInterface
 {
     /**
      * @var NodeRunnerProcessorInterface
      */
-    private $nodeRunnerProcessor;
+    private $stepProcessor;
 
     /**
      * @var RuntimeVariablesHandlerInterface
@@ -26,11 +26,11 @@ class DebugLogAppendRunner implements NodeRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $nodeRunnerProcessor,
+        NodeRunnerProcessorInterface $stepProcessor,
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger
     ) {
-        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->stepProcessor = $stepProcessor;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
     }
@@ -42,18 +42,18 @@ class DebugLogAppendRunner implements NodeRunnerInterface
 
     public function setup(array $step): void
     {
-        $this->nodeRunnerProcessor->setup($step, [$this, 'setupCallback']);
+        $this->stepProcessor->setup($step, [$this, 'setupCallback']);
     }
 
     public function setupCallback(array $step)
     {
-        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
+        $this->stepProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step) {
-                $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+                $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
-                $node = $this->nodeRunnerProcessor->getNodeFromStep($step);
-                $nodeSettings = $this->nodeRunnerProcessor->getNodeSettings($node);
+                $node = $this->stepProcessor->getNodeFromStep($step);
+                $nodeSettings = $this->stepProcessor->getNodeSettings($node);
 
                 $message = $nodeSettings['message'] ?? '';
 
@@ -63,7 +63,7 @@ class DebugLogAppendRunner implements NodeRunnerInterface
 
                 $message = $this->variablesHandler->replacePlaceholdersInText($message);
                 $message = 'Slug: ' . $nodeSlug . ' | ' . $message;
-                $message = $this->nodeRunnerProcessor->prepareLogMessage($message, $nodeSlug);
+                $message = $this->stepProcessor->prepareLogMessage($message, $nodeSlug);
 
                 $availableLevels = [
                     'debug',
@@ -83,7 +83,7 @@ class DebugLogAppendRunner implements NodeRunnerInterface
                 $this->logger->{$level}($message);
 
                 $this->logger->debug(
-                    $this->nodeRunnerProcessor->prepareLogMessage(
+                    $this->stepProcessor->prepareLogMessage(
                         'Step completed | Slug: %s',
                         $nodeSlug
                     )

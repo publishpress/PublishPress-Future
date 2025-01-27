@@ -437,6 +437,12 @@ class_alias(
     'PublishPress\Future\Modules\Expirator\Models\PostTypes'
 );
 
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AppendDebugLog',
+    'PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface'
+);
+
 // Step Processors
 
 /** @since 4.3.1 */
@@ -468,7 +474,7 @@ class_alias(
 /** @since 4.3.1 */
 class_alias(
     'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\AddPostTermRunner',
-    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermAdd'
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsAdd'
 );
 
 /** @since 4.3.1 */
@@ -491,7 +497,7 @@ class_alias(
 
 /** @since 4.3.1 */
 class_alias(
-    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\DebugLogAppendRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\AppendDebugLogRunner',
     'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\LogAdd'
 );
 
@@ -595,7 +601,7 @@ class_alias(
 
 /** @since 4.3.1 */
 class_alias(
-    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DebugLogAppend',
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AppendDebugLog',
     'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\LogAdd'
 );
 
@@ -736,5 +742,72 @@ class_alias(
 
 
 // Step Runners - Triggers
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnAdminInitRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnInitRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnLegacyActionTriggerRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\FutureLegacyAction'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostMetaChangeRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostMetaChanged'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostPublishRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostPublished'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostSaveRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnSavePost'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostScheduleRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostScheduled'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostStatusChangeRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostStatusChanged'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostUpdateRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostUpdated'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostWorkflowEnableRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnManuallyEnabledForPost'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnScheduleRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnCronSchedule'
+);
+
 
 require_once __DIR__ . '/deprecated-functions.php';

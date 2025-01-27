@@ -3,16 +3,16 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners;
 
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSchedule as NodeType;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
-class OnScheduleRunner implements NodeTriggerRunnerInterface
+class OnScheduleRunner implements TriggerRunnerInterface
 {
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepRunnerInterface
      */
-    private $nodeRunnerProcessor;
+    private $stepProcessor;
 
     /**
      * @var LoggerInterface
@@ -20,10 +20,10 @@ class OnScheduleRunner implements NodeTriggerRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $nodeRunnerProcessor,
+        StepProcessorInterface $stepProcessor,
         LoggerInterface $logger
     ) {
-        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->stepProcessor = $stepProcessor;
         $this->logger = $logger;
     }
 
@@ -41,15 +41,15 @@ class OnScheduleRunner implements NodeTriggerRunnerInterface
 
     public function setup(int $workflowId, array $step): void
     {
-        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
+        $this->stepProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step) {
-                $this->nodeRunnerProcessor->setup($step, '__return_true');
+                $this->stepProcessor->setup($step, '__return_true');
 
-                $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+                $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
                 $this->logger->debug(
-                    $this->nodeRunnerProcessor->prepareLogMessage(
+                    $this->stepProcessor->prepareLogMessage(
                         'Step %1$s is a Pro feature, skipping',
                         $nodeSlug
                     )

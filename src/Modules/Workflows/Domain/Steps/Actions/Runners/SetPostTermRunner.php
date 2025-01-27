@@ -4,16 +4,16 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsSet as NodeTypeCorePostTermsSet;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 
-class SetPostTermRunner implements NodeRunnerInterface
+class SetPostTermRunner implements StepRunnerInterface
 {
     /**
      * @var NodeRunnerProcessorInterface
      */
-    private $nodeRunnerProcessor;
+    private $stepProcessor;
 
     /**
      * @var \Closure
@@ -31,12 +31,12 @@ class SetPostTermRunner implements NodeRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $nodeRunnerProcessor,
+        NodeRunnerProcessorInterface $stepProcessor,
         \Closure $expirablePostModelFactory,
         ErrorFacade $errorFacade,
         LoggerInterface $logger
     ) {
-        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->stepProcessor = $stepProcessor;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->errorFacade = $errorFacade;
         $this->logger = $logger;
@@ -49,12 +49,12 @@ class SetPostTermRunner implements NodeRunnerInterface
 
     public function setup(array $step): void
     {
-        $this->nodeRunnerProcessor->setup($step, [$this, 'setupCallback']);
+        $this->stepProcessor->setup($step, [$this, 'setupCallback']);
     }
 
     public function setupCallback(int $postId, array $nodeSettings, array $step)
     {
-        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
+        $this->stepProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step, $postId, $nodeSettings) {
                 $postModel = call_user_func($this->expirablePostModelFactory, $postId);
@@ -66,11 +66,11 @@ class SetPostTermRunner implements NodeRunnerInterface
 
                 $resultIsError = $this->errorFacade->isWpError($result);
 
-                $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+                $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
                 if ($resultIsError) {
                     $this->logger->error(
-                        $this->nodeRunnerProcessor->prepareLogMessage(
+                        $this->stepProcessor->prepareLogMessage(
                             'Error updating post %1$s terms on step %2$s',
                             $postId,
                             $nodeSlug
@@ -78,7 +78,7 @@ class SetPostTermRunner implements NodeRunnerInterface
                     );
                 } else {
                     $this->logger->debug(
-                        $this->nodeRunnerProcessor->prepareLogMessage(
+                        $this->stepProcessor->prepareLogMessage(
                             'Post %1$s terms updated on step %2$s',
                             $postId,
                             $nodeSlug

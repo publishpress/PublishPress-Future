@@ -3,17 +3,17 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\RayDebug as NodeTypeRayDebug;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 
-class SendRayRunner implements NodeRunnerInterface
+class SendRayRunner implements StepRunnerInterface
 {
     /**
      * @var NodeRunnerProcessorInterface
      */
-    private $nodeRunnerProcessor;
+    private $stepProcessor;
 
     /**
      * @var RuntimeVariablesHandlerInterface
@@ -26,11 +26,11 @@ class SendRayRunner implements NodeRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $nodeRunnerProcessor,
+        NodeRunnerProcessorInterface $stepProcessor,
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger
     ) {
-        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->stepProcessor = $stepProcessor;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
     }
@@ -42,19 +42,19 @@ class SendRayRunner implements NodeRunnerInterface
 
     public function setup(array $step): void
     {
-        $this->nodeRunnerProcessor->setup($step, [$this, 'setupCallback']);
+        $this->stepProcessor->setup($step, [$this, 'setupCallback']);
     }
 
     public function setupCallback(array $step)
     {
-        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
+        $this->stepProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step) {
-                $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+                $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
                 if (! function_exists('ray')) {
                     $this->logger->error(
-                        $this->nodeRunnerProcessor->prepareLogMessage(
+                        $this->stepProcessor->prepareLogMessage(
                             'Ray is not installed. Skipping step %s',
                             $nodeSlug
                         )
@@ -64,8 +64,8 @@ class SendRayRunner implements NodeRunnerInterface
                 }
 
                 $output = null;
-                $node = $this->nodeRunnerProcessor->getNodeFromStep($step);
-                $nodeSettings = $this->nodeRunnerProcessor->getNodeSettings($node);
+                $node = $this->stepProcessor->getNodeFromStep($step);
+                $nodeSettings = $this->stepProcessor->getNodeSettings($node);
 
                 $expression = '';
                 if (isset($nodeSettings['data']['expression'])) {
@@ -122,7 +122,7 @@ class SendRayRunner implements NodeRunnerInterface
                 }
 
                 $this->logger->debug(
-                    $this->nodeRunnerProcessor->prepareLogMessage(
+                    $this->stepProcessor->prepareLogMessage(
                         'Step completed | Slug: %s',
                         $nodeSlug
                     )

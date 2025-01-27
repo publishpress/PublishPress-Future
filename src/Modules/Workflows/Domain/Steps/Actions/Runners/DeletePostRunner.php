@@ -3,16 +3,16 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDelete as NodeTypeCorePostDelete;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 
-class DeletePostRunner implements NodeRunnerInterface
+class DeletePostRunner implements StepRunnerInterface
 {
     /**
      * @var NodeRunnerProcessorInterface
      */
-    private $nodeRunnerProcessor;
+    private $stepProcessor;
 
     /**
      * @var \Closure
@@ -25,11 +25,11 @@ class DeletePostRunner implements NodeRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $nodeRunnerProcessor,
+        NodeRunnerProcessorInterface $stepProcessor,
         \Closure $expirablePostModelFactory,
         LoggerInterface $logger
     ) {
-        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->stepProcessor = $stepProcessor;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->logger = $logger;
     }
@@ -41,21 +41,21 @@ class DeletePostRunner implements NodeRunnerInterface
 
     public function setup(array $step): void
     {
-        $this->nodeRunnerProcessor->setup($step, [$this, 'setupCallback']);
+        $this->stepProcessor->setup($step, [$this, 'setupCallback']);
     }
 
     public function setupCallback(int $postId, array $nodeSettings, array $step)
     {
-        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
+        $this->stepProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step, $postId) {
                 $postModel = call_user_func($this->expirablePostModelFactory, $postId);
                 $postModel->delete(true);
 
-                $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+                $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
                 $this->logger->debug(
-                    $this->nodeRunnerProcessor->prepareLogMessage(
+                    $this->stepProcessor->prepareLogMessage(
                         'Post %1$s deleted on step %2$s',
                         $postId,
                         $nodeSlug

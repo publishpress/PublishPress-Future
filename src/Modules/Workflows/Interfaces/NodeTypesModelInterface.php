@@ -16,7 +16,7 @@ interface NodeTypesModelInterface
 
     public function getAllNodeTypesIndexedByName(): array;
 
-    public function getNodeType(string $name): ?NodeTypeInterface;
+    public function getNodeType(string $name): ?StepTypeInterface;
 
     public function getStrings(): array;
 

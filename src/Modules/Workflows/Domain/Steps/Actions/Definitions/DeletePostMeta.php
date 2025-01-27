@@ -2,10 +2,10 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions;
 
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypeInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
 
-class DeletePostMeta implements NodeTypeInterface
+class DeletePostMeta implements StepTypeInterface
 {
     public static function getNodeTypeName(): string
     {

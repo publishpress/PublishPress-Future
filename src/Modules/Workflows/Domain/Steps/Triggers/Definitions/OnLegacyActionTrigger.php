@@ -5,11 +5,11 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definition
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Domain\LegacyAction\TriggerWorkflow;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypeInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 
-class OnLegacyActionTrigger implements NodeTypeInterface
+class OnLegacyActionTrigger implements StepTypeInterface
 {
     public static function getNodeTypeName(): string
     {

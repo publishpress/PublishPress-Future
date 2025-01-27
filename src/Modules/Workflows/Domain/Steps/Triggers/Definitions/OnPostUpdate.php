@@ -3,10 +3,10 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions;
 
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypeInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
 
-class OnPostUpdate implements NodeTypeInterface
+class OnPostUpdate implements StepTypeInterface
 {
     public static function getNodeTypeName(): string
     {

@@ -19,7 +19,7 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowScheduledStepModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 use PublishPress\Future\Modules\Workflows\Module;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\stepRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowModelInterface;
 use Throwable;
@@ -41,7 +41,7 @@ class WorkflowEngine implements WorkflowEngineInterface
     /**
      * @var \Closure
      */
-    private $nodeRunnerFactory;
+    private $stepRunnerFactory;
 
     /**
      * @var RuntimeVariablesHandlerInterface
@@ -71,13 +71,13 @@ class WorkflowEngine implements WorkflowEngineInterface
     public function __construct(
         HookableInterface $hooks,
         NodeTypesModelInterface $nodeTypesModel,
-        \Closure $nodeRunnerFactory,
+        \Closure $stepRunnerFactory,
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
         $this->nodeTypesModel = $nodeTypesModel;
-        $this->nodeRunnerFactory = $nodeRunnerFactory;
+        $this->stepRunnerFactory = $stepRunnerFactory;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
 
@@ -180,8 +180,8 @@ class WorkflowEngine implements WorkflowEngineInterface
                     continue;
                 }
 
-                /** @var NodeRunnerInterface $triggerRunner */
-                $triggerRunner = call_user_func($this->nodeRunnerFactory, $triggerName);
+                /** @var stepRunnerInterface $triggerRunner */
+                $triggerRunner = call_user_func($this->stepRunnerFactory, $triggerName);
 
                 if (is_null($triggerRunner)) {
                     $message = sprintf(
@@ -253,9 +253,9 @@ class WorkflowEngine implements WorkflowEngineInterface
         $node = $step['node'];
         $nodeName = $node['data']['name'];
 
-        $nodeRunner = call_user_func($this->nodeRunnerFactory, $nodeName);
+        $stepRunner = call_user_func($this->stepRunnerFactory, $nodeName);
 
-        if (is_null($nodeRunner)) {
+        if (is_null($stepRunner)) {
             $message = sprintf(
                 self::LOG_PREFIX . ' Node runner not found: %s',
                 $nodeName
@@ -274,7 +274,7 @@ class WorkflowEngine implements WorkflowEngineInterface
             )
         );
 
-        $nodeRunner->setup($step);
+        $stepRunner->setup($step);
     }
 
     public function executeAsyncNodeRoutine($args)
@@ -309,7 +309,7 @@ class WorkflowEngine implements WorkflowEngineInterface
             }
             $args['actionId'] = $this->currentAsyncActionId;
 
-            $nodeRunner = call_user_func($this->nodeRunnerFactory, $nodeName);
+            $stepRunner = call_user_func($this->stepRunnerFactory, $nodeName);
 
             $step = $this->currentRunningWorkflow->getPartialRoutineTreeFromNodeId($args['step']['nodeId']);
 
@@ -326,7 +326,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                 )
             );
 
-            $nodeRunner->actionCallback($args, $originalArgs);
+            $stepRunner->actionCallback($args, $originalArgs);
         } catch (Throwable $e) {
             $this->logger->error(sprintf(self::LOG_PREFIX . ' Async node runner error: %s', $e->getMessage()));
         }

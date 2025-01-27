@@ -34,7 +34,7 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaD
     use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaUpdate;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypeInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 
 class NodeTypesModel implements NodeTypesModelInterface
 {
@@ -155,7 +155,7 @@ class NodeTypesModel implements NodeTypesModelInterface
         $instancesCopy = $instances;
 
         /**
-         * @var NodeTypeInterface $instance
+         * @var StepTypeInterface $instance
          */
         foreach ($instancesCopy as &$instance) {
             $instanceClass = get_class($instance);
@@ -351,7 +351,7 @@ class NodeTypesModel implements NodeTypesModelInterface
         return $indexed;
     }
 
-    public function getNodeType(string $name): ?NodeTypeInterface
+    public function getNodeType(string $name): ?StepTypeInterface
     {
         $nodes = $this->getAllNodeTypesIndexedByName();
 

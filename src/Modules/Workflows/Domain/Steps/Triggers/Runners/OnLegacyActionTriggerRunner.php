@@ -6,12 +6,12 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction as NodeTypeFutureLegacyAction;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 
-class OnLegacyActionTriggerRunner implements NodeTriggerRunnerInterface
+class OnLegacyActionTriggerRunner implements TriggerRunnerInterface
 {
     /**
      * @var HookableInterface
@@ -29,9 +29,9 @@ class OnLegacyActionTriggerRunner implements NodeTriggerRunnerInterface
     private $workflowId;
 
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepProcessorInterface
      */
-    private $nodeRunnerProcessor;
+    private $stepProcessor;
 
     /**
      * @var RuntimeVariablesHandlerInterface
@@ -50,13 +50,13 @@ class OnLegacyActionTriggerRunner implements NodeTriggerRunnerInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerProcessorInterface $nodeRunnerProcessor,
+        StepProcessorInterface $stepProcessor,
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger,
         \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
-        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->stepProcessor = $stepProcessor;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
@@ -82,27 +82,27 @@ class OnLegacyActionTriggerRunner implements NodeTriggerRunnerInterface
             return false;
         }
 
-        $this->nodeRunnerProcessor->executeSafelyWithErrorHandling(
+        $this->stepProcessor->executeSafelyWithErrorHandling(
             $this->step ,
             function ($step, $postId, $post) {
-                $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
+                $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
                 $this->variablesHandler->setVariable($nodeSlug, [
                     'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
                 ]);
 
-                $this->nodeRunnerProcessor->triggerCallbackIsRunning();
+                $this->stepProcessor->triggerCallbackIsRunning();
 
 
                 $this->logger->debug(
-                    $this->nodeRunnerProcessor->prepareLogMessage(
+                    $this->stepProcessor->prepareLogMessage(
                         'Trigger is running | Slug: %s | Post ID: %d',
                         $nodeSlug,
                         $postId
                     )
                 );
 
-                $this->nodeRunnerProcessor->runNextSteps($this->step);
+                $this->stepProcessor->runNextSteps($this->step);
             },
             $postId,
             $post
