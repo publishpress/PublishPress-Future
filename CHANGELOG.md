@@ -31,6 +31,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed the screenshot feature from the workflow editor (Issue #1135).
 - Changed the label and description of some workflow steps for making it more intuitive (Issue #1101).
 - Changed the default duplicate handling on workflow stepsto "Replace existing task" (Issue #956).
+- Step "Ray - Debug" renamed to "Send to Ray" (Issue #1143).
+- Step "Debug Log" renamed to "Append to debug log" (Issue #1143).
 
 ### Fixed
 
@@ -56,6 +58,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove the methods `convertLegacyScreenshots`, `setScreenshotFromBase64`, `setScreenshotFromFile` and `getScreenshotUrl` from the class `WorkflowModel` (Issue #1135).
 - Remove the methods `convertLegacyScreenshots`, `setScreenshotFromBase64`, `setScreenshotFromFile` and `getScreenshotUrl` from the interface `WorkflowModelInterface` (Issue #1135).
 - Remove the methods `getWorkflowScreenshotStatus`, and `setWorkflowScreenshotStatus` from the class `SettingsFacade` (Issue #1135).
+- Refactored step types and step runners moving files to new folder structure (Issue #1143).
 
 ## [4.3.0] - 08 Jan, 2025
 
