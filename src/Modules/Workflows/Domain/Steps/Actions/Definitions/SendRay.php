@@ -34,7 +34,7 @@ class SendRay implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This step transmits the flow's data to Spatie Ray.", "post-expirator");
+        return __("This step transmits the flow's data to Ray (by Spatie).", "post-expirator");
     }
 
     public function getIcon(): string
