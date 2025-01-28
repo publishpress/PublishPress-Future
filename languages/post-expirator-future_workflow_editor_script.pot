@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-23T19:51:22+00:00\n"
+"POT-Creation-Date: 2025-01-28T20:34:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -40,112 +40,104 @@ msgstr ""
 msgid "Add Rule"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:23
-msgid "Skip if duplicate exists"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:24
-msgid "Create additional task"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:25
-msgid "Replace existing task"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:29
+#: components/data-fields/date-offset.jsx:26
 msgid "As soon as possible"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:30
+#: components/data-fields/date-offset.jsx:27
 msgid "On a specific date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:31
+#: components/data-fields/date-offset.jsx:28
 msgid "Relative to a specific date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:35
+#: components/data-fields/date-offset.jsx:32
 msgid "Selected in the calendar"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:36
+#: components/data-fields/date-offset.jsx:33
 msgid "When the trigger is activated"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:37
+#: components/data-fields/date-offset.jsx:34
 msgid "When the step is activated"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:38
-#: components/data-fields/date-offset.jsx:227
+#: components/data-fields/date-offset.jsx:35
+#: components/data-fields/date-offset.jsx:208
 msgid "Custom date source"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:172
+#: components/data-fields/date-offset.jsx:169
+msgid "Skip or replace duplicate scheduled tasks to prevent multiple instances of the same task"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:170
+msgid "Allow multiple scheduled tasks to be created, even if they are duplicates"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:177
 msgid "When to run"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:182
-msgid "Duplicate handling"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:186
-msgid "Define how to handle tasks that share the same identifier. This helps prevent duplicate actions, like sending the same notification twice. The identifier is customizable below."
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:193
-msgid "Task Identifier Expression"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:199
-msgid "Define an identifier to detect duplicate tasks. Use variables like {{onSavePost1.post.ID}} or {{global.execution_id}} to create unique IDs."
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:211
+#: components/data-fields/date-offset.jsx:188
 msgid "Date source"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:235
+#: components/data-fields/date-offset.jsx:216
 msgid "Click the button to choose a custom date source from variables that can provide a date."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:245
+#: components/data-fields/date-offset.jsx:228
 msgid "Offset"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:252
+#: components/data-fields/date-offset.jsx:237
 msgid "Date Preview"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:253
+#: components/data-fields/date-offset.jsx:238
 msgid "Current Date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:254
+#: components/data-fields/date-offset.jsx:239
 msgid "Computed Date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:263
+#: components/data-fields/date-offset.jsx:250
 msgid "Error: "
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:268
+#: components/data-fields/date-offset.jsx:257
 msgid "Click for more information"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:276
+#: components/data-fields/date-offset.jsx:266
 msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:298
+#: components/data-fields/date-offset.jsx:291
 msgid "Repeating Action"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:310
+#: components/data-fields/date-offset.jsx:307
+msgid "Prevent duplicate scheduling"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:320
+msgid "Task Identifier Expression"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:326
+msgid "Define an identifier to detect duplicate tasks creating a unique ID."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:339
 msgid "Priority"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:313
+#: components/data-fields/date-offset.jsx:342
 msgid "Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first."
 msgstr ""
 
@@ -197,31 +189,31 @@ msgstr ""
 msgid "Insert"
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:116
+#: components/data-fields/expression-builder/index.jsx:117
 msgid "Edit"
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:160
+#: components/data-fields/expression-builder/index.jsx:161
 msgid "Select a variable from the list below."
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:164
+#: components/data-fields/expression-builder/index.jsx:165
 msgid "Type your expression here or use the variables below."
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:191
+#: components/data-fields/expression-builder/index.jsx:192
 msgid "Variables"
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:194
+#: components/data-fields/expression-builder/index.jsx:195
 msgid "Double-click on a variable to select it."
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:198
+#: components/data-fields/expression-builder/index.jsx:199
 msgid "Double-click on any variable to add it to your expression."
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:210
+#: components/data-fields/expression-builder/index.jsx:211
 msgid "Hover over a variable to see its description."
 msgstr ""
 
