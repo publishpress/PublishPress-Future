@@ -11,7 +11,6 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\SiteRe
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\UserResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionModel;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionsModel;
@@ -21,6 +20,7 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 use PublishPress\Future\Modules\Workflows\Module;
 use PublishPress\Future\Modules\Workflows\Interfaces\stepRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowModelInterface;
 use Throwable;
 
@@ -34,9 +34,9 @@ class WorkflowEngine implements WorkflowEngineInterface
     private $hooks;
 
     /**
-     * @var NodeTypesModelInterface
+     * @var StepTypesModelInterface
      */
-    private $nodeTypesModel;
+    private $stepTypesModel;
 
     /**
      * @var \Closure
@@ -70,13 +70,13 @@ class WorkflowEngine implements WorkflowEngineInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodeTypesModelInterface $nodeTypesModel,
+        StepTypesModelInterface $stepTypesModel,
         \Closure $stepRunnerFactory,
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
-        $this->nodeTypesModel = $nodeTypesModel;
+        $this->stepTypesModel = $stepTypesModel;
         $this->stepRunnerFactory = $stepRunnerFactory;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
@@ -85,18 +85,18 @@ class WorkflowEngine implements WorkflowEngineInterface
 
         $this->hooks->addAction(
             HooksAbstract::ACTION_EXECUTE_NODE,
-            [$this, 'executeNodeRoutine']
+            [$this, 'executeStepRoutine']
         );
 
         $this->hooks->addAction(
             HooksAbstract::ACTION_ASYNC_EXECUTE_NODE,
-            [$this, "executeAsyncNodeRoutine"],
+            [$this, "executeAsyncStepRoutine"],
             10
         );
 
         $this->hooks->addAction(
             HooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION,
-            [$this, "unscheduleRecurringNodeAction"],
+            [$this, "unscheduleRecurringStepAction"],
             10,
             2
         );
@@ -131,7 +131,7 @@ class WorkflowEngine implements WorkflowEngineInterface
         $workflowsModel = new WorkflowsModel();
         $workflows = $workflowsModel->getPublishedWorkflowsIds();
 
-        $nodeTypes = $this->nodeTypesModel->getAllNodeTypesByType();
+        $stepTypes = $this->stepTypesModel->getAllStepTypesByType();
 
         // Setup the workflow triggers
         foreach ($workflows as $workflowId) {
@@ -151,9 +151,9 @@ class WorkflowEngine implements WorkflowEngineInterface
 
             $this->variablesHandler->setAllVariables([]);
 
-            $triggerNodes = $workflow->getTriggerNodes();
+            $triggerSteps = $workflow->getTriggerNodes();
 
-            $routineTree = $workflow->getRoutineTree($nodeTypes);
+            $routineTree = $workflow->getRoutineTree($stepTypes);
 
             $triggerRunner = null;
 
@@ -171,10 +171,10 @@ class WorkflowEngine implements WorkflowEngineInterface
                 'execution_id' => $this->getExecutionId(),
             ];
 
-            foreach ($triggerNodes as $triggerNode) {
-                $triggerName = $triggerNode['data']['name'];
-                $triggerId = $triggerNode['id'];
-                $nodeType = $this->nodeTypesModel->getNodeType($triggerName);
+            foreach ($triggerSteps as $triggerStep) {
+                $triggerName = $triggerStep['data']['name'];
+                $triggerId = $triggerStep['id'];
+                $nodeType = $this->stepTypesModel->getStepType($triggerName);
 
                 if (! $nodeType) {
                     continue;
@@ -208,7 +208,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                         'name' => $triggerName,
                         'label' => $nodeType->getLabel(),
                         'activation_timestamp' => date('Y-m-d H:i:s'),
-                        'slug' => $triggerNode['data']['slug'],
+                        'slug' => $triggerStep['data']['slug'],
                         'postId' => null,
                     ]
                 );
@@ -221,7 +221,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                 $this->logger->debug(
                     sprintf(
                         self::LOG_PREFIX . '   - Setting up trigger | Slug: %s',
-                        $triggerNode['data']['slug']
+                        $triggerStep['data']['slug']
                     )
                 );
                 $triggerRunner->setup($workflowId, $routineTree[$triggerId]);
@@ -248,7 +248,7 @@ class WorkflowEngine implements WorkflowEngineInterface
         return (int) $this->currentAsyncActionId;
     }
 
-    public function executeNodeRoutine($step)
+    public function executeStepRoutine($step)
     {
         $node = $step['node'];
         $nodeName = $node['data']['name'];
@@ -277,7 +277,7 @@ class WorkflowEngine implements WorkflowEngineInterface
         $stepRunner->setup($step);
     }
 
-    public function executeAsyncNodeRoutine($args)
+    public function executeAsyncStepRoutine($args)
     {
         try {
 

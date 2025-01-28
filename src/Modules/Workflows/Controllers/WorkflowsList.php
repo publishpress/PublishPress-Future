@@ -7,7 +7,7 @@ use PublishPress\Future\Core\HooksAbstract as FutureCoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Module;
@@ -23,9 +23,9 @@ class WorkflowsList implements InitializableInterface
     private $hooks;
 
     /**
-     * @var NodeTypesModelInterface
+     * @var StepTypesModelInterface
      */
-    private $nodeTypesModel;
+    private $stepTypesModel;
 
     /**
      * @var LoggerInterface
@@ -39,12 +39,12 @@ class WorkflowsList implements InitializableInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodeTypesModelInterface $nodeTypesModel,
+        StepTypesModelInterface $stepTypesModel,
         LoggerInterface $logger,
         SettingsFacade $settingsFacade
     ) {
         $this->hooks = $hooks;
-        $this->nodeTypesModel = $nodeTypesModel;
+        $this->stepTypesModel = $stepTypesModel;
         $this->logger = $logger;
         $this->settingsFacade = $settingsFacade;
     }
@@ -260,7 +260,7 @@ class WorkflowsList implements InitializableInterface
                 NodeTypesModel::NODE_TYPE_TRIGGER ===
                 $node["data"]["elementaryType"]
             ) {
-                $nodeType = $this->nodeTypesModel->getNodeType($node["data"]["name"]);
+                $nodeType = $this->stepTypesModel->getNodeType($node["data"]["name"]);
 
                 if (empty($nodeType)) {
                     $triggers[] = esc_html($node["data"]["name"]);

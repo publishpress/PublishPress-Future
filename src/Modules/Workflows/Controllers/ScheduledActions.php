@@ -12,7 +12,7 @@ use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionModel;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionsModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
@@ -34,9 +34,9 @@ class ScheduledActions implements InitializableInterface
     private $hooks;
 
     /**
-     * @var NodeTypesModelInterface
+     * @var StepTypesModelInterface
      */
-    private $nodeTypesModel;
+    private $stepTypesModel;
 
     /**
      * @var CronInterface
@@ -55,13 +55,13 @@ class ScheduledActions implements InitializableInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodeTypesModelInterface $nodeTypesModel,
+        StepTypesModelInterface $stepTypesModel,
         CronInterface $cron,
         SettingsFacade $settingsFacade,
         LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
-        $this->nodeTypesModel = $nodeTypesModel;
+        $this->stepTypesModel = $stepTypesModel;
         $this->cron = $cron;
         $this->settingsFacade = $settingsFacade;
         $this->logger = $logger;
@@ -289,7 +289,7 @@ class ScheduledActions implements InitializableInterface
 
                     $next = $step['next'] ?? [];
 
-                    $nodeType = $this->nodeTypesModel->getNodeType($step['node']['data']['name']);
+                    $nodeType = $this->stepTypesModel->getNodeType($step['node']['data']['name']);
 
                     $sourceHandles = [];
                     if (! is_null($nodeType)) {
@@ -312,7 +312,7 @@ class ScheduledActions implements InitializableInterface
                             }
 
                             if (empty($stepLabel)) {
-                                $stepNodeType = $this->nodeTypesModel->getNodeType($nextStep['node']['data']['name']);
+                                $stepNodeType = $this->stepTypesModel->getNodeType($nextStep['node']['data']['name']);
                                 if (is_object($stepNodeType)) {
                                     $stepLabel = $stepNodeType->getLabel();
                                 }

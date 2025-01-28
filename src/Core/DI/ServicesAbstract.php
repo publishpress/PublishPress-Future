@@ -140,7 +140,12 @@ abstract class ServicesAbstract
 
     public const WORKFLOWS_REST_API_MANAGER = 'future.free/workflows/rest-api-manager';
 
+    /**
+     * @deprecated 4.3.1 Use STEP_TYPES_MODEL instead.
+     */
     public const NODE_TYPES_MODEL = 'future.free/workflows/node-types-model';
+
+    public const STEP_TYPES_MODEL = 'future.free/workflows/step-types-model';
 
     public const CRON_SCHEDULES_MODEL = 'future.free/workflows/cron-schedules-model';
 
@@ -156,7 +161,12 @@ abstract class ServicesAbstract
 
     public const CRON_STEP_NODE_RUNNER_PROCESSOR = 'future.free/workflows/cron-step-node-runner-processor';
 
+    /**
+     * @deprecated 4.3.1 Use STEP_RUNNER_FACTORY instead.
+     */
     public const NODE_RUNNER_FACTORY = 'future.free/workflows/node-runner-factory';
+
+    public const STEP_RUNNER_FACTORY = 'future.free/workflows/step-runner-factory';
 
     public const INPUT_VALIDATOR_POST_QUERY = 'future.free/workflows/input-validator-post-query';
 

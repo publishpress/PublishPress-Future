@@ -48,7 +48,7 @@ class WorkflowModel implements WorkflowModelInterface
 
     private $hasManualSelectionTrigger = null;
 
-    private $allNodeTypes = null;
+    private $allStepTypes = null;
 
     private $debugRayShowQueries = null;
 
@@ -59,9 +59,9 @@ class WorkflowModel implements WorkflowModelInterface
     private $debugRayShowCurrentRunningStep = null;
 
     /**
-     * @var NodeTypesModelInterface
+     * @var StepTypesModelInterface
      */
-    private $nodeTypesModel;
+    private $stepTypesModel;
 
     /**
      * @var HookableInterface
@@ -84,7 +84,7 @@ class WorkflowModel implements WorkflowModelInterface
 
         // FIXME: Use dependency injection
         $this->hooks = $container->get(ServicesAbstract::HOOKS);
-        $this->nodeTypesModel = $container->get(ServicesAbstract::NODE_TYPES_MODEL);
+        $this->stepTypesModel = $container->get(ServicesAbstract::STEP_TYPES_MODEL);
         $this->logger = $container->get(ServicesAbstract::LOGGER);
         $this->settingsFacade = $container->get(ServicesAbstract::SETTINGS);
     }
@@ -110,7 +110,7 @@ class WorkflowModel implements WorkflowModelInterface
         $this->flow = null;
         $this->hasLegacyActionTrigger = null;
         $this->hasManualSelectionTrigger = null;
-        $this->allNodeTypes = null;
+        $this->allStepTypes = null;
         $this->debugRayShowEmails = null;
         $this->debugRayShowQueries = null;
         $this->debugRayShowWordPressErrors = null;
@@ -311,17 +311,17 @@ class WorkflowModel implements WorkflowModelInterface
             return [];
         }
 
-        if (is_null($this->allNodeTypes)) {
+        if (is_null($this->allStepTypes)) {
             // Ensure the flow is updated with the latest node types
             // FIXME: Use dependency injection
-            $nodeTypesModel = Container::getInstance()->get(ServicesAbstract::NODE_TYPES_MODEL);
-            $this->allNodeTypes = $nodeTypesModel->getAllNodeTypesIndexedByName();
+            $stepTypesModel = Container::getInstance()->get(ServicesAbstract::STEP_TYPES_MODEL);
+            $this->allStepTypes = $stepTypesModel->getAllStepTypesIndexedByName();
         }
 
-        return $this->allNodeTypes;
+        return $this->allStepTypes;
     }
 
-    public function getFlow(bool $updateNodes = false): array
+    public function getFlow(bool $updateSteps = false): array
     {
         if (empty($this->post)) {
             return [];
@@ -334,7 +334,7 @@ class WorkflowModel implements WorkflowModelInterface
                 $this->flow = [];
             }
 
-            if ($updateNodes) {
+            if ($updateSteps) {
                 if (empty($this->flow)) {
                     return $this->flow;
                 }
@@ -344,7 +344,7 @@ class WorkflowModel implements WorkflowModelInterface
                 $nodesUpdated = false;
                 foreach ($nodes as &$node) {
                     if (! $this->isNodeUpdated($node)) {
-                        $node = $this->updateNode($node);
+                        $node = $this->updateStep($node);
                         $nodesUpdated = true;
                     }
                 }
@@ -357,32 +357,32 @@ class WorkflowModel implements WorkflowModelInterface
         return $this->flow;
     }
 
-    private function getNodeTypeByname(string $name)
+    private function getStepTypeByname(string $name)
     {
-        $nodeTypes = $this->getAllNodeTypesByType();
+        $stepTypes = $this->getAllNodeTypesByType();
 
-        $nodeType = $nodeTypes[$name] ?? null;
+        $stepType = $stepTypes[$name] ?? null;
 
-        if (is_null($nodeType)) {
+        if (is_null($stepType)) {
             throw new Exception('Node type not found: ' . esc_html($name));
         }
 
-        return $nodeType;
+        return $stepType;
     }
 
     private function isNodeUpdated(array $node): bool
     {
-        $nodeType = $this->getNodeTypeByname($node['data']['name'] ?? '');
-        $nodeVersion = $this->getNodeVersion($node);
+        $stepType = $this->getStepTypeByname($node['data']['name'] ?? '');
+        $stepVersion = $this->getStepVersion($node);
 
-        if (! $nodeType) {
+        if (! $stepType) {
             return false;
         }
 
-        return $nodeVersion === $nodeType->getVersion();
+        return $stepVersion === $stepType->getVersion();
     }
 
-    private function getNodeVersion(array $node): int
+    private function getStepVersion(array $node): int
     {
         return (int)($node['data']['version'] ?? 0);
     }
@@ -401,19 +401,19 @@ class WorkflowModel implements WorkflowModelInterface
         return $untranslatedString;
     }
 
-    private function updateNode(array $node): array
+    private function updateStep(array $node): array
     {
-        $nodeType = $this->getNodeTypeByname($node['data']['name']);
-        $nodeVersion = $this->getNodeVersion($node);
+        $stepType = $this->getStepTypeByname($node['data']['name']);
+        $stepVersion = $this->getStepVersion($node);
 
-        if ($nodeType->getVersion() < $nodeVersion) {
+        if ($stepType->getVersion() < $stepVersion) {
             // TODO: What to do when the node type is downgraded? Should we have a check in the version of the builder?
             return $node;
         }
         // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
-        // if ($nodeType->getVersion() > $nodeVersion) {
+        // if ($stepType->getVersion() > $stepVersion) {
         //     // Update the version
-        //     $node['data']['version'] = $nodeType->getVersion();
+        //     $node['data']['version'] = $stepType->getVersion();
         // }
 
         return $node;
@@ -519,7 +519,7 @@ class WorkflowModel implements WorkflowModelInterface
         return $abstractFlow['edges'] ?? [];
     }
 
-    public function getRoutineTree(array $nodeTypes): array
+    public function getRoutineTree(array $stepTypes): array
     {
         if (empty($this->post)) {
             return [];
@@ -548,34 +548,34 @@ class WorkflowModel implements WorkflowModelInterface
                 $edges,
                 $nodesById,
                 $triggerNode['id'],
-                $nodeTypes
+                $stepTypes
             );
         }
 
         return $routineTree;
     }
 
-    private function getRoutineNodesTree($edges, $nodes, $sourceNodeId, $nodeTypes, $edgeId = null)
+    private function getRoutineNodesTree($edges, $nodes, $sourceNodeId, $stepTypes, $edgeId = null)
     {
         $node = $nodes[$sourceNodeId];
         $elementaryType = $node['data']['elementaryType'] ?? null;
-        $nodeName = $node['data']['name'] ?? null;
-        $nodeTypeInstance = $nodeTypes[$elementaryType][$nodeName] ?? null;
+        $stepName = $node['data']['name'] ?? null;
+        $stepTypeInstance = $stepTypes[$elementaryType][$stepName] ?? null;
 
-        if (is_null($nodeTypeInstance)) {
+        if (is_null($stepTypeInstance)) {
             $this->logger->error(
                 sprintf(
-                    'Node type not found. Workflow: %1$d; ElementaryType: %2$s; NodeName; %3$s; SourceNodeId: %4$s',
+                    'Step type not found. Workflow: %1$d; ElementaryType: %2$s; StepName: %3$s; SourceNodeId: %4$s',
                     $this->post->ID,
                     $elementaryType,
-                    $nodeName,
+                    $stepName,
                     $sourceNodeId
                 )
             );
 
             return [];
         }
-        $handleSchema = $nodeTypeInstance->getHandleSchema();
+        $handleSchema = $stepTypeInstance->getHandleSchema();
 
         $tree = ['node' => $node,];
 
@@ -595,7 +595,7 @@ class WorkflowModel implements WorkflowModelInterface
                         $edges,
                         $nodes,
                         $edge['target'],
-                        $nodeTypes,
+                        $stepTypes,
                         $edge['id']
                     );
                 }
@@ -769,8 +769,8 @@ class WorkflowModel implements WorkflowModelInterface
             return [];
         }
 
-        $nodeTypes = $this->nodeTypesModel->getAllNodeTypesByType();
-        $routineTree = $this->getRoutineTree($nodeTypes);
+        $stepTypes = $this->stepTypesModel->getAllNodeTypesByType();
+        $routineTree = $this->getRoutineTree($stepTypes);
 
         if (empty($routineTree)) {
             // TODO: Log the error

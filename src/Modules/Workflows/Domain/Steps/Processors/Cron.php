@@ -19,10 +19,10 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\Workfl
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncStepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionModel;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionsModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
@@ -73,9 +73,9 @@ class Cron implements AsyncStepProcessorInterface
     private $hooks;
 
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepProcessorInterface
      */
-    private $generalNodeRunnerProcessor;
+    private $generalStepProcessor;
 
     /**
      * @var CronInterface
@@ -88,9 +88,9 @@ class Cron implements AsyncStepProcessorInterface
     private $cronSchedulesModel;
 
     /**
-     * @var NodeTypesModelInterface
+     * @var StepTypesModelInterface
      */
-    private $nodeTypesModel;
+    private $stepTypesModel;
 
     /**
      * @var RuntimeVariablesHandlerInterface
@@ -119,10 +119,10 @@ class Cron implements AsyncStepProcessorInterface
 
     public function __construct(
         HooksFacade $hooks,
-        NodeRunnerProcessorInterface $generalNodeRunnerProcessor,
+        StepProcessorInterface $stepProcessor,
         CronInterface $cron,
         CronSchedulesModelInterface $cronSchedulesModel,
-        NodeTypesModelInterface $nodeTypesModel,
+        StepTypesModelInterface $stepTypesModel,
         WorkflowEngineInterface $engine,
         string $pluginVersion,
         WorkflowEngineInterface $workflowEngine,
@@ -130,10 +130,10 @@ class Cron implements AsyncStepProcessorInterface
         \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
-        $this->generalNodeRunnerProcessor = $generalNodeRunnerProcessor;
+        $this->generalStepProcessor = $stepProcessor;
         $this->cron = $cron;
         $this->cronSchedulesModel = $cronSchedulesModel;
-        $this->nodeTypesModel = $nodeTypesModel;
+        $this->stepTypesModel = $stepTypesModel;
         $this->variablesHandler = $engine->getVariablesHandler();
         $this->pluginVersion = $pluginVersion;
         $this->workflowEngine = $workflowEngine;
@@ -896,27 +896,27 @@ class Cron implements AsyncStepProcessorInterface
 
     public function runNextSteps(array $step, string $branch = 'output'): void
     {
-        $this->generalNodeRunnerProcessor->runNextSteps($step, $branch);
+        $this->generalStepProcessor->runNextSteps($step, $branch);
     }
 
     public function getNextSteps(array $step, string $branch = 'output'): array
     {
-        return $this->generalNodeRunnerProcessor->getNextSteps($step, $branch);
+        return $this->general->getNextSteps($step, $branch);
     }
 
     public function getNodeFromStep(array $step)
     {
-        return $this->generalNodeRunnerProcessor->getNodeFromStep($step);
+        return $this->general->getNodeFromStep($step);
     }
 
     public function getSlugFromStep(array $step)
     {
-        return $this->generalNodeRunnerProcessor->getSlugFromStep($step);
+        return $this->general->getSlugFromStep($step);
     }
 
     public function getNodeSettings(array $node)
     {
-        return $this->generalNodeRunnerProcessor->getNodeSettings($node);
+        return $this->general->getNodeSettings($node);
     }
 
     public function logError(string $message, int $workflowId, array $step)
@@ -926,7 +926,7 @@ class Cron implements AsyncStepProcessorInterface
 
     public function triggerCallbackIsRunning(): void
     {
-        $this->generalNodeRunnerProcessor->triggerCallbackIsRunning();
+        $this->general->triggerCallbackIsRunning();
     }
 
     public function cancelWorkflowScheduledActions(int $workflowId): void
@@ -946,12 +946,12 @@ class Cron implements AsyncStepProcessorInterface
 
     public function prepareLogMessage(string $message, ...$args): string
     {
-        return $this->generalNodeRunnerProcessor->prepareLogMessage($message, ...$args);
+        return $this->general->prepareLogMessage($message, ...$args);
     }
 
     public function executeSafelyWithErrorHandling(array $step, callable $callback, ...$args): void
     {
-        $this->generalNodeRunnerProcessor->executeSafelyWithErrorHandling($step, $callback, ...$args);
+        $this->general->executeSafelyWithErrorHandling($step, $callback, ...$args);
     }
 
     private function addDebugLogMessage(string $message, ...$args): void

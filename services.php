@@ -107,11 +107,11 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostUp
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostWorkflowEnableRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnScheduleRunner;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
-use PublishPress\Future\Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\AsyncStepProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Migrations\V40000WorkflowScheduledStepsSchema;
 use PublishPress\Future\Modules\Workflows\Models\CronSchedulesModel;
-use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
+use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 use PublishPress\Future\Modules\Workflows\Module as ModuleWorkflows;
 use PublishPress\Future\Modules\Workflows\Rest\RestApiManager;
 use PublishPress\Psr\Container\ContainerInterface;
@@ -712,7 +712,7 @@ return [
         return new ModuleWorkflows(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::WORKFLOWS_REST_API_MANAGER),
-            $container->get(ServicesAbstract::NODE_TYPES_MODEL),
+            $container->get(ServicesAbstract::STEP_TYPES_MODEL),
             $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL),
             $container->get(ServicesAbstract::WORKFLOW_ENGINE),
             $container->get(ServicesAbstract::SETTINGS),
@@ -745,8 +745,8 @@ return [
         );
     },
 
-    ServicesAbstract::NODE_TYPES_MODEL => static function (ContainerInterface $container) {
-        return new NodeTypesModel(
+    ServicesAbstract::STEP_TYPES_MODEL => static function (ContainerInterface $container) {
+        return new StepTypesModel(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::SETTINGS)
         );
@@ -763,15 +763,15 @@ return [
     ServicesAbstract::WORKFLOW_ENGINE => static function (ContainerInterface $container) {
         return new WorkflowEngine(
             $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::NODE_TYPES_MODEL),
-            $container->get(ServicesAbstract::NODE_RUNNER_FACTORY),
+            $container->get(ServicesAbstract::STEP_TYPES_MODEL),
+            $container->get(ServicesAbstract::STEP_RUNNER_FACTORY),
             $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
             $container->get(ServicesAbstract::LOGGER)
         );
     },
 
     ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR =>
-    static function (ContainerInterface $container): NodeRunnerProcessorInterface {
+    static function (ContainerInterface $container): StepProcessorInterface {
         return new GeneralStep(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::WORKFLOW_ENGINE),
@@ -780,7 +780,7 @@ return [
     },
 
     ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR =>
-    static function (ContainerInterface $container): NodeRunnerProcessorInterface {
+    static function (ContainerInterface $container): StepProcessorInterface {
         return new PostStep(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
@@ -790,13 +790,13 @@ return [
     },
 
     ServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR =>
-    static function (ContainerInterface $container): AsyncNodeRunnerProcessorInterface {
+    static function (ContainerInterface $container): AsyncStepProcessorInterface {
         return new CronStep(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
             $container->get(ServicesAbstract::CRON),
             $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL),
-            $container->get(ServicesAbstract::NODE_TYPES_MODEL),
+            $container->get(ServicesAbstract::STEP_TYPES_MODEL),
             $container->get(ServicesAbstract::WORKFLOW_ENGINE),
             $container->get(ServicesAbstract::PLUGIN_VERSION),
             $container->get(ServicesAbstract::WORKFLOW_ENGINE),
@@ -805,12 +805,12 @@ return [
         );
     },
 
-    ServicesAbstract::NODE_RUNNER_FACTORY => static function (ContainerInterface $container) {
+    ServicesAbstract::STEP_RUNNER_FACTORY => static function (ContainerInterface $container) {
         return function ($nodeName) use ($container) {
             $hooks = $container->get(ServicesAbstract::HOOKS);
 
             $stepRunner = $hooks->applyFilters(
-                WorkflowsHooksAbstract::FILTER_WORKFLOW_ENGINE_MAP_NODE_RUNNER,
+                WorkflowsHooksAbstract::FILTER_WORKFLOW_ENGINE_MAP_STEP_RUNNER,
                 null,
                 $nodeName
             );

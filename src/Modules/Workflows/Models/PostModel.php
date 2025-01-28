@@ -148,8 +148,8 @@ class PostModel implements PostModelInterface
 
         if (is_null($this->workflowsManuallyEnabled)) {
             // FIXME: Use dependency injection
-            $nodeTypesModel = Container::getInstance()->get(ServicesAbstract::NODE_TYPES_MODEL);
-            $allNodeTypes = $nodeTypesModel->getAllNodeTypesIndexedByName();
+            $stepTypesModel = Container::getInstance()->get(ServicesAbstract::STEP_TYPES_MODEL);
+            $allStepTypes = $stepTypesModel->getAllNodeTypesIndexedByName();
 
             $workflowModel->load($workflowId);
 
@@ -207,7 +207,7 @@ class PostModel implements PostModelInterface
                 'workflowId' => $workflowId,
                 'workflowTitle' => $workflowModel->getManualSelectionLabel(),
                 'timestamp' => $action['scheduled_date_gmt'],
-                'nextStep' => $nextStep['data']['label'] ?? ($allNodeTypes[$nextStep['data']['name']])->getLabel(),
+                'nextStep' => $nextStep['data']['label'] ?? ($allStepTypes[$nextStep['data']['name']])->getLabel(),
             ];
         }
 

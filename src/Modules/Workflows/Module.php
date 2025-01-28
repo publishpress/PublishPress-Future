@@ -13,7 +13,7 @@ use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RestApiManagerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
@@ -32,7 +32,7 @@ final class Module implements InitializableInterface
      */
     private $restApiManager;
 
-    private $nodeTypesModel;
+    private $stepTypesModel;
 
     /**
      * @var CronSchedulesModelInterface
@@ -102,7 +102,7 @@ final class Module implements InitializableInterface
     public function __construct(
         HookableInterface $hooksFacade,
         RestApiManagerInterface $restApiManager,
-        NodeTypesModelInterface $nodeTypesModel,
+        StepTypesModelInterface $stepTypesModel,
         CronSchedulesModelInterface $cronSchedulesModel,
         WorkflowEngineInterface $workflowEngine,
         SettingsFacade $settingsFacade,
@@ -119,7 +119,7 @@ final class Module implements InitializableInterface
     ) {
         $this->hooks = $hooksFacade;
         $this->restApiManager = $restApiManager;
-        $this->nodeTypesModel = $nodeTypesModel;
+        $this->stepTypesModel = $stepTypesModel;
         $this->cronSchedulesModel = $cronSchedulesModel;
         $this->workflowEngine = $workflowEngine;
         $this->settingsFacade = $settingsFacade;
@@ -156,13 +156,13 @@ final class Module implements InitializableInterface
             new Controllers\PostType($this->hooks),
             new Controllers\WorkflowsList(
                 $this->hooks,
-                $this->nodeTypesModel,
+                $this->stepTypesModel,
                 $this->logger,
                 $this->settingsFacade
             ),
             new Controllers\WorkflowEditor(
                 $this->hooks,
-                $this->nodeTypesModel,
+                $this->stepTypesModel,
                 $this->cronSchedulesModel,
                 $this->settingsFacade
             ),
@@ -177,7 +177,7 @@ final class Module implements InitializableInterface
             ),
             new Controllers\ScheduledActions(
                 $this->hooks,
-                $this->nodeTypesModel,
+                $this->stepTypesModel,
                 $this->cron,
                 $this->settingsFacade,
                 $this->logger
