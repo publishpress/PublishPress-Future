@@ -3,10 +3,10 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners;
 
 use PublishPress\Future\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreventer;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostPublished as NodeTypeCoreOnPostPublished;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostPublish;
 
 class OnPostPublishRunner implements TriggerRunnerInterface
 {
@@ -32,7 +32,7 @@ class OnPostPublishRunner implements TriggerRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeTypeCoreOnPostPublished::getNodeTypeName();
+        return OnPostPublish::getNodeTypeName();
     }
 
     public function setup(int $workflowId, array $step): void

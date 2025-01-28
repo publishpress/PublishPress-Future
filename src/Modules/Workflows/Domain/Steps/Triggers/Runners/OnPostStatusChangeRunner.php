@@ -3,9 +3,9 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners;
 
 use PublishPress\Future\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreventer;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostStatusChanged as NodeTypeCoreOnPostStatusChanged;
 use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostStatusChange;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
 class OnPostStatusChangeRunner implements TriggerRunnerInterface
@@ -32,7 +32,7 @@ class OnPostStatusChangeRunner implements TriggerRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeTypeCoreOnPostStatusChanged::getNodeTypeName();
+        return OnPostStatusChange::getNodeTypeName();
     }
 
     public function setup(int $workflowId, array $step): void

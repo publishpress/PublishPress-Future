@@ -4,12 +4,12 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction as NodeTypeFutureLegacyAction;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnLegacyActionTrigger;
 
 class OnLegacyActionTriggerRunner implements TriggerRunnerInterface
 {
@@ -64,7 +64,7 @@ class OnLegacyActionTriggerRunner implements TriggerRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeTypeFutureLegacyAction::getNodeTypeName();
+        return OnLegacyActionTrigger::getNodeTypeName();
     }
 
     public function setup(int $workflowId, array $step): void

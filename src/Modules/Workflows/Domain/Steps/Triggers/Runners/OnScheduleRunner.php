@@ -2,9 +2,9 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners;
 
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSchedule as NodeType;
 use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnSchedule;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
 class OnScheduleRunner implements TriggerRunnerInterface
@@ -36,7 +36,7 @@ class OnScheduleRunner implements TriggerRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeType::getNodeTypeName();
+        return OnSchedule::getNodeTypeName();
     }
 
     public function setup(int $workflowId, array $step): void

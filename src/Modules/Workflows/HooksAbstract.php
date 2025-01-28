@@ -62,13 +62,29 @@ abstract class HooksAbstract
 
     public const ACTION_WORKFLOW_EDITOR_SCRIPTS = 'publishpressfuture_workflow_editor_scripts';
 
+    /** @deprecated 4.3.1 Use FILTER_WORKFLOW_TRIGGER_STEPS instead. */
     public const FILTER_WORKFLOW_TRIGGER_NODES = 'publishpressfuture_workflow_trigger_nodes';
 
+    /** @since 4.3.1 */
+    public const FILTER_WORKFLOW_TRIGGER_STEPS = 'publishpressfuture_workflow_trigger_steps';
+
+    /** @deprecated 4.3.1 Use FILTER_WORKFLOW_ACTION_STEPS instead. */
     public const FILTER_WORKFLOW_ACTION_NODES = 'publishpressfuture_workflow_action_nodes';
 
+    /** @since 4.3.1 */
+    public const FILTER_WORKFLOW_ACTION_STEPS = 'publishpressfuture_workflow_action_steps';
+
+    /** @deprecated 4.3.1 Use FILTER_WORKFLOW_ADVANCED_STEPS instead. */
     public const FILTER_WORKFLOW_ADVANCED_NODES = 'publishpressfuture_workflow_advanced_nodes';
 
+    /** @since 4.3.1 */
+    public const FILTER_WORKFLOW_ADVANCED_STEPS = 'publishpressfuture_workflow_advanced_steps';
+
+    /** @deprecated 4.3.1 Use FILTER_WORKFLOW_STEP_CATEGORIES instead. */
     public const FILTER_WORKFLOW_NODE_CATEGORIES = 'publishpressfuture_workflow_node_categories';
+
+    /** @since 4.3.1 */
+    public const FILTER_WORKFLOW_STEP_CATEGORIES = 'publishpressfuture_workflow_step_categories';
 
     public const FILTER_WORKFLOW_ENGINE_MAP_TRIGGER = 'publishpressfuture_workflow_engine_map_trigger';
 

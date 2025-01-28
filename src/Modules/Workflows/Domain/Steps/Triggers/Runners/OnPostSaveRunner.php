@@ -7,13 +7,13 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreve
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost as NodeTypeCoreOnSavePost;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSave;
 
 class OnPostSaveRunner implements TriggerRunnerInterface
 {
@@ -77,7 +77,7 @@ class OnPostSaveRunner implements TriggerRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeTypeCoreOnSavePost::getNodeTypeName();
+        return OnPostSave::getNodeTypeName();
     }
 
     public function setup(int $workflowId, array $step): void

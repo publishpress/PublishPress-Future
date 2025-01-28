@@ -2,10 +2,10 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners;
 
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminInit as NodeTypeCoreOnAdminInit;
 use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnAdminInit;
 
 class OnAdminInitRunner implements TriggerRunnerInterface
 {
@@ -29,7 +29,7 @@ class OnAdminInitRunner implements TriggerRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeTypeCoreOnAdminInit::getNodeTypeName();
+        return OnAdminInit::getNodeTypeName();
     }
 
     public function setup(int $workflowId, array $step): void

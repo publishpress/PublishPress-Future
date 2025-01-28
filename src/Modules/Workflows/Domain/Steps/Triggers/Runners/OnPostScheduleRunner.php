@@ -3,9 +3,9 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners;
 
 use PublishPress\Future\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreventer;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostScheduled as NodeTypeCoreOnPostScheduled;
 use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSchedule;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
 class OnPostScheduleRunner implements TriggerRunnerInterface
@@ -32,7 +32,7 @@ class OnPostScheduleRunner implements TriggerRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeTypeCoreOnPostScheduled::getNodeTypeName();
+        return OnPostSchedule::getNodeTypeName();
     }
 
     public function setup(int $workflowId, array $step): void

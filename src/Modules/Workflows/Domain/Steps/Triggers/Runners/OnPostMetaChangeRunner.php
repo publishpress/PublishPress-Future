@@ -3,10 +3,10 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners;
 
 use PublishPress\Future\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreventer;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostMetaChanged as NodeTypeCoreOnPostMetaChanged;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostMetaChange;
 
 class OnPostMetaChangeRunner implements TriggerRunnerInterface
 {
@@ -32,7 +32,7 @@ class OnPostMetaChangeRunner implements TriggerRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeTypeCoreOnPostMetaChanged::getNodeTypeName();
+        return OnPostMetaChange::getNodeTypeName();
     }
 
     public function setup(int $workflowId, array $step): void

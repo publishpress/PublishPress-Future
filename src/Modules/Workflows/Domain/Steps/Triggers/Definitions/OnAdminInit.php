@@ -2,7 +2,6 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions;
 
-use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
 
