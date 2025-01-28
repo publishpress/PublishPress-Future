@@ -3,7 +3,8 @@
  */
 import { Fragment, useState, useEffect } from "@wordpress/element";
 import { FormTokenField } from "@wordpress/components";
-import { stripTags } from "../workflow-editor/utils";
+import { stripTags } from "../utils";
+
 export const TokensControl = (props) => {
     const [stringValue, setStringValue] = useState('');
 

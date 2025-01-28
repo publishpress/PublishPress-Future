@@ -8,6 +8,7 @@ import {
     Button,
     __experimentalVStack as VStack,
     ToggleControl,
+    __experimentalNumberControl as NumberControl,
 } from "@wordpress/components";
 import { VariablesTreeSelect } from "../variables-tree-select";
 import { useState, useMemo } from "@wordpress/element";
@@ -19,8 +20,7 @@ import { Slot } from "@wordpress/components";
 import Recurrence from "./recurrence";
 import ProFeatureField from "../pro-feature-field";
 import ExpressionBuilder from "./expression-builder";
-import { DescriptionText } from "./description-text";
-import { stripTags } from "../../utils";
+import { stripTags } from "../../../utils";
 
 const whenToRunOptions = [
     { name: __("As soon as possible", "post-expirator"), id: "now" },
@@ -164,10 +164,10 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
     const isPro = futureWorkflowEditor.isPro || false;
 
-    const preventDuplicate = (defaultValue.duplicateHandling || defaultDuplicateHandling) === 'replace';
-    const preventDuplicateHelp = (preventDuplicate) ?
-        __("Skip or replace duplicate scheduled tasks to prevent multiple instances of the same task", "post-expirator") :
-        __("Allow multiple scheduled tasks to be created, even if they are duplicates", "post-expirator");
+    const allowDuplicate = (defaultValue.duplicateHandling || defaultDuplicateHandling) === 'create-new';
+    const allowDuplicateHelp = (allowDuplicate) ?
+        __("Allows scheduling tasks even if another task with the same identifier exists.", "post-expirator") :
+        __("Prevents scheduling tasks when another task with the same identifier already exists.", "post-expirator");
 
     return (
         <>
@@ -304,26 +304,26 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                             <>
                                 <PanelRow>
                                     <ToggleControl
-                                        label={__("Prevent duplicate scheduling", "post-expirator")}
-                                        checked={preventDuplicate}
+                                        label={__("Allow duplicate scheduled tasks", "post-expirator")}
+                                        checked={allowDuplicate}
                                         onChange={(value) => {
-                                            const newValue = (value) ? 'replace' : 'create-new';
+                                            const newValue = (value) ? 'create-new' : 'replace';
                                             onChangeSetting({ settingName: "duplicateHandling", value: newValue });
                                         }}
-                                        help={preventDuplicateHelp}
+                                        help={allowDuplicateHelp}
                                     />
                                 </PanelRow>
 
                                 <PanelRow>
                                     <ExpressionBuilder
                                         name="uniqueIdExpression"
-                                        label={__("Task Identifier Expression", "post-expirator")}
+                                        label={__("Unique Task Identifier", "post-expirator")}
                                         defaultValue={defaultValue.uniqueIdExpression ?? ''}
                                         onChange={(settingName, value) => {
                                             onChangeSetting({ settingName: 'uniqueIdExpression', value: value });
                                         }}
                                         variables={allVariables}
-                                        description={__("Define an identifier to detect duplicate tasks creating a unique ID.", "post-expirator")}
+                                        description={__("Define a unique ID to detect and prevent duplicate tasks.", "post-expirator")}
                                         oneLinePreview={true}
                                         wrapOnPreview={false}
                                         wrapOnEditor={false}
@@ -335,11 +335,11 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                         )}
 
                         <PanelRow>
-                            <TextControl
-                                label={__("Priority", "post-expirator")}
+                            <NumberControl
+                                label={__("Task Execution Order", "post-expirator")}
                                 value={defaultValue.priority || 10}
                                 onChange={(value) => onChangeSetting({ settingName: "priority", value })}
-                                help={__("Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first.", "post-expirator")} // phpcs:ignore Generic.Files.LineLength.TooLong
+                                help={__("Controls when this task runs. Lower numbers run first. Default: 10 (normal priority).", "post-expirator")} // phpcs:ignore Generic.Files.LineLength.TooLong
                             />
                         </PanelRow>
                     </>

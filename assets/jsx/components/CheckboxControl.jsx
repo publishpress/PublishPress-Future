@@ -3,7 +3,7 @@
  */
 import { Fragment, useState  } from "@wordpress/element";
 import { CheckboxControl as WPCheckboxControl } from "@wordpress/components";
-import { stripTags } from "../workflow-editor/utils";
+import { stripTags } from "../utils";
 
 export const CheckboxControl = function (props) {
     const [checked, setChecked] = useState(props.checked || false);

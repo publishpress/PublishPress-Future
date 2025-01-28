@@ -7,10 +7,8 @@ export const DescriptionText = ({
 }) => {
     return (
         <p className={className}>
-            {text}
-            {helpUrl && (
+            {text} {helpUrl && (
                 <>
-                    <br />
                     <HelpLink url={helpUrl} />
                 </>
             )}

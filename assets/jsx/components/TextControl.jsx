@@ -4,7 +4,7 @@
 import { Fragment } from "@wordpress/element";
 import { TextControl as WPTextControl } from "@wordpress/components";
 import { Spinner } from "./";
-import { stripTags } from "../workflow-editor/utils";
+import { stripTags } from "../utils";
 
 export const TextControl = function (props) {
     let description;
