@@ -770,7 +770,7 @@ return [
         );
     },
 
-    ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR =>
+    ServicesAbstract::GENERAL_STEP_PROCESSOR =>
     static function (ContainerInterface $container): StepProcessorInterface {
         return new GeneralStep(
             $container->get(ServicesAbstract::HOOKS),
@@ -779,21 +779,21 @@ return [
         );
     },
 
-    ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR =>
+    ServicesAbstract::POST_STEP_PROCESSOR =>
     static function (ContainerInterface $container): StepProcessorInterface {
         return new PostStep(
             $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+            $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
             $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
             $container->get(ServicesAbstract::LOGGER)
         );
     },
 
-    ServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR =>
+    ServicesAbstract::CRON_STEP_PROCESSOR =>
     static function (ContainerInterface $container): AsyncStepProcessorInterface {
         return new CronStep(
             $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+            $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
             $container->get(ServicesAbstract::CRON),
             $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL),
             $container->get(ServicesAbstract::STEP_TYPES_MODEL),
@@ -829,7 +829,7 @@ return [
                 case OnInitRunner::getNodeTypeName():
                     if ($settingsModel->getExperimentalFeaturesStatus()) {
                         $stepRunner = new OnInitRunner(
-                            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                            $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                             $container->get(ServicesAbstract::LOGGER)
                         );
                     }
@@ -838,7 +838,7 @@ return [
                 case OnAdminInitRunner::getNodeTypeName():
                     if ($settingsModel->getExperimentalFeaturesStatus()) {
                         $stepRunner = new OnAdminInitRunner(
-                            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                            $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                             $container->get(ServicesAbstract::LOGGER)
                         );
                     }
@@ -847,7 +847,7 @@ return [
                 case OnPostSaveRunner::getNodeTypeName():
                     $stepRunner = new OnPostSaveRunner(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER),
@@ -858,7 +858,7 @@ return [
                 case OnPostUpdateRunner::getNodeTypeName():
                     $stepRunner = new OnPostUpdateRunner(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER),
@@ -868,21 +868,21 @@ return [
 
                 case OnPostPublishRunner::getNodeTypeName():
                     $stepRunner = new OnPostPublishRunner(
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::LOGGER)
                     );
                     break;
 
                 case OnPostStatusChangeRunner::getNodeTypeName():
                     $stepRunner = new OnPostStatusChangeRunner(
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::LOGGER)
                     );
                     break;
 
                 case OnPostScheduleRunner::getNodeTypeName():
                     $stepRunner = new OnPostScheduleRunner(
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::LOGGER)
                     );
                     break;
@@ -890,7 +890,7 @@ return [
                 case OnPostWorkflowEnableRunner::getNodeTypeName():
                     $stepRunner = new OnPostWorkflowEnableRunner(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER),
@@ -901,7 +901,7 @@ return [
                 case OnLegacyActionTriggerRunner::getNodeTypeName():
                     $stepRunner = new OnLegacyActionTriggerRunner(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER),
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
@@ -910,14 +910,14 @@ return [
 
                 case OnScheduleRunner::getNodeTypeName():
                     $stepRunner = new OnScheduleRunner(
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::LOGGER)
                     );
                     break;
 
                 case OnPostMetaChangeRunner::getNodeTypeName():
                     $stepRunner = new OnPostMetaChangeRunner(
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::LOGGER)
                     );
                     break;
@@ -925,7 +925,7 @@ return [
                 // Actions
                 case DeletePostRunner::getNodeTypeName():
                     $stepRunner = new DeletePostRunner(
-                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                         $container->get(ServicesAbstract::LOGGER)
                     );
@@ -933,7 +933,7 @@ return [
 
                 case StickPostRunner::getNodeTypeName():
                     $stepRunner = new StickPostRunner(
-                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                         $container->get(ServicesAbstract::LOGGER)
                     );
@@ -941,7 +941,7 @@ return [
 
                 case UnstickPostRunner::getNodeTypeName():
                     $stepRunner = new UnstickPostRunner(
-                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                         $container->get(ServicesAbstract::LOGGER)
                     );
@@ -949,7 +949,7 @@ return [
 
                 case AddPostTermRunner::getNodeTypeName():
                     $stepRunner = new AddPostTermRunner(
-                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                         $container->get(ServicesAbstract::ERROR),
                         $container->get(ServicesAbstract::LOGGER)
@@ -958,7 +958,7 @@ return [
 
                 case SetPostTermRunner::getNodeTypeName():
                     $stepRunner = new SetPostTermRunner(
-                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                         $container->get(ServicesAbstract::ERROR),
                         $container->get(ServicesAbstract::LOGGER)
@@ -967,7 +967,7 @@ return [
 
                 case RemovePostTermRunner::getNodeTypeName():
                     $stepRunner = new RemovePostTermRunner(
-                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                         $container->get(ServicesAbstract::ERROR),
                         $container->get(ServicesAbstract::LOGGER)
@@ -976,21 +976,21 @@ return [
 
                 case ChangePostStatusRunner::getNodeTypeName():
                     $stepRunner = new ChangePostStatusRunner(
-                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::LOGGER)
                     );
                     break;
 
                 case SendEmailRunner::getNodeTypeName():
                     $stepRunner = new SendEmailRunner(
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::LOGGER)
                     );
                     break;
 
                 case DeactivatePostWorkflowRunner::getNodeTypeName():
                     $stepRunner = new DeactivatePostWorkflowRunner(
-                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER)
                     );
@@ -998,21 +998,21 @@ return [
 
                 case AddPostMetaRunner::getNodeTypeName():
                     $stepRunner = new AddPostMetaRunner(
-                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::LOGGER)
                     );
                     break;
 
                 case DeletePostMetaRunner::getNodeTypeName():
                     $stepRunner = new DeletePostMetaRunner(
-                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::LOGGER)
                     );
                     break;
 
                 case UpdatePostMetaRunner::getNodeTypeName():
                     $stepRunner = new UpdatePostMetaRunner(
-                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::LOGGER)
                     );
                     break;
@@ -1020,14 +1020,14 @@ return [
                 // Advanced
                 case ScheduleDelayRunner::getNodeTypeName():
                     $stepRunner = new ScheduleDelayRunner(
-                        $container->get(ServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::CRON_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
                     );
                     break;
 
                 case ConditionalRunner::getNodeTypeName():
                     $stepRunner = new ConditionalRunner(
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER)
                     );
@@ -1035,14 +1035,14 @@ return [
 
                 case QueryPostsRunner::getNodeTypeName():
                     $stepRunner = new QueryPostsRunner(
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::LOGGER)
                     );
                     break;
 
                 case SendRayRunner::getNodeTypeName():
                     $stepRunner = new SendRayRunner(
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER)
                     );
@@ -1050,7 +1050,7 @@ return [
 
                 case AppendDebugLogRunner::getNodeTypeName():
                     $stepRunner = new AppendDebugLogRunner(
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER)
                     );

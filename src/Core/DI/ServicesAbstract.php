@@ -155,11 +155,26 @@ abstract class ServicesAbstract
 
     public const NODE_RUNNER_MAPPER = 'future.free/workflows/node-runner-mapper';
 
-    public const GENERAL_STEP_NODE_RUNNER_PROCESSOR = 'future.free/workflows/general-step-node-runner-processor';
+    public const GENERAL_STEP_PROCESSOR = 'future.free/workflows/general-step-processor';
 
-    public const POST_STEP_NODE_RUNNER_PROCESSOR = 'future.free/workflows/post-step-node-runner-processor';
+    public const POST_STEP_PROCESSOR = 'future.free/workflows/post-step-processor';
 
-    public const CRON_STEP_NODE_RUNNER_PROCESSOR = 'future.free/workflows/cron-step-node-runner-processor';
+    public const CRON_STEP_PROCESSOR = 'future.free/workflows/cron-step-processor';
+
+    /**
+     * @deprecated 4.3.1 Use STEP_RUNNER_FACTORY instead.
+     */
+    public const GENERAL_STEP_PROCESSOR = 'future.free/workflows/general-step-node-runner-processor';
+
+    /**
+     * @deprecated 4.3.1 Use STEP_RUNNER_FACTORY instead.
+     */
+    public const POST_STEP_PROCESSOR = 'future.free/workflows/post-step-node-runner-processor';
+
+    /**
+     * @deprecated 4.3.1 Use STEP_RUNNER_FACTORY instead.
+     */
+    public const CRON_STEP_PROCESSOR = 'future.free/workflows/cron-step-node-runner-processor';
 
     /**
      * @deprecated 4.3.1 Use STEP_RUNNER_FACTORY instead.
