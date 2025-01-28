@@ -6,7 +6,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Domain\LegacyAction\TriggerWorkflow;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
-use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
+use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 
 class OnLegacyActionTrigger implements StepTypeInterface
@@ -36,7 +36,7 @@ class OnLegacyActionTrigger implements StepTypeInterface
 
     public function getElementaryType(): string
     {
-        return NodeTypesModel::NODE_TYPE_TRIGGER;
+        return StepTypesModel::STEP_TYPE_TRIGGER;
     }
 
     public function getReactFlowNodeType(): string

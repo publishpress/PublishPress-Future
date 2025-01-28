@@ -3,7 +3,7 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
-use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
+use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
 class AppendDebugLog implements StepTypeInterface
 {
@@ -14,7 +14,7 @@ class AppendDebugLog implements StepTypeInterface
 
     public function getElementaryType(): string
     {
-        return NodeTypesModel::NODE_TYPE_ADVANCED;
+        return StepTypesModel::STEP_TYPE_ADVANCED;
     }
 
     public function getReactFlowNodeType(): string

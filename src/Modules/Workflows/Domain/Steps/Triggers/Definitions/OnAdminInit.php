@@ -3,7 +3,7 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
-use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
+use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
 class OnAdminInit implements StepTypeInterface
 {
@@ -14,7 +14,7 @@ class OnAdminInit implements StepTypeInterface
 
     public function getElementaryType(): string
     {
-        return NodeTypesModel::NODE_TYPE_TRIGGER;
+        return StepTypesModel::STEP_TYPE_TRIGGER;
     }
 
     public function getReactFlowNodeType(): string

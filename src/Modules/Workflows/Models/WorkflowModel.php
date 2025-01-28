@@ -492,7 +492,7 @@ class WorkflowModel implements WorkflowModelInterface
         // Build a list of trigger nodes
         $triggers = [];
         foreach ($abstractFlow['nodes'] as $node) {
-            if ($node['data']['elementaryType'] === NodeTypesModel::NODE_TYPE_TRIGGER) {
+            if ($node['data']['elementaryType'] === StepTypesModel::STEP_TYPE_TRIGGER) {
                 $triggers[] = $node;
             }
         }
@@ -621,7 +621,7 @@ class WorkflowModel implements WorkflowModelInterface
 
         foreach ($workflowTriggers as $triggerNode) {
             if (
-                $triggerNode['data']['elementaryType'] === NodeTypesModel::NODE_TYPE_TRIGGER
+                $triggerNode['data']['elementaryType'] === StepTypesModel::STEP_TYPE_TRIGGER
                 && $triggerNode['data']['name'] === $triggerName
             ) {
                 return true;
@@ -738,7 +738,7 @@ class WorkflowModel implements WorkflowModelInterface
 
         foreach ($workflowTriggers as $triggerNode) {
             if (
-                $triggerNode['data']['elementaryType'] === NodeTypesModel::NODE_TYPE_TRIGGER
+                $triggerNode['data']['elementaryType'] === StepTypesModel::STEP_TYPE_TRIGGER
                 && $triggerNode['data']['name'] === CoreOnManuallyEnabledForPost::getNodeTypeName()
             ) {
                 return $triggerNode;

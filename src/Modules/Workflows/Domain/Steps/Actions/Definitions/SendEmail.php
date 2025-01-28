@@ -3,7 +3,7 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
-use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
+use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
 class SendEmail implements StepTypeInterface
 {
@@ -27,7 +27,7 @@ class SendEmail implements StepTypeInterface
 
     public function getElementaryType(): string
     {
-        return NodeTypesModel::NODE_TYPE_ACTION;
+        return StepTypesModel::STEP_TYPE_ACTION;
     }
 
     public function getReactFlowNodeType(): string

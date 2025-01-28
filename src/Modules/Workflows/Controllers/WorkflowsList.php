@@ -8,7 +8,7 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
-use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
+use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Module;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
@@ -257,10 +257,10 @@ class WorkflowsList implements InitializableInterface
 
         foreach ($workflowFlow["nodes"] as $node) {
             if (
-                NodeTypesModel::NODE_TYPE_TRIGGER ===
+                StepTypesModel::STEP_TYPE_TRIGGER ===
                 $node["data"]["elementaryType"]
             ) {
-                $nodeType = $this->stepTypesModel->getNodeType($node["data"]["name"]);
+                $nodeType = $this->stepTypesModel->getStepType($node["data"]["name"]);
 
                 if (empty($nodeType)) {
                     $triggers[] = esc_html($node["data"]["name"]);
