@@ -17,7 +17,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\SiteRe
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\UserResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
-use PublishPress\Future\Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\AsyncStepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
@@ -29,7 +29,7 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowScheduledStepModel;
 use Throwable;
 
-class Cron implements AsyncNodeRunnerProcessorInterface
+class Cron implements AsyncStepProcessorInterface
 {
     public const DEFAULT_REPEAT_UNTIL_TIMES = 99999999999;
 
