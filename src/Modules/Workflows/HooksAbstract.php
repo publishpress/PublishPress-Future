@@ -88,7 +88,11 @@ abstract class HooksAbstract
 
     public const FILTER_WORKFLOW_ENGINE_MAP_TRIGGER = 'publishpressfuture_workflow_engine_map_trigger';
 
+    /** @deprecated 4.3.1 Use FILTER_WORKFLOW_ENGINE_MAP_STEP_RUNNER instead. */
     public const FILTER_WORKFLOW_ENGINE_MAP_NODE_RUNNER = 'publishpressfuture_workflow_engine_map_node_runner';
+
+    /** @since 4.3.1 */
+    public const FILTER_WORKFLOW_ENGINE_MAP_STEP_RUNNER = 'publishpressfuture_workflow_engine_map_step_runner';
 
     public const FILTER_ACTION_SCHEDULER_LIST_COLUMN_ARGS = 'action_scheduler_list_table_column_args';
 
