@@ -20,6 +20,7 @@ import Recurrence from "./recurrence";
 import ProFeatureField from "../pro-feature-field";
 import ExpressionBuilder from "./expression-builder";
 import { DescriptionText } from "./description-text";
+import { stripTags } from "../../utils";
 
 const whenToRunOptions = [
     { name: __("As soon as possible", "post-expirator"), id: "now" },
@@ -261,7 +262,9 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
                                                     <div dangerouslySetInnerHTML={{
                                                         __html: sprintf(
-                                                            __("For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English.", "post-expirator"),
+                                                            stripTags(
+                                                                __("For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English.", "post-expirator")
+                                                            ),
                                                             "<a href='https://www.php.net/manual/en/function.strtotime.php' target='_blank'>",
                                                             "</a>",
                                                             "<code>",

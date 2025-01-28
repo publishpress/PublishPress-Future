@@ -4,13 +4,14 @@
 import { Fragment } from "@wordpress/element";
 import { TextControl as WPTextControl } from "@wordpress/components";
 import { Spinner } from "./";
+import { stripTags } from "../workflow-editor/utils";
 
 export const TextControl = function (props) {
     let description;
 
     if (props.unescapedDescription) {
         // If using this option, the HTML has to be escaped before injected into the JS interface.
-        description = <p className="description" dangerouslySetInnerHTML={{ __html: props.description }}></p>;
+        description = <p className="description" dangerouslySetInnerHTML={{ __html: stripTags(props.description) }}></p>;
     } else {
         description = <p className="description">{props.description}</p>;
     }

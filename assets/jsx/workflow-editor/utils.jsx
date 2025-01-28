@@ -543,3 +543,7 @@ export function getNodeById(id, nodes = null) {
 
     return nodes.find((node) => node.id === id);
 }
+
+export function stripTags(string) {
+    return string.replace(/<[^>]*>?/gm, '');
+}
