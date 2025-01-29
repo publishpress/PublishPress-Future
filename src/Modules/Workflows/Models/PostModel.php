@@ -5,7 +5,7 @@ namespace PublishPress\Future\Modules\Workflows\Models;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\InputValidators\PostQuery;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\PostModelInterface;
 use WP_Post;
@@ -68,7 +68,7 @@ class PostModel implements PostModelInterface
             // Validate the trigger's post query
             $triggers = $workflowModel->getTriggerNodes();
             foreach ($triggers as $trigger) {
-                if ($trigger['data']['name'] !== CoreOnManuallyEnabledForPost::getNodeTypeName()) {
+                if ($trigger['data']['name'] !== OnPostWorkflowEnable::getNodeTypeName()) {
                     continue;
                 }
 

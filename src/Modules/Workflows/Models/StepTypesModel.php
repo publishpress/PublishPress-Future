@@ -5,34 +5,34 @@ namespace PublishPress\Future\Modules\Workflows\Models;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDeactivateWorkflow;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeStatus;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsAdd;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDelete;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsRemove;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsSet;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostStick;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostUnstick;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CoreSendEmail;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\CorePostQuery;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\RayDebug;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\CoreSchedule;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\ConditionalSplit;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\LogAdd;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminInit;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSchedule;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostMetaChanged;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostPublished;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostStatusChanged;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostScheduled;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaAdd;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaDelete;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaUpdate;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AddPostMeta;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AddPostTerm;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AppendDebugLog;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\ChangePostStatus;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\Conditional;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeactivatePostWorkflow;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeletePost;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeletePostMeta;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\QueryPosts;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\RemovePostTerm;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\ScheduleDelay;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendEmail;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendRay;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SetPostTerm;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\StickPost;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UnstickPost;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePostMeta;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnAdminInit;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnInit;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnLegacyActionTrigger;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostMetaChange;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostPublish;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSave;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSchedule;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostStatusChange;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostUpdate;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnSchedule;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 
@@ -193,20 +193,20 @@ class StepTypesModel implements StepTypesModelInterface
     private function getDefaultTriggerSteps()
     {
         $nodesInstances = [
-            CoreOnSavePost::getNodeTypeName() => new CoreOnSavePost(),
-            CoreOnPostUpdated::getNodeTypeName() => new CoreOnPostUpdated(),
-            CoreOnPostPublished::getNodeTypeName() => new CoreOnPostPublished(),
-            CoreOnPostScheduled::getNodeTypeName() => new CoreOnPostScheduled(),
-            CoreOnPostStatusChanged::getNodeTypeName() => new CoreOnPostStatusChanged(),
-            CoreOnManuallyEnabledForPost::getNodeTypeName() => new CoreOnManuallyEnabledForPost(),
-            FutureLegacyAction::getNodeTypeName() => new FutureLegacyAction($this->hooks),
-            CoreOnCronSchedule::getNodeTypeName() => new CoreOnCronSchedule(),
-            CoreOnPostMetaChanged::getNodeTypeName() => new CoreOnPostMetaChanged(),
+            OnPostSave::getNodeTypeName() => new OnPostSave(),
+            OnPostUpdate::getNodeTypeName() => new OnPostUpdate(),
+            OnPostPublish::getNodeTypeName() => new OnPostPublish(),
+            OnPostSchedule::getNodeTypeName() => new OnPostSchedule(),
+            OnPostStatusChange::getNodeTypeName() => new OnPostStatusChange(),
+            OnPostWorkflowEnable::getNodeTypeName() => new OnPostWorkflowEnable(),
+            OnLegacyActionTrigger::getNodeTypeName() => new OnLegacyActionTrigger($this->hooks),
+            OnSchedule::getNodeTypeName() => new OnSchedule(),
+            OnPostMetaChange::getNodeTypeName() => new OnPostMetaChange(),
         ];
 
         if ($this->settingsFacade->getExperimentalFeaturesStatus()) {
-            $nodesInstances[CoreOnInit::getNodeTypeName()] = new CoreOnInit();
-            $nodesInstances[CoreOnAdminInit::getNodeTypeName()] = new CoreOnAdminInit();
+            $nodesInstances[OnInit::getNodeTypeName()] = new OnInit();
+            $nodesInstances[OnAdminInit::getNodeTypeName()] = new OnAdminInit();
         }
 
         return $nodesInstances;
@@ -215,18 +215,18 @@ class StepTypesModel implements StepTypesModelInterface
     private function getDefaultActionSteps()
     {
         $nodesInstances = [
-            CorePostDelete::getNodeTypeName() => new CorePostDelete(),
-            CorePostStick::getNodeTypeName() => new CorePostStick(),
-            CorePostUnstick::getNodeTypeName() => new CorePostUnstick(),
-            CorePostTermsAdd::getNodeTypeName() => new CorePostTermsAdd(),
-            CorePostTermsSet::getNodeTypeName() => new CorePostTermsSet(),
-            CorePostTermsRemove::getNodeTypeName() => new CorePostTermsRemove(),
-            CorePostChangeStatus::getNodeTypeName() => new CorePostChangeStatus(),
-            CoreSendEmail::getNodeTypeName() => new CoreSendEmail(),
-            CorePostDeactivateWorkflow::getNodeTypeName() => new CorePostDeactivateWorkflow(),
-            CorePostMetaAdd::getNodeTypeName() => new CorePostMetaAdd(),
-            CorePostMetaDelete::getNodeTypeName() => new CorePostMetaDelete(),
-            CorePostMetaUpdate::getNodeTypeName() => new CorePostMetaUpdate(),
+            DeletePost::getNodeTypeName() => new DeletePost(),
+            StickPost::getNodeTypeName() => new StickPost(),
+            UnstickPost::getNodeTypeName() => new UnstickPost(),
+            AddPostTerm::getNodeTypeName() => new AddPostTerm(),
+            SetPostTerm::getNodeTypeName() => new SetPostTerm(),
+            RemovePostTerm::getNodeTypeName() => new RemovePostTerm(),
+            ChangePostStatus::getNodeTypeName() => new ChangePostStatus(),
+            SendEmail::getNodeTypeName() => new SendEmail(),
+            DeactivatePostWorkflow::getNodeTypeName() => new DeactivatePostWorkflow(),
+            AddPostMeta::getNodeTypeName() => new AddPostMeta(),
+            DeletePostMeta::getNodeTypeName() => new DeletePostMeta(),
+            UpdatePostMeta::getNodeTypeName() => new UpdatePostMeta(),
         ];
 
         return $nodesInstances;
@@ -235,14 +235,14 @@ class StepTypesModel implements StepTypesModelInterface
     private function getDefaultAdvancedSteps()
     {
         $nodesInstances = [
-            CoreSchedule::getNodeTypeName() => new CoreSchedule(),
-            CorePostQuery::getNodeTypeName() => new CorePostQuery(),
-            ConditionalSplit::getNodeTypeName() => new ConditionalSplit(),
-            LogAdd::getNodeTypeName() => new LogAdd(),
+            ScheduleDelay::getNodeTypeName() => new ScheduleDelay(),
+            QueryPosts::getNodeTypeName() => new QueryPosts(),
+            Conditional::getNodeTypeName() => new Conditional(),
+            AppendDebugLog::getNodeTypeName() => new AppendDebugLog(),
         ];
 
         if (function_exists('ray')) {
-            $nodesInstances[RayDebug::getNodeTypeName()] = new RayDebug();
+            $nodesInstances[SendRay::getNodeTypeName()] = new SendRay();
         }
 
         return $nodesInstances;

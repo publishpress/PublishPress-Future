@@ -2,7 +2,6 @@
 
 namespace PublishPress\Future\Modules\Workflows\Controllers;
 
-use PhpParser\Node\ClosureUse;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
