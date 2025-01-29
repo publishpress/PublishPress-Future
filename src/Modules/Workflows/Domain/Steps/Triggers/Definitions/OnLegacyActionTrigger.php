@@ -46,7 +46,7 @@ class OnLegacyActionTrigger implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "futureLegacyAction";
+        return "onLegacyActionTrigger";
     }
 
     public function getLabel(): string

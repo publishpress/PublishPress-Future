@@ -24,7 +24,7 @@ class DeactivatePostWorkflow implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "deactivateWorkflowForPost";
+        return "deactWorkflowForPost";
     }
 
     public function getLabel(): string

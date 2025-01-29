@@ -24,7 +24,7 @@ class OnPostSave implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "onSavePost";
+        return "onPostSave";
     }
 
     public function getLabel(): string

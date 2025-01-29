@@ -24,7 +24,7 @@ class DeletePostMeta implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "postMetaDelete";
+        return "deletePostMeta";
     }
 
     public function getLabel(): string

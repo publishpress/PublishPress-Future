@@ -24,7 +24,7 @@ class OnPostWorkflowEnable implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "onManualEnableForPost";
+        return "onPostWorkflowEnable";
     }
 
     public function getLabel(): string

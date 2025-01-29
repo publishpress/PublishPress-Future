@@ -24,7 +24,7 @@ class ScheduleDelay implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "schedule";
+        return "scheduleDelay";
     }
 
     public function getLabel(): string

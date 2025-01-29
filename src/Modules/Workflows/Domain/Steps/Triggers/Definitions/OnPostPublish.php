@@ -24,7 +24,7 @@ class OnPostPublish implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "onPostPublished";
+        return "onPostPublish";
     }
 
     public function getLabel(): string

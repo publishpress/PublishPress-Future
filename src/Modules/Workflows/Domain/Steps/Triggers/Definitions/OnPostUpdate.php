@@ -24,7 +24,7 @@ class OnPostUpdate implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "onPostUpdated";
+        return "onPostUpdate";
     }
 
     public function getLabel(): string

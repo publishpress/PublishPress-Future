@@ -24,7 +24,7 @@ class AppendDebugLog implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "logAdd";
+        return "appendDebugLog";
     }
 
     public function getLabel(): string

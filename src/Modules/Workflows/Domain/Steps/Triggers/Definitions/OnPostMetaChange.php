@@ -24,7 +24,7 @@ class OnPostMetaChange implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "onPostMetaChanged";
+        return "onPostMetaChange";
     }
 
     public function getLabel(): string

@@ -24,7 +24,7 @@ class OnSchedule implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "onCronSchedule";
+        return "onSchedule";
     }
 
     public function getLabel(): string

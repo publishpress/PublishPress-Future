@@ -24,7 +24,7 @@ class AddPostTerm implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "addPostTerms";
+        return "addPostTerm";
     }
 
     public function getLabel(): string

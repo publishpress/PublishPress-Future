@@ -24,7 +24,7 @@ class SendRay implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "rayDebug";
+        return "sendRay";
     }
 
     public function getLabel(): string

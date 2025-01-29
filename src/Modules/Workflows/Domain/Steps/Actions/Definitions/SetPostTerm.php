@@ -24,7 +24,7 @@ class SetPostTerm implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "replacePostTerms";
+        return "setPostTerm";
     }
 
     public function getLabel(): string

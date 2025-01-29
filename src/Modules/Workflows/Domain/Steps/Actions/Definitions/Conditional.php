@@ -24,7 +24,7 @@ class Conditional implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "conditionalSplit";
+        return "conditional";
     }
 
     public function getLabel(): string

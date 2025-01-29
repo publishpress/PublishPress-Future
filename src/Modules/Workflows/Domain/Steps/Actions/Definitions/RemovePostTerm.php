@@ -24,7 +24,7 @@ class RemovePostTerm implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "removePostTerms";
+        return "removePostTerm";
     }
 
     public function getLabel(): string

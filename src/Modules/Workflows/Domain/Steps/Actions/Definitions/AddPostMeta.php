@@ -24,7 +24,7 @@ class AddPostMeta implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "postMetaAdd";
+        return "addPostMeta";
     }
 
     public function getLabel(): string

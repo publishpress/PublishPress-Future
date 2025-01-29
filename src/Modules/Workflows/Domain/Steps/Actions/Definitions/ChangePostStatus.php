@@ -24,7 +24,7 @@ class ChangePostStatus implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "changePostStatus";
+        return "movePostToStatus";
     }
 
     public function getLabel(): string

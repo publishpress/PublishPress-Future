@@ -24,7 +24,7 @@ class QueryPosts implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "queryPost";
+        return "queryPosts";
     }
 
     public function getLabel(): string
