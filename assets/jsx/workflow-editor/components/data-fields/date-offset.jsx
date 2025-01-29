@@ -6,6 +6,7 @@ import {
     PanelRow,
     Popover,
     Button,
+    Slot,
     __experimentalVStack as VStack,
     ToggleControl,
     __experimentalNumberControl as NumberControl,
@@ -16,11 +17,11 @@ import { useSelect } from "@wordpress/data";
 import { store as editorStore } from "../editor-store";
 import { FEATURE_ADVANCED_SETTINGS } from "../../constants";
 import { DateOffsetPreview } from "../../../components/DateOffsetPreview";
-import { Slot } from "@wordpress/components";
 import Recurrence from "./recurrence";
 import ProFeatureField from "../pro-feature-field";
 import ExpressionBuilder from "./expression-builder";
 import { stripTags } from "../../../utils";
+import { DescriptionText } from "./description-text";
 
 const whenToRunOptions = [
     { name: __("As soon as possible", "post-expirator"), id: "now" },
@@ -165,9 +166,6 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
     const isPro = futureWorkflowEditor.isPro || false;
 
     const allowDuplicate = (defaultValue.duplicateHandling || defaultDuplicateHandling) === 'create-new';
-    const allowDuplicateHelp = (allowDuplicate) ?
-        __("Allows scheduling tasks even if another task with the same identifier exists.", "post-expirator") :
-        __("Prevents scheduling tasks when another task with the same identifier already exists.", "post-expirator");
 
     return (
         <>
@@ -286,11 +284,16 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                 )}
 
                 {! isPro && (
-                    <PanelRow>
-                        <ProFeatureField link="https://publishpress.com/links/future-workflow-inspector">
-                            <Recurrence label={__("Repeating Action", "post-expirator")} disabled={true} />
-                        </ProFeatureField>
-                    </PanelRow>
+                    <>
+                        <PanelRow className="margin-bottom-0">
+                            <ProFeatureField link="https://publishpress.com/links/future-workflow-inspector">
+                                <Recurrence label={__("Repeating Action", "post-expirator")} disabled={true} />
+                            </ProFeatureField>
+                        </PanelRow>
+                        <PanelRow className="margin-top-0">
+                            <DescriptionText text={__("Choose how often this task should repeat. Select 'Non-repeating' for a one-time action or set an interval for automatic recurrence.", "post-expirator")} />
+                        </PanelRow>
+                    </>
                 )}
 
                 <Slot name="DateOffsetAfterDateSourceField" fillProps={{
@@ -302,7 +305,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                     <>
                         {! hidePreventDuplicateScheduling && (
                             <>
-                                <PanelRow>
+                                <PanelRow className="margin-bottom-0">
                                     <ToggleControl
                                         label={__("Allow duplicate scheduled tasks", "post-expirator")}
                                         checked={allowDuplicate}
@@ -310,10 +313,14 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                                             const newValue = (value) ? 'create-new' : 'replace';
                                             onChangeSetting({ settingName: "duplicateHandling", value: newValue });
                                         }}
-                                        help={allowDuplicateHelp}
                                     />
                                 </PanelRow>
-
+                                <PanelRow className="margin-top-0">
+                                    <DescriptionText
+                                        text={__("Allows scheduling tasks even if a similar task exists.", "post-expirator")}
+                                        helpUrl="https://publishpress.com/docs/schedule-delay/#preventing-duplicate-scheduled-tasks-task-identification-guide"
+                                    />
+                                </PanelRow>
                                 <PanelRow>
                                     <ExpressionBuilder
                                         name="uniqueIdExpression"
@@ -334,12 +341,18 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                             </>
                         )}
 
-                        <PanelRow>
+                        <PanelRow className="margin-bottom-0">
                             <NumberControl
                                 label={__("Task Execution Order", "post-expirator")}
                                 value={defaultValue.priority || 10}
                                 onChange={(value) => onChangeSetting({ settingName: "priority", value })}
-                                help={__("Controls when this task runs. Lower numbers run first. Default: 10 (normal priority).", "post-expirator")} // phpcs:ignore Generic.Files.LineLength.TooLong
+                            />
+                        </PanelRow>
+
+                        <PanelRow className="margin-top-0">
+                            <DescriptionText
+                                text={__("Defines the execution order for this task in relation to others.", "post-expirator")}
+                                helpUrl="https://publishpress.com/docs/schedule-delay/#preventing-duplicate-scheduled-tasks-task-identification-guide"
                             />
                         </PanelRow>
                     </>
