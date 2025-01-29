@@ -231,6 +231,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                 <div className='react-flow__node-top'>
                     {nodeTypeIcon}
                     {topText}
+                    {/* {topText}: <span className='node-slug'>{data.slug}</span> */}
                 </div>
 
                 <div className={nodeDescription ? 'react-flow__node-inner-body with-description' : 'react-flow__node-inner-body'}>

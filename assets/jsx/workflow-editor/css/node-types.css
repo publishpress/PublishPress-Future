@@ -487,3 +487,6 @@ body.workflow-editor.is-free .react-flow__node-handle-name.handle-area-source-tr
     color: #000;
 }
 
+.react-flow__node-top .node-slug {
+    color: #00000075;
+}

@@ -25,9 +25,7 @@ export const InspectorCard = ({ title, description, icon, id, slug, isProFeature
             label: "ID",
             value: id,
         });
-    }
 
-    if (isAdvancedSettingsEnabled) {
         nodeAttributes.push({
             id: "slug",
             label: "Slug",
