@@ -2,16 +2,16 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\LogAdd as NodeTypeLogAdd;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AppendDebugLog;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
 class AppendDebugLogRunner implements StepRunnerInterface
 {
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepProcessorInterface
      */
     private $stepProcessor;
 
@@ -26,7 +26,7 @@ class AppendDebugLogRunner implements StepRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $stepProcessor,
+        StepProcessorInterface $stepProcessor,
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger
     ) {
@@ -37,7 +37,7 @@ class AppendDebugLogRunner implements StepRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeTypeLogAdd::getNodeTypeName();
+        return AppendDebugLog::getNodeTypeName();
     }
 
     public function setup(array $step): void

@@ -3,14 +3,14 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeStatus as NodeType;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\ChangePostStatus;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
 class ChangePostStatusRunner implements StepRunnerInterface
 {
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepProcessorInterface
      */
     private $stepProcessor;
 
@@ -20,7 +20,7 @@ class ChangePostStatusRunner implements StepRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $stepProcessor,
+        StepProcessorInterface $stepProcessor,
         LoggerInterface $logger
     ) {
         $this->stepProcessor = $stepProcessor;
@@ -29,7 +29,7 @@ class ChangePostStatusRunner implements StepRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeType::getNodeTypeName();
+        return ChangePostStatus::getNodeTypeName();
     }
 
     public function setup(array $step): void

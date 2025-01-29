@@ -2,16 +2,16 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\CorePostQuery as NodeType;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\QueryPosts;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
 class QueryPostsRunner implements StepRunnerInterface
 {
 
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepProcessorInterface
      */
     private $stepProcessor;
 
@@ -21,7 +21,7 @@ class QueryPostsRunner implements StepRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $stepProcessor,
+        StepProcessorInterface $stepProcessor,
         LoggerInterface $logger
     ) {
         $this->stepProcessor = $stepProcessor;
@@ -30,7 +30,7 @@ class QueryPostsRunner implements StepRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeType::getNodeTypeName();
+        return QueryPosts::getNodeTypeName();
     }
 
     public function setup(array $step): void

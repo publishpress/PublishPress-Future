@@ -3,15 +3,15 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsRemove as NodeType;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\RemovePostTerm;
 
 class RemovePostTermRunner implements StepRunnerInterface
 {
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepProcessorInterface
      */
     private $stepProcessor;
 
@@ -31,7 +31,7 @@ class RemovePostTermRunner implements StepRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $stepProcessor,
+        StepProcessorInterface $stepProcessor,
         \Closure $expirablePostModelFactory,
         ErrorFacade $errorFacade,
         LoggerInterface $logger
@@ -44,7 +44,7 @@ class RemovePostTermRunner implements StepRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeType::getNodeTypeName();
+        return RemovePostTerm::getNodeTypeName();
     }
 
     public function setup(array $step): void

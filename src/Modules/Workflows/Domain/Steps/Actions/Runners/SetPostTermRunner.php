@@ -3,15 +3,15 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsSet as NodeTypeCorePostTermsSet;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SetPostTerm;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
 class SetPostTermRunner implements StepRunnerInterface
 {
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var Step
      */
     private $stepProcessor;
 
@@ -31,7 +31,7 @@ class SetPostTermRunner implements StepRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $stepProcessor,
+        StepProcessorInterface $stepProcessor,
         \Closure $expirablePostModelFactory,
         ErrorFacade $errorFacade,
         LoggerInterface $logger
@@ -44,7 +44,7 @@ class SetPostTermRunner implements StepRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeTypeCorePostTermsSet::getNodeTypeName();
+        return SetPostTerm::getNodeTypeName();
     }
 
     public function setup(array $step): void

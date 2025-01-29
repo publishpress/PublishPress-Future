@@ -2,15 +2,15 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaDelete as NodeTypeCorePostMetaDelete;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeletePostMeta;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
 class DeletePostMetaRunner implements StepRunnerInterface
 {
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepProcessorInterface
      */
     private $stepProcessor;
 
@@ -20,7 +20,7 @@ class DeletePostMetaRunner implements StepRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $stepProcessor,
+        StepProcessorInterface $stepProcessor,
         LoggerInterface $logger
     ) {
         $this->stepProcessor = $stepProcessor;
@@ -29,7 +29,7 @@ class DeletePostMetaRunner implements StepRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeTypeCorePostMetaDelete::getNodeTypeName();
+        return DeletePostMeta::getNodeTypeName();
     }
 
     public function setup(array $step): void

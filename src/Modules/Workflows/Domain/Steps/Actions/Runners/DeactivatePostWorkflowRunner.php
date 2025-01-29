@@ -3,16 +3,16 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDeactivateWorkflow as NodeType;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeactivatePostWorkflow;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Models\PostModel;
 
 class DeactivatePostWorkflowRunner implements StepRunnerInterface
 {
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepProcessorInterface
      */
     private $stepProcessor;
 
@@ -27,7 +27,7 @@ class DeactivatePostWorkflowRunner implements StepRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $stepProcessor,
+        StepProcessorInterface $stepProcessor,
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger
     ) {
@@ -38,7 +38,7 @@ class DeactivatePostWorkflowRunner implements StepRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeType::getNodeTypeName();
+        return DeactivatePostWorkflow::getNodeTypeName();
     }
 
     public function setup(array $step): void

@@ -2,15 +2,15 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostStick as NodeTypeCorePostStick;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\StickPost;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
 class StickPostRunner implements StepRunnerInterface
 {
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepProcessorInterface
      */
     private $stepProcessor;
 
@@ -25,7 +25,7 @@ class StickPostRunner implements StepRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $stepProcessor,
+        StepProcessorInterface $stepProcessor,
         \Closure $expirablePostModelFactory,
         LoggerInterface $logger
     ) {
@@ -36,7 +36,7 @@ class StickPostRunner implements StepRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeTypeCorePostStick::getNodeTypeName();
+        return StickPost::getNodeTypeName();
     }
 
     public function setup(array $step): void

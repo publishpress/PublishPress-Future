@@ -2,15 +2,15 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\CoreSchedule as NodeType;
-use PublishPress\Future\Modules\Workflows\Interfaces\AsyncNodeRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\ScheduleDelay;
+use PublishPress\Future\Modules\Workflows\Interfaces\AsyncStepProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\AsyncStepRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 
-class ScheduleDelayRunner implements AsyncNodeRunnerInterface
+class ScheduleDelayRunner implements AsyncStepRunnerInterface
 {
     /**
-     * @var AsyncNodeRunnerProcessorInterface
+     * @var AsyncStepProcessorInterface
      */
     private $stepProcessor;
 
@@ -20,7 +20,7 @@ class ScheduleDelayRunner implements AsyncNodeRunnerInterface
     private $variablesHandler;
 
     public function __construct(
-        AsyncNodeRunnerProcessorInterface $stepProcessor,
+        AsyncStepProcessorInterface $stepProcessor,
         RuntimeVariablesHandlerInterface $variablesHandler
     ) {
         $this->stepProcessor = $stepProcessor;
@@ -29,7 +29,7 @@ class ScheduleDelayRunner implements AsyncNodeRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeType::getNodeTypeName();
+        return ScheduleDelay::getNodeTypeName();
     }
 
     public function setup(array $step): void

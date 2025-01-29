@@ -3,10 +3,10 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsAdd as NodeTypeCorePostTermsAdd;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AddPostTerm;
 
 class AddPostTermRunner implements StepRunnerInterface
 {
@@ -44,7 +44,7 @@ class AddPostTermRunner implements StepRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeTypeCorePostTermsAdd::getNodeTypeName();
+        return AddPostTerm::getNodeTypeName();
     }
 
     public function setup(array $step): void

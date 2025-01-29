@@ -2,15 +2,15 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDelete as NodeTypeCorePostDelete;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeletePost;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
 class DeletePostRunner implements StepRunnerInterface
 {
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepProcessorInterface
      */
     private $stepProcessor;
 
@@ -25,7 +25,7 @@ class DeletePostRunner implements StepRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $stepProcessor,
+        StepProcessorInterface $stepProcessor,
         \Closure $expirablePostModelFactory,
         LoggerInterface $logger
     ) {
@@ -36,7 +36,7 @@ class DeletePostRunner implements StepRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeTypeCorePostDelete::getNodeTypeName();
+        return DeletePost::getNodeTypeName();
     }
 
     public function setup(array $step): void

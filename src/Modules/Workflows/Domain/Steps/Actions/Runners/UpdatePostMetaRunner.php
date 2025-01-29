@@ -2,15 +2,15 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaUpdate as NodeTypeCorePostMetaUpdate;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePostMeta;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
 class UpdatePostMetaRunner implements StepRunnerInterface
 {
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepProcessorInterface
      */
     private $stepProcessor;
 
@@ -20,7 +20,7 @@ class UpdatePostMetaRunner implements StepRunnerInterface
     private $logger;
 
     public function __construct(
-        NodeRunnerProcessorInterface $stepProcessor,
+        StepProcessorInterface $stepProcessor,
         LoggerInterface $logger
     ) {
         $this->stepProcessor = $stepProcessor;
@@ -29,7 +29,7 @@ class UpdatePostMetaRunner implements StepRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return NodeTypeCorePostMetaUpdate::getNodeTypeName();
+        return UpdatePostMeta::getNodeTypeName();
     }
 
     public function setup(array $step): void
