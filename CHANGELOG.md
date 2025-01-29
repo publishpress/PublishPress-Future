@@ -33,6 +33,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Changed the default duplicate handling on workflow stepsto "Replace existing task" (Issue #956).
 - Step "Ray - Debug" renamed to "Send to Ray" (Issue #1143).
 - Step "Debug Log" renamed to "Append to debug log" (Issue #1143).
+- Step "Conditional" renamed to "Conditional Delay".
+- Changed the default step's slug to reflect the new step name and classes.
+- Changed the Schedule Delay step settings to be more intuitive.
+- Chagned some text in the workflow editor to be more user friendly.
 
 ### Fixed
 
@@ -48,6 +52,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix the constructor of some workflow triggers (Issue 1141).
 - Fix the error related to wrong arguments passed to sprintf on nl_NL language (Issue #1138).
 - Fix the JS error when the expression builder is opened with an expression containing only numbers (Issue #1142).
+- Fix specific text stripping tags from translated string.
 
 ### Developers
 
@@ -59,6 +64,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove the methods `convertLegacyScreenshots`, `setScreenshotFromBase64`, `setScreenshotFromFile` and `getScreenshotUrl` from the interface `WorkflowModelInterface` (Issue #1135).
 - Remove the methods `getWorkflowScreenshotStatus`, and `setWorkflowScreenshotStatus` from the class `SettingsFacade` (Issue #1135).
 - Refactored step types and step runners moving files to new folder structure (Issue #1143).
+- Refactored most of the code renaming "Node" to "Step", "NodeRunner" to "StepRunner", and so on (Issue #1148).
 
 ## [4.3.0] - 08 Jan, 2025
 
