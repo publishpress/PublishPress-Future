@@ -246,10 +246,6 @@ class RestApiV1 implements RestApiManagerInterface
             $workflowModel->setStatus($request['status']);
         }
 
-        if (isset($request['screenshot']) && $this->settingsFacade->getWorkflowScreenshotStatus()) {
-            $workflowModel->setScreenshotFromBase64($request['screenshot']);
-        }
-
         if (isset($request['debugRayShowQueries'])) {
             $workflowModel->setDebugRayShowQueries($request['debugRayShowQueries']);
         }

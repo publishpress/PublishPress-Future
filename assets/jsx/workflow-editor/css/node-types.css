@@ -26,6 +26,7 @@
 
 .react-flow__node-header .react-flow__node-label {
     margin-left: 22px;
+    margin-right: 5px;
 }
 
 .react-flow__node-header .dashicon {
@@ -40,6 +41,23 @@
     position: absolute;
     top: 1px;
     left: 2px;
+}
+
+.react-flow__node-description {
+    font-size: 8px;
+    line-height: 10px;
+    color: #0000008a;
+    margin-top: 0px;
+    margin-left: 16px;
+    padding: 0px 6px;
+    border-radius: 6px;
+    overflow-wrap: break-word;
+    max-width: 140px;
+    margin-bottom: 6px;
+}
+
+.react-flow__node-inner-body.with-description {
+    padding-bottom: 4px;
 }
 
 .react-flow__node-slug {
@@ -82,6 +100,220 @@
     position: absolute;
     top: 1px;
     left: 8px;
+}
+
+.react-flow__node-inserter-popover .components-popover__content {
+    width: 350px;
+}
+
+.react-flow__node-inserter-popover {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.react-flow__node-inserter-popover-content {
+    height: 100%;
+    overflow-y: auto;
+    height: 340px;
+}
+
+.react-flow__node-inserter-popover-close {
+    cursor: pointer;
+    background-color: #000;
+    color: #fff;
+    display: block;
+    width: 100%;
+    padding: 6px;
+    height: 44px;
+}
+
+/* DEFAULT STYLE FOR NODES */
+
+.react-flow__node-genericNode,
+.react-flow__node-genericTrigger,
+.react-flow__node-unknownNode,
+.react-flow__node-genericAction,
+.react-flow__node-genericAdvanced,
+.react-flow__node-queryAction,
+.react-flow__node-debugAction,
+.react-flow__handle {
+    border-width: 1px;
+    border-style: solid;
+}
+
+.react-flow__node-inner-body {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+/* GENERIC NODE */
+
+.react-flow__node-genericNode {
+    background-color: #b2b2c9;
+    border-color: #b2b2c9;
+}
+
+.react-flow__node-genericNode .react-flow__handle {
+    background-color: #fff;
+    border-color: #b2b2c9;
+}
+
+.react-flow__node-genericNode .react-flow__node-top {
+    border-color: #b2b2c9;
+}
+
+.react-flow__node-genericNode .react-flow__node-slug {
+    color: #b2b2c9;
+}
+
+.react-flow__node-genericNode .react-flow__node-inner-body {
+    border-bottom-color: #b2b2c9;
+}
+
+/* TRIGGER */
+
+.react-flow__node-genericTrigger {
+    background-color: #dce5df;
+    border-color: #b9c0bb;
+}
+
+.react-flow__node-genericTrigger .react-flow__handle {
+    background-color: #fff;
+    border-color: #B594B6;
+}
+
+.react-flow__node-genericTrigger  .react-flow__node-slug {
+    color: #939895;
+}
+
+.react-flow__node-genericTrigger .react-flow__node-top {
+    border-color: #b9c0bb;
+}
+
+.react-flow__node-genericTrigger .react-flow__node-slug {
+    color: #808882;
+}
+
+.react-flow__node-genericTrigger .react-flow__node-inner-body {
+    border-bottom-color: #b9c0bb;
+}
+
+/* GENERIC ACTION */
+
+.react-flow__node-unknownNode {
+    background-color: #afafaf;
+    border-color: #bbbbbb;
+}
+
+.react-flow__node-genericAction {
+    background-color: #89bae4;
+    border-color: #7199bc;
+}
+
+.react-flow__node-unknownNode .react-flow__handle,
+.react-flow__node-genericAction .react-flow__handle {
+    background-color: #fff;
+    border-color: #7199bc;
+}
+
+.react-flow__node-unknownNode .react-flow__node-slug,
+.react-flow__node-genericAction .react-flow__node-slug {
+    color: #8a62be;
+}
+
+.react-flow__node-unknownNode .react-flow__node-top,
+.react-flow__node-genericAction .react-flow__node-top {
+    border-color: #7199bc;
+}
+
+.react-flow__node-unknownNode .react-flow__node-slug,
+.react-flow__node-genericAction .react-flow__node-slug {
+    color: #526e87;
+}
+
+.react-flow__node-genericAction .react-flow__node-inner-body {
+    border-bottom-color: #7199bc;
+}
+
+/* GENERIC ADVANCED */
+
+.react-flow__node-genericAdvanced {
+    background-color: #f8ddad;
+    border-color: #d3bc94;
+}
+
+.react-flow__node-genericAdvanced .react-flow__handle {
+    background-color: #fff;
+    border-color: #d3bc94;
+}
+
+.react-flow__node-genericAdvanced .react-flow__node-slug {
+    color: #b19f80;
+}
+
+.react-flow__node-genericAdvanced .react-flow__node-top {
+    border-color: #d3bc94;
+}
+
+.react-flow__node-genericAdvanced .react-flow__node-slug {
+    color: #908065;
+}
+
+.react-flow__node-genericAdvanced .react-flow__node-inner-body {
+    border-bottom-color: #d3bc94;
+}
+
+/* QUERY ACTION */
+
+.react-flow__node-queryAction {
+    background-color: #d8b6f2;
+    border-color: #b891c2;
+}
+
+.react-flow__node-queryAction .react-flow__handle {
+    background-color: #fff;
+    border-color: #b891c2;
+}
+
+.react-flow__node-queryAction .react-flow__node-slug {
+    color: #9079a1;
+}
+
+.react-flow__node-queryAction .react-flow__node-top {
+    border-color: #b891c2;
+}
+
+.react-flow__node-queryAction .react-flow__node-slug {
+    color: rgb(110, 110, 125);
+}
+
+.react-flow__node-queryAction .react-flow__node-inner-body {
+    border-bottom-color: #b891c2;
+}
+
+/* DEBUG ACTION */
+
+.react-flow__node-debugAction {
+    background-color: #f0aec6;
+    border-color: #cf96ab;
+}
+
+.react-flow__node-debugAction .react-flow__handle {
+    background-color: #fff;
+    border-color: #cf96ab;
+}
+
+.react-flow__node-debugAction .react-flow__node-slug {
+    color: #916877;
+}
+
+.react-flow__node-debugAction .react-flow__node-top {
+    border-color: #cf96ab;
+}
+
+.react-flow__node-debugAction .react-flow__node-inner-body {
+    border-bottom-color: #cf96ab;
 }
 
 /* PLACEHOLDER FOR EMPTY FLOW */
@@ -138,181 +370,9 @@
     color: #aeaeae;
 }
 
-.react-flow__node-inserter-popover .components-popover__content {
-    width: 350px;
+.react-flow__node-triggerPlaceholderNode .react-flow__node-inner-body {
+    border-bottom: none;
 }
-
-.react-flow__node-inserter-popover {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-.react-flow__node-inserter-popover-content {
-    height: 100%;
-    overflow-y: auto;
-    height: 340px;
-}
-
-.react-flow__node-inserter-popover-close {
-    cursor: pointer;
-    background-color: #000;
-    color: #fff;
-    display: block;
-    width: 100%;
-    padding: 6px;
-    height: 44px;
-}
-
-.react-flow__node-inserter-popover .components-popover__content {
-    height: ;
-}
-
-/* GENERIC NODE */
-
-.react-flow__node-genericNode {
-    background-color: #b2b2c9;
-    border: 1px solid #b2b2c9;
-}
-
-.react-flow__node-genericNode .react-flow__handle {
-    background-color: #fff;
-    border: 1px solid #b2b2c9;
-}
-
-.react-flow__node-genericNode .react-flow__node-top {
-    border-bottom: 1px solid #b2b2c9;
-}
-
-.react-flow__node-genericNode .react-flow__node-slug {
-    color: #b2b2c9;
-}
-
-/* TRIGGER */
-
-.react-flow__node-genericTrigger {
-    background-color: #dce5df;
-    border: 1px solid #b9c0bb;
-}
-
-.react-flow__node-genericTrigger .react-flow__handle {
-    background-color: #fff;
-    border: 1px solid #B594B6;
-}
-
-.react-flow__node-genericTrigger  .react-flow__node-slug {
-    color: #939895;
-}
-
-.react-flow__node-genericTrigger .react-flow__node-top {
-    border-bottom: 1px solid #b9c0bb;
-}
-
-.react-flow__node-genericTrigger .react-flow__node-slug {
-    color: #808882;
-}
-
-/* GENERIC ACTION */
-
-.react-flow__node-unknownNode {
-    background-color: #afafaf;
-    border: 1px solid #bbbbbb;
-}
-
-.react-flow__node-genericAction {
-    background-color: #89bae4;
-    border: 1px solid #7199bc;
-}
-
-.react-flow__node-unknownNode .react-flow__handle,
-.react-flow__node-genericAction .react-flow__handle {
-    background-color: #fff;
-    border: 1px solid #7199bc;
-}
-
-.react-flow__node-unknownNode .react-flow__node-slug,
-.react-flow__node-genericAction .react-flow__node-slug {
-    color: #8a62be;
-}
-
-.react-flow__node-unknownNode .react-flow__node-top,
-.react-flow__node-genericAction .react-flow__node-top {
-    border-bottom: 1px solid #7199bc;
-}
-
-.react-flow__node-unknownNode .react-flow__node-slug,
-.react-flow__node-genericAction .react-flow__node-slug {
-    color: #526e87;
-}
-
-/* GENERIC ADVANCED */
-
-.react-flow__node-genericAdvanced {
-    background-color: #f8ddad;
-    border: 1px solid #d3bc94;
-}
-
-.react-flow__node-genericAdvanced .react-flow__handle {
-    background-color: #fff;
-    border: 1px solid #d3bc94;
-}
-
-.react-flow__node-genericAdvanced .react-flow__node-slug {
-    color: #b19f80;
-}
-
-.react-flow__node-genericAdvanced .react-flow__node-top {
-    border-bottom: 1px solid #d3bc94;
-}
-
-.react-flow__node-genericAdvanced .react-flow__node-slug {
-    color: #908065;
-}
-
-/* QUERY ACTION */
-
-.react-flow__node-queryAction {
-    background-color: #d8b6f2;
-    border: 1px solid #b891c2;
-}
-
-.react-flow__node-queryAction .react-flow__handle {
-    background-color: #fff;
-    border: 1px solid #b891c2;
-}
-
-.react-flow__node-queryAction .react-flow__node-slug {
-    color: #9079a1;
-}
-
-.react-flow__node-queryAction .react-flow__node-top {
-    border-bottom: 1px solid #b891c2;
-}
-
-.react-flow__node-queryAction .react-flow__node-slug {
-    color: rgb(110, 110, 125);
-}
-
-/* DEBUG ACTION */
-
-.react-flow__node-debugAction {
-    background-color: #f0aec6;
-    border: 1px solid #cf96ab;
-}
-
-.react-flow__node-debugAction .react-flow__handle {
-    background-color: #fff;
-    border: 1px solid #cf96ab;
-}
-
-.react-flow__node-debugAction .react-flow__node-slug {
-    color: #916877;
-}
-
-.react-flow__node-debugAction .react-flow__node-top {
-    border-bottom: 1px solid #cf96ab;
-}
-
 
 /* SELECTED NODES */
 .react-flow__node.selected {
@@ -419,7 +479,7 @@
 }
 
 body.workflow-editor.is-free .react-flow__node-handle-name {
-    color: #cacaca;
+    color: #838383;
 }
 
 body.workflow-editor.is-free .react-flow__node-handle-name.handle-area-source-output,
@@ -427,3 +487,6 @@ body.workflow-editor.is-free .react-flow__node-handle-name.handle-area-source-tr
     color: #000;
 }
 
+.react-flow__node-top .node-slug {
+    color: #00000075;
+}

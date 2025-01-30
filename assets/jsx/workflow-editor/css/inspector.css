@@ -179,3 +179,19 @@ p.description.margin-top {
 .components-panel__row .components-base-control {
     width: 100%;
 }
+
+.components-form-token-field__help {
+    display: none;
+}
+
+.margin-bottom-0 {
+    margin-bottom: 0 !important;
+}
+
+.margin-bottom-0 .components-base-control {
+    margin-bottom: 0 !important;
+}
+
+.margin-top-0 {
+    margin-top: 0 !important;
+}

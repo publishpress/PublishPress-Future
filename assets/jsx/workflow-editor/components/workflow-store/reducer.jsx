@@ -3,7 +3,7 @@ import {
     POST_TYPE,
     NODE_TYPE_PLACEHOLDER
 } from '../../constants';
-import { newTriggerPlaceholderNode } from '../../utils';
+import { newTriggerPlaceholderNode, getNodeById } from '../../utils';
 
 export const DEFAULT_STATE = {
     postType: POST_TYPE,
@@ -81,8 +81,8 @@ const normalizeMarkerEnd = (payload) => {
 
 const removeBrokenConnections = (nodes, edges) => {
     return edges.filter(edge => {
-        const sourceNode = nodes.find(node => node.id === edge.source);
-        const targetNode = nodes.find(node => node.id === edge.target);
+        const sourceNode = getNodeById(edge.source, nodes);
+        const targetNode = getNodeById(edge.target, nodes);
 
         if (! sourceNode || ! targetNode) {
             return false;
@@ -720,6 +720,7 @@ const addNodeError = (state, action) => {
     theNodeErrors[payload.error] = {
         error: payload.error,
         message: payload.message,
+        details: payload?.details,
     };
 
     const nodeErrors = {

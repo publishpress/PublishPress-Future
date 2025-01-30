@@ -9,8 +9,8 @@ use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
-use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
+use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 use PublishPress\Future\Modules\Workflows\Models\PostStatusesModel;
 use PublishPress\Future\Modules\Workflows\Models\PostTypesModel;
 use PublishPress\Future\Modules\Workflows\Models\TaxonomiesModel;
@@ -24,9 +24,9 @@ class WorkflowEditor implements InitializableInterface
     private $hooks;
 
     /**
-     * @var NodeTypesModelInterface
+     * @var StepTypesModelInterface
      */
-    private $nodeTypesModel;
+    private $stepTypesModel;
 
     /**
      * @var CronSchedulesModelInterface
@@ -40,12 +40,12 @@ class WorkflowEditor implements InitializableInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodeTypesModelInterface $nodeTypesModel,
+        StepTypesModelInterface $stepTypesModel,
         CronSchedulesModelInterface $cronSchedulesModel,
         SettingsFacade $settingsFacade
     ) {
         $this->hooks = $hooks;
-        $this->nodeTypesModel = $nodeTypesModel;
+        $this->stepTypesModel = $stepTypesModel;
         $this->cronSchedulesModel = $cronSchedulesModel;
         $this->settingsFacade = $settingsFacade;
     }
@@ -132,10 +132,7 @@ class WorkflowEditor implements InitializableInterface
 
         wp_enqueue_style(
             "future_workflow_admin_style",
-            plugins_url(
-                "/assets/css/workflow-editor.css",
-                PUBLISHPRESS_FUTURE_PLUGIN_FILE
-            ),
+            Plugin::getAssetUrl('css/workflow-editor.css'),
             ["wp-components", "wp-edit-post", "wp-editor"],
             PUBLISHPRESS_FUTURE_VERSION
         );
@@ -146,13 +143,14 @@ class WorkflowEditor implements InitializableInterface
         wp_enqueue_script("wp-data");
         wp_enqueue_script("wp-plugins");
         wp_enqueue_script("wp-notices");
-
+        wp_enqueue_script("wp-compose");
         wp_enqueue_script(
             "future_workflow_editor_script",
             Plugin::getScriptUrl('workflowEditor'),
             [
                 "wp-element",
                 "wp-components",
+                "wp-compose",
                 "wp-url",
                 "wp-data",
                 "wp-api-fetch",
@@ -198,25 +196,25 @@ class WorkflowEditor implements InitializableInterface
                 "assetsUrl" => PUBLISHPRESS_FUTURE_ASSETS_URL,
                 "workflowId" => $workflowId,
                 "nonce" => wp_create_nonce("wp_rest"),
-                "nodeTypeCategories" => $this->nodeTypesModel->getCategories(),
+                "nodeTypeCategories" => $this->stepTypesModel->getCategories(),
                 "currentUserId" => get_current_user_id(),
                 "nodeTypes" => [
                     "triggers" => array_values(
-                        $this->nodeTypesModel->convertInstancesToArray(
-                            $this->nodeTypesModel->getTriggerNodes(),
-                            NodeTypesModel::NODE_TYPE_TRIGGER
+                        $this->stepTypesModel->convertInstancesToArray(
+                            $this->stepTypesModel->getTriggerSteps(),
+                            StepTypesModel::STEP_TYPE_TRIGGER
                         )
                     ),
                     "actions" => array_values(
-                        $this->nodeTypesModel->convertInstancesToArray(
-                            $this->nodeTypesModel->getActionNodes(),
-                            NodeTypesModel::NODE_TYPE_ACTION
+                        $this->stepTypesModel->convertInstancesToArray(
+                            $this->stepTypesModel->getActionSteps(),
+                            StepTypesModel::STEP_TYPE_ACTION
                         )
                     ),
                     "advanced" => array_values(
-                        $this->nodeTypesModel->convertInstancesToArray(
-                            $this->nodeTypesModel->getAdvancedNodes(),
-                            NodeTypesModel::NODE_TYPE_ADVANCED
+                        $this->stepTypesModel->convertInstancesToArray(
+                            $this->stepTypesModel->getAdvancedSteps(),
+                            StepTypesModel::STEP_TYPE_ADVANCED
                         )
                     ),
                 ],
@@ -227,7 +225,6 @@ class WorkflowEditor implements InitializableInterface
                 "welcomeGuidePages" => $this->getWelcomeGuidePages(),
                 "isExperimentalFeaturesEnabled" => $this->settingsFacade->getExperimentalFeaturesStatus(),
                 "isPro" => $isPro,
-                "enableWorkflowScreenshot" => $this->settingsFacade->getWorkflowScreenshotStatus(),
             ]
         );
 

@@ -328,9 +328,6 @@ class PostExpirator_Display
                 }
 
                 $this->settingsFacade->setAllowUserRoles($_POST['allow-user-roles']);
-                $this->settingsFacade->setWorkflowScreenshotStatus(
-                    isset($_POST['workflow-screenshot']) && $_POST['workflow-screenshot'] == '1'
-                );
 
                 echo "<div id='message' class='updated fade'><p>";
                 esc_html_e('Saved Options!', 'post-expirator');
@@ -361,12 +358,22 @@ class PostExpirator_Display
                 exit;
             }
 
-            $emailList = explode(',', trim(sanitize_text_field($_POST['expired-email-notification-list'])));
+            $expiredEmailNotificationList = explode(',', sanitize_text_field($_POST['expired-email-notification-list']));
+            $pastDueActionsNotificationList = explode(',', sanitize_text_field($_POST['past-due-actions-notification-list']));
+
+            $expiredEmailNotificationList = array_map('trim', $expiredEmailNotificationList);
+            $expiredEmailNotificationList = array_filter($expiredEmailNotificationList, 'is_email');
+
+            $pastDueActionsNotificationList = array_map('trim', $pastDueActionsNotificationList);
+            $pastDueActionsNotificationList = array_filter($pastDueActionsNotificationList, 'is_email');
+
 
             // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
             $this->settingsFacade->setSendEmailNotification((bool)$_POST['expired-email-notification']);
             $this->settingsFacade->setSendEmailNotificationToAdmins((bool)$_POST['expired-email-notification-admins']);
-            $this->settingsFacade->setEmailNotificationAddressesList($emailList);
+            $this->settingsFacade->setEmailNotificationAddressesList($expiredEmailNotificationList);
+            $this->settingsFacade->setPastDueActionsNotificationStatus((bool)$_POST['past-due-actions-notification']);
+            $this->settingsFacade->setPastDueActionsNotificationAddressesList($pastDueActionsNotificationList);
             // phpcs:enable
 
             echo "<div id='message' class='updated fade'><p>";

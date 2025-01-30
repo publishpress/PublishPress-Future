@@ -110,6 +110,7 @@
         ],
         "check:php": [
             "@check:php-5.6",
+            "@check:php-7.2",
             "@check:php-7.4",
             "@check:php-8.0",
             "@check:php-8.1",
@@ -117,6 +118,7 @@
             "@check:php-8.3"
         ],
         "check:php-5.6": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 5.6 ./post-expirator.php",
+        "check:php-7.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.2 ./post-expirator.php",
         "check:php-7.4": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4",
         "check:php-8.0": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.0",
         "check:php-8.1": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1",

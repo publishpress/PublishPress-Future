@@ -93,3 +93,7 @@ export const getActionSettingsFromColumnData = (postId) => {
 export const isNumber = (value) => {
     return !isNaN(value);
 }
+
+export function stripTags(string) {
+    return string.replace(/<[^>]*>?/gm, '');
+}

@@ -11,6 +11,7 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
@@ -58,6 +59,8 @@ class PostListController implements InitializableInterface
 
         $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_PAGES_CUSTOM_COLUMN, [$this, 'managePostsCustomColumn']);
         $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_POSTS_CUSTOM_COLUMN, [$this, 'managePostsCustomColumn']);
+        $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_PAGES_CUSTOM_COLUMN, [$this, 'showEmptyOutputChar'], 20, 2);
+        $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_POSTS_CUSTOM_COLUMN, [$this, 'showEmptyOutputChar'], 20, 2);
         $this->hooks->addAction(ExpiratorHooks::ACTION_ADMIN_INIT, [$this, 'manageSortableColumns'], 100);
         $this->hooks->addAction(ExpiratorHooks::ACTION_POSTS_ORDER_BY, [$this, 'orderByExpirationDate'], 10, 2);
         $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS, [$this, 'enqueueScripts']);
@@ -126,7 +129,7 @@ class PostListController implements InitializableInterface
         }
 
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        echo $this->hooks->applyFilters(ExpiratorHooks::FILTER_POSTS_FUTURE_ACTION_COLUMN_OUTPUT, $output);
+        echo $output;
     }
 
     public function manageSortableColumns()
@@ -203,7 +206,7 @@ class PostListController implements InitializableInterface
             if ('edit.php' === $screenId) {
                 wp_enqueue_style(
                     'postexpirator-edit',
-                    POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
+                    Plugin::getAssetUrl('css/edit.css'),
                     false,
                     PUBLISHPRESS_FUTURE_VERSION
                 );
@@ -211,5 +214,25 @@ class PostListController implements InitializableInterface
         } catch (Throwable $th) {
             $this->logger->error('Error enqueuing scripts: ' . $th->getMessage());
         }
+    }
+
+    public function showEmptyOutputChar($column, $post)
+    {
+        if ($column !== 'expirationdate') {
+            return;
+        }
+
+        $container = Container::getInstance();
+        $cachePostsWithFutureActions = $container->get(ServicesAbstract::CACHE_POSTS_WITH_FUTURE_ACTION);
+        $post = get_post($post);
+
+        if ($cachePostsWithFutureActions->hasValue((string) $post->ID)) {
+            return;
+        }
+
+        ?>
+        <span aria-hidden="true">—</span>
+        <span class="screen-reader-text"><?php echo esc_html__('No future action', 'post-expirator'); ?></span>
+        <?php
     }
 }

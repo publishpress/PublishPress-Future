@@ -7,8 +7,8 @@ use PublishPress\Future\Core\HooksAbstract as FutureCoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
-use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
+use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Module;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
@@ -23,9 +23,9 @@ class WorkflowsList implements InitializableInterface
     private $hooks;
 
     /**
-     * @var NodeTypesModelInterface
+     * @var StepTypesModelInterface
      */
-    private $nodeTypesModel;
+    private $stepTypesModel;
 
     /**
      * @var LoggerInterface
@@ -39,12 +39,12 @@ class WorkflowsList implements InitializableInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodeTypesModelInterface $nodeTypesModel,
+        StepTypesModelInterface $stepTypesModel,
         LoggerInterface $logger,
         SettingsFacade $settingsFacade
     ) {
         $this->hooks = $hooks;
-        $this->nodeTypesModel = $nodeTypesModel;
+        $this->stepTypesModel = $stepTypesModel;
         $this->logger = $logger;
         $this->settingsFacade = $settingsFacade;
     }
@@ -92,15 +92,6 @@ class WorkflowsList implements InitializableInterface
             10,
             2
         );
-
-        if ($this->settingsFacade->getWorkflowScreenshotStatus()) {
-            $this->hooks->addAction(
-                "manage_" . Module::POST_TYPE_WORKFLOW . "_posts_custom_column",
-                [$this, "renderPreviewColumn"],
-                10,
-                2
-            );
-        }
 
         $this->hooks->addAction(
             FutureCoreHooksAbstract::ACTION_ADMIN_INIT,
@@ -196,10 +187,6 @@ class WorkflowsList implements InitializableInterface
             "post-expirator"
         );
 
-        if ($this->settingsFacade->getWorkflowScreenshotStatus()) {
-            $columns["workflow_preview"] = __("Preview", "post-expirator");
-        }
-
         // Move the date column to the end
         if (isset($columns["date"])) {
             $date = $columns["date"];
@@ -270,10 +257,10 @@ class WorkflowsList implements InitializableInterface
 
         foreach ($workflowFlow["nodes"] as $node) {
             if (
-                NodeTypesModel::NODE_TYPE_TRIGGER ===
+                StepTypesModel::STEP_TYPE_TRIGGER ===
                 $node["data"]["elementaryType"]
             ) {
-                $nodeType = $this->nodeTypesModel->getNodeType($node["data"]["name"]);
+                $nodeType = $this->stepTypesModel->getStepType($node["data"]["name"]);
 
                 if (empty($nodeType)) {
                     $triggers[] = esc_html($node["data"]["name"]);
@@ -285,29 +272,6 @@ class WorkflowsList implements InitializableInterface
 
         echo esc_html(implode(", ", $triggers));
     }
-
-    public function renderPreviewColumn($column, $postId)
-    {
-        if ("workflow_preview" !== $column) {
-            return;
-        }
-
-        $workflowModel = new WorkflowModel();
-        $workflowModel->load($postId);
-
-        $workflowModel->convertLegacyScreenshots();
-
-        $screenshot = $workflowModel->getScreenshotUrl('thumbnail');
-        $screenshotFull = $workflowModel->getScreenshotUrl();
-
-        if (empty($screenshotFull)) {
-            esc_html_e("No screenshot", "post-expirator");
-            return;
-        }
-
-        require __DIR__ . "/../Views/preview-column.html.php";
-    }
-
 
     public function updateWorkflowStatus()
     {

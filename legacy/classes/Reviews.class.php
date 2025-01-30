@@ -1,5 +1,6 @@
 <?php
 
+use PublishPress\Future\Core\Plugin;
 use PublishPress\WordPressReviews\ReviewsController;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -22,7 +23,7 @@ abstract class PostExpirator_Reviews
             self::$reviewController = new ReviewsController(
                 'post-expirator',
                 'PublishPress Future',
-                POSTEXPIRATOR_BASEURL . 'assets/images/publishpress-future-256.png'
+                Plugin::getAssetUrl('images/publishpress-future-256.png')
             );
 
             self::$reviewController->init();

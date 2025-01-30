@@ -437,4 +437,377 @@ class_alias(
     'PublishPress\Future\Modules\Expirator\Models\PostTypes'
 );
 
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AppendDebugLog',
+    'PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface'
+);
+
+// Step Processors
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\Cron',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\CronStep'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\General',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\GeneralStep'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\Post',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\PostStep'
+);
+
+// Step Runners - Actions
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\AddPostMetaRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostMetaAdd'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\AddPostTermRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsAdd'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\ChangePostStatusRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostChangeStatus'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\ConditionalRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\ConditionalSplit'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\DeactivatePostWorkflowRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostDeactivateWorkflow'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\AppendDebugLogRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\LogAdd'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\DeletePostRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostDelete'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\DeletePostMetaRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostMetaDelete'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\QueryPostsRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostQuery'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\RemovePostTermRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsRemove'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\ScheduleDelayRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostSchedule'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\SendEmailRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreSendEmail'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\SetPostTermRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsSet'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\SendRayRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\RayDebug'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\StickPostRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostStick'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\UnstickPostRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostUnstick'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\UpdatePostMetaRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostMetaUpdate'
+);
+
+// Step Definitions - Actions
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AddPostMeta',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaAdd'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AddPostTerm',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsAdd'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\ChangePostStatus',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeStatus'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\Conditional',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\ConditionalSplit'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeactivatePostWorkflow',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDeactivateWorkflow'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AppendDebugLog',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\LogAdd'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeletePost',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDelete'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeletePostMeta',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaDelete'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\QueryPosts',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\CorePostQuery'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\RemovePostTerm',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsRemove'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\ScheduleDelay',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\CoreSchedule'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendEmail',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CoreSendEmail'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SetPostTerm',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsSet'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendRay',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\RayDebug'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\StickPost',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostStick'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UnstickPost',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostUnstick'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePostMeta',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostMetaUpdate'
+);
+
+// // Step Definitions - Triggers
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnAdminInit',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminInit'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnInit',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnLegacyActionTrigger',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostMetaChange',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostMetaChanged'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostPublish',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostPublished'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSave',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSchedule',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostScheduled'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostStatusChange',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostStatusChanged'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostUpdate',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost'
+);
+
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnSchedule',
+    'PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSchedule'
+);
+
+
+// Step Runners - Triggers
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnAdminInitRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnInitRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnLegacyActionTriggerRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\FutureLegacyAction'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostMetaChangeRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostMetaChanged'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostPublishRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostPublished'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostSaveRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnSavePost'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostScheduleRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostScheduled'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostStatusChangeRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostStatusChanged'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostUpdateRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostUpdated'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostWorkflowEnableRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnManuallyEnabledForPost'
+);
+
+/** @since 4.3.1 */
+class_alias(
+    'PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnScheduleRunner',
+    'PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnCronSchedule'
+);
+
+
 require_once __DIR__ . '/deprecated-functions.php';

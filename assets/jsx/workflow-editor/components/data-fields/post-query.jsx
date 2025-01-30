@@ -1,4 +1,4 @@
-import { FormTokenField, RadioControl } from "@wordpress/components";
+import { FormTokenField, RadioControl, PanelRow } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { useEffect } from "@wordpress/element";
 import { InlineMultiSelect } from "../inline-multi-select";
@@ -83,10 +83,6 @@ export function PostQuery({
                             <p className="description">{descriptions.postType}</p>
                         )}
 
-                        {isPostTypeRequired && (
-                            <p className="description">{__('* Required field', 'post-expirator')}</p>
-                        )}
-
                         <FormTokenField
                             label={__('Post ID', 'post-expirator')}
                             value={defaultValue?.postId || []}
@@ -113,6 +109,20 @@ export function PostQuery({
                                 )}
                             </>
                         )}
+
+                        <PanelRow>
+                            <p className="description">
+                                {__('Separate multiple values with commas or Enter key.', 'post-expirator')}
+                            </p>
+                        </PanelRow>
+
+                        {isPostTypeRequired && (
+                            <PanelRow>
+                                <p className="description">{__('* Required field', 'post-expirator')}</p>
+                            </PanelRow>
+                        )}
+
+
                     </>
                 )}
             </VStack>

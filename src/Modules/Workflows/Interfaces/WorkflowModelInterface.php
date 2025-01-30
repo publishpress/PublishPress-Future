@@ -36,10 +36,6 @@ interface WorkflowModelInterface
 
     public function setFlow(array $flow);
 
-    public function setScreenshotFromBase64(string $dataImage);
-
-    public function setScreenshotFromFile(string $filePath);
-
     public function setDebugRayShowQueries(bool $debugRayShowQueries);
 
     public function setDebugRayShowEmails(bool $debugRayShowEmails);
@@ -63,10 +59,6 @@ interface WorkflowModelInterface
     public function getEdges(): array;
 
     public function getRoutineTree(array $nodeTypes): array;
-
-    public function getScreenshotUrl($size = 'full'): string;
-
-    public function convertLegacyScreenshots(): void;
 
     public function getNodeById(string $nodeId): array;
 

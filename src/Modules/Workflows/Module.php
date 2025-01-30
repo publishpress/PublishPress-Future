@@ -6,16 +6,19 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Framework\WordPress\Facade\EmailFacade;
+use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Framework\WordPress\Facade\RequestFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RestApiManagerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
+use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 
-class Module implements InitializableInterface
+final class Module implements InitializableInterface
 {
     public const POST_TYPE_WORKFLOW = "ppfuture_workflow";
 
@@ -29,7 +32,7 @@ class Module implements InitializableInterface
      */
     private $restApiManager;
 
-    private $nodeTypesModel;
+    private $stepTypesModel;
 
     /**
      * @var CronSchedulesModelInterface
@@ -86,10 +89,20 @@ class Module implements InitializableInterface
      */
     private $currentUserModel;
 
+    /**
+     * @var OptionsFacade
+     */
+    private $options;
+
+    /**
+     * @var EmailFacade
+     */
+    private $email;
+
     public function __construct(
         HookableInterface $hooksFacade,
         RestApiManagerInterface $restApiManager,
-        NodeTypesModelInterface $nodeTypesModel,
+        StepTypesModelInterface $stepTypesModel,
         CronSchedulesModelInterface $cronSchedulesModel,
         WorkflowEngineInterface $workflowEngine,
         SettingsFacade $settingsFacade,
@@ -100,11 +113,13 @@ class Module implements InitializableInterface
         LoggerInterface $logger,
         SanitizationFacade $sanitization,
         RequestFacade $request,
-        \Closure $currentUserModelFactory
+        \Closure $currentUserModelFactory,
+        OptionsFacade $options,
+        EmailFacade $email
     ) {
         $this->hooks = $hooksFacade;
         $this->restApiManager = $restApiManager;
-        $this->nodeTypesModel = $nodeTypesModel;
+        $this->stepTypesModel = $stepTypesModel;
         $this->cronSchedulesModel = $cronSchedulesModel;
         $this->workflowEngine = $workflowEngine;
         $this->settingsFacade = $settingsFacade;
@@ -116,6 +131,8 @@ class Module implements InitializableInterface
         $this->sanitization = $sanitization;
         $this->request = $request;
         $this->currentUserModel = $currentUserModelFactory();
+        $this->options = $options;
+        $this->email = $email;
 
         /*
          * We initialize the engine in the constructor because it requires
@@ -139,13 +156,13 @@ class Module implements InitializableInterface
             new Controllers\PostType($this->hooks),
             new Controllers\WorkflowsList(
                 $this->hooks,
-                $this->nodeTypesModel,
+                $this->stepTypesModel,
                 $this->logger,
                 $this->settingsFacade
             ),
             new Controllers\WorkflowEditor(
                 $this->hooks,
-                $this->nodeTypesModel,
+                $this->stepTypesModel,
                 $this->cronSchedulesModel,
                 $this->settingsFacade
             ),
@@ -160,14 +177,25 @@ class Module implements InitializableInterface
             ),
             new Controllers\ScheduledActions(
                 $this->hooks,
-                $this->nodeTypesModel,
+                $this->stepTypesModel,
                 $this->cron,
                 $this->settingsFacade,
                 $this->logger
             ),
             new Controllers\SampleWorkflows(),
             new Controllers\PostsList($this->hooks),
-            new Controllers\Settings($this->hooks, $this->workflowScheduledStepsSchema),
+            new Controllers\Settings(
+                $this->hooks,
+                $this->workflowScheduledStepsSchema
+            ),
+            new Controllers\PastDueActions(
+                $this->hooks,
+                $this->cron,
+                $this->options,
+                $this->logger,
+                $this->email,
+                $this->settingsFacade
+            ),
         ];
 
         foreach ($controllers as $controller) {

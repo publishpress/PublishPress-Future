@@ -1,16 +1,21 @@
-.future_page_publishpress-future-scheduled-actions .future-workflows-outputs,
-.future_page_publishpress-future-scheduled-actions .future-workflows-outputs ul {
+.future-workflows-outputs {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.future-workflows-outputs,
+.future-workflows-outputs ul {
     margin-left: 5px;
     margin-top: 0;
     margin-bottom: 0;
 }
 
-.future_page_publishpress-future-scheduled-actions .future-workflows-outputs .future-workflow-step-handler {
+.future-workflows-outputs .future-workflow-step-handler {
     font-style: italic;
 }
 
-.future_page_publishpress-future-scheduled-actions .future-workflows-outputs li,
-.future_page_publishpress-future-scheduled-actions .future-workflows-outputs ul li {
+.future-workflows-outputs li,
+.future-workflows-outputs ul li {
     margin-bottom: 0;
 }
 

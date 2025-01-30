@@ -32,7 +32,6 @@ export function WorkflowPublishButton({
 		isPublished,
 		isSaveable,
 		isSaving,
-		takeScreenshot,
 	} = useSelect(
 		(select) => {
 			const {
@@ -42,7 +41,6 @@ export function WorkflowPublishButton({
 				isSavingWorkflow,
 				isEditedWorkflowSaveable,
 				isAutosavingWorkflow,
-				takeScreenshot,
 			} = select(workflowStore);
 
 			return {
@@ -52,7 +50,6 @@ export function WorkflowPublishButton({
 				isPublished: isCurrentWorkflowPublished(),
 				isSaving: isSavingWorkflow(),
 				isSaveable: isEditedWorkflowSaveable(),
-				takeScreenshot,
 			};
 		},
 		[]
@@ -64,8 +61,6 @@ export function WorkflowPublishButton({
 	} = useDispatch(workflowStore);
 
 	const wasSaving = usePrevious(isSaving);
-
-	const { enableWorkflowScreenshot } = futureWorkflowEditor;
 
 	useEffect(() => {
 		let timeoutId;
@@ -106,20 +101,10 @@ export function WorkflowPublishButton({
 			return;
 		}
 
-		if (enableWorkflowScreenshot) {
-			takeScreenshot().then((dataUrl) => {
-				if (isPublished) {
-					saveAsCurrentStatus({screenshot: dataUrl});
-				} else {
-					publishWorkflow({screenshot: dataUrl});
-				}
-			});
+		if (isPublished) {
+			saveAsCurrentStatus();
 		} else {
-			if (isPublished) {
-				saveAsCurrentStatus();
-			} else {
-				publishWorkflow();
-			}
+			publishWorkflow();
 		}
 	}
 

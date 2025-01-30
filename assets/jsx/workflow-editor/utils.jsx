@@ -535,3 +535,11 @@ export const newTriggerPlaceholderNode = () => {
         },
     };
 }
+
+export function getNodeById(id, nodes = null) {
+    if (! nodes) {
+        nodes = select(workflowStore).getNodes();
+    }
+
+    return nodes.find((node) => node.id === id);
+}

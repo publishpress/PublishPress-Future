@@ -1,3 +1,5 @@
+import { getNodeById as getNodeByIdUtils } from "../../utils";
+
 export const getPostType = (state) => {
     return state.postType;
 };
@@ -11,7 +13,7 @@ export const getEdges = (state) => {
 };
 
 export const getNodeById = (state, id) => {
-    return state.workflow.flow.nodes.find(node => node.id === id);
+    return getNodeByIdUtils(id, state.workflow.flow.nodes);
 };
 
 export const getEdgeById = (state, id) => {
@@ -129,33 +131,6 @@ export const getDataTypes = (state) => {
 
 export const getDataTypeByName = (state, name) => {
     return state.dataTypes.find(dataType => dataType.name === name);
-}
-
-export async function takeScreenshot() {
-    const { enableWorkflowScreenshot } = futureWorkflowEditor;
-
-    if (!enableWorkflowScreenshot) {
-        return null;
-    }
-
-    try {
-        const { toPng } = await import('html-to-image');
-        return await toPng(document.querySelector('.react-flow'), {
-            filter: (node) => {
-                if (
-                    node?.classList?.contains('react-flow__minimap') ||
-                    node?.classList?.contains('react-flow__controls') ||
-                    node?.classList?.contains('pwe-node-edit-button')
-                ) {
-                    return false;
-                }
-                return true;
-            },
-        });
-    } catch (error) {
-        console.error('Error loading html-to-image:', error);
-        return null;
-    }
 }
 
 export function getGlobalVariables(state) {

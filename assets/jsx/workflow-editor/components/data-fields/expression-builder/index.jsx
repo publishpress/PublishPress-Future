@@ -9,7 +9,7 @@ import { __ } from "@wordpress/i18n";
 import { useState, useRef, useCallback, useEffect } from "@wordpress/element";
 import NodeIcon from "../../node-icon";
 import ColumnsContainer from "./columns-container";
-
+import { DescriptionText } from "../description-text";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-handlebars";
 import "ace-builds/src-noconflict/theme-textmate";
@@ -32,6 +32,7 @@ export const ExpressionBuilder = ({
     wrapOnPreview = false,
     wrapOnEditor = false,
     oneLinePreview = false,
+    helpUrl = '',
 }) => {
     const editorFullRef = useRef(null);
     const editorSmallRef = useRef(null);
@@ -78,8 +79,10 @@ export const ExpressionBuilder = ({
 
             if (! singleVariableOnly) {
                 const cursorPosition = editor.getCursorPosition();
+                console.log(cursorPosition);
                 editor.session.insert(cursorPosition, `{{${item.name}}}`);
             } else {
+                console.log('single variable');
                 editor.session.setValue(`{{${item.name}}}`);
             }
 
@@ -101,6 +104,9 @@ export const ExpressionBuilder = ({
         }
     }, [wrapOnPreview, editorSmallRef]);
 
+    const expression = (defaultValue[propertyName] || '').toString();
+    const placeholder = (settings?.placeholder || '').toString();
+
     return <div className={`expression-builder ${isOpen ? 'expression-builder-open' : ''} ${isInline ? 'expression-builder-inline' : ''}`}>
 
         <Button
@@ -115,16 +121,12 @@ export const ExpressionBuilder = ({
             <Heading level={3} className="expression-builder-small-heading">{label}</Heading>
         )}
 
-        {description && (
-            <p className="description">{description}</p>
-        )}
-
         <AceEditor
             ref={editorSmallRef}
             mode="handlebars"
             theme="textmate"
             name="expression-builder-small"
-            value={defaultValue[propertyName] || ''}
+            value={expression}
             readOnly={readOnlyPreview}
             className={readOnlyPreview ? 'read-only-editor' : ''}
             editorProps={editorProps}
@@ -141,8 +143,12 @@ export const ExpressionBuilder = ({
             }}
             height={oneLinePreview ? '30px' : '92px'}
             width="100%"
-            placeholder={settings?.placeholder || ''}
+            placeholder={placeholder}
         />
+
+        {description && (
+            <DescriptionText text={description} helpUrl={helpUrl} />
+        )}
 
         {isOpen && (
             <Modal
@@ -152,7 +158,7 @@ export const ExpressionBuilder = ({
             >
                 <div style={{ minWidth: '600px', maxWidth: '600px' }}>
                     {singleVariableOnly && (
-                        <p>{__("Single variable mode. Select a variable from the list below.", "post-expirator")}</p>
+                        <p>{__("Select a variable from the list below.", "post-expirator")}</p>
                     )}
 
                     {!singleVariableOnly && (
@@ -167,7 +173,7 @@ export const ExpressionBuilder = ({
                         className={singleVariableOnly ? 'read-only-editor' : ''}
                         wrapEnabled={wrapOnEditor}
                         onChange={(value) => onChangeSetting({ settingName: propertyName, value })}
-                        value={defaultValue[propertyName] || ''}
+                        value={expression}
                         editorProps={editorProps}
                         readOnly={singleVariableOnly}
                         setOptions={{
@@ -179,7 +185,7 @@ export const ExpressionBuilder = ({
                         }}
                         height={singleVariableOnly ? '30px' : '200px'}
                         width="100%"
-                        placeholder={settings?.placeholder || ''}
+                        placeholder={placeholder}
                     />
 
                     <div className="expression-builder-modal-variables" style={{ maxWidth: '600px', overflowX: 'auto' }}>
@@ -193,6 +199,18 @@ export const ExpressionBuilder = ({
                             <p>{__("Double-click on any variable to add it to your expression.", "post-expirator")}</p>
                         )}
 
+                        {currentDescription && (
+                            <p className="description margin-top">
+                                <code className="expression-builder-variable-name">
+                                    {`{{${currentVariableId}}}`}
+                                </code> {currentDescription}
+                            </p>
+                        )}
+
+                        {!currentDescription && (
+                            <p className="description margin-top">{__("Hover over a variable to see its description.", "post-expirator")}</p>
+                        )}
+
                         <ColumnsContainer
                             items={variables}
                             setCurrentDescription={setCurrentDescription}
@@ -200,18 +218,6 @@ export const ExpressionBuilder = ({
                             onDoubleClick={onDoubleClick}
                         />
                     </div>
-
-                    {currentDescription && (
-                        <p className="description margin-top">
-                            <code className="expression-builder-variable-name">
-                                {`{{${currentVariableId}}}`}
-                            </code>: {currentDescription}
-                        </p>
-                    )}
-
-                    {!currentDescription && (
-                        <p className="description margin-top">{__("Hover over a variable to see its description.", "post-expirator")}</p>
-                    )}
                 </div>
             </Modal>
         )}

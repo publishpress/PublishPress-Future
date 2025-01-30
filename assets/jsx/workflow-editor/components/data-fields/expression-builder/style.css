@@ -84,13 +84,12 @@
 
 .expression-builder {
     position: relative;
-    padding-top: 20px;
     width: 100%;
 }
 
 .expression-builder .expression-builder-button {
     position: absolute;
-    top: 12px;
+    top: 0;
     right: 0;
     height: 24px;
     padding-top: 4px;
@@ -149,7 +148,18 @@
     top: 0 !important;
 }
 
+.expression-builder .description {
+    margin-top: 10px !important;
+}
+
 .expression-builder-modal .description:last-of-type {
     min-height: 40px !important;
     margin-top: 10px !important;
+}
+
+.expression-builder-modal-variables .description code {
+    color: #00458b;
+    margin-left: 0;
+    padding: 5px;
+    font-size: 12px;
 }

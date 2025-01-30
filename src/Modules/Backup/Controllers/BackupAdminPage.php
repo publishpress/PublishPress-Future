@@ -104,7 +104,6 @@ class BackupAdminPage implements InitializableInterface
             'futureBackupPanelData',
             [
                 'apiRoot' => esc_url_raw(rest_url()),
-                'enableWorkflowScreenshot' => $this->settingsFacade->getWorkflowScreenshotStatus(),
             ]
         );
 
@@ -116,21 +115,21 @@ class BackupAdminPage implements InitializableInterface
 
         wp_enqueue_style(
             'pe-footer',
-            POSTEXPIRATOR_BASEURL . 'assets/css/footer.css',
+            Plugin::getAssetUrl('css/footer.css'),
             false,
             PUBLISHPRESS_FUTURE_VERSION
         );
 
         wp_enqueue_style(
             'pe-settings',
-            POSTEXPIRATOR_BASEURL . 'assets/css/settings.css',
+            Plugin::getAssetUrl('css/settings.css'),
             ['pe-footer'],
             PUBLISHPRESS_FUTURE_VERSION
         );
 
         wp_enqueue_style(
             'pp-wordpress-banners-style',
-            POSTEXPIRATOR_BASEURL . 'assets/vendor/wordpress-banners/css/style.css',
+            Plugin::getAssetUrl('vendor/wordpress-banners/css/style.css'),
             false,
             PUBLISHPRESS_FUTURE_VERSION
         );

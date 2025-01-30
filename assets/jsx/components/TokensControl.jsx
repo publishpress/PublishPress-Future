@@ -3,6 +3,7 @@
  */
 import { Fragment, useState, useEffect } from "@wordpress/element";
 import { FormTokenField } from "@wordpress/components";
+import { stripTags } from "../utils";
 
 export const TokensControl = (props) => {
     const [stringValue, setStringValue] = useState('');
@@ -18,7 +19,7 @@ export const TokensControl = (props) => {
     if (props.description) {
         if (props.unescapedDescription) {
             // If using this option, the HTML has to be escaped before injected into the JS interface.
-            description = <p className="description" dangerouslySetInnerHTML={{__html: props.description}}></p>;
+            description = <p className="description" dangerouslySetInnerHTML={{ __html: stripTags(props.description)}}></p>;
         } else {
             description = <p className="description">{props.description}</p>;
         }

@@ -1760,9 +1760,9 @@ msgstr "A mensagem a ser enviada para o registro de depuração."
 msgid "Level"
 msgstr "Nível"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:32
-msgid "Ray - Debug"
-msgstr "Ray - Depuração"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:32
+msgid "Send to Ray"
+msgstr "Enviar para o Ray"
 
 #: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:37
 msgid "This step transmits the flow's data to Ray Debug."

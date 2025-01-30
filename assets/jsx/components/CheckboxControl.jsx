@@ -3,6 +3,7 @@
  */
 import { Fragment, useState  } from "@wordpress/element";
 import { CheckboxControl as WPCheckboxControl } from "@wordpress/components";
+import { stripTags } from "../utils";
 
 export const CheckboxControl = function (props) {
     const [checked, setChecked] = useState(props.checked || false);
@@ -11,7 +12,7 @@ export const CheckboxControl = function (props) {
 
     if (props.unescapedDescription) {
         // If using this option, the HTML has to be escaped before injected into the JS interface.
-        description = <p className="description" dangerouslySetInnerHTML={{ __html: props.description }}></p>;
+        description = <p className="description" dangerouslySetInnerHTML={{ __html: stripTags(props.description) }}></p>;
     } else {
         description = <p className="description">{props.description}</p>;
     }

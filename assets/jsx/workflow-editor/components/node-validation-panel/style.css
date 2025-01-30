@@ -1,0 +1,20 @@
+.workflow-editor-validation-notification-header {
+    position: relative;
+}
+
+.workflow-editor-validation-notification-details-toggle {
+    cursor: pointer;
+    position: absolute;
+    right: -5px;
+    top: 0;
+}
+
+.workflow-editor-validation-notification-details {
+    margin-top: 10px;
+    margin-left: 20px;
+    color: #555555;
+}
+
+.workflow-editor-validation-notification-message {
+    padding-right: 17px;
+}

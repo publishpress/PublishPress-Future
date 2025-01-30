@@ -8,10 +8,11 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionModel;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionsModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
@@ -33,9 +34,9 @@ class ScheduledActions implements InitializableInterface
     private $hooks;
 
     /**
-     * @var NodeTypesModelInterface
+     * @var StepTypesModelInterface
      */
-    private $nodeTypesModel;
+    private $stepTypesModel;
 
     /**
      * @var CronInterface
@@ -54,13 +55,13 @@ class ScheduledActions implements InitializableInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodeTypesModelInterface $nodeTypesModel,
+        StepTypesModelInterface $stepTypesModel,
         CronInterface $cron,
         SettingsFacade $settingsFacade,
         LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
-        $this->nodeTypesModel = $nodeTypesModel;
+        $this->stepTypesModel = $stepTypesModel;
         $this->cron = $cron;
         $this->settingsFacade = $settingsFacade;
         $this->logger = $logger;
@@ -116,7 +117,7 @@ class ScheduledActions implements InitializableInterface
 
         $this->hooks->addAction(
             WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS,
-            [$this, 'deleteExpiredScheduledSteps']
+            [$this, 'deleteExpiredDoneActions']
         );
 
         $this->hooks->addAction(
@@ -274,7 +275,7 @@ class ScheduledActions implements InitializableInterface
                         || ! isset($step['node']['data'])
                         || ! isset($step['node']['data']['name'])
                     ) {
-                        $html = '<span style="color: red;">' . __('Step not found in workflow.', 'post-expirator') . '</span>';
+                        $html = '<span style="color: red;">' . __('Schedule step is required for this workflow.', 'post-expirator') . '</span>';
 
                         $html .= '<br>';
                         $html .= '<strong>' . __('Workflow:', 'post-expirator') . '</strong> '
@@ -288,7 +289,7 @@ class ScheduledActions implements InitializableInterface
 
                     $next = $step['next'] ?? [];
 
-                    $nodeType = $this->nodeTypesModel->getNodeType($step['node']['data']['name']);
+                    $nodeType = $this->stepTypesModel->getNodeType($step['node']['data']['name']);
 
                     $sourceHandles = [];
                     if (! is_null($nodeType)) {
@@ -311,7 +312,7 @@ class ScheduledActions implements InitializableInterface
                             }
 
                             if (empty($stepLabel)) {
-                                $stepNodeType = $this->nodeTypesModel->getNodeType($nextStep['node']['data']['name']);
+                                $stepNodeType = $this->stepTypesModel->getNodeType($nextStep['node']['data']['name']);
                                 if (is_object($stepNodeType)) {
                                     $stepLabel = $stepNodeType->getLabel();
                                 }
@@ -446,16 +447,16 @@ class ScheduledActions implements InitializableInterface
 
     public function enqueueScripts($hook)
     {
-        if ('future_page_publishpress-future-scheduled-actions' !== $hook) {
+        if (
+            'future_page_publishpress-future-scheduled-actions' !== $hook
+            && 'admin_page_publishpress-future-scheduled-actions' !== $hook
+        ) {
             return;
         }
 
         wp_enqueue_style(
             "future_actions_admin_style",
-            plugins_url(
-                "assets/css/future-actions.css",
-                PUBLISHPRESS_FUTURE_PLUGIN_FILE
-            ),
+            Plugin::getAssetUrl("css/future-actions.css"),
             ["wp-components", "wp-edit-post", "wp-editor"],
             PUBLISHPRESS_FUTURE_VERSION
         );
@@ -539,9 +540,9 @@ class ScheduledActions implements InitializableInterface
         (new ScheduledActionsModel())->deleteOrphanWorkflowArgs();
     }
 
-    public function deleteExpiredScheduledSteps()
+    public function deleteExpiredDoneActions()
     {
-        (new ScheduledActionsModel())->deleteExpiredScheduledSteps();
+        (new ScheduledActionsModel())->deleteExpiredDoneActions();
     }
 
     /*

@@ -5,7 +5,7 @@ namespace PublishPress\Future\Modules\Workflows\Models;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\InputValidators\PostQuery;
-use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\PostModelInterface;
 use WP_Post;
@@ -68,7 +68,7 @@ class PostModel implements PostModelInterface
             // Validate the trigger's post query
             $triggers = $workflowModel->getTriggerNodes();
             foreach ($triggers as $trigger) {
-                if ($trigger['data']['name'] !== CoreOnManuallyEnabledForPost::getNodeTypeName()) {
+                if ($trigger['data']['name'] !== OnPostWorkflowEnable::getNodeTypeName()) {
                     continue;
                 }
 
@@ -91,6 +91,14 @@ class PostModel implements PostModelInterface
 
     public function setManuallyEnabledWorkflows(array $workflowIds): void
     {
+        $currentWorkflowIds = $this->getManuallyEnabledWorkflows();
+
+        $workflowsToDisable = array_diff($currentWorkflowIds, $workflowIds);
+
+        foreach ($workflowsToDisable as $workflowId) {
+            $this->removeScheduledActionsFromDisabledWorkflows($workflowId);
+        }
+
         delete_post_meta($this->post->ID, self::META_KEY_WORKFLOW_MANUALLY_TRIGGERED);
 
         foreach ($workflowIds as $workflowId) {
@@ -120,6 +128,16 @@ class PostModel implements PostModelInterface
         $this->setManuallyEnabledWorkflows($workflowIds);
     }
 
+    private function removeScheduledActionsFromDisabledWorkflows(int $workflowId): void
+    {
+        // Check if the workflow has a scheduled action for this post
+        $scheduledActionsModel = new ScheduledActionsModel();
+        $scheduledActionsModel->cancelByWorkflowAndPostId($workflowId, $this->post->ID);
+
+        // $scheduledActionsModel = new ScheduledActionsModel();
+        // $scheduledActionsModel->cancelWorkflowScheduledActions($workflowId);
+    }
+
     public function getManuallyEnabledWorkflowsSchedule(int $workflowId): array
     {
         global $wpdb;
@@ -130,8 +148,8 @@ class PostModel implements PostModelInterface
 
         if (is_null($this->workflowsManuallyEnabled)) {
             // FIXME: Use dependency injection
-            $nodeTypesModel = Container::getInstance()->get(ServicesAbstract::NODE_TYPES_MODEL);
-            $allNodeTypes = $nodeTypesModel->getAllNodeTypesIndexedByName();
+            $stepTypesModel = Container::getInstance()->get(ServicesAbstract::STEP_TYPES_MODEL);
+            $allStepTypes = $stepTypesModel->getAllStepTypesIndexedByName();
 
             $workflowModel->load($workflowId);
 
@@ -189,7 +207,7 @@ class PostModel implements PostModelInterface
                 'workflowId' => $workflowId,
                 'workflowTitle' => $workflowModel->getManualSelectionLabel(),
                 'timestamp' => $action['scheduled_date_gmt'],
-                'nextStep' => $nextStep['data']['label'] ?? ($allNodeTypes[$nextStep['data']['name']])->getLabel(),
+                'nextStep' => $nextStep['data']['label'] ?? ($allStepTypes[$nextStep['data']['name']])->getLabel(),
             ];
         }
 

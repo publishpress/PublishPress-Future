@@ -1,0 +1,133 @@
+<?php
+
+namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
+
+use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendRay;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
+
+class SendRayRunner implements StepRunnerInterface
+{
+    /**
+     * @var StepProcessorInterface
+     */
+    private $stepProcessor;
+
+    /**
+     * @var RuntimeVariablesHandlerInterface
+     */
+    private $variablesHandler;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(
+        StepProcessorInterface $stepProcessor,
+        RuntimeVariablesHandlerInterface $variablesHandler,
+        LoggerInterface $logger
+    ) {
+        $this->stepProcessor = $stepProcessor;
+        $this->variablesHandler = $variablesHandler;
+        $this->logger = $logger;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return SendRay::getNodeTypeName();
+    }
+
+    public function setup(array $step): void
+    {
+        $this->stepProcessor->setup($step, [$this, 'setupCallback']);
+    }
+
+    public function setupCallback(array $step)
+    {
+        $this->stepProcessor->executeSafelyWithErrorHandling(
+            $step,
+            function ($step) {
+                $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
+
+                if (! function_exists('ray')) {
+                    $this->logger->error(
+                        $this->stepProcessor->prepareLogMessage(
+                            'Ray is not installed. Skipping step %s',
+                            $nodeSlug
+                        )
+                    );
+
+                    return;
+                }
+
+                $output = null;
+                $node = $this->stepProcessor->getNodeFromStep($step);
+                $nodeSettings = $this->stepProcessor->getNodeSettings($node);
+
+                $expression = '';
+                if (isset($nodeSettings['data']['expression'])) {
+                    $expression = $nodeSettings['data']['expression'];
+                } else {
+                    if (isset($nodeSettings['data']['dataToOutput'])) {
+                        $expression = '{{' . $nodeSettings['data']['dataToOutput'] . '}}';
+
+                        if ($expression === '{{all-input}}') {
+                            $expression = '{{input}}';
+                        }
+                    }
+
+                    if (isset($nodeSettings['data']['customData'])) {
+                        $expression = $nodeSettings['data']['customData'];
+                    }
+                }
+
+                if ($expression === '{{input}}') {
+                    $output = $this->variablesHandler->getAllVariables();
+                    unset($output['global']);
+                } else {
+                    $output = $this->variablesHandler->replacePlaceholdersInText($expression);
+                }
+
+                // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction
+                $rayMessage = ray($output);
+
+                if (isset($nodeSettings['label'])) {
+                    $rayMessage->label($nodeSettings['label']);
+                }
+
+                if (isset($nodeSettings['color'])) {
+                    switch ($nodeSettings['color']) {
+                        case 'red':
+                            $rayMessage->red();
+                            break;
+                        case 'green':
+                            $rayMessage->green();
+                            break;
+                        case 'blue':
+                            $rayMessage->blue();
+                            break;
+                        case 'purple':
+                            $rayMessage->purple();
+                            break;
+                        case 'orange':
+                            $rayMessage->orange();
+                            break;
+                        case 'gray':
+                            $rayMessage->gray();
+                            break;
+                    }
+                }
+
+                $this->logger->debug(
+                    $this->stepProcessor->prepareLogMessage(
+                        'Step completed | Slug: %s',
+                        $nodeSlug
+                    )
+                );
+            }
+        );
+    }
+}

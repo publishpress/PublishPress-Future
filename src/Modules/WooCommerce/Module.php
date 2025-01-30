@@ -10,7 +10,7 @@ use PublishPress\Future\Framework\ModuleInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-class Module implements ModuleInterface
+final class Module implements ModuleInterface
 {
     /**
      * @var string

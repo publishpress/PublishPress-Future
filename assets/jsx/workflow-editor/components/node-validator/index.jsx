@@ -1,16 +1,20 @@
 import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
 import { useDispatch, useSelect } from "@wordpress/data";
-import { useEffect } from "@wordpress/element";
+import { useEffect, useMemo, useCallback } from "@wordpress/element";
 import { __, sprintf } from "@wordpress/i18n";
 import { nodeHasIncomers, nodeHasOutgoers, getNodeIncomers, getNodeIncomersRecursively } from "../../utils";
 import isEmail from "validator/lib/isEmail";
 import isInt from "validator/lib/isInt";
+import { useDebounce } from "@wordpress/compose";
+import { getExpandedVariablesList, filterVariableOptionsByDataType } from "../../utils";
 
 function isVariable(value) {
     const trimmedValue = value.trim();
     return trimmedValue.startsWith('{{') && trimmedValue.endsWith('}}');
 }
+
+const DEBOUNCE_TIME = 250;
 
 export function NodeValidator({})
 {
@@ -18,11 +22,13 @@ export function NodeValidator({})
         nodes,
         edges,
         getNodeTypeByName,
+        globalVariables,
     } = useSelect((select) => {
         return {
             nodes: select(workflowStore).getNodes(),
             edges: select(workflowStore).getEdges(),
             getNodeTypeByName: select(editorStore).getNodeTypeByName,
+            globalVariables: select(workflowStore).getGlobalVariables(),
         }
     });
 
@@ -31,7 +37,113 @@ export function NodeValidator({})
         resetNodeErrors,
     } = useDispatch(workflowStore);
 
-    useEffect(() => {
+    const nodeSlugs = useMemo(() => {
+        return nodes.map((node) => {
+            return node.data.slug;
+        });
+    }, [nodes]);
+
+    const isVariableValid = useCallback((node, variable, ruleData) => {
+        const successfulResult = {
+            isValid: true,
+            error: null,
+        };
+
+        if (variable?.rule && variable?.dataType) {
+            return successfulResult;
+        }
+
+        if (variable === '') {
+            return successfulResult;
+        }
+
+        let variables = getExpandedVariablesList(node, globalVariables);
+
+        if (ruleData?.dataType) {
+            variables = filterVariableOptionsByDataType(variables, ruleData.dataType);
+        }
+
+        let variableIsFound = false;
+        variables.forEach((existentVariable) => {
+            if (existentVariable.id === variable) {
+                variableIsFound = true;
+            }
+        });
+
+        if (variableIsFound) {
+            return successfulResult;
+        }
+
+        return {
+            isValid: false,
+            error: sprintf(
+                __('The field "%s" requires a valid variable. Please select one from the available options.', 'post-expirator'),
+                ruleData?.fieldLabel
+            ),
+            details: sprintf(
+                __('The variable "%s" is not available in the current context.', 'post-expirator'),
+                variable
+            ),
+        };
+    }, [globalVariables, getExpandedVariablesList, filterVariableOptionsByDataType, getNodeTypeByName]);
+
+    // We are doing a simple validation here. Maybe we should do a more complex one using a parser in the future.
+    const isExpressionValid = useCallback((expression, ruleData) => {
+        let invalidExpression = false;
+        let detailsMessage = '';
+
+        const successfulResult = {
+            isValid: true,
+            error: null,
+        };
+
+        if (! expression?.includes('{{')) {
+            return successfulResult;
+        }
+
+        const slugs = expression.match(/{{[^}]+}}/g);
+
+        if (slugs) {
+            slugs.forEach((slug) => {
+                slug = slug.replace('{{', '').replace('}}', '');
+                slug = slug.trim();
+                slug = slug.split('.')[0];
+
+                if (slug === 'global') {
+                    return successfulResult;
+                }
+
+                if (ruleData?.allowedSlugs?.includes(slug)) {
+                    return successfulResult;
+                }
+
+                if (! nodeSlugs.includes(slug)) {
+                    invalidExpression = true;
+                    detailsMessage = sprintf(
+                        // translators: %s is the workflow step slug.
+                        __('"%s" is not a variable or step slug.', 'post-expirator'),
+                        slug
+                    );
+                }
+            });
+        }
+
+        if (invalidExpression) {
+            return {
+                isValid: false,
+                error: sprintf(
+                    // translators: %s is the field label.
+                    __('Invalid expression on %s', 'post-expirator'),
+                    ruleData?.fieldLabel
+                ),
+                details: detailsMessage,
+            }
+        }
+
+        return successfulResult;
+    }, [nodeSlugs]);
+
+    const validateNodes = useCallback((nodes, edges, nodeSlugs) => {
         nodes.forEach((node) => {
             const nodeType = getNodeTypeByName(node.data?.name);
             const nodeSettings = node.data?.settings || {};
@@ -131,7 +243,17 @@ export function NodeValidator({})
                                     );
                                 }
                             } else {
-                                if (!settingValue || settingValue == '') {
+                                const isEmpty = (value) => {
+                                    return value === ''
+                                        || value === null
+                                        || value === undefined
+                                        || (Array.isArray(value) && value.length === 0)
+                                        // If the default value is an object with a rule, that is the default value
+                                        // and it was not set by the user yet.
+                                        || (typeof value === 'object' && value.rule);
+                                };
+
+                                if (isEmpty(settingValue)) {
                                     addNodeError(
                                         node.id,
                                         `${fieldName}-required`,
@@ -140,6 +262,7 @@ export function NodeValidator({})
                                             fieldLabel
                                         )
                                     );
+                                    break;
                                 }
                             }
                             break;
@@ -213,11 +336,48 @@ export function NodeValidator({})
                             }
 
                             break;
+                        case 'validVariable':
+                            const variableValidation = isVariableValid(node, settingValue, ruleData);
+
+                            if (!variableValidation.isValid) {
+                                addNodeError(
+                                    node.id,
+                                    `${fieldName}-validVariable`,
+                                    variableValidation.error,
+                                    variableValidation.details
+                                );
+                            }
+                            break;
+
+                        case 'validExpression':
+                            const expressionValidation = isExpressionValid(settingValue, ruleData);
+
+                            if (!expressionValidation.isValid) {
+                                addNodeError(
+                                    node.id,
+                                    `${fieldName}-validExpression`,
+                                    expressionValidation.error,
+                                    expressionValidation.details
+                                );
+                            }
+                            break;
                     }
                 });
             }
         });
-    }, [nodes, edges]);
+    }, [getNodeTypeByName, addNodeError, resetNodeErrors, isExpressionValid]);
+
+    const debounceValidation = useDebounce((nodes, edges, nodeSlugs) => {
+        validateNodes(nodes, edges, nodeSlugs);
+    }, DEBOUNCE_TIME);
+
+    useEffect(() => {
+        debounceValidation(nodes, edges, nodeSlugs);
+
+        return () => {
+            debounceValidation.cancel();
+        };
+    }, [nodes, edges, nodeSlugs, debounceValidation]);
 
     return;
 }

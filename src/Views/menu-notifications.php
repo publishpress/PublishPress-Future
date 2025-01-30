@@ -6,11 +6,13 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 $container = \PublishPress\Future\Core\DI\Container::getInstance();
 $settingsFacade = $container->get(\PublishPress\Future\Core\DI\ServicesAbstract::SETTINGS);
+$optionsFacade = $container->get(\PublishPress\Future\Core\DI\ServicesAbstract::OPTIONS);
 
 $expiredemailnotification = $settingsFacade->getSendEmailNotification();
 $expiredemailnotificationadmins = $settingsFacade->getSendEmailNotificationToAdmins();
 $expiredemailnotificationlist = $settingsFacade->getEmailNotificationAddressesList();
-
+$pastDueActionsNotification = $settingsFacade->getPastDueActionsNotificationStatus();
+$pastDueActionsNotificationList = $settingsFacade->getPastDueActionsNotificationAddressesList();
 $expiredemailnotificationenabled = '';
 $expiredemailnotificationdisabled = '';
 if ($expiredemailnotification == 0) {
@@ -26,6 +28,16 @@ if ($expiredemailnotificationadmins == 0) {
 } elseif ($expiredemailnotificationadmins == 1) {
     $expiredemailnotificationadminsenabled = 'checked="checked"';
 }
+
+$pastDueActionsNotificationEnabled = '';
+$pastDueActionsNotificationDisabled = '';
+if ($pastDueActionsNotification == 0) {
+    $pastDueActionsNotificationDisabled = 'checked="checked"';
+} elseif ($pastDueActionsNotification == 1) {
+    $pastDueActionsNotificationEnabled = 'checked="checked"';
+}
+
+$systemAdminEmail = $optionsFacade->getOption('admin_email');
 
 ?>
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
@@ -106,10 +118,62 @@ if ($expiredemailnotificationadmins == 0) {
                     <td>
                         <input class="large-text" type="text" name="expired-email-notification-list"
                                id="expired-email-notification-list" value="<?php
-                                echo esc_attr(implode(',', $expiredemailnotificationlist)); ?>"/>
+                                echo esc_attr(implode(', ', $expiredemailnotificationlist)); ?>"/>
                         <p class="description"><?php
                             esc_html_e(
                                 'Enter a comma separate list of emails that you would like to be notified when the action runs.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab.',
+                                'post-expirator'
+                            ); ?></p>
+                    </td>
+                </tr>
+            </table>
+
+            <h3><?php
+                esc_html_e('Past-due Actions Notification', 'post-expirator'); ?></h3>
+            <p class="description"><?php
+                esc_html_e(
+                    'This will enable or disable the send of email notification on past-due actions.',
+                    'post-expirator'
+                ); ?></p>
+
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row"><?php
+                        esc_html_e('Enable Past-due Actions Notification?', 'post-expirator'); ?></th>
+                    <td>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="past-due-actions-notification" id="past-due-actions-notification-true"
+                                value="1" <?php
+                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                echo $pastDueActionsNotificationEnabled; ?>/> <label
+                                    for="past-due-actions-notification-true"><?php
+                                    esc_html_e('Enabled', 'post-expirator'); ?></label>
+                        </div>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="past-due-actions-notification" id="past-due-actions-notification-false"
+                                value="0" <?php
+                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                echo $pastDueActionsNotificationDisabled; ?>/> <label
+                                    for="past-due-actions-notification-false"><?php
+                                    esc_html_e('Disabled', 'post-expirator'); ?></label>
+                        </div>
+                        <p class="description"><?php
+                            esc_html_e(
+                                'This will enable or disable the send of email notification on past-due actions.',
+                                'post-expirator'
+                            ); ?></p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php
+                        esc_html_e('Who to Notify', 'post-expirator'); ?></th>
+                    <td>
+                        <input class="large-text" type="text" name="past-due-actions-notification-list"
+                               id="past-due-actions-notification-list" placeholder="<?php echo esc_attr($systemAdminEmail); ?>" value="<?php
+                                echo esc_attr(implode(', ', $pastDueActionsNotificationList)); ?>"/>
+                        <p class="description"><?php
+                            esc_html_e(
+                                'Enter a comma separate list of emails that you would like to be notified when past-due actions are detected.',
                                 'post-expirator'
                             ); ?></p>
                     </td>

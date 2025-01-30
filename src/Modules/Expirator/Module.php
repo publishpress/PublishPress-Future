@@ -23,7 +23,7 @@ use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-class Module implements ModuleInterface
+final class Module implements ModuleInterface
 {
     /**
      * @var \PublishPress\Future\Core\HookableInterface

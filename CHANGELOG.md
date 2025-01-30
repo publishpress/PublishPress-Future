@@ -3,6 +3,69 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.3.1 - 30 Jan, 2025
+
+### Added
+
+- Add new option to the Schedule workflow step to select the behavior when a duplicate scheduled action is found (Issue #956).
+- Add daily check and notification for past-due actions, with settings to enable/disable and customize the email addresses (Issue #229).
+- Add check for overdue actions in the Scheduled Actions list screen (Issue #232).
+- Add new validation rule to check if the expression is valid in the workflow editor (Issue #742).
+- Add new validation rule to check if the value of a field has invalid variable references (Issue #969).
+
+### Changed
+
+- Change the workflow step custom label to be a step description and still display the original step label (Issue #1114).
+- Changed text and description of fields in the Settings page (Issues #1097, #1103, #1104, #1105).
+- Changed the field description in the Post Query step (Issue #1100).
+- Changed the label of the "Schedule" workflow step to "Schedule delay" (Issue #1122).
+- Changed the label of the "On Cron Schedule" trigger to "On schedule" (Issue #1122).
+- Changed the label of the "Conditional split" workflow step to "Conditional" (Issue #1117).
+- Changed the color of the "False" branch in the "Conditional" workflow step to a slightly darker color.
+- Changed the "Not" field in the "Conditional" workflow step to only be displayed when there are rules (Issue #1118).
+- Changed the description of the "Conditional" workflow step conditions modal (Issue #1118).
+- Changed the validation rule message of the "Stick" and "Unstick" workflow steps (Issue #1101).
+- Changed the message in the Scheduled Actions list screen when a scheduled action is missing its original Schedule step (Issue #971).
+- Removed the "Single variable mode" from the text in the expression builder (Issue #1118).
+- Automatically select post-related settings and defaults in workflow steps that interact with posts (Issue #969).
+- Removed the screenshot feature from the workflow editor (Issue #1135).
+- Changed the label and description of some workflow steps for making it more intuitive (Issue #1101).
+- Changed the default duplicate handling on workflow stepsto "Replace existing task" (Issue #956).
+- Step "Ray - Debug" renamed to "Send to Ray" (Issue #1143).
+- Step "Debug Log" renamed to "Append to debug log" (Issue #1143).
+- Step "Conditional" renamed to "Conditional Delay".
+- Changed the default step's slug to reflect the new step name and classes.
+- Changed the Schedule Delay step settings to be more intuitive.
+- Chagned some text in the workflow editor to be more user friendly.
+
+### Fixed
+
+- Fix SQL syntax error in MariaDB lower than 11.6 when deleting orphan scheduled steps (Issue #1087).
+- Update translations (Issue #1113).
+- Fix extra line (empty value character) on some post in the future action column (Issue #1106).
+- Fix error when the step being executed is not found (Issue #1123).
+- Fix the space on right margin of the workflow editor nodes.
+- Fix queries in the `ScheduledActionsModel` to use the group ID.
+- Fix infinite loop detection in post related triggers when fired by a bulk edit action (Issue #943).
+- Fix space on the outputs of the workflow steps in the Scheduled Actions list screen.
+- Fix performance issue when validating the workflow editor nodes (Issue #1137).
+- Fix the constructor of some workflow triggers (Issue 1141).
+- Fix the error related to wrong arguments passed to sprintf on nl_NL language (Issue #1138).
+- Fix the JS error when the expression builder is opened with an expression containing only numbers (Issue #1142).
+- Fix specific text stripping tags from translated string.
+
+### Developers
+
+- Refactor the method `deleteExpiredScheduledSteps` in the class `ScheduledActionsModel` renaming it to `deleteExpiredDoneActions`.
+- Add new method `getExpiredPendingActions` to the class `ScheduledActionsModel`.
+- Deprecated the method `isInfinityLoopDetected` in the trait `InfiniteLoopPreventer` and use the method `isInfiniteLoopDetected` instead.
+- Add new argument `$uniqueId` to the method `isInfiniteLoopDetected` in the trait `InfiniteLoopPreventer` (Issue #943).
+- Remove the methods `convertLegacyScreenshots`, `setScreenshotFromBase64`, `setScreenshotFromFile` and `getScreenshotUrl` from the class `WorkflowModel` (Issue #1135).
+- Remove the methods `convertLegacyScreenshots`, `setScreenshotFromBase64`, `setScreenshotFromFile` and `getScreenshotUrl` from the interface `WorkflowModelInterface` (Issue #1135).
+- Remove the methods `getWorkflowScreenshotStatus`, and `setWorkflowScreenshotStatus` from the class `SettingsFacade` (Issue #1135).
+- Refactored step types and step runners moving files to new folder structure (Issue #1143).
+- Refactored most of the code renaming "Node" to "Step", "NodeRunner" to "StepRunner", and so on (Issue #1148).
+
 ## [4.3.0] - 08 Jan, 2025
 
 ### Added

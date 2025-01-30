@@ -10,15 +10,12 @@ import { SettingsTab } from '../settings-tab';
 const ExportTab = () => {
     const [exportActionWorkflows, setExportActionWorkflows] = useState(true);
     const [exportActionSettings, setExportActionSettings] = useState(true);
-    const [includeScreenshots, setIncludeScreenshots] = useState(false);
     const [isExporting, setIsExporting] = useState(false);
     const [workflows, setWorkflows] = useState([]);
     const [selectedWorkflows, setSelectedWorkflows] = useState([]);
     const [selectedSettings, setSelectedSettings] = useState(['postTypesDefaults', 'general', 'notifications', 'display', 'advanced']);
 
     const apiRequestControllerRef = useRef(new AbortController());
-
-    const { enableWorkflowScreenshot } = futureBackupPanelData;
 
     const settingsOptions = [
         {
@@ -92,7 +89,6 @@ const ExportTab = () => {
                 exportActionWorkflows: exportActionWorkflows,
                 exportActionSettings: exportActionSettings,
                 workflows: selectedWorkflows,
-                includeScreenshots: includeScreenshots,
                 settings: selectedSettings,
             },
             signal,
@@ -171,16 +167,6 @@ const ExportTab = () => {
 
                     {exportActionWorkflows && workflows.length > 0 && (
                         <div className="pe-settings-tab__backup-container">
-                            {enableWorkflowScreenshot && (
-                                <div>
-                                    <ToggleControl
-                                        label={__('Include screenshots', 'post-expirator')}
-                                        checked={includeScreenshots}
-                                        onChange={(value) => setIncludeScreenshots(value)}
-                                    />
-                                </div>
-                            )}
-
                             <SelectableList items={workflows} selectedItems={selectedWorkflows} onSelect={setSelectedWorkflows} />
                         </div>
                     )}

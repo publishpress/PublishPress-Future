@@ -13,6 +13,8 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManual
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnLegacyActionTrigger;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
 use WP_Post;
 use WP_Query;
 
@@ -48,7 +50,7 @@ class WorkflowModel implements WorkflowModelInterface
 
     private $hasManualSelectionTrigger = null;
 
-    private $allNodeTypes = null;
+    private $allStepTypes = null;
 
     private $debugRayShowQueries = null;
 
@@ -59,9 +61,9 @@ class WorkflowModel implements WorkflowModelInterface
     private $debugRayShowCurrentRunningStep = null;
 
     /**
-     * @var NodeTypesModelInterface
+     * @var StepTypesModelInterface
      */
-    private $nodeTypesModel;
+    private $stepTypesModel;
 
     /**
      * @var HookableInterface
@@ -84,7 +86,7 @@ class WorkflowModel implements WorkflowModelInterface
 
         // FIXME: Use dependency injection
         $this->hooks = $container->get(ServicesAbstract::HOOKS);
-        $this->nodeTypesModel = $container->get(ServicesAbstract::NODE_TYPES_MODEL);
+        $this->stepTypesModel = $container->get(ServicesAbstract::STEP_TYPES_MODEL);
         $this->logger = $container->get(ServicesAbstract::LOGGER);
         $this->settingsFacade = $container->get(ServicesAbstract::SETTINGS);
     }
@@ -110,7 +112,7 @@ class WorkflowModel implements WorkflowModelInterface
         $this->flow = null;
         $this->hasLegacyActionTrigger = null;
         $this->hasManualSelectionTrigger = null;
-        $this->allNodeTypes = null;
+        $this->allStepTypes = null;
         $this->debugRayShowEmails = null;
         $this->debugRayShowQueries = null;
         $this->debugRayShowWordPressErrors = null;
@@ -311,17 +313,17 @@ class WorkflowModel implements WorkflowModelInterface
             return [];
         }
 
-        if (is_null($this->allNodeTypes)) {
+        if (is_null($this->allStepTypes)) {
             // Ensure the flow is updated with the latest node types
             // FIXME: Use dependency injection
-            $nodeTypesModel = Container::getInstance()->get(ServicesAbstract::NODE_TYPES_MODEL);
-            $this->allNodeTypes = $nodeTypesModel->getAllNodeTypesIndexedByName();
+            $stepTypesModel = Container::getInstance()->get(ServicesAbstract::STEP_TYPES_MODEL);
+            $this->allStepTypes = $stepTypesModel->getAllStepTypesIndexedByName();
         }
 
-        return $this->allNodeTypes;
+        return $this->allStepTypes;
     }
 
-    public function getFlow(bool $updateNodes = false): array
+    public function getFlow(bool $updateSteps = false): array
     {
         if (empty($this->post)) {
             return [];
@@ -334,7 +336,7 @@ class WorkflowModel implements WorkflowModelInterface
                 $this->flow = [];
             }
 
-            if ($updateNodes) {
+            if ($updateSteps) {
                 if (empty($this->flow)) {
                     return $this->flow;
                 }
@@ -344,7 +346,7 @@ class WorkflowModel implements WorkflowModelInterface
                 $nodesUpdated = false;
                 foreach ($nodes as &$node) {
                     if (! $this->isNodeUpdated($node)) {
-                        $node = $this->updateNode($node);
+                        $node = $this->updateStep($node);
                         $nodesUpdated = true;
                     }
                 }
@@ -357,32 +359,32 @@ class WorkflowModel implements WorkflowModelInterface
         return $this->flow;
     }
 
-    private function getNodeTypeByname(string $name)
+    private function getStepTypeByname(string $name)
     {
-        $nodeTypes = $this->getAllNodeTypesByType();
+        $stepTypes = $this->getAllNodeTypesByType();
 
-        $nodeType = $nodeTypes[$name] ?? null;
+        $stepType = $stepTypes[$name] ?? null;
 
-        if (is_null($nodeType)) {
+        if (is_null($stepType)) {
             throw new Exception('Node type not found: ' . esc_html($name));
         }
 
-        return $nodeType;
+        return $stepType;
     }
 
     private function isNodeUpdated(array $node): bool
     {
-        $nodeType = $this->getNodeTypeByname($node['data']['name'] ?? '');
-        $nodeVersion = $this->getNodeVersion($node);
+        $stepType = $this->getStepTypeByname($node['data']['name'] ?? '');
+        $stepVersion = $this->getStepVersion($node);
 
-        if (! $nodeType) {
+        if (! $stepType) {
             return false;
         }
 
-        return $nodeVersion === $nodeType->getVersion();
+        return $stepVersion === $stepType->getVersion();
     }
 
-    private function getNodeVersion(array $node): int
+    private function getStepVersion(array $node): int
     {
         return (int)($node['data']['version'] ?? 0);
     }
@@ -401,19 +403,19 @@ class WorkflowModel implements WorkflowModelInterface
         return $untranslatedString;
     }
 
-    private function updateNode(array $node): array
+    private function updateStep(array $node): array
     {
-        $nodeType = $this->getNodeTypeByname($node['data']['name']);
-        $nodeVersion = $this->getNodeVersion($node);
+        $stepType = $this->getStepTypeByname($node['data']['name']);
+        $stepVersion = $this->getStepVersion($node);
 
-        if ($nodeType->getVersion() < $nodeVersion) {
+        if ($stepType->getVersion() < $stepVersion) {
             // TODO: What to do when the node type is downgraded? Should we have a check in the version of the builder?
             return $node;
         }
         // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
-        // if ($nodeType->getVersion() > $nodeVersion) {
+        // if ($stepType->getVersion() > $stepVersion) {
         //     // Update the version
-        //     $node['data']['version'] = $nodeType->getVersion();
+        //     $node['data']['version'] = $stepType->getVersion();
         // }
 
         return $node;
@@ -465,120 +467,6 @@ class WorkflowModel implements WorkflowModelInterface
         return $id;
     }
 
-    private function getScreenshotsFolder()
-    {
-        $uploadDir = wp_get_upload_dir();
-        $uploadDir = $uploadDir['basedir'];
-
-        return $uploadDir . '/publishpress-future/workflows/';
-    }
-
-    private function prepareScreenshotsFolder()
-    {
-        $screenshotDir = $this->getScreenshotsFolder();
-
-        if (!file_exists($screenshotDir)) {
-            // WordPress VIP false positive, since we are making the directory in the uploads folder
-            // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.directory_mkdir
-            mkdir($screenshotDir, 0777, true);
-        }
-
-        return $screenshotDir;
-    }
-
-    private function getScreenshotFileName(): string
-    {
-        return 'workflow-screenshot-' . $this->post->ID . '.png';
-    }
-
-    private function deleteScreenshotFile()
-    {
-        $screenshotDir = $this->getScreenshotsFolder();
-        $screenshotFile = $screenshotDir . $this->getScreenshotFileName();
-
-        if (file_exists($screenshotFile)) {
-            // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_unlink
-            unlink($screenshotFile);
-        }
-    }
-
-    private function deleteLegacyScreenshotFile()
-    {
-        $existingScreenshotId = get_post_thumbnail_id($this->post->ID);
-
-        if ($existingScreenshotId) {
-            wp_delete_attachment($existingScreenshotId, true);
-        }
-    }
-
-    public function convertLegacyScreenshots(): void
-    {
-        if (empty($this->post)) {
-            return;
-        }
-
-        if (! $this->settingsFacade->getWorkflowScreenshotStatus()) {
-            return;
-        }
-
-        $existingScreenshotId = get_post_thumbnail_id($this->post->ID);
-
-        if ($existingScreenshotId) {
-            $existingScreenshotFile = get_attached_file($existingScreenshotId);
-
-            if ($existingScreenshotFile) {
-                $screenshotDir = $this->getScreenshotsFolder();
-                $screenshotFile = $screenshotDir . $this->getScreenshotFileName();
-
-                if (file_exists($existingScreenshotFile)) {
-                    // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_rename
-                    rename($existingScreenshotFile, $screenshotFile);
-                }
-
-                $this->deleteLegacyScreenshotFile();
-                $this->createScreenshotThumbnails($screenshotFile);
-            }
-        }
-    }
-
-    private function createScreenshotThumbnails($screenshotFile)
-    {
-        if (!file_exists($screenshotFile)) {
-            return;
-        }
-
-        if (! $this->settingsFacade->getWorkflowScreenshotStatus()) {
-            return;
-        }
-
-        if (! function_exists('image_make_intermediate_size')) {
-            require_once ABSPATH . 'wp-admin/includes/image.php';
-        }
-
-        // Create 4 versions of the screenshot: 150x150, 258x300, 768x892, 882x1024
-        $sizes = [
-            $this->getImageDimensionsBySize('thumbnail'),
-            $this->getImageDimensionsBySize('medium'),
-            $this->getImageDimensionsBySize('large'),
-            $this->getImageDimensionsBySize('full'),
-        ];
-
-        foreach ($sizes as $size) {
-            $thumbnail = image_make_intermediate_size($screenshotFile, $size[0], $size[1], true);
-
-            if ($thumbnail) {
-                // Move the thumbnail to the uploads dir
-                $thumbnailDir = $this->getScreenshotsFolder();
-                $thumbnailFile = $thumbnailDir . basename($thumbnail['file']);
-
-                if (file_exists($thumbnail['file'])) {
-                    // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_rename
-                    rename($thumbnail['file'], $thumbnailFile);
-                }
-            }
-        }
-    }
-
     private function getImageDimensionsBySize($size)
     {
         $sizes = [
@@ -589,85 +477,6 @@ class WorkflowModel implements WorkflowModelInterface
         ];
 
         return $sizes[$size] ?? $sizes['full'];
-    }
-
-    public function setScreenshotFromBase64(string $dataImage)
-    {
-        if (empty($this->post)) {
-            return;
-        }
-
-        if (! $this->settingsFacade->getWorkflowScreenshotStatus()) {
-            return;
-        }
-
-        $this->deleteLegacyScreenshotFile();
-        $this->prepareScreenshotsFolder();
-        $this->deleteScreenshotFile();
-
-        // Sanitize the baseurl to make sure it has data:image/png;base64
-        if (strpos($dataImage, 'data:image/png;base64') !== 0) {
-            return;
-        }
-
-        // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
-        $imageData = file_get_contents($dataImage);
-
-        if ($imageData !== false) {
-            $imageFileName = 'workflow-screenshot-' . $this->post->ID . '.png';
-
-            $upload = wp_upload_bits($imageFileName, null, $imageData);
-            if ($upload['error'] === false) {
-                // Put the uploaded file into the screenshots dir
-                $screenshotDir = $this->getScreenshotsFolder();
-                $screenshotFile = $screenshotDir . $this->getScreenshotFileName();
-
-                if (file_exists($upload['file'])) {
-                    // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_rename
-                    rename($upload['file'], $screenshotFile);
-                }
-
-                $this->createScreenshotThumbnails($screenshotFile);
-            }
-        }
-    }
-
-    public function setScreenshotFromFile(string $filePath)
-    {
-        if (! $this->settingsFacade->getWorkflowScreenshotStatus()) {
-            return;
-        }
-
-        // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
-        $dataImage = 'data:image/png;base64,' . base64_encode(file_get_contents($filePath));
-
-        $this->setScreenshotFromBase64($dataImage);
-    }
-
-    public function getScreenshotUrl($size = 'full'): string
-    {
-        if (empty($this->post)) {
-            return '';
-        }
-
-        if (! $this->settingsFacade->getWorkflowScreenshotStatus()) {
-            return '';
-        }
-
-        $screenshotDir = $this->getScreenshotsFolder();
-        $screenshotFile = $screenshotDir . $this->getScreenshotFileName();
-
-        if (!file_exists($screenshotFile)) {
-            return '';
-        }
-
-        $dimensions = $this->getImageDimensionsBySize($size);
-        $dimensions = $dimensions[0] . 'x' . $dimensions[1];
-        $screenshotFile = $screenshotDir . basename($screenshotFile, '.png') . '-' . $dimensions . '.png';
-
-        $screenshotUrl = str_replace(ABSPATH, site_url('/'), $screenshotFile);
-
-        return $screenshotUrl;
     }
 
     public function getTriggerNodes(): array
@@ -685,7 +494,7 @@ class WorkflowModel implements WorkflowModelInterface
         // Build a list of trigger nodes
         $triggers = [];
         foreach ($abstractFlow['nodes'] as $node) {
-            if ($node['data']['elementaryType'] === NodeTypesModel::NODE_TYPE_TRIGGER) {
+            if ($node['data']['elementaryType'] === StepTypesModel::STEP_TYPE_TRIGGER) {
                 $triggers[] = $node;
             }
         }
@@ -712,7 +521,7 @@ class WorkflowModel implements WorkflowModelInterface
         return $abstractFlow['edges'] ?? [];
     }
 
-    public function getRoutineTree(array $nodeTypes): array
+    public function getRoutineTree(array $stepTypes): array
     {
         if (empty($this->post)) {
             return [];
@@ -741,34 +550,34 @@ class WorkflowModel implements WorkflowModelInterface
                 $edges,
                 $nodesById,
                 $triggerNode['id'],
-                $nodeTypes
+                $stepTypes
             );
         }
 
         return $routineTree;
     }
 
-    private function getRoutineNodesTree($edges, $nodes, $sourceNodeId, $nodeTypes, $edgeId = null)
+    private function getRoutineNodesTree($edges, $nodes, $sourceNodeId, $stepTypes, $edgeId = null)
     {
         $node = $nodes[$sourceNodeId];
         $elementaryType = $node['data']['elementaryType'] ?? null;
-        $nodeName = $node['data']['name'] ?? null;
-        $nodeTypeInstance = $nodeTypes[$elementaryType][$nodeName] ?? null;
+        $stepName = $node['data']['name'] ?? null;
+        $stepTypeInstance = $stepTypes[$elementaryType][$stepName] ?? null;
 
-        if (is_null($nodeTypeInstance)) {
+        if (is_null($stepTypeInstance)) {
             $this->logger->error(
                 sprintf(
-                    'Node type not found. Workflow: %1$d; ElementaryType: %2$s; NodeName; %3$s; SourceNodeId: %4$s',
+                    'Step type not found. Workflow: %1$d; ElementaryType: %2$s; StepName: %3$s; SourceNodeId: %4$s',
                     $this->post->ID,
                     $elementaryType,
-                    $nodeName,
+                    $stepName,
                     $sourceNodeId
                 )
             );
 
             return [];
         }
-        $handleSchema = $nodeTypeInstance->getHandleSchema();
+        $handleSchema = $stepTypeInstance->getHandleSchema();
 
         $tree = ['node' => $node,];
 
@@ -788,7 +597,7 @@ class WorkflowModel implements WorkflowModelInterface
                         $edges,
                         $nodes,
                         $edge['target'],
-                        $nodeTypes,
+                        $stepTypes,
                         $edge['id']
                     );
                 }
@@ -800,12 +609,12 @@ class WorkflowModel implements WorkflowModelInterface
 
     private function checkHasLegacyActionTriggerInTheFlow(): bool
     {
-        return $this->checkHasTriggerInTheFlow(FutureLegacyAction::getNodeTypeName());
+        return $this->checkHasTriggerInTheFlow(OnLegacyActionTrigger::getNodeTypeName());
     }
 
     private function checkHasManualSelectionTriggerInTheFlow(): bool
     {
-        return $this->checkHasTriggerInTheFlow(CoreOnManuallyEnabledForPost::getNodeTypeName());
+        return $this->checkHasTriggerInTheFlow(OnPostWorkflowEnable::getNodeTypeName());
     }
 
     private function checkHasTriggerInTheFlow(string $triggerName): bool
@@ -814,7 +623,7 @@ class WorkflowModel implements WorkflowModelInterface
 
         foreach ($workflowTriggers as $triggerNode) {
             if (
-                $triggerNode['data']['elementaryType'] === NodeTypesModel::NODE_TYPE_TRIGGER
+                $triggerNode['data']['elementaryType'] === StepTypesModel::STEP_TYPE_TRIGGER
                 && $triggerNode['data']['name'] === $triggerName
             ) {
                 return true;
@@ -931,8 +740,8 @@ class WorkflowModel implements WorkflowModelInterface
 
         foreach ($workflowTriggers as $triggerNode) {
             if (
-                $triggerNode['data']['elementaryType'] === NodeTypesModel::NODE_TYPE_TRIGGER
-                && $triggerNode['data']['name'] === CoreOnManuallyEnabledForPost::getNodeTypeName()
+                $triggerNode['data']['elementaryType'] === StepTypesModel::STEP_TYPE_TRIGGER
+                && $triggerNode['data']['name'] === OnPostWorkflowEnable::getNodeTypeName()
             ) {
                 return $triggerNode;
             }
@@ -962,8 +771,8 @@ class WorkflowModel implements WorkflowModelInterface
             return [];
         }
 
-        $nodeTypes = $this->nodeTypesModel->getAllNodeTypesByType();
-        $routineTree = $this->getRoutineTree($nodeTypes);
+        $stepTypes = $this->stepTypesModel->getAllStepTypesByType();
+        $routineTree = $this->getRoutineTree($stepTypes);
 
         if (empty($routineTree)) {
             // TODO: Log the error
