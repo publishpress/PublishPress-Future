@@ -11,7 +11,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 class SetPostTermRunner implements StepRunnerInterface
 {
     /**
-     * @var Step
+     * @var StepProcessorInterface
      */
     private $stepProcessor;
 
