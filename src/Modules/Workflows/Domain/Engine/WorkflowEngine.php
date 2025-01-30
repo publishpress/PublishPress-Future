@@ -18,7 +18,7 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowScheduledStepModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 use PublishPress\Future\Modules\Workflows\Module;
-use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowModelInterface;
@@ -190,7 +190,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                     continue;
                 }
 
-                /** @var StepRunnerInterface $triggerRunner */
+                /** @var TriggerRunnerInterface $triggerRunner */
                 $triggerRunner = call_user_func($this->stepRunnerFactory, $triggerName);
 
                 if (is_null($triggerRunner)) {
