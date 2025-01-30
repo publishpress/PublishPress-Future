@@ -4,6 +4,7 @@ namespace PublishPress\Future\Modules\Workflows\Models;
 
 use PublishPress\Future\Modules\Workflows\Module;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowModelInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use Exception;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;

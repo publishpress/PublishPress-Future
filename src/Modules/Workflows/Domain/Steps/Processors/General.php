@@ -6,14 +6,14 @@ use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayResolver;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
-use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use Throwable;
 
-class General implements NodeRunnerProcessorInterface
+class General implements StepProcessorInterface
 {
     const LOG_PREFIX = '[WF Engine]   - ';
 
