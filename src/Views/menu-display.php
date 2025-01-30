@@ -397,7 +397,7 @@ $shortcodeWrapperClass = $settingsFacade->getShortcodeWrapperClass();
                 <?php
                 echo sprintf(
                     // translators: %s is a code tag that wraps the shortcode
-                    esc_html('Use the %s[futureaction]%s shortcode to show when the future action will occur. You can add this shortcode anywhere in your post content.', 'post-expirator'),
+                    esc_html__('Use the %s[futureaction]%s shortcode to show when the future action will occur. You can add this shortcode anywhere in your post content.', 'post-expirator'),
                     '<code>',
                     '</code>'
                 ); ?>

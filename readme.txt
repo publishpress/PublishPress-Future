@@ -7,7 +7,7 @@ Requires at least: 6.7
 Requires PHP: 7.4
 Tested up to: 6.7
 License: GPLv2 or later
-Stable tag: 4.3.1
+Stable tag: 4.3.2
 
 PublishPress Future can make scheduled changes to your content. You can unpublish posts, move posts to a new status, update the categories, and more.
 
@@ -173,7 +173,15 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
 
-## 4.3.1 - 30 Jan, 2025
+## [4.3.2] - 30 Jan, 2025
+
+### Fixed
+
+- Fix typo in the `WorkflowEngine` class.
+- Fix reference to deprecated classes and interfaces.
+- Fix translation of shortcode settings in the Display settings page.
+
+## [4.3.1] - 30 Jan, 2025
 
 ### Added
 
@@ -206,7 +214,7 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 - Step "Conditional" renamed to "Conditional Delay".
 - Changed the default step's slug to reflect the new step name and classes.
 - Changed the Schedule Delay step settings to be more intuitive.
-- Chagned some text in the workflow editor to be more user friendly.
+- Changed some text in the workflow editor to be more user friendly.
 
 ### Fixed
 

@@ -7,6 +7,7 @@
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -21,6 +22,9 @@ $actionDate = $postModel->getExpirationDateString(false);
 $actionDateUnix = $postModel->getExpirationDateAsUnixTime();
 $actionTaxonomy = $postModel->getExpirationTaxonomy();
 $actionType = $postModel->getExpirationType();
+/**
+ * @var ExpirationActionInterface $action
+ */
 $action = $postModel->getExpirationAction();
 $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
 $isOverdueAction = $actionDateUnix < time() || 1;

@@ -312,7 +312,7 @@ class ScheduledActionsController implements InitializableInterface
             }
         }
 
-        if ($hook === WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_NODE) {
+        if ($hook === WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_STEP) {
             $html = __('Executed workflow scheduled step', 'post-expirator');
         }
 

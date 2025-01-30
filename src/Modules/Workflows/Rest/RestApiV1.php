@@ -302,13 +302,17 @@ class RestApiV1 implements RestApiManagerInterface
             'hide_empty' => false,
         ]);
 
-        $terms = array_map(function ($term) {
-            return [
+        if (is_array($terms) && ! empty($terms)) {
+            $terms = array_map(function ($term) {
+                return [
                 'id' => $term->term_id,
                 'name' => $term->name,
-                'slug' => $term->slug,
-            ];
-        }, $terms);
+                    'slug' => $term->slug,
+                ];
+            }, $terms);
+        } else {
+            $terms = [];
+        }
 
         return rest_ensure_response($terms);
     }

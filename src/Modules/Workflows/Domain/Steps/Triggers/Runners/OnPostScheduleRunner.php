@@ -13,7 +13,7 @@ class OnPostScheduleRunner implements TriggerRunnerInterface
     use InfiniteLoopPreventer;
 
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepProcessorInterface
      */
     private $stepProcessor;
 

@@ -10,7 +10,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 class OnScheduleRunner implements TriggerRunnerInterface
 {
     /**
-     * @var StepRunnerInterface
+     * @var StepProcessorInterface
      */
     private $stepProcessor;
 

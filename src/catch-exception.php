@@ -35,11 +35,18 @@ namespace PublishPress\Future {
                 );
             }
 
-            if ($addTrace) {
+            if ($addTrace && method_exists($e, 'getTrace')) {
                 // Add the backtrace to the log
-                $traceItems = array_map(function ($item) {
-                    return $item['file'] . ':' . $item['line'] . ' ' . $item['function'] . '()';
-                }, $e->getTrace());
+                $traceItems = array_map(
+                    function ($item) {
+                        if (isset($item['file'])) {
+                            return $item['file'] . ':' . $item['line'] . ' ' . $item['function'] . '()';
+                        }
+
+                        return '';
+                    },
+                    $e->getTrace()
+                );
 
                 $message .= ' Trace: ' . implode(' > ', $traceItems);
             }

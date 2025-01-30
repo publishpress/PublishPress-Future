@@ -17,9 +17,9 @@ class Post implements StepProcessorInterface, StepPostRelatedProcessorInterface
     private $hooks;
 
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepProcessorInterface
      */
-    private $generalNodeRunnerProcessor;
+    private $generalProcessor;
 
     /**
      * @var RuntimeVariablesHandlerInterface
@@ -33,12 +33,12 @@ class Post implements StepProcessorInterface, StepPostRelatedProcessorInterface
 
     public function __construct(
         HooksFacade $hooks,
-        StepProcessorInterface $generalNodeRunnerProcessor,
+        StepProcessorInterface $generalProcessor,
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger
     ) {
         $this->hooks = $hooks;
-        $this->generalNodeRunnerProcessor = $generalNodeRunnerProcessor;
+        $this->generalProcessor = $generalProcessor;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
     }
@@ -109,27 +109,27 @@ class Post implements StepProcessorInterface, StepPostRelatedProcessorInterface
 
     public function runNextSteps(array $step, string $branch = 'output'): void
     {
-        $this->generalNodeRunnerProcessor->runNextSteps($step, $branch);
+        $this->generalProcessor->runNextSteps($step, $branch);
     }
 
     public function getNextSteps(array $step, string $branch = 'output'): array
     {
-        return $this->generalNodeRunnerProcessor->getNextSteps($step, $branch);
+        return $this->generalProcessor->getNextSteps($step, $branch);
     }
 
     public function getNodeFromStep(array $step)
     {
-        return $this->generalNodeRunnerProcessor->getNodeFromStep($step);
+        return $this->generalProcessor->getNodeFromStep($step);
     }
 
     public function getSlugFromStep(array $step)
     {
-        return $this->generalNodeRunnerProcessor->getSlugFromStep($step);
+        return $this->generalProcessor->getSlugFromStep($step);
     }
 
     public function getNodeSettings(array $node)
     {
-        return $this->generalNodeRunnerProcessor->getNodeSettings($node);
+        return $this->generalProcessor->getNodeSettings($node);
     }
 
     public function logError(string $message, int $workflowId, array $step)
@@ -139,17 +139,17 @@ class Post implements StepProcessorInterface, StepPostRelatedProcessorInterface
 
     public function triggerCallbackIsRunning(): void
     {
-        $this->generalNodeRunnerProcessor->triggerCallbackIsRunning();
+        $this->generalProcessor->triggerCallbackIsRunning();
     }
 
     public function prepareLogMessage(string $message, ...$args): string
     {
-        return $this->generalNodeRunnerProcessor->prepareLogMessage($message, ...$args);
+        return $this->generalProcessor->prepareLogMessage($message, ...$args);
     }
 
     public function executeSafelyWithErrorHandling(array $step, callable $callback, ...$args): void
     {
-        $this->generalNodeRunnerProcessor->executeSafelyWithErrorHandling($step, $callback, ...$args);
+        $this->generalProcessor->executeSafelyWithErrorHandling($step, $callback, ...$args);
     }
 
     private function addDebugLogMessage(string $message, ...$args): void

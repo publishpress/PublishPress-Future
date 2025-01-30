@@ -58,7 +58,7 @@ if (! empty($results)) {
     echo '<select id="log-count" name="log_count" onchange="this.form.submit()">';
     foreach ($logCountOptions as $value => $label) {
         $selected = $currentLogCount === $value ? ' selected' : '';
-        echo '<option value="' . esc_attr($value) . '"' . $selected . '>' . esc_html($label) . '</option>';
+        echo '<option value="' . esc_attr((string)$value) . '"' . $selected . '>' . esc_html($label) . '</option>';
     }
     echo '</select>';
     echo '</form>';

@@ -33,8 +33,8 @@ foreach ($enabledWorkflows as $workflowModel) :
         ?>
         <div class="post-expire-col">
             <span class="dashicons dashicons-clock icon-scheduled" aria-hidden="true"></span>
-            <span class="future-action-action-name"><?php echo esc_html($workflowLabel); ?></span>
-            <span class="future-action-action-date"><?php echo esc_html(wp_date($wpDateFormat, $timestamp)); ?></span>
+            <span class="future-action-action-name"><?php echo esc_html((string)$workflowLabel); ?></span>
+            <span class="future-action-action-date"><?php echo esc_html((string)wp_date($wpDateFormat, $timestamp)); ?></span>
         </div>
         <?php
         $hasListedWorkflows = true;

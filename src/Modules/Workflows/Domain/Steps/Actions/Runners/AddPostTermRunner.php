@@ -11,7 +11,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AddPo
 class AddPostTermRunner implements StepRunnerInterface
 {
     /**
-     * @var NodeRunnerProcessorInterface
+     * @var StepProcessorInterface
      */
     private $stepProcessor;
 

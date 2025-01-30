@@ -18,7 +18,7 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowScheduledStepModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 use PublishPress\Future\Modules\Workflows\Module;
-use PublishPress\Future\Modules\Workflows\Interfaces\stepRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowModelInterface;
@@ -84,16 +84,26 @@ class WorkflowEngine implements WorkflowEngineInterface
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_LOAD);
 
         $this->hooks->addAction(
-            HooksAbstract::ACTION_EXECUTE_NODE,
+            HooksAbstract::ACTION_EXECUTE_STEP,
             [$this, 'executeStepRoutine']
         );
 
         $this->hooks->addAction(
-            HooksAbstract::ACTION_ASYNC_EXECUTE_NODE,
+            HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
             [$this, "executeAsyncStepRoutine"],
             10
         );
 
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_UNSCHEDULE_RECURRING_STEP_ACTION,
+            [$this, "unscheduleRecurringStepAction"],
+            10,
+            2
+        );
+
+        /**
+         * We are keeping the old constant for compatibility with old actions scheduled by the old constant.
+         */
         $this->hooks->addAction(
             HooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION,
             [$this, "unscheduleRecurringStepAction"],
@@ -180,7 +190,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                     continue;
                 }
 
-                /** @var stepRunnerInterface $triggerRunner */
+                /** @var TriggerRunnerInterface $triggerRunner */
                 $triggerRunner = call_user_func($this->stepRunnerFactory, $triggerName);
 
                 if (is_null($triggerRunner)) {
