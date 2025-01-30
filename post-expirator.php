@@ -133,6 +133,7 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         });
 
         add_action('init', function () {
+            $container = null;
             try {
                 loadDependencies();
 
