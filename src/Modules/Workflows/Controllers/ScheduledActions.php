@@ -235,8 +235,8 @@ class ScheduledActions implements InitializableInterface
             }
 
             switch ($hook) {
-                case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_STEP:
                 case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_NODE:
+                case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_STEP:
                     if (ScheduledActionModel::argsAreOnNewFormat((array) $args)) {
                         $scheduledStepModel = new WorkflowScheduledStepModel();
                         $scheduledStepModel->loadByActionId($actionId);
