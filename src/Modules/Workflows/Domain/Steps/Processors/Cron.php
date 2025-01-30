@@ -763,7 +763,7 @@ class Cron implements AsyncStepProcessorInterface
     {
         $this->cron->scheduleSingleAction(
             time() + self::UNSCHEDULE_FUTURE_ACTION_DELAY,
-            HooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION,
+            HooksAbstract::ACTION_UNSCHEDULE_RECURRING_STEP_ACTION,
             [
                 'workflowId' => $workflowId,
                 'stepId' => $stepId,

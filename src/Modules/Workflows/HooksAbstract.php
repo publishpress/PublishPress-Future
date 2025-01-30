@@ -22,12 +22,40 @@ abstract class HooksAbstract
 
     public const ACTION_TRIGGER_FIRED = 'publishpressfuture_workflow_trigger_fired_';
 
+    /**
+     * @deprecated 4.3.2 Use ACTION_EXECUTE_STEP instead.
+     */
     public const ACTION_EXECUTE_NODE = 'publishpressfuture_workflow_execute_node';
 
+    /**
+     * @since 4.3.2
+     */
+    public const ACTION_EXECUTE_STEP = 'publishpressfuture_workflow_execute_node';
+
+    /**
+     * @deprecated 4.3.2 Use ACTION_ASYNC_EXECUTE_STEP instead.
+     */
     public const ACTION_ASYNC_EXECUTE_NODE = 'publishpressfuture_workflow_async_execute_node';
 
+    /**
+     * We are just renaming the constant to be more intuitive. The value we are using is the same as the old one
+     * to avoid breaking async actions scheduled by the old constant.
+     *
+     * @since 4.3.2
+     */
+    public const ACTION_ASYNC_EXECUTE_STEP = 'publishpressfuture_workflow_async_execute_node';
+
+    /**
+     * @deprecated 4.3.2 Use ACTION_UNSCHEDULE_RECURRING_STEP_ACTION instead.
+     */
     public const ACTION_UNSCHEDULE_RECURRING_NODE_ACTION =
     'publishpressfuture_workflow_unschedule_recurring_node_action';
+
+    /**
+     * @since 4.3.2
+     */
+    public const ACTION_UNSCHEDULE_RECURRING_STEP_ACTION =
+    'publishpressfuture_workflow_unschedule_recurring_step_action';
 
     public const ACTION_LEGACY_ACTION = 'publishpressfuture_legacy_action';
 

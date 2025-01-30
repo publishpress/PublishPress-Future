@@ -84,16 +84,26 @@ class WorkflowEngine implements WorkflowEngineInterface
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_LOAD);
 
         $this->hooks->addAction(
-            HooksAbstract::ACTION_EXECUTE_NODE,
+            HooksAbstract::ACTION_EXECUTE_STEP,
             [$this, 'executeStepRoutine']
         );
 
         $this->hooks->addAction(
-            HooksAbstract::ACTION_ASYNC_EXECUTE_NODE,
+            HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
             [$this, "executeAsyncStepRoutine"],
             10
         );
 
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_UNSCHEDULE_RECURRING_STEP_ACTION,
+            [$this, "unscheduleRecurringStepAction"],
+            10,
+            2
+        );
+
+        /**
+         * We are keeping the old constant for compatibility with old actions scheduled by the old constant.
+         */
         $this->hooks->addAction(
             HooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION,
             [$this, "unscheduleRecurringStepAction"],

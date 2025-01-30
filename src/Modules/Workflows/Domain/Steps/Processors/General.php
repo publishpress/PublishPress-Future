@@ -79,7 +79,7 @@ class General implements NodeRunnerProcessorInterface
             /**
              * @var array $nextStep
              */
-            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep);
+            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_STEP, $nextStep);
         }
     }
 

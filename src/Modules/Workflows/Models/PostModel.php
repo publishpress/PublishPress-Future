@@ -169,7 +169,7 @@ class PostModel implements PostModelInterface
                 'trigger/core.manually-enabled-for-post',
                 'trigger/core.manually-enabled-for-post',
                 'trigger/core.manually-enabled-for-post',
-                HooksAbstract::ACTION_ASYNC_EXECUTE_NODE
+                HooksAbstract::ACTION_ASYNC_EXECUTE_STEP
             );
 
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared

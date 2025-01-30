@@ -179,7 +179,7 @@ class ScheduledActions implements InitializableInterface
         $hook = $actionModel->getHook();
 
         switch ($hook) {
-            case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_NODE:
+            case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_STEP:
                 $step = $this->getStepFromActionId($row['ID']);
 
                 if (empty($step)) {
@@ -195,6 +195,7 @@ class ScheduledActions implements InitializableInterface
 
                 break;
 
+            case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_STEP_ACTION:
             case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION:
                 $title = __('Unschedule workflow recurring scheduled step', 'post-expirator');
                 break;
@@ -234,6 +235,7 @@ class ScheduledActions implements InitializableInterface
             }
 
             switch ($hook) {
+                case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_STEP:
                 case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_NODE:
                     if (ScheduledActionModel::argsAreOnNewFormat((array) $args)) {
                         $scheduledStepModel = new WorkflowScheduledStepModel();
@@ -361,6 +363,7 @@ class ScheduledActions implements InitializableInterface
                     $html = $argsText;
                     break;
 
+                case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_STEP_ACTION:
                 case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION:
                     $html = __('Workflow recurring scheduled action', 'post-expirator');
                     break;
@@ -558,7 +561,7 @@ class ScheduledActions implements InitializableInterface
         $actionModel = new ScheduledActionModel();
         $actionModel->loadByActionId($actionId);
 
-        if ($actionModel->getHook() !== WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_NODE) {
+        if ($actionModel->getHook() !== WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_STEP) {
             return;
         }
 
