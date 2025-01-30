@@ -206,7 +206,7 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 - Step "Conditional" renamed to "Conditional Delay".
 - Changed the default step's slug to reflect the new step name and classes.
 - Changed the Schedule Delay step settings to be more intuitive.
-- Chagned some text in the workflow editor to be more user friendly.
+- Changed some text in the workflow editor to be more user friendly.
 
 ### Fixed
 
