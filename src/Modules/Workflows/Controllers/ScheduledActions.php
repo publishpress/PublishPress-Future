@@ -291,11 +291,11 @@ class ScheduledActions implements InitializableInterface
 
                     $next = $step['next'] ?? [];
 
-                    $nodeType = $this->stepTypesModel->getNodeType($step['node']['data']['name']);
+                    $stepType = $this->stepTypesModel->getStepType($step['node']['data']['name']);
 
                     $sourceHandles = [];
-                    if (! is_null($nodeType)) {
-                        $handlesSchema = $nodeType->getHandleSchema();
+                    if (! is_null($stepType)) {
+                        $handlesSchema = $stepType->getHandleSchema();
 
                         foreach ($handlesSchema['source'] as $handle) {
                             $sourceHandles[$handle['id']] = $handle['label'];
@@ -314,7 +314,7 @@ class ScheduledActions implements InitializableInterface
                             }
 
                             if (empty($stepLabel)) {
-                                $stepNodeType = $this->stepTypesModel->getNodeType($nextStep['node']['data']['name']);
+                                $stepNodeType = $this->stepTypesModel->getStepType($nextStep['node']['data']['name']);
                                 if (is_object($stepNodeType)) {
                                     $stepLabel = $stepNodeType->getLabel();
                                 }
