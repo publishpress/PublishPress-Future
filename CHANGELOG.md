@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix typo in the `WorkflowEngine` class.
 - Fix reference to deprecated classes and interfaces.
+- Fix translation of shortcode settings in the Display settings page.
 
 ## [4.3.1] - 30 Jan, 2025
 

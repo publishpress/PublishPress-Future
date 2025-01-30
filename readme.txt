@@ -179,6 +179,7 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 
 - Fix typo in the `WorkflowEngine` class.
 - Fix reference to deprecated classes and interfaces.
+- Fix translation of shortcode settings in the Display settings page.
 
 ## [4.3.1] - 30 Jan, 2025
 
