@@ -75,7 +75,7 @@ class Cron implements AsyncStepProcessorInterface
     /**
      * @var StepProcessorInterface
      */
-    private $generalStepProcessor;
+    private $generalProcessor;
 
     /**
      * @var CronInterface
@@ -86,11 +86,6 @@ class Cron implements AsyncStepProcessorInterface
      * @var CronSchedulesModelInterface
      */
     private $cronSchedulesModel;
-
-    /**
-     * @var StepTypesModelInterface
-     */
-    private $stepTypesModel;
 
     /**
      * @var RuntimeVariablesHandlerInterface
@@ -122,21 +117,18 @@ class Cron implements AsyncStepProcessorInterface
         StepProcessorInterface $stepProcessor,
         CronInterface $cron,
         CronSchedulesModelInterface $cronSchedulesModel,
-        StepTypesModelInterface $stepTypesModel,
         WorkflowEngineInterface $engine,
         string $pluginVersion,
-        WorkflowEngineInterface $workflowEngine,
         LoggerInterface $logger,
         \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
-        $this->generalStepProcessor = $stepProcessor;
+        $this->generalProcessor = $stepProcessor;
         $this->cron = $cron;
         $this->cronSchedulesModel = $cronSchedulesModel;
-        $this->stepTypesModel = $stepTypesModel;
+        $this->workflowEngine = $engine;
         $this->variablesHandler = $engine->getVariablesHandler();
         $this->pluginVersion = $pluginVersion;
-        $this->workflowEngine = $workflowEngine;
         $this->logger = $logger;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
@@ -896,27 +888,27 @@ class Cron implements AsyncStepProcessorInterface
 
     public function runNextSteps(array $step, string $branch = 'output'): void
     {
-        $this->generalStepProcessor->runNextSteps($step, $branch);
+        $this->generalProcessor->runNextSteps($step, $branch);
     }
 
     public function getNextSteps(array $step, string $branch = 'output'): array
     {
-        return $this->general->getNextSteps($step, $branch);
+        return $this->generalProcessor->getNextSteps($step, $branch);
     }
 
     public function getNodeFromStep(array $step)
     {
-        return $this->general->getNodeFromStep($step);
+        return $this->generalProcessor->getNodeFromStep($step);
     }
 
     public function getSlugFromStep(array $step)
     {
-        return $this->general->getSlugFromStep($step);
+        return $this->generalProcessor->getSlugFromStep($step);
     }
 
     public function getNodeSettings(array $node)
     {
-        return $this->general->getNodeSettings($node);
+        return $this->generalProcessor->getNodeSettings($node);
     }
 
     public function logError(string $message, int $workflowId, array $step)
@@ -926,7 +918,7 @@ class Cron implements AsyncStepProcessorInterface
 
     public function triggerCallbackIsRunning(): void
     {
-        $this->general->triggerCallbackIsRunning();
+        $this->generalProcessor->triggerCallbackIsRunning();
     }
 
     public function cancelWorkflowScheduledActions(int $workflowId): void
@@ -946,12 +938,12 @@ class Cron implements AsyncStepProcessorInterface
 
     public function prepareLogMessage(string $message, ...$args): string
     {
-        return $this->general->prepareLogMessage($message, ...$args);
+        return $this->generalProcessor->prepareLogMessage($message, ...$args);
     }
 
     public function executeSafelyWithErrorHandling(array $step, callable $callback, ...$args): void
     {
-        $this->general->executeSafelyWithErrorHandling($step, $callback, ...$args);
+        $this->generalProcessor->executeSafelyWithErrorHandling($step, $callback, ...$args);
     }
 
     private function addDebugLogMessage(string $message, ...$args): void

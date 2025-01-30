@@ -796,10 +796,8 @@ return [
             $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
             $container->get(ServicesAbstract::CRON),
             $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL),
-            $container->get(ServicesAbstract::STEP_TYPES_MODEL),
             $container->get(ServicesAbstract::WORKFLOW_ENGINE),
             $container->get(ServicesAbstract::PLUGIN_VERSION),
-            $container->get(ServicesAbstract::WORKFLOW_ENGINE),
             $container->get(ServicesAbstract::LOGGER),
             $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
         );

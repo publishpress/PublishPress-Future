@@ -13,6 +13,8 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManual
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnLegacyActionTrigger;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
 use WP_Post;
 use WP_Query;
 
@@ -607,12 +609,12 @@ class WorkflowModel implements WorkflowModelInterface
 
     private function checkHasLegacyActionTriggerInTheFlow(): bool
     {
-        return $this->checkHasTriggerInTheFlow(FutureLegacyAction::getNodeTypeName());
+        return $this->checkHasTriggerInTheFlow(OnLegacyActionTrigger::getNodeTypeName());
     }
 
     private function checkHasManualSelectionTriggerInTheFlow(): bool
     {
-        return $this->checkHasTriggerInTheFlow(CoreOnManuallyEnabledForPost::getNodeTypeName());
+        return $this->checkHasTriggerInTheFlow(OnPostWorkflowEnable::getNodeTypeName());
     }
 
     private function checkHasTriggerInTheFlow(string $triggerName): bool
@@ -739,7 +741,7 @@ class WorkflowModel implements WorkflowModelInterface
         foreach ($workflowTriggers as $triggerNode) {
             if (
                 $triggerNode['data']['elementaryType'] === StepTypesModel::STEP_TYPE_TRIGGER
-                && $triggerNode['data']['name'] === CoreOnManuallyEnabledForPost::getNodeTypeName()
+                && $triggerNode['data']['name'] === OnPostWorkflowEnable::getNodeTypeName()
             ) {
                 return $triggerNode;
             }
@@ -769,7 +771,7 @@ class WorkflowModel implements WorkflowModelInterface
             return [];
         }
 
-        $stepTypes = $this->stepTypesModel->getAllNodeTypesByType();
+        $stepTypes = $this->stepTypesModel->getAllStepTypesByType();
         $routineTree = $this->getRoutineTree($stepTypes);
 
         if (empty($routineTree)) {

@@ -149,7 +149,7 @@ class PostModel implements PostModelInterface
         if (is_null($this->workflowsManuallyEnabled)) {
             // FIXME: Use dependency injection
             $stepTypesModel = Container::getInstance()->get(ServicesAbstract::STEP_TYPES_MODEL);
-            $allStepTypes = $stepTypesModel->getAllNodeTypesIndexedByName();
+            $allStepTypes = $stepTypesModel->getAllStepTypesIndexedByName();
 
             $workflowModel->load($workflowId);
 

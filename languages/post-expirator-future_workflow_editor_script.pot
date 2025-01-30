@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-28T20:36:05+00:00\n"
+"POT-Creation-Date: 2025-01-30T14:53:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -40,105 +40,105 @@ msgstr ""
 msgid "Add Rule"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:26
+#: components/data-fields/date-offset.jsx:27
 msgid "As soon as possible"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:27
+#: components/data-fields/date-offset.jsx:28
 msgid "On a specific date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:28
+#: components/data-fields/date-offset.jsx:29
 msgid "Relative to a specific date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:32
+#: components/data-fields/date-offset.jsx:33
 msgid "Selected in the calendar"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:33
+#: components/data-fields/date-offset.jsx:34
 msgid "When the trigger is activated"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:34
+#: components/data-fields/date-offset.jsx:35
 msgid "When the step is activated"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:35
-#: components/data-fields/date-offset.jsx:208
+#: components/data-fields/date-offset.jsx:36
+#: components/data-fields/date-offset.jsx:206
 msgid "Custom date source"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:169
-msgid "Skip or replace duplicate scheduled tasks to prevent multiple instances of the same task"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:170
-msgid "Allow multiple scheduled tasks to be created, even if they are duplicates"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:177
+#: components/data-fields/date-offset.jsx:175
 msgid "When to run"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:188
+#: components/data-fields/date-offset.jsx:186
 msgid "Date source"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:216
+#: components/data-fields/date-offset.jsx:214
 msgid "Click the button to choose a custom date source from variables that can provide a date."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:228
+#: components/data-fields/date-offset.jsx:226
 msgid "Offset"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:237
+#: components/data-fields/date-offset.jsx:235
 msgid "Date Preview"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:238
+#: components/data-fields/date-offset.jsx:236
 msgid "Current Date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:239
+#: components/data-fields/date-offset.jsx:237
 msgid "Computed Date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:250
+#: components/data-fields/date-offset.jsx:248
 msgid "Error: "
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:257
+#: components/data-fields/date-offset.jsx:255
 msgid "Click for more information"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:266
+#: components/data-fields/date-offset.jsx:264
 msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:291
+#: components/data-fields/date-offset.jsx:290
 msgid "Repeating Action"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:307
-msgid "Prevent duplicate scheduling"
+#: components/data-fields/date-offset.jsx:294
+msgid "Choose how often this task should repeat. Select 'Non-repeating' for a one-time action or set an interval for automatic recurrence."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:310
+msgid "Allow duplicate scheduled tasks"
 msgstr ""
 
 #: components/data-fields/date-offset.jsx:320
-msgid "Task Identifier Expression"
+msgid "Allows scheduling tasks even if a similar task exists."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:326
-msgid "Define an identifier to detect duplicate tasks creating a unique ID."
+#: components/data-fields/date-offset.jsx:327
+msgid "Unique Task Identifier"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:339
-msgid "Priority"
+#: components/data-fields/date-offset.jsx:333
+msgid "Define a unique ID to detect and prevent duplicate tasks."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:342
-msgid "Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first."
+#: components/data-fields/date-offset.jsx:346
+msgid "Task Execution Order"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:354
+msgid "Defines the execution order for this task in relation to others."
 msgstr ""
 
 #: components/data-fields/debug-data.jsx:39
@@ -322,13 +322,13 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: components/inspector-card/index.jsx:48
+#: components/inspector-card/index.jsx:46
 #: components/secondary-sidebar/node-card.jsx:22
 msgid "Pro"
 msgstr ""
 
-#: components/inspector-card/index.jsx:59
-#: components/node-types/generic.jsx:242
+#: components/inspector-card/index.jsx:57
+#: components/node-types/generic.jsx:243
 #: components/secondary-sidebar/node-card.jsx:35
 msgid "Currently this step is being skipped. Upgrade to Pro to unlock this feature."
 msgstr ""
@@ -620,7 +620,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: components/node-types/generic.jsx:250
+#: components/node-types/generic.jsx:251
 msgid "This node has errors"
 msgstr ""
 
