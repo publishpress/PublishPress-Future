@@ -95,6 +95,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\SendEmail
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\SendRayRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\SetPostTermRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\UpdatePostMetaRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\UpdatePostRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostAuthorChange;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnAdminInitRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnInitRunner;
@@ -1019,6 +1020,13 @@ return [
 
                 case UpdatePostMetaRunner::getNodeTypeName():
                     $stepRunner = new UpdatePostMetaRunner(
+                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
+                        $container->get(ServicesAbstract::LOGGER)
+                    );
+                    break;
+
+                case UpdatePostRunner::getNodeTypeName():
+                    $stepRunner = new UpdatePostRunner(
                         $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::LOGGER)
                     );

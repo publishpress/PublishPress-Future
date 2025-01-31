@@ -21,6 +21,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendR
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SetPostTerm;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\StickPost;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UnstickPost;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePost;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePostMeta;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnAdminInit;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnInit;
@@ -229,6 +230,7 @@ class StepTypesModel implements StepTypesModelInterface
             AddPostMeta::getNodeTypeName() => new AddPostMeta(),
             DeletePostMeta::getNodeTypeName() => new DeletePostMeta(),
             UpdatePostMeta::getNodeTypeName() => new UpdatePostMeta(),
+            UpdatePost::getNodeTypeName() => new UpdatePost(),
         ];
 
         return $nodesInstances;

@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.3.4] - UNRELEASED
+
+### Added
+
+- Add new trigger: Post Author Changed - PRO (Issue #1144).
+- Add new action: Update Post - PRO (Issue #1143).
+
+
 ## [4.3.3] - UNRELEASED
 
 ### Fixed
