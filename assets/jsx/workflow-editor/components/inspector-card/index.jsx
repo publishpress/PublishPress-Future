@@ -4,12 +4,12 @@ import { store as workflowStore } from "../workflow-store";
 import { __ } from "@wordpress/i18n";
 import {
     Button,
-    Popover,
     TextareaControl,
     __experimentalVStack as VStack,
     __experimentalHStack as HStack,
 } from "@wordpress/components";
 import { useState, useEffect } from "@wordpress/element";
+import SettingPopover from "../setting-popover";
 
 const StepDescription = ({ node }) => {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -71,26 +71,11 @@ const StepDescription = ({ node }) => {
             )}
 
             {isPopoverOpen && (
-                <Popover
+                <SettingPopover
                     onClose={closePopover}
-                    placement="left-start"
-                    offset={40}
                     className="workflow-editor-inspector-card__description-popover"
+                    title={__("Edit description", "post-expirator")}
                 >
-                    <VStack>
-                        <HStack>
-                            <h2 className="components-truncate components-text components-heading block-editor-inspector-popover-header__heading">
-                                {__("Edit description", "post-expirator")}
-                            </h2>
-                            <Button
-                                icon={'no-alt'}
-                                isSmall={true}
-                                className="block-editor-inspector-popover-header__action"
-                                onClick={closePopover}
-                            />
-                        </HStack>
-                    </VStack>
-
                     <VStack>
                         <TextareaControl
                             value={description}
@@ -104,7 +89,7 @@ const StepDescription = ({ node }) => {
                             }}
                         />
                     </VStack>
-                </Popover>
+                </SettingPopover>
             )}
         </>
     );
