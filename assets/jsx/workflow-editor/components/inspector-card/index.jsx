@@ -74,7 +74,7 @@ const StepDescription = ({ node }) => {
                 <Popover
                     onClose={closePopover}
                     placement="left-start"
-                    offset={80}
+                    offset={40}
                     className="workflow-editor-inspector-card__description-popover"
                 >
                     <VStack>
