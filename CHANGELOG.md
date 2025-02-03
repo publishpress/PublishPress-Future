@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix the overdue actions check in the Scheduled Actions list screen (Issue #1155).
+- Update translations (Issue #1156).
 
 
 ## [4.3.2] - 30 Jan, 2025

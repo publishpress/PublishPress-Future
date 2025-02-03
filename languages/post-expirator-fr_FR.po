@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Plugins - PublishPress Future: Automatically Unpublish "
 "WordPress Posts - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
-"POT-Creation-Date: 2025-01-22T19:49:51+00:00\n"
-"PO-Revision-Date: 2025-01-23 00:51+0100\n"
+"POT-Creation-Date: 2025-01-30T20:47:03+00:00\n"
+"PO-Revision-Date: 2025-02-02 18:12+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -19,7 +19,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: post-expirator.php
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:120
-#: src/Modules/Workflows/Models/NodeTypesModel.php:88
+#: src/Modules/Workflows/Models/StepTypesModel.php:88
 msgid "PublishPress Future"
 msgstr "PublishPress Future"
 
@@ -223,7 +223,7 @@ msgstr "Catégories"
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:393
 #: src/Modules/Expirator/Controllers/QuickEditController.php:322
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:49
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:151
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:151
 msgid "Action"
 msgstr "Action"
 
@@ -340,8 +340,8 @@ msgstr "Veuillez sélectionner un ou plusieurs %s"
 #: src/Modules/Expirator/Controllers/BulkEditController.php:236
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:431
 #: src/Modules/Expirator/Controllers/QuickEditController.php:351
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:85
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:91
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:85
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:91
 msgid "New status"
 msgstr "Nouvel état"
 
@@ -392,8 +392,8 @@ msgid "Category"
 msgstr "Catégoria"
 
 #: src/Modules/Expirator/Controllers/PluginsListController.php:46
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:67
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:67
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:67
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:67
 msgid "Settings"
 msgstr "Réglages"
 
@@ -807,9 +807,9 @@ msgid "Date"
 msgstr "Date"
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:654
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:100
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:148
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/LogAdd.php:70
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:70
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:100
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:148
 msgid "Message"
 msgstr "Message"
 
@@ -1038,11 +1038,11 @@ msgstr ""
 msgid "Upgrade to Pro"
 msgstr "Passez à la version Pro"
 
-#: src/Modules/Workflows/Controllers/ManualPostTrigger.php:383
+#: src/Modules/Workflows/Controllers/ManualPostTrigger.php:382
 msgid "Workflow Manual Trigger"
 msgstr "Déclencheur manuel du flux de travail"
 
-#: src/Modules/Workflows/Controllers/ManualPostTrigger.php:417
+#: src/Modules/Workflows/Controllers/ManualPostTrigger.php:416
 #: src/Modules/Workflows/Controllers/PostType.php:48
 #: src/Modules/Workflows/Controllers/WorkflowsList.php:147
 #: src/Modules/Workflows/Views/manual-trigger-quick-edit.html.php:9
@@ -1065,7 +1065,6 @@ msgstr ""
 "Veuillez les vérifier sur %s"
 
 #: src/Modules/Workflows/Controllers/PastDueActions.php:155
-#| msgid "PublishPress Future"
 msgid "[PublishPress Future] Past-due Actions Found"
 msgstr "[PublishPress Future] actions échues trouvées"
 
@@ -1086,7 +1085,7 @@ msgid "Edit Workflow"
 msgstr "Modifier le flux de travail"
 
 #: src/Modules/Workflows/Controllers/PostType.php:53
-#: src/Modules/Workflows/Models/WorkflowModel.php:455
+#: src/Modules/Workflows/Models/WorkflowModel.php:456
 msgid "New Workflow"
 msgstr "Nouveau flux de travail"
 
@@ -1206,62 +1205,61 @@ msgstr "Étape planifiée répétée dans le flux de travail"
 msgid "Workflow scheduled step"
 msgstr "Étape planifiée du flux de travail"
 
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:199
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:200
 msgid "Unschedule workflow recurring scheduled step"
 msgstr "Déplanifier l’action récurrente planifiée d’un flux de travail"
 
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:203
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:204
 msgid "Cleanup orphan workflow scheduled step arguments"
 msgstr ""
 "Nettoyer les arguments des étapes planifiées orphelines du flux de travail"
 
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:208
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:209
 msgid "Clean up completed scheduled steps older than %d days"
 msgstr "Nettoyer les étapes planifiées terminées depuis plus de %d jours"
 
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:278
-#| msgid "A schedule to activate the workflow."
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:280
 msgid "Schedule step is required for this workflow."
 msgstr "L’étape de planification est obligatoire pour ce flux de travail."
 
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:281
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:331
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:283
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:333
 msgid "Workflow:"
 msgstr "Flux de travail :"
 
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:284
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:286
 msgid "Step:"
 msgstr "Étape :"
 
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:335
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:355
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:337
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:357
 msgid "Trigger: "
 msgstr "Déclencheur : "
 
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:348
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:350
 msgid "Post:"
 msgstr "Publication :"
 
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:359
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:361
 msgid "Steps:"
 msgstr "Étapes :"
 
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:365
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:368
 msgid "Workflow recurring scheduled action"
 msgstr "Action récurrente planifiée du flux de travail"
 
 #. translators: %1$s: recurrence, %2$s: date
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:410
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:413
 msgid "%1$s until %2$s"
 msgstr "%1$s jusqu’à %2$s"
 
 #. translators: %1$s: recurrence, %2$d: repeat times
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:420
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:423
 msgid "%1$s for %2$d times"
 msgstr "%1$s pour %2$d fois"
 
 #. translators: %1$s: executed times, %2$d: total repeat times
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:430
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:433
 msgid "[%1$s/%2$d]"
 msgstr "[%1$s/%2$d]"
 
@@ -1395,14 +1393,14 @@ msgid "Action Workflow Editor"
 msgstr "Éditeur de flux de travail d’action"
 
 #: src/Modules/Workflows/Domain/DataType/PostQuery.php:16
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:67
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:82
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:68
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:67
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:64
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:64
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:67
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:64
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:64
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:64
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:82
 msgid "Post Query"
 msgstr "Requête de publication"
 
@@ -1432,214 +1430,56 @@ msgstr "Le flux de travail a été déclenché par l’ancienne action"
 msgid "Trigger workflow"
 msgstr "Déclencher le flux de travail"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:32
-msgid "Move post to status"
-msgstr "Déplacer la publication vers l’état"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:37
-msgid "This step transitions a post to a different status."
-msgstr "Cette étape fait passer une publication à un état différent."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:121
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:72
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:116
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:126
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:106
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:135
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:128
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:128
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:114
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:123
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:130
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:126
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:114
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:145
-#: src/Modules/Workflows/Models/NodeTypesModel.php:79
-msgid "Post"
-msgstr "Publication"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:65
-msgid "The post to update."
-msgstr "La publication à mettre à jour."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:73
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:71
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:71
-msgid ""
-"Select the variable that contains the post to update. It can be a post "
-"instance or the post ID."
-msgstr ""
-"Sélectionner la variable qui contient la publication à mettre à jour. Il "
-"peut s’agir d’une instance de publication ou de l’ID de la publication."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:86
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:92
-msgid "The new status that the post will be moved to."
-msgstr "Le nouvel état dans lequel la publication sera déplacée."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:135
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:140
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:120
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:149
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:142
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:142
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:128
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:137
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:144
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:140
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:128
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:162
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:113
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:142
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:112
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/LogAdd.php:111
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:122
-msgid "Step input"
-msgstr "Entrée par étapes"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:136
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:141
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:121
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:150
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:143
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:143
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:129
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:138
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:145
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:141
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:129
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:163
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:114
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:143
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:113
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/LogAdd.php:112
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:123
-msgid "The input data for this step."
-msgstr "Les données d’entrée pour cette étape."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:159
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:164
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:144
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:179
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:172
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:172
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:152
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:161
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:168
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:164
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:152
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:186
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:166
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:136
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/LogAdd.php:135
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:146
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnAdminInit.php:97
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:116
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnInit.php:97
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:167
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:194
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:156
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:156
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:157
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:157
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:154
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:128
-msgid "Next"
-msgstr "Suivante"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:32
-msgid "Deactivate workflow for post"
-msgstr "Désactiver le flux de travail pour la publication"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:37
-msgid ""
-"This step enables you to deactivate the \"Manually enabled via checkbox\" "
-"workflow after use."
-msgstr ""
-"Cette étape vous permet désactiver le flux de travail « Activé manuellement "
-"via une case à cocher » après l’utilisation."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:90
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:121
-msgid "Workflow"
-msgstr "Flux de travail"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:91
-msgid ""
-"Select the manually enabling workflow that will be deactivated for the "
-"selected post."
-msgstr ""
-"Sélectionner le flux de travail d’activation manuelle qui sera activé pour "
-"la publication sélectionnée."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:32
-msgid "Delete post"
-msgstr "Supprimer la publication"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:37
-msgid "This step deletes a post."
-msgstr "Cette étape supprime une publication."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:32
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:32
 msgid "Add post meta"
 msgstr "Ajouter les métadonnées de la publication"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:37
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:37
 msgid "This step adds post meta to a post."
 msgstr "Cette étape ajoute des métadonnées à une publication."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:85
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:85
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:85
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:64
+msgid "Target Post"
+msgstr "Publication cible"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:65
+msgid "Select which post will have post meta added."
+msgstr ""
+"Sélectionner la publication pour laquelle des métas de publication seront "
+"ajoutées."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:70
+msgid "Post to Add Meta"
+msgstr "Publication à ajouter les métas"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:71
+msgid "Choose the post that will have its meta added."
+msgstr "Choisir la publication pour laquelle les métas seront ajoutées."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:85
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:85
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:85
 msgid "Meta"
 msgstr "Méta"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:86
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:86
 msgid "The meta to add to the post."
 msgstr "La méta à ajouter à la publication."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:91
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:91
 msgid "Is single"
 msgstr "Est unique"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:92
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:92
 msgid ""
 "If enabled, only one meta value will be allowed. If disabled, multiple meta "
 "values can be added as an array."
@@ -1648,247 +1488,226 @@ msgstr ""
 "désactivée, plusieurs valeurs méta peuvent être ajoutées sous la forme d’un "
 "tableau."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:98
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:91
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:91
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:163
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:98
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:91
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:91
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:163
 msgid "Meta key"
 msgstr "Clé méta"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:99
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:99
 msgid "The meta key to add to the post."
 msgstr "La clé méta à ajouter à la publication."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:104
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:97
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:97
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:104
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:97
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:97
 msgid "Meta value"
 msgstr "Valeur de méta"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:105
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:105
 msgid "The meta value to add to the post."
 msgstr "La valeur méta à ajouter à la publication."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:155
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:148
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:148
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:157
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:135
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:123
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:121
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:117
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:127
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:106
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:128
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:127
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:123
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:114
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:114
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:128
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:145
+#: src/Modules/Workflows/Models/StepTypesModel.php:79
+msgid "Post"
+msgstr "Publication"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:149
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:137
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:111
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:135
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:113
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:141
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:120
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:142
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:142
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:141
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:112
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:162
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:122
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:137
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:128
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:128
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:142
+msgid "Step input"
+msgstr "Entrée par étapes"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:150
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:138
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:112
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:136
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:114
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:142
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:121
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:143
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:143
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:142
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:113
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:163
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:123
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:138
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:129
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:129
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:143
+msgid "The input data for this step."
+msgstr "Les données d’entrée pour cette étape."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:155
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:148
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:148
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:157
 msgid "Meta ID"
 msgstr "ID méta"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaAdd.php:156
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:149
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:156
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:149
 msgid "The ID of the meta added to the post."
 msgstr "L’ID de la méta ajoutée à la publication."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:32
-msgid "Delete post meta"
-msgstr "Supprimer les métadonnées de la publication"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:179
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:161
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:135
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:159
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:165
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:144
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:172
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:166
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:165
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:136
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:186
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:146
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:161
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:152
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:152
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:172
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnAdminInit.php:96
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnInit.php:96
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnLegacyActionTrigger.php:128
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:194
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:156
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:153
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:156
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:157
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:156
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:167
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:116
+msgid "Next"
+msgstr "Suivante"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:37
-msgid "This step deletes post meta from a post."
-msgstr "Cette étape supprime les métadonnées de une publication."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:86
-msgid "The meta to delete from the post."
-msgstr "La méta à supprimer de la publication."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:92
-msgid "The meta key to delete from the post."
-msgstr "La clé méta à supprimer de la publication."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaDelete.php:98
-msgid ""
-"Specify the meta value to delete from the post. If empty, all meta with the "
-"same key will be deleted."
-msgstr ""
-"Spécifier la valeur méta à supprimer de la publication. Si elle est vide, "
-"toutes les méta ayant la même clé seront supprimées."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:32
-msgid "Update post meta"
-msgstr "Mettre à jour les métadonnées de la publication"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:37
-msgid "This step updates post meta for a post."
-msgstr "Cette étape met à jour les métadonnées de une publication."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:86
-msgid "The meta to update for the post."
-msgstr "La méta à mettre à jour pour la publication."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:92
-msgid "The meta key to update for the post."
-msgstr ""
-"La clé méta à mettre à jour pour la publication.Les termes qui seront "
-"ajoutés aux publications."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:98
-msgid "The meta value to update for the post."
-msgstr "La valeur méta à mettre à jour pour la publication."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostMetaUpdate.php:149
-msgid "The ID of the meta updated for the post."
-msgstr "L’ID de la méta mise à jour pour la publication."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:32
-msgid "Stick post"
-msgstr "Épingler la publication"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:37
-msgid "This step sticks a post."
-msgstr "Cette étape épingle une publication."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:98
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:98
-msgid ""
-"Please include a \"Schedule\" step earlier in this branch of the workflow."
-msgstr ""
-"Veuillez inclure une étape « Planifier » plus tôt dans cette branche du flux "
-"de travail."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:32
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:32
 msgid "Add extra terms to post"
 msgstr "Ajouter des termes supplémentaires à la publication"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:37
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:37
 msgid "This step keeps the current taxonomy terms and adds additional terms."
 msgstr ""
 "Cette étape maintient les termes de la taxonomie actuelle et ajoute des "
 "termes supplémentaires."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:85
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:65
+msgid "Select which post will have terms added."
+msgstr "Sélectionner la publication pour laquelle des termes seront ajoutées."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:70
+msgid "Post to Add Terms"
+msgstr "Publication pour laquelle ajouter des termes"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:71
+msgid "Choose the post that will have its terms added."
+msgstr "Choisir la publication pour laquelle les termes seront ajoutés."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:85
 msgid "Extra terms"
 msgstr "Termes supplémentaires"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:86
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:92
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:95
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:86
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:92
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:92
 msgid "The terms that will be added to the posts."
 msgstr "Les termes qui seront ajoutés aux publications."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:91
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:118
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:91
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:125
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:94
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:121
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:91
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:118
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:88
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:122
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:91
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:118
 msgid "Terms"
 msgstr "Termes"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:32
-msgid "Remove terms from post"
-msgstr "Retirer les termes de la publication"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:32
+msgid "Append to debug log"
+msgstr "Ajouter au journal de débogage"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:37
-msgid "This step removes current taxonomy terms."
-msgstr "Cette étape retire les termes de la taxonomie actuelle."
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:37
+msgid "This step appends the flow's data to the debug log."
+msgstr "Cette étape ajoute les données du flux au journal de débogage."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:85
-msgid "Terms to remove"
-msgstr "Termes à retirer"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:97
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:64
+msgid "Debug output"
+msgstr "Résultats de débogage"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:86
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:92
-msgid "The terms that will be removed from the posts."
-msgstr "Les termes qui seront retirés des publications."
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:65
+msgid "The message to be sent to the debug log."
+msgstr "Le message à envoyer au journal de débogage."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:98
-msgid "Remove all terms"
-msgstr "Retirer tous les termes"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:75
+msgid "Level"
+msgstr "Niveau"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:32
-msgid "Replace all terms on post"
-msgstr "Remplacer tous les termes de la publication"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:98
+msgid "Debug output > Message"
+msgstr "Résultats de débogage > message"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:37
-msgid "This step removes the current taxonomy terms and adds new terms."
-msgstr ""
-"Cette étape retire les termes de la taxonomie actuelle et en ajoute de "
-"nouveaux."
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:32
+msgid "Move post to status"
+msgstr "Déplacer la publication vers l’état"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:85
-msgid "New terms"
-msgstr "Nouveaux termes"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:37
+msgid "This step transitions a post to a different status."
+msgstr "Cette étape fait passer une publication à un état différent."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:86
-msgid ""
-"The terms that will be added to the posts after removing all the others."
-msgstr ""
-"Les termes qui seront ajoutés aux publications après avoir retiré tous les "
-"autres."
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:65
+#| msgid "This step transitions a post to a different status."
+msgid "Select which post will be moved to a different status."
+msgstr "Sélectionner la publication qui sera déplacée vers un état différent."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:32
-msgid "Unstick post"
-msgstr "Ne plus épingler"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:70
+#| msgid "Change status"
+msgid "Post to Change Status"
+msgstr "Publication pour la quelle modifier l’état"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:37
-msgid "This step unsticks a post."
-msgstr "Cette étape désépingle une publication."
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:71
+#| msgid "This step transitions a post to a different status."
+msgid "Choose the post that will be moved to a different status."
+msgstr "Choisir la publication qui sera déplacée vers un état différent."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:17
-msgid "PublishPress Workflow: {{global.workflow.title}}"
-msgstr "Flux de travail de PublishPress : {{global.workflow.title}}"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:86
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:92
+msgid "The new status that the post will be moved to."
+msgstr "Le nouvel état dans lequel la publication sera déplacée."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:22
-msgid ""
-"This is a message sent by PublishPress Workflow: {{global.workflow.title}}."
-msgstr ""
-"Ceci est un message envoyé par le flux de travail de PublishPress : {{global."
-"workflow.title}}."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:45
-msgid "Send email"
-msgstr "Envoyer e-mail"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:50
-msgid "This step dispatches a message via email."
-msgstr "Cette étape envoie un message par e-mail."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:77
-msgid "Email Message"
-msgstr "Message e-mail"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:78
-msgid "The email message configuration"
-msgstr "La configuration du message e-mail"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:83
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:125
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:130
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:136
-msgid "Recipient"
-msgstr "Destinataire"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:84
-msgid "A comma-separated list of email addresses to send the message to."
-msgstr ""
-"Une liste d’adresses e-mail séparées par des virgules à laquelle envoyer le "
-"message."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:92
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:142
-msgid "Subject"
-msgstr "Sujet"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:137
-msgid "Email Message > Recipient"
-msgstr "Message e-mail > destinataire"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:143
-msgid "Email Message > Subject"
-msgstr "Message e-mail > sujet"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:149
-msgid "Email Message > Message"
-msgstr "Message e-mail > message"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:32
-#| msgid "Conditions"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:32
 msgid "Conditional"
 msgstr "Conditionnel"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:37
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:37
 msgid ""
 "This step allows you to continue the workflow only if certain conditions are "
 "met. It is not required to have both a True and a False option."
@@ -1897,40 +1716,138 @@ msgstr ""
 "certaines conditions sont satisfaites. Il n’est pas nécessaire d’avoir une "
 "option « Vrai » et une option « Faux »."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:73
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:99
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:100
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:73
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:99
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:100
 msgid "Conditions"
 msgstr "Conditions"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:74
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:74
 msgid "The conditions that must be met for deciding which branch to take."
 msgstr ""
 "Les conditions qui doivent être satisfaites pour décider de la branche à "
 "prendre."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:119
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:119
 msgid "Branch"
 msgstr "Branche"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:120
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:120
 msgid "The current branch on this step: 'true' or 'false'."
 msgstr "La branche actuelle sur cette étape : « vrai » ou « faux »."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:143
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:143
 msgid "True"
 msgstr "Vrai"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/ConditionalSplit.php:148
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:148
 msgid "False"
 msgstr "Échec"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:32
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:32
+msgid "Deactivate workflow for post"
+msgstr "Désactiver le flux de travail pour la publication"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:37
+msgid ""
+"This step enables you to deactivate the \"Manually enabled via checkbox\" "
+"workflow after use."
+msgstr ""
+"Cette étape vous permet désactiver le flux de travail « Activé manuellement "
+"via une case à cocher » après l’utilisation."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:68
+msgid "Select which post will have its workflow deactivated."
+msgstr "Sélectionner la publication dont le flux de travail sera désactivé."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:73
+msgid "Post to Deactivate Workflow"
+msgstr "Publication pour laquelle désactiver le flux de travail"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:74
+msgid "Choose the post that will have its workflow deactivated."
+msgstr "Choisir la publication dont le flux de travail sera désactivé."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:91
+msgid "Workflow to Deactivate"
+msgstr "Flux de travail à désactiver"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:92
+msgid ""
+"Choose the manually enabling workflow that will be deactivated for the "
+"selected post."
+msgstr ""
+"Choisir le flux de travail d’activation manuelle qui sera désactivé pour la "
+"publication sélectionnée."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:122
+msgid "Workflow"
+msgstr "Flux de travail"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:32
+msgid "Delete post"
+msgstr "Supprimer la publication"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:37
+msgid "This step deletes a post."
+msgstr "Cette étape supprime une publication."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:65
+msgid "Select which post will be deleted."
+msgstr "Sélectionner la publication qui sera supprimée."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:70
+msgid "Post to Delete"
+msgstr "Publication à supprimer"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:71
+#| msgid "The terms that will be added to the posts."
+msgid "Choose the post that will be deleted."
+msgstr "Choisir la publication qui sera supprimée."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:32
+msgid "Delete post meta"
+msgstr "Supprimer les métadonnées de la publication"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:37
+msgid "This step deletes post meta from a post."
+msgstr "Cette étape supprime les métadonnées de une publication."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:65
+msgid "Select which post will have post meta deleted."
+msgstr ""
+"Sélectionner la publication dont les métas de publication seront supprimées."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:70
+msgid "Post to Delete Meta"
+msgstr "Publication pour la quelle supprimer les métas"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:71
+msgid "Choose the post that will have its meta deleted."
+msgstr "Choisir la publication dont les métas seront supprimées."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:86
+msgid "The meta to delete from the post."
+msgstr "La méta à supprimer de la publication."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:92
+msgid "The meta key to delete from the post."
+msgstr "La clé méta à supprimer de la publication."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:98
+msgid ""
+"Specify the meta value to delete from the post. If empty, all meta with the "
+"same key will be deleted."
+msgstr ""
+"Spécifier la valeur méta à supprimer de la publication. Si elle est vide, "
+"toutes les méta ayant la même clé seront supprimées."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:32
 msgid "Query posts"
 msgstr "Requête de publications"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:37
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:37
 msgid ""
 "This step defines the posts that will be passed to the next step in the "
 "workflow."
@@ -1938,59 +1855,91 @@ msgstr ""
 "Cette étape définit les publications qui seront transmises à l’action "
 "suivante dans le flux de travail."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:72
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:91
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:73
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:73
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:73
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:73
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:74
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:77
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:72
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:73
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:73
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:76
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:73
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:73
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:73
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:91
 msgid "Post query"
 msgstr "Requête de publication"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:73
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:73
 msgid "The query defines the posts that will be retrieved by this action."
 msgstr ""
 "La requête définit les publications qui seront récupérées par cette action."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:110
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:122
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:119
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:105
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:105
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:105
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:106
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:109
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:110
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:119
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:105
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:108
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:105
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:105
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:105
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:122
 msgid "Post Type"
 msgstr "Type de publication"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:116
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:121
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:128
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:125
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:111
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:111
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:111
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:112
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:115
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:116
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:121
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:125
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:111
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:114
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:111
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:111
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:111
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:128
 msgid "Post ID"
 msgstr "ID de la publication"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:136
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:136
 msgid "Array of queried post IDs"
 msgstr "Tableau d’ID des publications requêtées"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:137
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:137
 msgid "The posts found following the criteria of the query."
 msgstr "Les publications trouvées suivant les critères de la requête."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:32
-#| msgid "Scheduled"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:32
+msgid "Remove terms from post"
+msgstr "Retirer les termes de la publication"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:37
+msgid "This step removes current taxonomy terms."
+msgstr "Cette étape retire les termes de la taxonomie actuelle."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:65
+msgid "Select which post will have terms removed."
+msgstr "Sélectionner la publication dont les termes seront retirés."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:70
+msgid "Post to Remove Terms"
+msgstr "Publication dont retirer les termes"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:71
+msgid "Choose the post that will have its terms removed."
+msgstr "Choisir la publication dont les termes seront rétirés."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:82
+msgid "Terms to remove"
+msgstr "Termes à retirer"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:83
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:89
+msgid "The terms that will be removed from the posts."
+msgstr "Les termes qui seront retirés des publications."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:95
+msgid "Remove all terms"
+msgstr "Retirer tous les termes"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:32
 msgid "Schedule delay"
 msgstr "Retard dans la planification"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:37
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:37
 msgid ""
 "This step allows you to run the next part of a workflow at a specific time, "
 "or relative to another date. You can also use this step to repeat the next "
@@ -2000,122 +1949,485 @@ msgstr ""
 "un moment précis ou par rapport à une autre date. Vous pouvez également "
 "utiliser cette étape pour répéter la partie suivante du flux de travail."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:67
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:67
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:64
 msgid "Schedule"
 msgstr "Planifier"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:68
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:68
 msgid "A scheduled delay between steps."
 msgstr "Un délai planifié entre les étapes."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:73
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:70
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:73
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:70
 msgid "Date offset"
 msgstr "Décalage de date"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:98
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:98
 msgid "Unique ID Expression"
 msgstr "Expression de l’ID unique"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:99
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:99
 msgid "Schedule > Unique ID Expression"
 msgstr "Planifier > expression de I’ID unique"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/LogAdd.php:32
-msgid "Log - Add"
-msgstr "Journal - ajouter"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:17
+msgid "PublishPress Workflow: {{global.workflow.title}}"
+msgstr "Flux de travail de PublishPress : {{global.workflow.title}}"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/LogAdd.php:37
-msgid "This step transmits the flow's data to the debug log."
-msgstr "Cette étape transmet les données du flux au journal de débogage."
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:22
+msgid ""
+"This is a message sent by PublishPress Workflow: {{global.workflow.title}}."
+msgstr ""
+"Ceci est un message envoyé par le flux de travail de PublishPress : {{global."
+"workflow.title}}."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/LogAdd.php:64
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/LogAdd.php:97
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:64
-msgid "Debug output"
-msgstr "Résultats de débogage"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:45
+msgid "Send email"
+msgstr "Envoyer e-mail"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/LogAdd.php:65
-msgid "The message to be sent to the debug log."
-msgstr "Le message à envoyer au journal de débogage."
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:50
+msgid "This step dispatches a message via email."
+msgstr "Cette étape envoie un message par e-mail."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/LogAdd.php:75
-msgid "Level"
-msgstr "Niveau"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:77
+msgid "Email Message"
+msgstr "Message e-mail"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/LogAdd.php:98
-msgid "Debug output > Message"
-msgstr "Résultats de débogage > message"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:78
+msgid "The email message configuration"
+msgstr "La configuration du message e-mail"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:32
-msgid "Ray - Debug"
-msgstr "Débogage - Ray"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:83
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:125
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:130
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:136
+msgid "Recipient"
+msgstr "Destinataire"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:37
-msgid "This step transmits the flow's data to Ray Debug."
-msgstr "Cette étape transmet les données du flux au débogage de Ray."
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:84
+msgid "A comma-separated list of email addresses to send the message to."
+msgstr ""
+"Une liste d’adresses e-mail séparées par des virgules à laquelle envoyer le "
+"message."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:65
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:92
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:142
+msgid "Subject"
+msgstr "Sujet"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:137
+msgid "Email Message > Recipient"
+msgstr "Message e-mail > destinataire"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:143
+msgid "Email Message > Subject"
+msgstr "Message e-mail > sujet"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:149
+msgid "Email Message > Message"
+msgstr "Message e-mail > message"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:32
+msgid "Send to Ray"
+msgstr "Envoyer vers Ray"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:37
+msgid "This step transmits the flow's data to Ray (by Spatie)."
+msgstr ""
+"Cette étape transmet les données du flux au débogage de Ray (de Spatie)."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:65
 msgid "The data to be sent to Ray."
 msgstr "Les données à envoyer à Ray."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:70
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:105
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:70
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:105
 msgid "Data to output"
 msgstr "Données vers la sortie"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:78
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:78
 msgid "Label"
 msgstr "Libellé"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:83
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:83
 msgid "Color"
 msgstr "Couleur"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:106
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:106
 msgid "Debug output > Custom data > Data to output"
 msgstr "Résultats de débogage > données personnalisées > données à sortir"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnAdminInit.php:33
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:32
+msgid "Replace all terms on post"
+msgstr "Remplacer tous les termes de la publication"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:37
+msgid "This step removes the current taxonomy terms and adds new terms."
+msgstr ""
+"Cette étape retire les termes de la taxonomie actuelle et en ajoute de "
+"nouveaux."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:65
+msgid "Select which post will have terms replaced."
+msgstr "Sélectionner la publication dont les termes seront remplacés."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:70
+msgid "Post to Replace Terms"
+msgstr "Publication dont remplacer les termes"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:71
+msgid "Choose the post that will have its terms replaced."
+msgstr "Choisir la publication dont les termes seront remplacés."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:82
+msgid "New terms"
+msgstr "Nouveaux termes"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:83
+msgid ""
+"The terms that will be added to the posts after removing all the others."
+msgstr ""
+"Les termes qui seront ajoutés aux publications après avoir retiré tous les "
+"autres."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:32
+msgid "Stick post"
+msgstr "Épingler la publication"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:37
+msgid "This step sticks a post."
+msgstr "Cette étape épingle une publication."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:65
+msgid "Select which post will be marked as sticky."
+msgstr "Sélectionner la publication qui sera sera marquée comme épinglée."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:70
+msgid "Post to Stick"
+msgstr "Publication à épingler"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:71
+msgid ""
+"Choose the post that will be marked as sticky. You can select a post "
+"variable or enter a post ID."
+msgstr ""
+"Choisir la publication qui sera marquée comme épinglée. Vous pouvez "
+"sélectionner une variable de publication ou saisir un ID de publication."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:98
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:98
+msgid ""
+"Please include a \"Schedule\" step earlier in this branch of the workflow."
+msgstr ""
+"Veuillez inclure une étape « Planifier » plus tôt dans cette branche du flux "
+"de travail."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:32
+msgid "Unstick post"
+msgstr "Ne plus épingler"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:37
+msgid "This step unsticks a post."
+msgstr "Cette étape désépingle une publication."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:65
+msgid "Select which post will no longer be marked as sticky."
+msgstr ""
+"Sélectionner la publication qui sera ne sera plus marquée comme épinglée."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:70
+msgid "Post to Unstick"
+msgstr "Publication à ne plus épingler"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:71
+msgid ""
+"Choose the post that will be unmarked as sticky. You can select a post "
+"variable or enter a post ID."
+msgstr ""
+"Choisir la publication qui ne sera plus marquée comme épinglée. Vous pouvez "
+"sélectionner une variable de publication ou saisir un ID de publication."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:32
+msgid "Update post meta"
+msgstr "Mettre à jour les métadonnées de la publication"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:37
+msgid "This step updates post meta for a post."
+msgstr "Cette étape met à jour les métadonnées de une publication."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:65
+msgid "Select which post will have post meta updated."
+msgstr ""
+"Sélectionner la publication dont les métas de publication seront mises à "
+"jour."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:70
+msgid "Post to Update Meta"
+msgstr "Publication pour la quelle mettre à jour les métas"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:71
+msgid "Choose the post that will have its meta updated."
+msgstr "Choisir la publication dont les métas seront mises a jour."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:86
+msgid "The meta to update for the post."
+msgstr "La méta à mettre à jour pour la publication."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:92
+msgid "The meta key to update for the post."
+msgstr ""
+"La clé méta à mettre à jour pour la publication.Les termes qui seront "
+"ajoutés aux publications."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:98
+msgid "The meta value to update for the post."
+msgstr "La valeur méta à mettre à jour pour la publication."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:149
+msgid "The ID of the meta updated for the post."
+msgstr "L’ID de la méta mise à jour pour la publication."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnAdminInit.php:32
 msgid "On admin init"
 msgstr "Lors de l’initialisation de l’administration"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnAdminInit.php:38
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnAdminInit.php:37
 msgid "This trigger activates upon the initialization of the admin site."
 msgstr ""
 "Ce déclencheur s’active lors de l’initialisation du site d’administration."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:32
-msgid "On schedule"
-msgstr "Selon le plan"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:37
-msgid ""
-"his trigger allows you to run a workflow at a specific time, or relative to "
-"another date. You can also use this trigger to repeat workflows."
-msgstr ""
-"Ce déclencheur vous permet d’exécuter un flux de travail à un moment précis "
-"ou par rapport à une autre date. Vous pouvez également utiliser ce "
-"déclencheur pour répéter des flux de travail."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:65
-msgid "Choose a schedule to activate the workflow."
-msgstr "Chosir un plan pour activer le flux de travail."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnInit.php:33
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnInit.php:32
 msgid "On site init"
 msgstr "Lors de l’initialisation du site"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnInit.php:38
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnInit.php:37
 msgid "This trigger activates upon site initialization."
 msgstr "Ce déclencheur est activé lors de l’initialisation du site."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:32
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnLegacyActionTrigger.php:54
+msgid "Manually enabled via Future Actions box"
+msgstr "Activée manuellement par la boîte des actions de Future"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnLegacyActionTrigger.php:59
+msgid ""
+"This trigger allows users to choose the workflow from the dropdown menu in "
+"the Future Actions options."
+msgstr ""
+"Ce déclencheur permet aux utilisateurs/utilisatrices de choisir le flux de "
+"travail dans le menu déroulant des options « Actions de Future »."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnLegacyActionTrigger.php:109
+msgid "Action Post"
+msgstr "Publication de l’action"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnLegacyActionTrigger.php:110
+msgid "The post that was saved triggering the action."
+msgstr "La publication qui a été enregistrée et qui a déclenché l’action."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:32
+msgid "Post meta changed"
+msgstr "Méta de la publication modifiée"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:37
+msgid "This trigger activates when a post meta field is changed."
+msgstr ""
+"Ce déclencheur s’active lorsqu’un champ méta de la publication a été modifié."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:65
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:65
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:68
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:65
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:65
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:65
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:83
+msgid "Specify the criteria for posts that will trigger this action."
+msgstr ""
+"Spécifier les critères pour les publications qui déclencheront cette action."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:74
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:74
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:77
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:74
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:74
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:74
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:92
+msgid "The query defines the posts that will trigger this action."
+msgstr "La requête définit les publications qui déclencheront cette action."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:82
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:82
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:84
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:82
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:81
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:81
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:98
+msgid "Select the post types that will trigger this action."
+msgstr "Sélectionner les types de publication qui déclencheront cette action."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:83
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:83
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:85
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:83
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:82
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:82
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:99
+msgid "Enter one or more post IDs. Leave empty to include all posts."
+msgstr ""
+"Saisir un ou plusieurs ID de publication. Laisser vide pour inclure toutes "
+"les publications."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:95
+msgid "Meta settings"
+msgstr "Réglages des métadonnées"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:96
+msgid "Specify the criteria for the meta to watch for changes."
+msgstr ""
+"Spécifier les critères pour les métadonnées à surveiller pour les "
+"modifications."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:101
+msgid "Meta keys"
+msgstr "Clés méta"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:102
+msgid ""
+"This field allow you to choose the post meta that will trigger this action."
+msgstr ""
+"Ce champ vous permet de choisir le méta de la publication qui déclenchera "
+"cette action."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:146
+msgid "The post that triggered this action."
+msgstr "La publication qui a déclenché cette action."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:152
+msgid ""
+"The action taken when the meta key is changed: 'added', 'updated' or "
+"'deleted'."
+msgstr ""
+"L’action entreprise lorsque la clé méta a été modifiée : « ajoutée », « mise "
+"à jour » ou « supprimée »."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:158
+msgid "The meta ID."
+msgstr "L’ID méta."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:164
+msgid "The meta key that was changed."
+msgstr "La clé méta qui a été modifiée."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:169
+msgid "New meta value"
+msgstr "Nouvelle valeur de méta"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:170
+msgid "The new meta value."
+msgstr "La nouvelle valeur méta."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:175
+msgid "Old meta value"
+msgstr "Vielle valeur de méta"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:176
+msgid "The meta value before the change."
+msgstr "La valeur méta avant la modification."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:32
+msgid "Post is published"
+msgstr "La publication est publiée"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:37
+msgid "This trigger activates when a post is published."
+msgstr "Ce déclencheur s’active lorsqu’une publication a été publiée."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:131
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:131
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:132
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:131
+msgid "Post Before Update"
+msgstr "La publication avant la mis à jour"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:132
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:132
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:133
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:132
+msgid "The post that was saved, with the old properties."
+msgstr "La publication qui a été enregistrée avec les vieilles propriétés."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:137
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:137
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:138
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:137
+msgid "Post After Update"
+msgstr "La publication après la mis à jour"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:138
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:135
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:138
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:139
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:138
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:149
+msgid "The post that was saved, with the new properties."
+msgstr "La publication qui a été enregistrée avec les nouvelles propriétés."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:32
+msgid "Post is saved"
+msgstr "La publication a été enregistrée"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:37
+msgid ""
+"This trigger activates whenever a post is saved, regardless of whether it's "
+"newly created, imported, or updated."
+msgstr ""
+"Ce déclencheur s’active à chaque fois qu’une publication est enregistrée, "
+"qu’elle soit nouvellement créée, importée ou mise à jour."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:86
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:83
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:83
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:100
+msgid "If selected, only posts with these statuses will trigger this action."
+msgstr ""
+"Si est sélectionnée, uniquement les publications avec cet état déclencheront "
+"cette action."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:134
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:148
+msgid "Saved post"
+msgstr "Publication enregistrée"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:32
+msgid "Post is scheduled"
+msgstr "La publication a été planifiée"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:37
+msgid "This trigger activates when a post is scheduled."
+msgstr "Ce déclencheur s’active lorsqu’une publication a été planifiée."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:32
+msgid "Post status changed"
+msgstr "État de la publication modifié"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:37
+msgid "This trigger activates when a post status changes."
+msgstr "Ce déclencheur s’active lorsque l’état d’une publication change."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:32
+msgid "Post is updated"
+msgstr "La publication a été mise a jour"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:37
+msgid "This trigger activates when an existing post is updated."
+msgstr ""
+"Ce déclencheur s’active lorsqu’une publication existante est mise à jour."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:32
 msgid "Manually enabled via checkbox"
 msgstr "Activée manuellement par une case à cocher"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:37
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:37
 msgid ""
 "This trigger activates when the option is manually enabled. It can be "
 "enabled via the post editing screen or the Quick Edit panel."
@@ -2124,257 +2436,56 @@ msgstr ""
 "être activé à partir de l’écran de modification de la publication ou du "
 "panneau de « Modification rapide »."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:68
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:68
 msgid "Settings for the trigger."
 msgstr "Réglages pour le déclencheur."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:73
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:73
 msgid "Checkbox label"
 msgstr "Libellé de la case à cocher"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:74
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:74
 msgid "The label of the checkbox that enables the trigger."
 msgstr "Le libellé de la case à cocher qui active le déclencheur."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:83
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:65
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:66
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:69
-msgid "Specify the criteria for posts that will trigger this action."
-msgstr ""
-"Spécifier les critères pour les publications qui déclencheront cette action."
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:32
+msgid "On schedule"
+msgstr "Selon le plan"
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:92
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:74
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:74
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:74
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:74
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:75
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:78
-msgid "The query defines the posts that will trigger this action."
-msgstr "La requête définit les publications qui déclencheront cette action."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:98
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:82
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:82
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:82
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:81
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:82
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:85
-msgid "Select the post types that will trigger this action."
-msgstr "Sélectionner les types de publication qui déclencheront cette action."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:99
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:83
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:83
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:83
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:82
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:83
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:86
-msgid "Enter one or more post IDs. Leave empty to include all posts."
-msgstr ""
-"Saisir un ou plusieurs ID de publication. Laisser vide pour inclure toutes "
-"les publications."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:100
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:83
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:84
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:87
-msgid "If selected, only posts with these statuses will trigger this action."
-msgstr ""
-"Si est sélectionnée, uniquement les publications avec cet état déclencheront "
-"cette action."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:148
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:135
-msgid "Saved post"
-msgstr "Publication enregistrée"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:149
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:138
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:138
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:139
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:139
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:136
-msgid "The post that was saved, with the new properties."
-msgstr "La publication qui a été enregistrée avec les nouvelles propriétés."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:32
-msgid "Post meta changed"
-msgstr "Méta de la publication modifiée"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:37
-msgid "This trigger activates when a post meta field is changed."
-msgstr ""
-"Ce déclencheur s’active lorsqu’un champ méta de la publication a été modifié."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:95
-msgid "Meta settings"
-msgstr "Réglages des métadonnées"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:96
-msgid "Specify the criteria for the meta to watch for changes."
-msgstr ""
-"Spécifier les critères pour les métadonnées à surveiller pour les "
-"modifications."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:101
-msgid "Meta keys"
-msgstr "Clés méta"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:102
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:37
 msgid ""
-"This field allow you to choose the post meta that will trigger this action."
+"This trigger allows you to run a workflow at a specific time, or relative to "
+"another date. You can also use this trigger to repeat workflows."
 msgstr ""
-"Ce champ vous permet de choisir le méta de la publication qui déclenchera "
-"cette action."
+"Ce déclencheur vous permet d’exécuter un flux de travail à un moment précis "
+"ou par rapport à une autre date. Vous pouvez également utiliser ce "
+"déclencheur pour répéter des flux de travail."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:146
-msgid "The post that triggered this action."
-msgstr "La publication qui a déclenché cette action."
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:65
+msgid "Choose a schedule to activate the workflow."
+msgstr "Chosir un plan pour activer le flux de travail."
 
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:152
-msgid ""
-"The action taken when the meta key is changed: 'added', 'updated' or "
-"'deleted'."
-msgstr ""
-"L’action entreprise lorsque la clé méta a été modifiée : « ajoutée », « mise "
-"à jour » ou « supprimée »."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:158
-msgid "The meta ID."
-msgstr "L’ID méta."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:164
-msgid "The meta key that was changed."
-msgstr "La clé méta qui a été modifiée."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:169
-msgid "New meta value"
-msgstr "Nouvelle valeur de méta"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:170
-msgid "The new meta value."
-msgstr "La nouvelle valeur méta."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:175
-msgid "Old meta value"
-msgstr "Vielle valeur de méta"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostMetaChanged.php:176
-msgid "The meta value before the change."
-msgstr "La valeur méta avant la modification."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:32
-msgid "Post is published"
-msgstr "La publication est publiée"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:37
-msgid "This trigger activates when a post is published."
-msgstr "Ce déclencheur s’active lorsqu’une publication a été publiée."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:131
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:131
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:132
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:132
-msgid "Post Before Update"
-msgstr "La publication avant la mis à jour"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:132
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:132
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:133
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:133
-msgid "The post that was saved, with the old properties."
-msgstr "La publication qui a été enregistrée avec les vieilles propriétés."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostPublished.php:137
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:137
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:138
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:138
-msgid "Post After Update"
-msgstr "La publication après la mis à jour"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:32
-msgid "Post is scheduled"
-msgstr "La publication a été planifiée"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostScheduled.php:37
-msgid "This trigger activates when a post is scheduled."
-msgstr "Ce déclencheur s’active lorsqu’une publication a été planifiée."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:32
-msgid "Post status changed"
-msgstr "État de la publication modifié"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostStatusChanged.php:37
-msgid "This trigger activates when a post status changes."
-msgstr "Ce déclencheur s’active lorsque l’état d’une publication change."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:33
-msgid "Post is updated"
-msgstr "La publication a été mise a jour"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:38
-msgid "This trigger activates when an existing post is updated."
-msgstr ""
-"Ce déclencheur s’active lorsqu’une publication existante est mise à jour."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:33
-msgid "Post is saved"
-msgstr "La publication a été enregistrée"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:38
-msgid ""
-"This trigger activates whenever a post is saved, regardless of whether it's "
-"newly created, imported, or updated."
-msgstr ""
-"Ce déclencheur s’active à chaque fois qu’une publication est enregistrée, "
-"qu’elle soit nouvellement créée, importée ou mise à jour."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:54
-msgid "Manually enabled via Future Actions box"
-msgstr "Activée manuellement par la boîte des actions de Future"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:59
-msgid ""
-"This trigger allows users to choose the workflow from the dropdown menu in "
-"the Future Actions options."
-msgstr ""
-"Ce déclencheur permet aux utilisateurs/utilisatrices de choisir le flux de "
-"travail dans le menu déroulant des options « Actions de Future »."
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:109
-msgid "Action Post"
-msgstr "Publication de l’action"
-
-#: src/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:110
-msgid "The post that was saved triggering the action."
-msgstr "La publication qui a été enregistrée et qui a déclenché l’action."
-
-#: src/Modules/Workflows/Models/NodeTypesModel.php:97
+#: src/Modules/Workflows/Models/StepTypesModel.php:97
 msgid "Site"
 msgstr "Site"
 
-#: src/Modules/Workflows/Models/NodeTypesModel.php:106
+#: src/Modules/Workflows/Models/StepTypesModel.php:106
 msgid "Flow Control"
 msgstr "Contrôler le flux"
 
-#: src/Modules/Workflows/Models/NodeTypesModel.php:115
+#: src/Modules/Workflows/Models/StepTypesModel.php:115
 msgid "Asynchronous"
 msgstr "Asynchrone"
 
-#: src/Modules/Workflows/Models/NodeTypesModel.php:124 src/Views/tabs.php:53
+#: src/Modules/Workflows/Models/StepTypesModel.php:124 src/Views/tabs.php:53
 msgid "Debug"
 msgstr "Débogage"
 
-#: src/Modules/Workflows/Models/NodeTypesModel.php:133
+#: src/Modules/Workflows/Models/StepTypesModel.php:133
 msgid "Data Query"
 msgstr "Requête de données"
 
-#: src/Modules/Workflows/Models/NodeTypesModel.php:142
+#: src/Modules/Workflows/Models/StepTypesModel.php:142
 msgid "Messages"
 msgstr "Messages"
 
@@ -2461,16 +2572,15 @@ msgid "View Knowledge Base"
 msgstr "Voir la base de connaissances"
 
 #. translators: %1$s opens a span tag, %2$s is the action name, %3$s ends a span tag, %4$s is the a span tag, %5$s is the a span tag, %6$s is the a span tag
-#: src/Views/expire-column.php:69
+#: src/Views/expire-column.php:73
 msgid "%1$s%2$s%3$s on %5$s%4$s%6$s"
 msgstr "%1$s%2$s%3$s sur %5$s%4$s%6$s"
 
-#: src/Views/expire-column.php:79
-#| msgid "Scheduled Actions"
+#: src/Views/expire-column.php:83
 msgid "Overdue action"
 msgstr "Action en retard"
 
-#: src/Views/expire-column.php:111
+#: src/Views/expire-column.php:115
 msgid ""
 "Action was not scheduled due to a configuration issue. Please attempt to "
 "schedule it again."
@@ -2892,6 +3002,16 @@ msgstr "Exemple : "
 msgid "Shortcode"
 msgstr "Code court"
 
+#. translators: %s is a code tag that wraps the shortcode
+#: src/Views/menu-display.php:400
+msgid ""
+"Use the %s[futureaction]%s shortcode to show when the future action will "
+"occur. You can add this shortcode anywhere in your post content."
+msgstr ""
+"Utiliser le code court %s[futureaction]%s pour indiquer quand l’action "
+"future se produira. Vous pouvez ajouter ce code court n’importe où dans le "
+"contenu de votre publication."
+
 #: src/Views/menu-display.php:410
 msgid "Shortcode Wrapper"
 msgstr "Conteneur du code court"
@@ -3074,6 +3194,22 @@ msgstr "Avancé"
 #: src/Views/tabs.php:45
 msgid "Diagnostics and Tools"
 msgstr "Diagnostics et outils"
+
+#~ msgid "The post to update."
+#~ msgstr "La publication à mettre à jour."
+
+#~ msgid ""
+#~ "Select the variable that contains the post to update. It can be a post "
+#~ "instance or the post ID."
+#~ msgstr ""
+#~ "Sélectionner la variable qui contient la publication à mettre à jour. Il "
+#~ "peut s’agir d’une instance de publication ou de l’ID de la publication."
+
+#~ msgid "Log - Add"
+#~ msgstr "Journal - ajouter"
+
+#~ msgid "Ray - Debug"
+#~ msgstr "Débogage - Ray"
 
 #~ msgid "Step not found in workflow."
 #~ msgstr "Étape non trouvée dans le flux de travail."

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-22T19:49:55+00:00\n"
-"PO-Revision-Date: 2025-01-23 00:27+0100\n"
+"POT-Creation-Date: 2025-01-30T20:47:07+00:00\n"
+"PO-Revision-Date: 2025-01-31 10:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -50,56 +50,44 @@ msgstr "Ajouter un groupe"
 msgid "Add Rule"
 msgstr "Ajouter une règle"
 
-#: components/data-fields/date-offset.jsx:23
-msgid "Skip task if already exists"
-msgstr "Passer la tâche si elle existe déjà"
-
-#: components/data-fields/date-offset.jsx:24
-msgid "Create new task"
-msgstr "Créer une nouvelle tâche"
-
-#: components/data-fields/date-offset.jsx:25
-msgid "Replace existing task"
-msgstr "Remplacer la tâche existante"
-
-#: components/data-fields/date-offset.jsx:29
+#: components/data-fields/date-offset.jsx:27
 msgid "As soon as possible"
 msgstr "Dès que possible"
 
-#: components/data-fields/date-offset.jsx:30
+#: components/data-fields/date-offset.jsx:28
 msgid "On a specific date"
 msgstr "À une date précise"
 
-#: components/data-fields/date-offset.jsx:31
+#: components/data-fields/date-offset.jsx:29
 msgid "Relative to a specific date"
 msgstr "Relatif à une date spécifique"
 
-#: components/data-fields/date-offset.jsx:35
+#: components/data-fields/date-offset.jsx:33
 msgid "Selected in the calendar"
 msgstr "Sélectionné dans le calendrier"
 
-#: components/data-fields/date-offset.jsx:36
+#: components/data-fields/date-offset.jsx:34
 msgid "When the trigger is activated"
 msgstr "Lorsque le déclencheur est activé"
 
-#: components/data-fields/date-offset.jsx:37
+#: components/data-fields/date-offset.jsx:35
 msgid "When the step is activated"
 msgstr "Lorsque l’étape est activée"
 
-#: components/data-fields/date-offset.jsx:38
-#: components/data-fields/date-offset.jsx:197
+#: components/data-fields/date-offset.jsx:36
+#: components/data-fields/date-offset.jsx:206
 msgid "Custom date source"
 msgstr "Source de la date personnalisée"
 
-#: components/data-fields/date-offset.jsx:172
+#: components/data-fields/date-offset.jsx:175
 msgid "When to run"
 msgstr "Quand exécuter"
 
-#: components/data-fields/date-offset.jsx:181
+#: components/data-fields/date-offset.jsx:186
 msgid "Date source"
 msgstr "Source de la date"
 
-#: components/data-fields/date-offset.jsx:205
+#: components/data-fields/date-offset.jsx:214
 msgid ""
 "Click the button to choose a custom date source from variables that can "
 "provide a date."
@@ -107,31 +95,31 @@ msgstr ""
 "Cliquer sur le bouton pour choisir une source de date personnalisée parmi "
 "les variables qui peuvent fournir une date."
 
-#: components/data-fields/date-offset.jsx:215
+#: components/data-fields/date-offset.jsx:226
 msgid "Offset"
 msgstr "Décalage"
 
-#: components/data-fields/date-offset.jsx:222
+#: components/data-fields/date-offset.jsx:235
 msgid "Date Preview"
 msgstr "Aperçu de la date"
 
-#: components/data-fields/date-offset.jsx:223
+#: components/data-fields/date-offset.jsx:236
 msgid "Current Date"
 msgstr "Date actuelle"
 
-#: components/data-fields/date-offset.jsx:224
+#: components/data-fields/date-offset.jsx:237
 msgid "Computed Date"
 msgstr "Date calculée"
 
-#: components/data-fields/date-offset.jsx:233
+#: components/data-fields/date-offset.jsx:248
 msgid "Error: "
 msgstr "Erreur : "
 
-#: components/data-fields/date-offset.jsx:238
+#: components/data-fields/date-offset.jsx:255
 msgid "Click for more information"
 msgstr "Cliquer pour plus d’informations"
 
-#: components/data-fields/date-offset.jsx:246
+#: components/data-fields/date-offset.jsx:264
 msgid ""
 "For more information on formatting, see the %sPHP strtotime function%s. For "
 "example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 "
@@ -142,39 +130,42 @@ msgstr ""
 "jours 4 heures 2 secondes%s ou %sprochain jeudi%s. Veuillez utiliser "
 "uniquement des phrases en anglais."
 
-#: components/data-fields/date-offset.jsx:268
+#: components/data-fields/date-offset.jsx:290
 msgid "Repeating Action"
 msgstr "Répétition de l’action"
 
-#: components/data-fields/date-offset.jsx:280
-msgid "Duplicate handling"
-msgstr "Traitement des doublons"
-
 #: components/data-fields/date-offset.jsx:294
-msgid "Unique ID Expression"
-msgstr "Expression de l’ID unique"
-
-#: components/data-fields/date-offset.jsx:300
 msgid ""
-"Define a custom expression for a unique task ID. Use placeholders like "
-"{{onSavePost1.post.ID}}, {{global.user.ID}} or {{global.execution_id}} to "
-"make sure the ID is unique."
+"Choose how often this task should repeat. Select 'Non-repeating' for a one-"
+"time action or set an interval for automatic recurrence."
 msgstr ""
-"Définir une expression personnalisée pour un ID de tâche unique. Utiliser "
-"des textes indicatifs comme {{onSavePost1.post.ID}}, {{global.user.ID}} ou "
-"{{global.execution_id}} pour s’assurer que l’ID est unique."
+"Choisir la fréquence à laquelle cette tâche doit être répétée. Sélectionner "
+"« Non répétitif » pour une action unique ou définir un intervalle pour une "
+"récurrence automatique."
 
-#: components/data-fields/date-offset.jsx:309
-msgid "Priority"
-msgstr "Priorité"
+#: components/data-fields/date-offset.jsx:310
+msgid "Allow duplicate scheduled tasks"
+msgstr "Autoriser la duplication des tâches planifiées"
 
-#: components/data-fields/date-offset.jsx:312
-msgid ""
-"Sets the execution priority of the scheduled step. Lower numbers indicate "
-"higher priority and are executed first."
-msgstr ""
-"Définit la priorité d’exécution de l’étape planifiée. Les nombres inférieurs "
-"indiquent une priorité plus élevée et sont exécutés en premier."
+#: components/data-fields/date-offset.jsx:320
+msgid "Allows scheduling tasks even if a similar task exists."
+msgstr "Permet de planifier des tâches même s’il existe une tâche similaire."
+
+#: components/data-fields/date-offset.jsx:327
+msgid "Unique Task Identifier"
+msgstr "Identifiant unique de la tâche"
+
+#: components/data-fields/date-offset.jsx:333
+msgid "Define a unique ID to detect and prevent duplicate tasks."
+msgstr "Définir un ID unique pour détecter et éviter les tâches en double."
+
+#: components/data-fields/date-offset.jsx:346
+msgid "Task Execution Order"
+msgstr "Ordre d’exécution des tâches"
+
+#: components/data-fields/date-offset.jsx:354
+msgid "Defines the execution order for this task in relation to others."
+msgstr "Définit l’ordre d’exécution de cette tâche par rapport aux autres."
 
 #: components/data-fields/debug-data.jsx:39
 msgid "All received input"
@@ -224,33 +215,33 @@ msgstr "Niveau"
 msgid "Insert"
 msgstr "Insérer"
 
-#: components/data-fields/expression-builder/index.jsx:116
+#: components/data-fields/expression-builder/index.jsx:117
 msgid "Edit"
 msgstr "Modifier"
 
-#: components/data-fields/expression-builder/index.jsx:160
+#: components/data-fields/expression-builder/index.jsx:161
 msgid "Select a variable from the list below."
 msgstr "Sélectionner une variable dans la liste ci-dessous."
 
-#: components/data-fields/expression-builder/index.jsx:164
+#: components/data-fields/expression-builder/index.jsx:165
 msgid "Type your expression here or use the variables below."
 msgstr "Saisir votre expression ici ou utiliser les variables ci-dessous."
 
-#: components/data-fields/expression-builder/index.jsx:191
+#: components/data-fields/expression-builder/index.jsx:192
 msgid "Variables"
 msgstr "Variables"
 
-#: components/data-fields/expression-builder/index.jsx:194
+#: components/data-fields/expression-builder/index.jsx:195
 msgid "Double-click on a variable to select it."
 msgstr "Double-cliquer sur une variable pour la sélectionner."
 
-#: components/data-fields/expression-builder/index.jsx:198
+#: components/data-fields/expression-builder/index.jsx:199
 msgid "Double-click on any variable to add it to your expression."
 msgstr ""
 "Double-cliquer sur n’importe quelle variable pour l’ajouter à votre "
 "expression."
 
-#: components/data-fields/expression-builder/index.jsx:210
+#: components/data-fields/expression-builder/index.jsx:211
 msgid "Hover over a variable to see its description."
 msgstr "Survoler une variable pour en voir la description."
 
@@ -360,12 +351,12 @@ msgstr "Mise en page automatique appliquée."
 msgid "Back"
 msgstr "Retour"
 
-#: components/inspector-card/index.jsx:48
+#: components/inspector-card/index.jsx:46
 #: components/secondary-sidebar/node-card.jsx:22
 msgid "Pro"
 msgstr "Pro"
 
-#: components/inspector-card/index.jsx:59 components/node-types/generic.jsx:242
+#: components/inspector-card/index.jsx:57 components/node-types/generic.jsx:243
 #: components/secondary-sidebar/node-card.jsx:35
 msgid ""
 "Currently this step is being skipped. Upgrade to Pro to unlock this feature."
@@ -674,7 +665,7 @@ msgstr "Actions d’étape"
 msgid "Delete"
 msgstr "Supprimer"
 
-#: components/node-types/generic.jsx:250
+#: components/node-types/generic.jsx:251
 msgid "This node has errors"
 msgstr "Ce nœud contient des erreurs"
 
@@ -739,25 +730,24 @@ msgid "This step requires a connection to a following step."
 msgstr "Cette étape nécessite une connexion avec l’étape suivante."
 
 #: components/node-validator/index.jsx:240
-#: components/node-validator/index.jsx:251
-#: components/node-validator/index.jsx:265
+#: components/node-validator/index.jsx:261
 msgid "The field %s is required."
 msgstr "Le champ %s est obligatoire."
 
-#: components/node-validator/index.jsx:286
+#: components/node-validator/index.jsx:283
 msgid "The field %s must be a valid email address."
 msgstr "Le champ %s doit être une e-mail valide."
 
-#: components/node-validator/index.jsx:302
+#: components/node-validator/index.jsx:299
 msgid "The field %s must be a valid email address list separated by commas."
 msgstr ""
 "Le champ %s doit être une liste d’e-mails valides séparés par des virgules."
 
-#: components/node-validator/index.jsx:316
+#: components/node-validator/index.jsx:313
 msgid "The field %s must be an integer."
 msgstr "Le champ %s doit être un entier."
 
-#: components/node-validator/index.jsx:331
+#: components/node-validator/index.jsx:328
 msgid "The field %s must be an integer list separated by commas."
 msgstr "Le champ %s doit être une liste d’entiers séparés par des virgules."
 
@@ -1046,6 +1036,40 @@ msgstr "Brouillon"
 #: components/workflow-switch-to-draft-button/index.jsx:52
 msgid "Switch to draft"
 msgstr "Passer en brouillon"
+
+#~ msgid "Skip task if already exists"
+#~ msgstr "Passer la tâche si elle existe déjà"
+
+#~ msgid "Create new task"
+#~ msgstr "Créer une nouvelle tâche"
+
+#~ msgid "Replace existing task"
+#~ msgstr "Remplacer la tâche existante"
+
+#~ msgid "Duplicate handling"
+#~ msgstr "Traitement des doublons"
+
+#~ msgid "Unique ID Expression"
+#~ msgstr "Expression de l’ID unique"
+
+#~ msgid ""
+#~ "Define a custom expression for a unique task ID. Use placeholders like "
+#~ "{{onSavePost1.post.ID}}, {{global.user.ID}} or {{global.execution_id}} to "
+#~ "make sure the ID is unique."
+#~ msgstr ""
+#~ "Définir une expression personnalisée pour un ID de tâche unique. Utiliser "
+#~ "des textes indicatifs comme {{onSavePost1.post.ID}}, {{global.user.ID}} "
+#~ "ou {{global.execution_id}} pour s’assurer que l’ID est unique."
+
+#~ msgid "Priority"
+#~ msgstr "Priorité"
+
+#~ msgid ""
+#~ "Sets the execution priority of the scheduled step. Lower numbers indicate "
+#~ "higher priority and are executed first."
+#~ msgstr ""
+#~ "Définit la priorité d’exécution de l’étape planifiée. Les nombres "
+#~ "inférieurs indiquent une priorité plus élevée et sont exécutés en premier."
 
 #~ msgid ""
 #~ "Create a condition adding rules and groups. You can also add a NOT "
