@@ -83,7 +83,7 @@ class OnLegacyActionTriggerRunner implements TriggerRunnerInterface
         }
 
         $this->stepProcessor->executeSafelyWithErrorHandling(
-            $this->step ,
+            $this->step,
             function ($step, $postId, $post) {
                 $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 

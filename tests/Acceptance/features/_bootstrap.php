@@ -1,4 +1,5 @@
 <?php
+
 /*
  * EndToEnd suite bootstrap file.
  *

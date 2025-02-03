@@ -66,4 +66,3 @@ class DeletePostRunner implements StepRunnerInterface
         );
     }
 }
-

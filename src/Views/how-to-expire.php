@@ -36,5 +36,5 @@ $actions = $actionsModel->getActionsAsOptions($opts['type']);
         </option>
         <?php
     }
-    ?>
+?>
 </select>

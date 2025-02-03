@@ -500,7 +500,7 @@ class PostExpirator_Display
                         '<strong>PublishPress Future</strong>',
                         '<span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span>'
                     );
-                    ?>
+        ?>
                 </a>
             </div>
 
@@ -511,25 +511,25 @@ class PostExpirator_Display
                     <li>
                         <a href="https://publishpress.com/future/" target="_blank" rel="noopener noreferrer"
                            title="<?php
-                            esc_attr_e('About PublishPress Future', 'post-expirator'); ?>">
+                esc_attr_e('About PublishPress Future', 'post-expirator'); ?>">
                             <?php
-                            esc_html_e('About', 'post-expirator'); ?>
+                esc_html_e('About', 'post-expirator'); ?>
                         </a>
                     </li>
                     <li>
                         <a href="https://publishpress.com/knowledge-base/future-introduction/" target="_blank"
                            rel="noopener noreferrer" title="<?php
-                            esc_attr_e('Future Documentation', 'post-expirator'); ?>">
+                esc_attr_e('Future Documentation', 'post-expirator'); ?>">
                             <?php
-                            esc_html_e('Documentation', 'post-expirator'); ?>
+                esc_html_e('Documentation', 'post-expirator'); ?>
                         </a>
                     </li>
                     <li>
                         <a href="https://publishpress.com/publishpress-support/" target="_blank" rel="noopener noreferrer"
                            title="<?php
-                            esc_attr_e('Contact the PublishPress team', 'post-expirator'); ?>">
+                esc_attr_e('Contact the PublishPress team', 'post-expirator'); ?>">
                             <?php
-                            esc_html_e('Contact', 'post-expirator'); ?>
+                esc_html_e('Contact', 'post-expirator'); ?>
                         </a>
                     </li>
                 </ul>
@@ -538,7 +538,7 @@ class PostExpirator_Display
             <div class="pp-pressshack-logo">
                 <a href="https://publishpress.com" target="_blank" rel="noopener noreferrer">
                     <img src="<?php
-                    echo esc_url(plugins_url('../assets/images/publishpress-logo.png', dirname(__FILE__))) ?>"/>
+        echo esc_url(plugins_url('../assets/images/publishpress-logo.png', dirname(__FILE__))) ?>"/>
                 </a>
             </div>
         </footer>

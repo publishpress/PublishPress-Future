@@ -1,4 +1,5 @@
 <?php
+
 header('Content-Type: text/plain');
 
 $results = $this->logger->fetchAll();

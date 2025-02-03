@@ -35,8 +35,7 @@ class CheckCommand extends Command
     public function setDependencies(
         PoFileProcessorInterface $poFileProcessor,
         ConsoleMessageFormatterInterface $consoleMessageFormatter
-    ): self
-    {
+    ): self {
         $this->poFileProcessor = $poFileProcessor;
         $this->consoleMessageFormatter = $consoleMessageFormatter;
 

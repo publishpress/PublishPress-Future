@@ -12,7 +12,7 @@ class WorkflowScheduledStepModelTest extends \lucatume\WPBrowser\TestCase\WPTest
      */
     protected $tester;
 
-    public function setUp() :void
+    public function setUp(): void
     {
         // Before...
         parent::setUp();
@@ -20,7 +20,7 @@ class WorkflowScheduledStepModelTest extends \lucatume\WPBrowser\TestCase\WPTest
         // Your set up methods here.
     }
 
-    public function tearDown() :void
+    public function tearDown(): void
     {
         // Your tear down methods here.
 
@@ -440,7 +440,7 @@ class WorkflowScheduledStepModelTest extends \lucatume\WPBrowser\TestCase\WPTest
 
         $model->loadByActionId(7);
         $this->assertNotEmpty($model->getLastRunAt());
-        $this->assertEquals (current_time('mysql'), $model->getLastRunAt());
+        $this->assertEquals(current_time('mysql'), $model->getLastRunAt());
     }
 
     public function testResetRunData(): void

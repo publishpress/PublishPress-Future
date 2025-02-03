@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tests\Modules\Workflows\Domain\Engine\VariableResolvers;
 
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
@@ -20,7 +19,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
      */
     private $expirablePostModelFactory;
 
-    public function setUp() :void
+    public function setUp(): void
     {
         // Before...
         parent::setUp();
@@ -31,7 +30,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         };
     }
 
-    public function tearDown() :void
+    public function tearDown(): void
     {
         // Your tear down methods here.
 
@@ -43,7 +42,7 @@ class PostResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
     {
         $hooks = new HooksFacade();
 
-        $resolver = new PostResolver(new stdClass, $hooks, '', $this->expirablePostModelFactory);
+        $resolver = new PostResolver(new stdClass(), $hooks, '', $this->expirablePostModelFactory);
 
         $this->assertEquals('post', $resolver->getType());
     }

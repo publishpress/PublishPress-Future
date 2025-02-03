@@ -9,7 +9,6 @@ use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
 class QueryPostsRunner implements StepRunnerInterface
 {
-
     /**
      * @var StepProcessorInterface
      */

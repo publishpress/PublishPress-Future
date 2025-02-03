@@ -4,7 +4,6 @@ namespace Tests\Modules\Workflows\Domain\Engine;
 
 use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHandler;
 
-
 class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 {
     /**
@@ -12,7 +11,7 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
      */
     protected $tester;
 
-    public function setUp() :void
+    public function setUp(): void
     {
         // Before...
         parent::setUp();
@@ -20,7 +19,7 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
         // Your set up methods here.
     }
 
-    public function tearDown() :void
+    public function tearDown(): void
     {
         // Your tear down methods here.
 

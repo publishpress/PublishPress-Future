@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name: ray-future
  * Plugin URI:  https://wordpress.org/plugins/post-expirator/

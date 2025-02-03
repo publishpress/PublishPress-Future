@@ -18,7 +18,8 @@ class FutureActionResolver implements VariableResolverInterface
      */
     private $postModel;
 
-    public function __construct(object $post, \Closure $postModelFactory) {
+    public function __construct(object $post, \Closure $postModelFactory)
+    {
         $this->post = $post;
         $this->postModel = $postModelFactory($post->ID);
     }

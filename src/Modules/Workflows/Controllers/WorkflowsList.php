@@ -392,8 +392,8 @@ class WorkflowsList implements InitializableInterface
         if (
             !is_admin() || (
                 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-            (!isset($_GET['post_type']) || $_GET['post_type'] !== Module::POST_TYPE_WORKFLOW) &&
-                ($currentScreen && $currentScreen->id !== 'edit-' . Module::POST_TYPE_WORKFLOW)
+                (!isset($_GET['post_type']) || $_GET['post_type'] !== Module::POST_TYPE_WORKFLOW) &&
+                    ($currentScreen && $currentScreen->id !== 'edit-' . Module::POST_TYPE_WORKFLOW)
             )
         ) {
             return $title;

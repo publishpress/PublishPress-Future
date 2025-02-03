@@ -10,5 +10,4 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 interface ModuleInterface extends InitializableInterface
 {
-
 }

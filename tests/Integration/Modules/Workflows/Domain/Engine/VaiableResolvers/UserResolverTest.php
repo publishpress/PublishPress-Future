@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tests\Modules\Workflows\Domain\Engine\VariableResolvers;
 
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
@@ -15,7 +14,7 @@ class UserResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
      */
     protected $tester;
 
-    public function setUp() :void
+    public function setUp(): void
     {
         // Before...
         parent::setUp();
@@ -23,7 +22,7 @@ class UserResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         // Your set up methods here.
     }
 
-    public function tearDown() :void
+    public function tearDown(): void
     {
         // Your tear down methods here.
 
@@ -33,7 +32,7 @@ class UserResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
     public function testGetTypeReturnsCorrectType(): void
     {
-        $resolver = new UserResolver(new stdClass);
+        $resolver = new UserResolver(new stdClass());
 
         $this->assertEquals('user', $resolver->getType());
     }
