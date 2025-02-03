@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add new trigger: Post Author Changed - PRO (Issue #1144).
 - Add new action: Update Post - PRO (Issue #1143).
 
+### Changed
+
+- Changed the description field on workflow steps settings to be a popover, and part of the inspector card, saving space in the sidebar.
+
 
 ## [4.3.3] - UNRELEASED
 

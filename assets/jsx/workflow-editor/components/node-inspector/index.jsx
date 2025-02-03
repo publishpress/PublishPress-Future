@@ -16,7 +16,6 @@ import ObjectGroupIcon from "../icons/object-group";
 import LinesLeaningIcon from "../icons/lines-leaning";
 import NodeDevInfoPanel from "../node-dev-info-panel";
 import useScrollToTop from "../scrolled-to-top";
-import NodeDetailsPanel from "./node-details-panel";
 
 export const NodeInspector = () => {
     const {
@@ -145,8 +144,6 @@ export const NodeInspector = () => {
             {onlyNodesSelected && selectedElementsCount === 1 && (
                 <>
                     <NodeInspectorCard node={selectedNode} />
-
-                    <NodeDetailsPanel node={selectedNode} />
 
                     {nodeHasSettings && (
                         <NodeSettingsPanel node={selectedNode} />

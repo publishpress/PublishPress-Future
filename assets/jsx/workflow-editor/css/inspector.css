@@ -195,3 +195,17 @@ p.description.margin-top {
 .margin-top-0 {
     margin-top: 0 !important;
 }
+
+.workflow-editor-inspector-card__description-popover .components-popover__content {
+    min-width: 320px;
+    padding: 16px;
+}
+
+
+.workflow-editor-inspector-card__header {
+    justify-content: flex-start !important;
+}
+
+.workflow-editor-inspector-card__content .components-v-stack {
+    margin-bottom: 10px;
+}

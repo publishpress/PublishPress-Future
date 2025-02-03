@@ -32,6 +32,7 @@ export const NodeInspectorCard = ({ node }) => {
             icon={Icon}
             slug={nodeSlug}
             isProFeature={nodeType.isProFeature}
+            node={node}
         />
     );
 };
