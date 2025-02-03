@@ -1,9 +1,6 @@
 import { useSelect, useDispatch } from "@wordpress/data";
 import { store as editorStore } from "../editor-store";
 import { store as workflowStore } from "../workflow-store";
-import {
-    FEATURE_DEVELOPER_MODE,
-} from "../../constants";
 import { __ } from "@wordpress/i18n";
 import {
     Button,
@@ -115,29 +112,14 @@ const StepDescription = ({ node }) => {
 
 export const InspectorCard = ({ title, description, icon, id, slug, isProFeature, node }) => {
     const {
-        isDeveloperModeEnabled,
         isPro
     } = useSelect((select) => {
         return {
-            isDeveloperModeEnabled: select(editorStore).isFeatureActive(FEATURE_DEVELOPER_MODE),
             isPro: select(editorStore).isPro(),
         };
     });
 
     const nodeAttributes = [];
-    if (isDeveloperModeEnabled) {
-        nodeAttributes.push({
-            id: "id",
-            label: "ID",
-            value: id,
-        });
-
-        nodeAttributes.push({
-            id: "slug",
-            label: "Slug",
-            value: slug,
-        });
-    }
 
     return (
         <div className="workflow-editor-inspector-card">
@@ -173,6 +155,10 @@ export const InspectorCard = ({ title, description, icon, id, slug, isProFeature
                     </VStack>
                 )}
 
+                <VStack>
+                    <StepDescription node={node} />
+                </VStack>
+
                 {nodeAttributes.length > 0 && (
                     <VStack>
                         <table>
@@ -189,10 +175,6 @@ export const InspectorCard = ({ title, description, icon, id, slug, isProFeature
                         </table>
                     </VStack>
                 )}
-
-                <VStack>
-                    <StepDescription node={node} />
-                </VStack>
             </div>
         </div>
     );

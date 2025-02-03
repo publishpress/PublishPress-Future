@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Changed the description field on workflow steps settings to be a popover, and part of the inspector card, saving space in the sidebar.
+- Remove left padding from the workflow step details panel.
+- Remove attributes table from the inspector card when on developer mode (that data can still be seen in the Developer Info panel).
 
 
 ## [4.3.3] - UNRELEASED
