@@ -141,8 +141,6 @@ class OnPostWorkflowEnableRunner implements TriggerRunnerInterface
 
         $this->stepProcessor->setPostIdOnTriggerGlobalVariable($postId);
 
-        ray($this->variablesHandler->getAllVariables());
-
         $this->logger->debug(
             $this->stepProcessor->prepareLogMessage(
                 'Trigger is running | Slug: %s | Post ID: %d',
