@@ -8,7 +8,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix the overdue actions check in the Scheduled Actions list screen (Issue #1155).
-- Fix the Send Email step to correctly parse the recipient field when using custom email addresses (Issue #1153).
 - Update translations (Issue #1156).
 
 

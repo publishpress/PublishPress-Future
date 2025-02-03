@@ -178,7 +178,6 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 ### Fixed
 
 - Fix the overdue actions check in the Scheduled Actions list screen (Issue #1155).
-- Fix the Send Email step to correctly parse the recipient field when using custom email addresses (Issue #1153).
 - Update translations (Issue #1156).
 
 ## [4.3.2] - 30 Jan, 2025
