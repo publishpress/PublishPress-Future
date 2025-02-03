@@ -15,7 +15,7 @@ use Throwable;
 
 class General implements StepProcessorInterface
 {
-    const LOG_PREFIX = '[WF Engine]   - ';
+    public const LOG_PREFIX = '[WF Engine]   - ';
 
     /**
      * @var HooksFacade
@@ -177,8 +177,7 @@ class General implements StepProcessorInterface
     private function updateExecutionTraceOnVariablesHandler(
         string $stepSlug,
         WorkflowModelInterface $currentRunningWorkflow
-    ): void
-    {
+    ): void {
         $currentExecutionTrace = $this->engine->getCurrentExecutionTrace();
         $currentExecutionTrace[] = $stepSlug;
 

@@ -54,4 +54,3 @@ class UpdatePostMetaRunner implements StepRunnerInterface
         );
     }
 }
-

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Integration suite bootstrap file.
  *

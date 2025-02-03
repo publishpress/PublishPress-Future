@@ -24,7 +24,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
     if ($showSideBar) {
         include __DIR__ . '/../../../Views/ad-banner-right-sidebar.php';
     }
-    ?>
+?>
     </div>
 </div>
 <?php

@@ -56,29 +56,29 @@ $systemAdminEmail = $optionsFacade->getOption('admin_email');
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row"><?php
-                        esc_html_e('Enable Email Notification?', 'post-expirator'); ?></th>
+                                        esc_html_e('Enable Email Notification?', 'post-expirator'); ?></th>
                     <td>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="expired-email-notification" id="expired-email-notification-true"
                                 value="1" <?php
-                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                                echo $expiredemailnotificationenabled; ?>/> <label
+                                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                                echo $expiredemailnotificationenabled; ?>/> <label
                                     for="expired-email-notification-true"><?php
-                                    esc_html_e('Enabled', 'post-expirator'); ?></label>
+                                                    esc_html_e('Enabled', 'post-expirator'); ?></label>
                         </div>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="expired-email-notification" id="expired-email-notification-false"
                                 value="0" <?php
-                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                                echo $expiredemailnotificationdisabled; ?>/> <label
+                                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                                echo $expiredemailnotificationdisabled; ?>/> <label
                                     for="expired-email-notification-false"><?php
-                                    esc_html_e('Disabled', 'post-expirator'); ?></label>
+                                                    esc_html_e('Disabled', 'post-expirator'); ?></label>
                         </div>
                         <p class="description"><?php
-                            esc_html_e(
-                                'This will enable or disable the send of email notification on future action.',
-                                'post-expirator'
-                            ); ?></p>
+                                            esc_html_e(
+                                                'This will enable or disable the send of email notification on future action.',
+                                                'post-expirator'
+                                            ); ?></p>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -90,18 +90,18 @@ $systemAdminEmail = $optionsFacade->getOption('admin_email');
                                 id="expired-email-notification-admins-true"
                                 value="1" <?php
                             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                                echo $expiredemailnotificationadminsenabled; ?>/> <label
+                                            echo $expiredemailnotificationadminsenabled; ?>/> <label
                                     for="expired-email-notification-admins-true"><?php
-                                    esc_html_e('Enabled', 'post-expirator'); ?></label>
+                                                esc_html_e('Enabled', 'post-expirator'); ?></label>
                         </div>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="expired-email-notification-admins"
                                 id="expired-email-notification-admins-false"
                                 value="0" <?php
                             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                                echo $expiredemailnotificationadminsdisabled; ?>/> <label
+                                            echo $expiredemailnotificationadminsdisabled; ?>/> <label
                                     for="expired-email-notification-admins-false"><?php
-                                    esc_html_e('Disabled', 'post-expirator'); ?></label>
+                                                esc_html_e('Disabled', 'post-expirator'); ?></label>
                         </div>
                         <p class="description"><?php
                             esc_html_e(
@@ -113,12 +113,12 @@ $systemAdminEmail = $optionsFacade->getOption('admin_email');
                 <tr valign="top">
                     <th scope="row"><label
                                 for="expired-email-notification-list"><?php
-                                esc_html_e('Who to Notify', 'post-expirator'); ?></label>
+                            esc_html_e('Who to Notify', 'post-expirator'); ?></label>
                     </th>
                     <td>
                         <input class="large-text" type="text" name="expired-email-notification-list"
                                id="expired-email-notification-list" value="<?php
-                                echo esc_attr(implode(', ', $expiredemailnotificationlist)); ?>"/>
+                            echo esc_attr(implode(', ', $expiredemailnotificationlist)); ?>"/>
                         <p class="description"><?php
                             esc_html_e(
                                 'Enter a comma separate list of emails that you would like to be notified when the action runs.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab.',
@@ -144,24 +144,24 @@ $systemAdminEmail = $optionsFacade->getOption('admin_email');
                         <div class="pp-settings-field-row">
                             <input type="radio" name="past-due-actions-notification" id="past-due-actions-notification-true"
                                 value="1" <?php
-                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                                echo $pastDueActionsNotificationEnabled; ?>/> <label
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo $pastDueActionsNotificationEnabled; ?>/> <label
                                     for="past-due-actions-notification-true"><?php
-                                    esc_html_e('Enabled', 'post-expirator'); ?></label>
+                        esc_html_e('Enabled', 'post-expirator'); ?></label>
                         </div>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="past-due-actions-notification" id="past-due-actions-notification-false"
                                 value="0" <?php
-                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                                echo $pastDueActionsNotificationDisabled; ?>/> <label
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo $pastDueActionsNotificationDisabled; ?>/> <label
                                     for="past-due-actions-notification-false"><?php
-                                    esc_html_e('Disabled', 'post-expirator'); ?></label>
+                        esc_html_e('Disabled', 'post-expirator'); ?></label>
                         </div>
                         <p class="description"><?php
-                            esc_html_e(
-                                'This will enable or disable the send of email notification on past-due actions.',
-                                'post-expirator'
-                            ); ?></p>
+                esc_html_e(
+                    'This will enable or disable the send of email notification on past-due actions.',
+                    'post-expirator'
+                ); ?></p>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -170,7 +170,7 @@ $systemAdminEmail = $optionsFacade->getOption('admin_email');
                     <td>
                         <input class="large-text" type="text" name="past-due-actions-notification-list"
                                id="past-due-actions-notification-list" placeholder="<?php echo esc_attr($systemAdminEmail); ?>" value="<?php
-                                echo esc_attr(implode(', ', $pastDueActionsNotificationList)); ?>"/>
+                echo esc_attr(implode(', ', $pastDueActionsNotificationList)); ?>"/>
                         <p class="description"><?php
                             esc_html_e(
                                 'Enter a comma separate list of emails that you would like to be notified when past-due actions are detected.',
@@ -192,7 +192,7 @@ $systemAdminEmail = $optionsFacade->getOption('admin_email');
     if ($showSideBar) {
         include __DIR__ . '/ad-banner-right-sidebar.php';
     }
-    ?>
+?>
 </div>
 <?php
 // phpcs:enable

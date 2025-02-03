@@ -18,11 +18,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove attributes table from the inspector card when on developer mode (that data can still be seen in the Developer Info panel)
 
 
-## [4.3.3] - UNRELEASED
+## [4.3.3] - 03 Feb, 2025
 
 ### Fixed
 
 - Fix the overdue actions check in the Scheduled Actions list screen (Issue #1155).
+- Update translations (Issue #1156).
 
 
 ## [4.3.2] - 30 Jan, 2025

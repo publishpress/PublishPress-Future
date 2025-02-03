@@ -26,7 +26,7 @@ use Throwable;
 
 class WorkflowEngine implements WorkflowEngineInterface
 {
-    const LOG_PREFIX = '[WF Engine]';
+    public const LOG_PREFIX = '[WF Engine]';
 
     /**
      * @var HookableInterface

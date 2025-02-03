@@ -16,7 +16,7 @@ class GeneralStepTest extends \lucatume\WPBrowser\TestCase\WPTestCase
      */
     protected $tester;
 
-    public function setUp() :void
+    public function setUp(): void
     {
         // Before...
         parent::setUp();
@@ -24,7 +24,7 @@ class GeneralStepTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         // Your set up methods here.
     }
 
-    public function tearDown() :void
+    public function tearDown(): void
     {
         // Your tear down methods here.
 

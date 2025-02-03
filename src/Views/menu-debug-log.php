@@ -76,10 +76,10 @@ if (! empty($results)) {
 
     if ($totalLogs > $totalDisplayedLogs) {
         echo '<p id="debug-log-length">' . sprintf(
-        // translators: %s is the number of results in the debug log. %s is the size of the log in the most appropriate unit.
-        esc_html__('Showing the latest %d of %d results. The approximate size of the log is %s.', 'post-expirator'),
-        $totalDisplayedLogs,
-        $totalLogs,
+            // translators: %s is the number of results in the debug log. %s is the size of the log in the most appropriate unit.
+            esc_html__('Showing the latest %d of %d results. The approximate size of the log is %s.', 'post-expirator'),
+            $totalDisplayedLogs,
+            $totalLogs,
             PostExpirator_Util::formatBytes($logSizeInBytes)
         ) . '</p>';
     } else {
