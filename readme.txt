@@ -173,6 +173,14 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
 
+## [4.3.3] - 03 Feb, 2025
+
+### Fixed
+
+- Fix the overdue actions check in the Scheduled Actions list screen (Issue #1155).
+- Fix the Send Email step to correctly parse the recipient field when using custom email addresses (Issue #1153).
+- Update translations (Issue #1156).
+
 ## [4.3.2] - 30 Jan, 2025
 
 ### Fixed
@@ -439,9 +447,3 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 ### Fixed
 
 - Fix error when the filter `the_title` is called without an ID, #984
-
-## [4.0.1] - 21 Oct, 2024
-
-### Fixed
-
-- Fix the database schema check for version 4.0.0 on fresh installations, (Issue #928).
