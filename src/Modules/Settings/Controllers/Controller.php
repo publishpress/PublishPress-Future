@@ -561,11 +561,11 @@ class Controller implements InitializableInterface
 
     public function saveTabAdvanced()
     {
-         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
-         $experimentalFeaturesStatus = isset($_POST['future-experimental-features'])
-         // phpcs:ignore WordPress.Security.NonceVerification.Missing
-         ? (int) $_POST['future-experimental-features']
-         : 0;
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $experimentalFeaturesStatus = isset($_POST['future-experimental-features'])
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        ? (int) $_POST['future-experimental-features']
+        : 0;
         $this->settings->setExperimentalFeaturesStatus($experimentalFeaturesStatus);
 
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing

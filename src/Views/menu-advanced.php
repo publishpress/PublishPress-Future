@@ -54,7 +54,7 @@ $preserveData = $settingsFacade->getSettingPreserveData();
                                 value="0"
                                 <?php echo !$settingsFacade->getStepScheduleCompressedArgsStatus() ? 'checked' : ''; ?> />
                             <label for="future-step-schedule-compressed-args-disabled"><?php
-                                esc_html_e('Do not compress the arguments', 'post-expirator'); ?></label>
+                                                                esc_html_e('Do not compress the arguments', 'post-expirator'); ?></label>
                             <p class="description offset">
                                 <?php esc_html_e(
                                     'Do not compress the arguments of the step schedule, storing them as plain text.',
@@ -103,20 +103,20 @@ $preserveData = $settingsFacade->getSettingPreserveData();
                             <input type="radio" name="expired-preserve-data-deactivating"
                                 id="expired-preserve-data-deactivating-true"
                                 value="1" <?php
-                                echo $preserveData ? ' checked="checked"' : ''; ?>/>
+                                    echo $preserveData ? ' checked="checked"' : ''; ?>/>
                             <label for="expired-preserve-data-deactivating-true">
                                 <?php
-                                esc_html_e('Preserve data', 'post-expirator'); ?>
+                                    esc_html_e('Preserve data', 'post-expirator'); ?>
                             </label>
                         </div>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="expired-preserve-data-deactivating"
                                 id="expired-preserve-data-deactivating-false"
                                 value="0" <?php
-                                echo ! $preserveData ? ' checked="checked"' : ''; ?>/>
+                                    echo ! $preserveData ? ' checked="checked"' : ''; ?>/>
                             <label for="expired-preserve-data-deactivating-false">
                                 <?php
-                                esc_html_e('Delete data', 'post-expirator'); ?>
+                                    esc_html_e('Delete data', 'post-expirator'); ?>
                             </label>
                         </div>
                         <p class="description">
@@ -141,7 +141,7 @@ $preserveData = $settingsFacade->getSettingPreserveData();
     if ($showSideBar) {
         include __DIR__ . '/ad-banner-right-sidebar.php';
     }
-    ?>
+?>
 </div>
 <?php
 // phpcs:enable

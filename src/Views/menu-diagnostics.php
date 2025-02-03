@@ -79,7 +79,7 @@ $schemaHealthErrors = [
                                     count($schemaHealthErrors),
                                     'post-expirator'
                                 )
-                                  ); // phpcs:ignore PSR2.Methods.FunctionCallSignature.Indent?>
+                            ); // phpcs:ignore PSR2.Methods.FunctionCallSignature.Indent?>
                             </span>
                             <?php foreach ($schemaHealthErrors as $tableName => $errors) : ?>
                                 <?php if (empty($errors)) {
@@ -186,15 +186,15 @@ $schemaHealthErrors = [
                             <?php
                             $cron = PostExpirator_CronFacade::get_plugin_cron_events();
 
-                            ?>
+                    ?>
                             <p><?php
                          // phpcs:disable Generic.Files.LineLength.TooLong, PSR2.Methods.FunctionCallSignature.Indent
-                            esc_html_e(
-                            'The below table will show all currently scheduled cron events for the plugin with the next run time.',
-                            'post-expirator'
-                               );
-                            // phpcs:enable
-                                ?></p>
+                    esc_html_e(
+                        'The below table will show all currently scheduled cron events for the plugin with the next run time.',
+                        'post-expirator'
+                    );
+                    // phpcs:enable
+                    ?></p>
 
                             <div>
                                 <table class="striped wp-list-table widefat fixed table-view-list">
@@ -213,18 +213,18 @@ $schemaHealthErrors = [
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $printPostEvent = function ($post) use ($container) {
-                                            echo esc_html("$post->ID: $post->post_title (status: $post->post_status)");
+                            $printPostEvent = function ($post) use ($container) {
+                                echo esc_html("$post->ID: $post->post_title (status: $post->post_status)");
 
-                                            $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-                                            $postModel = $factory($post->ID);
-                                            $attributes = $postModel->getExpirationDataAsArray();
+                                $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+                                $postModel = $factory($post->ID);
+                                $attributes = $postModel->getExpirationDataAsArray();
 
-                                            echo ': <span class="post-expiration-attributes">';
-                                            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-                                            print_r($attributes);
-                                            echo '</span>';
-                                        };
+                                echo ': <span class="post-expiration-attributes">';
+                                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+                                print_r($attributes);
+                                echo '</span>';
+                            };
 
                     // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
                     foreach ($cron as $time => $value) {
@@ -267,7 +267,7 @@ $schemaHealthErrors = [
                                     'post-expirator'
                                 );
                     // phpcs:enable
-                                ?></p>
+                    ?></p>
                         </td>
                     </tr>
                 <?php endif; ?>
@@ -279,7 +279,7 @@ $schemaHealthErrors = [
     if ($showSideBar) {
         include __DIR__ . '/ad-banner-right-sidebar.php';
     }
-    ?>
+?>
 </div>
 <?php
 

@@ -717,7 +717,7 @@ class Cron implements AsyncStepProcessorInterface
                     // TODO: Replace this with a factory
                     if ($type === 'site') {
                         $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass();
-                    } else if ($type === 'post') {
+                    } elseif ($type === 'post') {
                         $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass(
                             $resolverArgument,
                             $this->hooks,

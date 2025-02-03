@@ -489,8 +489,7 @@ class SettingsFacade
 
         $pluginFacade = PostExpirator_Facade::getInstance();
 
-        foreach ($userRoles as $userRoleName => $userRoleLabel)
-        {
+        foreach ($userRoles as $userRoleName => $userRoleLabel) {
             if ($pluginFacade->user_role_can_expire_posts($userRoleName)) {
                 $allowedUserRoles[] = $userRoleName;
             }

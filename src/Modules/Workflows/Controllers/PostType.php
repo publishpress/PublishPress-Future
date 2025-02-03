@@ -10,7 +10,7 @@ use PublishPress\Future\Modules\Workflows\Module;
 
 class PostType implements InitializableInterface
 {
-    const MENU_CAPABILITY = 'manage_options';
+    public const MENU_CAPABILITY = 'manage_options';
 
     /**
      * @var HookableInterface

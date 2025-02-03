@@ -448,9 +448,10 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         return $this->hooks->applyFilters('action_scheduler_list_table_column_args', $columnHtml, $row);
     }
 
-    public function column_recurrence( $row ) {
-        $action = $this->store->fetch_action( $row['ID'] );
-        $html = $this->get_recurrence( $action );
+    public function column_recurrence($row)
+    {
+        $action = $this->store->fetch_action($row['ID']);
+        $html = $this->get_recurrence($action);
 
         return $this->hooks->applyFilters('action_scheduler_list_table_column_recurrence', $html, $row);
     }

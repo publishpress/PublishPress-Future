@@ -75,7 +75,7 @@ class PostResolver implements VariableResolverInterface
             case 'content_text':
                 return wp_strip_all_tags(
                     strip_shortcodes(
-                    $this->hooks->applyFilters(
+                        $this->hooks->applyFilters(
                             HooksAbstract::FILTER_THE_CONTENT,
                             $this->post->post_content
                         )

@@ -28,7 +28,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class Plugin implements InitializableInterface
 {
-    const LOG_PREFIX = '[Plugin]';
+    public const LOG_PREFIX = '[Plugin]';
 
     /**
      * @var bool
@@ -329,4 +329,3 @@ class Plugin implements InitializableInterface
         return $baseUrl . 'assets/' . $asset;
     }
 }
-

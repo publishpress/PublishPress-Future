@@ -7,7 +7,6 @@ use Exception;
 use PostExpirator_Util;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract as Services;
-
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 
 use function sq;

@@ -7,7 +7,7 @@ Requires at least: 6.7
 Requires PHP: 7.4
 Tested up to: 6.7
 License: GPLv2 or later
-Stable tag: 4.3.2
+Stable tag: 4.3.3
 
 PublishPress Future can make scheduled changes to your content. You can unpublish posts, move posts to a new status, update the categories, and more.
 
@@ -172,6 +172,13 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 == Changelog ==
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
+
+## [4.3.3] - 03 Feb, 2025
+
+### Fixed
+
+- Fix the overdue actions check in the Scheduled Actions list screen (Issue #1155).
+- Update translations (Issue #1156).
 
 ## [4.3.2] - 30 Jan, 2025
 
@@ -439,9 +446,3 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 ### Fixed
 
 - Fix error when the filter `the_title` is called without an ID, #984
-
-## [4.0.1] - 21 Oct, 2024
-
-### Fixed
-
-- Fix the database schema check for version 4.0.0 on fresh installations, (Issue #928).

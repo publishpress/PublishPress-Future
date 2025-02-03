@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PublishPress Future: Schedule Post Changes
  *
@@ -920,7 +921,7 @@ return [
                     );
                     break;
 
-                // Actions
+                    // Actions
                 case DeletePostRunner::getNodeTypeName():
                     $stepRunner = new DeletePostRunner(
                         $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
@@ -1015,7 +1016,7 @@ return [
                     );
                     break;
 
-                // Advanced
+                    // Advanced
                 case ScheduleDelayRunner::getNodeTypeName():
                     $stepRunner = new ScheduleDelayRunner(
                         $container->get(ServicesAbstract::CRON_STEP_PROCESSOR),

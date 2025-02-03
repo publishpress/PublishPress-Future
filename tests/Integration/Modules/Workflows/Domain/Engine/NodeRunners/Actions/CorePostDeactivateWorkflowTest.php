@@ -10,7 +10,6 @@ use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Models\PostModel;
 
-
 class CorePostDeactivateWorkflowTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 {
     /**
@@ -18,7 +17,7 @@ class CorePostDeactivateWorkflowTest extends \lucatume\WPBrowser\TestCase\WPTest
      */
     protected $tester;
 
-    public function setUp() :void
+    public function setUp(): void
     {
         // Before...
         parent::setUp();
@@ -26,7 +25,7 @@ class CorePostDeactivateWorkflowTest extends \lucatume\WPBrowser\TestCase\WPTest
         // Your set up methods here.
     }
 
-    public function tearDown() :void
+    public function tearDown(): void
     {
         // Your tear down methods here.
 
