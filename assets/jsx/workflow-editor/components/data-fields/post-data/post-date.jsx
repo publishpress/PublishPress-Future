@@ -49,7 +49,6 @@ export const PostDateControl = ({ name, label, defaultValue, onChange, variables
     }, [defaultValue, name, onChange]);
 
     const valuePreview = useMemo(() => {
-        // return wp.date.format(`${dateFormat} ${timeFormat}`, new Date(date));
         if (defaultValue.dateStrategy !== '') {
             if (defaultValue?.dateStrategy === "date" || defaultValue?.dateStrategy === "offset") {
                 let previewText = '';
