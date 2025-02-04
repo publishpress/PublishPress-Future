@@ -79,10 +79,8 @@ export const ExpressionBuilder = ({
 
             if (! singleVariableOnly) {
                 const cursorPosition = editor.getCursorPosition();
-                console.log(cursorPosition);
                 editor.session.insert(cursorPosition, `{{${item.name}}}`);
             } else {
-                console.log('single variable');
                 editor.session.setValue(`{{${item.name}}}`);
             }
 
