@@ -14,6 +14,7 @@ import Conditional from "../data-fields/conditional";
 import DebugLevels from "../data-fields/debug-levels";
 import ExpressionBuilder from "../data-fields/expression-builder";
 import Toggle from "../data-fields/toggle";
+import PostData from "../data-fields/post-data";
 
 export const MappedField = (props) => {
     switch (props.type) {
@@ -76,6 +77,10 @@ export const MappedField = (props) => {
         case "expression":
             return (
                 <ExpressionBuilder {...props} />
+            );
+        case "postData":
+            return (
+                <PostData {...props} />
             );
     }
 

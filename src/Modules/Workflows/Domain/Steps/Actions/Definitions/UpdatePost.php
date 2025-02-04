@@ -81,6 +81,18 @@ class UpdatePost implements StepTypeInterface
                     ],
                 ],
             ],
+            [
+                "label" => __("Post Data", "post-expirator"),
+                "description" => __("Update the post data.", "post-expirator"),
+                "fields" => [
+                    [
+                        "name" => "postData",
+                        "type" => "postData",
+                        "label" => __("Post data", "post-expirator"),
+                        "description" => __("The data to update for the post.", "post-expirator"),
+                    ],
+                ],
+            ],
         ];
     }
 
