@@ -11,7 +11,7 @@ export const SettingPopover = ({ onClose, title, children, className, offset = 4
             onClose={onClose}
             placement={placement}
             offset={offset}
-            className={className}
+            className={`workflow-editor-setting-popover ${className}`}
             {...props}
         >
             <VStack>

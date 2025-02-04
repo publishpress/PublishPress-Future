@@ -196,7 +196,7 @@ p.description.margin-top {
     margin-top: 0 !important;
 }
 
-.workflow-editor-inspector-card__description-popover .components-popover__content {
+.workflow-editor-setting-popover .components-popover__content {
     min-width: 320px;
     padding: 16px;
 }
@@ -208,4 +208,20 @@ p.description.margin-top {
 
 .workflow-editor-inspector-card__content .components-v-stack {
     margin-bottom: 10px;
+}
+
+.workflow-editor-post-data.hidden-calendar .components-datetime__date {
+    display: none;
+}
+
+.workflow-editor-panel__row {
+    width: 100%;
+}
+
+.workflow-editor-panel__row-label {
+    min-width: 0px;
+}
+
+.workflow-editor-panel__row-control {
+    min-width: 0px;
 }
