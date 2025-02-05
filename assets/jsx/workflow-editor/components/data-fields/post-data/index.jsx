@@ -6,7 +6,7 @@ import {
 } from "@wordpress/components";
 import { PostDateControl } from "./post-date";
 import { PostTextControl } from "./post-text";
-
+import { PostDiscussionControl } from "./post-discussion";
 export function PostData({ name, label, defaultValue, onChange, settings, variables }) {
     const onChangeSetting = ({ settingName, value }) => {
         const newValue = { ...defaultValue };
@@ -50,6 +50,12 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
                 onChange={(settingName, value) => onChangeSetting({ settingName: "postExcerpt", value })}
                 settings={settings}
                 variables={variables}
+            />
+            <PostDiscussionControl
+                name="postDiscussion"
+                label={__('Post Discussion', 'post-expirator')}
+                defaultValue={defaultValue?.postDiscussion}
+                onChange={(settingName, value) => onChangeSetting({ settingName: "postDiscussion", value })}
             />
         </VStack>
     );
