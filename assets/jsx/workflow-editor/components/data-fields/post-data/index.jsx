@@ -20,42 +20,56 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
     return (
         <VStack>
             <PostDateControl
-                name="postDate"
+                name="date"
                 label={__('Post Date', 'post-expirator')}
-                defaultValue={defaultValue?.postDate}
-                onChange={(settingName, value) => onChangeSetting({ settingName: "postDate", value })}
+                defaultValue={defaultValue?.date}
+                onChange={(settingName, value) => onChangeSetting({ settingName: "date", value })}
                 settings={settings}
                 variables={variables}
+                checkboxLabel={__("Update the post date", "post-expirator")}
             />
             <PostTextControl
-                name="postTitle"
+                name="title"
                 label={__('Post Title', 'post-expirator')}
-                defaultValue={defaultValue?.postTitle}
-                onChange={(settingName, value) => onChangeSetting({ settingName: "postTitle", value })}
+                defaultValue={defaultValue?.title}
+                onChange={(settingName, value) => onChangeSetting({ settingName: "title", value })}
                 settings={settings}
                 variables={variables}
+                checkboxLabel={__("Update the post title", "post-expirator")}
             />
             <PostTextControl
-                name="postContent"
+                name="content"
                 label={__('Post Content', 'post-expirator')}
-                defaultValue={defaultValue?.postContent}
-                onChange={(settingName, value) => onChangeSetting({ settingName: "postContent", value })}
+                defaultValue={defaultValue?.content}
+                onChange={(settingName, value) => onChangeSetting({ settingName: "content", value })}
                 settings={settings}
                 variables={variables}
+                checkboxLabel={__("Update the post content", "post-expirator")}
             />
             <PostTextControl
-                name="postExcerpt"
+                name="excerpt"
                 label={__('Post Excerpt', 'post-expirator')}
-                defaultValue={defaultValue?.postExcerpt}
-                onChange={(settingName, value) => onChangeSetting({ settingName: "postExcerpt", value })}
+                defaultValue={defaultValue?.excerpt}
+                onChange={(settingName, value) => onChangeSetting({ settingName: "excerpt", value })}
                 settings={settings}
                 variables={variables}
+                checkboxLabel={__("Update the post excerpt", "post-expirator")}
             />
             <PostDiscussionControl
-                name="postDiscussion"
+                name="discussion"
                 label={__('Post Discussion', 'post-expirator')}
-                defaultValue={defaultValue?.postDiscussion}
-                onChange={(settingName, value) => onChangeSetting({ settingName: "postDiscussion", value })}
+                defaultValue={defaultValue?.discussion}
+                onChange={(settingName, value) => onChangeSetting({ settingName: "discussion", value })}
+                checkboxLabel={__("Update the post discussion", "post-expirator")}
+            />
+            <PostTextControl
+                name="password"
+                label={__('Post Password', 'post-expirator')}
+                defaultValue={defaultValue?.password}
+                onChange={(settingName, value) => onChangeSetting({ settingName: "password", value })}
+                settings={settings}
+                variables={variables}
+                checkboxLabel={__("Update the post password", "post-expirator")}
             />
         </VStack>
     );

@@ -1,12 +1,11 @@
 import { __ } from "@wordpress/i18n";
 import {
-    useCallback,
     useMemo
 } from "@wordpress/element";
 import {
-    __experimentalVStack as VStack
+    __experimentalVStack as VStack,
 } from "@wordpress/components";
-import InlineSetting from "./inline-setting";
+import ToggleInlineSetting from "./toggle-inline-setting";
 import { ExpressionBuilder } from "../expression-builder";
 
 export const PostTextControl = ({
@@ -15,27 +14,35 @@ export const PostTextControl = ({
     defaultValue,
     onChange,
     variables = [],
-    settings
+    checkboxLabel
 }) => {
     defaultValue = {
         expression: "",
+        update: false,
         ...defaultValue
     };
 
     const valuePreview = useMemo(() => {
-        if (defaultValue.expression !== '') {
-            return defaultValue.expression;
+        if (!defaultValue.update) {
+            return __('Do not update', 'post-expirator');
         }
 
-        return __('Unchanged', 'post-expirator');
+        if (defaultValue.expression === '') {
+            return __('Clear content', 'post-expirator');
+        }
+
+        return defaultValue.expression;
     }, [defaultValue]);
 
     return (
         <>
-            <InlineSetting
+            <ToggleInlineSetting
                 name={name}
                 label={label}
                 valuePreview={valuePreview}
+                defaultValue={defaultValue}
+                checkboxLabel={checkboxLabel}
+                onChange={onChange}
             >
                 <VStack>
                     <ExpressionBuilder
@@ -46,7 +53,7 @@ export const PostTextControl = ({
                         variables={variables}
                     />
                 </VStack>
-            </InlineSetting>
+            </ToggleInlineSetting>
         </>
     )
 }

@@ -9,27 +9,27 @@ import {
     CheckboxControl,
     ExternalLink
 } from "@wordpress/components";
-import InlineSetting from "./inline-setting";
+import ToggleInlineSetting from "./toggle-inline-setting";
 
 export const PostDiscussionControl = ({
     name,
     label,
     defaultValue,
     onChange,
-    variables = [],
-    settings
+    checkboxLabel
 }) => {
     defaultValue = {
-        commentStatus: "",
-        pingStatus: "",
+        update: false,
+        commentStatus: "closed",
+        pingStatus: "closed",
         ...defaultValue
     };
 
     const valuePreview = useMemo(() => {
         const { commentStatus, pingStatus } = defaultValue;
 
-        if (!commentStatus && !pingStatus) {
-            return 'Unchanged';
+        if (!defaultValue.update) {
+            return __('Do not update', 'post-expirator');
         }
 
         const statusMap = {
@@ -59,22 +59,9 @@ export const PostDiscussionControl = ({
         },
     ];
 
-    const onChangeStatus = useCallback((value) => {
-        if (value) {
-            onChange(name, {
-                pingStatus: 'open',
-                commentStatus: 'open'
-            });
-        } else {
-            onChange(name, {
-                pingStatus: '',
-                commentStatus: ''
-            });
-        }
-    }, [onChange, name]);
-
     const onChangeRadio = useCallback((value) => {
         onChange(name, {
+            update: true,
             commentStatus: value,
             pingStatus: defaultValue.pingStatus
         });
@@ -82,6 +69,7 @@ export const PostDiscussionControl = ({
 
     const onChangePingbacks = useCallback((value) => {
         onChange(name, {
+            update: true,
             pingStatus: value ? 'open' : 'closed',
             commentStatus: defaultValue.commentStatus
         });
@@ -89,40 +77,33 @@ export const PostDiscussionControl = ({
 
     return (
         <>
-            <InlineSetting
+            <ToggleInlineSetting
                 name={name}
                 label={label}
                 valuePreview={valuePreview}
+                defaultValue={defaultValue}
+                onChange={onChange}
+                checkboxLabel={checkboxLabel}
             >
                 <VStack>
-                    <CheckboxControl
-                        label={__("Update the post discussion status", "post-expirator")}
-                        checked={defaultValue.pingStatus !== '' || defaultValue.commentStatus !== ''}
-                        onChange={onChangeStatus}
+                    <RadioControl
+                        options={radioOptions}
+                        selected={defaultValue.commentStatus}
+                        onChange={onChangeRadio}
                     />
 
-                    {(defaultValue.pingStatus !== '' || defaultValue.commentStatus !== '') && (
-                        <>
-                            <RadioControl
-                                options={radioOptions}
-                                selected={defaultValue.commentStatus}
-                                onChange={onChangeRadio}
-                            />
-
-                            <CheckboxControl
-                                label={__("Enable pinbacks & trackbacks", "post-expirator")}
-                                checked={defaultValue.pingStatus === 'open'}
-                                onChange={onChangePingbacks}
-                            />
-                            <ExternalLink
-                                href="https://wordpress.org/documentation/article/trackbacks-and-pingbacks/"
-                            >
-                                {__("Learn more about pinbacks & trackbacks", "post-expirator")}
-                            </ExternalLink>
-                        </>
-                    )}
+                    <CheckboxControl
+                        label={__("Enable pinbacks & trackbacks", "post-expirator")}
+                        checked={defaultValue.pingStatus === 'open'}
+                        onChange={onChangePingbacks}
+                    />
+                    <ExternalLink
+                        href="https://wordpress.org/documentation/article/trackbacks-and-pingbacks/"
+                    >
+                        {__("Learn more about pinbacks & trackbacks", "post-expirator")}
+                    </ExternalLink>
                 </VStack>
-            </InlineSetting>
+            </ToggleInlineSetting>
         </>
     )
 }

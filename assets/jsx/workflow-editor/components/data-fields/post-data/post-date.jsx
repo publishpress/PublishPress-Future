@@ -4,7 +4,7 @@ import {
     __experimentalVStack as VStack,
 } from "@wordpress/components";
 import DateOffset from "../date-offset";
-import InlineSetting from "./inline-setting";
+import ToggleInlineSetting from "./toggle-inline-setting";
 
 const formatDate = (date) => {
     if (date) {
@@ -23,12 +23,13 @@ export const PostDateControl = ({
     defaultValue,
     onChange,
     variables = [],
-    settings
+    checkboxLabel
 }) => {
     const defaultSpecificDate = new Date();
     defaultSpecificDate.setDate(defaultSpecificDate.getDate() + 3);
 
     defaultValue = {
+        update: false,
         dateStrategy: "",
         dateSource: "calendar",
         specificDate: defaultSpecificDate,
@@ -45,7 +46,7 @@ export const PostDateControl = ({
     }, [defaultValue, name, onChange]);
 
     const valuePreview = useMemo(() => {
-        if (defaultValue.dateStrategy !== '') {
+        if (defaultValue.update) {
             if (defaultValue?.dateStrategy === "date" || defaultValue?.dateStrategy === "offset") {
                 let previewText = '';
 
@@ -79,16 +80,18 @@ export const PostDateControl = ({
             }
         }
 
-        return __('Unchanged', 'post-expirator');
+        return __('Do not update', 'post-expirator');
     }, [defaultValue]);
 
     return (
         <>
-            <InlineSetting
+            <ToggleInlineSetting
                 name={name}
                 label={label}
                 defaultValue={defaultValue}
                 valuePreview={valuePreview}
+                checkboxLabel={checkboxLabel}
+                onChange={onChange}
             >
                 <VStack>
                     <DateOffset
@@ -104,7 +107,7 @@ export const PostDateControl = ({
                         }}
                     />
                 </VStack>
-            </InlineSetting>
+            </ToggleInlineSetting>
         </>
     )
 }
