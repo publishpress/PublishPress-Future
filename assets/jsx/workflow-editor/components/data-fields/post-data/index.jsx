@@ -43,6 +43,14 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
                 settings={settings}
                 variables={variables}
             />
+            <PostTextControl
+                name="postExcerpt"
+                label={__('Post Excerpt', 'post-expirator')}
+                defaultValue={defaultValue?.postExcerpt}
+                onChange={(settingName, value) => onChangeSetting({ settingName: "postExcerpt", value })}
+                settings={settings}
+                variables={variables}
+            />
         </VStack>
     );
 }
