@@ -140,9 +140,11 @@ export const InspectorCard = ({ title, description, icon, id, slug, isProFeature
                     </VStack>
                 )}
 
-                <VStack>
-                    <StepDescription node={node} />
-                </VStack>
+                {node && node?.data && (
+                    <VStack>
+                        <StepDescription node={node} />
+                    </VStack>
+                )}
 
                 {nodeAttributes.length > 0 && (
                     <VStack>

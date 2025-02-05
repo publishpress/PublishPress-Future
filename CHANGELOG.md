@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove left padding from the workflow step details panel.
 - Remove attributes table from the inspector card when on developer mode (that data can still be seen in the Developer Info panel)
 
+### Fixed
+
+- Fix fatal error when selecting multiple steps or a connection in the workflow editor (Issue #1162).
+
 
 ## [4.3.3] - 03 Feb, 2025
 
