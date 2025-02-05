@@ -5,7 +5,7 @@ import {
     PanelRow,
 } from "@wordpress/components";
 import { PostDateControl } from "./post-date";
-import { PostTitleControl } from "./post-title";
+import { PostTextControl } from "./post-text";
 
 export function PostData({ name, label, defaultValue, onChange, settings, variables }) {
     const onChangeSetting = ({ settingName, value }) => {
@@ -27,11 +27,19 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
                 settings={settings}
                 variables={variables}
             />
-            <PostTitleControl
+            <PostTextControl
                 name="postTitle"
                 label={__('Post Title', 'post-expirator')}
                 defaultValue={defaultValue?.postTitle}
                 onChange={(settingName, value) => onChangeSetting({ settingName: "postTitle", value })}
+                settings={settings}
+                variables={variables}
+            />
+            <PostTextControl
+                name="postContent"
+                label={__('Post Content', 'post-expirator')}
+                defaultValue={defaultValue?.postContent}
+                onChange={(settingName, value) => onChangeSetting({ settingName: "postContent", value })}
                 settings={settings}
                 variables={variables}
             />

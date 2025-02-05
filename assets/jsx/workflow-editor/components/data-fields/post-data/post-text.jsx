@@ -9,7 +9,7 @@ import {
 import InlineSetting from "./inline-setting";
 import { ExpressionBuilder } from "../expression-builder";
 
-export const PostTitleControl = ({
+export const PostTextControl = ({
     name,
     label,
     defaultValue,
@@ -21,14 +21,6 @@ export const PostTitleControl = ({
         expression: "",
         ...defaultValue
     };
-
-    const onChangeSetting = useCallback(({ settingName, value }) => {
-        const newValue = { ...defaultValue };
-
-        if (onChange) {
-            onChange(name, value);
-        }
-    }, [defaultValue, name, onChange]);
 
     const valuePreview = useMemo(() => {
         if (defaultValue.expression !== '') {
@@ -50,7 +42,7 @@ export const PostTitleControl = ({
                         name={name}
                         label={label}
                         defaultValue={defaultValue}
-                        onChange={(settingName, value) => onChangeSetting({ settingName: "postTitle", value })}
+                        onChange={(settingName, value) => onChange(name, value)}
                         variables={variables}
                     />
                 </VStack>
@@ -59,4 +51,4 @@ export const PostTitleControl = ({
     )
 }
 
-export default PostTitleControl;
+export default PostTextControl;
