@@ -95,7 +95,7 @@ export const PostDateControl = ({
                         name={name}
                         label={label}
                         defaultValue={defaultValue}
-                        onChange={(settingName, value) => onChangeSetting({ settingName: "postDate", value })}
+                        onChange={(settingName, value) => onChangeSetting({ settingName: name, value })}
                         variables={variables}
                         settings={{
                             showEmptyDateOption: true,
