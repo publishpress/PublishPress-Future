@@ -5,6 +5,7 @@ import {
     PanelRow,
 } from "@wordpress/components";
 import { PostDateControl } from "./post-date";
+import { PostTitleControl } from "./post-title";
 
 export function PostData({ name, label, defaultValue, onChange, settings, variables }) {
     const onChangeSetting = ({ settingName, value }) => {
@@ -17,20 +18,24 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
     }
 
     return (
-        <PanelRow>
-            <VStack>
-                <HStack className="workflow-editor-panel__row">
-                    <PostDateControl
-                        name="postDate"
-                        label={__('Post Date', 'post-expirator')}
-                        defaultValue={defaultValue?.postDate}
-                        onChange={(settingName, value) => onChangeSetting({ settingName: "postDate", value })}
-                        settings={settings}
-                        variables={variables}
-                    />
-                </HStack>
-            </VStack>
-        </PanelRow>
+        <VStack>
+            <PostDateControl
+                name="postDate"
+                label={__('Post Date', 'post-expirator')}
+                defaultValue={defaultValue?.postDate}
+                onChange={(settingName, value) => onChangeSetting({ settingName: "postDate", value })}
+                settings={settings}
+                variables={variables}
+            />
+            <PostTitleControl
+                name="postTitle"
+                label={__('Post Title', 'post-expirator')}
+                defaultValue={defaultValue?.postTitle}
+                onChange={(settingName, value) => onChangeSetting({ settingName: "postTitle", value })}
+                settings={settings}
+                variables={variables}
+            />
+        </VStack>
     );
 }
 
