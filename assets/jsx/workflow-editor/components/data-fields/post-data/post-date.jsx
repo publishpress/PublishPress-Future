@@ -1,11 +1,10 @@
 import { __ } from "@wordpress/i18n";
-import { useState, useEffect, useCallback, useMemo } from "@wordpress/element";
+import { useCallback, useMemo } from "@wordpress/element";
 import {
     __experimentalVStack as VStack,
-    Button,
 } from "@wordpress/components";
-import SettingPopover from "../../setting-popover";
 import DateOffset from "../date-offset";
+import InlineSetting from "./inline-setting";
 
 const formatDate = (date) => {
     if (date) {
@@ -18,17 +17,14 @@ const formatDate = (date) => {
     return '';
 }
 
-export const PostDateControl = ({ name, label, defaultValue, onChange, variables = [], settings }) => {
-    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
-    useEffect(() => {
-        setIsPopoverOpen(false);
-    }, []);
-
-    const closePopover = useCallback(() => {
-        setIsPopoverOpen(false);
-    }, []);
-
+export const PostDateControl = ({
+    name,
+    label,
+    defaultValue,
+    onChange,
+    variables = [],
+    settings
+}) => {
     const defaultSpecificDate = new Date();
     defaultSpecificDate.setDate(defaultSpecificDate.getDate() + 3);
 
@@ -88,38 +84,27 @@ export const PostDateControl = ({ name, label, defaultValue, onChange, variables
 
     return (
         <>
-            <div className="workflow-editor-panel__row-label">{label}</div>
-            <div className="workflow-editor-panel__row-control">
-                <Button
-                    variant="link"
-                    onClick={() => setIsPopoverOpen(true)}
-                >
-                    {valuePreview}
-                </Button>
-            </div>
-
-            {isPopoverOpen && (
-                <SettingPopover
-                    onClose={closePopover}
-                    className="workflow-editor-inspector-post-date-popover"
-                    title={label}
-                >
-                    <VStack>
-                        <DateOffset
-                            name="postDate"
-                            label={label}
-                            defaultValue={defaultValue}
-                            onChange={(settingName, value) => onChangeSetting({ settingName: "postDate", value })}
-                            variables={variables}
-                            settings={{
-                                showEmptyDateOption: true,
-                                emptyDateOptionLabel: __('Unchanged', 'post-expirator'),
-                                hideDateStrategy: ['now'],
-                            }}
-                        />
-                    </VStack>
-                </SettingPopover>
-            )}
+            <InlineSetting
+                name={name}
+                label={label}
+                defaultValue={defaultValue}
+                valuePreview={valuePreview}
+            >
+                <VStack>
+                    <DateOffset
+                        name={name}
+                        label={label}
+                        defaultValue={defaultValue}
+                        onChange={(settingName, value) => onChangeSetting({ settingName: "postDate", value })}
+                        variables={variables}
+                        settings={{
+                            showEmptyDateOption: true,
+                            emptyDateOptionLabel: __('Unchanged', 'post-expirator'),
+                            hideDateStrategy: ['now'],
+                        }}
+                    />
+                </VStack>
+            </InlineSetting>
         </>
     )
 }
