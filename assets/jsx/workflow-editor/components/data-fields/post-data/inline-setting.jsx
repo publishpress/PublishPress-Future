@@ -6,6 +6,7 @@ import {
 } from "@wordpress/element";
 import {
     Button,
+    __experimentalHStack as HStack,
 } from "@wordpress/components";
 import SettingPopover from "../../setting-popover";
 
@@ -33,15 +34,17 @@ export const InlineSetting = ({
 
     return (
         <>
-            <div className="workflow-editor-panel__row-label">{label}</div>
-            <div className="workflow-editor-panel__row-control">
-                <Button
-                    variant="link"
-                    onClick={() => setIsPopoverOpen(true)}
-                >
-                    {valuePreview}
-                </Button>
-            </div>
+            <HStack className="workflow-editor-panel__row">
+                <div className="workflow-editor-panel__row-label">{label}</div>
+                <div className="workflow-editor-panel__row-control">
+                    <Button
+                        variant="link"
+                        onClick={() => setIsPopoverOpen(true)}
+                    >
+                        {valuePreview}
+                    </Button>
+                </div>
+            </HStack>
 
             {isPopoverOpen && (
                 <SettingPopover
