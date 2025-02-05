@@ -7,6 +7,7 @@ import {
     TextareaControl,
     __experimentalVStack as VStack,
     __experimentalHStack as HStack,
+    ExternalLink
 } from "@wordpress/components";
 import { useState, useEffect } from "@wordpress/element";
 import SettingPopover from "../setting-popover";
@@ -133,9 +134,9 @@ export const InspectorCard = ({ title, description, icon, id, slug, isProFeature
                 {isProFeature && !isPro && (
                     <VStack>
                         <div className="workflow-editor-inspector-card__pro-instructions">
-                            <a href="https://publishpress.com/links/future-workflow-inspector" target="_blank">
-                            {__("Currently this step is being skipped. Upgrade to Pro to unlock this feature.", "post-expirator")}
-                            </a>
+                            <ExternalLink href="https://publishpress.com/links/future-workflow-inspector" target="_blank">
+                                {__("Currently this step is being skipped. Upgrade to Pro to unlock this feature.", "post-expirator")}
+                            </ExternalLink>
                         </div>
                     </VStack>
                 )}
