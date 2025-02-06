@@ -30,7 +30,7 @@ export const PostDateControl = ({
 
     defaultValue = {
         update: false,
-        dateStrategy: "",
+        dateStrategy: "date",
         dateSource: "calendar",
         specificDate: defaultSpecificDate,
         dateOffset: "+7 days",
@@ -45,7 +45,7 @@ export const PostDateControl = ({
         }
     }, [defaultValue, name, onChange]);
 
-    const valuePreview = useMemo(() => {
+    const valuePreview = () => {
         if (defaultValue.update) {
             if (defaultValue?.dateStrategy === "date" || defaultValue?.dateStrategy === "offset") {
                 let previewText = '';
@@ -81,7 +81,7 @@ export const PostDateControl = ({
         }
 
         return __('Do not update', 'post-expirator');
-    }, [defaultValue]);
+    };
 
     return (
         <>
@@ -89,7 +89,7 @@ export const PostDateControl = ({
                 name={name}
                 label={label}
                 defaultValue={defaultValue}
-                valuePreview={valuePreview}
+                valuePreview={valuePreview()}
                 checkboxLabel={checkboxLabel}
                 onChange={onChange}
             >
@@ -101,8 +101,6 @@ export const PostDateControl = ({
                         onChange={(settingName, value) => onChangeSetting({ settingName: name, value })}
                         variables={variables}
                         settings={{
-                            showEmptyDateOption: true,
-                            emptyDateOptionLabel: __('Unchanged', 'post-expirator'),
                             hideDateStrategy: ['now'],
                         }}
                     />
