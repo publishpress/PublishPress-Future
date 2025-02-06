@@ -6,7 +6,6 @@ import {
 } from "@wordpress/element";
 import {
     Button,
-    __experimentalHStack as HStack,
 } from "@wordpress/components";
 import SettingPopover from "../../setting-popover";
 

@@ -7,6 +7,7 @@ import {
 import { PostDateControl } from "./post-date";
 import { PostTextControl } from "./post-text";
 import { PostDiscussionControl } from "./post-discussion";
+
 export function PostData({ name, label, defaultValue, onChange, settings, variables }) {
     const onChangeSetting = ({ settingName, value }) => {
         const newValue = { ...defaultValue };
@@ -18,7 +19,7 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
     }
 
     return (
-        <VStack>
+        <VStack className="workflow-editor-panel">
             <PostDateControl
                 name="date"
                 label={__('Post Date', 'post-expirator')}

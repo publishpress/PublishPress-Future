@@ -214,14 +214,34 @@ p.description.margin-top {
     display: none;
 }
 
+.workflow-editor-panel {
+    gap: calc(4px) !important;
+}
+
 .workflow-editor-panel__row {
     width: 100%;
 }
 
 .workflow-editor-panel__row-label {
     min-width: 0px;
+    align-items: center;
+    display: flex;
+    flex-shrink: 0;
+    hyphens: auto;
+    line-height: 20px;
+    min-height: 32px;
+    padding: 6px 0;
+    width: 38%;
 }
 
 .workflow-editor-panel__row-control {
     min-width: 0px;
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    min-height: 32px;
+    max-height: 40px;
+    overflow: hidden;
+    word-break: break-word;
+    flex-wrap: wrap;
 }
