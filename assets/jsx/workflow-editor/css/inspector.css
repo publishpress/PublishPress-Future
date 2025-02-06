@@ -240,8 +240,22 @@ p.description.margin-top {
     display: flex;
     flex-grow: 1;
     min-height: 32px;
-    max-height: 40px;
+    max-height: 38px;
     overflow: hidden;
     word-break: break-word;
     flex-wrap: wrap;
+    hyphens: auto;
+    line-height: 20px;
+}
+
+.workflow-editor-panel__row-control .components-button.is-tertiary {
+    white-space: normal;
+    height: 38px;
+    text-align: left;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    align-items: center;
+    padding: 4px 8px;
 }
