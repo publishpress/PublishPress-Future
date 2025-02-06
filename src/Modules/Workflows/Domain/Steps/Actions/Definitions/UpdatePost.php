@@ -118,6 +118,43 @@ class UpdatePost implements StepTypeInterface
                         "fieldLabel" => __("Post", "post-expirator"),
                         "dataType" => "post",
                     ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "postData.title.expression",
+                        "label" => __("Post title", "post-expirator"),
+                        "fieldLabel" => __("Post data > Post title", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "postData.content.expression",
+                        "label" => __("Post content", "post-expirator"),
+                        "fieldLabel" => __("Post data > Post content", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "postData.excerpt.expression",
+                        "label" => __("Post excerpt", "post-expirator"),
+                        "fieldLabel" => __("Post data > Post excerpt", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "postData.date.expression",
+                        "label" => __("Post date", "post-expirator"),
+                        "fieldLabel" => __("Post data > Post date", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "postData.name.expression",
+                        "label" => __("Post name", "post-expirator"),
+                        "fieldLabel" => __("Post data > Post name", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "postData.password.expression",
+                        "label" => __("Post password", "post-expirator"),
+                        "fieldLabel" => __("Post data > Post password", "post-expirator"),
+                    ],
+
                 ],
             ],
         ];
