@@ -6,6 +6,7 @@ import {
 } from "@wordpress/element";
 import {
     Button,
+    __experimentalHStack as HStack,
 } from "@wordpress/components";
 import SettingPopover from "../../setting-popover";
 
@@ -37,8 +38,9 @@ export const InlineSetting = ({
                 <div className="workflow-editor-panel__row-label">{label}</div>
                 <div className="workflow-editor-panel__row-control">
                     <Button
-                        variant="link"
+                        variant="tertiary"
                         onClick={() => setIsPopoverOpen(true)}
+                        className="is-compact"
                     >
                         {valuePreview}
                     </Button>

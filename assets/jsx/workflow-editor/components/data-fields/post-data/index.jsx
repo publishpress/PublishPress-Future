@@ -18,6 +18,12 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
         }
     }
 
+    const onClosePopover = (settingName) => {
+        if (! defaultValue[settingName]?.update) {
+            onChangeSetting({ settingName, value: null });
+        }
+    }
+
     return (
         <VStack className="workflow-editor-panel">
             <PostDateControl
@@ -27,6 +33,7 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
                 onChange={(settingName, value) => onChangeSetting({ settingName: "date", value })}
                 settings={settings}
                 variables={variables}
+                onClosePopover={() => onClosePopover("date")}
                 checkboxLabel={__("Update the post date", "post-expirator")}
             />
             <PostTextControl
@@ -36,6 +43,7 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
                 onChange={(settingName, value) => onChangeSetting({ settingName: "title", value })}
                 settings={settings}
                 variables={variables}
+                onClosePopover={() => onClosePopover("title")}
                 checkboxLabel={__("Update the post title", "post-expirator")}
             />
             <PostTextControl
@@ -45,6 +53,7 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
                 onChange={(settingName, value) => onChangeSetting({ settingName: "name", value })}
                 settings={settings}
                 variables={variables}
+                onClosePopover={() => onClosePopover("name")}
                 checkboxLabel={__("Update the post name", "post-expirator")}
             />
             <PostTextControl
@@ -54,6 +63,7 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
                 onChange={(settingName, value) => onChangeSetting({ settingName: "content", value })}
                 settings={settings}
                 variables={variables}
+                onClosePopover={() => onClosePopover("content")}
                 checkboxLabel={__("Update the post content", "post-expirator")}
             />
             <PostTextControl
@@ -63,6 +73,7 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
                 onChange={(settingName, value) => onChangeSetting({ settingName: "excerpt", value })}
                 settings={settings}
                 variables={variables}
+                onClosePopover={() => onClosePopover("excerpt")}
                 checkboxLabel={__("Update the post excerpt", "post-expirator")}
             />
             <PostDiscussionControl
@@ -70,6 +81,7 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
                 label={__('Post Discussion', 'post-expirator')}
                 defaultValue={defaultValue?.discussion}
                 onChange={(settingName, value) => onChangeSetting({ settingName: "discussion", value })}
+                onClosePopover={() => onClosePopover("discussion")}
                 checkboxLabel={__("Update the post discussion", "post-expirator")}
             />
             <PostTextControl
@@ -79,6 +91,7 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
                 onChange={(settingName, value) => onChangeSetting({ settingName: "password", value })}
                 settings={settings}
                 variables={variables}
+                onClosePopover={() => onClosePopover("password")}
                 checkboxLabel={__("Update the post password", "post-expirator")}
             />
         </VStack>

@@ -43,6 +43,7 @@ export const PostTextControl = ({
                 defaultValue={defaultValue}
                 checkboxLabel={checkboxLabel}
                 onChange={onChange}
+                onUncheckUpdate={() => onChange(name, null)}
             >
                 <VStack>
                     <ExpressionBuilder

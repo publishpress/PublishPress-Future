@@ -23,7 +23,8 @@ export const PostDateControl = ({
     defaultValue,
     onChange,
     variables = [],
-    checkboxLabel
+    checkboxLabel,
+    onClosePopover
 }) => {
     const defaultSpecificDate = new Date();
     defaultSpecificDate.setDate(defaultSpecificDate.getDate() + 3);
@@ -92,6 +93,7 @@ export const PostDateControl = ({
                 valuePreview={valuePreview()}
                 checkboxLabel={checkboxLabel}
                 onChange={onChange}
+                onUncheckUpdate={() => onChange(name, null)}
             >
                 <VStack>
                     <DateOffset

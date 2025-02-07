@@ -84,6 +84,7 @@ export const PostDiscussionControl = ({
                 defaultValue={defaultValue}
                 onChange={onChange}
                 checkboxLabel={checkboxLabel}
+                onUncheckUpdate={() => onChange(name, null)}
             >
                 <VStack>
                     <RadioControl

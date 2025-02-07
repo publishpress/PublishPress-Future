@@ -1,7 +1,5 @@
 import { __ } from "@wordpress/i18n";
 import {
-    useState,
-    useEffect,
     useCallback
 } from "@wordpress/element";
 import {
@@ -10,7 +8,7 @@ import {
     CheckboxControl
 } from "@wordpress/components";
 import SettingPopover from "../../setting-popover";
-
+import InlineSetting from "./inline-setting";
 
 export const ToggleInlineSetting = ({
     name,
@@ -20,61 +18,41 @@ export const ToggleInlineSetting = ({
     checkboxLabel,
     defaultValue,
     onChange,
-    children
+    children,
+    onUncheckUpdate
 }) => {
-    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
-    useEffect(() => {
-        setIsPopoverOpen(false);
-    }, []);
-
-    const closePopover = useCallback(() => {
-        setIsPopoverOpen(false);
-
-        if (onClosePopover) {
-            onClosePopover();
-        }
-    }, [onClosePopover]);
-
     const onChangeCheckbox = useCallback((value) => {
         defaultValue.update = value;
         onChange(name, defaultValue);
-    }, [onChange, name, defaultValue]);
+
+        if ((! value) && onUncheckUpdate) {
+            onUncheckUpdate();
+        }
+    }, [onChange, name, defaultValue, onUncheckUpdate]);
 
     return (
         <>
-            <HStack className="workflow-editor-panel__row">
-                <div className="workflow-editor-panel__row-label">{label}</div>
-                <div className="workflow-editor-panel__row-control">
-                    <Button
-                        variant="tertiary"
-                        onClick={() => setIsPopoverOpen(true)}
-                        className="is-compact"
-                    >
-                        {valuePreview}
-                    </Button>
-                </div>
-            </HStack>
+            <InlineSetting
+                name={name}
+                label={label}
+                valuePreview={valuePreview}
+                onClosePopover={onClosePopover}
+                children={(
+                    <>
+                        <CheckboxControl
+                            label={checkboxLabel}
+                            checked={defaultValue.update}
+                            onChange={onChangeCheckbox}
+                        />
 
-            {isPopoverOpen && (
-                <SettingPopover
-                    onClose={closePopover}
-                    className={`workflow-editor-inspector-${name}-popover`}
-                    title={label}
-                >
-                    <CheckboxControl
-                        label={checkboxLabel}
-                        checked={defaultValue.update}
-                        onChange={onChangeCheckbox}
-                    />
-
-                    {defaultValue.update && (
-                        <>
-                            {children}
-                        </>
-                    )}
-                </SettingPopover>
-            )}
+                        {defaultValue.update && (
+                            <>
+                                {children}
+                            </>
+                        )}
+                    </>
+                )}
+            />
         </>
     )
 }
