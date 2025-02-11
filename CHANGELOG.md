@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add a loading message when the workflow is being loaded.
 - Add validation to the expression builder to avoid empty placeholders.
 - Add validation to the expression builder to avoid unopened and unclosed placeholders.
+- Add form to customize the import of workflows and settings from a JSON file (Issue #1152).
 
 ### Changed
 

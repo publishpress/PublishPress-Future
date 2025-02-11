@@ -17,7 +17,6 @@ export const JsonPreview = ({ content }) => {
 
     return (
         <div className="pe-settings-tab__import-file-upload-preview">
-            <p>{__('Preview', 'post-expirator')}</p>
             <Suspense fallback={lazyLoadLoading}>
                 <ReactJson src={content} {...reactJSONParams} />
             </Suspense>

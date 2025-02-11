@@ -126,7 +126,7 @@ var JsonPreview = function JsonPreview(_ref) {
   var lazyLoadLoading = /*#__PURE__*/React.createElement("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Loading...', 'post-expirator'));
   return /*#__PURE__*/React.createElement("div", {
     className: "pe-settings-tab__import-file-upload-preview"
-  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Preview', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.Suspense, {
+  }, /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.Suspense, {
     fallback: lazyLoadLoading
   }, /*#__PURE__*/React.createElement(ReactJson, _extends({
     src: content
@@ -1381,7 +1381,19 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.pe-settings-tab__import-tabs {
 .pe-settings-tab__import-file-upload-info-label {
     font-weight: bold;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/backup-panel/components/tabs-content/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,sBAAsB;IACtB,qBAAqB;AACzB;;AAEA;IACI,WAAW;AACf;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,WAAW;IACX,aAAa;AACjB;;AAEA;IACI,OAAO;;AAEX;;AAEA;IACI,OAAO;;AAEX;;AAEA;IACI,WAAW;IACX,sCAAsC;IACtC,gBAAgB;AACpB;;AAEA;IACI,iBAAiB;AACrB","sourcesContent":[".pe-settings-tab__import-tabs {\n    display: flex;\n    flex-direction: column;\n    align-items: baseline;\n}\n\n.pe-settings-tab__import-tabs .components-tab-panel__tabs {\n    width: 100%;\n}\n\n.pe-settings-tab__import-tabs .components-tab-panel__tab-content {\n    padding-left: 10px;\n}\n\n.pe-settings-tab__import-preview-tab {\n    width: 100%;\n    padding: 10px;\n}\n\n.pe-settings-tab__import-preview-tab-content {\n    flex: 1;\n\n}\n\n.pe-settings-tab__import-preview-tab-json {\n    flex: 1;\n\n}\n\n.pe-settings-tab__import-file-upload-actions {\n    width: 100%;\n    justify-content: flex-start !important;\n    margin-top: 20px;\n}\n\n.pe-settings-tab__import-file-upload-info-label {\n    font-weight: bold;\n}\n"],"sourceRoot":""}]);
+
+.components-tab-panel__tab-content {
+    width: 100%;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+.pe-settings-tab__import-file-upload-preview {
+    background-color: #fff;
+    padding: 10px;
+    width: 100%;
+}
+`, "",{"version":3,"sources":["webpack://./assets/jsx/backup-panel/components/tabs-content/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,sBAAsB;IACtB,qBAAqB;AACzB;;AAEA;IACI,WAAW;AACf;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,WAAW;IACX,aAAa;AACjB;;AAEA;IACI,OAAO;;AAEX;;AAEA;IACI,OAAO;;AAEX;;AAEA;IACI,WAAW;IACX,sCAAsC;IACtC,gBAAgB;AACpB;;AAEA;IACI,iBAAiB;AACrB;;AAEA;IACI,WAAW;IACX,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,sBAAsB;IACtB,aAAa;IACb,WAAW;AACf","sourcesContent":[".pe-settings-tab__import-tabs {\n    display: flex;\n    flex-direction: column;\n    align-items: baseline;\n}\n\n.pe-settings-tab__import-tabs .components-tab-panel__tabs {\n    width: 100%;\n}\n\n.pe-settings-tab__import-tabs .components-tab-panel__tab-content {\n    padding-left: 10px;\n}\n\n.pe-settings-tab__import-preview-tab {\n    width: 100%;\n    padding: 10px;\n}\n\n.pe-settings-tab__import-preview-tab-content {\n    flex: 1;\n\n}\n\n.pe-settings-tab__import-preview-tab-json {\n    flex: 1;\n\n}\n\n.pe-settings-tab__import-file-upload-actions {\n    width: 100%;\n    justify-content: flex-start !important;\n    margin-top: 20px;\n}\n\n.pe-settings-tab__import-file-upload-info-label {\n    font-weight: bold;\n}\n\n.components-tab-panel__tab-content {\n    width: 100%;\n    padding-right: 20px;\n    box-sizing: border-box;\n}\n\n.pe-settings-tab__import-file-upload-preview {\n    background-color: #fff;\n    padding: 10px;\n    width: 100%;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

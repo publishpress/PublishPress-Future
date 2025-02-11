@@ -36,3 +36,15 @@
 .pe-settings-tab__import-file-upload-info-label {
     font-weight: bold;
 }
+
+.components-tab-panel__tab-content {
+    width: 100%;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+.pe-settings-tab__import-file-upload-preview {
+    background-color: #fff;
+    padding: 10px;
+    width: 100%;
+}
