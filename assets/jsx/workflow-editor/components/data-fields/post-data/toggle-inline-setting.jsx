@@ -3,11 +3,8 @@ import {
     useCallback
 } from "@wordpress/element";
 import {
-    Button,
-    __experimentalHStack as HStack,
     CheckboxControl
 } from "@wordpress/components";
-import SettingPopover from "../../setting-popover";
 import InlineSetting from "./inline-setting";
 
 export const ToggleInlineSetting = ({
