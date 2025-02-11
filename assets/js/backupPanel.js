@@ -473,6 +473,14 @@ var TabImport = function TabImport(_ref) {
       setSettings(filteredSettings);
     }
   }, [fileContent]);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
+    if (!importActionWorkflows) {
+      setSelectedWorkflows([]);
+    }
+    if (!importActionSettings) {
+      setSelectedSettings([]);
+    }
+  }, [importActionWorkflows, importActionSettings]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Select the content you want to import.', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalVStack, {
     className: "pe-settings-tab__export"
   }, workflows.length > 0 && /*#__PURE__*/React.createElement(_settings_list__WEBPACK_IMPORTED_MODULE_2__.SettingsList, {
@@ -507,7 +515,7 @@ var TabImport = function TabImport(_ref) {
     isPrimary: true,
     isBusy: isImporting,
     onClick: handleImport,
-    disabled: !(selectedWorkflows.length > 0 || selectedSettings.length > 0)
+    disabled: selectedWorkflows.length === 0 && selectedSettings.length === 0
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Import', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
     variant: "secondary",
     onClick: onCancel

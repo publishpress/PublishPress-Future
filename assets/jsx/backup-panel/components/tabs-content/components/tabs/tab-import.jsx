@@ -47,6 +47,16 @@ export const TabImport = ({
         }
     }, [fileContent]);
 
+    useEffect(() => {
+        if (! importActionWorkflows) {
+            setSelectedWorkflows([]);
+        }
+
+        if (! importActionSettings) {
+            setSelectedSettings([]);
+        }
+    }, [importActionWorkflows, importActionSettings]);
+
     return (
         <>
             <p>{__('Select the content you want to import.', 'post-expirator')}</p>
@@ -91,7 +101,7 @@ export const TabImport = ({
                 <Button isPrimary
                     isBusy={isImporting}
                     onClick={handleImport}
-                    disabled={!(selectedWorkflows.length > 0 || selectedSettings.length > 0)}
+                    disabled={(selectedWorkflows.length === 0 && selectedSettings.length === 0)}
                 >
                     {__('Import', 'post-expirator')}
                 </Button>
