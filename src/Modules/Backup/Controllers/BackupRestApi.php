@@ -97,7 +97,6 @@ class BackupRestApi implements InitializableInterface
                 'permission_callback' => function () {
                     return current_user_can('manage_options');
                 },
-                'accept_file_uploads' => true,
             ]
         );
     }
@@ -315,45 +314,21 @@ class BackupRestApi implements InitializableInterface
 
     public function importBackup(WP_REST_Request $request)
     {
-        $files = $request->get_file_params();
-
-        $uploadedFile = null;
-
-        $permittedTypes = ['application/json', 'text/json', 'text/plain'];
-
-        if (!empty($files) && !empty($files['backupFile'])) {
-            $uploadedFile = $files['backupFile'];
-        }
-
         try {
-            if (empty($uploadedFile) || !isset($uploadedFile['tmp_name'])) {
-                throw new Exception('No backup file uploaded');
+            $data = $request->get_param('data');
+            $backupData = json_decode($data, true);
+
+            if (! is_array($backupData)) {
+                throw new Exception('Invalid data');
             }
 
-            if (! is_uploaded_file($uploadedFile['tmp_name'])) {
-                throw new Exception('Invalid backup file');
+            if (! isset($backupData['workflows']) || ! isset($backupData['settings'])) {
+                throw new Exception('Invalid data. Missing workflows or settings');
             }
 
-            if ($uploadedFile['error'] !== UPLOAD_ERR_OK) {
-                throw new Exception('Error uploading backup file');
+            if (empty($backupData) || (empty($backupData['workflows']) && empty($backupData['settings']))) {
+                throw new Exception('No content to import');
             }
-
-            $ext = pathinfo($uploadedFile['name'], PATHINFO_EXTENSION);
-
-            if ($ext !== 'json') {
-                throw new Exception('Invalid file type. Please upload a JSON file.');
-            }
-
-            $mimeType = mime_content_type($uploadedFile['tmp_name']);
-            if (!in_array($uploadedFile['type'], $permittedTypes)
-                || !in_array($mimeType, $permittedTypes)
-            ) {
-                throw new Exception('Invalid mime type');
-            }
-
-            // Read and decode the JSON file
-            $jsonContent = file_get_contents($uploadedFile['tmp_name']);
-            $backupData = json_decode($jsonContent, true);
 
             if (isset($backupData['workflows'])) {
                 $this->importWorkflows($backupData['workflows']);
