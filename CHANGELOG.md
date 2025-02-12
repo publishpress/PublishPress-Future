@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Add new trigger: Post Author Changed - PRO (Issue #1144).
 - Add new action: Update Post - PRO (Issue #1143).
+- Add new action: Delete Post - PRO (Issue #1168).
 - Add the step slug/name to the top of the step's node in the workflow editor.
 - Add a loading message when the workflow is being loaded.
 - Add validation to the expression builder to avoid empty placeholders.
