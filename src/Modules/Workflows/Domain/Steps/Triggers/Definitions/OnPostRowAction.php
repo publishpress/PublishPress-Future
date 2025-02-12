@@ -29,7 +29,7 @@ class OnPostRowAction implements StepTypeInterface
 
     public function getLabel(): string
     {
-        return __("Post row action", "post-expirator");
+        return __("Post row action is clicked", "post-expirator");
     }
 
     public function getDescription(): string
