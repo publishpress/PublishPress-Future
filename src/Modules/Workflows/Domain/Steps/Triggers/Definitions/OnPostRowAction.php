@@ -35,7 +35,7 @@ class OnPostRowAction implements StepTypeInterface
     public function getDescription(): string
     {
         return __(
-            "This trigger activates whenever a post is saved, regardless of whether it's newly created, imported, or updated.", // phpcs:ignore Generic.Files.LineLength.TooLong
+            "This trigger creates a custom post row action and activates when the row action is clicked in the Posts list screen.", // phpcs:ignore Generic.Files.LineLength.TooLong
             "post-expirator"
         );
     }

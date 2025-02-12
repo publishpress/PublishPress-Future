@@ -31,6 +31,10 @@ class PostQuery implements InputValidatorsInterface
 
     private function hasValidPostType($post, array $nodeSettings)
     {
+        if (! is_object($post)) {
+            return false;
+        }
+
         // Prevent to apply actions to workflows
         if ($post->post_type === Module::POST_TYPE_WORKFLOW) {
             return false;
