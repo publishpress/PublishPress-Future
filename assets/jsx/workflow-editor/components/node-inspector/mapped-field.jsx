@@ -16,6 +16,7 @@ import ExpressionBuilder from "../data-fields/expression-builder";
 import Toggle from "../data-fields/toggle";
 import PostData from "../data-fields/post-data";
 import DateOffset from "../data-fields/date-offset";
+import AskForConfirmation from "../data-fields/ask-confirmation";
 
 export const MappedField = (props) => {
     switch (props.type) {
@@ -86,6 +87,10 @@ export const MappedField = (props) => {
         case "dateOffset":
             return (
                 <DateOffset {...props} />
+            );
+        case "askForConfirmation":
+            return (
+                <AskForConfirmation {...props} />
             );
     }
 

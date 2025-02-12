@@ -64,6 +64,40 @@ class OnPostRowAction implements StepTypeInterface
     {
         return [
             [
+                "label" => __("Row Action", "post-expirator"),
+                "description" => __(
+                    "Configure the post row action that will be created in the Posts list screen.",
+                    "post-expirator"
+                ),
+                "fields" => [
+                    [
+                        "name" => "actionLabel",
+                        "type" => "text",
+                        "label" => __("Action label", "post-expirator"),
+                        "description" => __(
+                            "The label of the action created in the post row for this trigger.",
+                            "post-expirator"
+                        ),
+                        "settings" => [
+                            "placeholder" => __("Run workflow", "post-expirator"),
+                        ],
+                    ],
+                    [
+                        "name" => "askForConfirmation",
+                        "type" => "askForConfirmation",
+                        "label" => __("Ask for confirmation", "post-expirator"),
+                        "description" => __(
+                            "If enabled, the user will be asked to confirm the action before it is executed.",
+                            "post-expirator"
+                        ),
+                        "default" => [
+                            "enabled" => false,
+                            "message" => __("Are you sure you want to run this action?", "post-expirator"),
+                        ],
+                    ],
+                ],
+            ],
+            [
                 "label" => __("Post Query", "post-expirator"),
                 "description" => __(
                     "Specify the criteria for posts that will trigger this action.",
@@ -92,20 +126,8 @@ class OnPostRowAction implements StepTypeInterface
                             "postStatus" => [],
                         ],
                     ],
-                    [
-                        "name" => "actionLabel",
-                        "type" => "text",
-                        "label" => __("Action label", "post-expirator"),
-                        "description" => __(
-                            "The label of the action to perform when the post row is clicked.",
-                            "post-expirator"
-                        ),
-                        "settings" => [
-                            "placeholder" => __("Run workflow", "post-expirator"),
-                        ],
-                    ]
                 ]
-            ]
+            ],
         ];
     }
 
