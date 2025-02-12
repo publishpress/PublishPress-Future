@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { Button, CheckboxControl } from '@wordpress/components';
+import { useEffect } from '@wordpress/element';
 
 export const SelectableList = ({ items, selectedItems, onSelect }) => {
     const handleSelectAll = () => {
@@ -9,6 +10,10 @@ export const SelectableList = ({ items, selectedItems, onSelect }) => {
     const handleUnselectAll = () => {
         onSelect([]);
     };
+
+    useEffect(() => {
+        handleSelectAll();
+    }, []);
 
     return (
         <>
