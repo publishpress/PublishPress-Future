@@ -69,12 +69,20 @@ class OnUserRoleChange implements StepTypeInterface
                 "fields" => [
                     [
                         "name" => "userQuery",
-                        "type" => "text",
+                        "type" => "userQuery",
                         "label" => __("User query", "post-expirator"),
                         "description" => __(
                             "The query defines the users that will trigger this action.",
                             "post-expirator"
                         ),
+                        "settings" => [
+                            "labels" => [
+                                "userRole" => __(
+                                    "User Role before change",
+                                    "post-expirator"
+                                ),
+                            ],
+                        ],
                     ],
                 ]
             ]
