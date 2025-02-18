@@ -36,6 +36,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPo
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostUpdate;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnSchedule;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnUserRoleChange;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 
@@ -89,6 +90,15 @@ class StepTypesModel implements StepTypesModelInterface
             [
                 "name" => "future",
                 "label" => __("PublishPress Future", "post-expirator"),
+                "icon" => [
+                    "src" => "media-document",
+                    "background" => self::DEFAULT_ICON_BACKGROUND,
+                    "foreground" => self::DEFAULT_ICON_FOREGROUND,
+                ],
+            ],
+            [
+                "name" => "user",
+                "label" => __("User", "post-expirator"),
                 "icon" => [
                     "src" => "media-document",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
@@ -207,6 +217,7 @@ class StepTypesModel implements StepTypesModelInterface
             OnPostMetaChange::getNodeTypeName() => new OnPostMetaChange(),
             OnPostAuthorChange::getNodeTypeName() => new OnPostAuthorChange(),
             OnPostRowAction::getNodeTypeName() => new OnPostRowAction(),
+            OnUserRoleChange::getNodeTypeName() => new OnUserRoleChange(),
         ];
 
         if ($this->settingsFacade->getExperimentalFeaturesStatus()) {

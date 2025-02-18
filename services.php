@@ -110,6 +110,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostSt
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostUpdateRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostWorkflowEnableRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnScheduleRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnUserRoleChangeRunner;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncStepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
@@ -933,6 +934,13 @@ return [
 
                 case OnPostRowActionRunner::getNodeTypeName():
                     $stepRunner = new OnPostRowActionRunner(
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
+                        $container->get(ServicesAbstract::LOGGER)
+                    );
+                    break;
+
+                case OnUserRoleChangeRunner::getNodeTypeName():
+                    $stepRunner = new OnUserRoleChangeRunner(
                         $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
                         $container->get(ServicesAbstract::LOGGER)
                     );
