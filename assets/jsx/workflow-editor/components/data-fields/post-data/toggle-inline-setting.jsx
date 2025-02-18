@@ -16,7 +16,8 @@ export const ToggleInlineSetting = ({
     defaultValue,
     onChange,
     children,
-    onUncheckUpdate
+    onUncheckUpdate,
+    isLoading
 }) => {
     const onChangeCheckbox = useCallback((value) => {
         defaultValue.update = value;
@@ -34,6 +35,7 @@ export const ToggleInlineSetting = ({
                 label={label}
                 valuePreview={valuePreview}
                 onClosePopover={onClosePopover}
+                isLoading={isLoading}
                 children={(
                     <>
                         <CheckboxControl

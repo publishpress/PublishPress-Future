@@ -7,6 +7,7 @@ import {
 import {
     Button,
     __experimentalHStack as HStack,
+    Spinner
 } from "@wordpress/components";
 import SettingPopover from "../../setting-popover";
 
@@ -16,7 +17,8 @@ export const InlineSetting = ({
     label,
     valuePreview,
     onClosePopover,
-    children
+    children,
+    isLoading
 }) => {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
@@ -41,8 +43,9 @@ export const InlineSetting = ({
                         variant="tertiary"
                         onClick={() => setIsPopoverOpen(true)}
                         className="is-compact"
+                        disabled={isLoading}
                     >
-                        {valuePreview}
+                        {isLoading ? <Spinner /> : valuePreview}
                     </Button>
                 </div>
             </HStack>

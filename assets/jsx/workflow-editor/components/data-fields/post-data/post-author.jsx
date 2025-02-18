@@ -50,14 +50,20 @@ export const PostAuthorControl = ({
     checkboxLabel
 }) => {
     const [authors, setAuthors] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        setIsLoading(true);
+
         getAuthors()
             .then(setAuthors)
             .catch(error => {
                 dispatch('core/notices').createErrorNotice(
                     __('Unable to load the list of authors. Please try again.', 'post-expirator')
                 );
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     }, []);
 
@@ -89,6 +95,7 @@ export const PostAuthorControl = ({
                 checkboxLabel={checkboxLabel}
                 onChange={onChange}
                 onUncheckUpdate={() => onChange(name, null)}
+                isLoading={isLoading}
             >
                 <VStack>
                     <SelectControl
