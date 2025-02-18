@@ -379,7 +379,9 @@ class RestApiV1 implements RestApiManagerInterface
         $users = array_map(function ($user) {
             return [
                 'id' => $user->ID,
+                'userLogin' => $user->user_login,
                 'name' => $user->display_name,
+                'email' => $user->user_email,
             ];
         }, $users);
 

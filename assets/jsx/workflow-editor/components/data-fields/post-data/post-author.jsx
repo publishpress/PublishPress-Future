@@ -31,14 +31,17 @@ const getAuthors = () => {
         }).then(response => {
             cachedAuthors = response;
 
-            cachedAuthors.forEach(author => {
-                author.label = author.name;
-            });
-
             return cachedAuthors;
         });
     }
     return authorsPromise;
+};
+
+const getAuthorOptions = (authors) => {
+    return authors.map(author => ({
+        label: author.name,
+        value: author.userLogin
+    }));
 };
 
 export const PostAuthorControl = ({
@@ -61,18 +64,20 @@ export const PostAuthorControl = ({
     }, []);
 
     defaultValue = {
-        authors: [authors[0]?.name],
+        authors: [authors[0]?.userLogin],
         update: false,
         ...defaultValue
     };
+
+    const authorOptions = useMemo(() => getAuthorOptions(authors), [authors]);
 
     const valuePreview = useMemo(() => {
         if (!defaultValue.update || defaultValue.authors.length === 0) {
             return __('Do not update', 'post-expirator');
         }
 
-        return defaultValue.authors.map(authorName => authors.find(a => a.name === authorName)?.label).join(', ');
-    }, [defaultValue]);
+        return defaultValue.authors.map(author => authorOptions.find(a => a.value === author)?.label).join(', ');
+    }, [defaultValue, authorOptions]);
 
     return (
         <>
@@ -89,7 +94,7 @@ export const PostAuthorControl = ({
                     <SelectControl
                         label={__('Author', 'post-expirator')}
                         value={defaultValue.authors[0]}
-                        options={authors}
+                        options={authorOptions}
                         onChange={value => {
                             onChange(name, {
                                 authors: [value],
