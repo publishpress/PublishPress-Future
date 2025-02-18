@@ -69,8 +69,8 @@ class ScheduleDelay implements StepTypeInterface
                 "fields" => [
                     [
                         "name" => "schedule",
-                        "type" => "dateOffset",
-                        "label" => __("Date offset", "post-expirator"),
+                        "type" => "schedule",
+                        "label" => __("When to run", "post-expirator"),
                     ],
                 ],
             ],

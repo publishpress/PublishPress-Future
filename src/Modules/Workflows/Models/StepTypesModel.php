@@ -29,6 +29,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnLe
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostAuthorChange;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostMetaChange;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostPublish;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostRowAction;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSave;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostStatusChange;
@@ -205,6 +206,7 @@ class StepTypesModel implements StepTypesModelInterface
             OnSchedule::getNodeTypeName() => new OnSchedule(),
             OnPostMetaChange::getNodeTypeName() => new OnPostMetaChange(),
             OnPostAuthorChange::getNodeTypeName() => new OnPostAuthorChange(),
+            OnPostRowAction::getNodeTypeName() => new OnPostRowAction(),
         ];
 
         if ($this->settingsFacade->getExperimentalFeaturesStatus()) {

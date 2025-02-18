@@ -1,0 +1,50 @@
+.pe-settings-tab__import-tabs {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+
+.pe-settings-tab__import-tabs .components-tab-panel__tabs {
+    width: 100%;
+}
+
+.pe-settings-tab__import-tabs .components-tab-panel__tab-content {
+    padding-left: 10px;
+}
+
+.pe-settings-tab__import-preview-tab {
+    width: 100%;
+    padding: 10px;
+}
+
+.pe-settings-tab__import-preview-tab-content {
+    flex: 1;
+
+}
+
+.pe-settings-tab__import-preview-tab-json {
+    flex: 1;
+
+}
+
+.pe-settings-tab__import-file-upload-actions {
+    width: 100%;
+    justify-content: flex-start !important;
+    margin-top: 20px;
+}
+
+.pe-settings-tab__import-file-upload-info-label {
+    font-weight: bold;
+}
+
+.components-tab-panel__tab-content {
+    width: 100%;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+.pe-settings-tab__import-file-upload-preview {
+    background-color: #fff;
+    padding: 10px;
+    width: 100%;
+}

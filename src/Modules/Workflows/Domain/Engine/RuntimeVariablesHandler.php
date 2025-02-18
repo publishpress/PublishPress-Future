@@ -87,18 +87,19 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
 
     private function getVariableValueFromNestedVariable(string $variableName, $dataSource)
     {
+        $originalVariableName = $variableName;
         $variableName = explode('.', $variableName);
 
         if (count($variableName) === 1) {
             return $this->getVariableValue($variableName[0], $dataSource);
         } else {
             if (is_array($dataSource) && !isset($dataSource[$variableName[0]])) {
-                return '';
+                return $originalVariableName;
             }
 
             if (is_object($dataSource)) {
                 if (!isset($dataSource->{$variableName[0]})) {
-                    return '';
+                    return $originalVariableName;
                 }
             }
 
@@ -116,7 +117,7 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
             );
         }
 
-        return '';
+        return $originalVariableName;
     }
 
     private function setVariableInNestedArray(string $variableName, $variableValue, &$dataSource)

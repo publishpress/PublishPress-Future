@@ -1,6 +1,6 @@
 import PostQuery from "../data-fields/post-query";
 import { __, sprintf } from "@wordpress/i18n";
-import { DateOffset } from "../data-fields/date-offset";
+import Schedule from "../data-fields/schedule";
 import DebugData from "../data-fields/debug-data";
 import RayColor from "../data-fields/ray-color";
 import Text from "../data-fields/text";
@@ -14,6 +14,9 @@ import Conditional from "../data-fields/conditional";
 import DebugLevels from "../data-fields/debug-levels";
 import ExpressionBuilder from "../data-fields/expression-builder";
 import Toggle from "../data-fields/toggle";
+import PostData from "../data-fields/post-data";
+import DateOffset from "../data-fields/date-offset";
+import AskForConfirmation from "../data-fields/ask-confirmation";
 
 export const MappedField = (props) => {
     switch (props.type) {
@@ -29,9 +32,9 @@ export const MappedField = (props) => {
             return (
                 <TaxonomyTerms {...props} />
             );
-        case "dateOffset":
+        case "schedule":
             return (
-                <DateOffset {...props} />
+                <Schedule {...props} />
             );
         case "toggle":
             return (
@@ -76,6 +79,18 @@ export const MappedField = (props) => {
         case "expression":
             return (
                 <ExpressionBuilder {...props} />
+            );
+        case "postData":
+            return (
+                <PostData {...props} />
+            );
+        case "dateOffset":
+            return (
+                <DateOffset {...props} />
+            );
+        case "askForConfirmation":
+            return (
+                <AskForConfirmation {...props} />
             );
     }
 

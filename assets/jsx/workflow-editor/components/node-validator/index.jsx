@@ -128,6 +128,29 @@ export function NodeValidator({})
             });
         }
 
+        if (expression.includes('{{}}')) {
+            invalidExpression = true;
+            detailsMessage = __('Empty placeholder is not allowed.', 'post-expirator');
+        }
+
+        const countOpenPlaceholders = (expression) => {
+            return (expression.match(/{{/g) || []).length;
+        }
+
+        const countClosePlaceholders = (expression) => {
+            return (expression.match(/}}/g) || []).length;
+        }
+
+        if (countOpenPlaceholders(expression) > countClosePlaceholders(expression)) {
+            invalidExpression = true;
+            detailsMessage = __('Unclosed placeholder are not allowed.', 'post-expirator');
+        }
+
+        if (countOpenPlaceholders(expression) < countClosePlaceholders(expression)) {
+            invalidExpression = true;
+            detailsMessage = __('Unopened placeholder are not allowed.', 'post-expirator');
+        }
+
         if (invalidExpression) {
             return {
                 isValid: false,

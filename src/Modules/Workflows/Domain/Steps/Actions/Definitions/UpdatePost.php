@@ -81,6 +81,18 @@ class UpdatePost implements StepTypeInterface
                     ],
                 ],
             ],
+            [
+                "label" => __("Post Data", "post-expirator"),
+                "description" => __("Select which data should be updated in the post.", "post-expirator"),
+                "fields" => [
+                    [
+                        "name" => "postData",
+                        "type" => "postData",
+                        "label" => __("Post data", "post-expirator"),
+                        "description" => __("The data to update for the post.", "post-expirator"),
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -106,6 +118,43 @@ class UpdatePost implements StepTypeInterface
                         "fieldLabel" => __("Post", "post-expirator"),
                         "dataType" => "post",
                     ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "postData.title.expression",
+                        "label" => __("Post title", "post-expirator"),
+                        "fieldLabel" => __("Post data > Post title", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "postData.content.expression",
+                        "label" => __("Post content", "post-expirator"),
+                        "fieldLabel" => __("Post data > Post content", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "postData.excerpt.expression",
+                        "label" => __("Post excerpt", "post-expirator"),
+                        "fieldLabel" => __("Post data > Post excerpt", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "postData.date.expression",
+                        "label" => __("Post date", "post-expirator"),
+                        "fieldLabel" => __("Post data > Post date", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "postData.name.expression",
+                        "label" => __("Post name", "post-expirator"),
+                        "fieldLabel" => __("Post data > Post name", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "postData.password.expression",
+                        "label" => __("Post password", "post-expirator"),
+                        "fieldLabel" => __("Post data > Post password", "post-expirator"),
+                    ],
+
                 ],
             ],
         ];
@@ -119,6 +168,12 @@ class UpdatePost implements StepTypeInterface
                 "type" => "input",
                 "label" => __("Step input", "post-expirator"),
                 "description" => __("The input data for this step.", "post-expirator"),
+            ],
+            [
+                "name" => "updatedPost",
+                "type" => "post",
+                "label" => __("Updated post", "post-expirator"),
+                "description" => __("The post data after the update.", "post-expirator"),
             ],
         ];
     }

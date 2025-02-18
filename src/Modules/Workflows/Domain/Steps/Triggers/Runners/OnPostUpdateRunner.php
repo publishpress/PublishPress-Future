@@ -59,6 +59,11 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
     private $postPermalinkCache = [];
 
     /**
+     * @var array
+     */
+    private $postCache = [];
+
+    /**
      * @var \Closure
      */
     private $expirablePostModelFactory;
@@ -90,11 +95,23 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
         $this->workflowId = $workflowId;
 
         $this->hooks->addAction(HooksAbstract::ACTION_PRE_POST_UPDATE, [$this, 'cachePermalink'], 15, 2);
-        $this->hooks->addAction(HooksAbstract::ACTION_POST_UPDATED, [$this, 'triggerCallback'], 15, 3);
+        $this->hooks->addAction(HooksAbstract::ACTION_POST_UPDATED, [$this, 'cachePosts'], 15, 3);
+        /*
+         * We need to use the save_post action because the post_updated action is triggered too early
+         * and some post data (like Future Action data) would not be available yet.
+         */
+        $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'triggerCallback'], 15, 3);
     }
 
-    public function triggerCallback($postId, $postAfter, $postBefore)
+    public function triggerCallback($postId, $post, $update)
     {
+        if (! $update) {
+            return;
+        }
+
+        $postBefore = $this->postCache[$postId][0] ?? null;
+        $postAfter = $this->postCache[$postId][1] ?? null;
+
         if (
             $this->hooks->applyFilters(
                 HooksAbstract::FILTER_IGNORE_SAVE_POST_EVENT,
@@ -175,5 +192,13 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
     public function cachePermalink($postId, $data)
     {
         $this->postPermalinkCache[$postId] = get_permalink($postId);
+    }
+
+    public function cachePosts($postId, $postAfter, $postBefore)
+    {
+        $this->postCache[$postId] = [
+            'postAfter' => $postAfter,
+            'postBefore' => $postBefore,
+        ];
     }
 }

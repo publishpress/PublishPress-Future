@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Add new trigger: Post Author Changed - PRO (Issue #1144).
 - Add new action: Update Post - PRO (Issue #1143).
+- Add new action: Delete Post - PRO (Issue #1168).
 - Add the step slug/name to the top of the step's node in the workflow editor.
+- Add a loading message when the workflow is being loaded.
+- Add validation to the expression builder to avoid empty placeholders.
+- Add validation to the expression builder to avoid unopened and unclosed placeholders.
+- Add form to customize the import of workflows and settings from a JSON file (Issue #1152).
 
 ### Changed
 
@@ -17,6 +22,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove left padding from the workflow step details panel.
 - Remove attributes table from the inspector card when on developer mode (that data can still be seen in the Developer Info panel)
 
+### Fixed
+
+- Fix fatal error when selecting multiple steps or a connection in the workflow editor (Issue #1162).
+- Fix default data for the "Send Ray" step, sending all the input value instead of a blank message.
 
 ## [4.3.3] - 03 Feb, 2025
 

@@ -5,6 +5,7 @@ import { useEffect } from "@wordpress/element";
 import { PluginArea } from '@wordpress/plugins';
 import { addBodyClasses, removeBodyClasses } from "../../utils";
 import { store as editorStore } from "../editor-store";
+import { store as workflowStore } from "../workflow-store";
 import { ReactFlowProvider } from "reactflow";
 import { KeyboardShortcuts } from "../keyboard-shortcuts";
 import {
@@ -17,6 +18,7 @@ import classnames from 'classnames';
 import { SlotFillProvider } from "@wordpress/components";
 import { SettingsSidebar } from "../settings-sidebar/settings-sidebar";
 import WelcomeGuide from "../welcome-guide";
+import LoadingMessage from "../loading-message";
 
 export function WorkflowEditorLayout() {
     const {
@@ -24,12 +26,16 @@ export function WorkflowEditorLayout() {
         isInserterOpened,
         isWelcomeGuideActive,
         isPro,
+        isLoadingWorkflow,
+        isCreatingWorkflow,
     } = useSelect((select) => {
         return {
             isFullscreenActive: select(editorStore).isFeatureActive(FEATURE_FULLSCREEN_MODE),
             isInserterOpened: select(editorStore).isFeatureActive(FEATURE_INSERTER),
             isWelcomeGuideActive: select(editorStore).isFeatureActive(FEATURE_WELCOME_GUIDE),
             isPro: select(editorStore).isPro(),
+            isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
+            isCreatingWorkflow: select(workflowStore).isCreatingWorkflow(),
         }
     });
 
@@ -65,6 +71,7 @@ export function WorkflowEditorLayout() {
                 <FullscreenMode isActive={isFullscreenActive} />
                 <KeyboardShortcuts />
                 <SettingsSidebar />
+                {(isLoadingWorkflow || isCreatingWorkflow) && <LoadingMessage />}
 
                 <WorkflowEditorInterface
                     className={className}
