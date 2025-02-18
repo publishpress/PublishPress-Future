@@ -6,9 +6,6 @@ export const useSettingsImport = () => {
     const { createSuccessNotice, createErrorNotice } = useDispatch('core/notices');
 
     const importSettings = async ({ workflowsToImport, settingsToImport }) => {
-        console.log('workflowsToImport', workflowsToImport);
-        console.log('settingsToImport', settingsToImport);
-
         const formData = new FormData();
         formData.append('data', JSON.stringify({
             workflows: workflowsToImport,

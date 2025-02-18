@@ -12,13 +12,9 @@ export function AskForConfirmation({ name, label, defaultValue, onChange, settin
                 [settingName]: value,
             };
 
-            console.log(newSettings);
-
             onChange(name, newSettings);
         }
     }
-
-    console.log(defaultValue);
 
     return (
         <>

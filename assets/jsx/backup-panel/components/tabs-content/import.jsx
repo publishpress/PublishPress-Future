@@ -29,8 +29,6 @@ const ImportTab = () => {
 
     const handleImport = async () => {
         setIsImporting(true);
-        console.log('selectedWorkflowsData', selectedWorkflowsData);
-        console.log('selectedSettingsData', selectedSettingsData);
 
         const result = await importSettings({
             workflowsToImport: selectedWorkflowsData,

@@ -955,16 +955,14 @@ var useSettingsImport = function useSettingsImport() {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             workflowsToImport = _ref.workflowsToImport, settingsToImport = _ref.settingsToImport;
-            console.log('workflowsToImport', workflowsToImport);
-            console.log('settingsToImport', settingsToImport);
             formData = new FormData();
             formData.append('data', JSON.stringify({
               workflows: workflowsToImport,
               settings: settingsToImport
             }));
             wpNonce = wp.apiFetch.nonceMiddleware ? wp.apiFetch.nonceMiddleware.nonce : '';
-            _context.prev = 6;
-            _context.next = 9;
+            _context.prev = 4;
+            _context.next = 7;
             return fetch("".concat(futureBackupPanelData.apiRoot, "publishpress-future/v1/backup/import"), {
               method: 'POST',
               headers: {
@@ -973,14 +971,14 @@ var useSettingsImport = function useSettingsImport() {
               body: formData,
               credentials: 'same-origin'
             });
-          case 9:
+          case 7:
             response = _context.sent;
-            _context.next = 12;
+            _context.next = 10;
             return response.json();
-          case 12:
+          case 10:
             data = _context.sent;
             if (!data.ok) {
-              _context.next = 16;
+              _context.next = 14;
               break;
             }
             createSuccessNotice(data.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Settings imported successfully.', 'post-expirator'), {
@@ -994,11 +992,11 @@ var useSettingsImport = function useSettingsImport() {
               })
             });
             return _context.abrupt("return", true);
-          case 16:
+          case 14:
             throw new Error(data.message);
-          case 19:
-            _context.prev = 19;
-            _context.t0 = _context["catch"](6);
+          case 17:
+            _context.prev = 17;
+            _context.t0 = _context["catch"](4);
             createErrorNotice(_context.t0.message || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Failed to import settings.', 'post-expirator'), {
               type: 'snackbar',
               isDismissible: true,
@@ -1010,11 +1008,11 @@ var useSettingsImport = function useSettingsImport() {
               })
             });
             return _context.abrupt("return", false);
-          case 23:
+          case 21:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[6, 19]]);
+      }, _callee, null, [[4, 17]]);
     }));
     return function importSettings(_x) {
       return _ref2.apply(this, arguments);
@@ -1117,14 +1115,12 @@ var ImportTab = function ImportTab() {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             setIsImporting(true);
-            console.log('selectedWorkflowsData', selectedWorkflowsData);
-            console.log('selectedSettingsData', selectedSettingsData);
-            _context.next = 5;
+            _context.next = 3;
             return importSettings({
               workflowsToImport: selectedWorkflowsData,
               settingsToImport: selectedSettingsData
             });
-          case 5:
+          case 3:
             result = _context.sent;
             setIsImporting(false);
             if (result) {
@@ -1136,7 +1132,7 @@ var ImportTab = function ImportTab() {
               setSelectedWorkflowsData([]);
               setSelectedSettingsData({});
             }
-          case 8:
+          case 6:
           case "end":
             return _context.stop();
         }
