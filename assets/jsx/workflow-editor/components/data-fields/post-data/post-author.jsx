@@ -1,0 +1,106 @@
+import { __ } from "@wordpress/i18n";
+import {
+    useMemo,
+    useEffect,
+    useState
+} from "@wordpress/element";
+import {
+    __experimentalVStack as VStack,
+    SelectControl
+} from "@wordpress/components";
+import ToggleInlineSetting from "./toggle-inline-setting";
+import apiFetch from "@wordpress/api-fetch";
+import { cache } from "react";
+
+const { apiUrl, nonce } = window.futureWorkflowEditor;
+
+let authorsPromise = null;
+let cachedAuthors = null;
+
+const getAuthors = () => {
+    if (cachedAuthors) {
+        return Promise.resolve(cachedAuthors);
+    }
+
+    if (!authorsPromise) {
+        authorsPromise = apiFetch({
+            path: `${apiUrl}/authors`,
+            headers: {
+                'X-WP-Nonce': nonce,
+            },
+        }).then(response => {
+            cachedAuthors = response;
+
+            cachedAuthors.forEach(author => {
+                author.label = author.name;
+            });
+
+            return cachedAuthors;
+        });
+    }
+    return authorsPromise;
+};
+
+export const PostAuthorControl = ({
+    name,
+    label,
+    defaultValue,
+    onChange,
+    checkboxLabel
+}) => {
+    const [authors, setAuthors] = useState([]);
+
+    useEffect(() => {
+        getAuthors()
+            .then(setAuthors)
+            .catch(error => {
+                dispatch('core/notices').createErrorNotice(
+                    __('Unable to load the list of authors. Please try again.', 'post-expirator')
+                );
+            });
+    }, []);
+
+    defaultValue = {
+        authors: [authors[0]?.name],
+        update: false,
+        ...defaultValue
+    };
+
+    const valuePreview = useMemo(() => {
+        if (!defaultValue.update || defaultValue.authors.length === 0) {
+            return __('Do not update', 'post-expirator');
+        }
+
+        return defaultValue.authors.map(authorName => authors.find(a => a.name === authorName)?.label).join(', ');
+    }, [defaultValue]);
+
+    return (
+        <>
+            <ToggleInlineSetting
+                name={name}
+                label={label}
+                valuePreview={valuePreview}
+                defaultValue={defaultValue}
+                checkboxLabel={checkboxLabel}
+                onChange={onChange}
+                onUncheckUpdate={() => onChange(name, null)}
+            >
+                <VStack>
+                    <SelectControl
+                        label={__('Author', 'post-expirator')}
+                        value={defaultValue.authors[0]}
+                        options={authors}
+                        onChange={value => {
+                            onChange(name, {
+                                authors: [value],
+                                update: true
+                            });
+                        }}
+                    />
+                </VStack>
+            </ToggleInlineSetting>
+        </>
+    )
+}
+
+export default PostAuthorControl;

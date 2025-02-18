@@ -6,6 +6,7 @@ import {
 } from "@wordpress/components";
 import { PostDateControl } from "./post-date";
 import { PostTextControl } from "./post-text";
+import { PostAuthorControl } from "./post-author";
 import { PostDiscussionControl } from "./post-discussion";
 
 export function PostData({ name, label, defaultValue, onChange, settings, variables }) {
@@ -93,6 +94,16 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
                 variables={variables}
                 onClosePopover={() => onClosePopover("password")}
                 checkboxLabel={__("Update the post password", "post-expirator")}
+            />
+            <PostAuthorControl
+                name="author"
+                label={__('Post Author', 'post-expirator')}
+                defaultValue={defaultValue?.author}
+                onChange={(settingName, value) => onChangeSetting({ settingName: "author", value })}
+                settings={settings}
+                variables={variables}
+                onClosePopover={() => onClosePopover("author")}
+                checkboxLabel={__("Update the post author", "post-expirator")}
             />
         </VStack>
     );
