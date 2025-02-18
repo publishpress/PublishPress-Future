@@ -10,7 +10,6 @@ import {
 } from "@wordpress/components";
 import ToggleInlineSetting from "./toggle-inline-setting";
 import apiFetch from "@wordpress/api-fetch";
-import { cache } from "react";
 
 const { apiUrl, nonce } = window.futureWorkflowEditor;
 
@@ -30,7 +29,6 @@ const getAuthors = () => {
             },
         }).then(response => {
             cachedAuthors = response;
-
             return cachedAuthors;
         });
     }
@@ -39,8 +37,8 @@ const getAuthors = () => {
 
 const getAuthorOptions = (authors) => {
     return authors.map(author => ({
-        label: author.name,
-        value: author.userLogin
+        value: author.id,
+        label: author.name + ' (' + author.email + ')',
     }));
 };
 
@@ -64,7 +62,7 @@ export const PostAuthorControl = ({
     }, []);
 
     defaultValue = {
-        authors: [authors[0]?.userLogin],
+        authors: [authors[0]?.id],
         update: false,
         ...defaultValue
     };
@@ -76,8 +74,10 @@ export const PostAuthorControl = ({
             return __('Do not update', 'post-expirator');
         }
 
-        return defaultValue.authors.map(author => authorOptions.find(a => a.value === author)?.label).join(', ');
-    }, [defaultValue, authorOptions]);
+        return defaultValue.authors.map(
+            authorId => authors.find(a => parseInt(a.id) === parseInt(authorId))?.name
+        ).join(', ');
+    }, [defaultValue, authors]);
 
     return (
         <>
