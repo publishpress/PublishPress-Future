@@ -26,6 +26,10 @@ class PostQuery implements InputValidatorsInterface
             return false;
         }
 
+        if (! $this->hasValidPostAuthor($post, $nodeSettings)) {
+            return false;
+        }
+
         return true;
     }
 
@@ -74,5 +78,16 @@ class PostQuery implements InputValidatorsInterface
         }
 
         return true;
+    }
+
+    private function hasValidPostAuthor($post, array $nodeSettings)
+    {
+        $settingPostAuthor = $nodeSettings['postQuery']['postAuthor'] ?? [];
+
+        if (empty($settingPostAuthor)) {
+            return false;
+        }
+
+        return in_array($post->post_author, $settingPostAuthor);
     }
 }

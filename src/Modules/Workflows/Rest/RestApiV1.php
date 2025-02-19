@@ -6,6 +6,7 @@ use PublishPress\Future\Modules\Settings\SettingsFacade;
 use WP_Error;
 use WP_REST_Server;
 use PublishPress\Future\Modules\Workflows\Interfaces\RestApiManagerInterface;
+use PublishPress\Future\Modules\Workflows\Models\PostAuthorsModel;
 use PublishPress\Future\Modules\Workflows\Models\PostModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
@@ -370,21 +371,18 @@ class RestApiV1 implements RestApiManagerInterface
 
     public function getAuthors($request)
     {
-        $users = get_users([
-            'capability' => ['edit_posts'],
-            'orderby' => 'display_name',
-            'order' => 'ASC'
-        ]);
+        $postAuthorsModel = new PostAuthorsModel();
+        $authors = $postAuthorsModel->getAuthors();
 
-        $users = array_map(function ($user) {
+        $authors = array_map(function ($user) {
             return [
                 'id' => $user->ID,
                 'userLogin' => $user->user_login,
                 'name' => $user->display_name,
                 'email' => $user->user_email,
             ];
-        }, $users);
+        }, $authors);
 
-        return rest_ensure_response($users);
+        return rest_ensure_response($authors);
     }
 }

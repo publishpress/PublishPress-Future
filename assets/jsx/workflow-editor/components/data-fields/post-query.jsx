@@ -14,6 +14,7 @@ export function PostQuery({
 }) {
     const postTypes = futureWorkflowEditor.postTypes;
     const postStatuses = futureWorkflowEditor.postStatuses;
+    const postAuthors = futureWorkflowEditor.postAuthors;
 
     const onChangeSetting = ({ settingName, value }) => {
         const newValue = { ...defaultValue };
@@ -38,6 +39,7 @@ export function PostQuery({
                 postType: [],
                 postId: [],
                 postStatus: [],
+                postAuthor: [],
             };
 
             onChangeSetting({ settingName: "postSource", value: defaultPostSource });
@@ -50,6 +52,7 @@ export function PostQuery({
         postType: settings?.postTypeDescription || null,
         postId: settings?.postIdDescription || null,
         postStatus: settings?.postStatusDescription || null,
+        postAuthor: settings?.postAuthorDescription || null,
     };
 
     return (
@@ -109,6 +112,21 @@ export function PostQuery({
                                 )}
                             </>
                         )}
+
+                        <>
+                            <InlineMultiSelect
+                                label={__('Post Author', 'post-expirator')}
+                                value={defaultValue?.postAuthor || []}
+                                suggestions={postAuthors}
+                                expandOnFocus={true}
+                                autoSelectFirstMatch={true}
+                                onChange={(value) => onChangeSetting({ settingName: "postAuthor", value })}
+                            />
+
+                            {descriptions?.postAuthor && (
+                                <p className="description">{descriptions.postAuthor}</p>
+                            )}
+                        </>
 
                         <PanelRow>
                             <p className="description">
