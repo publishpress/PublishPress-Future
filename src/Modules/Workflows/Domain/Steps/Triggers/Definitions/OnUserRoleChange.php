@@ -63,7 +63,7 @@ class OnUserRoleChange implements StepTypeInterface
             [
                 "label" => __("User Query", "post-expirator"),
                 "description" => __(
-                    "Specify the criteria for users that will trigger this action.",
+                    "Specify the criteria for users whose role changes will trigger this action.",
                     "post-expirator"
                 ),
                 "fields" => [
@@ -85,6 +85,31 @@ class OnUserRoleChange implements StepTypeInterface
                         ],
                     ],
                 ]
+            ],
+            [
+                "label" => __("Authors Post Query", "post-expirator"),
+                "description" => __(
+                    "Filter the event to only trigger for users who are authors of posts matching these criteria.",
+                    "post-expirator"
+                ),
+                "fields" => [
+                    [
+                        "name" => "postQuery",
+                        "type" => "postQuery",
+                        "label" => __("Post query", "post-expirator"),
+                        "settings" => [
+                            "acceptsInput" => false,
+                            "postTypeDescription" => __("Select the post types authored by the user.", "post-expirator"),
+                            "postIdDescription" => __("Enter one or more post IDs authored by the user. Leave empty to include all their posts.", "post-expirator"),
+                            "postStatusDescription" => __("If selected, only posts with these statuses authored by the user will be considered.", "post-expirator"),
+                        ],
+                        "default" => [
+                            "postSource" => "custom",
+                            "postId" => [],
+                            "postStatus" => [],
+                        ],
+                    ],
+                ],
             ]
         ];
     }
@@ -92,15 +117,6 @@ class OnUserRoleChange implements StepTypeInterface
     public function getValidationSchema(): array
     {
         return [
-            "settings" => [
-                "rules" => [
-                    [
-                        "rule" => "required",
-                        "field" => "userQuery",
-                        "label" => __("User query", "post-expirator"),
-                    ],
-                ],
-            ],
             "connections" => [
                 "rules" => [
                     [
