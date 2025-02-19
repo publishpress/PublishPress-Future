@@ -19,12 +19,10 @@ class UserRolesModel implements UserRolesModelInterface
     {
         $userRoles = $this->getUserRoles($filtered);
 
-        $options = [];
-
-        foreach ($userRoles as $userRole) {
+        foreach ($userRoles as $userRoleKey => $userRole) {
             $options[] = [
                 'label' => $userRole['name'],
-                'value' => $userRole['name'],
+                'value' => $userRoleKey,
             ];
         }
 
