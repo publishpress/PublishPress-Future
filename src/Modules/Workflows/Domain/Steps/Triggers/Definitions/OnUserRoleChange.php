@@ -121,16 +121,16 @@ class OnUserRoleChange implements StepTypeInterface
                 'description' => __("The user that data was changed for.", "post-expirator"),
             ],
             [
-                'name' => 'roleBefore',
-                'type' => 'string',
-                'label' => __("User role before change", "post-expirator"),
-                'description' => __("The user role before the change.", "post-expirator"),
+                'name' => 'addedRoles',
+                'type' => 'array',
+                'label' => __("Added roles", "post-expirator"),
+                'description' => __("The roles that were added to the user.", "post-expirator"),
             ],
             [
-                'name' => 'roleAfter',
-                'type' => 'string',
-                'label' => __("User role after change", "post-expirator"),
-                'description' => __("The user role after the change.", "post-expirator"),
+                'name' => 'removedRoles',
+                'type' => 'array',
+                'label' => __("Removed roles", "post-expirator"),
+                'description' => __("The roles that were removed from the user.", "post-expirator"),
             ]
         ];
     }
