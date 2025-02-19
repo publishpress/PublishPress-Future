@@ -25,16 +25,38 @@ export function NodeDevInfoPanel({node, nodeType}) {
             className="workflow-editor-dev-info-panel workflow-editor-dev-panel"
         >
             {node && (
-                <PanelRow>
-                    <div>
-                        <h3>{__('Node', 'post-expirator')}</h3>
-                        <div className="workflow-editor-dev-info-wrapper">
-                            <Suspense fallback={lazyLoadLoading}>
-                                <ReactJson src={node} {...reactJSONParams} />
-                            </Suspense>
+                <>
+                    <PanelRow>
+                        <div>
+                            <h3>{__('Node', 'post-expirator')}</h3>
+                            <div className="workflow-editor-dev-info-wrapper">
+                                <Suspense fallback={lazyLoadLoading}>
+                                    <ReactJson src={node} {...reactJSONParams} collapsed={true} />
+                                </Suspense>
+                            </div>
                         </div>
-                    </div>
-                </PanelRow>
+                    </PanelRow>
+                    <PanelRow>
+                        <div>
+                            <h3>{__('Node Data', 'post-expirator')}</h3>
+                            <div className="workflow-editor-dev-info-wrapper">
+                                <Suspense fallback={lazyLoadLoading}>
+                                    <ReactJson src={node?.data} {...reactJSONParams} collapsed={true} />
+                                </Suspense>
+                            </div>
+                        </div>
+                    </PanelRow>
+                    <PanelRow>
+                        <div>
+                            <h3>{__('Node Settings', 'post-expirator')}</h3>
+                            <div className="workflow-editor-dev-info-wrapper">
+                                <Suspense fallback={lazyLoadLoading}>
+                                    <ReactJson src={node?.data?.settings} {...reactJSONParams} collapsed={true} />
+                                </Suspense>
+                            </div>
+                        </div>
+                    </PanelRow>
+                </>
             )}
 
             {nodeType && (
@@ -43,7 +65,7 @@ export function NodeDevInfoPanel({node, nodeType}) {
                         <h3>{__('Node Type', 'post-expirator')}</h3>
                         <div className="workflow-editor-dev-info-wrapper">
                             <Suspense fallback={lazyLoadLoading}>
-                                <ReactJson src={nodeType} {...reactJSONParams} />
+                                <ReactJson src={nodeType} {...reactJSONParams} collapsed={true} />
                             </Suspense>
                         </div>
                     </div>
