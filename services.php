@@ -1099,7 +1099,9 @@ return [
     },
 
     ServicesAbstract::INPUT_VALIDATOR_POST_QUERY => static function (ContainerInterface $container) {
-        return new PostQueryValidator();
+        return new PostQueryValidator(
+            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
+        );
     },
 
     ServicesAbstract::DATE_TIME_HANDLER => static function (ContainerInterface $container) {

@@ -1,6 +1,6 @@
 import { FormTokenField, RadioControl, PanelRow } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { useEffect } from "@wordpress/element";
+import { useEffect, useMemo, useCallback } from "@wordpress/element";
 import { InlineMultiSelect } from "../inline-multi-select";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 
@@ -11,10 +11,10 @@ export function PostQuery({
     defaultValue,
     onChange,
     settings,
+    variables,
 }) {
     const postTypes = futureWorkflowEditor.postTypes;
     const postStatuses = futureWorkflowEditor.postStatuses;
-    const postAuthors = futureWorkflowEditor.postAuthors;
 
     const onChangeSetting = ({ settingName, value }) => {
         const newValue = { ...defaultValue };
@@ -54,6 +54,19 @@ export function PostQuery({
         postStatus: settings?.postStatusDescription || null,
         postAuthor: settings?.postAuthorDescription || null,
     };
+
+    const injectUserVariablesIntoPostAuthors = useCallback(() => {
+        let userVariables = variables.filter(variable => variable.type === 'user');
+        userVariables = userVariables.map(variable => ({
+            label: variable.label,
+            value: `{{${variable.name}.id}}`,
+        }));
+
+        const postAuthors = [...userVariables, ...futureWorkflowEditor.postAuthors];
+        return postAuthors;
+    }, [variables]);
+
+    const postAuthorOptions = useMemo(() => injectUserVariablesIntoPostAuthors(), [injectUserVariablesIntoPostAuthors]);
 
     return (
         <>
@@ -117,7 +130,7 @@ export function PostQuery({
                             <InlineMultiSelect
                                 label={__('Post Author', 'post-expirator')}
                                 value={defaultValue?.postAuthor || []}
-                                suggestions={postAuthors}
+                                suggestions={postAuthorOptions}
                                 expandOnFocus={true}
                                 autoSelectFirstMatch={true}
                                 onChange={(value) => onChangeSetting({ settingName: "postAuthor", value })}

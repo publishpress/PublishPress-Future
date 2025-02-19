@@ -3,11 +3,18 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\InputValidators;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
-use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Module;
 
 class PostQuery implements InputValidatorsInterface
 {
+    private RuntimeVariablesHandlerInterface $runtimeVariablesHandler;
+
+    public function __construct(RuntimeVariablesHandlerInterface $runtimeVariablesHandler)
+    {
+        $this->runtimeVariablesHandler = $runtimeVariablesHandler;
+    }
+
     public function validate(array $args): bool
     {
         $post = $args['post'];
@@ -85,8 +92,16 @@ class PostQuery implements InputValidatorsInterface
         $settingPostAuthor = $nodeSettings['postQuery']['postAuthor'] ?? [];
 
         if (empty($settingPostAuthor)) {
-            return false;
+            return true;
         }
+
+        $settingPostAuthor = array_map(function ($postAuthor) {
+            if (strpos($postAuthor, '{{') === 0) {
+                $postAuthor = $this->runtimeVariablesHandler->replacePlaceholdersInText($postAuthor);
+            }
+
+            return $postAuthor;
+        }, $settingPostAuthor);
 
         return in_array($post->post_author, $settingPostAuthor);
     }
