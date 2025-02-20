@@ -343,7 +343,7 @@ export const FlowEditor = (props) => {
 
                     if (defaultItem.rule === 'first') {
 
-                        const filteredVariables = filterVariableOptionsByDataType(variables, defaultItem.dataType);
+                        const filteredVariables = filterVariableOptionsByDataType(variables, [defaultItem.dataType]);
 
                         if (filteredVariables.length === 0) {
                             return;
