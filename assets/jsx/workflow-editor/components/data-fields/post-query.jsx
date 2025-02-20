@@ -15,7 +15,7 @@ export function PostQuery({
 }) {
     const postTypes = futureWorkflowEditor.postTypes;
     const postStatuses = futureWorkflowEditor.postStatuses;
-
+    const postTermsOptions = futureWorkflowEditor.postTerms;
     const onChangeSetting = ({ settingName, value }) => {
         const newValue = { ...defaultValue };
         newValue[settingName] = value;
@@ -40,6 +40,7 @@ export function PostQuery({
                 postId: [],
                 postStatus: [],
                 postAuthor: [],
+                postTerms: [],
             };
 
             onChangeSetting({ settingName: "postSource", value: defaultPostSource });
@@ -53,6 +54,7 @@ export function PostQuery({
         postId: settings?.postIdDescription || null,
         postStatus: settings?.postStatusDescription || null,
         postAuthor: settings?.postAuthorDescription || null,
+        postTerms: settings?.postTermsDescription || null,
     };
 
     const injectUserVariablesIntoPostAuthors = useCallback(() => {
@@ -126,20 +128,32 @@ export function PostQuery({
                             </>
                         )}
 
-                        <>
-                            <InlineMultiSelect
-                                label={__('Post Author', 'post-expirator')}
-                                value={defaultValue?.postAuthor || []}
-                                suggestions={postAuthorOptions}
-                                expandOnFocus={true}
-                                autoSelectFirstMatch={true}
-                                onChange={(value) => onChangeSetting({ settingName: "postAuthor", value })}
-                            />
+                        <InlineMultiSelect
+                            label={__('Post Author', 'post-expirator')}
+                            value={defaultValue?.postAuthor || []}
+                            suggestions={postAuthorOptions}
+                            expandOnFocus={true}
+                            autoSelectFirstMatch={true}
+                            onChange={(value) => onChangeSetting({ settingName: "postAuthor", value })}
+                        />
 
-                            {descriptions?.postAuthor && (
-                                <p className="description">{descriptions.postAuthor}</p>
-                            )}
-                        </>
+                        {descriptions?.postAuthor && (
+                            <p className="description">{descriptions.postAuthor}</p>
+                        )}
+
+                        <InlineMultiSelect
+                            label={__('Post Terms', 'post-expirator')}
+                            value={defaultValue?.postTerms || []}
+                            suggestions={postTermsOptions}
+                            expandOnFocus={true}
+                            autoSelectFirstMatch={true}
+                            onChange={(value) => onChangeSetting({ settingName: "postTerms", value })}
+                        />
+
+                        {descriptions?.postTerms && (
+                            <p className="description">{descriptions.postTerms}</p>
+                        )}
+
 
                         <PanelRow>
                             <p className="description">

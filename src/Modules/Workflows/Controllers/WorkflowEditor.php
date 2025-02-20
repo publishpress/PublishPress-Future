@@ -13,6 +13,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\PostAuthorsModel;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 use PublishPress\Future\Modules\Workflows\Models\PostStatusesModel;
+use PublishPress\Future\Modules\Workflows\Models\PostTermModel;
 use PublishPress\Future\Modules\Workflows\Models\PostTypesModel;
 use PublishPress\Future\Modules\Workflows\Models\TaxonomiesModel;
 use PublishPress\Future\Modules\Workflows\Models\UserRolesModel;
@@ -190,6 +191,9 @@ class WorkflowEditor implements InitializableInterface
         $postAuthorsModel = new PostAuthorsModel();
         $postAuthors = $postAuthorsModel->getAuthorsAsOptions();
 
+        $postTermsModel = new PostTermModel();
+        $postTerms = $postTermsModel->getAllTermsAsOptions();
+
         wp_localize_script(
             "future_workflow_editor_script",
             "futureWorkflowEditor",
@@ -238,6 +242,7 @@ class WorkflowEditor implements InitializableInterface
                 "isPro" => $isPro,
                 "userRoles" => $userRoles,
                 "postAuthors" => $postAuthors,
+                "postTerms" => $postTerms,
             ]
         );
 
