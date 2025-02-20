@@ -526,6 +526,8 @@ class ManualPostTrigger implements InitializableInterface
                 ('edit' !== $doAction)
                 || (! isset($_REQUEST['future_action_bulk_view']))
                 || ($_REQUEST['future_action_bulk_view'] !== 'bulk-edit')
+                || (! isset($_REQUEST['future_workflow_manual_trigger']))
+                || (! isset($_REQUEST['future_workflow_manual_strategy']))
             ) {
                 return;
             }
