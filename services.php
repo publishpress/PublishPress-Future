@@ -110,6 +110,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostSt
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostUpdateRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostWorkflowEnableRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnScheduleRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnUserRoleChangeRunner;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncStepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
@@ -938,6 +939,13 @@ return [
                     );
                     break;
 
+                case OnUserRoleChangeRunner::getNodeTypeName():
+                    $stepRunner = new OnUserRoleChangeRunner(
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
+                        $container->get(ServicesAbstract::LOGGER)
+                    );
+                    break;
+
                 // Actions
                 case DeletePostRunner::getNodeTypeName():
                     $stepRunner = new DeletePostRunner(
@@ -1091,7 +1099,9 @@ return [
     },
 
     ServicesAbstract::INPUT_VALIDATOR_POST_QUERY => static function (ContainerInterface $container) {
-        return new PostQueryValidator();
+        return new PostQueryValidator(
+            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
+        );
     },
 
     ServicesAbstract::DATE_TIME_HANDLER => static function (ContainerInterface $container) {

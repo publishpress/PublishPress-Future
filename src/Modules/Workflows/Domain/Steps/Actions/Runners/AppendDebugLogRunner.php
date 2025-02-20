@@ -61,7 +61,7 @@ class AppendDebugLogRunner implements StepRunnerInterface
                     $message = $message['expression'] ?? '';
                 }
 
-                $message = $this->variablesHandler->replacePlaceholdersInText($message);
+                $message = $this->variablesHandler->resolveExpressionsInText($message);
                 $message = 'Slug: ' . $nodeSlug . ' | ' . $message;
                 $message = $this->stepProcessor->prepareLogMessage($message, $nodeSlug);
 

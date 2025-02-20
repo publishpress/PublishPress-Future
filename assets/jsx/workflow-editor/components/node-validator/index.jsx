@@ -60,7 +60,7 @@ export function NodeValidator({})
         let variables = getExpandedVariablesList(node, globalVariables);
 
         if (ruleData?.dataType) {
-            variables = filterVariableOptionsByDataType(variables, ruleData.dataType);
+            variables = filterVariableOptionsByDataType(variables, [ruleData.dataType]);
         }
 
         let variableIsFound = false;

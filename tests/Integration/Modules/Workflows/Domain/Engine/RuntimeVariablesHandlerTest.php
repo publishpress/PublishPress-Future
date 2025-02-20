@@ -124,7 +124,7 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
         $handler = new RuntimeVariablesHandler();
 
         $text = 'This is a test {{variable1}} and {{variable2}}';
-        $placeholders = $handler->extractPlaceholdersFromText($text);
+        $placeholders = $handler->extractExpressionsFromText($text);
         $this->assertEquals(['variable1', 'variable2'], $placeholders);
     }
 
@@ -143,7 +143,7 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
         ]);
 
         $text = 'This is a test {{variable1}} and {{variable2}} on the workflow {{global.workflow.id}}';
-        $replacedText = $handler->replacePlaceholdersInText($text);
+        $replacedText = $handler->resolveExpressionsInText($text);
         $this->assertEquals('This is a test value1 and value2 on the workflow 123', $replacedText);
     }
 }

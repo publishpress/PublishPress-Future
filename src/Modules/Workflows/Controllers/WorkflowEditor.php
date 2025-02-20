@@ -10,10 +10,12 @@ use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
+use PublishPress\Future\Modules\Workflows\Models\PostAuthorsModel;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 use PublishPress\Future\Modules\Workflows\Models\PostStatusesModel;
 use PublishPress\Future\Modules\Workflows\Models\PostTypesModel;
 use PublishPress\Future\Modules\Workflows\Models\TaxonomiesModel;
+use PublishPress\Future\Modules\Workflows\Models\UserRolesModel;
 use PublishPress\Future\Modules\Workflows\Module;
 
 class WorkflowEditor implements InitializableInterface
@@ -182,6 +184,12 @@ class WorkflowEditor implements InitializableInterface
 
         $isPro = $this->hooks->applyFilters(HooksAbstract::FILTER_IS_PRO, false);
 
+        $userRolesModel = new UserRolesModel();
+        $userRoles = $userRolesModel->getUserRolesAsOptions();
+
+        $postAuthorsModel = new PostAuthorsModel();
+        $postAuthors = $postAuthorsModel->getAuthorsAsOptions();
+
         wp_localize_script(
             "future_workflow_editor_script",
             "futureWorkflowEditor",
@@ -228,6 +236,8 @@ class WorkflowEditor implements InitializableInterface
                 "welcomeGuidePages" => $this->getWelcomeGuidePages(),
                 "isExperimentalFeaturesEnabled" => $this->settingsFacade->getExperimentalFeaturesStatus(),
                 "isPro" => $isPro,
+                "userRoles" => $userRoles,
+                "postAuthors" => $postAuthors,
             ]
         );
 

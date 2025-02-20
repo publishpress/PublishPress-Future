@@ -27,7 +27,7 @@ trait TimestampCalculator
                 } elseif ($dateSource === 'step') {
                     $timestamp = time();
                 } elseif ($dateSource === 'custom') {
-                    $timestamp = $this->variablesHandler->replacePlaceholdersInText($customDate);
+                    $timestamp = $this->variablesHandler->resolveExpressionsInText($customDate);
                 } else {
                     $timestamp = $this->variablesHandler->getVariable($dateSource);
                 }
