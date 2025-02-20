@@ -37,6 +37,10 @@ class PostQuery implements InputValidatorsInterface
             return false;
         }
 
+        if (! $this->hasValidPostTerms($post, $nodeSettings)) {
+            return false;
+        }
+
         return true;
     }
 
@@ -98,5 +102,46 @@ class PostQuery implements InputValidatorsInterface
         $settingPostAuthor = $this->runtimeVariablesHandler->resolveExpressionsInArray($settingPostAuthor);
 
         return in_array($post->post_author, $settingPostAuthor);
+    }
+
+    private function hasValidPostTerms($post, array $nodeSettings)
+    {
+        $settingPostTerms = $nodeSettings['postQuery']['postTerms'] ?? [];
+
+        if (empty($settingPostTerms)) {
+            return true;
+        }
+
+        $settingPostTerms = $this->runtimeVariablesHandler->resolveExpressionsInArray($settingPostTerms);
+
+        $groupedSelectedTerms = [];
+
+        foreach ($settingPostTerms as $term) {
+            $termParts = explode(':', $term);
+
+            if (count($termParts) !== 2) {
+                continue;
+            }
+
+            if (!isset($groupedSelectedTerms[$termParts[0]])) {
+                $groupedSelectedTerms[$termParts[0]] = [];
+            }
+
+            $groupedSelectedTerms[$termParts[0]][] = (int)$termParts[1];
+        }
+
+        foreach ($groupedSelectedTerms as $taxonomy => $termIds) {
+            $postTerms = wp_get_post_terms($post->ID, $taxonomy, ['fields' => 'ids']);
+
+            if (is_wp_error($postTerms)) {
+                return false;
+            }
+
+            if (count(array_intersect($postTerms, $termIds)) > 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
