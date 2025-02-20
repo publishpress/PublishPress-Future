@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add form to customize the import of workflows and settings from a JSON file (Issue #1152).
 - Add new trigger: User role is changed - PRO (Issue #1166).
 - Add new field to the post query step settings on the workflow editor to query posts by author.
+- Add new field to the post query step settings on the workflow editor to query posts by terms.
 
 ### Changed
 
