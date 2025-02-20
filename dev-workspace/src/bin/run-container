@@ -12,4 +12,20 @@ run_terminal_service() {
 
 $BIN_PATH/update-docker-image --daily
 
-run_terminal_service "$@"
+RUNNING_CONTAINER=$($BIN_PATH/detect-running-container)
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+    echo "Usage: $0 [--new|-n|--help|-h]"
+    exit 0
+fi
+
+if [ "$1" = "--new" ] || [ "$1" = "-n" ]; then
+    echo "Running new container"
+    run_terminal_service "${@:2}"
+elif [ -z "$RUNNING_CONTAINER" ]; then
+    echo "Running new container"
+    run_terminal_service "$@"
+else
+    echo "Running existing container"
+    docker exec -it $RUNNING_CONTAINER bash -c "zsh -l"
+fi

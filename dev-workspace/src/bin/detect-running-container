@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+docker ps --format "{{.Names}}" | grep -q "$CONTAINER_NAME"
+
+if [ $? -ne 0 ]; then
+    echo ""
+else
+    RUNNING_CONTAINER=$(docker ps --format "{{.Names}}" | grep "$CONTAINER_NAME")
+    echo "$RUNNING_CONTAINER"
+fi
