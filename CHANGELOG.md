@@ -15,17 +15,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add validation to the expression builder to avoid empty placeholders.
 - Add validation to the expression builder to avoid unopened and unclosed placeholders.
 - Add form to customize the import of workflows and settings from a JSON file (Issue #1152).
+- Add new trigger: User role is changed - PRO (Issue #1166).
+- Add new field to the post query step settings on the workflow editor to query posts by author.
 
 ### Changed
 
 - Changed the description field on workflow steps settings to be a popover, and part of the inspector card, saving space in the sidebar.
 - Remove left padding from the workflow step details panel.
 - Remove attributes table from the inspector card when on developer mode (that data can still be seen in the Developer Info panel)
+- Improved the debug panel in the workflow editor showing the node data and node settings in separate items.
 
 ### Fixed
 
 - Fix fatal error when selecting multiple steps or a connection in the workflow editor (Issue #1162).
 - Fix default data for the "Send Ray" step, sending all the input value instead of a blank message.
+
+### Developers
+
+- Add new method `resolveExpressionsInArray` to the class `RuntimeVariablesHandler`.
+- Add new method `resolveExpressionsInText` to the class `RuntimeVariablesHandler`.
+- Add new method `extractExpressionsFromText` to the class `RuntimeVariablesHandler`.
+- Deprecated the methods `replacePlaceholdersInText` and `extractPlaceholdersFromText` in favor of the new methods `resolveExpressionsInText` and `extractExpressionsFromText` in the interface `RuntimeVariablesHandlerInterface` and the class `RuntimeVariablesHandler`.
+- Add new data field to the workflow editor to query users by role and id.
+- Add new model to user roles.
 
 ## [4.3.3] - 03 Feb, 2025
 
