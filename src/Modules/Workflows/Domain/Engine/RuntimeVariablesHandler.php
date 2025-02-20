@@ -38,29 +38,63 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
         }
     }
 
-    public function extractPlaceholdersFromText($text)
+    /**
+     * @since 4.3.4
+     */
+    public function extractExpressionsFromText(string $text): array
     {
-        $variables = [];
-        preg_match_all('/{{(.*?)}}/', $text, $variables);
+        $expressions = [];
+        preg_match_all('/{{(.*?)}}/', $text, $expressions);
 
-        return $variables[1];
+        return $expressions[1];
     }
 
-    public function replacePlaceholdersInText($text)
+    /**
+     * @since 4.3.4
+     */
+    public function resolveExpressionsInText(string $text): string
     {
-        $variables = $this->extractPlaceholdersFromText($text);
+        $expressions = $this->extractExpressionsFromText($text);
 
-        foreach ($variables as $variable) {
-            $value = $this->getVariable($variable);
+        foreach ($expressions as $expression) {
+            $value = $this->getVariable($expression);
 
             if (is_array($value) || is_object($value)) {
                 $value = wp_json_encode($value);
             }
 
-            $text = str_replace('{{' . $variable . '}}', $value, $text);
+            $text = str_replace('{{' . $expression . '}}', $value, $text);
         }
 
         return $text;
+    }
+
+    /**
+     * @since 4.3.4
+     */
+    public function resolveExpressionsInArray(array $array): array
+    {
+        if (empty($array)) {
+            return $array;
+        }
+
+        return array_map(fn($item) => $this->resolveExpressionsInText($item), $array);
+    }
+
+    /**
+     * @deprecated 4.3.4 Use extractExpressionsFromText instead.
+     */
+    public function extractPlaceholdersFromText($text)
+    {
+        return $this->extractExpressionsFromText($text);
+    }
+
+    /**
+     * @deprecated 4.3.4 Use extractExpressionsFromText instead.
+     */
+    public function replacePlaceholdersInText($text)
+    {
+        return $this->resolveExpressionsInText($text);
     }
 
     private function getVariableValue(string $variableName, $dataSource)

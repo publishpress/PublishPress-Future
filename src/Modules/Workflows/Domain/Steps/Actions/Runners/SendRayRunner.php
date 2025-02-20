@@ -88,7 +88,7 @@ class SendRayRunner implements StepRunnerInterface
                     $output = $this->variablesHandler->getAllVariables();
                     unset($output['global']);
                 } else {
-                    $output = $this->variablesHandler->replacePlaceholdersInText($expression);
+                    $output = $this->variablesHandler->resolveExpressionsInText($expression);
                 }
 
                 // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction

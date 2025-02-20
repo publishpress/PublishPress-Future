@@ -95,13 +95,7 @@ class PostQuery implements InputValidatorsInterface
             return true;
         }
 
-        $settingPostAuthor = array_map(function ($postAuthor) {
-            if (strpos($postAuthor, '{{') === 0) {
-                $postAuthor = $this->runtimeVariablesHandler->replacePlaceholdersInText($postAuthor);
-            }
-
-            return $postAuthor;
-        }, $settingPostAuthor);
+        $settingPostAuthor = $this->runtimeVariablesHandler->resolveExpressionsInArray($settingPostAuthor);
 
         return in_array($post->post_author, $settingPostAuthor);
     }

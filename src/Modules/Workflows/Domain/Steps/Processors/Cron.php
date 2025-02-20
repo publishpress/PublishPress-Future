@@ -392,7 +392,7 @@ class Cron implements AsyncStepProcessorInterface
 
             if (! empty($uniqueIdExpression)) {
                 $uniqueId = [
-                    'custom' => $this->variablesHandler->replacePlaceholdersInText($uniqueIdExpression),
+                    'custom' => $this->variablesHandler->resolveExpressionsInText($uniqueIdExpression),
                 ];
             }
         }
