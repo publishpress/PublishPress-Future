@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix fatal error when selecting multiple steps or a connection in the workflow editor (Issue #1162).
 - Fix default data for the "Send Ray" step, sending all the input value instead of a blank message.
+- Fix the "Restore" and "Delete Permanently" actions for trashed workflows (Issue #1175).
 
 ### Developers
 

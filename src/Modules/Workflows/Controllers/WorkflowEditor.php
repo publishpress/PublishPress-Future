@@ -109,7 +109,13 @@ class WorkflowEditor implements InitializableInterface
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $action = $_GET["action"] ?? "";
-        if ("trash" === $action) {
+        $actionsToByPass = [
+            "trash",
+            "untrash",
+            "delete",
+        ];
+
+        if (in_array($action, $actionsToByPass)) {
             return;
         }
 
