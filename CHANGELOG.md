@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add new trigger: User role is changed - PRO (Issue #1166).
 - Add new field to the post query step settings on the workflow editor to query posts by author.
 - Add new field to the post query step settings on the workflow editor to query posts by terms.
+- Add time to the Schedule step (Issue #1124).
 
 ### Changed
 
