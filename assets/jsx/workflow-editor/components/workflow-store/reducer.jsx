@@ -136,20 +136,20 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
     state = setGlobalVariable(state, {
         payload: {
             name: 'trace',
-            label: 'Execution trace',
+            label: 'Workflow step trace',
             type: 'array',
             runtimeOnly: true,
-            description: 'The trace of the execution of the workflow.',
+            description: 'A step-by-step history showing how the workflow ran, making it easier to find and fix any issues.',
         }
     });
 
     state = setGlobalVariable(state, {
         payload: {
-            name: 'execution_id',
-            label: 'Execution ID',
+            name: 'run_id',
+            label: 'Workflow run ID',
             type: 'string',
             runtimeOnly: true,
-            description: 'The unique identifier for the execution of the workflow.',
+            description: 'A unique identifier assigned each time the workflow runs. Useful for tracking specific workflow executions and debugging.',
         }
     });
 

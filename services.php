@@ -762,7 +762,9 @@ return [
     },
 
     ServicesAbstract::WORKFLOW_VARIABLES_HANDLER => static function (ContainerInterface $container) {
-        return new RuntimeVariablesHandler();
+        return new RuntimeVariablesHandler(
+            $container->get(ServicesAbstract::HOOKS)
+        );
     },
 
     ServicesAbstract::WORKFLOW_ENGINE => static function (ContainerInterface $container) {

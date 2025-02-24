@@ -2,6 +2,8 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine;
 
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\VariableResolverInterface;
 
@@ -9,6 +11,16 @@ use function wp_json_encode;
 
 class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
 {
+    /**
+     * @var HookableInterface
+     */
+    private $hooks;
+
+    public function __construct(HookableInterface $hooks)
+    {
+        $this->hooks = $hooks;
+    }
+
     /**
      * @var array
      */
@@ -121,6 +133,20 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
 
     private function getVariableValueFromNestedVariable(string $variableName, $dataSource)
     {
+        /**
+         * @param string $variableName
+         * @param mixed $dataSource
+         *
+         * @since 4.3.4
+         *
+         * @return string
+         */
+        $variableName = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_WORKFLOW_ROUTE_VARIABLE,
+            $variableName,
+            $dataSource
+        );
+
         $originalVariableName = $variableName;
         $variableName = explode('.', $variableName);
 

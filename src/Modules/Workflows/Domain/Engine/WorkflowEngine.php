@@ -178,7 +178,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                         'modified_at' => $workflow->getModifiedAt(),
                     ]
                 ),
-                'execution_id' => $this->getExecutionId(),
+                'run_id' => $this->getRunId(),
             ];
 
             foreach ($triggerSteps as $triggerStep) {
@@ -414,7 +414,7 @@ class WorkflowEngine implements WorkflowEngineInterface
         return 'frontend';
     }
 
-    private function getExecutionId(): string
+    private function getRunId(): string
     {
         return wp_generate_uuid4();
     }

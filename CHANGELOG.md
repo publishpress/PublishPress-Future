@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add new field to the post query step settings on the workflow editor to query posts by author.
 - Add new field to the post query step settings on the workflow editor to query posts by terms.
 - Add time to the Schedule step (Issue #1124).
+- Add new filter `publishpressfuture_workflow_route_variable` to customize the variable name on the workflow runtime (Issue #1126).
 
 ### Changed
 
@@ -26,6 +27,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove left padding from the workflow step details panel.
 - Remove attributes table from the inspector card when on developer mode (that data can still be seen in the Developer Info panel)
 - Improved the debug panel in the workflow editor showing the node data and node settings in separate items.
+- Renamed the label of the `global.trace` variable to "Workflow Step Trace" (Issue #1126).
+- Renamed the variable `global.execution_id` to `global.run_id` and its label to "Workflow Run ID" (Issue #1126).
 
 ### Fixed
 
