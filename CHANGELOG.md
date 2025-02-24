@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Renamed the label of the `global.trace` variable to "Workflow Step Trace" (Issue #1126).
 - Renamed the variable `global.execution_id` to `global.run_id` and its label to "Workflow Run ID" (Issue #1126).
 - Removed the "Task Execution Order" field from the Schedule Delay step settings (Issue #1180).
+- Updated the "Auto-enable" setting, renaming it to "Automatically create actions" (Issue #1157)
+- Updated the text in the Permissions settings (Issue #1136)
 
 ### Fixed
 
