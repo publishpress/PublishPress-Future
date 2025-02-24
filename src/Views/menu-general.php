@@ -81,7 +81,7 @@ echo sprintf(
                 <tr valign="top">
                     <th scope="row">
                         <?php
-                        esc_html_e('Choose Which User Roles Can Use PublishPress Future', 'post-expirator'); ?>
+                        esc_html_e('Choose Which User Roles Can Create Future Actions', 'post-expirator'); ?>
                     </th>
                     <td class="pe-checklist">
                         <?php
