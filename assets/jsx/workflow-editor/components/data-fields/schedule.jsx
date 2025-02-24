@@ -180,21 +180,6 @@ export function Schedule({ name, label, defaultValue, onChange, variables = [], 
 
                             </>
                         )}
-
-                        <PanelRow className="margin-bottom-0">
-                            <NumberControl
-                                label={__("Task Execution Order", "post-expirator")}
-                                value={defaultValue.priority || 10}
-                                onChange={(value) => onChangeSetting({ settingName: "priority", value })}
-                            />
-                        </PanelRow>
-
-                        <PanelRow className="margin-top-0">
-                            <DescriptionText
-                                text={__("Defines the execution order for this task in relation to others.", "post-expirator")}
-                                helpUrl="https://publishpress.com/docs/schedule-delay/#preventing-duplicate-scheduled-tasks-task-identification-guide"
-                            />
-                        </PanelRow>
                     </>
                 )}
             </VStack>

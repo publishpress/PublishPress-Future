@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Improved the debug panel in the workflow editor showing the node data and node settings in separate items.
 - Renamed the label of the `global.trace` variable to "Workflow Step Trace" (Issue #1126).
 - Renamed the variable `global.execution_id` to `global.run_id` and its label to "Workflow Run ID" (Issue #1126).
+- Removed the "Task Execution Order" field from the Schedule Delay step settings (Issue #1180).
 
 ### Fixed
 
