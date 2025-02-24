@@ -247,8 +247,8 @@ class Controller implements InitializableInterface
                                 'Select the taxonomy to be used for actions.',
                                 'post-expirator'
                             ),
-                            'fieldAutoEnable' => __('Auto-enable', 'post-expirator'),
-                            'fieldAutoEnableLabel' => __('Enabled for all new posts', 'post-expirator'),
+                            'fieldAutoEnable' => __('Automatically create actions', 'post-expirator'),
+                            'fieldAutoEnableLabel' => __('This will automatically create an action for new posts, using the default settings on this screen', 'post-expirator'),
                             'fieldTaxonomy' => __('Taxonomy', 'post-expirator'),
                             'noItemsfound' => __('No taxonomies found for this post type. Taxonomy actions will not be available.', 'post-expirator'),
                             'fieldWhoToNotify' => __('Who to Notify', 'post-expirator'),
