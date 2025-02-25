@@ -30,7 +30,11 @@ import { useLegacyVariables } from './hooks/useLegacyVariables';
 
 export const Conditional = ({ name, label, defaultValue, onChange, variables }) => {
     const [query, setQuery, formatCondition] = useConditionalLogic({defaultValue, name, onChange, variables});
-    const [isModalOpen, setIsModalOpen, onCloseModal] = useModalManagement({onChange, name, formatCondition});
+    const {
+        isModalOpen,
+        onCloseModal,
+        openModal
+    } = useModalManagement({onChange, name, formatCondition});
     const [ editorRef ] = useEditorSetup();
     const [ convertLegacyVariables ] = useLegacyVariables();
 
@@ -99,7 +103,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
 
     return (
         <div className='conditional-editor'>
-            <Button onClick={() => setIsModalOpen(true)} variant="secondary">
+            <Button onClick={openModal} variant="secondary">
                 {__('Edit condition', 'post-expirator')}
             </Button>
 
