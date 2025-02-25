@@ -1,138 +1,28 @@
 import { QueryBuilder, formatQuery, defaultOperators } from 'react-querybuilder';
 import { parseJsonLogic } from 'react-querybuilder/parseJsonLogic';
-import { useState, useCallback, useEffect, useRef, useMemo } from '@wordpress/element';
-import { Button, CheckboxControl, Dashicon, Modal, SelectControl, ToggleControl } from '@wordpress/components';
+import { useState, useCallback, useEffect, useRef} from '@wordpress/element';
+import { Button, Modal, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as editorStore } from '../../editor-store';
-import { useSelect, select, useDispatch } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { QueryBuilderDnD } from '@react-querybuilder/dnd';
 
-import { getVariableDataTypeByVariableName } from '../../../utils';
+import { FieldExpressionBuilder } from './field-expression-builder';
+import { ValueExpressionBuilder } from './value-expression-builder';
+import { NotToggle } from './not-toggle';
+import { AddElementButton } from './add-element-button';
+import { RemoveElementButton } from './remove-element-button';
+import { CombinatorSelector } from './combinator-selector';
+import { OperatorSelector } from './operator-selector';
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-handlebars";
 import "ace-builds/src-noconflict/theme-textmate";
 import "ace-builds/src-noconflict/ext-language_tools";
 
-import ExpressionBuilder from '../expression-builder';
-
 import 'react-querybuilder/dist/query-builder.css';
 import '../../../css/query-builder.css';
 import './style.css';
-
-
-const ConditionalExpressionBuilder = ({ options, value, handleOnChange, context, readOnlyPreview, singleVariableOnly }) => {
-    const onChange = (name, value) => {
-        if (handleOnChange) {
-            handleOnChange(value.expression);
-        }
-    }
-
-    return <div>
-        <ExpressionBuilder
-            name={context.name}
-            label={context.label}
-            defaultValue={{expression: value}}
-            onChange={onChange}
-            variables={context.variables}
-            isInline={true}
-            readOnlyPreview={readOnlyPreview || false}
-            singleVariableOnly={singleVariableOnly || false}
-            oneLinePreview={true}
-            wrapOnPreview={false}
-            wrapOnEditor={false}
-        />
-    </div>;
-};
-
-const FieldExpressionBuilder = ({ options, value, handleOnChange, context }) => {
-    return <ConditionalExpressionBuilder
-        options={options}
-        value={value}
-        handleOnChange={handleOnChange}
-        context={context}
-        readOnlyPreview={true}
-        singleVariableOnly={true}
-    />;
-};
-
-const ValueExpressionBuilder = ({ options, value, handleOnChange, context, rule }) => {
-    const variableDataType = useMemo(() => getVariableDataTypeByVariableName(rule.field, context.variables), [rule.field, context.variables]);
-
-    console.log(variableDataType);
-
-    return <ConditionalExpressionBuilder
-        options={options}
-        value={value}
-        handleOnChange={handleOnChange}
-        context={context}
-        readOnlyPreview={false}
-    />;
-};
-
-const NotToggle = ({ checked, handleOnChange }) => {
-    const [isNot, setIsNot] = useState(checked || false);
-
-    useEffect(() => {
-        setIsNot(checked || false);
-    }, [checked]);
-
-    const handleToggle = () => {
-        const newValue = !isNot;
-        setIsNot(newValue);
-        handleOnChange(newValue);
-    }
-
-    const {
-        currentConditionalQuery,
-    } = useSelect((select) => ({
-        currentConditionalQuery: select(editorStore).getCurrentConditionalQuery(),
-    }));
-
-    return (
-        <>
-            {currentConditionalQuery && currentConditionalQuery.rules.length > 0 && (
-                <CheckboxControl
-                    label={__('Not', 'post-expirator')}
-                    checked={isNot}
-                    onChange={handleToggle}
-                    className={isNot ? 'is-checked' : ''}
-                />
-            )}
-        </>
-    );
-};
-
-const AddElementButton = ({ label, handleOnClick }) => {
-    return <Button onClick={handleOnClick} variant="secondary">
-        {label}
-    </Button>;
-};
-
-const RemoveElementButton = ({ label, handleOnClick }) => {
-    return <Button onClick={handleOnClick} variant="secondary" className="conditional-editor-modal-remove-element">
-        <Dashicon icon="trash" size={16} />
-    </Button>;
-};
-
-const CombinatorSelector = ({ label, value, options, handleOnChange }) => {
-    return <SelectControl
-        label={label}
-        value={value}
-        options={options}
-        onChange={handleOnChange}
-    />;
-};
-
-const OperatorSelector = ({ label, value, options, handleOnChange }) => {
-    return <SelectControl
-        label={label}
-        value={value}
-        options={options}
-        onChange={handleOnChange}
-        className="conditional-editor-modal-operator-selector"
-    />;
-};
 
 export const Conditional = ({ name, label, defaultValue, onChange, variables }) => {
     const [isPopoverVisible, setIsPopoverVisible] = useState(false);
