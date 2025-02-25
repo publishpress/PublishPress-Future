@@ -44,8 +44,6 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         setCurrentConditionalQuery,
     } = useDispatch(editorStore);
 
-    let allVariables = variables;
-
     const editorRef = useRef(null);
 
     const convertLegacyVariables = useCallback((legacyQuery) => {
@@ -90,7 +88,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
             {
                 format: 'natural_language',
                 parseNumbers: true,
-                fields: allVariables,
+                fields: variables,
                 getOperators: () => defaultOperators,
             }
         );
@@ -104,7 +102,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         }
 
         setIsPopoverVisible(false);
-    }, [query, allVariables, onChange, name, defaultValue]);
+    }, [query, variables, onChange, name, defaultValue]);
 
     useEffect(() => {
         convertLegacyVariables(query);
@@ -173,7 +171,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                     </p>
                     <QueryBuilderDnD>
                         <QueryBuilder
-                            fields={allVariables}
+                            fields={variables}
                             onQueryChange={setQuery}
                             query={query}
                             addRuleToNewGroups
@@ -200,7 +198,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                                 operatorSelector: OperatorSelector,
                             }}
                             context={{
-                                variables: allVariables,
+                                variables: variables,
                                 name: name,
                                 label: label
                             }}
