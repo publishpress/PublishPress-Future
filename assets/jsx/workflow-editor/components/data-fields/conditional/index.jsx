@@ -24,15 +24,11 @@ import 'react-querybuilder/dist/query-builder.css';
 import '../../../css/query-builder.css';
 import './style.css';
 
+import { useConditionalLogic } from './hook-conditional-logic';
+
 export const Conditional = ({ name, label, defaultValue, onChange, variables }) => {
     const [isPopoverVisible, setIsPopoverVisible] = useState(false);
-    const [query, setQuery] = useState(
-        parseJsonLogic(
-            defaultValue?.json ?
-                defaultValue.json :
-                ''
-        )
-    );
+    const [query, setQuery, formatCondition] = useConditionalLogic(defaultValue, name, onChange, variables);
 
     const {
         isPro,
@@ -75,34 +71,12 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
     }, []);
 
     const onClose = useCallback(() => {
-        const jsonCondition = formatQuery(
-            query,
-            {
-                format: 'jsonlogic',
-                parseNumbers: true,
-            }
-        );
-
-        const naturalLanguageCondition = formatQuery(
-            query,
-            {
-                format: 'natural_language',
-                parseNumbers: true,
-                fields: variables,
-                getOperators: () => defaultOperators,
-            }
-        );
-
-        const newValue = { ...defaultValue };
-        newValue.json = jsonCondition;
-        newValue.natural = naturalLanguageCondition;
-
         if (onChange) {
-            onChange(name, newValue);
+            onChange(name, formatCondition());
         }
 
         setIsPopoverVisible(false);
-    }, [query, variables, onChange, name, defaultValue]);
+    }, [onChange, name, defaultValue, formatCondition]);
 
     useEffect(() => {
         convertLegacyVariables(query);
