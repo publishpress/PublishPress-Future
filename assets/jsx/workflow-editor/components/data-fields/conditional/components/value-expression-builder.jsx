@@ -1,5 +1,5 @@
 import { useMemo } from '@wordpress/element';
-import { getVariableDataTypeByVariableName } from '../../../utils';
+import { getVariableDataTypeByVariableName } from '../../../../utils';
 import { ConditionalExpressionBuilder } from './conditional-expression-builder';
 
 export const ValueExpressionBuilder = ({ options, value, handleOnChange, context, rule }) => {

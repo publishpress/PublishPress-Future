@@ -1,4 +1,4 @@
-import ExpressionBuilder from '../expression-builder';
+import ExpressionBuilder from '../../expression-builder';
 
 export const ConditionalExpressionBuilder = ({ options, value, handleOnChange, context, readOnlyPreview, singleVariableOnly }) => {
     const onChange = (name, value) => {

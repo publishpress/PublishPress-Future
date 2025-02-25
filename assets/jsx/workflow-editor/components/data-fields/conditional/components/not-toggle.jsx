@@ -1,6 +1,6 @@
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
-import { store as editorStore } from '../../editor-store';
+import { store as editorStore } from '../../../editor-store';
 import { __ } from '@wordpress/i18n';
 import { CheckboxControl } from '@wordpress/components';
 

@@ -6,13 +6,13 @@ import { store as editorStore } from '../../editor-store';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { QueryBuilderDnD } from '@react-querybuilder/dnd';
 
-import { FieldExpressionBuilder } from './field-expression-builder';
-import { ValueExpressionBuilder } from './value-expression-builder';
-import { NotToggle } from './not-toggle';
-import { AddElementButton } from './add-element-button';
-import { RemoveElementButton } from './remove-element-button';
-import { CombinatorSelector } from './combinator-selector';
-import { OperatorSelector } from './operator-selector';
+import { FieldExpressionBuilder } from './components/field-expression-builder';
+import { ValueExpressionBuilder } from './components/value-expression-builder';
+import { NotToggle } from './components/not-toggle';
+import { AddElementButton } from './components/add-element-button';
+import { RemoveElementButton } from './components/remove-element-button';
+import { CombinatorSelector } from './components/combinator-selector';
+import { OperatorSelector } from './components/operator-selector';
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-handlebars";
@@ -21,12 +21,12 @@ import "ace-builds/src-noconflict/ext-language_tools";
 
 import 'react-querybuilder/dist/query-builder.css';
 import '../../../css/query-builder.css';
-import './style.css';
+import './styles/index.css';
 
-import { useConditionalLogic } from './hook-conditional-logic';
-import { useModalManagement } from './hook-modal-management';
-import { useEditorSetup } from './hook-editor-setup';
-import { useLegacyVariables } from './hook-legacy-variables';
+import { useConditionalLogic } from './hooks/useConditionalLogic';
+import { useModalManagement } from './hooks/useModalManagement';
+import { useEditorSetup } from './hooks/useEditorSetup';
+import { useLegacyVariables } from './hooks/useLegacyVariables';
 
 export const Conditional = ({ name, label, defaultValue, onChange, variables }) => {
     const [query, setQuery, formatCondition] = useConditionalLogic({defaultValue, name, onChange, variables});
