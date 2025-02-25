@@ -1,6 +1,5 @@
-import { QueryBuilder, formatQuery, defaultOperators } from 'react-querybuilder';
-import { parseJsonLogic } from 'react-querybuilder/parseJsonLogic';
-import { useState, useCallback, useEffect, useRef } from '@wordpress/element';
+import { QueryBuilder } from 'react-querybuilder';
+import { useState, useCallback, useEffect, useRef, useMemo } from '@wordpress/element';
 import { Button, Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as editorStore } from '../../editor-store';
@@ -131,11 +130,11 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         queryBuilder: 'queryBuilder-branches',
     };
 
-    const queryBuilderContext = {
+    const queryBuilderContext = useMemo(() => ({
         variables: variables,
         name: name,
         label: label
-    };
+    }), [variables, name, label]);
 
     return (
         <div className='conditional-editor'>
