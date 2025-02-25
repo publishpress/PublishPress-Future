@@ -1,7 +1,7 @@
 import { QueryBuilder, formatQuery, defaultOperators } from 'react-querybuilder';
 import { parseJsonLogic } from 'react-querybuilder/parseJsonLogic';
 import { useState, useCallback, useEffect, useRef} from '@wordpress/element';
-import { Button, Modal, SelectControl } from '@wordpress/components';
+import { Button, Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as editorStore } from '../../editor-store';
 import { useSelect, useDispatch } from '@wordpress/data';
