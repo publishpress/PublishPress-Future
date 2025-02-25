@@ -57,8 +57,6 @@ export function NodeValidator({})
             variable = [variable];
         }
 
-        console.log("variable", variable, ruleData);
-
 
         if (ruleData?.skipIfEmpty) {
             if (variable === '') {
@@ -75,17 +73,13 @@ export function NodeValidator({})
         }
 
         let contextVariables = getNodeVariablesTree(node, globalVariables);
-        // contextVariables =
 
         if (ruleData?.dataType) {
             if (! Array.isArray(ruleData.dataType)) {
                 ruleData.dataType = [ruleData.dataType];
             }
-            console.log('contextVariables-a', contextVariables);
             contextVariables = filterVariablesTreeByDataType(contextVariables, ruleData.dataType);
         }
-
-        console.log("contextVariables", contextVariables);
 
         let onlyValidValues = true;
         let invalidVariable = '';
