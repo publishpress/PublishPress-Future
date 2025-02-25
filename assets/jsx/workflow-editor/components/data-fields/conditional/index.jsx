@@ -1,11 +1,13 @@
 import { QueryBuilder, formatQuery, defaultOperators } from 'react-querybuilder';
 import { parseJsonLogic } from 'react-querybuilder/parseJsonLogic';
-import { useState, useCallback, useEffect, useRef } from '@wordpress/element';
+import { useState, useCallback, useEffect, useRef, useMemo } from '@wordpress/element';
 import { Button, CheckboxControl, Dashicon, Modal, SelectControl, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as editorStore } from '../../editor-store';
 import { useSelect, select, useDispatch } from '@wordpress/data';
 import { QueryBuilderDnD } from '@react-querybuilder/dnd';
+
+import { getVariableDataTypeByVariableName } from '../../../utils';
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-handlebars";
@@ -17,6 +19,7 @@ import ExpressionBuilder from '../expression-builder';
 import 'react-querybuilder/dist/query-builder.css';
 import '../../../css/query-builder.css';
 import './style.css';
+
 
 const ConditionalExpressionBuilder = ({ options, value, handleOnChange, context, readOnlyPreview, singleVariableOnly }) => {
     const onChange = (name, value) => {
@@ -31,7 +34,7 @@ const ConditionalExpressionBuilder = ({ options, value, handleOnChange, context,
             label={context.label}
             defaultValue={{expression: value}}
             onChange={onChange}
-            variables={context.options}
+            variables={context.variables}
             isInline={true}
             readOnlyPreview={readOnlyPreview || false}
             singleVariableOnly={singleVariableOnly || false}
@@ -53,7 +56,11 @@ const FieldExpressionBuilder = ({ options, value, handleOnChange, context }) => 
     />;
 };
 
-const ValueExpressionBuilder = ({ options, value, handleOnChange, context }) => {
+const ValueExpressionBuilder = ({ options, value, handleOnChange, context, rule }) => {
+    const variableDataType = useMemo(() => getVariableDataTypeByVariableName(rule.field, context.variables), [rule.field, context.variables]);
+
+    console.log(variableDataType);
+
     return <ConditionalExpressionBuilder
         options={options}
         value={value}
@@ -157,7 +164,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         const wrapFieldValue = (field) => {
             if (typeof field !== 'string') return field;
             if (field.startsWith('{{') && field.endsWith('}}')) return field;
-            return `{{${field}}}`;
+            return field;
         };
 
         const processRules = (rules) => {
@@ -303,7 +310,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                                 operatorSelector: OperatorSelector,
                             }}
                             context={{
-                                options: allVariables,
+                                variables: allVariables,
                                 name: name,
                                 label: label
                             }}

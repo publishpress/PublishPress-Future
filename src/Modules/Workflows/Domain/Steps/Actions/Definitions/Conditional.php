@@ -119,6 +119,12 @@ class Conditional implements StepTypeInterface
                 "label" => __("Branch", "post-expirator"),
                 "description" => __("The current branch on this step: 'true' or 'false'.", "post-expirator"),
             ],
+            [
+                "name" => "result",
+                "type" => "boolean",
+                "label" => __("Result", "post-expirator"),
+                "description" => __("The result of the conditional step.", "post-expirator"),
+            ]
         ];
     }
 

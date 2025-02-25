@@ -2,7 +2,7 @@ export function DatetimeData() {
     return {
         name: "datetime",
         label: "Datetime",
-        type: "datetime"
+        primitiveType: "string",
     };
 }
 

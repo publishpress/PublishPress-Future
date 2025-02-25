@@ -2,8 +2,7 @@ export function SiteData() {
     return {
         name: "site",
         label: "Site",
-        type: "object",
-        objectType: "site",
+        primitiveType: "object",
         propertiesSchema: [
             {
                 name: "id",

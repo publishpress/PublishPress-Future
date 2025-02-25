@@ -3,7 +3,7 @@ import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useMemo } from "@wordpress/element";
-import { getExpandedVariablesList } from "../../utils";
+import { getNodeVariablesTree } from "../../utils";
 import MappedField from "./mapped-field";
 import PersistentPanelBody from "../persistent-panel-body";
 
@@ -42,7 +42,7 @@ export const NodeSettingsPanel = ({ node }) => {
     }
     const settingsSchema = nodeType?.settingsSchema || {};
 
-    const variableListOptions = getExpandedVariablesList(node, globalVariables);
+    const variableListOptions = getNodeVariablesTree(node, globalVariables);
 
     const settingsPanels = useMemo(() => {
         return settingsSchema.map((settingPanel) => {

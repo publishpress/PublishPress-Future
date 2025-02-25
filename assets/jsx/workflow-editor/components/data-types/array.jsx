@@ -2,7 +2,8 @@ export function ArrayData() {
     return {
         name: "array",
         label: "Array",
-        type: "array",
+        primitiveType: "array",
+        itemsType: "mixed",
     };
 }
 

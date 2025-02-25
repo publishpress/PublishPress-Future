@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add new field to the post query step settings on the workflow editor to query posts by terms.
 - Add time to the Schedule step (Issue #1124).
 - Add new filter `publishpressfuture_workflow_route_variable` to customize the variable name on the workflow runtime (Issue #1126).
+- Add new output "Result" to the "Conditional" step. Data type is boolean - PRO.
 
 ### Changed
 
@@ -32,12 +33,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed the "Task Execution Order" field from the Schedule Delay step settings (Issue #1180).
 - Updated the "Auto-enable" setting, renaming it to "Automatically create actions" (Issue #1157)
 - Updated the text in the Permissions settings (Issue #1136)
+- Renamed "postId" property on "node" data type variables to "post_id" to keep consistency (with backward compatibility).
+
 
 ### Fixed
 
 - Fix fatal error when selecting multiple steps or a connection in the workflow editor (Issue #1162).
 - Fix default data for the "Send Ray" step, sending all the input value instead of a blank message.
 - Fix the "Restore" and "Delete Permanently" actions for trashed workflows (Issue #1175).
+- Fix node validation rules for variables (Issue #1177).
 
 ### Developers
 
@@ -47,6 +51,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Deprecated the methods `replacePlaceholdersInText` and `extractPlaceholdersFromText` in favor of the new methods `resolveExpressionsInText` and `extractExpressionsFromText` in the interface `RuntimeVariablesHandlerInterface` and the class `RuntimeVariablesHandler`.
 - Add new data field to the workflow editor to query users by role and id.
 - Add new model to user roles.
+- Refactored the schema of data types, renaming "type" to "primitiveType" and adding "itemsType" to array.
+- Add new data types: post_status, post_type, url, user_roles, meta.
+- Refactored internal util functions on workflow editor scripts to have clearer names.
 
 ## [4.3.3] - 03 Feb, 2025
 

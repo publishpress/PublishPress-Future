@@ -2,8 +2,7 @@ export function FutureActionData() {
     return {
         name: "future_action",
         label: "Future Action",
-        type: "object",
-        objectType: "future_action",
+        primitiveType: "object",
         propertiesSchema: [
             {
                 name: "enabled",

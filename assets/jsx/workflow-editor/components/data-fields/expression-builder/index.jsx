@@ -33,6 +33,8 @@ export const ExpressionBuilder = ({
     wrapOnEditor = false,
     oneLinePreview = false,
     helpUrl = '',
+    autoComplete = true,
+    autoCompleteOptions = [],
 }) => {
     const editorFullRef = useRef(null);
     const editorSmallRef = useRef(null);
@@ -79,9 +81,9 @@ export const ExpressionBuilder = ({
 
             if (! singleVariableOnly) {
                 const cursorPosition = editor.getCursorPosition();
-                editor.session.insert(cursorPosition, `{{${item.name}}}`);
+                editor.session.insert(cursorPosition, item.id);
             } else {
-                editor.session.setValue(`{{${item.name}}}`);
+                editor.session.setValue(item.id);
             }
 
             editor.focus();
@@ -200,7 +202,7 @@ export const ExpressionBuilder = ({
                         {currentDescription && (
                             <p className="description margin-top">
                                 <code className="expression-builder-variable-name">
-                                    {`{{${currentVariableId}}}`}
+                                    {currentVariableId}
                                 </code> {currentDescription}
                             </p>
                         )}

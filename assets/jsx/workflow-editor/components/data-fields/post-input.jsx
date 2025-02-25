@@ -1,8 +1,8 @@
 import { ListInput } from "./list-input";
-import { filterVariableOptionsByDataType } from "../../utils";
+import { filterVariablesTreeByDataType } from "../../utils";
 
 export function PostInput({ name, label, defaultValue, onChange, variables}) {
-    variables = filterVariableOptionsByDataType(variables, ['post', 'array:integer']);
+    variables = filterVariablesTreeByDataType(variables, ['post', 'array:integer']);
 
     const tree = [
         {
