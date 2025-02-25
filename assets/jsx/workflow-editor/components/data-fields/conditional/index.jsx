@@ -1,6 +1,6 @@
 import { QueryBuilder, formatQuery, defaultOperators } from 'react-querybuilder';
 import { parseJsonLogic } from 'react-querybuilder/parseJsonLogic';
-import { useState, useCallback, useEffect, useRef} from '@wordpress/element';
+import { useState, useCallback, useEffect, useRef } from '@wordpress/element';
 import { Button, Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as editorStore } from '../../editor-store';
@@ -34,7 +34,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         isPro,
     } = useSelect((select) => ({
         isPro: select(editorStore).isPro(),
-    }));
+    }), [editorStore]);
 
     const {
         setCurrentConditionalQuery,
@@ -76,27 +76,66 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         }
 
         setIsPopoverVisible(false);
-    }, [onChange, name, defaultValue, formatCondition]);
-
-    useEffect(() => {
-        convertLegacyVariables(query);
-
-        if (editorRef.current) {
-            editorRef.current.editor.setOption("indentedSoftWrap", false);
-        }
-    }, []);
+    }, [onChange, name, formatCondition, setIsPopoverVisible]);
 
     const getDefaultField = useCallback((field) => {
         return '{{global.user.id}}';
     }, []);
 
-    const editorProps = {
-        $blockScrolling: true,
-    };
+    useEffect(() => {
+        convertLegacyVariables(query);
+    }, []);
+
+    useEffect(() => {
+        if (editorRef.current) {
+            editorRef.current.editor.setOption("indentedSoftWrap", false);
+        }
+    }, [editorRef]);
 
     useEffect(() => {
         setCurrentConditionalQuery(query);
     }, [query]);
+
+    const editorProps = {
+        $blockScrolling: true,
+    };
+
+    const editorOptions = {
+        enableBasicAutocompletion: false,
+        enableLiveAutocompletion: false,
+        showGutter: false,
+        showPrintMargin: false,
+        showLineNumbers: false,
+        showInvisibles: false,
+        highlightActiveLine: false,
+    };
+
+    const queryBuilderTranslations = {
+        addGroup: { label: __('Add Group', 'post-expirator') },
+        addRule: { label: __('Add Rule', 'post-expirator') }
+    };
+
+    const queryBuilderControlElements = {
+        fieldSelector: FieldExpressionBuilder,
+        valueEditor: ValueExpressionBuilder,
+        notToggle: NotToggle,
+        addRuleAction: AddElementButton,
+        addGroupAction: AddElementButton,
+        removeGroupAction: RemoveElementButton,
+        removeRuleAction: RemoveElementButton,
+        combinatorSelector: CombinatorSelector,
+        operatorSelector: OperatorSelector,
+    };
+
+    const queryBuilderControlClassnames = {
+        queryBuilder: 'queryBuilder-branches',
+    };
+
+    const queryBuilderContext = {
+        variables: variables,
+        name: name,
+        label: label
+    };
 
     return (
         <div className='conditional-editor'>
@@ -115,19 +154,11 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                     value={defaultValue?.natural || ''}
                     editorProps={editorProps}
                     readOnly={true}
-                    setOptions={{
-                        enableBasicAutocompletion: false,
-                        enableLiveAutocompletion: false,
-                        showGutter: false,
-                        showPrintMargin: false,
-                        showLineNumbers: false,
-                        showInvisibles: false,
-                        highlightActiveLine: false,
-                    }}
+                    setOptions={editorOptions}
                 />
             )}
 
-            {! isPro && (
+            {!isPro && (
                 <div className="condition-pro-features-notice">
                     <p className="description margin-top">{__('This conditional will only be evaluated in the Pro version. In the Free version, it will always return true.', 'post-expirator')}</p>
                 </div>
@@ -153,29 +184,10 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                             showCombinatorsBetweenRules
                             showNotToggle
                             enableDragAndDrop={true}
-                            controlClassnames={{
-                                queryBuilder: 'queryBuilder-branches',
-                            }}
-                            translations={{
-                                addGroup: { label: __('Add Group', 'post-expirator') },
-                                addRule: { label: __('Add Rule', 'post-expirator') }
-                            }}
-                            controlElements={{
-                                fieldSelector: FieldExpressionBuilder,
-                                valueEditor: ValueExpressionBuilder,
-                                notToggle: NotToggle,
-                                addRuleAction: AddElementButton,
-                                addGroupAction: AddElementButton,
-                                removeGroupAction: RemoveElementButton,
-                                removeRuleAction: RemoveElementButton,
-                                combinatorSelector: CombinatorSelector,
-                                operatorSelector: OperatorSelector,
-                            }}
-                            context={{
-                                variables: variables,
-                                name: name,
-                                label: label
-                            }}
+                            controlClassnames={queryBuilderControlClassnames}
+                            translations={queryBuilderTranslations}
+                            controlElements={queryBuilderControlElements}
+                            context={queryBuilderContext}
                             getDefaultField={getDefaultField}
                         />
                     </QueryBuilderDnD>
