@@ -2,7 +2,7 @@ import { useState, useCallback } from '@wordpress/element';
 import { parseJsonLogic } from 'react-querybuilder/parseJsonLogic';
 import { formatQuery, defaultOperators } from 'react-querybuilder';
 
-export const useConditionalLogic = (defaultValue, name, onChange, variables) => {
+export const useConditionalLogic = ({defaultValue, name, onChange, variables}) => {
     const [query, setQuery] = useState(
         parseJsonLogic(defaultValue?.json || '')
     );

@@ -24,10 +24,15 @@ import '../../../css/query-builder.css';
 import './style.css';
 
 import { useConditionalLogic } from './hook-conditional-logic';
+import { useModalManagement } from './hook-modal-management';
+import { useEditorSetup } from './hook-editor-setup';
+import { useLegacyVariables } from './hook-legacy-variables';
 
 export const Conditional = ({ name, label, defaultValue, onChange, variables }) => {
-    const [isPopoverVisible, setIsPopoverVisible] = useState(false);
-    const [query, setQuery, formatCondition] = useConditionalLogic(defaultValue, name, onChange, variables);
+    const [query, setQuery, formatCondition] = useConditionalLogic({defaultValue, name, onChange, variables});
+    const [isModalOpen, setIsModalOpen, onCloseModal] = useModalManagement({onChange, name, formatCondition});
+    const [ editorRef ] = useEditorSetup();
+    const [ convertLegacyVariables ] = useLegacyVariables();
 
     const {
         isPro,
@@ -39,44 +44,6 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         setCurrentConditionalQuery,
     } = useDispatch(editorStore);
 
-    const editorRef = useRef(null);
-
-    const convertLegacyVariables = useCallback((legacyQuery) => {
-        if (!legacyQuery) return;
-
-        const wrapFieldValue = (field) => {
-            if (typeof field !== 'string') return field;
-            if (field.startsWith('{{') && field.endsWith('}}')) return field;
-            return field;
-        };
-
-        const processRules = (rules) => {
-            if (!Array.isArray(rules)) return;
-
-            rules.forEach(rule => {
-                if (rule.rules) {
-                    // Recursively process nested rule groups
-                    processRules(rule.rules);
-                } else if (rule.field) {
-                    // Update the field value if it's not properly wrapped
-                    rule.field = wrapFieldValue(rule.field);
-                }
-            });
-        };
-
-        if (legacyQuery.rules) {
-            processRules(legacyQuery.rules);
-        }
-    }, []);
-
-    const onClose = useCallback(() => {
-        if (onChange) {
-            onChange(name, formatCondition());
-        }
-
-        setIsPopoverVisible(false);
-    }, [onChange, name, formatCondition, setIsPopoverVisible]);
-
     const getDefaultField = useCallback((field) => {
         return '{{global.user.id}}';
     }, []);
@@ -84,12 +51,6 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
     useEffect(() => {
         convertLegacyVariables(query);
     }, []);
-
-    useEffect(() => {
-        if (editorRef.current) {
-            editorRef.current.editor.setOption("indentedSoftWrap", false);
-        }
-    }, [editorRef]);
 
     useEffect(() => {
         setCurrentConditionalQuery(query);
@@ -138,7 +99,7 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
 
     return (
         <div className='conditional-editor'>
-            <Button onClick={() => setIsPopoverVisible(true)} variant="secondary">
+            <Button onClick={() => setIsModalOpen(true)} variant="secondary">
                 {__('Edit condition', 'post-expirator')}
             </Button>
 
@@ -163,11 +124,11 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                 </div>
             )}
 
-            {isPopoverVisible && (
+            {isModalOpen && (
                 <Modal
-                    onClose={onClose}
+                    onClose={onCloseModal}
                     title={__('Condition', 'post-expirator')}
-                    onRequestClose={onClose}
+                    onRequestClose={onCloseModal}
                     className="conditional-editor-modal"
                 >
                     <p>
