@@ -1,15 +1,9 @@
 import NodeIcon from "../node-icon";
 import { __ } from '@wordpress/i18n';
-import { useSelect } from '@wordpress/data';
-import { store as editorStore } from '../editor-store';
+import { useIsPro } from '../../contexts/pro-context';
 
 export function NodeCard({node}) {
-    const { isPro } = useSelect((select) => {
-        return {
-            isPro: select(editorStore).isPro(),
-        }
-    });
-
+    const isPro = useIsPro();
 
     return (
         <div className="block-editor-block-card">

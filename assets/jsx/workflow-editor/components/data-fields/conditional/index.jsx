@@ -14,10 +14,6 @@ import { RemoveElementButton } from './components/remove-element-button';
 import { CombinatorSelector } from './components/combinator-selector';
 import { OperatorSelector } from './components/operator-selector';
 import { ConditionPreview } from './components/condition-preview';
-import AceEditor from "react-ace";
-import "ace-builds/src-noconflict/mode-handlebars";
-import "ace-builds/src-noconflict/theme-textmate";
-import "ace-builds/src-noconflict/ext-language_tools";
 
 import 'react-querybuilder/dist/query-builder.css';
 import '../../../css/query-builder.css';
@@ -27,6 +23,7 @@ import { useConditionalLogic } from './hooks/useConditionalLogic';
 import { useModalManagement } from './hooks/useModalManagement';
 import { useEditorSetup } from './hooks/useEditorSetup';
 import { useLegacyVariables } from './hooks/useLegacyVariables';
+import { useIsPro } from '../../../contexts/pro-context';
 
 const EDITOR_PROPS = {
     $blockScrolling: true,
@@ -62,12 +59,6 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
     const [ convertLegacyVariables ] = useLegacyVariables();
 
     const {
-        isPro,
-    } = useSelect((select) => ({
-        isPro: select(editorStore).isPro(),
-    }), [editorStore]);
-
-    const {
         setCurrentConditionalQuery,
     } = useDispatch(editorStore);
 
@@ -101,6 +92,8 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         label: label
     }), [variables, name, label]);
 
+    const isPro = useIsPro();
+
     return (
         <div className='conditional-editor'>
             <Button onClick={openModal} variant="secondary">
@@ -114,9 +107,11 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                 editorOptions={EDITOR_OPTIONS}
             />
 
-            {!isPro && (
-                <div className="condition-pro-features-notice">
-                    <p className="description margin-top">{__('This conditional will only be evaluated in the Pro version. In the Free version, it will always return true.', 'post-expirator')}</p>
+            {! isPro && (
+                <div className="conditional-editor-pro-feature-message">
+                    <p className="description margin-top">
+                        {__('Conditional logic is a Pro feature. Upgrade to create advanced conditions for your workflows.', 'post-expirator')}
+                    </p>
                 </div>
             )}
 
