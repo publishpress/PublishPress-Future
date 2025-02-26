@@ -27,5 +27,5 @@ export const useConditionalLogic = ({defaultValue, name, onChange, variables}) =
         };
     }, [query, defaultValue, onChange, name, variables]);
 
-    return [query, setQuery, formatCondition];
+    return { query, setQuery, formatCondition };
 };

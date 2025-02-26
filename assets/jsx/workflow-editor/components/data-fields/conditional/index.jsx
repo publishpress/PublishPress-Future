@@ -1,5 +1,5 @@
 import { QueryBuilder } from 'react-querybuilder';
-import { useState, useCallback, useEffect, useRef, useMemo } from '@wordpress/element';
+import { useCallback, useEffect, useMemo } from '@wordpress/element';
 import { Button, Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as editorStore } from '../../editor-store';
@@ -13,7 +13,7 @@ import { AddElementButton } from './components/add-element-button';
 import { RemoveElementButton } from './components/remove-element-button';
 import { CombinatorSelector } from './components/combinator-selector';
 import { OperatorSelector } from './components/operator-selector';
-
+import { ConditionPreview } from './components/condition-preview';
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-handlebars";
 import "ace-builds/src-noconflict/theme-textmate";
@@ -28,8 +28,31 @@ import { useModalManagement } from './hooks/useModalManagement';
 import { useEditorSetup } from './hooks/useEditorSetup';
 import { useLegacyVariables } from './hooks/useLegacyVariables';
 
+const EDITOR_PROPS = {
+    $blockScrolling: true,
+};
+
+const EDITOR_OPTIONS = {
+    enableBasicAutocompletion: false,
+    enableLiveAutocompletion: false,
+    showGutter: false,
+    showPrintMargin: false,
+    showLineNumbers: false,
+    showInvisibles: false,
+    highlightActiveLine: false,
+};
+
+const QUERY_BUILDER_TRANSLATIONS = {
+    addGroup: { label: __('Add Group', 'post-expirator') },
+    addRule: { label: __('Add Rule', 'post-expirator') }
+};
+
+const QUERY_BUILDER_CONTROL_CLASSNAMES = {
+    queryBuilder: 'queryBuilder-branches',
+};
+
 export const Conditional = ({ name, label, defaultValue, onChange, variables }) => {
-    const [query, setQuery, formatCondition] = useConditionalLogic({defaultValue, name, onChange, variables});
+    const { query, setQuery, formatCondition } = useConditionalLogic({ defaultValue, name, onChange, variables });
     const {
         isModalOpen,
         onCloseModal,
@@ -60,25 +83,6 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         setCurrentConditionalQuery(query);
     }, [query]);
 
-    const editorProps = {
-        $blockScrolling: true,
-    };
-
-    const editorOptions = {
-        enableBasicAutocompletion: false,
-        enableLiveAutocompletion: false,
-        showGutter: false,
-        showPrintMargin: false,
-        showLineNumbers: false,
-        showInvisibles: false,
-        highlightActiveLine: false,
-    };
-
-    const queryBuilderTranslations = {
-        addGroup: { label: __('Add Group', 'post-expirator') },
-        addRule: { label: __('Add Rule', 'post-expirator') }
-    };
-
     const queryBuilderControlElements = {
         fieldSelector: FieldExpressionBuilder,
         valueEditor: ValueExpressionBuilder,
@@ -89,10 +93,6 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
         removeRuleAction: RemoveElementButton,
         combinatorSelector: CombinatorSelector,
         operatorSelector: OperatorSelector,
-    };
-
-    const queryBuilderControlClassnames = {
-        queryBuilder: 'queryBuilder-branches',
     };
 
     const queryBuilderContext = useMemo(() => ({
@@ -107,20 +107,12 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                 {__('Edit condition', 'post-expirator')}
             </Button>
 
-            {defaultValue?.natural && (
-                <AceEditor
-                    ref={editorRef}
-                    mode="handlebars"
-                    theme="textmate"
-                    name="expression-builder-natural-language"
-                    className="read-only-editor settings-panel"
-                    wrapEnabled={true}
-                    value={defaultValue?.natural || ''}
-                    editorProps={editorProps}
-                    readOnly={true}
-                    setOptions={editorOptions}
-                />
-            )}
+            <ConditionPreview
+                defaultValue={defaultValue}
+                editorRef={editorRef}
+                editorProps={EDITOR_PROPS}
+                editorOptions={EDITOR_OPTIONS}
+            />
 
             {!isPro && (
                 <div className="condition-pro-features-notice">
@@ -148,8 +140,8 @@ export const Conditional = ({ name, label, defaultValue, onChange, variables }) 
                             showCombinatorsBetweenRules
                             showNotToggle
                             enableDragAndDrop={true}
-                            controlClassnames={queryBuilderControlClassnames}
-                            translations={queryBuilderTranslations}
+                            controlClassnames={QUERY_BUILDER_CONTROL_CLASSNAMES}
+                            translations={QUERY_BUILDER_TRANSLATIONS}
                             controlElements={queryBuilderControlElements}
                             context={queryBuilderContext}
                             getDefaultField={getDefaultField}
