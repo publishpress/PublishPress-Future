@@ -36,4 +36,9 @@ interface RuntimeVariablesHandlerInterface
      * @since 4.3.4
      */
     public function resolveExpressionsInArray(array $array): array;
+
+    /**
+     * @since 4.3.4
+     */
+    public function resolveExpressionsInJsonLogic(array $jsonLogicExpression): array;
 }
