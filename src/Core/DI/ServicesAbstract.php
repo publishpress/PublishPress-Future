@@ -190,4 +190,6 @@ abstract class ServicesAbstract
     public const DATE_TIME_HANDLER = 'future.free/datetime-handler';
 
     public const CACHE_POSTS_WITH_FUTURE_ACTION = 'future.free/cache-posts-with-future-action';
+
+    public const JSON_LOGIC_ENGINE = 'future.free/json-logic-engine';
 }
