@@ -1,10 +1,20 @@
 import ExpressionBuilder from '../../expression-builder';
 
-export const ConditionalExpressionBuilder = ({ options, value, handleOnChange, context, readOnlyPreview, singleVariableOnly }) => {
+export const ConditionalExpressionBuilder = ({
+    value,
+    handleOnChange,
+    context,
+    readOnlyPreview,
+    singleVariableOnly,
+}) => {
     const onChange = (name, value) => {
         if (handleOnChange) {
             handleOnChange(value.expression);
         }
+    }
+
+    if (value === 'global.site') {
+        value = '';
     }
 
     return <div>

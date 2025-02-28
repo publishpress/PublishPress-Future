@@ -195,6 +195,7 @@ class StepTypesModel implements StepTypesModelInterface
                     "handleSchema" => $instance->getHandleSchema(),
                     "baseSlug" => $instance->getBaseSlug(),
                     "isProFeature" => $instance->isProFeature(),
+                    "stepScopedVariablesSchema" => $instance->getStepScopedVariablesSchema(),
                 ],
                 $type
             );

@@ -1,0 +1,79 @@
+import { __ } from '@wordpress/i18n';
+import { withConditional } from '../../conditional';
+import { PostFieldSelector } from './post-field-selector';
+import { PostValueSelector } from './post-value-selector';
+import { useConditionalLogic } from '../../conditional/hooks/useConditionalLogic';
+
+import { parseJsonLogic } from 'react-querybuilder/parseJsonLogic';
+import { formatQuery, defaultOperators } from 'react-querybuilder';
+import { getStepScopedVariables } from '../../../../utils';
+
+const convertLegacySettingsIntoJson = (defaultValue, firstPostVariable) => {
+    const json = { "and": [] };
+    const { postType, postStatus, postId } = defaultValue;
+
+    // Helper function to create clauses for each field type
+    const createClauses = (values, fieldPath) => {
+        if (!values || values.length === 0) return null;
+
+        const clauses = values.map(value => ({
+            "==": [
+                { "var": `{{${firstPostVariable}.${fieldPath}}}` },
+                value
+            ]
+        }));
+
+        return { "or": clauses };
+    };
+
+    // Add post type conditions
+    const typeClause = createClauses(postType, 'type');
+    if (typeClause) json.and.push(typeClause);
+
+    // Add post status conditions
+    const statusClause = createClauses(postStatus, 'status');
+    if (statusClause) json.and.push(statusClause);
+
+    // Add post ID conditions
+    const idClause = createClauses(postId, 'id');
+    if (idClause) json.and.push(idClause);
+
+    return json;
+};
+
+/**
+ * Post Query Conditional component for filtering posts
+ */
+const PostQueryConditional = (props) => {
+    if (! props.defaultValue.json) {
+        // Look for the first post variable in the step scoped variables
+        console.log('props', props);
+        const firstPostVariable = props.stepScopedVariables.find(variable => variable.type === 'post');
+        const jsonValue = convertLegacySettingsIntoJson(props.defaultValue, firstPostVariable.name);
+
+        const query = parseJsonLogic(jsonValue);
+
+        props.defaultValue.json = formatQuery(query, {
+            format: 'jsonlogic',
+            parseNumbers: true,
+        });
+
+        props.defaultValue.natural = formatQuery(query, {
+            format: 'natural_language',
+            parseNumbers: true,
+            fields: props.variables,
+            getOperators: () => defaultOperators,
+        });
+    }
+
+    return withConditional({
+        FieldComponent: PostFieldSelector,
+        ValueComponent: PostValueSelector,
+        modalTitle: __('Post Filter', 'post-expirator'),
+        modalDescription: __('Create filters to query specific posts based on conditions.', 'post-expirator'),
+        buttonText: __('Edit filters', 'post-expirator'),
+        defaultField: '',
+    })(props);
+};
+
+export default PostQueryConditional;

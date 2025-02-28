@@ -8,6 +8,7 @@ export const useConditionalLogic = ({defaultValue, name, onChange, variables}) =
     );
 
     const formatCondition = useCallback(() => {
+        console.log('query', query);
         const jsonCondition = formatQuery(query, {
             format: 'jsonlogic',
             parseNumbers: true,

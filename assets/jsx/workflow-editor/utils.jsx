@@ -290,6 +290,33 @@ export function mapNodeInputs(node) {
     return uniqueMappedInputs;
 }
 
+export function getStepScopedVariables(node) {
+    const nodeType = select(editorStore).getNodeTypeByName(node?.data?.name);
+
+    if (! nodeType?.stepScopedVariablesSchema?.length) {
+        return [];
+    }
+
+    const stepScopedVariables = nodeType.stepScopedVariablesSchema.map((variable) => {
+        return {
+            name: node.data.slug + '.' + variable.name,
+            label: variable.label,
+            children: [],
+            type: variable.type,
+            itemsType: variable?.itemsType,
+            description: variable?.description,
+        };
+    });
+
+    return stepScopedVariables;
+}
+
+export function getExpandedStepScopedVariables(node) {
+    const stepScopedVariables = getStepScopedVariables(node);
+
+    return stepScopedVariables.map(expandVariableWithChildren);
+}
+
 export function getNodeVariablesTree(node, globalVariables) {
     const mappedNodeInputs = mapNodeInputs(node);
     const globalVariablesToList = getGlobalVariablesExpanded(globalVariables);
@@ -562,4 +589,35 @@ export function getVariableDataTypeByVariableName(targetVariableName, variables)
     });
 
     return foundDataType;
+}
+
+export function getVariableLabelByVariableName(targetVariableName, variables) {
+    const plainTargetVariableName = targetVariableName.replace('{{', '').replace('}}', '');
+
+    let label = null;
+
+    for (const variable of variables) {
+        if (! plainTargetVariableName.toLowerCase().startsWith(variable.name.toLowerCase())) {
+            continue;
+        }
+
+        if (variable.name.toLowerCase() === plainTargetVariableName.toLowerCase()) {
+            label = variable.label;
+            break;
+        }
+
+        if (plainTargetVariableName.toLowerCase().startsWith(variable.name.toLowerCase()) && variable.children.length > 0) {
+            label = variable.label + ' -> ' + getVariableLabelByVariableName(targetVariableName, variable.children);
+
+            if (label) {
+                break;
+            }
+        }
+    }
+
+    if (! label) {
+        return null;
+    }
+
+    return label;
 }
