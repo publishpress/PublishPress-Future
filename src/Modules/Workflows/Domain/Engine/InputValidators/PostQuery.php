@@ -4,15 +4,21 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine\InputValidators;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\JsonLogicEngineInterface;
 use PublishPress\Future\Modules\Workflows\Module;
 
 class PostQuery implements InputValidatorsInterface
 {
     private RuntimeVariablesHandlerInterface $runtimeVariablesHandler;
 
-    public function __construct(RuntimeVariablesHandlerInterface $runtimeVariablesHandler)
-    {
+    private JsonLogicEngineInterface $jsonLogicEngine;
+
+    public function __construct(
+        RuntimeVariablesHandlerInterface $runtimeVariablesHandler,
+        JsonLogicEngineInterface $jsonLogicEngine
+    ) {
         $this->runtimeVariablesHandler = $runtimeVariablesHandler;
+        $this->jsonLogicEngine = $jsonLogicEngine;
     }
 
     public function validate(array $args): bool
@@ -21,6 +27,15 @@ class PostQuery implements InputValidatorsInterface
         $node = $args['node'];
         $nodeSettings = $node['data']['settings'] ?? [];
 
+        if ($this->isLegacyPostQuery($nodeSettings)) {
+            return $this->validateLegacyPostQuery($post, $nodeSettings);
+        }
+
+        return $this->validateJsonPostQuery($post, $nodeSettings);
+    }
+
+    private function validateLegacyPostQuery($post, array $nodeSettings)
+    {
         if (! $this->hasValidPostType($post, $nodeSettings)) {
             return false;
         }
@@ -42,6 +57,25 @@ class PostQuery implements InputValidatorsInterface
         }
 
         return true;
+    }
+
+    private function validateJsonPostQuery($post, array $nodeSettings)
+    {
+        $json = $nodeSettings['postQuery']['json'] ?? [];
+
+        if (empty($json)) {
+            return false;
+        }
+
+        $json = $this->runtimeVariablesHandler->resolveExpressionsInJsonLogic($json);
+        $result = (bool) $this->jsonLogicEngine->apply($json, []);
+
+        return $result;
+    }
+
+    private function isLegacyPostQuery($nodeSettings)
+    {
+        return ! isset($nodeSettings['postQuery']['json']) && isset($nodeSettings['postQuery']['postType']);
     }
 
     private function hasValidPostType($post, array $nodeSettings)

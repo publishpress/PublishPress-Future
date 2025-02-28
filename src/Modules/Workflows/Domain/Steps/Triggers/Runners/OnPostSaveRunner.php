@@ -126,6 +126,10 @@ class OnPostSaveRunner implements TriggerRunnerInterface
             'node' => $this->step['node'],
         ];
 
+        $this->variablesHandler->setVariable($stepSlug, [
+            'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
+        ]);
+
         if (! $this->postQueryValidator->validate($postQueryArgs)) {
             return false;
         }
