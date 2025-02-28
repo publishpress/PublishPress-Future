@@ -6,6 +6,7 @@ const ColumnItemMeta = ({ item, onClick }) => {
     const [metaKey, setMetaKey] = useState('');
 
     const metaItem = {
+        id: `{{${item.name}.${metaKey}}}`,
         name: item.name + '.' + metaKey,
         label: 'Metadata key',
         description: 'Type the meta key and click on the button to insert it.',
@@ -42,7 +43,7 @@ const ColumnItemVariable = ({
 
     const onMouseEnter = () => {
         setCurrentDescription(`${item.description}`);
-        setCurrentVariableId(item.name);
+        setCurrentVariableId(item.id);
     }
 
     return <div

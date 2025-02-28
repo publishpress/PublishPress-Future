@@ -47,6 +47,7 @@ class NodeResolver implements VariableResolverInterface
                 return (string)$this->node['slug'];
 
             case 'postId':
+            case 'post_id':
                 return (int)$this->node['postId'];
         }
 
@@ -76,7 +77,7 @@ class NodeResolver implements VariableResolverInterface
 
     public function __isset($name): bool
     {
-        return in_array($name, ['ID', 'name', 'label', 'activation_timestamp', 'slug', 'postId']);
+        return in_array($name, ['ID', 'name', 'label', 'activation_timestamp', 'slug', 'postId', 'post_id']);
     }
 
     public function __get($name)
@@ -90,7 +91,7 @@ class NodeResolver implements VariableResolverInterface
 
     public function __set($name, $value): void
     {
-        if ($name === 'postId') {
+        if ($name === 'postId' || $name === 'post_id') {
             $this->node['postId'] = (int)$value;
         }
 

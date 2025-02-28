@@ -3,11 +3,11 @@ import { store as editorStore } from "../editor-store";
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useEffect, useMemo, useCallback } from "@wordpress/element";
 import { __, sprintf } from "@wordpress/i18n";
-import { nodeHasIncomers, nodeHasOutgoers, getNodeIncomers, getNodeIncomersRecursively } from "../../utils";
+import { nodeHasIncomers, nodeHasOutgoers, getNodeIncomersRecursively } from "../../utils";
 import isEmail from "validator/lib/isEmail";
 import isInt from "validator/lib/isInt";
 import { useDebounce } from "@wordpress/compose";
-import { getExpandedVariablesList, filterVariableOptionsByDataType } from "../../utils";
+import { getNodeVariablesTree, filterVariablesTreeByDataType } from "../../utils";
 
 function isVariable(value) {
     const trimmedValue = value.trim();
@@ -53,39 +53,81 @@ export function NodeValidator({})
             return successfulResult;
         }
 
-        if (variable === '') {
-            return successfulResult;
+        if (typeof variable !== 'object') {
+            variable = [variable];
         }
 
-        let variables = getExpandedVariablesList(node, globalVariables);
+
+        if (ruleData?.skipIfEmpty) {
+            if (variable === '') {
+                return successfulResult;
+            }
+
+            if (Array.isArray(variable) && variable.length === 0) {
+                return successfulResult;
+            }
+
+            if (typeof variable === 'object' && Object.keys(variable).length === 0) {
+                return successfulResult;
+            }
+        }
+
+        let contextVariables = getNodeVariablesTree(node, globalVariables);
 
         if (ruleData?.dataType) {
-            variables = filterVariableOptionsByDataType(variables, [ruleData.dataType]);
+            if (! Array.isArray(ruleData.dataType)) {
+                ruleData.dataType = [ruleData.dataType];
+            }
+            contextVariables = filterVariablesTreeByDataType(contextVariables, ruleData.dataType);
         }
 
-        let variableIsFound = false;
-        variables.forEach((existentVariable) => {
-            if (existentVariable.id === variable) {
-                variableIsFound = true;
-            }
-        });
+        let onlyValidValues = true;
+        let invalidVariable = '';
 
-        if (variableIsFound) {
+        for (let i = 0; i < variable.length; i++) {
+            const variableItem = variable[i].trim();
+
+            if (! variableItem.startsWith('{{')) {
+                continue;
+            }
+
+            if (! variableItem.endsWith('}}')) {
+                invalidVariable = variableItem;
+                onlyValidValues = false;
+                break;
+            }
+
+            let variableIsFound = false;
+
+            contextVariables.forEach((contextVariable) => {
+                if (contextVariable.id === variableItem) {
+                    variableIsFound = true;
+                }
+            });
+
+            if (! variableIsFound) {
+                onlyValidValues = false;
+                invalidVariable = variableItem;
+                break;
+            }
+        }
+
+        if (onlyValidValues) {
             return successfulResult;
         }
 
         return {
             isValid: false,
             error: sprintf(
-                __('The field "%s" requires a valid variable. Please select one from the available options.', 'post-expirator'),
+                __('The field "%s" contains an invalid variable.', 'post-expirator'),
                 ruleData?.fieldLabel
             ),
             details: sprintf(
-                __('The variable "%s" is not available in the current context.', 'post-expirator'),
-                variable
+                __('The variable "%s" is not available in the current context. Please, check if it is spelled correctly.', 'post-expirator'),
+                invalidVariable
             ),
         };
-    }, [globalVariables, getExpandedVariablesList, filterVariableOptionsByDataType, getNodeTypeByName]);
+    }, [globalVariables, getNodeVariablesTree, filterVariablesTreeByDataType, getNodeTypeByName]);
 
     // We are doing a simple validation here. Maybe we should do a more complex one using a parser in the future.
     const isExpressionValid = useCallback((expression, ruleData) => {

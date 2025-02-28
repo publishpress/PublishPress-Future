@@ -12,3 +12,8 @@ export { default as NodeData } from './node';
 export { default as ArrayData } from './array';
 export { default as FutureActionData } from './future-action';
 export { default as TermsArrayData } from './terms-array';
+export { default as PostStatusData } from './post-status';
+export { default as PostTypeData } from './post-type';
+export { default as UrlData } from './url';
+export { default as UserRolesData } from './user-roles';
+export { default as MetaData } from './meta';

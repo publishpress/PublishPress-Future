@@ -16,6 +16,7 @@ import ExpressionBuilder from "./expression-builder";
 import { DescriptionText } from "./description-text";
 import { DateOffset } from "./date-offset";
 import { useCallback } from "react";
+import { useIsPro } from "../../contexts/pro-context";
 
 /**
  *  When to execute:
@@ -83,8 +84,6 @@ export function Schedule({ name, label, defaultValue, onChange, variables = [], 
 
     const hidePreventDuplicateScheduling = settings?.hidePreventDuplicateScheduling;
 
-    const isPro = futureWorkflowEditor.isPro || false;
-
     const allowDuplicate = (defaultValue.duplicateHandling || defaultDuplicateHandling) === 'create-new';
 
     const onChangeSetting = useCallback(({ settingName, value }) => {
@@ -105,6 +104,8 @@ export function Schedule({ name, label, defaultValue, onChange, variables = [], 
             onChange(name, { ...defaultValue, ...value });
         }
     }, [defaultValue, name, onChange]);
+
+    const isPro = useIsPro();
 
     return (
         <>

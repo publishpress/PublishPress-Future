@@ -76,6 +76,7 @@ use PublishPress\Future\Modules\Workflows\DBTableSchemas\WorkflowScheduledStepsS
 use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHandler;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\WorkflowEngine;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\InputValidators\PostQuery as PostQueryValidator;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\JsonLogicEngine;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\Cron as CronStep;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\General as GeneralStep;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\Post as PostStep;
@@ -1102,7 +1103,8 @@ return [
 
     ServicesAbstract::INPUT_VALIDATOR_POST_QUERY => static function (ContainerInterface $container) {
         return new PostQueryValidator(
-            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
+            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
+            $container->get(ServicesAbstract::JSON_LOGIC_ENGINE)
         );
     },
 
@@ -1113,5 +1115,11 @@ return [
 
     ServicesAbstract::CACHE_POSTS_WITH_FUTURE_ACTION => static function (ContainerInterface $container) {
         return new GenericCacheHandler();
+    },
+
+    ServicesAbstract::JSON_LOGIC_ENGINE => static function (ContainerInterface $container) {
+        return new JsonLogicEngine(
+            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
+        );
     },
 ];

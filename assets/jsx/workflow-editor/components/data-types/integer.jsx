@@ -2,7 +2,7 @@ export function IntegerData() {
     return {
         name: "integer",
         label: "Integer",
-        type: "integer"
+        primitiveType: "integer",
     };
 }
 

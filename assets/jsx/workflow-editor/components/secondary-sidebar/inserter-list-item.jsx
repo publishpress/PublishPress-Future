@@ -7,7 +7,6 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 import { useMemo, useRef, memo } from '@wordpress/element';
-import { useSelect, useDispatch } from '@wordpress/data';
 
 import { ENTER } from '@wordpress/keycodes';
 
@@ -18,8 +17,8 @@ import NodeIcon from '../node-icon';
 import { InserterListboxItem } from './inserter-listbox';
 import InserterDraggableNodes from './inserter-draggable-nodes';
 import { isAppleOS } from '../../utils';
-import { store as editorStore } from '../editor-store';
 import { EVENT_DROP_NODE } from '../../constants';
+import { useIsPro } from '../../contexts/pro-context';
 
 function InserterListItem({
     className,
@@ -41,11 +40,7 @@ function InserterListItem({
         return item;
     }, [item.id, item.label, item.icon, item.disabled]);
 
-    const { isPro } = useSelect((select) => {
-        return {
-            isPro: select(editorStore).isPro(),
-        }
-    });
+    const isPro = useIsPro();
 
     const classes = classnames(
         'block-editor-block-types-list__list-item',

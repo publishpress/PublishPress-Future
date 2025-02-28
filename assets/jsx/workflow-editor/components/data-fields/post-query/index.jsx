@@ -1,7 +1,7 @@
 import { FormTokenField, RadioControl, PanelRow } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { useEffect, useMemo, useCallback } from "@wordpress/element";
-import { InlineMultiSelect } from "../inline-multi-select";
+import { InlineMultiSelect } from "../../inline-multi-select";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 
 

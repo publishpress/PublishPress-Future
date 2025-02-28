@@ -19,13 +19,13 @@ import { SlotFillProvider } from "@wordpress/components";
 import { SettingsSidebar } from "../settings-sidebar/settings-sidebar";
 import WelcomeGuide from "../welcome-guide";
 import LoadingMessage from "../loading-message";
+import { useIsPro, ProFeaturesProvider } from "../../contexts/pro-context";
 
 export function WorkflowEditorLayout() {
     const {
         isFullscreenActive,
         isInserterOpened,
         isWelcomeGuideActive,
-        isPro,
         isLoadingWorkflow,
         isCreatingWorkflow,
     } = useSelect((select) => {
@@ -33,7 +33,6 @@ export function WorkflowEditorLayout() {
             isFullscreenActive: select(editorStore).isFeatureActive(FEATURE_FULLSCREEN_MODE),
             isInserterOpened: select(editorStore).isFeatureActive(FEATURE_INSERTER),
             isWelcomeGuideActive: select(editorStore).isFeatureActive(FEATURE_WELCOME_GUIDE),
-            isPro: select(editorStore).isPro(),
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
             isCreatingWorkflow: select(workflowStore).isCreatingWorkflow(),
         }
@@ -42,6 +41,8 @@ export function WorkflowEditorLayout() {
     const className = classnames('edit-post-layout editor-editor-interface', {
         'is-inserter-opened': isInserterOpened,
     });
+
+    const isPro = useIsPro();
 
     useEffect(() => {
         const bodyClasses = ['workflow-editor'];
@@ -68,19 +69,20 @@ export function WorkflowEditorLayout() {
     return (
         <SlotFillProvider>
             <ReactFlowProvider>
-                <FullscreenMode isActive={isFullscreenActive} />
-                <KeyboardShortcuts />
-                <SettingsSidebar />
-                {(isLoadingWorkflow || isCreatingWorkflow) && <LoadingMessage />}
+                <ProFeaturesProvider>
+                    <FullscreenMode isActive={isFullscreenActive} />
+                    <KeyboardShortcuts />
+                    <SettingsSidebar />
+                    {(isLoadingWorkflow || isCreatingWorkflow) && <LoadingMessage />}
 
-                <WorkflowEditorInterface
-                    className={className}
-                    secondarySidebar={secondarySidebar}
-                />
-                {isWelcomeGuideActive && (
-                    <WelcomeGuide />
-                )}
-
+                    <WorkflowEditorInterface
+                        className={className}
+                        secondarySidebar={secondarySidebar}
+                    />
+                    {isWelcomeGuideActive && (
+                        <WelcomeGuide />
+                    )}
+                </ProFeaturesProvider>
             </ReactFlowProvider>
 
             <PluginArea scope="future-workflow-editor" />

@@ -8,14 +8,15 @@ import NodeInspectorCard from "./node-inspector-card";
 import InspectorCard from "../inspector-card";
 import InspectorWarning from "../inspector-warning";
 import NodeSettingsPanel from "./node-settings-panel";
-import { nodeHasInput, mapNodeInputs, nodeHasOutput } from "../../utils";
-import { FEATURE_ADVANCED_SETTINGS, FEATURE_DEVELOPER_MODE } from "../../constants";
+import { mapNodeInputs, nodeHasOutput } from "../../utils";
+import { FEATURE_DEVELOPER_MODE } from "../../constants";
 import NodeValidationPanel from "../node-validation-panel";
 import NodeDataFlowPanel from "./node-data-flow-panel";
 import ObjectGroupIcon from "../icons/object-group";
 import LinesLeaningIcon from "../icons/lines-leaning";
 import NodeDevInfoPanel from "../node-dev-info-panel";
 import useScrollToTop from "../scrolled-to-top";
+import { getExpandedStepScopedVariables } from "../../utils";
 
 export const NodeInspector = () => {
     const {
@@ -55,11 +56,9 @@ export const NodeInspector = () => {
 
     const {
         isDeveloperModeEnabled,
-        isAdvancedSettingsEnabled,
     } = useSelect((select) => {
         return {
             isDeveloperModeEnabled: select(editorStore).isFeatureActive(FEATURE_DEVELOPER_MODE),
-            isAdvancedSettingsEnabled: select(editorStore).isFeatureActive(FEATURE_ADVANCED_SETTINGS),
         };
     });
 
@@ -72,8 +71,7 @@ export const NodeInspector = () => {
 
     const nodeHasSettings = nodeType?.settingsSchema?.length > 0;
 
-    const selectedNodeHasInput = nodeHasInput(selectedNode);
-    const selectedNodeHasOutput = nodeHasOutput(selectedNode);
+    const stepScopedVariables = getExpandedStepScopedVariables(selectedNode);
 
     const mappedNodeInputSchema = mapNodeInputs(selectedNode);
 
@@ -153,7 +151,7 @@ export const NodeInspector = () => {
 
                     {isDeveloperModeEnabled && (
                         <>
-                            <NodeDataFlowPanel inputSchema={mappedNodeInputSchema} outputSchema={mappedNodeOutputSchema} />
+                            <NodeDataFlowPanel inputSchema={mappedNodeInputSchema} outputSchema={mappedNodeOutputSchema} stepScopedVariables={stepScopedVariables} />
                             <NodeDevInfoPanel node={selectedNode} nodeType={nodeType} />
                         </>
                     )}

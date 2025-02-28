@@ -2,7 +2,7 @@ export function EmailData() {
     return {
         name: "email",
         label: "Email",
-        type: "email"
+        primitiveType: "string",
     };
 }
 

@@ -8,7 +8,7 @@ import { __ } from '@wordpress/i18n';
 import { Toolbar, ToolbarGroup, ToolbarButton, Popover } from '@wordpress/components';
 import PlayIcon from "../icons/play";
 import { SIDEBAR_NODE_EDGE } from '../settings-sidebar/constants';
-
+import { useIsPro } from '../../contexts/pro-context';
 
 export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIcon }) => {
     const {
@@ -17,7 +17,6 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
         isAdvancedSettingsEnabled,
         isSingularElementSelected,
         getNodeTypeByName,
-        isPro,
     } = useSelect((select) => {
         const nodeErrors = select(workflowStore).getNodeErrors(id);
         const selectedElementsCount = select(workflowStore).getSelectedElementsCount();
@@ -28,9 +27,10 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
             isAdvancedSettingsEnabled: true,
             isSingularElementSelected: selectedElementsCount === 1,
             getNodeTypeByName: select(editorStore).getNodeTypeByName,
-            isPro: select(editorStore).isPro(),
         }
     });
+
+    const isPro = useIsPro();
 
     const {
         removeNode,

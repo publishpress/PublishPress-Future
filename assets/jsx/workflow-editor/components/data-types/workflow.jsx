@@ -2,8 +2,7 @@ export function WorkflowData() {
     return {
         name: "workflow",
         label: "Future Workflow",
-        type: "object",
-        objectType: "workflow",
+        primitiveType: "object",
         propertiesSchema: [
             {
                 name: "id",

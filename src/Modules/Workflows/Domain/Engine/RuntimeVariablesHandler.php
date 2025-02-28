@@ -109,6 +109,34 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
         return $this->resolveExpressionsInText($text);
     }
 
+    /**
+     * Recursively replaces variables in JSON Logic expressions with their values.
+     *
+     * @since 4.3.4
+     */
+    public function resolveExpressionsInJsonLogic(array $jsonLogicExpression): array
+    {
+        $newExpression = [];
+
+        foreach ($jsonLogicExpression as $key => $value) {
+            if (is_array($value)) {
+                if (isset($value['var'])) {
+                    $value = $value['var'];
+                } else {
+                    $value = $this->resolveExpressionsInJsonLogic($value);
+                }
+            }
+
+            if (is_string($value) && strpos($value, '{{') !== false) {
+                $value = $this->resolveExpressionsInText($value);
+            }
+
+            $newExpression[$key] = $value;
+        }
+
+        return $newExpression;
+    }
+
     private function getVariableValue(string $variableName, $dataSource)
     {
         // FIXME: Do we really need the VariableResolvers? Can't we just use the native PHP values?

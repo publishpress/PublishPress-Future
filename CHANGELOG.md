@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Add new trigger: Post Author Changed - PRO (Issue #1144).
 - Add new action: Update Post - PRO (Issue #1143).
-- Add new action: Delete Post - PRO (Issue #1168).
+- Add new trigger: Manually run via posts row action - PRO (Issue #1168).
 - Add the step slug/name to the top of the step's node in the workflow editor.
 - Add a loading message when the workflow is being loaded.
 - Add validation to the expression builder to avoid empty placeholders.
@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add new field to the post query step settings on the workflow editor to query posts by terms.
 - Add time to the Schedule step (Issue #1124).
 - Add new filter `publishpressfuture_workflow_route_variable` to customize the variable name on the workflow runtime (Issue #1126).
+- Add new output "Result" to the "Conditional" step. Data type is boolean - PRO.
+- Add a query builder to post related triggers and steps (Issue #1131).
 
 ### Changed
 
@@ -32,12 +34,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed the "Task Execution Order" field from the Schedule Delay step settings (Issue #1180).
 - Updated the "Auto-enable" setting, renaming it to "Automatically create actions" (Issue #1157)
 - Updated the text in the Permissions settings (Issue #1136)
+- Renamed "postId" property on "node" data type variables to "post_id" to keep consistency (with backward compatibility).
+- Replaced Post Query fields with a query builder, on triggers and actions related to post (Issue #1131).
 
 ### Fixed
 
 - Fix fatal error when selecting multiple steps or a connection in the workflow editor (Issue #1162).
 - Fix default data for the "Send Ray" step, sending all the input value instead of a blank message.
 - Fix the "Restore" and "Delete Permanently" actions for trashed workflows (Issue #1175).
+- Fix node validation rules for variables (Issue #1177).
 
 ### Developers
 
@@ -47,6 +52,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Deprecated the methods `replacePlaceholdersInText` and `extractPlaceholdersFromText` in favor of the new methods `resolveExpressionsInText` and `extractExpressionsFromText` in the interface `RuntimeVariablesHandlerInterface` and the class `RuntimeVariablesHandler`.
 - Add new data field to the workflow editor to query users by role and id.
 - Add new model to user roles.
+- Refactored the schema of data types, renaming "type" to "primitiveType" and adding "itemsType" to array.
+- Add new data types: post_status, post_type, url, user_roles, meta.
+- Refactored internal util functions on workflow editor scripts to have clearer names.
+- Add step scoped variables definition. These variables can be listed and used in the editor to configure some behaviors in the step's runner.
 
 ## [4.3.3] - 03 Feb, 2025
 

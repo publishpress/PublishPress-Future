@@ -1,8 +1,8 @@
 import { ListInput } from "./list-input";
-import { filterVariableOptionsByDataType } from "../../utils";
+import { filterVariablesTreeByDataType } from "../../utils";
 
 export function ManualWorkflowInput({ name, label, defaultValue, onChange, variables}) {
-    variables = filterVariableOptionsByDataType(variables, ['workflow', 'array:integer']);
+    variables = filterVariablesTreeByDataType(variables, ['workflow', 'array:integer']);
 
     const tree = [
         {

@@ -112,18 +112,25 @@ class QueryPosts implements StepTypeInterface
                     [
                         "rule" => "dataType",
                         "field" => "postQuery.postId",
-                        "type" => "integerList",
+                        "dataType" => ["array:integer", "array:post", "integer", "post"],
                         "label" => __("Post ID", "post-expirator"),
+                        "skipIfEmpty" => true,
                     ],
                     [
                         "rule" => "validVariable",
                         "field" => "postQuery.postId",
                         "fieldLabel" => __("Post ID", "post-expirator"),
-                        "dataType" => "post",
+                        "dataType" => ["array:integer", "array:post", "integer", "post"],
+                        "skipIfEmpty" => true,
                     ],
                 ],
             ],
         ];
+    }
+
+    public function getStepScopedVariablesSchema(): array
+    {
+        return [];
     }
 
     public function getOutputSchema(): array

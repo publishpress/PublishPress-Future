@@ -2,8 +2,7 @@ export function PostData() {
     return {
         name: "post",
         label: "Post",
-        type: "object",
-        objectType: "post",
+        primitiveType: "object",
         propertiesSchema: [
             {
                 name: "title",
@@ -31,13 +30,13 @@ export function PostData() {
             },
             {
                 name: "status",
-                type: "string",
+                type: "post_status",
                 label: "Post Status",
                 description: "The status of the post.",
             },
             {
                 name: "type",
-                type: "string",
+                type: "post_type",
                 label: "Post Type",
                 description: "The type of the post.",
             },
@@ -61,7 +60,7 @@ export function PostData() {
             },
             {
                 name: "permalink",
-                type: "string",
+                type: "url",
                 label: "Permalink",
                 description: "The permalink of the post.",
             },

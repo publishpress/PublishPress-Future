@@ -64,7 +64,7 @@ class OnPostSave implements StepTypeInterface
     {
         return [
             [
-                "label" => __("Post Query", "post-expirator"),
+                "label" => __("Conditions", "post-expirator"),
                 "description" => __(
                     "Specify the criteria for posts that will trigger this action.",
                     "post-expirator"
@@ -72,19 +72,12 @@ class OnPostSave implements StepTypeInterface
                 "fields" => [
                     [
                         "name" => "postQuery",
-                        "type" => "postQuery",
+                        "type" => "postQueryConditional",
                         "label" => __("Post query", "post-expirator"),
                         "description" => __(
                             "The query defines the posts that will trigger this action.",
                             "post-expirator"
                         ),
-                        "settings" => [
-                            "acceptsInput" => false,
-                            "isPostTypeRequired" => true,
-                            "postTypeDescription" => __("Select the post types that will trigger this action.", "post-expirator"),
-                            "postIdDescription" => __("Enter one or more post IDs. Leave empty to include all posts.", "post-expirator"),
-                            "postStatusDescription" => __("If selected, only posts with these statuses will trigger this action.", "post-expirator"),
-                        ],
                         "default" => [
                             "postSource" => "custom",
                             "postType" => ["post"],
@@ -121,6 +114,18 @@ class OnPostSave implements StepTypeInterface
                         "rule" => "hasOutgoingConnection",
                     ],
                 ]
+            ]
+        ];
+    }
+
+    public function getStepScopedVariablesSchema(): array
+    {
+        return [
+            [
+                "name" => "post",
+                "type" => "post",
+                "label" => __("Saved post", "post-expirator"),
+                "description" => __("The post that was saved, with the new properties.", "post-expirator"),
             ]
         ];
     }

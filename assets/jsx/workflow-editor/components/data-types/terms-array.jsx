@@ -2,8 +2,7 @@ export function TermsArrayData() {
     return {
         name: "terms_array",
         label: "Terms Array",
-        type: "object",
-        objectType: "terms_array",
+        primitiveType: "object",
         propertiesSchema: [
             {
                 name: "ids",

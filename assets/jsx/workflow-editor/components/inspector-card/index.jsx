@@ -1,5 +1,4 @@
-import { useSelect, useDispatch } from "@wordpress/data";
-import { store as editorStore } from "../editor-store";
+import { useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
 import { __ } from "@wordpress/i18n";
 import {
@@ -11,6 +10,7 @@ import {
 } from "@wordpress/components";
 import { useState, useEffect } from "@wordpress/element";
 import SettingPopover from "../setting-popover";
+import { useIsPro } from "../../contexts/pro-context";
 
 const StepDescription = ({ node }) => {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -97,13 +97,7 @@ const StepDescription = ({ node }) => {
 }
 
 export const InspectorCard = ({ title, description, icon, id, slug, isProFeature, node }) => {
-    const {
-        isPro
-    } = useSelect((select) => {
-        return {
-            isPro: select(editorStore).isPro(),
-        };
-    });
+    const isPro = useIsPro();
 
     const nodeAttributes = [];
 
