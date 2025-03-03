@@ -6,6 +6,8 @@ export const ConditionalExpressionBuilder = ({
     context,
     readOnlyPreview,
     singleVariableOnly,
+    autoComplete = false,
+    completers = [],
 }) => {
     const onChange = (name, value) => {
         if (handleOnChange) {
@@ -30,6 +32,8 @@ export const ConditionalExpressionBuilder = ({
             oneLinePreview={true}
             wrapOnPreview={false}
             wrapOnEditor={false}
+            autoComplete={autoComplete}
+            completers={completers}
         />
     </div>;
 };

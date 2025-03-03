@@ -47,7 +47,6 @@ const convertLegacySettingsIntoJson = (defaultValue, firstPostVariable) => {
 const PostQueryConditional = (props) => {
     if (! props.defaultValue.json) {
         // Look for the first post variable in the step scoped variables
-        console.log('props', props);
         const firstPostVariable = props.stepScopedVariables.find(variable => variable.type === 'post');
         const jsonValue = convertLegacySettingsIntoJson(props.defaultValue, firstPostVariable.name);
 
