@@ -93,21 +93,6 @@ class OnPostSave implements StepTypeInterface
     public function getValidationSchema(): array
     {
         return [
-            "settings" => [
-                "rules" => [
-                    [
-                        "rule" => "required",
-                        "field" => "postQuery.postType",
-                        "label" => __("Post Type", "post-expirator"),
-                    ],
-                    [
-                        "rule" => "dataType",
-                        "field" => "postQuery.postId",
-                        "type" => "integerList",
-                        "label" => __("Post ID", "post-expirator"),
-                    ],
-                ],
-            ],
             "connections" => [
                 "rules" => [
                     [
