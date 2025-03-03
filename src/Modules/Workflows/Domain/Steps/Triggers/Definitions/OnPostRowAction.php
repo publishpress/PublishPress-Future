@@ -64,6 +64,30 @@ class OnPostRowAction implements StepTypeInterface
     {
         return [
             [
+                "label" => __("Conditions", "post-expirator"),
+                "description" => __(
+                    "Specify the criteria for posts that will trigger this action.",
+                    "post-expirator"
+                ),
+                "fields" => [
+                    [
+                        "name" => "postQuery",
+                        "type" => "postQueryConditional",
+                        "label" => __("Post query", "post-expirator"),
+                        "description" => __(
+                            "The query defines the posts that will trigger this action.",
+                            "post-expirator"
+                        ),
+                        "default" => [
+                            "postSource" => "custom",
+                            "postType" => ["post"],
+                            "postId" => [],
+                            "postStatus" => [],
+                        ],
+                    ],
+                ]
+            ],
+            [
                 "label" => __("Row Action", "post-expirator"),
                 "description" => __(
                     "Configure the post row action that will be created in the Posts list screen.",
@@ -96,30 +120,6 @@ class OnPostRowAction implements StepTypeInterface
                         ],
                     ],
                 ],
-            ],
-            [
-                "label" => __("Conditions", "post-expirator"),
-                "description" => __(
-                    "Specify the criteria for posts that will trigger this action.",
-                    "post-expirator"
-                ),
-                "fields" => [
-                    [
-                        "name" => "postQuery",
-                        "type" => "postQueryConditional",
-                        "label" => __("Post query", "post-expirator"),
-                        "description" => __(
-                            "The query defines the posts that will trigger this action.",
-                            "post-expirator"
-                        ),
-                        "default" => [
-                            "postSource" => "custom",
-                            "postType" => ["post"],
-                            "postId" => [],
-                            "postStatus" => [],
-                        ],
-                    ],
-                ]
             ]
         ];
     }
