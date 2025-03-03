@@ -31,7 +31,7 @@ class PostQuery implements InputValidatorsInterface
             return $this->validateLegacyPostQuery($post, $nodeSettings);
         }
 
-        return $this->validateJsonPostQuery($post, $nodeSettings);
+        return $this->validateJsonPostQuery($nodeSettings);
     }
 
     private function validateLegacyPostQuery($post, array $nodeSettings)
@@ -59,7 +59,7 @@ class PostQuery implements InputValidatorsInterface
         return true;
     }
 
-    private function validateJsonPostQuery($post, array $nodeSettings)
+    private function validateJsonPostQuery(array $nodeSettings)
     {
         $json = $nodeSettings['postQuery']['json'] ?? [];
 

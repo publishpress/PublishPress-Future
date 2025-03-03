@@ -161,6 +161,8 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
 
     private function getVariableValueFromNestedVariable(string $variableName, $dataSource)
     {
+        $variableName = trim($variableName, '{}');
+
         /**
          * @param string $variableName
          * @param mixed $dataSource
