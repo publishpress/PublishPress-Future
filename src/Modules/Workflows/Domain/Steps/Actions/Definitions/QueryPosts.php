@@ -68,7 +68,7 @@ class QueryPosts implements StepTypeInterface
                 "fields" => [
                     [
                         "name" => "postQuery",
-                        "type" => "postQuery",
+                        "type" => "postQueryConditional",
                         "label" => __("Post query", "post-expirator"),
                         "description" => __(
                             "The query defines the posts that will be retrieved by this action.",
@@ -79,9 +79,6 @@ class QueryPosts implements StepTypeInterface
                             "postType" => ["post"],
                             "postId" => [],
                             "postStatus" => [],
-                        ],
-                        "settings" => [
-                            "isPostTypeRequired" => true,
                         ],
                     ],
                 ]
@@ -102,35 +99,19 @@ class QueryPosts implements StepTypeInterface
                     ]
                 ],
             ],
-            "settings" => [
-                "rules" => [
-                    [
-                        "rule" => "required",
-                        "field" => "postQuery.postType",
-                        "label" => __("Post Type", "post-expirator"),
-                    ],
-                    [
-                        "rule" => "dataType",
-                        "field" => "postQuery.postId",
-                        "dataType" => ["array:integer", "array:post", "integer", "post"],
-                        "label" => __("Post ID", "post-expirator"),
-                        "skipIfEmpty" => true,
-                    ],
-                    [
-                        "rule" => "validVariable",
-                        "field" => "postQuery.postId",
-                        "fieldLabel" => __("Post ID", "post-expirator"),
-                        "dataType" => ["array:integer", "array:post", "integer", "post"],
-                        "skipIfEmpty" => true,
-                    ],
-                ],
-            ],
         ];
     }
 
     public function getStepScopedVariablesSchema(): array
     {
-        return [];
+        return [
+            [
+                "name" => "post",
+                "type" => "post",
+                "label" => __("Queried post", "post-expirator"),
+                "description" => __("The post that was queried.", "post-expirator"),
+            ]
+        ];
     }
 
     public function getOutputSchema(): array
