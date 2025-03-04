@@ -58,7 +58,8 @@ export const withConditional = ({
     proFeatureMessage = __('Conditional logic is a Pro feature. Upgrade to create advanced conditions for your workflows.', 'post-expirator'),
     onQueryChange = null,
     isProFeature = false,
-    defaultField = ''
+    defaultField = '',
+    queryFields = null
 }) => {
     // Return the actual component
     return ({ name, label, defaultValue, onChange, variables }) => {
@@ -66,7 +67,7 @@ export const withConditional = ({
             defaultValue,
             name,
             onChange,
-            variables,
+            variables: queryFields ?? variables,
             onQueryChange
         });
 

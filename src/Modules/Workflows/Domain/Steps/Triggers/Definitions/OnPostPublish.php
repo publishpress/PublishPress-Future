@@ -69,10 +69,10 @@ class OnPostPublish implements StepTypeInterface
                 "fields" => [
                     [
                         "name" => "postQuery",
-                        "type" => "postQueryConditional",
-                        "label" => __("Post query", "post-expirator"),
+                        "type" => "postFilter",
+                        "label" => __("Post filter", "post-expirator"),
                         "description" => __(
-                            "The query defines the posts that will trigger this action.",
+                            "The filter defines the posts that will trigger this action.",
                             "post-expirator"
                         ),
                         "default" => [

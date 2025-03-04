@@ -18,7 +18,8 @@ import PostData from "../data-fields/post-data";
 import DateOffset from "../data-fields/date-offset";
 import AskForConfirmation from "../data-fields/ask-confirmation";
 import UserQuery from "../data-fields/user-query";
-import PostQueryConditional from "../data-fields/post-query-conditional";
+import PostFilter from "../data-fields/post-filter";
+import PostSearchQuery from "../data-fields/post-search-query";
 
 export const MappedField = (props) => {
     switch (props.type) {
@@ -98,9 +99,13 @@ export const MappedField = (props) => {
             return (
                 <UserQuery {...props} />
             );
-        case "postQueryConditional":
+        case "postFilter":
             return (
-                <PostQueryConditional {...props} />
+                <PostFilter {...props} />
+            );
+        case "postSearchQuery":
+            return (
+                <PostSearchQuery {...props} />
             );
     }
 
