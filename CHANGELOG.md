@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add time to the Schedule step (Issue #1124).
 - Add new filter `publishpressfuture_workflow_route_variable` to customize the variable name on the workflow runtime (Issue #1126).
 - Add new output "Result" to the "Conditional" step. Data type is boolean - PRO.
-- Add a query builder to post related triggers and steps (Issue #1131).
+- Add a query builder to post related triggers (Issue #1131).
 
 ### Changed
 
