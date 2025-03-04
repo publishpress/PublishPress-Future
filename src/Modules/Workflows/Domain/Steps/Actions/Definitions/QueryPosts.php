@@ -68,7 +68,7 @@ class QueryPosts implements StepTypeInterface
                 "fields" => [
                     [
                         "name" => "postQuery",
-                        "type" => "postSearchQuery",
+                        "type" => "postQuery",
                         "label" => __("Post query", "post-expirator"),
                         "description" => __(
                             "The query defines the posts that will be retrieved by this action.",
