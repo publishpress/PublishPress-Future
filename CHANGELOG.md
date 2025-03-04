@@ -44,6 +44,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix the "Restore" and "Delete Permanently" actions for trashed workflows (Issue #1175).
 - Fix node validation rules for variables (Issue #1177).
 - Fix the scroll behavior in the list of variables in query builder.
+- Fix the height of the columns in the list of variables in query builder.
 
 ### Developers
 
