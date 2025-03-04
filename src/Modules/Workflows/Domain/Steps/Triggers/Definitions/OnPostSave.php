@@ -111,20 +111,19 @@ class OnPostSave implements StepTypeInterface
                 "type" => "post",
                 "label" => __("Saved post", "post-expirator"),
                 "description" => __("The post that was saved, with the new properties.", "post-expirator"),
+            ],
+            [
+                "name" => "update",
+                "type" => "boolean",
+                "label" => __("Is update", "post-expirator"),
+                "description" => __("Whether the post was updated or not.", "post-expirator"),
             ]
         ];
     }
 
     public function getOutputSchema(): array
     {
-        return [
-            [
-                'name' => 'post',
-                'type' => 'post',
-                'label' => __("Saved post", "post-expirator"),
-                'description' => __("The post that was saved, with the new properties.", "post-expirator"),
-            ]
-        ];
+        return $this->getStepScopedVariablesSchema();
     }
 
     public function getCSSClass(): string

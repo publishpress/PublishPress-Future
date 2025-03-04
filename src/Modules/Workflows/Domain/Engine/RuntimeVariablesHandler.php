@@ -124,6 +124,9 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
                     $value = $value['var'];
                 } else {
                     $value = $this->resolveExpressionsInJsonLogic($value);
+                    if (is_bool($value)) {
+                        $value = $value ? '1' : '0';
+                    }
                 }
             }
 

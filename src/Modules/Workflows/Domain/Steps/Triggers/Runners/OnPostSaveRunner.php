@@ -128,6 +128,7 @@ class OnPostSaveRunner implements TriggerRunnerInterface
 
         $this->variablesHandler->setVariable($stepSlug, [
             'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
+            'update' => new BooleanResolver($update),
         ]);
 
         if (! $this->postQueryValidator->validate($postQueryArgs)) {
@@ -137,12 +138,6 @@ class OnPostSaveRunner implements TriggerRunnerInterface
         $this->stepProcessor->executeSafelyWithErrorHandling(
             $this->step,
             function ($step, $stepSlug, $postId, $post, $update) {
-                $this->variablesHandler->setVariable($stepSlug, [
-                    'postId' => new IntegerResolver($postId),
-                    'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
-                    'update' => new BooleanResolver($update),
-                ]);
-
                 $this->stepProcessor->triggerCallbackIsRunning();
 
                 $this->logger->debug(

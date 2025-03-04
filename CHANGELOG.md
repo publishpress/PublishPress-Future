@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add new filter `publishpressfuture_workflow_route_variable` to customize the variable name on the workflow runtime (Issue #1126).
 - Add new output "Result" to the "Conditional" step. Data type is boolean - PRO.
 - Add a query builder to post related triggers (Issue #1131).
+- Add "update" variable to the Post is Saved step (Issue #1147).
 
 ### Changed
 
