@@ -128,8 +128,8 @@ class ScheduledActionsController implements InitializableInterface
 
             add_submenu_page(
                 'publishpress-future',
-                __('Action Settings', 'post-expirator'),
-                __('Action Settings', 'post-expirator'),
+                __('Future Actions', 'post-expirator'),
+                __('Future Actions', 'post-expirator'),
                 'manage_options',
                 'publishpress-future',
                 [\PostExpirator_Display::getInstance(), 'settings_tabs']
