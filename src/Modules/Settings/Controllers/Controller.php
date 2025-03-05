@@ -598,7 +598,7 @@ class Controller implements InitializableInterface
     public function onFilterAdminTitle($adminTitle, $title)
     {
         if (isset($_GET['page']) && $_GET['page'] === 'publishpress-future') {
-            return str_replace($title, __('Action Settings', 'post-expirator'), $adminTitle);
+            return str_replace($title, __('Future Actions', 'post-expirator'), $adminTitle);
         }
 
         return $adminTitle;
