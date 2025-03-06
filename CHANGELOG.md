@@ -26,17 +26,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- Changed the description field on workflow steps settings to be a popover, and part of the inspector card, saving space in the sidebar.
+- Change the description field on workflow steps settings to be a popover, and part of the inspector card, saving space in the sidebar.
 - Remove left padding from the workflow step details panel.
 - Remove attributes table from the inspector card when on developer mode (that data can still be seen in the Developer Info panel)
-- Improved the debug panel in the workflow editor showing the node data and node settings in separate items.
-- Renamed the label of the `global.trace` variable to "Workflow Step Trace" (Issue #1126).
-- Renamed the variable `global.execution_id` to `global.run_id` and its label to "Workflow Run ID" (Issue #1126).
-- Removed the "Task Execution Order" field from the Schedule Delay step settings (Issue #1180).
-- Updated the "Auto-enable" setting, renaming it to "Automatically create actions" (Issue #1157)
-- Updated the text in the Permissions settings (Issue #1136)
-- Renamed "postId" property on "node" data type variables to "post_id" to keep consistency (with backward compatibility).
-- Replaced Post Query fields with a query builder, on triggers and actions related to post (Issue #1131).
+- Improve the debug panel in the workflow editor showing the node data and node settings in separate items.
+- Rename the label of the `global.trace` variable to "Workflow Step Trace" (Issue #1126).
+- Rename the variable `global.execution_id` to `global.run_id` and its label to "Workflow Run ID" (Issue #1126).
+- Remove the "Task Execution Order" field from the Schedule Delay step settings (Issue #1180).
+- Update the "Auto-enable" setting, renaming it to "Automatically create actions" (Issue #1157)
+- Update the text in the Permissions settings (Issue #1136)
+- Rename "postId" property on "node" data type variables to "post_id" to keep consistency (with backward compatibility).
+- Replace Post Query fields with a query builder, on triggers and actions related to post (Issue #1131).
+- Change selection of post types in the Settings page from tabs to a select box (Issue #1188).
 
 ### Fixed
 
