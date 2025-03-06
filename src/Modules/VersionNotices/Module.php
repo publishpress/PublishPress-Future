@@ -117,6 +117,10 @@ final class Module implements ModuleInterface
                                 [
                                     'base' => 'future_page_future-backup',
                                     'id' => 'future_page_future-backup'
+                                ],
+                                [
+                                    'base' => 'future_page_publishpress-future-settings',
+                                    'id' => 'future_page_publishpress-future-settings'
                                 ]
                             ]
                         ];
