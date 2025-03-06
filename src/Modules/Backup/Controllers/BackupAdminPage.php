@@ -138,6 +138,10 @@ class BackupAdminPage implements InitializableInterface
 
     public function filterAllowedSettingsTabs($allowedTabs)
     {
+        if (isset($_GET['page']) && $_GET['page'] !== 'publishpress-future-settings') {
+            return $allowedTabs;
+        }
+
         $allowedTabs[] = 'export';
         $allowedTabs[] = 'import';
 
@@ -146,6 +150,10 @@ class BackupAdminPage implements InitializableInterface
 
     public function filterSettingsTabs($tabs)
     {
+        if (isset($_GET['page']) && $_GET['page'] !== 'publishpress-future-settings') {
+            return $tabs;
+        }
+
         $baseLink = 'admin.php?page=publishpress-future-settings&tab=';
 
         $tabs[] = [
