@@ -121,7 +121,7 @@ class ScheduledActionsController implements InitializableInterface
                 __('Future', 'post-expirator'),
                 'manage_options',
                 'publishpress-future',
-                [\PostExpirator_Display::getInstance(), 'settings_tabs'],
+                [\PostExpirator_Display::getInstance(), 'future_actions_tabs'],
                 'dashicons-clock',
                 74
             );
@@ -132,7 +132,7 @@ class ScheduledActionsController implements InitializableInterface
                 __('Future Actions', 'post-expirator'),
                 'manage_options',
                 'publishpress-future',
-                [\PostExpirator_Display::getInstance(), 'settings_tabs']
+                [\PostExpirator_Display::getInstance(), 'future_actions_tabs']
             );
 
             $hook_suffix = add_submenu_page(

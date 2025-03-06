@@ -418,7 +418,10 @@ return [
             $container->get(ServicesAbstract::DATE_TIME_HANDLER),
             $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY),
             $container->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY),
-            $container->get(ServicesAbstract::DATETIME)
+            $container->get(ServicesAbstract::DATETIME),
+            $container->get(ServicesAbstract::POST_TYPE_SETTINGS_MODEL_FACTORY),
+            $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL),
+            $container->get(ServicesAbstract::MIGRATIONS_FACTORY)
         );
     },
 

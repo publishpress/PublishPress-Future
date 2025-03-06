@@ -10,32 +10,12 @@ $hooks = $container->get(ServicesAbstract::HOOKS);
 defined('ABSPATH') or die('Direct access not allowed.');
 
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-$current_tab = empty($_GET['tab']) ? 'defaults' : sanitize_title(wp_unslash($_GET['tab']));
+$current_tab = empty($_GET['tab']) ? 'advanced' : sanitize_title(wp_unslash($_GET['tab']));
 
 $debugIsEnabled = $hooks->applyFilters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
-$baseLink = 'admin.php?page=publishpress-future&tab=';
+$baseLink = 'admin.php?page=publishpress-future-settings&tab=';
 
 $tabs = [
-    [
-        'title' => __('Post Types', 'post-expirator'),
-        'slug'  => 'defaults',
-        'link' => admin_url($baseLink . 'defaults'),
-    ],
-    [
-        'title' => __('General', 'post-expirator'),
-        'slug'  => 'general',
-        'link' => admin_url($baseLink . 'general'),
-    ],
-    [
-        'title' => __('Notifications', 'post-expirator'),
-        'slug'  => 'notifications',
-        'link' => admin_url($baseLink . 'notifications'),
-    ],
-    [
-        'title' => __('Display', 'post-expirator'),
-        'slug'  => 'display',
-        'link' => admin_url($baseLink . 'display'),
-    ],
     [
         'title' => __('Advanced', 'post-expirator'),
         'slug'  => 'advanced',
@@ -52,7 +32,7 @@ if ($debugIsEnabled) {
     $tabs[] = [
         'title' => __('Debug', 'post-expirator'),
         'slug'  => 'viewdebug',
-        'link' => admin_url('admin.php?page=publishpress-future&tab=viewdebug'),
+        'link' => admin_url($baseLink . 'viewdebug'),
     ];
 }
 

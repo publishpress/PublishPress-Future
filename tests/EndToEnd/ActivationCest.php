@@ -34,6 +34,6 @@ class ActivationCest
 
         $I->deactivatePlugin('post-expirator');
         $I->activatePlugin('post-expirator');
-        $I->seeCurrentUrlEquals('/wp-admin/admin.php?page=publishpress-future');
+        $I->seeCurrentUrlEquals('/wp-admin/admin.php?page=publishpress-future-settings');
     }
 }
