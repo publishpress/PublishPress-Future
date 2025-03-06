@@ -30,23 +30,42 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+var tabs = [{
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Export', 'post-expirator'),
+  value: 'export'
+}, {
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import', 'post-expirator'),
+  value: 'import'
+}];
 var BackupPanel = function BackupPanel() {
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(),
     _useState2 = _slicedToArray(_useState, 2),
     activeTab = _useState2[0],
     setActiveTab = _useState2[1];
-  var tabs = [{
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Export', 'post-expirator'),
-    value: 'export'
-  }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import', 'post-expirator'),
-    value: 'import'
-  }];
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_tabbed_window__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    tabs: tabs,
-    defaultTab: tabs[0].value,
-    onChange: setActiveTab
-  }, activeTab === 'import' && /*#__PURE__*/React.createElement(_tabs_content_import__WEBPACK_IMPORTED_MODULE_2__["default"], null), activeTab === 'export' && /*#__PURE__*/React.createElement(_tabs_content_export__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
+  var getTabFromUrl = function getTabFromUrl() {
+    var url = new URL(window.location.href);
+    var tab = url.searchParams.get('tab');
+    console.log(tab);
+    if (tab && tabs.some(function (t) {
+      return t.value === tab;
+    })) {
+      return tab;
+    }
+    return tabs[0].value;
+  };
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    var tab = getTabFromUrl();
+    setActiveTab(tab);
+  }, []);
+  if (!activeTab) {
+    return null;
+  }
+  if (activeTab === 'import') {
+    return /*#__PURE__*/React.createElement(_tabs_content_import__WEBPACK_IMPORTED_MODULE_2__["default"], null);
+  }
+  if (activeTab === 'export') {
+    return /*#__PURE__*/React.createElement(_tabs_content_export__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+  }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BackupPanel);
 
@@ -668,7 +687,7 @@ var ExportTab = function ExportTab() {
     });
   }, []);
   return /*#__PURE__*/React.createElement(_settings_tab__WEBPACK_IMPORTED_MODULE_4__.SettingsTab, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Export Settings', 'post-expirator'),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Export', 'post-expirator'),
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Export the plugin settings and workflows to a .json file. This file can be imported later to restore the data or migrate to another site.', 'post-expirator')
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalVStack, {
     className: "pe-settings-tab__export"
@@ -1224,7 +1243,7 @@ var ImportTab = function ImportTab() {
     id: 'advanced'
   }];
   return /*#__PURE__*/React.createElement(_settings_tab__WEBPACK_IMPORTED_MODULE_3__.SettingsTab, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import Settings', 'post-expirator'),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import', 'post-expirator'),
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Import the plugin settings or workflows from a .json file.', 'post-expirator')
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalVStack, {
     className: "pe-settings-tab__import-file-upload"

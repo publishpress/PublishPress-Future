@@ -70,7 +70,7 @@ const ExportTab = () => {
 
     return (
         <SettingsTab
-            title={__('Export Settings', 'post-expirator')}
+            title={__('Export', 'post-expirator')}
             description={__('Export the plugin settings and workflows to a .json file. This file can be imported later to restore the data or migrate to another site.', 'post-expirator')}
         >
             <VStack className="pe-settings-tab__export">

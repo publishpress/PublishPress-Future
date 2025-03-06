@@ -10,6 +10,8 @@ $hooks = $container->get(ServicesAbstract::HOOKS);
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+echo '<h2>' . esc_html__('Debug Log', 'post-expirator') . '</h2>';
+
 echo '<p>' . esc_html__(
     'Below is a dump of the debugging table, this should be useful for troubleshooting.',
     'post-expirator'

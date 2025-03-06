@@ -106,7 +106,7 @@ class PostExpirator_Display
     /**
      * Creates the settings page.
      */
-    public function settings_tabs()
+    public function future_actions_tabs()
     {
         if (!is_admin() || !current_user_can('manage_options')) {
             wp_die(esc_html__('You do not have permission to configure PublishPress Future.', 'post-expirator'));
@@ -115,8 +115,36 @@ class PostExpirator_Display
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
 
-        $allowed_tabs = ['defaults', 'general', 'display', 'advanced', 'diagnostics', 'viewdebug', 'notifications', ];
+        $allowed_tabs = ['defaults', 'general', 'display', 'notifications', ];
         $allowed_tabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
+
+        if (empty($tab) || ! in_array($tab, $allowed_tabs, true)) {
+            $tab = 'defaults';
+        }
+
+        ob_start();
+        $this->load_tab($tab);
+        $html = ob_get_clean();
+
+        $this->render_template('tabs-future-actions', ['tabs' => $allowed_tabs, 'html' => $html, 'tab' => $tab]);
+
+        $this->publishpress_footer();
+    }
+
+    /**
+     * Creates the settings page.
+     */
+    public function settings_tabs()
+    {
+        if (!is_admin() || !current_user_can('manage_options')) {
+            wp_die(esc_html__('You do not have permission to configure PublishPress Future.', 'post-expirator'));
+        }
+
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : 'advanced';
+
+        $allowed_tabs = ['advanced', 'diagnostics', 'viewdebug' ];
+        $allowed_tabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_SETTINGS_TABS, $allowed_tabs);
 
         $debugIsEnabled = (bool)$this->hooks->applyFilters(SettingsHooksAbstract::FILTER_DEBUG_ENABLED, false);
         if (! $debugIsEnabled) {
@@ -128,14 +156,14 @@ class PostExpirator_Display
         }
 
         if (empty($tab) || ! in_array($tab, $allowed_tabs, true)) {
-            $tab = 'defaults';
+            $tab = 'advanced';
         }
 
         ob_start();
         $this->load_tab($tab);
         $html = ob_get_clean();
 
-        $this->render_template('tabs', ['tabs' => $allowed_tabs, 'html' => $html, 'tab' => $tab]);
+        $this->render_template('tabs-settings', ['tabs' => $allowed_tabs, 'html' => $html, 'tab' => $tab]);
 
         $this->publishpress_footer();
     }

@@ -123,7 +123,7 @@ $schemaHealthErrors = [
                             <?php
                             echo '<a href="' . esc_url(
                                 admin_url(
-                                    'admin.php?page=publishpress-future&tab=viewdebug'
+                                    'admin.php?page=publishpress-future-settings&tab=viewdebug'
                                 )
                             ) . '">' . esc_html__('View Debug Logs', 'post-expirator') . '</a>'; ?>
                         <?php else : ?>
