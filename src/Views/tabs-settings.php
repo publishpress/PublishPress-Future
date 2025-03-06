@@ -41,7 +41,7 @@ $tabs = $hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_TABS, $tabs);
 
 <div class="wrap">
     <h2 class="pp-settings-title"><?php
-        esc_html_e('Future Actions', 'post-expirator'); ?></h2>
+        esc_html_e('Settings', 'post-expirator'); ?></h2>
     <div id="pe-settings-tabs">
         <nav class="nav-tab-wrapper postexpirator-nav-tab-wrapper" id="postexpirator-nav">
             <?php foreach ($tabs as $tab) : ?>

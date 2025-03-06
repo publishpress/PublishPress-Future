@@ -155,10 +155,6 @@ class Controller implements InitializableInterface
                 return;
             }
 
-            if (!isset($_GET['page']) || $_GET['page'] !== 'publishpress-future-settings') {
-                return;
-            }
-
             wp_enqueue_style(
                 'pe-footer',
                 Plugin::getAssetUrl('css/footer.css'),
@@ -183,45 +179,6 @@ class Controller implements InitializableInterface
                 false,
                 PUBLISHPRESS_FUTURE_VERSION
             );
-
-            // phpcs:disable WordPress.Security.NonceVerification.Recommended
-            if (
-                (isset($_GET['page']) && $_GET['page'] === 'publishpress-future')
-                && (isset($_GET['tab']) && $_GET['tab'] === 'general')
-            ) {
-                //phpcs:enable WordPress.Security.NonceVerification.Recommended
-                wp_enqueue_script(
-                    'publishpressfuture-settings-general-panel',
-                    Plugin::getScriptUrl('settingsGeneral'),
-                    [
-                        'wp-i18n',
-                        'wp-components',
-                        'wp-url',
-                        'wp-data',
-                        'wp-element',
-                        'wp-hooks',
-                        'wp-api-fetch',
-                        'wp-html-entities'
-                    ],
-                    PUBLISHPRESS_FUTURE_VERSION,
-                    true
-                );
-
-                wp_enqueue_style('wp-components');
-
-                wp_localize_script(
-                    'publishpressfuture-settings-general-panel',
-                    'publishpressFutureSettingsGeneralConfig',
-                    [
-                        'text' => [
-                            'datePreview' => __('Date Preview', 'post-expirator'),
-                            'datePreviewCurrent' => __('Current Date', 'post-expirator'),
-                            'datePreviewComputed' => __('Computed Date', 'post-expirator'),
-                            'error' => __('Error', 'post-expirator'),
-                        ],
-                    ]
-                );
-            }
 
             if (! isset($_GET['tab']) || $_GET['tab'] === 'advanced') {
                 wp_enqueue_script(
@@ -293,7 +250,7 @@ class Controller implements InitializableInterface
             'advanced',
         ];
 
-        $allowedTabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowedTabs);
+        $allowedTabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_SETTINGS_TABS, $allowedTabs);
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';

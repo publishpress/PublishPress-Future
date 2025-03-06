@@ -347,64 +347,6 @@ class SettingsController implements InitializableInterface
                     ]
                 );
             }
-
-            if (! isset($_GET['tab']) || $_GET['tab'] === 'advanced') {
-                wp_enqueue_script(
-                    'publishpress-future-settings-advanced-panel',
-                    Plugin::getScriptUrl('settingsAdvanced'),
-                    [
-                        'wp-components',
-                        'wp-url',
-                        'wp-data',
-                        'wp-element',
-                        'wp-api-fetch',
-                    ],
-                    PUBLISHPRESS_FUTURE_VERSION,
-                    true
-                );
-
-                wp_enqueue_script('wp-url');
-                wp_enqueue_script('wp-element');
-                wp_enqueue_script('wp-api-fetch');
-                wp_enqueue_script('wp-data');
-
-                wp_localize_script(
-                    'publishpress-future-settings-advanced-panel',
-                    'publishpressFutureSettingsAdvanced',
-                    [
-                        'text' => [
-                            'scheduledStepsCleanup' => __('Scheduled Workflow Steps Cleanup', 'post-expirator'),
-                            'scheduledStepsCleanupEnable' => __(
-                                'Automatically remove scheduled workflow steps',
-                                'post-expirator'
-                            ),
-                            'scheduledStepsCleanupEnableDesc' => __(
-                                'Automatically remove scheduled workflow steps that have been marked as failed, completed, or cancelled.',
-                                'post-expirator'
-                            ),
-                            'scheduledStepsCleanupDisable' => __(
-                                'Retain all scheduled workflow steps',
-                                'post-expirator'
-                            ),
-                            'scheduledStepsCleanupDisableDesc' => __(
-                                'Retain all scheduled workflow steps indefinitely, including those marked as failed, completed, or cancelled. This may impact database performance over time.',
-                                'post-expirator'
-                            ),
-                            'scheduledStepsCleanupRetention' => __('Retention', 'post-expirator'),
-                            'scheduledStepsCleanupRetentionDesc' => __(
-                                'The duration, in days, for which completed, failed, and canceled scheduled workflow steps will be preserved before automatic removal.',
-                                'post-expirator'
-                            ),
-                            'days' => __('days', 'post-expirator'),
-                        ],
-                        'settings' => [
-                            'scheduledStepsCleanupStatus' => $this->settings->getScheduledWorkflowStepsCleanupStatus(),
-                            'scheduledStepsCleanupRetention' => $this->settings->getScheduledWorkflowStepsCleanupRetention(),
-                        ],
-                        'settingsTab' => $_GET['tab'] ?? 'defaults',
-                    ]
-                );
-            }
         } catch (Throwable $th) {
             $this->logger->error('Error enqueuing scripts: ' . $th->getMessage());
         }

@@ -144,7 +144,7 @@ class PostExpirator_Display
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : 'advanced';
 
         $allowed_tabs = ['advanced', 'diagnostics', 'viewdebug' ];
-        $allowed_tabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
+        $allowed_tabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_SETTINGS_TABS, $allowed_tabs);
 
         $debugIsEnabled = (bool)$this->hooks->applyFilters(SettingsHooksAbstract::FILTER_DEBUG_ENABLED, false);
         if (! $debugIsEnabled) {

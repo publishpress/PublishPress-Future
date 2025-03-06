@@ -124,7 +124,7 @@ const ImportTab = () => {
 
     return (
         <SettingsTab
-            title={__('Import Settings', 'post-expirator')}
+            title={__('Import', 'post-expirator')}
             description={__('Import the plugin settings or workflows from a .json file.', 'post-expirator')}
         >
             <VStack className="pe-settings-tab__import-file-upload">
