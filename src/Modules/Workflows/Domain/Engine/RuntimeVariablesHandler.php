@@ -5,6 +5,7 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHelperRegistryInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\VariableResolverInterface;
 
 use function wp_json_encode;
@@ -16,9 +17,15 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
      */
     private $hooks;
 
-    public function __construct(HookableInterface $hooks)
+    /**
+     * @var RuntimeVariablesHelperRegistryInterface
+     */
+    private $helperRegistry;
+
+    public function __construct(HookableInterface $hooks, RuntimeVariablesHelperRegistryInterface $helperRegistry)
     {
         $this->hooks = $hooks;
+        $this->helperRegistry = $helperRegistry;
     }
 
     /**
@@ -69,7 +76,13 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
         $expressions = $this->extractExpressionsFromText($text);
 
         foreach ($expressions as $expression) {
-            $value = $this->getVariable($expression);
+            if ($expressionElements = $this->variableHasHelper($expression)) {
+                $value = $this->getVariable($expressionElements['variable']);
+
+                $value = $this->helperRegistry->execute($expressionElements['helper'], $value, $expressionElements['args']);
+            } else {
+                $value = $this->getVariable($expression);
+            }
 
             if (is_array($value) || is_object($value)) {
                 $value = wp_json_encode($value);
@@ -138,6 +151,44 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
         }
 
         return $newExpression;
+    }
+
+    private function variableHasHelper(string $variableName): mixed
+    {
+        $helperRegex = '/^([a-zA-Z0-9_]+)\s+([a-zA-Z0-9_\.]+)\s*(.*)$/';
+
+        $matches = [];
+        preg_match($helperRegex, $variableName, $matches);
+
+        if (empty($matches)) {
+            return false;
+        }
+
+        $arguments = [];
+
+        // Extract arguments if they exist in the third capture group
+        if (!empty($matches[3])) {
+            $argsString = trim($matches[3]);
+
+            // Regex to match key-value pairs like key="value" or key='value' or key=value
+            $argsRegex = '/([a-zA-Z0-9_\-]+)\s*=\s*(?:(?:"([^"]*)")|(?:\'([^\']*)\')|([^\s]+))/';
+
+            $argMatches = [];
+            preg_match_all($argsRegex, $argsString, $argMatches, PREG_SET_ORDER);
+
+            foreach ($argMatches as $argMatch) {
+                $key = $argMatch[1];
+                // Get the value from whichever capturing group matched (double quotes, single quotes, or no quotes)
+                $value = $argMatch[2] ?? $argMatch[3] ?? $argMatch[4] ?? '';
+                $arguments[$key] = $value;
+            }
+        }
+
+        return [
+            'helper' => $matches[1],
+            'variable' => $matches[2],
+            'args' => $arguments,
+        ];
     }
 
     private function getVariableValue(string $variableName, $dataSource)

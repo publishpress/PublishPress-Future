@@ -182,7 +182,6 @@ class SettingsController implements InitializableInterface
     public function onAdminEnqueueScript($screenId)
     {
         try {
-            ray($screenId);
             if ($screenId !== 'toplevel_page_publishpress-future') {
                 return;
             }
