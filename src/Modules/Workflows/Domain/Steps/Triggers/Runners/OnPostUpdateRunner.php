@@ -109,8 +109,8 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
             return;
         }
 
-        $postBefore = $this->postCache[$postId][0] ?? null;
-        $postAfter = $this->postCache[$postId][1] ?? null;
+        $postBefore = $this->postCache[$postId]['postBefore'] ?? null;
+        $postAfter = $this->postCache[$postId]['postAfter'] ?? null;
 
         if (
             $this->hooks->applyFilters(
@@ -136,35 +136,34 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
             return;
         }
 
+        $this->variablesHandler->setVariable($nodeSlug, [
+            'postBefore' => new PostResolver(
+                $postBefore,
+                $this->hooks,
+                $this->postPermalinkCache[$postBefore->ID] ?? '',
+                $this->expirablePostModelFactory
+            ),
+            'postAfter' => new PostResolver(
+                $postAfter,
+                $this->hooks,
+                $this->postPermalinkCache[$postAfter->ID] ?? '',
+                $this->expirablePostModelFactory
+            ),
+        ]);
+
+        $postQueryArgs = [
+            'post' => $postAfter,
+            'node' => $this->step['node'],
+        ];
+
+        if (! $this->postQueryValidator->validate($postQueryArgs)) {
+            return false;
+        }
+
         $this->stepProcessor->executeSafelyWithErrorHandling(
             $this->step,
             function ($step, $postId, $postAfter, $postBefore) {
                 $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
-
-                $postQueryArgs = [
-                    'post' => $postAfter,
-                    'node' => $step['node'],
-                ];
-
-                if (! $this->postQueryValidator->validate($postQueryArgs)) {
-                    return false;
-                }
-
-                $this->variablesHandler->setVariable($nodeSlug, [
-                    'postId' => new IntegerResolver($postId),
-                    'postBefore' => new PostResolver(
-                        $postBefore,
-                        $this->hooks,
-                        $this->postPermalinkCache[$postBefore->ID] ?? '',
-                        $this->expirablePostModelFactory
-                    ),
-                    'postAfter' => new PostResolver(
-                        $postAfter,
-                        $this->hooks,
-                        $this->postPermalinkCache[$postAfter->ID] ?? '',
-                        $this->expirablePostModelFactory
-                    ),
-                ]);
 
                 $this->stepProcessor->triggerCallbackIsRunning();
 
