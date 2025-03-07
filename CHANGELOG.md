@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Replace Post Query fields with a query builder, on triggers and actions related to post (Issue #1131).
 - Change selection of post types in the Settings page from tabs to a select box (Issue #1188).
 - Move the Export / Import tabs to the Settings page, removing the respective admin menu (Issue #1127).
+- Add the name of the selected post type as title in the Post Types settings (Issue #1191).
 
 ### Fixed
 
