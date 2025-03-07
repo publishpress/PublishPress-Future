@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add new output "Result" to the "Conditional" step. Data type is boolean - PRO.
 - Add a query builder to post related triggers (Issue #1131).
 - Add "update" variable to the Post is Saved step (Issue #1147).
+- Add support to helper "date" on runtime variables in the workflow editor (Issue #1160).
 
 ### Changed
 
