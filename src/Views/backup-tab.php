@@ -19,14 +19,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 </div>
             </div>
         </div>
-    <?php
-    if ($showSideBar) {
-        include __DIR__ . '/../../../Views/ad-banner-right-sidebar.php';
-    }
-?>
+        <?php if ($showSideBar) :
+            include __DIR__ . '/ad-banner-right-sidebar.php';
+        endif; ?>
     </div>
 </div>
-<?php
-// phpcs:enable
-
-\PostExpirator_Display::getInstance()->publishpress_footer();

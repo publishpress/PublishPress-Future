@@ -46,16 +46,6 @@ class BackupAdminPage implements InitializableInterface
         );
     }
 
-    public function renderSubmenuPage()
-    {
-        $showSideBar = $this->hooks->applyFilters(
-            SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
-            ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
-        );
-
-        include __DIR__ . '/../../../Views/debug-panel.php';
-    }
-
     public function enqueueAdminScripts($screenId)
     {
         if ($screenId !== 'future_page_publishpress-future-settings') {
@@ -178,6 +168,11 @@ class BackupAdminPage implements InitializableInterface
         }
 
         $basePath = __DIR__ . '/../../../Views/';
+
+        $showSideBar = $this->hooks->applyFilters(
+            SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
+            ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
+        );
 
         include $basePath . 'backup-tab.php';
     }
