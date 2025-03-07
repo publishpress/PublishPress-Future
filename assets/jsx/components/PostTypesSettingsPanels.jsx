@@ -33,6 +33,7 @@ export const PostTypesSettingsPanels = function (props) {
                 legend={postTypeSettings.label}
                 text={props.text}
                 postType={postType}
+                postTypeLabel={postTypeSettings.label}
                 settings={postTypeSettings}
                 expireTypeList={props.expireTypeList}
                 taxonomiesList={props.taxonomiesList[postType]}

@@ -291,6 +291,7 @@ export const PostTypeSettingsPanel = function (props) {
 
     return (
         <div className={fieldSetClassNames}>
+            <h2>{props.postTypeLabel}</h2>
             <SettingsTable bodyChildren={settingsRows} />
 
             {! hasValidData && (
