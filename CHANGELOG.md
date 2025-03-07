@@ -63,6 +63,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add new data types: post_status, post_type, url, user_roles, meta.
 - Refactored internal util functions on workflow editor scripts to have clearer names.
 - Add step scoped variables definition. These variables can be listed and used in the editor to configure some behaviors in the step's runner.
+- Add new filter to filter future actions admin page tabs: `publishpressfuture_future_actions_tabs`.
 
 ## [4.3.3] - 03 Feb, 2025
 

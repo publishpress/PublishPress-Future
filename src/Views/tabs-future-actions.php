@@ -38,7 +38,7 @@ $tabs = [
     ],
 ];
 
-$tabs = $hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_TABS, $tabs);
+$tabs = $hooks->applyFilters(HooksAbstract::FILTER_FUTURE_ACTIONS_TABS, $tabs);
 ?>
 
 <div class="wrap">
