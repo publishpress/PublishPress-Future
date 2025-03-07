@@ -7,26 +7,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Add new trigger: Post Author Changed - PRO (Issue #1144).
 - Add new action: Update Post - PRO (Issue #1143).
 - Add new trigger: Manually run via posts row action - PRO (Issue #1168).
-- Add the step slug/name to the top of the step's node in the workflow editor.
-- Add a loading message when the workflow is being loaded.
-- Add validation to the expression builder to avoid empty placeholders.
-- Add validation to the expression builder to avoid unopened and unclosed placeholders.
-- Add form to customize the import of workflows and settings from a JSON file (Issue #1152).
+- Add new trigger: Post Author Changed - PRO (Issue #1144).
 - Add new trigger: User role is changed - PRO (Issue #1166).
+- Add support to helper "date" on runtime variables in the workflow editor (Issue #1160).
+- Add the step slug/name to the top of the step's node in the workflow editor.
+- Add form to customize the import of workflows and settings from a JSON file (Issue #1152).
 - Add new field to the post query step settings on the workflow editor to query posts by author.
 - Add new field to the post query step settings on the workflow editor to query posts by terms.
 - Add time to the Schedule step (Issue #1124).
 - Add new filter `publishpressfuture_workflow_route_variable` to customize the variable name on the workflow runtime (Issue #1126).
 - Add new output "Result" to the "Conditional" step. Data type is boolean - PRO.
-- Add a query builder to post related triggers (Issue #1131).
+- Add a posts query builder to post related triggers (Issue #1131).
 - Add "update" variable to the Post is Saved step (Issue #1147).
-- Add support to helper "date" on runtime variables in the workflow editor (Issue #1160).
+- Add validation to the expression builder to avoid empty placeholders.
+- Add validation to the expression builder to avoid unopened and unclosed placeholders.
+- Add a loading message when the workflow is being loaded.
 
 ### Changed
 
+- Move the Export / Import tabs to the Settings page, removing the respective admin menu (Issue #1127).
 - Change the description field on workflow steps settings to be a popover, and part of the inspector card, saving space in the sidebar.
 - Remove left padding from the workflow step details panel.
 - Remove attributes table from the inspector card when on developer mode (that data can still be seen in the Developer Info panel)
@@ -39,7 +40,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Rename "postId" property on "node" data type variables to "post_id" to keep consistency (with backward compatibility).
 - Replace Post Query fields with a query builder, on triggers and actions related to post (Issue #1131).
 - Change selection of post types in the Settings page from tabs to a select box (Issue #1188).
-- Move the Export / Import tabs to the Settings page, removing the respective admin menu (Issue #1127).
 - Add the name of the selected post type as title in the Post Types settings (Issue #1191).
 
 ### Fixed
