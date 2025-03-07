@@ -1530,7 +1530,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
   var fieldSetClassNames = props.isVisible ? 'pe-settings-fieldset' : 'pe-settings-fieldset hidden';
   return /*#__PURE__*/React.createElement("div", {
     className: fieldSetClassNames
-  }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingsTable, {
+  }, /*#__PURE__*/React.createElement("h2", null, props.postTypeLabel), /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingsTable, {
     bodyChildren: settingsRows
   }), !hasValidData && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("div", {
     className: "publishpress-future-notice publishpress-future-notice-error"
@@ -1597,6 +1597,7 @@ var PostTypesSettingsPanels = function PostTypesSettingsPanels(props) {
       legend: postTypeSettings.label,
       text: props.text,
       postType: postType,
+      postTypeLabel: postTypeSettings.label,
       settings: postTypeSettings,
       expireTypeList: props.expireTypeList,
       taxonomiesList: props.taxonomiesList[postType],
