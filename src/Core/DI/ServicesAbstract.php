@@ -192,4 +192,10 @@ abstract class ServicesAbstract
     public const CACHE_POSTS_WITH_FUTURE_ACTION = 'future.free/cache-posts-with-future-action';
 
     public const JSON_LOGIC_ENGINE = 'future.free/json-logic-engine';
+
+    public const RUNTIME_VARIABLES_HELPER_REGISTRY = 'future.free/runtime-variables-helper-registry';
+
+    public const RUNTIME_VARIABLES_HELPER_INITIALIZER = 'future.free/runtime-variables-helper-initializer';
+
+    public const RUNTIME_VARIABLES_DATE_HELPER = 'future.free/runtime-variables-date-helper';
 }

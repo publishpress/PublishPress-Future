@@ -77,6 +77,9 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHandler;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\WorkflowEngine;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\InputValidators\PostQuery as PostQueryValidator;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\JsonLogicEngine;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHelperInitializer;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHelperRegistry;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHelpers\DateHelper;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\Cron as CronStep;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\General as GeneralStep;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\Post as PostStep;
@@ -767,7 +770,27 @@ return [
 
     ServicesAbstract::WORKFLOW_VARIABLES_HANDLER => static function (ContainerInterface $container) {
         return new RuntimeVariablesHandler(
-            $container->get(ServicesAbstract::HOOKS)
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::RUNTIME_VARIABLES_HELPER_REGISTRY)
+        );
+    },
+
+    ServicesAbstract::RUNTIME_VARIABLES_HELPER_REGISTRY => static function (ContainerInterface $container) {
+        return new RuntimeVariablesHelperRegistry();
+    },
+
+    ServicesAbstract::RUNTIME_VARIABLES_HELPER_INITIALIZER => static function (ContainerInterface $container) {
+        return new RuntimeVariablesHelperInitializer(
+            $container->get(ServicesAbstract::RUNTIME_VARIABLES_HELPER_REGISTRY),
+            [
+                $container->get(ServicesAbstract::RUNTIME_VARIABLES_DATE_HELPER)
+            ]
+        );
+    },
+
+    ServicesAbstract::RUNTIME_VARIABLES_DATE_HELPER => static function (ContainerInterface $container) {
+        return new DateHelper(
+            $container->get(ServicesAbstract::DATE_TIME_HANDLER)
         );
     },
 
@@ -777,7 +800,8 @@ return [
             $container->get(ServicesAbstract::STEP_TYPES_MODEL),
             $container->get(ServicesAbstract::STEP_RUNNER_FACTORY),
             $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
-            $container->get(ServicesAbstract::LOGGER)
+            $container->get(ServicesAbstract::LOGGER),
+            $container->get(ServicesAbstract::RUNTIME_VARIABLES_HELPER_INITIALIZER)
         );
     },
 
