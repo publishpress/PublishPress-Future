@@ -143,19 +143,29 @@ export function NodeValidator({})
             return successfulResult;
         }
 
-        const slugs = expression.match(/{{[^}]+}}/g);
+        const expressions = expression.match(/{{[^}]+}}/g);
 
-        if (slugs) {
-            slugs.forEach((slug) => {
-                slug = slug.replace('{{', '').replace('}}', '');
-                slug = slug.trim();
-                slug = slug.split('.')[0];
+        if (expressions) {
+            expressions.forEach((expression) => {
+                expression = expression.replace('{{', '').replace('}}', '');
+                expression = expression.trim();
+
+                // Remove the optional helper parts, the first and all after the second parts.
+                expression = expression.split(' ');
+                if (expression.length > 1) {
+                    expression = expression[1];
+                } else {
+                    expression = expression[0];
+                }
+
+                const expressionParts = expression.split('.');
+                const slug = expressionParts[0];
 
                 if (slug === 'global') {
                     return successfulResult;
                 }
 
-                if (ruleData?.allowedSlugs?.includes(slug)) {
+                if (ruleData?.allowedVariables?.includes(slug)) {
                     return successfulResult;
                 }
 
