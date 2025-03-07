@@ -7,63 +7,63 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Add new action: Update Post - PRO (Issue #1143).
-- Add new trigger: Manually run via posts row action - PRO (Issue #1168).
-- Add new trigger: Post Author Changed - PRO (Issue #1144).
-- Add new trigger: User role is changed - PRO (Issue #1166).
-- Add support to helper "date" on runtime variables in the workflow editor (Issue #1160).
-- Add the step slug/name to the top of the step's node in the workflow editor.
-- Add form to customize the import of workflows and settings from a JSON file (Issue #1152).
-- Add new field to the post query step settings on the workflow editor to query posts by author.
-- Add new field to the post query step settings on the workflow editor to query posts by terms.
-- Add time to the Schedule step (Issue #1124).
-- Add new filter `publishpressfuture_workflow_route_variable` to customize the variable name on the workflow runtime (Issue #1126).
-- Add new output "Result" to the "Conditional" step. Data type is boolean - PRO.
-- Add a posts query builder to post related triggers (Issue #1131).
-- Add "update" variable to the Post is Saved step (Issue #1147).
-- Add validation to the expression builder to avoid empty placeholders.
-- Add validation to the expression builder to avoid unopened and unclosed placeholders.
-- Add a loading message when the workflow is being loaded.
+- Added new action: Update Post - PRO (Issue #1143).
+- Added new trigger: Manual run via posts row action - PRO (Issue #1168).
+- Added new trigger: Post Author Changed - PRO (Issue #1144).
+- Added new trigger: User role change - PRO (Issue #1166).
+- Added support for "date" helper on runtime variables in the workflow editor (Issue #1160).
+- Added step slug/name to the top of each step node in the workflow editor.
+- Added form to customize workflow and settings import from JSON files (Issue #1152).
+- Added new field in post query step settings to query posts by author.
+- Added new field in post query step settings to query posts by terms.
+- Added time selection to the Schedule step (Issue #1124).
+- Added new filter `publishpressfuture_workflow_route_variable` to customize variable names in workflow runtime (Issue #1126).
+- Added new "Result" output to the "Conditional" step with boolean data type - PRO.
+- Added posts query builder to post-related triggers (Issue #1131).
+- Added "update" variable to the Post is Saved step (Issue #1147).
+- Added validation to prevent empty placeholders in expression builder.
+- Added validation to prevent unclosed placeholders in expression builder.
+- Added loading message during workflow load.
 
 ### Changed
 
-- Move the Export / Import tabs to the Settings page, removing the respective admin menu (Issue #1127).
-- Change the description field on workflow steps settings to be a popover, and part of the inspector card, saving space in the sidebar.
-- Remove left padding from the workflow step details panel.
-- Remove attributes table from the inspector card when on developer mode (that data can still be seen in the Developer Info panel)
-- Improve the debug panel in the workflow editor showing the node data and node settings in separate items.
-- Rename the label of the `global.trace` variable to "Workflow Step Trace" (Issue #1126).
-- Rename the variable `global.execution_id` to `global.run_id` and its label to "Workflow Run ID" (Issue #1126).
-- Remove the "Task Execution Order" field from the Schedule Delay step settings (Issue #1180).
-- Update the "Auto-enable" setting, renaming it to "Automatically create actions" (Issue #1157)
-- Update the text in the Permissions settings (Issue #1136)
-- Rename "postId" property on "node" data type variables to "post_id" to keep consistency (with backward compatibility).
-- Replace Post Query fields with a query builder, on triggers and actions related to post (Issue #1131).
-- Change selection of post types in the Settings page from tabs to a select box (Issue #1188).
-- Add the name of the selected post type as title in the Post Types settings (Issue #1191).
+- Moved Export / Import tabs to Settings page and removed respective admin menu (Issue #1127).
+- Changed description field in workflow steps to use a popover within the inspector card, saving sidebar space.
+- Removed left padding from workflow step details panel.
+- Removed attributes table from inspector card in developer mode (data still visible in Developer Info panel)
+- Improved debug panel in workflow editor by separating node data and settings into distinct items.
+- Renamed `global.trace` variable label to "Workflow Step Trace" (Issue #1126).
+- Renamed `global.execution_id` to `global.run_id` and its label to "Workflow Run ID" (Issue #1126).
+- Removed the "Task Execution Order" field from Schedule Delay step settings (Issue #1180).
+- Renamed "Auto-enable" setting to "Automatically create actions" for clarity (Issue #1157).
+- Updated text in Permissions settings for better clarity (Issue #1136).
+- Renamed "postId" property to "post_id" in node data type variables for consistency (with backward compatibility).
+- Replaced Post Query fields with a query builder for post-related triggers and actions (Issue #1131).
+- Changed post type selection in Settings page from tabs to a select box (Issue #1188).
+- Added selected post type name as title in Post Types settings (Issue #1191).
 
 ### Fixed
 
-- Fix fatal error when selecting multiple steps or a connection in the workflow editor (Issue #1162).
-- Fix default data for the "Send Ray" step, sending all the input value instead of a blank message.
-- Fix the "Restore" and "Delete Permanently" actions for trashed workflows (Issue #1175).
-- Fix node validation rules for variables (Issue #1177).
-- Fix the scroll behavior in the list of variables in query builder.
-- Fix the height of the columns in the list of variables in query builder.
+- Fixed fatal error when selecting multiple steps or connections in workflow editor (Issue #1162).
+- Fixed default data in "Send Ray" step to send all input values instead of blank message.
+- Fixed "Restore" and "Delete Permanently" actions for trashed workflows (Issue #1175).
+- Fixed node validation rules for variables (Issue #1177).
+- Fixed scroll behavior in variables list within query builder.
+- Fixed column height in variables list within query builder.
 
 ### Developers
 
-- Add new method `resolveExpressionsInArray` to the class `RuntimeVariablesHandler`.
-- Add new method `resolveExpressionsInText` to the class `RuntimeVariablesHandler`.
-- Add new method `extractExpressionsFromText` to the class `RuntimeVariablesHandler`.
-- Deprecated the methods `replacePlaceholdersInText` and `extractPlaceholdersFromText` in favor of the new methods `resolveExpressionsInText` and `extractExpressionsFromText` in the interface `RuntimeVariablesHandlerInterface` and the class `RuntimeVariablesHandler`.
-- Add new data field to the workflow editor to query users by role and id.
-- Add new model to user roles.
-- Refactored the schema of data types, renaming "type" to "primitiveType" and adding "itemsType" to array.
-- Add new data types: post_status, post_type, url, user_roles, meta.
-- Refactored internal util functions on workflow editor scripts to have clearer names.
-- Add step scoped variables definition. These variables can be listed and used in the editor to configure some behaviors in the step's runner.
-- Add new filter to filter future actions admin page tabs: `publishpressfuture_future_actions_tabs`.
+- Added new method `resolveExpressionsInArray` to `RuntimeVariablesHandler` class.
+- Added new method `resolveExpressionsInText` to `RuntimeVariablesHandler` class.
+- Added new method `extractExpressionsFromText` to `RuntimeVariablesHandler` class.
+- Deprecated methods `replacePlaceholdersInText` and `extractPlaceholdersFromText` in favor of new methods `resolveExpressionsInText` and `extractExpressionsFromText` in `RuntimeVariablesHandlerInterface` and `RuntimeVariablesHandler` class.
+- Added new data field to workflow editor for querying users by role and ID.
+- Added new model for user roles.
+- Refactored data types schema: renamed "type" to "primitiveType" and added "itemsType" to array.
+- Added new data types: post_status, post_type, url, user_roles, meta.
+- Refactored workflow editor utility functions for clearer naming.
+- Added step-scoped variables definition for configuring step runner behaviors in editor.
+- Added new filter `publishpressfuture_future_actions_tabs` for filtering future actions admin page tabs.
 
 ## [4.3.3] - 03 Feb, 2025
 
