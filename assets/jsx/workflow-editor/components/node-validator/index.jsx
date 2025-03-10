@@ -139,7 +139,14 @@ export function NodeValidator({})
             error: null,
         };
 
+
+        expression = expression.trim();
+
         if (! expression?.includes('{{')) {
+            return successfulResult;
+        }
+
+        if (expression === '{{input}}') {
             return successfulResult;
         }
 
