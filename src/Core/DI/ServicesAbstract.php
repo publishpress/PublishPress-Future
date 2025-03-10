@@ -200,4 +200,6 @@ abstract class ServicesAbstract
     public const RUNTIME_VARIABLES_DATE_HELPER = 'future.free/runtime-variables-date-helper';
 
     public const POST_CACHE = 'future.free/post-cache';
+
+    public const WORKFLOW_EXECUTION_SAFTEGUARD = 'future.free/workflow-execution-safeguard';
 }

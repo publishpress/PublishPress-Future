@@ -117,6 +117,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostWo
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnScheduleRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnUserRoleChangeRunner;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
+use PublishPress\Future\Modules\Workflows\Infrastructure\Safety\WorkflowExecutionSafeguard;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncStepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Migrations\V40000WorkflowScheduledStepsSchema;
@@ -885,7 +886,8 @@ return [
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER),
-                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFTEGUARD)
                     );
                     break;
 
@@ -897,7 +899,8 @@ return [
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER),
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
-                        $container->get(ServicesAbstract::POST_CACHE)
+                        $container->get(ServicesAbstract::POST_CACHE),
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFTEGUARD)
                     );
                     break;
 
@@ -1156,5 +1159,16 @@ return [
         return new PostCache(
             $container->get(ServicesAbstract::HOOKS)
         );
+    },
+    ServicesAbstract::WORKFLOW_EXECUTION_SAFTEGUARD => static function (ContainerInterface $container) {
+        global $workflowExecutionSafeguard;
+
+        if (! isset($workflowExecutionSafeguard)) {
+            $workflowExecutionSafeguard = new WorkflowExecutionSafeguard(
+                $container->get(ServicesAbstract::HOOKS)
+            );
+        }
+
+        return $workflowExecutionSafeguard;
     },
 ];

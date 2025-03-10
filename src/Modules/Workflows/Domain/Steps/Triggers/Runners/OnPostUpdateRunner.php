@@ -13,11 +13,10 @@ use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInte
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostUpdate;
 use PublishPress\Future\Modules\Workflows\Interfaces\PostCacheInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowExecutionSafeguardInterface;
 
 class OnPostUpdateRunner implements TriggerRunnerInterface
 {
-    use InfiniteLoopPreventer;
-
     /**
      * @var HookableInterface
      */
@@ -54,11 +53,6 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
     private $logger;
 
     /**
-     * @var array
-     */
-    private $postPermalinkCache = [];
-
-    /**
      * @var \Closure
      */
     private $expirablePostModelFactory;
@@ -68,6 +62,11 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
      */
     private $postCache;
 
+    /**
+     * @var WorkflowExecutionSafeguardInterface
+     */
+    private $executionSafeguard;
+
     public function __construct(
         HookableInterface $hooks,
         StepProcessorInterface $stepProcessor,
@@ -75,7 +74,8 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger,
         \Closure $expirablePostModelFactory,
-        PostCacheInterface $postCache
+        PostCacheInterface $postCache,
+        WorkflowExecutionSafeguardInterface $workflowExecutionSafeguard
     ) {
         $this->hooks = $hooks;
         $this->stepProcessor = $stepProcessor;
@@ -84,6 +84,7 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
         $this->logger = $logger;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->postCache = $postCache;
+        $this->executionSafeguard = $workflowExecutionSafeguard;
     }
 
     public static function getNodeTypeName(): string
@@ -111,37 +112,19 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
             return;
         }
 
+        $stepSlug = $this->stepProcessor->getSlugFromStep($this->step);
+
+        if ($this->shouldAbortExecution($postId, $stepSlug)) {
+            return;
+        }
+
         $cachedPosts = $this->postCache->getCachedPosts($postId);
-        $cachedPermalink = $this->postCache->getPermalink($postId);
+        $cachedPermalink = $this->postCache->getCachedPermalink($postId);
 
         $postBefore = $cachedPosts['postBefore'] ?? null;
         $postAfter = $cachedPosts['postAfter'] ?? null;
 
-        if (
-            $this->hooks->applyFilters(
-                HooksAbstract::FILTER_IGNORE_SAVE_POST_EVENT,
-                false,
-                self::getNodeTypeName(),
-                $this->step
-            )
-        ) {
-            return;
-        }
-
-        $nodeSlug = $this->stepProcessor->getSlugFromStep($this->step);
-
-        if ($this->isInfiniteLoopDetected($this->workflowId, $this->step, $postId)) {
-            $this->logger->debug(
-                $this->stepProcessor->prepareLogMessage(
-                    'Infinite loop detected for step %s, skipping',
-                    $nodeSlug
-                )
-            );
-
-            return;
-        }
-
-        $this->variablesHandler->setVariable($nodeSlug, [
+        $this->variablesHandler->setVariable($stepSlug, [
             'postBefore' => new PostResolver(
                 $postBefore,
                 $this->hooks,
@@ -167,22 +150,77 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
 
         $this->stepProcessor->executeSafelyWithErrorHandling(
             $this->step,
-            function ($step, $postId) {
-                $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
-
-                $this->stepProcessor->triggerCallbackIsRunning();
-
-                $this->logger->debug(
-                    $this->stepProcessor->prepareLogMessage(
-                        'Trigger is running | Slug: %s | Post ID: %d',
-                        $nodeSlug,
-                        $postId
-                    )
-                );
-
-                $this->stepProcessor->runNextSteps($step);
-            },
+            [$this, 'processTriggerExecution'],
             $postId
         );
+    }
+
+    private function shouldAbortExecution($postId, $stepSlug): bool
+    {
+        if (
+            $this->hooks->applyFilters(
+                HooksAbstract::FILTER_IGNORE_SAVE_POST_EVENT,
+                false,
+                self::getNodeTypeName(),
+                $this->step
+            )
+        ) {
+            $this->logger->debug(
+                $this->stepProcessor->prepareLogMessage(
+                    'Ignoring save post event for step %s',
+                    $stepSlug
+                )
+            );
+
+            return true;
+        }
+
+        if ($this->executionSafeguard->detectInfiniteLoop($this->workflowId, $this->step, $postId)) {
+            $this->logger->debug(
+                $this->stepProcessor->prepareLogMessage(
+                    'Infinite loop detected for step %s, skipping',
+                    $stepSlug
+                )
+            );
+
+            return true;
+        }
+
+        $uniqueId = $this->executionSafeguard->generateUniqueExecutionIdentifier([
+            get_current_user_id(),
+            $this->workflowId,
+            $this->step['node']['id'],
+            $postId,
+        ]);
+
+        if ($this->executionSafeguard->preventDuplicateExecution($uniqueId)) {
+            $this->logger->debug(
+                $this->stepProcessor->prepareLogMessage(
+                    'Duplicate execution detected for step %s, skipping',
+                    $stepSlug
+                )
+            );
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function processTriggerExecution($postId)
+    {
+        $stepSlug = $this->stepProcessor->getSlugFromStep($this->step);
+
+        $this->stepProcessor->triggerCallbackIsRunning();
+
+        $this->logger->debug(
+            $this->stepProcessor->prepareLogMessage(
+                'Trigger is running | Slug: %s | Post ID: %d',
+                $stepSlug,
+                $postId
+            )
+        );
+
+        $this->stepProcessor->runNextSteps($this->step);
     }
 }
