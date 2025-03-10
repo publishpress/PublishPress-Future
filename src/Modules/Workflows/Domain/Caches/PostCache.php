@@ -49,7 +49,7 @@ class PostCache implements PostCacheInterface
         $this->permalinkCache[$postId]['postAfter'] = get_permalink($postId);
     }
 
-    public function getPermalink(int $postId): ?array
+    public function getCachedPermalink(int $postId): ?array
     {
         return $this->permalinkCache[$postId] ?? null;
     }
