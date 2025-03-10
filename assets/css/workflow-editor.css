@@ -66,3 +66,7 @@ body.js.workflow-editor,
 body.admin_page_future_workflow_editor {
     background-color: #fff;
 }
+
+.edit-post-sidebar .interface-complementary-area-header__small {
+    display: none;
+}
