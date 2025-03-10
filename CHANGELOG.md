@@ -50,6 +50,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed node validation rules for variables (Issue #1177).
 - Fixed scroll behavior in variables list within query builder.
 - Fixed column height in variables list within query builder.
+- Fixed the top header in the right sidebar, hiding it (Issue #1195).
 
 ### Developers
 
