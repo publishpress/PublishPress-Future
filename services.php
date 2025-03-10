@@ -73,6 +73,7 @@ use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\VersionNotices\Module as ModuleVersionNotices;
 use PublishPress\Future\Modules\WooCommerce\Module as ModuleWooCommerce;
 use PublishPress\Future\Modules\Workflows\DBTableSchemas\WorkflowScheduledStepsSchema;
+use PublishPress\Future\Modules\Workflows\Domain\Caches\PostCache;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHandler;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\WorkflowEngine;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\InputValidators\PostQuery as PostQueryValidator;
@@ -895,7 +896,8 @@ return [
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER),
-                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(ServicesAbstract::POST_CACHE)
                     );
                     break;
 
@@ -1147,6 +1149,12 @@ return [
     ServicesAbstract::JSON_LOGIC_ENGINE => static function (ContainerInterface $container) {
         return new JsonLogicEngine(
             $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
+        );
+    },
+
+    ServicesAbstract::POST_CACHE => static function (ContainerInterface $container) {
+        return new PostCache(
+            $container->get(ServicesAbstract::HOOKS)
         );
     },
 ];

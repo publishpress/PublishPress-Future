@@ -198,4 +198,6 @@ abstract class ServicesAbstract
     public const RUNTIME_VARIABLES_HELPER_INITIALIZER = 'future.free/runtime-variables-helper-initializer';
 
     public const RUNTIME_VARIABLES_DATE_HELPER = 'future.free/runtime-variables-date-helper';
+
+    public const POST_CACHE = 'future.free/post-cache';
 }

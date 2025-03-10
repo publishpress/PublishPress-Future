@@ -4,7 +4,6 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreventer;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
@@ -13,6 +12,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostUpdate;
+use PublishPress\Future\Modules\Workflows\Interfaces\PostCacheInterface;
 
 class OnPostUpdateRunner implements TriggerRunnerInterface
 {
@@ -59,14 +59,14 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
     private $postPermalinkCache = [];
 
     /**
-     * @var array
-     */
-    private $postCache = [];
-
-    /**
      * @var \Closure
      */
     private $expirablePostModelFactory;
+
+    /**
+     * @var PostCacheInterface
+     */
+    private $postCache;
 
     public function __construct(
         HookableInterface $hooks,
@@ -74,7 +74,8 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
         InputValidatorsInterface $postQueryValidator,
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger,
-        \Closure $expirablePostModelFactory
+        \Closure $expirablePostModelFactory,
+        PostCacheInterface $postCache
     ) {
         $this->hooks = $hooks;
         $this->stepProcessor = $stepProcessor;
@@ -82,6 +83,7 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+        $this->postCache = $postCache;
     }
 
     public static function getNodeTypeName(): string
@@ -94,8 +96,8 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
         $this->step = $step;
         $this->workflowId = $workflowId;
 
-        $this->hooks->addAction(HooksAbstract::ACTION_PRE_POST_UPDATE, [$this, 'cachePermalink'], 15, 2);
-        $this->hooks->addAction(HooksAbstract::ACTION_POST_UPDATED, [$this, 'cachePosts'], 15, 3);
+        $this->postCache->setup();
+
         /*
          * We need to use the save_post action because the post_updated action is triggered too early
          * and some post data (like Future Action data) would not be available yet.
@@ -109,8 +111,11 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
             return;
         }
 
-        $postBefore = $this->postCache[$postId]['postBefore'] ?? null;
-        $postAfter = $this->postCache[$postId]['postAfter'] ?? null;
+        $cachedPosts = $this->postCache->getCachedPosts($postId);
+        $cachedPermalink = $this->postCache->getPermalink($postId);
+
+        $postBefore = $cachedPosts['postBefore'] ?? null;
+        $postAfter = $cachedPosts['postAfter'] ?? null;
 
         if (
             $this->hooks->applyFilters(
@@ -140,13 +145,13 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
             'postBefore' => new PostResolver(
                 $postBefore,
                 $this->hooks,
-                $this->postPermalinkCache[$postBefore->ID] ?? '',
+                $cachedPermalink['postBefore'],
                 $this->expirablePostModelFactory
             ),
             'postAfter' => new PostResolver(
                 $postAfter,
                 $this->hooks,
-                $this->postPermalinkCache[$postAfter->ID] ?? '',
+                $cachedPermalink['postAfter'],
                 $this->expirablePostModelFactory
             ),
         ]);
@@ -162,7 +167,7 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
 
         $this->stepProcessor->executeSafelyWithErrorHandling(
             $this->step,
-            function ($step, $postId, $postAfter, $postBefore) {
+            function ($step, $postId) {
                 $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
                 $this->stepProcessor->triggerCallbackIsRunning();
@@ -177,27 +182,7 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
 
                 $this->stepProcessor->runNextSteps($step);
             },
-            $postId,
-            $postAfter,
-            $postBefore
+            $postId
         );
-    }
-
-    /**
-     * Cache the permalink of the post when it is updated because
-     * the post revolver will always return the new permalink of the post.
-     * We use this to make sure the post before results the old permalink.
-     */
-    public function cachePermalink($postId, $data)
-    {
-        $this->postPermalinkCache[$postId] = get_permalink($postId);
-    }
-
-    public function cachePosts($postId, $postAfter, $postBefore)
-    {
-        $this->postCache[$postId] = [
-            'postAfter' => $postAfter,
-            'postBefore' => $postBefore,
-        ];
     }
 }
