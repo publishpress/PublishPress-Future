@@ -156,7 +156,6 @@ export const ExpressionBuilder = ({
                 showGutter: false,
                 showPrintMargin: false,
                 showLineNumbers: false,
-                showInvisibles: true,
                 highlightActiveLine: false,
             }}
             height={oneLinePreview ? '30px' : '92px'}
@@ -199,7 +198,6 @@ export const ExpressionBuilder = ({
                             enableLiveAutocompletion: autoComplete,
                             showLineNumbers: !singleVariableOnly,
                             showGutter: !singleVariableOnly,
-                            showInvisibles: true,
                             highlightActiveLine: !singleVariableOnly,
                         }}
                         height={singleVariableOnly ? '30px' : '200px'}
