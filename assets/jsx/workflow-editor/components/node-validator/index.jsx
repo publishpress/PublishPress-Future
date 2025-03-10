@@ -140,8 +140,6 @@ export function NodeValidator({})
         };
 
 
-        expression = expression.trim();
-
         if (! expression?.includes('{{')) {
             return successfulResult;
         }
