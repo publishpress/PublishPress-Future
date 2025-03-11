@@ -8,7 +8,8 @@ const RenderColumns = ({
     setCurrentDescription,
     onDoubleClick,
     path = [],
-    setCurrentVariableId
+    setCurrentVariableId,
+    columnIndex
 }) => {
     if (!currentItems) return null;
 
@@ -51,6 +52,7 @@ const RenderColumns = ({
                         onDoubleClick={onDoubleClick}
                         path={[...path, index]}
                         index={index}
+                        columnIndex={currentColumnIndex}
                     />;
                 })}
             </div>

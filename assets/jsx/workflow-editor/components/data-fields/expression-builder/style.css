@@ -185,3 +185,7 @@
     color: rgb(30, 30, 30);
     margin-bottom: 15px;
 }
+
+.expression-builder-modal-variables .column-item-step-slug {
+    color: #a3a3a3;
+}

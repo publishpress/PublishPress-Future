@@ -258,7 +258,7 @@ export function mapNodeInputs(node) {
             } else {
                 mappedInput.push({
                     ...outputItem,
-                    label: `${outputItem.label} (${previousNode.data.slug})`,
+                    label: `${outputItem.label}`,
                     name: `${previousNode.data.slug}.${outputItem.name}`,
                     type: outputItem.type,
                     nodeLabel: nodeType.label,
@@ -310,6 +310,7 @@ export function getStepScopedVariables(node) {
             type: variable.type,
             itemsType: variable?.itemsType,
             description: variable?.description,
+            nodeSlug: node.data.slug,
         };
     });
 
@@ -340,6 +341,7 @@ function formatVariableStructure(variable) {
         type: variable.type,
         itemsType: variable?.itemsType,
         description: variable?.description,
+        nodeSlug: variable?.nodeSlug,
     };
 }
 
@@ -358,6 +360,7 @@ function getVariableProperties(variable) {
             type: property?.type,
             itemsType: property?.itemsType,
             description: property?.description,
+            nodeSlug: variable?.nodeSlug,
             children: [],
         });
 

@@ -35,7 +35,8 @@ const ColumnItemVariable = ({
     setCurrentVariableId,
     onDoubleClick,
     path = [],
-    index
+    index,
+    columnIndex
 }) => {
     const hasChildren = item.children && item.children.length > 0;
     const currentColumnIndex = path.length - 1;
@@ -46,13 +47,17 @@ const ColumnItemVariable = ({
         setCurrentVariableId(item.id);
     }
 
+    const stepSlug = item.name.split('.')[0];
+    const stepSlugLabel = stepSlug ? `(${stepSlug})` : '';
+    const showStepSlugLabel = columnIndex === 0 && stepSlug !== 'global';
+
     return <div
         className={`column-item ${selectedItemIndex === index ? 'selected' : ''} ${hasChildren ? 'has-children' : ''}`}
         onClick={() => onClick(path, currentColumnIndex, index)}
         onMouseEnter={onMouseEnter}
         onDoubleClick={() => onDoubleClick(item)}
     >
-        {item.label}
+        {item.label} {showStepSlugLabel ? <span className="column-item-step-slug">{stepSlugLabel}</span> : ''}
     </div>;
 };
 
@@ -64,7 +69,8 @@ export const ColumnItem = ({
     setCurrentVariableId,
     onDoubleClick,
     path = [],
-    index
+    index,
+    columnIndex
 }) => {
     if (item?.type === 'meta-key-input') {
         return <ColumnItemMeta item={item} onClick={onDoubleClick} />;
@@ -79,6 +85,7 @@ export const ColumnItem = ({
         onDoubleClick={onDoubleClick}
         path={path}
         index={index}
+        columnIndex={columnIndex}
     />;
 };
 
