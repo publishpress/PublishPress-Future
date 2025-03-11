@@ -18,7 +18,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added new field in post query step settings to query posts by terms.
 - Added time selection to the Schedule step (Issue #1124).
 - Added new filter `publishpressfuture_workflow_route_variable` to customize variable names in workflow runtime (Issue #1126).
-- Added new "Result" output to the "Conditional" step with boolean data type - PRO.
 - Added posts query builder to post-related triggers (Issue #1131).
 - Added "update" variable to the Post is Saved step (Issue #1147).
 - Added validation to prevent empty placeholders in expression builder.
