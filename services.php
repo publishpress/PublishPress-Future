@@ -887,7 +887,7 @@ return [
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER),
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
-                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFTEGUARD)
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD)
                     );
                     break;
 
@@ -900,7 +900,7 @@ return [
                         $container->get(ServicesAbstract::LOGGER),
                         $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                         $container->get(ServicesAbstract::POST_CACHE),
-                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFTEGUARD)
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD)
                     );
                     break;
 
@@ -1160,7 +1160,7 @@ return [
             $container->get(ServicesAbstract::HOOKS)
         );
     },
-    ServicesAbstract::WORKFLOW_EXECUTION_SAFTEGUARD => static function (ContainerInterface $container) {
+    ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD => static function (ContainerInterface $container) {
         global $workflowExecutionSafeguard;
 
         if (! isset($workflowExecutionSafeguard)) {

@@ -201,5 +201,5 @@ abstract class ServicesAbstract
 
     public const POST_CACHE = 'future.free/post-cache';
 
-    public const WORKFLOW_EXECUTION_SAFTEGUARD = 'future.free/workflow-execution-safeguard';
+    public const WORKFLOW_EXECUTION_SAFEGUARD = 'future.free/workflow-execution-safeguard';
 }
