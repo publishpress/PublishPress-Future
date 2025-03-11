@@ -116,7 +116,7 @@ class OnPostSave implements StepTypeInterface
                 "name" => "update",
                 "type" => "boolean",
                 "label" => __("Is update", "post-expirator"),
-                "description" => __("Whether the post was updated or not.", "post-expirator"),
+                "description" => __("Whether the action happened to an existing post or a new post. Enter True for an existing post, or False for a new post.", "post-expirator"),
                 "priority" => 15,
             ]
         ];
