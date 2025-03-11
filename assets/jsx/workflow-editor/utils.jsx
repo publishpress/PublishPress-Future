@@ -258,6 +258,7 @@ export function mapNodeInputs(node) {
             } else {
                 mappedInput.push({
                     ...outputItem,
+                    label: `${outputItem.label} (${previousNode.data.slug})`,
                     name: `${previousNode.data.slug}.${outputItem.name}`,
                     type: outputItem.type,
                     nodeLabel: nodeType.label,

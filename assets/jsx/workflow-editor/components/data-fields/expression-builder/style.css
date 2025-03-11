@@ -28,6 +28,7 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    padding-right: 20px;
 }
 
 .column-item.has-children::after {
