@@ -7,6 +7,7 @@ import { NODE_TYPE_PLACEHOLDER } from "./constants";
 
 const VARIABLE_SOURCE_NODE_INPUT = 'node-input';
 const VARIABLE_SOURCE_GLOBAL = 'global';
+const DEFAULT_VARIABLE_PRIORITY = 10;
 
 export function addBodyClass(className) {
     if (document.body.classList.contains(className)) return;
@@ -217,13 +218,17 @@ export function getGlobalVariablesExpanded(globalVariables) {
             label: variable.label,
             source: VARIABLE_SOURCE_GLOBAL,
             description: variable.description,
+            priority: variable?.priority || DEFAULT_VARIABLE_PRIORITY,
         });
     });
 
     // Add "global." prefix to all global variables
     globalVariablesExpanded.forEach((variable) => {
         variable.name = 'global.' + variable.name;
+        variable.priority = variable?.priority || DEFAULT_VARIABLE_PRIORITY;
     });
+
+    console.log(globalVariablesExpanded);
 
     return globalVariablesExpanded;
 }
@@ -253,6 +258,7 @@ export function mapNodeInputs(node) {
                         type: inputItem.type,
                         nodeLabel: nodeType.label,
                         nodeSlug: previousNode.data.slug,
+                        priority: inputItem?.priority || DEFAULT_VARIABLE_PRIORITY,
                     });
                 });
             } else {
@@ -263,6 +269,7 @@ export function mapNodeInputs(node) {
                     type: outputItem.type,
                     nodeLabel: nodeType.label,
                     nodeSlug: previousNode.data.slug,
+                    priority: outputItem?.priority || DEFAULT_VARIABLE_PRIORITY,
                 });
             }
         });
@@ -290,7 +297,7 @@ export function mapNodeInputs(node) {
         return 0;
     });
 
-    console.log(uniqueMappedInputs);
+    uniqueMappedInputs.sort((a, b) => a.priority - b.priority);
 
     return uniqueMappedInputs;
 }
@@ -311,6 +318,7 @@ export function getStepScopedVariables(node) {
             itemsType: variable?.itemsType,
             description: variable?.description,
             nodeSlug: node.data.slug,
+            priority: variable?.priority || DEFAULT_VARIABLE_PRIORITY,
         };
     });
 
@@ -320,7 +328,11 @@ export function getStepScopedVariables(node) {
 export function getExpandedStepScopedVariables(node) {
     const stepScopedVariables = getStepScopedVariables(node);
 
-    return stepScopedVariables.map(expandVariableWithChildren);
+    const expandedStepScopedVariables = stepScopedVariables.map(expandVariableWithChildren);
+
+    expandedStepScopedVariables.sort((a, b) => a.priority - b.priority);
+
+    return expandedStepScopedVariables;
 }
 
 export function getNodeVariablesTree(node, globalVariables) {
@@ -329,7 +341,11 @@ export function getNodeVariablesTree(node, globalVariables) {
 
     const variablesList = [...mappedNodeInputs, ...globalVariablesToList];
 
-    return variablesList.map(expandVariableWithChildren);
+    const expandedVariablesList = variablesList.map(expandVariableWithChildren);
+
+    expandedVariablesList.sort((a, b) => a.priority - b.priority);
+
+    return expandedVariablesList;
 }
 
 function formatVariableStructure(variable) {
@@ -342,6 +358,7 @@ function formatVariableStructure(variable) {
         itemsType: variable?.itemsType,
         description: variable?.description,
         nodeSlug: variable?.nodeSlug,
+        priority: variable?.priority || DEFAULT_VARIABLE_PRIORITY,
     };
 }
 
@@ -362,6 +379,7 @@ function getVariableProperties(variable) {
             description: property?.description,
             nodeSlug: variable?.nodeSlug,
             children: [],
+            priority: property?.priority || DEFAULT_VARIABLE_PRIORITY,
         });
 
         if (dataType.primitiveType === 'object') {

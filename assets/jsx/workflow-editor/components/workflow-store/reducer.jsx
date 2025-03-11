@@ -140,6 +140,7 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
             type: 'array',
             runtimeOnly: true,
             description: 'A step-by-step history showing how the workflow ran, making it easier to find and fix any issues.',
+            priority: 30,
         }
     });
 
@@ -150,6 +151,7 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
             type: 'string',
             runtimeOnly: true,
             description: 'A unique identifier assigned each time the workflow runs. Useful for tracking specific workflow executions and debugging.',
+            priority: 35,
         }
     });
 
@@ -580,7 +582,7 @@ const addDataType = (state, action) => {
 }
 
 const setGlobalVariable = (state, action) => {
-    const { name, label, type, value, runtimeOnly, description } = action.payload;
+    const { name, label, type, value, runtimeOnly, description, priority } = action.payload;
 
     const globalVariables = {
         ...state.globalVariables
@@ -593,6 +595,7 @@ const setGlobalVariable = (state, action) => {
         label,
         runtimeOnly,
         description,
+        priority,
     };
 
     return {

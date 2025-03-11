@@ -123,6 +123,7 @@ class Conditional implements StepTypeInterface
                 "type" => "string",
                 "label" => __("Branch", "post-expirator"),
                 "description" => __("Shows which path was taken: 'true' if conditions were met, or 'false' if they weren't.", "post-expirator"),
+                "priority" => 20,
             ],
         ];
     }
