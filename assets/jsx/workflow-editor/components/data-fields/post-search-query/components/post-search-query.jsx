@@ -9,7 +9,6 @@ import { formatQuery, defaultOperators } from 'react-querybuilder';
 import { queryFields } from './query-fields';
 
 const convertLegacySettingsIntoJson = (defaultValue) => {
-    const json = { "and": [] };
     const { postType, postStatus, postId } = defaultValue;
 
     // Helper function to create clauses for each field type
@@ -26,17 +25,32 @@ const convertLegacySettingsIntoJson = (defaultValue) => {
         return { "or": clauses };
     };
 
+    let clauses = [];
+    let json = {};
+
     // Add post type conditions
     const typeClause = createClauses(postType, 'post_type');
-    if (typeClause) json.and.push(typeClause);
+    if (typeClause) {
+        clauses.push(typeClause)
+    };
 
     // Add post status conditions
     const statusClause = createClauses(postStatus, 'post_status');
-    if (statusClause) json.and.push(statusClause);
+    if (statusClause) {
+        clauses.push(statusClause)
+    };
 
     // Add post ID conditions
     const idClause = createClauses(postId, 'ID');
-    if (idClause) json.and.push(idClause);
+    if (idClause) {
+        clauses.push(idClause)
+    };
+
+    if (clauses.length > 1) {
+        json = { "and": clauses };
+    } else {
+        json = clauses[0];
+    }
 
     return json;
 };
