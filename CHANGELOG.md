@@ -40,6 +40,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Replaced Post Query fields with a query builder for post-related triggers and actions (Issue #1131).
 - Changed post type selection in Settings page from tabs to a select box (Issue #1188).
 - Added selected post type name as title in Post Types settings (Issue #1191).
+- Added the step's name to the list of variables, distinguishing among similar variables (Issue #1205).
+- Sorted the list of variables moving less important variables to the bottom of the list (Issue #1207).
+- Changed the description of the "Is Update" variable in the "Post is saved" trigger (Issue #1206).
+- Updated the text of the promobox highlighting workflow editor features (Issue #1164).
 
 ### Fixed
 
@@ -50,6 +54,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed scroll behavior in variables list within query builder.
 - Fixed column height in variables list within query builder.
 - Fixed the top header in the right sidebar, hiding it (Issue #1195).
+- Fixed the expressions validation in the workflow editor for "Send to Ray" step, accepting the `{{input}}` expression (Issue #1197).
+- Fixed the order post related trigger activation to correctly retrieve posts before and after state, and making sure post meta is saved.
+- Fixed the workflow step execution avoiding duplicate processing of post related triggers, adding a threshold time of 2 seconds.
+- Fixed messages displayed after manually running scheduled actions (Issue #1202).
 
 ### Developers
 
@@ -64,6 +72,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Refactored workflow editor utility functions for clearer naming.
 - Added step-scoped variables definition for configuring step runner behaviors in editor.
 - Added new filter `publishpressfuture_future_actions_tabs` for filtering future actions admin page tabs.
+- Deprecated the `InfinityLoopPreventer` trait.
+- Added `WorkflowExecutionSafeguard` service to centralize infinite loop and duplicate execution prevention.
+- Introduced priority property to variables, allowing to sort the variables list according to importance.
 
 ## [4.3.3] - 03 Feb, 2025
 
