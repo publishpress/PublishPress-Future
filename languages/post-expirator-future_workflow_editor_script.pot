@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-06T21:50:05+00:00\n"
+"POT-Creation-Date: 2025-03-11T20:03:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -176,27 +176,27 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:179
+#: components/data-fields/expression-builder/index.jsx:178
 msgid "Select a variable from the list below."
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:183
+#: components/data-fields/expression-builder/index.jsx:182
 msgid "Type your expression here or use the variables below."
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:211
+#: components/data-fields/expression-builder/index.jsx:209
 msgid "Variables"
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:214
+#: components/data-fields/expression-builder/index.jsx:212
 msgid "Double-click on a variable to select it."
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:218
+#: components/data-fields/expression-builder/index.jsx:216
 msgid "Double-click on any variable to add it to your expression."
 msgstr ""
 
-#: components/data-fields/expression-builder/index.jsx:230
+#: components/data-fields/expression-builder/index.jsx:228
 msgid "Hover over a variable to see its description."
 msgstr ""
 
@@ -331,15 +331,15 @@ msgstr ""
 msgid "Clear content"
 msgstr ""
 
-#: components/data-fields/post-filter/components/post-filter.jsx:69
+#: components/data-fields/post-filter/components/post-filter.jsx:83
 msgid "Post Filter"
 msgstr ""
 
-#: components/data-fields/post-filter/components/post-filter.jsx:70
+#: components/data-fields/post-filter/components/post-filter.jsx:84
 msgid "Create filters to query specific posts based on conditions."
 msgstr ""
 
-#: components/data-fields/post-filter/components/post-filter.jsx:71
+#: components/data-fields/post-filter/components/post-filter.jsx:85
 msgid "Edit filters"
 msgstr ""
 
@@ -375,15 +375,15 @@ msgstr ""
 msgid "* Required field"
 msgstr ""
 
-#: components/data-fields/post-search-query/components/post-search-query.jsx:70
+#: components/data-fields/post-search-query/components/post-search-query.jsx:84
 msgid "Post Search Query"
 msgstr ""
 
-#: components/data-fields/post-search-query/components/post-search-query.jsx:71
+#: components/data-fields/post-search-query/components/post-search-query.jsx:85
 msgid "Create a search query to filter posts based on conditions."
 msgstr ""
 
-#: components/data-fields/post-search-query/components/post-search-query.jsx:72
+#: components/data-fields/post-search-query/components/post-search-query.jsx:86
 msgid "Edit query"
 msgstr ""
 
