@@ -252,6 +252,7 @@ export function mapNodeInputs(node) {
                         name: `${inputItem.name}`,
                         type: inputItem.type,
                         nodeLabel: nodeType.label,
+                        nodeSlug: previousNode.data.slug,
                     });
                 });
             } else {
@@ -260,6 +261,7 @@ export function mapNodeInputs(node) {
                     name: `${previousNode.data.slug}.${outputItem.name}`,
                     type: outputItem.type,
                     nodeLabel: nodeType.label,
+                    nodeSlug: previousNode.data.slug,
                 });
             }
         });
@@ -286,6 +288,8 @@ export function mapNodeInputs(node) {
 
         return 0;
     });
+
+    console.log(uniqueMappedInputs);
 
     return uniqueMappedInputs;
 }
