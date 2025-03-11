@@ -22,15 +22,17 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 </p>
                 <ul>
                     <li><?php
-                        echo esc_html__('Design custom workflows with multiple actions', 'post-expirator'); ?></li>
+                        echo esc_html__('Additional workflow triggers', 'post-expirator'); ?></li>
                     <li><?php
-                        echo esc_html__('Schedule actions based on the post\'s publishing date', 'post-expirator'); ?></li>
+                        echo esc_html__('Additional workflow actions', 'post-expirator'); ?></li>
                     <li><?php
-                        echo esc_html__('Move posts to custom statuses', 'post-expirator'); ?></li>
+                        echo esc_html__('Schedule your workflows', 'post-expirator'); ?></li>
+                    <li><?php
+                        echo esc_html__('Manage metadata with workflows', 'post-expirator'); ?></li>
+                    <li><?php
+                        echo esc_html__('Advanced features for Future Actions', 'post-expirator'); ?></li>
                     <li><?php
                         echo esc_html__('Use other plugins to control Future Actions', 'post-expirator'); ?></li>
-                    <li><?php
-                        echo esc_html__('Enjoy fast and professional support', 'post-expirator'); ?></li>
                 </ul>
                 <div class="upgrade-btn">
                     <a href="https://publishpress.com/links/future-sidebar" target="__blank"><?php
