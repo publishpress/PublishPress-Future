@@ -10,7 +10,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added new action: Update Post - PRO (Issue #1143).
 - Added new trigger: Manual run via posts row action - PRO (Issue #1168).
 - Added new trigger: Post Author Changed - PRO (Issue #1144).
-- Added new trigger: User role change - PRO (Issue #1166).
 - Added support for "date" helper on runtime variables in the workflow editor (Issue #1160).
 - Added step slug/name to the top of each step node in the workflow editor.
 - Added form to customize workflow and settings import from JSON files (Issue #1152).
