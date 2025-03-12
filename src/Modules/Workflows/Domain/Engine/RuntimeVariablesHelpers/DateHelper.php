@@ -20,7 +20,7 @@ class DateHelper implements RuntimeVariablesHelperInterface
         return 'date';
     }
 
-    public function execute(string $value, array $parameters): mixed
+    public function execute(string $value, array $parameters)
     {
         $inputFormat = $parameters['input'] ?? 'Y-m-d H:i:s';
         $outputFormat = $parameters['output']

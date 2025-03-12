@@ -6,5 +6,5 @@ interface RuntimeVariablesHelperInterface
 {
     public function getType(): string;
 
-    public function execute(string $value, array $parameters): mixed;
+    public function execute(string $value, array $parameters);
 }

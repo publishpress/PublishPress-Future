@@ -153,7 +153,7 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
         return $newExpression;
     }
 
-    private function variableHasHelper(string $variableName): mixed
+    private function variableHasHelper(string $variableName)
     {
         $helperRegex = '/^([a-zA-Z0-9_]+)\s+([a-zA-Z0-9_\.]+)\s*(.*)$/';
 
