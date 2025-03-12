@@ -360,7 +360,7 @@ class ClassicEditorController implements InitializableInterface
             }
 
             if (empty($taxonomyPluralName)) {
-                $taxonomyPluralName = '';
+                $taxonomyPluralName = 'Taxonomy';
             }
 
             $taxonomyTerms = [];

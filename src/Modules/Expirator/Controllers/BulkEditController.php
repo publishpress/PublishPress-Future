@@ -153,6 +153,10 @@ class BulkEditController implements InitializableInterface
             }
         }
 
+        if (empty($taxonomyPluralName)) {
+            $taxonomyPluralName = 'Taxonomy';
+        }
+
         $taxonomyTerms = [];
         if (! empty($postTypeDefaultConfig['taxonomy'])) {
             $taxonomyTerms = get_terms([
