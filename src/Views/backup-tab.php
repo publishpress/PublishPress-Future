@@ -5,7 +5,6 @@ defined('ABSPATH') or die('Direct access not allowed.');
 // phpcs:disable Generic.Files.LineLength.TooLong
 ?>
 <div class="wrap">
-    <h2 class="pp-settings-title"><?php _e('Export / Import', 'post-expirator'); ?></h2>
     <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
         <div class="pp-column-left">
             <div id="backup-panel">
@@ -20,14 +19,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 </div>
             </div>
         </div>
-    <?php
-    if ($showSideBar) {
-        include __DIR__ . '/../../../Views/ad-banner-right-sidebar.php';
-    }
-?>
+        <?php if ($showSideBar) :
+            include __DIR__ . '/ad-banner-right-sidebar.php';
+        endif; ?>
     </div>
 </div>
-<?php
-// phpcs:enable
-
-\PostExpirator_Display::getInstance()->publishpress_footer();

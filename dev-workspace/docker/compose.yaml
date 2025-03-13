@@ -17,7 +17,7 @@ services:
             - ../.cache/.composer/cache:/root/.composer/cache
             - ../.cache/.composer/auth.json:/root/.composer/auth.json
     wordpress:
-        image: wordpress:beta-6.7
+        image: wordpress:6.7.2
         container_name: ${COMPOSE_PROJECT_NAME}_tests_wordpress
         restart: always
         ports:

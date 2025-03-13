@@ -5,6 +5,7 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Processors;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\Traits\TimestampCalculator;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\DatetimeResolver;
@@ -22,7 +23,6 @@ use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionModel;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionsModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
@@ -31,6 +31,8 @@ use Throwable;
 
 class Cron implements AsyncStepProcessorInterface
 {
+    use TimestampCalculator;
+
     public const DEFAULT_REPEAT_UNTIL_TIMES = 99999999999;
 
     public const WHEN_TO_RUN_NOW = 'now';
@@ -153,7 +155,13 @@ class Cron implements AsyncStepProcessorInterface
             if (self::SCHEDULE_RECURRENCE_SINGLE === $recurrence && self::WHEN_TO_RUN_NOW === $whenToRun) {
                 $timestamp = 0;
             } else {
-                $timestamp = $this->getSchedulingTimestamp($nodeSettings);
+                $timestamp = $this->calculateTimestamp(
+                    $whenToRun,
+                    $nodeSettings['schedule']['dateSource'] ?? self::DATE_SOURCE_CALENDAR,
+                    $nodeSettings['schedule']['specificDate'] ?? '',
+                    $nodeSettings['schedule']['customDateSource']['expression'] ?? '',
+                    $nodeSettings['schedule']['dateOffset'] ?? ''
+                );
             }
 
             if (is_null($timestamp)) {
@@ -368,60 +376,6 @@ class Cron implements AsyncStepProcessorInterface
         }
     }
 
-    private function getSchedulingTimestamp(array $nodeSettings)
-    {
-        $scheduleSettings = $nodeSettings['schedule'];
-
-        $whenToRun = $scheduleSettings['whenToRun'] ?? self::WHEN_TO_RUN_NOW;
-        $dateSource = $scheduleSettings['dateSource'] ?? self::DATE_SOURCE_CALENDAR;
-
-        $timestamp = 0;
-        switch ($whenToRun) {
-            case self::WHEN_TO_RUN_NOW:
-            case self::WHEN_TO_RUN_EVENT:
-                $timestamp = time();
-                break;
-            case self::WHEN_TO_RUN_DATE:
-            case self::WHEN_TO_RUN_OFFSET:
-                if (self::DATE_SOURCE_CALENDAR === $dateSource) {
-                    $timestamp = strtotime($scheduleSettings['specificDate']);
-                } elseif (self::DATE_SOURCE_EVENT === $dateSource) {
-                    $timestamp = $this->variablesHandler->getVariable('global.trigger.activation_timestamp');
-                } elseif (self::DATE_SOURCE_STEP === $dateSource) {
-                    $timestamp = time();
-                } elseif (self::DATE_SOURCE_CUSTOM === $dateSource) {
-                    $timestamp = $this->variablesHandler->replacePlaceholdersInText($nodeSettings['schedule']['customDateSource']['expression']);
-                } else {
-                    $timestamp = $this->variablesHandler->getVariable($dateSource);
-                }
-
-                break;
-        }
-
-        if (is_numeric($timestamp)) {
-            $timestamp = (int)$timestamp;
-        } else {
-            $timestamp = strtotime($timestamp);
-
-            if ($timestamp === false) {
-                $timestamp = null;
-            }
-        }
-
-        if (empty($timestamp)) {
-            return null;
-        }
-
-        if (self::WHEN_TO_RUN_OFFSET === $whenToRun) {
-            $offset = $scheduleSettings['dateOffset'] ?? '';
-            if (! empty($offset)) {
-                $timestamp = strtotime($offset, (int)$timestamp);
-            }
-        }
-
-        return $timestamp;
-    }
-
     private function getScheduledActionUniqueId(array $node): string
     {
         $uniqueId = [
@@ -438,7 +392,7 @@ class Cron implements AsyncStepProcessorInterface
 
             if (! empty($uniqueIdExpression)) {
                 $uniqueId = [
-                    'custom' => $this->variablesHandler->replacePlaceholdersInText($uniqueIdExpression),
+                    'custom' => $this->variablesHandler->resolveExpressionsInText($uniqueIdExpression),
                 ];
             }
         }

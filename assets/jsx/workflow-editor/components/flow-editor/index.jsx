@@ -37,7 +37,7 @@ import { createNewNode, getId } from "../../utils";
 import NodePlaceholder from "../node-types/node-placeholder";
 import AutoLayout from "./auto-layout";
 import { __ } from "@wordpress/i18n";
-import { getExpandedVariablesList, filterVariableOptionsByDataType, getNodeById } from "../../utils";
+import { getNodeVariablesTree, filterVariablesTreeByDataType, getNodeById } from "../../utils";
 
 const GRID_SIZE = 10;
 
@@ -322,7 +322,7 @@ export const FlowEditor = (props) => {
             return;
         }
 
-        const variables = getExpandedVariablesList(item, globalVariables);
+        const variables = getNodeVariablesTree(item, globalVariables);
 
         settingsSchema.forEach((schema) => {
             schema?.fields.forEach((field) => {
@@ -342,8 +342,11 @@ export const FlowEditor = (props) => {
                     }
 
                     if (defaultItem.rule === 'first') {
+                        if (! Array.isArray(defaultItem.dataType)) {
+                            defaultItem.dataType = [defaultItem.dataType];
+                        }
 
-                        const filteredVariables = filterVariableOptionsByDataType(variables, defaultItem.dataType);
+                        const filteredVariables = filterVariablesTreeByDataType(variables, defaultItem.dataType);
 
                         if (filteredVariables.length === 0) {
                             return;

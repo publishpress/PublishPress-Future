@@ -87,6 +87,15 @@ interface StepTypeInterface
     public function getValidationSchema(): array;
 
     /**
+     * The schema of the step scoped variables of the node type. This is used to
+     * specify the step scoped variables of the node in the workflow editor. Those
+     * variables are available to the node and can be used in the settings. Output
+     * variables are not necessarily available in the step scoped variables, and it
+     * doesn't have to be on both schemas.
+     */
+    public function getStepScopedVariablesSchema(): array;
+
+    /**
      * The schema of the output of the node type. This is used to
      * specify the output of the node in the workflow editor.
      */

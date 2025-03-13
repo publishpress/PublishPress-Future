@@ -3,17 +3,39 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\InputValidators;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
-use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\JsonLogicEngineInterface;
 use PublishPress\Future\Modules\Workflows\Module;
 
 class PostQuery implements InputValidatorsInterface
 {
+    private RuntimeVariablesHandlerInterface $runtimeVariablesHandler;
+
+    private JsonLogicEngineInterface $jsonLogicEngine;
+
+    public function __construct(
+        RuntimeVariablesHandlerInterface $runtimeVariablesHandler,
+        JsonLogicEngineInterface $jsonLogicEngine
+    ) {
+        $this->runtimeVariablesHandler = $runtimeVariablesHandler;
+        $this->jsonLogicEngine = $jsonLogicEngine;
+    }
+
     public function validate(array $args): bool
     {
         $post = $args['post'];
         $node = $args['node'];
         $nodeSettings = $node['data']['settings'] ?? [];
 
+        if ($this->isLegacyPostQuery($nodeSettings)) {
+            return $this->validateLegacyPostQuery($post, $nodeSettings);
+        }
+
+        return $this->validateJsonPostQuery($nodeSettings);
+    }
+
+    private function validateLegacyPostQuery($post, array $nodeSettings)
+    {
         if (! $this->hasValidPostType($post, $nodeSettings)) {
             return false;
         }
@@ -26,11 +48,42 @@ class PostQuery implements InputValidatorsInterface
             return false;
         }
 
+        if (! $this->hasValidPostAuthor($post, $nodeSettings)) {
+            return false;
+        }
+
+        if (! $this->hasValidPostTerms($post, $nodeSettings)) {
+            return false;
+        }
+
         return true;
+    }
+
+    private function validateJsonPostQuery(array $nodeSettings)
+    {
+        $json = $nodeSettings['postQuery']['json'] ?? [];
+
+        if (empty($json)) {
+            return false;
+        }
+
+        $json = $this->runtimeVariablesHandler->resolveExpressionsInJsonLogic($json);
+        $result = (bool) $this->jsonLogicEngine->apply($json, []);
+
+        return $result;
+    }
+
+    private function isLegacyPostQuery($nodeSettings)
+    {
+        return ! isset($nodeSettings['postQuery']['json']) && isset($nodeSettings['postQuery']['postType']);
     }
 
     private function hasValidPostType($post, array $nodeSettings)
     {
+        if (! is_object($post)) {
+            return false;
+        }
+
         // Prevent to apply actions to workflows
         if ($post->post_type === Module::POST_TYPE_WORKFLOW) {
             return false;
@@ -70,5 +123,59 @@ class PostQuery implements InputValidatorsInterface
         }
 
         return true;
+    }
+
+    private function hasValidPostAuthor($post, array $nodeSettings)
+    {
+        $settingPostAuthor = $nodeSettings['postQuery']['postAuthor'] ?? [];
+
+        if (empty($settingPostAuthor)) {
+            return true;
+        }
+
+        $settingPostAuthor = $this->runtimeVariablesHandler->resolveExpressionsInArray($settingPostAuthor);
+
+        return in_array($post->post_author, $settingPostAuthor);
+    }
+
+    private function hasValidPostTerms($post, array $nodeSettings)
+    {
+        $settingPostTerms = $nodeSettings['postQuery']['postTerms'] ?? [];
+
+        if (empty($settingPostTerms)) {
+            return true;
+        }
+
+        $settingPostTerms = $this->runtimeVariablesHandler->resolveExpressionsInArray($settingPostTerms);
+
+        $groupedSelectedTerms = [];
+
+        foreach ($settingPostTerms as $term) {
+            $termParts = explode(':', $term);
+
+            if (count($termParts) !== 2) {
+                continue;
+            }
+
+            if (!isset($groupedSelectedTerms[$termParts[0]])) {
+                $groupedSelectedTerms[$termParts[0]] = [];
+            }
+
+            $groupedSelectedTerms[$termParts[0]][] = (int)$termParts[1];
+        }
+
+        foreach ($groupedSelectedTerms as $taxonomy => $termIds) {
+            $postTerms = wp_get_post_terms($post->ID, $taxonomy, ['fields' => 'ids']);
+
+            if (is_wp_error($postTerms)) {
+                return false;
+            }
+
+            if (count(array_intersect($postTerms, $termIds)) > 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

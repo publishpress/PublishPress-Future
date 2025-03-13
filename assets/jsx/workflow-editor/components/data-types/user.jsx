@@ -2,8 +2,7 @@ export function UserData() {
     return {
         name: "user",
         label: "User",
-        type: "object",
-        objectType: "user",
+        primitiveType: "object",
         propertiesSchema: [
             {
                 name: "ID",
@@ -31,7 +30,7 @@ export function UserData() {
             },
             {
                 name: "roles",
-                type: "array",
+                type: "user_roles",
                 label: "Roles",
                 description: "The roles of the user.",
             },

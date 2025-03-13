@@ -353,7 +353,14 @@ class ClassicEditorController implements InitializableInterface
             $taxonomyPluralName = '';
             if (! empty($postTypeDefaultConfig['taxonomy'])) {
                 $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
-                $taxonomyPluralName = $taxonomy->label;
+
+                if (is_object($taxonomy)) {
+                    $taxonomyPluralName = $taxonomy->label;
+                }
+            }
+
+            if (empty($taxonomyPluralName)) {
+                $taxonomyPluralName = __('Taxonomy', 'post-expirator');
             }
 
             $taxonomyTerms = [];

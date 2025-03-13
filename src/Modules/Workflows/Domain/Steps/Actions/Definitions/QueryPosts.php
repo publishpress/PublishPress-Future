@@ -80,9 +80,6 @@ class QueryPosts implements StepTypeInterface
                             "postId" => [],
                             "postStatus" => [],
                         ],
-                        "settings" => [
-                            "isPostTypeRequired" => true,
-                        ],
                     ],
                 ]
             ]
@@ -102,27 +99,18 @@ class QueryPosts implements StepTypeInterface
                     ]
                 ],
             ],
-            "settings" => [
-                "rules" => [
-                    [
-                        "rule" => "required",
-                        "field" => "postQuery.postType",
-                        "label" => __("Post Type", "post-expirator"),
-                    ],
-                    [
-                        "rule" => "dataType",
-                        "field" => "postQuery.postId",
-                        "type" => "integerList",
-                        "label" => __("Post ID", "post-expirator"),
-                    ],
-                    [
-                        "rule" => "validVariable",
-                        "field" => "postQuery.postId",
-                        "fieldLabel" => __("Post ID", "post-expirator"),
-                        "dataType" => "post",
-                    ],
-                ],
-            ],
+        ];
+    }
+
+    public function getStepScopedVariablesSchema(): array
+    {
+        return [
+            [
+                "name" => "post",
+                "type" => "post",
+                "label" => __("Queried post", "post-expirator"),
+                "description" => __("The post that was queried.", "post-expirator"),
+            ]
         ];
     }
 

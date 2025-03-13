@@ -61,7 +61,7 @@ class OnPostPublish implements StepTypeInterface
     {
         return [
             [
-                "label" => __("Post Query", "post-expirator"),
+                "label" => __("Conditions", "post-expirator"),
                 "description" => __(
                     "Specify the criteria for posts that will trigger this action.",
                     "post-expirator"
@@ -69,19 +69,12 @@ class OnPostPublish implements StepTypeInterface
                 "fields" => [
                     [
                         "name" => "postQuery",
-                        "type" => "postQuery",
-                        "label" => __("Post query", "post-expirator"),
+                        "type" => "postFilter",
+                        "label" => __("Post filter", "post-expirator"),
                         "description" => __(
-                            "The query defines the posts that will trigger this action.",
+                            "The filter defines the posts that will trigger this action.",
                             "post-expirator"
                         ),
-                        "settings" => [
-                            "acceptsInput" => false,
-                            "isPostTypeRequired" => true,
-                            "hidePostStatus" => true,
-                            "postTypeDescription" => __("Select the post types that will trigger this action.", "post-expirator"),
-                            "postIdDescription" => __("Enter one or more post IDs. Leave empty to include all posts.", "post-expirator"),
-                        ],
                         "default" => [
                             "postSource" => "custom",
                             "postType" => ["post"],
@@ -97,21 +90,6 @@ class OnPostPublish implements StepTypeInterface
     public function getValidationSchema(): array
     {
         return [
-            "settings" => [
-                "rules" => [
-                    [
-                        "rule" => "required",
-                        "field" => "postQuery.postType",
-                        "label" => __("Post Type", "post-expirator"),
-                    ],
-                    [
-                        "rule" => "dataType",
-                        "field" => "postQuery.postId",
-                        "type" => "integerList",
-                        "label" => __("Post ID", "post-expirator"),
-                    ],
-                ],
-            ],
             "connections" => [
                 "rules" => [
                     [
@@ -122,20 +100,38 @@ class OnPostPublish implements StepTypeInterface
         ];
     }
 
-    public function getOutputSchema(): array
+    public function getStepScopedVariablesSchema(): array
     {
         return [
             [
                 'name' => 'postBefore',
                 'type' => 'post',
                 'label' => __("Post Before Update", "post-expirator"),
-                'description' => __("The post that was saved, with the old properties.", "post-expirator"),
+                'description' => __("The post that was published, with the old properties.", "post-expirator"),
             ],
             [
                 'name' => 'postAfter',
                 'type' => 'post',
                 'label' => __("Post After Update", "post-expirator"),
-                'description' => __("The post that was saved, with the new properties.", "post-expirator"),
+                'description' => __("The post that was published, with the new properties.", "post-expirator"),
+            ]
+        ];
+    }
+
+    public function getOutputSchema(): array
+    {
+        return [
+            [
+                'name' => 'postBefore',
+                'type' => 'post',
+                'label' => __("Post Before Publish", "post-expirator"),
+                'description' => __("The post that was published, with the old properties.", "post-expirator"),
+            ],
+            [
+                'name' => 'postAfter',
+                'type' => 'post',
+                'label' => __("Post After Publish", "post-expirator"),
+                'description' => __("The post that was published, with the new properties.", "post-expirator"),
             ]
         ];
     }

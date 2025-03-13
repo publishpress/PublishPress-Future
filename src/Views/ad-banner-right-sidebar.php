@@ -9,7 +9,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
             <div class="postbox-header pp-advert">
                 <h3 class="advertisement-box-header hndle is-non-sortable">
                     <span><?php
-                        echo esc_html__('Upgrade to PublishPress Future Pro', 'post-expirator'); ?></span>
+                            echo esc_html__('Upgrade to PublishPress Future Pro', 'post-expirator'); ?></span>
                 </h3>
             </div>
 
@@ -22,19 +22,21 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 </p>
                 <ul>
                     <li><?php
-                                                                                    echo esc_html__('Design custom workflows with multiple actions', 'post-expirator'); ?></li>
+                        echo esc_html__('Additional workflow triggers', 'post-expirator'); ?></li>
                     <li><?php
-                                                                                    echo esc_html__('Schedule actions based on the post\'s publishing date', 'post-expirator'); ?></li>
+                        echo esc_html__('Additional workflow actions', 'post-expirator'); ?></li>
                     <li><?php
-                                                                                    echo esc_html__('Move posts to custom statuses', 'post-expirator'); ?></li>
+                        echo esc_html__('Schedule your workflows', 'post-expirator'); ?></li>
                     <li><?php
-                                                                                    echo esc_html__('Use other plugins to control Future Actions', 'post-expirator'); ?></li>
+                        echo esc_html__('Manage metadata with workflows', 'post-expirator'); ?></li>
                     <li><?php
-                                                                                    echo esc_html__('Enjoy fast and professional support', 'post-expirator'); ?></li>
+                        echo esc_html__('Advanced features for Future Actions', 'post-expirator'); ?></li>
+                    <li><?php
+                        echo esc_html__('Use other plugins to control Future Actions', 'post-expirator'); ?></li>
                 </ul>
                 <div class="upgrade-btn">
                     <a href="https://publishpress.com/links/future-sidebar" target="__blank"><?php
-                                                                                    echo esc_html__('Upgrade to Pro', 'post-expirator'); ?></a>
+                                                                                                echo esc_html__('Upgrade to Pro', 'post-expirator'); ?></a>
                 </div>
             </div>
         </div>
@@ -42,42 +44,40 @@ defined('ABSPATH') or die('Direct access not allowed.');
             <div class="postbox-header">
                 <h3 class="advertisement-box-header hndle is-non-sortable">
                     <span><?php
-                                                                                    echo esc_html__('Need PublishPress Future Support?', 'post-expirator'); ?></span>
+                            echo esc_html__('Need PublishPress Future Support?', 'post-expirator'); ?></span>
                 </h3>
             </div>
 
             <div class="inside pp-advert">
                 <p><?php
-                                                                                echo esc_html__(
-                                                                                    'If you need help or have a new feature request, let us know.',
-                                                                                    'post-expirator'
-                                                                                ); ?>
+                    echo esc_html__(
+                        'If you need help or have a new feature request, let us know.',
+                        'post-expirator'
+                    ); ?>
                     <a class="advert-link" href="https://wordpress.org/support/plugin/post-expirator/" target="_blank">
                         <?php
-                                                                                                                                                echo esc_html__('Request Support', 'post-expirator'); ?>
+                        echo esc_html__('Request Support', 'post-expirator'); ?>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                             class="linkIcon">
+                            class="linkIcon">
                             <path
-                                    d="M18.2 17c0 .7-.6 1.2-1.2 1.2H7c-.7 0-1.2-.6-1.2-1.2V7c0-.7.6-1.2 1.2-1.2h3.2V4.2H7C5.5 4.2 4.2 5.5 4.2 7v10c0 1.5 1.2 2.8 2.8 2.8h10c1.5 0 2.8-1.2 2.8-2.8v-3.6h-1.5V17zM14.9 3v1.5h3.7l-6.4 6.4 1.1 1.1 6.4-6.4v3.7h1.5V3h-6.3z"
-                            ></path>
+                                d="M18.2 17c0 .7-.6 1.2-1.2 1.2H7c-.7 0-1.2-.6-1.2-1.2V7c0-.7.6-1.2 1.2-1.2h3.2V4.2H7C5.5 4.2 4.2 5.5 4.2 7v10c0 1.5 1.2 2.8 2.8 2.8h10c1.5 0 2.8-1.2 2.8-2.8v-3.6h-1.5V17zM14.9 3v1.5h3.7l-6.4 6.4 1.1 1.1 6.4-6.4v3.7h1.5V3h-6.3z"></path>
                         </svg>
                     </a>
                 </p>
                 <p>
                     <?php
-                                                                                                                                            echo esc_html__(
-                                                                                                                                                'Detailed documentation is also available on the plugin website.',
-                                                                                                                                                'post-expirator'
-                                                                                                                                            ); ?>
+                    echo esc_html__(
+                        'Detailed documentation is also available on the plugin website.',
+                        'post-expirator'
+                    ); ?>
                     <a class="advert-link" href="https://publishpress.com/knowledge-base/introduction-future/"
-                       target="_blank">
+                        target="_blank">
                         <?php
-                                                                                                                                                                    echo esc_html__('View Knowledge Base', 'post-expirator'); ?>
+                        echo esc_html__('View Knowledge Base', 'post-expirator'); ?>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                             class="linkIcon">
+                            class="linkIcon">
                             <path
-                                    d="M18.2 17c0 .7-.6 1.2-1.2 1.2H7c-.7 0-1.2-.6-1.2-1.2V7c0-.7.6-1.2 1.2-1.2h3.2V4.2H7C5.5 4.2 4.2 5.5 4.2 7v10c0 1.5 1.2 2.8 2.8 2.8h10c1.5 0 2.8-1.2 2.8-2.8v-3.6h-1.5V17zM14.9 3v1.5h3.7l-6.4 6.4 1.1 1.1 6.4-6.4v3.7h1.5V3h-6.3z"
-                            ></path>
+                                d="M18.2 17c0 .7-.6 1.2-1.2 1.2H7c-.7 0-1.2-.6-1.2-1.2V7c0-.7.6-1.2 1.2-1.2h3.2V4.2H7C5.5 4.2 4.2 5.5 4.2 7v10c0 1.5 1.2 2.8 2.8 2.8h10c1.5 0 2.8-1.2 2.8-2.8v-3.6h-1.5V17zM14.9 3v1.5h3.7l-6.4 6.4 1.1 1.1 6.4-6.4v3.7h1.5V3h-6.3z"></path>
                         </svg>
                     </a>
                 </p>

@@ -27,7 +27,7 @@ import { WorkflowSaveDraftButton } from '../workflow-save-draft-button';
 import WorkflowPublishButton from '../workflow-publish-button';
 import { useAutoLayout } from '../flow-editor/auto-layout/hooks';
 import ShopIcon from '../icons/shop';
-
+import { useIsPro } from '../../contexts/pro-context';
 const { isWP65OrLater } = window.futureWorkflowEditor;
 
 const preventDefault = (event) => {
@@ -41,7 +41,6 @@ export const LayoutHeader = () => {
         hasReducedUI,
         showIconLabels,
         isLoadingWorkflow,
-        isPro
     } = useSelect((select) => {
         return {
             isFullscreenActive: select(editorStore).isFeatureActive(FEATURE_FULLSCREEN_MODE),
@@ -49,7 +48,6 @@ export const LayoutHeader = () => {
             isInserterOpened: select(editorStore).isFeatureActive(FEATURE_INSERTER),
             showIconLabels: select(editorStore).isFeatureActive(FEATURE_SHOW_ICON_LABELS),
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
-            isPro: select(editorStore).isPro(),
         }
     });
 
@@ -94,6 +92,8 @@ export const LayoutHeader = () => {
     });
 
     const toolbarLeftClassName = isWP65OrLater ? 'editor-document-tools__left' : 'edit-post-header-toolbar__left';
+
+    const isPro = useIsPro();
 
     return (
         <div className={headerClasses}>

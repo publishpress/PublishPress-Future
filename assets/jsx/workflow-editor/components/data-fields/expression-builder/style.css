@@ -5,6 +5,8 @@
     overflow-x: auto;
     white-space: nowrap;
     max-height: 212px;
+    overflow-y: hidden;
+    overflow-x: scroll;
 }
 
 .column {
@@ -14,7 +16,8 @@
     flex: 0 0 auto;
     border-right: 1px solid #ccc;
     overflow-y: scroll;
-    max-height: 270px;
+    max-height: 212px;
+    min-height: 212px;
 }
 
 .column-item {
@@ -25,6 +28,7 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    padding-right: 20px;
 }
 
 .column-item.has-children::after {
@@ -162,4 +166,26 @@
     margin-left: 0;
     padding: 5px;
     font-size: 12px;
+}
+
+.expression-builder .expression-builder-small-heading {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-transform: uppercase;
+    box-sizing: border-box;
+    display: block;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    max-width: 100%;
+    z-index: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgb(30, 30, 30);
+    margin-bottom: 15px;
+}
+
+.expression-builder-modal-variables .column-item-step-slug {
+    color: #a3a3a3;
 }

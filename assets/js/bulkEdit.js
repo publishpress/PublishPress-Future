@@ -1530,7 +1530,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
   var fieldSetClassNames = props.isVisible ? 'pe-settings-fieldset' : 'pe-settings-fieldset hidden';
   return /*#__PURE__*/React.createElement("div", {
     className: fieldSetClassNames
-  }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingsTable, {
+  }, /*#__PURE__*/React.createElement("h2", null, props.postTypeLabel), /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingsTable, {
     bodyChildren: settingsRows
   }), !hasValidData && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("div", {
     className: "publishpress-future-notice publishpress-future-notice-error"
@@ -1552,6 +1552,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -1564,11 +1568,26 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
+
 var PostTypesSettingsPanels = function PostTypesSettingsPanels(props) {
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(Object.keys(props.settings)[0]),
     _useState2 = _slicedToArray(_useState, 2),
     currentTab = _useState2[0],
     setCurrentTab = _useState2[1];
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+    _useState4 = _slicedToArray(_useState3, 2),
+    selectedPostType = _useState4[0],
+    setSelectedPostType = _useState4[1];
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    // Get post type from URL on component mount
+    var urlParams = new URLSearchParams(window.location.search);
+    var postTypeParam = urlParams.get('post_type');
+    if (postTypeParam && props.settings[postTypeParam]) {
+      setSelectedPostType(postTypeParam);
+      setCurrentTab(postTypeParam);
+    }
+  }, []);
   var panels = [];
   for (var _i = 0, _Object$entries = Object.entries(props.settings); _i < _Object$entries.length; _i++) {
     var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
@@ -1578,6 +1597,7 @@ var PostTypesSettingsPanels = function PostTypesSettingsPanels(props) {
       legend: postTypeSettings.label,
       text: props.text,
       postType: postType,
+      postTypeLabel: postTypeSettings.label,
       settings: postTypeSettings,
       expireTypeList: props.expireTypeList,
       taxonomiesList: props.taxonomiesList[postType],
@@ -1590,27 +1610,41 @@ var PostTypesSettingsPanels = function PostTypesSettingsPanels(props) {
       isVisible: currentTab === postType
     }));
   }
-  var onSelectTab = function onSelectTab(event) {
-    event.preventDefault();
-    setCurrentTab(event.target.hash.replace('#', '').replace('-panel', ''));
+  var onSelectPostType = function onSelectPostType(postType) {
+    setSelectedPostType(postType);
+    setCurrentTab(postType);
+
+    // Update URL with the selected post type
+    var newUrl = new URL(window.location);
+    newUrl.searchParams.set('post_type', postType);
+    window.history.pushState({}, '', newUrl);
   };
-  var tabs = [];
-  var selected = false;
-  for (var _i2 = 0, _Object$entries2 = Object.entries(props.settings); _i2 < _Object$entries2.length; _i2++) {
-    var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 2),
-      _postType = _Object$entries2$_i[0],
-      _postTypeSettings = _Object$entries2$_i[1];
-    selected = currentTab === _postType;
-    tabs.push( /*#__PURE__*/React.createElement("a", {
-      href: "#".concat(_postType, "-panel"),
-      className: "nav-tab " + (selected ? 'nav-tab-active' : ''),
-      key: "".concat(_postType, "-tab"),
-      onClick: onSelectTab
-    }, _postTypeSettings.label));
-  }
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("nav", {
-    className: "nav-tab-wrapper"
-  }, tabs), panels);
+  var postTypeOptions = Object.keys(props.settings).map(function (postType) {
+    return {
+      label: props.settings[postType].label,
+      value: postType
+    };
+  });
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "pe-post-type-select"
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalHStack, {
+    style: {
+      justifyContent: 'flex-start',
+      alignItems: 'stretch',
+      background: '#fff',
+      padding: '10px',
+      border: '1px solid #ccc',
+      marginBottom: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      lineHeight: '33px'
+    }
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Select a post type to edit:', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+    value: selectedPostType,
+    options: postTypeOptions,
+    onChange: onSelectPostType
+  }))), panels);
 };
 
 /***/ }),

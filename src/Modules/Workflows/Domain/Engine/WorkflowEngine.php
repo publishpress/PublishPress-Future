@@ -5,6 +5,7 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine;
 use Closure;
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\SiteResolver;
@@ -68,18 +69,25 @@ class WorkflowEngine implements WorkflowEngineInterface
      */
     private $currentExecutionTrace;
 
+    /**
+     * @var InitializableInterface
+     */
+    private $runtimeVariablesHelperInitializer;
+
     public function __construct(
         HookableInterface $hooks,
         StepTypesModelInterface $stepTypesModel,
         \Closure $stepRunnerFactory,
         RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        InitializableInterface $runtimeVariablesHelperInitializer
     ) {
         $this->hooks = $hooks;
         $this->stepTypesModel = $stepTypesModel;
         $this->stepRunnerFactory = $stepRunnerFactory;
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
+        $this->runtimeVariablesHelperInitializer = $runtimeVariablesHelperInitializer;
 
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_LOAD);
 
@@ -127,6 +135,8 @@ class WorkflowEngine implements WorkflowEngineInterface
     public function start()
     {
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_START);
+
+        $this->runtimeVariablesHelperInitializer->initialize();
 
         $currentUser = wp_get_current_user();
         $context = $this->getContext();
@@ -178,7 +188,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                         'modified_at' => $workflow->getModifiedAt(),
                     ]
                 ),
-                'execution_id' => $this->getExecutionId(),
+                'run_id' => $this->getRunId(),
             ];
 
             foreach ($triggerSteps as $triggerStep) {
@@ -414,7 +424,7 @@ class WorkflowEngine implements WorkflowEngineInterface
         return 'frontend';
     }
 
-    private function getExecutionId(): string
+    private function getRunId(): string
     {
         return wp_generate_uuid4();
     }

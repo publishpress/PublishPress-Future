@@ -6,6 +6,7 @@ use PublishPress\Future\Modules\Settings\SettingsFacade;
 use WP_Error;
 use WP_REST_Server;
 use PublishPress\Future\Modules\Workflows\Interfaces\RestApiManagerInterface;
+use PublishPress\Future\Modules\Workflows\Models\PostAuthorsModel;
 use PublishPress\Future\Modules\Workflows\Models\PostModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
@@ -43,7 +44,7 @@ class RestApiV1 implements RestApiManagerInterface
             [
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => [$this, 'getWorkflow'],
-                'permission_callback' => [$this, 'getWorkflowPermissions'],
+                'permission_callback' => [$this, 'checkUserCanCallApi'],
                 'args' => [
                     'id' => [
                         'description' => __('The ID of the workflow', 'post-expirator'),
@@ -64,7 +65,7 @@ class RestApiV1 implements RestApiManagerInterface
             [
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => [$this, 'getWorkflowsWithManualTrigger'],
-                'permission_callback' => [$this, 'getWorkflowsWithManualTriggerPermissions'],
+                'permission_callback' => [$this, 'checkUserCanCallApi'],
                 'args' => [
                     'postType' => [
                         'description' => __('The post type', 'post-expirator'),
@@ -84,7 +85,7 @@ class RestApiV1 implements RestApiManagerInterface
             [
                 'methods' => WP_REST_Server::CREATABLE,
                 'callback' => [$this, 'createWorkflow'],
-                'permission_callback' => [$this, 'createWorkflowPermissions'],
+                'permission_callback' => [$this, 'checkUserCanCallApi'],
                 'show_in_index' => false,
                 'show_in_rest' => true,
             ]
@@ -97,7 +98,7 @@ class RestApiV1 implements RestApiManagerInterface
             [
                 'methods' => WP_REST_Server::EDITABLE,
                 'callback' => [$this, 'updateWorkflow'],
-                'permission_callback' => [$this, 'updateWorkflowPermissions'],
+                'permission_callback' => [$this, 'checkUserCanCallApi'],
                 'args' => [
                     'id' => [
                         'description' => __('The ID of the workflow', 'post-expirator'),
@@ -117,7 +118,7 @@ class RestApiV1 implements RestApiManagerInterface
             [
                 'methods' => WP_REST_Server::DELETABLE,
                 'callback' => [$this, 'deleteWorkflow'],
-                'permission_callback' => [$this, 'deleteWorkflowPermissions'],
+                'permission_callback' => [$this, 'checkUserCanCallApi'],
                 'args' => [
                     'id' => [
                         'description' => __('The ID of the workflow', 'post-expirator'),
@@ -137,7 +138,7 @@ class RestApiV1 implements RestApiManagerInterface
             [
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => [$this, 'getTaxonomyTerms'],
-                'permission_callback' => [$this, 'getTaxonomyTermsPermissions'],
+                'permission_callback' => [$this, 'checkUserCanCallApi'],
                 'args' => [
                     'taxonomy' => [
                         'description' => __('The taxonomy name', 'post-expirator'),
@@ -157,7 +158,7 @@ class RestApiV1 implements RestApiManagerInterface
             [
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => [$this, 'getPostWorkflowSettings'],
-                'permission_callback' => [$this, 'getPostWorkflowSettingsPermissions'],
+                'permission_callback' => [$this, 'checkUserCanCallApi'],
                 'args' => [
                     'post' => [
                         'description' => __('The post ID', 'post-expirator'),
@@ -169,7 +170,21 @@ class RestApiV1 implements RestApiManagerInterface
                 'show_in_rest' => true,
             ]
         );
+
+        // Get all authors
+        register_rest_route(
+            self::BASE_PATH,
+            '/authors',
+            [
+                'methods' => WP_REST_Server::READABLE,
+                'callback' => [$this, 'getAuthors'],
+                'permission_callback' => [$this, 'checkUserCanCallApi'],
+                'show_in_index' => false,
+                'show_in_rest' => true,
+            ]
+        );
     }
+
 
     private function getWorkflowForResponse(WorkflowModel $workflowModel)
     {
@@ -349,38 +364,25 @@ class RestApiV1 implements RestApiManagerInterface
         ]);
     }
 
-    public function getWorkflowPermissions($request)
+    public function checkUserCanCallApi($request)
     {
         return current_user_can(self::PERMISSION_READ);
     }
 
-    public function createWorkflowPermissions($request)
+    public function getAuthors($request)
     {
-        return current_user_can(self::PERMISSION_CREATE);
-    }
+        $postAuthorsModel = new PostAuthorsModel();
+        $authors = $postAuthorsModel->getAuthors();
 
-    public function updateWorkflowPermissions($request)
-    {
-        return current_user_can(self::PERMISSION_UPDATE);
-    }
+        $authors = array_map(function ($user) {
+            return [
+                'id' => $user->ID,
+                'userLogin' => $user->user_login,
+                'name' => $user->display_name,
+                'email' => $user->user_email,
+            ];
+        }, $authors);
 
-    public function deleteWorkflowPermissions($request)
-    {
-        return current_user_can(self::PERMISSION_DELETE);
-    }
-
-    public function getTaxonomyTermsPermissions($request)
-    {
-        return current_user_can(self::PERMISSION_READ);
-    }
-
-    public function getPostWorkflowSettingsPermissions($request)
-    {
-        return current_user_can(self::PERMISSION_READ);
-    }
-
-    public function getWorkflowsWithManualTriggerPermissions($request)
-    {
-        return current_user_can(self::PERMISSION_READ);
+        return rest_ensure_response($authors);
     }
 }

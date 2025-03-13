@@ -7,6 +7,7 @@ import { NODE_TYPE_PLACEHOLDER } from "./constants";
 
 const VARIABLE_SOURCE_NODE_INPUT = 'node-input';
 const VARIABLE_SOURCE_GLOBAL = 'global';
+const DEFAULT_VARIABLE_PRIORITY = 10;
 
 export function addBodyClass(className) {
     if (document.body.classList.contains(className)) return;
@@ -217,13 +218,17 @@ export function getGlobalVariablesExpanded(globalVariables) {
             label: variable.label,
             source: VARIABLE_SOURCE_GLOBAL,
             description: variable.description,
+            priority: variable?.priority || DEFAULT_VARIABLE_PRIORITY,
         });
     });
 
     // Add "global." prefix to all global variables
     globalVariablesExpanded.forEach((variable) => {
         variable.name = 'global.' + variable.name;
+        variable.priority = variable?.priority || DEFAULT_VARIABLE_PRIORITY;
     });
+
+    console.log(globalVariablesExpanded);
 
     return globalVariablesExpanded;
 }
@@ -252,14 +257,19 @@ export function mapNodeInputs(node) {
                         name: `${inputItem.name}`,
                         type: inputItem.type,
                         nodeLabel: nodeType.label,
+                        nodeSlug: previousNode.data.slug,
+                        priority: inputItem?.priority || DEFAULT_VARIABLE_PRIORITY,
                     });
                 });
             } else {
                 mappedInput.push({
                     ...outputItem,
+                    label: `${outputItem.label}`,
                     name: `${previousNode.data.slug}.${outputItem.name}`,
                     type: outputItem.type,
                     nodeLabel: nodeType.label,
+                    nodeSlug: previousNode.data.slug,
+                    priority: outputItem?.priority || DEFAULT_VARIABLE_PRIORITY,
                 });
             }
         });
@@ -287,37 +297,68 @@ export function mapNodeInputs(node) {
         return 0;
     });
 
+    uniqueMappedInputs.sort((a, b) => a.priority - b.priority);
+
     return uniqueMappedInputs;
 }
 
-export function getExpandedVariablesList(node, globalVariables) {
-    const variablesList = getVariablesList(node, globalVariables);
+export function getStepScopedVariables(node) {
+    const nodeType = select(editorStore).getNodeTypeByName(node?.data?.name);
 
-    var expandedList = [];
-    variablesList.forEach((variable) => {
-        expandedList.push(
-            expandVariable(variable)
-        );
+    if (! nodeType?.stepScopedVariablesSchema?.length) {
+        return [];
+    }
+
+    const stepScopedVariables = nodeType.stepScopedVariablesSchema.map((variable) => {
+        return {
+            name: node.data.slug + '.' + variable.name,
+            label: variable.label,
+            children: [],
+            type: variable.type,
+            itemsType: variable?.itemsType,
+            description: variable?.description,
+            nodeSlug: node.data.slug,
+            priority: variable?.priority || DEFAULT_VARIABLE_PRIORITY,
+        };
     });
 
-    return expandedList;
+    return stepScopedVariables;
 }
 
-function getVariablesList(node, globalVariables) {
+export function getExpandedStepScopedVariables(node) {
+    const stepScopedVariables = getStepScopedVariables(node);
+
+    const expandedStepScopedVariables = stepScopedVariables.map(expandVariableWithChildren);
+
+    expandedStepScopedVariables.sort((a, b) => a.priority - b.priority);
+
+    return expandedStepScopedVariables;
+}
+
+export function getNodeVariablesTree(node, globalVariables) {
     const mappedNodeInputs = mapNodeInputs(node);
     const globalVariablesToList = getGlobalVariablesExpanded(globalVariables);
 
-    return [...mappedNodeInputs, ...globalVariablesToList];
+    const variablesList = [...mappedNodeInputs, ...globalVariablesToList];
+
+    const expandedVariablesList = variablesList.map(expandVariableWithChildren);
+
+    expandedVariablesList.sort((a, b) => a.priority - b.priority);
+
+    return expandedVariablesList;
 }
 
-function convertVariableToOptions(variable) {
+function formatVariableStructure(variable) {
     return {
+        id: '{{' + variable.name + '}}',
         name: variable.name,
         label: variable.label,
         children: [],
         type: variable.type,
         itemsType: variable?.itemsType,
         description: variable?.description,
+        nodeSlug: variable?.nodeSlug,
+        priority: variable?.priority || DEFAULT_VARIABLE_PRIORITY,
     };
 }
 
@@ -330,16 +371,18 @@ function getVariableProperties(variable) {
     }
 
     const properties = dataType.propertiesSchema.map((property) => {
-        const propertyData = {
+        const propertyData = formatVariableStructure({
             name: variable.name + '.' + property.name,
             label: property.label,
             type: property?.type,
             itemsType: property?.itemsType,
             description: property?.description,
+            nodeSlug: variable?.nodeSlug,
             children: [],
-        };
+            priority: property?.priority || DEFAULT_VARIABLE_PRIORITY,
+        });
 
-        if (dataType.type === 'object') {
+        if (dataType.primitiveType === 'object') {
             propertyData.children = getVariableProperties(propertyData);
         }
 
@@ -349,35 +392,39 @@ function getVariableProperties(variable) {
     return properties;
 }
 
-function expandVariable(variable) {
+function expandVariableWithChildren(variable) {
     const getDataTypeByName = select(workflowStore).getDataTypeByName;
     const dataType = getDataTypeByName(variable.type);
 
-    const option = convertVariableToOptions(variable);
+    variable = formatVariableStructure(variable);
 
     // If the variable is an object, add its properties as children
-    if (dataType.type === 'object') {
-        option.children = getVariableProperties(variable);
+    if (dataType.primitiveType === 'object') {
+        variable.children = getVariableProperties(variable);
     }
 
-    return option;
+    return variable;
 }
 
 export function isValidDataType(dataType, expectedDataTypes) {
     let hasValidDataType = true;
 
     if (expectedDataTypes?.length) {
-        hasValidDataType = expectedDataTypes.includes(dataType?.type);
+        hasValidDataType = expectedDataTypes.includes(dataType?.name);
 
-        if (dataType?.type === 'object' && !hasValidDataType) {
-            hasValidDataType = expectedDataTypes.includes(dataType?.objectType);
+        if (!hasValidDataType) {
+            hasValidDataType = expectedDataTypes.includes(dataType?.primitiveType);
+        }
+
+        if (!hasValidDataType && dataType?.primitiveType === 'array') {
+            hasValidDataType = expectedDataTypes.includes(dataType?.itemsType);
         }
     }
 
     return hasValidDataType;
 }
 
-export function filterVariableOptionsByDataType(variables, expectedDataTypes) {
+export function filterVariablesTreeByDataType(variables, expectedDataTypes) {
     const getDataTypeByName = select(workflowStore).getDataTypeByName;
     let filteredVariables = [];
 
@@ -403,7 +450,7 @@ export function filterVariableOptionsByDataType(variables, expectedDataTypes) {
         let validChildren = [];
 
         // Desn't include the variable properties if the variable itself is invalid
-        if (dataType.type === 'object') {
+        if (dataType.primitiveType === 'object') {
             const properties = dataType.propertiesSchema;
 
             // Ignore the properties if the variable itself is valid.
@@ -412,15 +459,18 @@ export function filterVariableOptionsByDataType(variables, expectedDataTypes) {
                 const propertyHasValidDataType = isValidDataType(propertyDataType, expectedDataTypes);
 
                 if (propertyHasValidDataType) {
-                    validChildren.push({
-                        id: variable.id + '.' + property.name,
-                        name: variable.name + ' -> ' + property.label,
-                    });
+                    const filteredVariable = {
+                        id: variable.name + '.' + property.name,
+                        name: variable.name + '.' + property.name,
+                        label: variable.label + ' -> ' + property.label,
+                    };
+
+                    validChildren.push(formatVariableStructure(filteredVariable));
                 }
             });
 
             validVariable = {
-                id: variable.name,
+                id: variable.id,
                 name: variable.label,
                 children: validChildren,
                 type: variable.type,
@@ -434,7 +484,7 @@ export function filterVariableOptionsByDataType(variables, expectedDataTypes) {
         } else {
             if (variableHasValidDataType) {
                 filteredVariables.push({
-                    id: variable.name,
+                    id: variable.id,
                     name: variable.label,
                     children: [],
                     type: variable.type,
@@ -542,4 +592,58 @@ export function getNodeById(id, nodes = null) {
     }
 
     return nodes.find((node) => node.id === id);
+}
+
+export function getVariableDataTypeByVariableName(targetVariableName, variables) {
+    const plainTargetVariableName = targetVariableName.replace('{{', '').replace('}}', '');
+
+    // Problem: the post thype, for example is a string. Should we have a sub type, or specialized type? Autocomplete type?
+    let foundDataType = null;
+
+    variables.forEach(variable => {
+        // Check if the variable.name is the same as the targetVariableName
+        if (variable.name === plainTargetVariableName) {
+            foundDataType = variable.type;
+        }
+
+        // Check if the variable.name is the beginning of the targetVariableName
+        if (plainTargetVariableName.startsWith(variable.name)) {
+            if (variable.children.length > 0) {
+                foundDataType = getVariableDataTypeByVariableName(targetVariableName, variable.children);
+            }
+        }
+    });
+
+    return foundDataType;
+}
+
+export function getVariableLabelByVariableName(targetVariableName, variables) {
+    const plainTargetVariableName = targetVariableName.replace('{{', '').replace('}}', '');
+
+    let label = null;
+
+    for (const variable of variables) {
+        if (! plainTargetVariableName.toLowerCase().startsWith(variable.name.toLowerCase())) {
+            continue;
+        }
+
+        if (variable.name.toLowerCase() === plainTargetVariableName.toLowerCase()) {
+            label = variable.label;
+            break;
+        }
+
+        if (plainTargetVariableName.toLowerCase().startsWith(variable.name.toLowerCase()) && variable.children.length > 0) {
+            label = variable.label + ' -> ' + getVariableLabelByVariableName(targetVariableName, variable.children);
+
+            if (label) {
+                break;
+            }
+        }
+    }
+
+    if (! label) {
+        return null;
+    }
+
+    return label;
 }

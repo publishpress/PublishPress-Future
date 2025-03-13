@@ -4,7 +4,6 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreventer;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
@@ -13,11 +12,11 @@ use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostUpdate;
+use PublishPress\Future\Modules\Workflows\Interfaces\PostCacheInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowExecutionSafeguardInterface;
 
 class OnPostUpdateRunner implements TriggerRunnerInterface
 {
-    use InfiniteLoopPreventer;
-
     /**
      * @var HookableInterface
      */
@@ -54,14 +53,19 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
     private $logger;
 
     /**
-     * @var array
-     */
-    private $postPermalinkCache = [];
-
-    /**
      * @var \Closure
      */
     private $expirablePostModelFactory;
+
+    /**
+     * @var PostCacheInterface
+     */
+    private $postCache;
+
+    /**
+     * @var WorkflowExecutionSafeguardInterface
+     */
+    private $executionSafeguard;
 
     public function __construct(
         HookableInterface $hooks,
@@ -69,7 +73,9 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
         InputValidatorsInterface $postQueryValidator,
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger,
-        \Closure $expirablePostModelFactory
+        \Closure $expirablePostModelFactory,
+        PostCacheInterface $postCache,
+        WorkflowExecutionSafeguardInterface $workflowExecutionSafeguard
     ) {
         $this->hooks = $hooks;
         $this->stepProcessor = $stepProcessor;
@@ -77,6 +83,8 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+        $this->postCache = $postCache;
+        $this->executionSafeguard = $workflowExecutionSafeguard;
     }
 
     public static function getNodeTypeName(): string
@@ -89,11 +97,65 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
         $this->step = $step;
         $this->workflowId = $workflowId;
 
-        $this->hooks->addAction(HooksAbstract::ACTION_PRE_POST_UPDATE, [$this, 'cachePermalink'], 15, 2);
-        $this->hooks->addAction(HooksAbstract::ACTION_POST_UPDATED, [$this, 'triggerCallback'], 15, 3);
+        $this->postCache->setup();
+
+        /*
+         * We need to use the save_post action because the post_updated action is triggered too early
+         * and some post data (like Future Action data) would not be available yet.
+         */
+        $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'triggerCallback'], 15, 3);
     }
 
-    public function triggerCallback($postId, $postAfter, $postBefore)
+    public function triggerCallback($postId, $post, $update)
+    {
+        if (! $update) {
+            return;
+        }
+
+        $stepSlug = $this->stepProcessor->getSlugFromStep($this->step);
+
+        if ($this->shouldAbortExecution($postId, $stepSlug)) {
+            return;
+        }
+
+        $cachedPosts = $this->postCache->getCachedPosts($postId);
+        $cachedPermalink = $this->postCache->getCachedPermalink($postId);
+
+        $postBefore = $cachedPosts['postBefore'] ?? null;
+        $postAfter = $cachedPosts['postAfter'] ?? null;
+
+        $this->variablesHandler->setVariable($stepSlug, [
+            'postBefore' => new PostResolver(
+                $postBefore,
+                $this->hooks,
+                $cachedPermalink['postBefore'],
+                $this->expirablePostModelFactory
+            ),
+            'postAfter' => new PostResolver(
+                $postAfter,
+                $this->hooks,
+                $cachedPermalink['postAfter'],
+                $this->expirablePostModelFactory
+            ),
+        ]);
+
+        $postQueryArgs = [
+            'post' => $postAfter,
+            'node' => $this->step['node'],
+        ];
+
+        if (! $this->postQueryValidator->validate($postQueryArgs)) {
+            return false;
+        }
+
+        $this->stepProcessor->executeSafelyWithErrorHandling(
+            $this->step,
+            [$this, 'processTriggerExecution'],
+            $postId
+        );
+    }
+
+    private function shouldAbortExecution($postId, $stepSlug): bool
     {
         if (
             $this->hooks->applyFilters(
@@ -103,77 +165,62 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
                 $this->step
             )
         ) {
-            return;
-        }
-
-        $nodeSlug = $this->stepProcessor->getSlugFromStep($this->step);
-
-        if ($this->isInfiniteLoopDetected($this->workflowId, $this->step, $postId)) {
             $this->logger->debug(
                 $this->stepProcessor->prepareLogMessage(
-                    'Infinite loop detected for step %s, skipping',
-                    $nodeSlug
+                    'Ignoring save post event for step %s',
+                    $stepSlug
                 )
             );
 
-            return;
+            return true;
         }
 
-        $this->stepProcessor->executeSafelyWithErrorHandling(
-            $this->step,
-            function ($step, $postId, $postAfter, $postBefore) {
-                $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
+        if ($this->executionSafeguard->detectInfiniteLoop($this->workflowId, $this->step, $postId)) {
+            $this->logger->debug(
+                $this->stepProcessor->prepareLogMessage(
+                    'Infinite loop detected for step %s, skipping',
+                    $stepSlug
+                )
+            );
 
-                $postQueryArgs = [
-                    'post' => $postAfter,
-                    'node' => $step['node'],
-                ];
+            return true;
+        }
 
-                if (! $this->postQueryValidator->validate($postQueryArgs)) {
-                    return false;
-                }
-
-                $this->variablesHandler->setVariable($nodeSlug, [
-                    'postId' => new IntegerResolver($postId),
-                    'postBefore' => new PostResolver(
-                        $postBefore,
-                        $this->hooks,
-                        $this->postPermalinkCache[$postBefore->ID] ?? '',
-                        $this->expirablePostModelFactory
-                    ),
-                    'postAfter' => new PostResolver(
-                        $postAfter,
-                        $this->hooks,
-                        $this->postPermalinkCache[$postAfter->ID] ?? '',
-                        $this->expirablePostModelFactory
-                    ),
-                ]);
-
-                $this->stepProcessor->triggerCallbackIsRunning();
-
-                $this->logger->debug(
-                    $this->stepProcessor->prepareLogMessage(
-                        'Trigger is running | Slug: %s | Post ID: %d',
-                        $nodeSlug,
-                        $postId
-                    )
-                );
-
-                $this->stepProcessor->runNextSteps($step);
-            },
+        $uniqueId = $this->executionSafeguard->generateUniqueExecutionIdentifier([
+            get_current_user_id(),
+            $this->workflowId,
+            $this->step['node']['id'],
             $postId,
-            $postAfter,
-            $postBefore
-        );
+        ]);
+
+        if ($this->executionSafeguard->preventDuplicateExecution($uniqueId)) {
+            $this->logger->debug(
+                $this->stepProcessor->prepareLogMessage(
+                    'Duplicate execution detected for step %s, skipping',
+                    $stepSlug
+                )
+            );
+
+            return true;
+        }
+
+        return false;
     }
 
-    /**
-     * Cache the permalink of the post when it is updated because
-     * the post revolver will always return the new permalink of the post.
-     * We use this to make sure the post before results the old permalink.
-     */
-    public function cachePermalink($postId, $data)
+    public function processTriggerExecution($postId)
     {
-        $this->postPermalinkCache[$postId] = get_permalink($postId);
+        $stepSlug = $this->stepProcessor->getSlugFromStep($this->step);
+
+        $this->stepProcessor->triggerCallbackIsRunning();
+
+        $this->logger->debug(
+            $this->stepProcessor->prepareLogMessage(
+                'Trigger is running | Slug: %s | Post ID: %d',
+                $stepSlug,
+                $postId
+            )
+        );
+
+        $this->stepProcessor->runNextSteps($this->step);
     }
 }

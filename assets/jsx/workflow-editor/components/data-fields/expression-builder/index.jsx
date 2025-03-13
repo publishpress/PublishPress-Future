@@ -10,6 +10,7 @@ import { useState, useRef, useCallback, useEffect } from "@wordpress/element";
 import NodeIcon from "../../node-icon";
 import ColumnsContainer from "./columns-container";
 import { DescriptionText } from "../description-text";
+import ace, {Ace} from "ace-builds";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-handlebars";
 import "ace-builds/src-noconflict/theme-textmate";
@@ -33,6 +34,8 @@ export const ExpressionBuilder = ({
     wrapOnEditor = false,
     oneLinePreview = false,
     helpUrl = '',
+    autoComplete = true,
+    completers = [],
 }) => {
     const editorFullRef = useRef(null);
     const editorSmallRef = useRef(null);
@@ -79,11 +82,9 @@ export const ExpressionBuilder = ({
 
             if (! singleVariableOnly) {
                 const cursorPosition = editor.getCursorPosition();
-                console.log(cursorPosition);
-                editor.session.insert(cursorPosition, `{{${item.name}}}`);
+                editor.session.insert(cursorPosition, item.id);
             } else {
-                console.log('single variable');
-                editor.session.setValue(`{{${item.name}}}`);
+                editor.session.setValue(item.id);
             }
 
             editor.focus();
@@ -106,6 +107,23 @@ export const ExpressionBuilder = ({
 
     const expression = (defaultValue[propertyName] || '').toString();
     const placeholder = (settings?.placeholder || '').toString();
+
+    useEffect(() => {
+        if (completers.length === 0) {
+            return;
+        }
+
+        // Set completers for each editor instance individually
+        if (editorFullRef.current) {
+            const editor = editorFullRef.current.editor;
+            editor.completers = completers;
+        }
+
+        if (editorSmallRef.current) {
+            const editor = editorSmallRef.current.editor;
+            editor.completers = completers;
+        }
+    }, [completers, editorFullRef, editorSmallRef]);
 
     return <div className={`expression-builder ${isOpen ? 'expression-builder-open' : ''} ${isInline ? 'expression-builder-inline' : ''}`}>
 
@@ -133,12 +151,11 @@ export const ExpressionBuilder = ({
             wrapEnabled={wrapOnPreview}
             onChange={(value) => onChangeSetting({ settingName: propertyName, value })}
             setOptions={{
-                enableBasicAutocompletion: false,
-                enableLiveAutocompletion: false,
+                enableBasicAutocompletion: autoComplete,
+                enableLiveAutocompletion: autoComplete,
                 showGutter: false,
                 showPrintMargin: false,
                 showLineNumbers: false,
-                showInvisibles: false,
                 highlightActiveLine: false,
             }}
             height={oneLinePreview ? '30px' : '92px'}
@@ -177,8 +194,8 @@ export const ExpressionBuilder = ({
                         editorProps={editorProps}
                         readOnly={singleVariableOnly}
                         setOptions={{
-                            enableBasicAutocompletion: false,
-                            enableLiveAutocompletion: false,
+                            enableBasicAutocompletion: autoComplete,
+                            enableLiveAutocompletion: autoComplete,
                             showLineNumbers: !singleVariableOnly,
                             showGutter: !singleVariableOnly,
                             highlightActiveLine: !singleVariableOnly,
@@ -202,7 +219,7 @@ export const ExpressionBuilder = ({
                         {currentDescription && (
                             <p className="description margin-top">
                                 <code className="expression-builder-variable-name">
-                                    {`{{${currentVariableId}}}`}
+                                    {currentVariableId}
                                 </code> {currentDescription}
                             </p>
                         )}

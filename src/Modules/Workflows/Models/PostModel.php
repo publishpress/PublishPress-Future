@@ -4,7 +4,6 @@ namespace PublishPress\Future\Modules\Workflows\Models;
 
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\InputValidators\PostQuery;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\PostModelInterface;
@@ -53,9 +52,11 @@ class PostModel implements PostModelInterface
         $workflowsModel = new WorkflowsModel();
         $workflows = $workflowsModel->getPublishedWorkflowsWithManualTrigger();
 
+        $container = Container::getInstance();
+
         $postModel = new PostModel();
         $postModel->load($postId);
-        $postQueryValidator = new PostQuery();
+        $postQueryValidator = $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY);
 
         $validatedWorkflows = [];
 

@@ -36,32 +36,14 @@ $tabs = [
         'slug'  => 'display',
         'link' => admin_url($baseLink . 'display'),
     ],
-    [
-        'title' => __('Advanced', 'post-expirator'),
-        'slug'  => 'advanced',
-        'link' => admin_url($baseLink . 'advanced'),
-    ],
-    [
-        'title' => __('Diagnostics and Tools', 'post-expirator'),
-        'slug'  => 'diagnostics',
-        'link' => admin_url($baseLink . 'diagnostics'),
-    ],
 ];
 
-if ($debugIsEnabled) {
-    $tabs[] = [
-        'title' => __('Debug', 'post-expirator'),
-        'slug'  => 'viewdebug',
-        'link' => admin_url('admin.php?page=publishpress-future&tab=viewdebug'),
-    ];
-}
-
-$tabs = $hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_TABS, $tabs);
+$tabs = $hooks->applyFilters(HooksAbstract::FILTER_FUTURE_ACTIONS_TABS, $tabs);
 ?>
 
 <div class="wrap">
     <h2 class="pp-settings-title"><?php
-        esc_html_e('Action Settings', 'post-expirator'); ?></h2>
+        esc_html_e('Future Actions', 'post-expirator'); ?></h2>
     <div id="pe-settings-tabs">
         <nav class="nav-tab-wrapper postexpirator-nav-tab-wrapper" id="postexpirator-nav">
             <?php foreach ($tabs as $tab) : ?>

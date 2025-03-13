@@ -67,7 +67,7 @@ class SendRayRunner implements StepRunnerInterface
                 $node = $this->stepProcessor->getNodeFromStep($step);
                 $nodeSettings = $this->stepProcessor->getNodeSettings($node);
 
-                $expression = '';
+                $expression = '{{input}}';
                 if (isset($nodeSettings['data']['expression'])) {
                     $expression = $nodeSettings['data']['expression'];
                 } else {
@@ -88,15 +88,13 @@ class SendRayRunner implements StepRunnerInterface
                     $output = $this->variablesHandler->getAllVariables();
                     unset($output['global']);
                 } else {
-                    $output = $this->variablesHandler->replacePlaceholdersInText($expression);
+                    $output = $this->variablesHandler->resolveExpressionsInText($expression);
                 }
 
                 // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction
                 $rayMessage = ray($output);
 
-                if (isset($nodeSettings['label'])) {
-                    $rayMessage->label($nodeSettings['label']);
-                }
+                $rayMessage->label($nodeSettings['label'] ?? '');
 
                 if (isset($nodeSettings['color'])) {
                     switch ($nodeSettings['color']) {

@@ -43,7 +43,7 @@ class PluginsListController implements InitializableInterface
     {
         $this_plugin = basename(PUBLISHPRESS_FUTURE_BASE_PATH) . '/post-expirator.php';
         if ($file === $this_plugin) {
-            $links[] = '<a href="admin.php?page=publishpress-future">' . __('Settings', 'post-expirator') . '</a>';
+            $links[] = '<a href="admin.php?page=publishpress-future-settings">' . __('Settings', 'post-expirator') . '</a>';
         }
 
         return $links;

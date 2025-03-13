@@ -1,15 +1,15 @@
-ul#export-actions {
+.pe-settings-tab__export {
     margin-bottom: 20px;
 }
 
-ul#export-actions li ul {
+.pe-settings-tab__export ul {
     margin-top: 10px;
     border: 1px solid #e0e0e0e5;
     padding: 10px;
     background-color: #fff;
 }
 
-ul#export-actions span {
+.pe-settings-tab__export span {
     display: inline-block;
 }
 
@@ -68,3 +68,6 @@ ul#export-actions span {
     margin: 0;
 }
 
+.components-form-file-upload {
+    margin-top: 10px;
+}

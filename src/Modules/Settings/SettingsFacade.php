@@ -11,12 +11,14 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
-use PublishPress\Future\Modules\Expirator\ExpirationActions\ChangePostStatus;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use WP_Role;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+/**
+ *
+ */
 class SettingsFacade
 {
     public const OPTION_STEP_SCHEDULE_COMPRESSED_ARGS = 'ppfuture_scheduled_step_args_compression_status';

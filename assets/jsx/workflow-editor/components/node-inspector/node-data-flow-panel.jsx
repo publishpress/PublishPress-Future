@@ -6,7 +6,7 @@ import { store as workflowStore } from '../workflow-store';
 import NodeIcon from "../node-icon";
 import { useState } from "@wordpress/element";
 
-export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
+export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = [], stepScopedVariables = []}) => {
     const {
         isLoadingWorkflow,
         getDataTypeByName,
@@ -118,6 +118,26 @@ export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
                     )}
 
                     {outputSchema.length === 0 && __("This step does not output any data.", "post-expirator")}
+                </div>
+            </PanelRow>
+
+            <PanelRow className="workflow-editor-inspector-card__handles-schema">
+                <h3>{__('Step Scoped Variables', 'post-expirator')}</h3>
+                <div>
+                    {stepScopedVariables.length > 0 && (
+                        <>
+                            <div>{__("This step receives the following step scoped variables:", "post-expirator")}</div>
+                            <ul>
+                                {stepScopedVariables.map((schemaItem, index) => (
+                                    <li key={`input-${schemaItem.name}-${index}`}>
+                                        <Variable schemaItem={schemaItem} />
+                                    </li>
+                                ))}
+                            </ul>
+                        </>
+                    )}
+
+                    {stepScopedVariables.length === 0 && __("This step does not have any step scoped variables.", "post-expirator")}
                 </div>
             </PanelRow>
 

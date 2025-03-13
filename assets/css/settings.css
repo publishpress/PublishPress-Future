@@ -74,6 +74,14 @@ span.post-expiration-attributes {
 	cursor: help;
 }
 
+.pe-post-type-select {
+    margin-top: 10px;
+}
+
+.pe-post-type-select .components-base-control__field {
+    margin-bottom: 0 !important;
+}
+
 .post-expirator-timestamp {
 	width: 20% !important;
 }

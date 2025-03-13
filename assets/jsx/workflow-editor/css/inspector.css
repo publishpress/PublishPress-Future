@@ -195,3 +195,67 @@ p.description.margin-top {
 .margin-top-0 {
     margin-top: 0 !important;
 }
+
+.workflow-editor-setting-popover .components-popover__content {
+    min-width: 320px;
+    padding: 16px;
+}
+
+
+.workflow-editor-inspector-card__header {
+    justify-content: flex-start !important;
+}
+
+.workflow-editor-inspector-card__content .components-v-stack {
+    margin-bottom: 10px;
+}
+
+.workflow-editor-post-data.hidden-calendar .components-datetime__date {
+    display: none;
+}
+
+.workflow-editor-panel {
+    gap: calc(4px) !important;
+}
+
+.workflow-editor-panel__row {
+    width: 100%;
+}
+
+.workflow-editor-panel__row-label {
+    min-width: 0px;
+    align-items: center;
+    display: flex;
+    flex-shrink: 0;
+    hyphens: auto;
+    line-height: 20px;
+    min-height: 32px;
+    padding: 6px 0;
+    width: 38%;
+}
+
+.workflow-editor-panel__row-control {
+    min-width: 0px;
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    min-height: 32px;
+    max-height: 38px;
+    overflow: hidden;
+    word-break: break-word;
+    flex-wrap: wrap;
+    hyphens: auto;
+    line-height: 20px;
+}
+
+.workflow-editor-panel__row-control .components-button.is-tertiary {
+    white-space: normal;
+    height: 38px;
+    text-align: left;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    align-items: center;
+    padding: 4px 8px;
+}

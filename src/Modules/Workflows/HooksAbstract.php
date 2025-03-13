@@ -147,4 +147,8 @@ abstract class HooksAbstract
     public const ACTION_CHECK_EXPIRED_ACTIONS = 'publishpressfuture_check_expired_actions';
 
     public const ACTION_WARN_ABOUT_PAST_DUE_ACTIONS = 'publishpressfuture_warn_about_past_due_actions';
+
+    public const FILTER_WORKFLOW_ROUTE_VARIABLE = 'publishpressfuture_workflow_route_variable';
+
+    public const FILTER_DUPLICATE_PREVENTION_THRESHOLD = 'publishpressfuture_duplicate_prevention_threshold';
 }

@@ -29,12 +29,12 @@ class AppendDebugLog implements StepTypeInterface
 
     public function getLabel(): string
     {
-        return __("Append to debug log", "post-expirator");
+        return __("Send to debug log", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This step appends the flow's data to the debug log.", "post-expirator");
+        return __("This step transmits the workflow's data to the debug log.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -100,6 +100,11 @@ class AppendDebugLog implements StepTypeInterface
                 ],
             ],
         ];
+    }
+
+    public function getStepScopedVariablesSchema(): array
+    {
+        return [];
     }
 
     public function getOutputSchema(): array

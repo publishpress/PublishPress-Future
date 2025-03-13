@@ -14,11 +14,10 @@ use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSave;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowExecutionSafeguardInterface;
 
 class OnPostSaveRunner implements TriggerRunnerInterface
 {
-    use InfiniteLoopPreventer;
-
     /**
      * @var HookableInterface
      */
@@ -59,13 +58,19 @@ class OnPostSaveRunner implements TriggerRunnerInterface
      */
     private $expirablePostModelFactory;
 
+    /**
+     * @var WorkflowExecutionSafeguardInterface
+     */
+    private $executionSafeguard;
+
     public function __construct(
         HookableInterface $hooks,
         StepProcessorInterface $stepProcessor,
         InputValidatorsInterface $postQueryValidator,
         RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger,
-        \Closure $expirablePostModelFactory
+        \Closure $expirablePostModelFactory,
+        WorkflowExecutionSafeguardInterface $executionSafeguard
     ) {
         $this->hooks = $hooks;
         $this->stepProcessor = $stepProcessor;
@@ -73,6 +78,7 @@ class OnPostSaveRunner implements TriggerRunnerInterface
         $this->variablesHandler = $variablesHandler;
         $this->logger = $logger;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+        $this->executionSafeguard = $executionSafeguard;
     }
 
     public static function getNodeTypeName(): string
@@ -92,6 +98,33 @@ class OnPostSaveRunner implements TriggerRunnerInterface
     {
         $stepSlug = $this->stepProcessor->getSlugFromStep($this->step);
 
+        if ($this->shouldAbortExecution($postId, $stepSlug)) {
+            return;
+        }
+
+        $this->variablesHandler->setVariable($stepSlug, [
+            'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
+            'update' => new BooleanResolver($update),
+        ]);
+
+        $postQueryArgs = [
+            'post' => $post,
+            'node' => $this->step['node'],
+        ];
+
+        if (! $this->postQueryValidator->validate($postQueryArgs)) {
+            return false;
+        }
+
+        $this->stepProcessor->executeSafelyWithErrorHandling(
+            $this->step,
+            [$this, 'processTriggerExecution'],
+            $postId
+        );
+    }
+
+    private function shouldAbortExecution($postId, $stepSlug): bool
+    {
         if (
             $this->hooks->applyFilters(
                 HooksAbstract::FILTER_IGNORE_SAVE_POST_EVENT,
@@ -107,10 +140,10 @@ class OnPostSaveRunner implements TriggerRunnerInterface
                 )
             );
 
-            return;
+            return true;
         }
 
-        if ($this->isInfiniteLoopDetected($this->workflowId, $this->step, $postId)) {
+        if ($this->executionSafeguard->detectInfiniteLoop($this->workflowId, $this->step, $postId)) {
             $this->logger->debug(
                 $this->stepProcessor->prepareLogMessage(
                     'Infinite loop detected for step %s, skipping',
@@ -118,43 +151,44 @@ class OnPostSaveRunner implements TriggerRunnerInterface
                 )
             );
 
-            return;
+            return true;
         }
 
-        $postQueryArgs = [
-            'post' => $post,
-            'node' => $this->step['node'],
-        ];
-
-        if (! $this->postQueryValidator->validate($postQueryArgs)) {
-            return false;
-        }
-
-        $this->stepProcessor->executeSafelyWithErrorHandling(
-            $this->step,
-            function ($step, $stepSlug, $postId, $post, $update) {
-                $this->variablesHandler->setVariable($stepSlug, [
-                    'postId' => new IntegerResolver($postId),
-                    'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
-                    'update' => new BooleanResolver($update),
-                ]);
-
-                $this->stepProcessor->triggerCallbackIsRunning();
-
-                $this->logger->debug(
-                    $this->stepProcessor->prepareLogMessage(
-                        'Trigger is running | Slug: %s | Post ID: %d',
-                        $stepSlug,
-                        $postId
-                    )
-                );
-
-                $this->stepProcessor->runNextSteps($step);
-            },
-            $stepSlug,
+        $uniqueId = $this->executionSafeguard->generateUniqueExecutionIdentifier([
+            get_current_user_id(),
+            $this->workflowId,
+            $this->step['node']['id'],
             $postId,
-            $post,
-            $update
+        ]);
+
+        if ($this->executionSafeguard->preventDuplicateExecution($uniqueId)) {
+            $this->logger->debug(
+                $this->stepProcessor->prepareLogMessage(
+                    'Duplicate execution detected for step %s, skipping',
+                    $stepSlug
+                )
+            );
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function processTriggerExecution($postId)
+    {
+        $stepSlug = $this->stepProcessor->getSlugFromStep($this->step);
+
+        $this->stepProcessor->triggerCallbackIsRunning();
+
+        $this->logger->debug(
+            $this->stepProcessor->prepareLogMessage(
+                'Trigger is running | Slug: %s | Post ID: %d',
+                $stepSlug,
+                $postId
+            )
         );
+
+        $this->stepProcessor->runNextSteps($this->step);
     }
 }

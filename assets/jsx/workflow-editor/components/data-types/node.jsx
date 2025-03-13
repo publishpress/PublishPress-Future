@@ -2,8 +2,7 @@ export function NodeData() {
     return {
         name: "node",
         label: "Workflow Node",
-        type: "object",
-        objectType: "node",
+        primitiveType: "object",
         propertiesSchema: [
             {
                 name: "id",
@@ -36,7 +35,7 @@ export function NodeData() {
                 description: "The timestamp when the node was activated.",
             },
             {
-                name: "postId",
+                name: "post_id",
                 type: "integer",
                 label: "Post ID",
                 description: "The ID of the post that triggered the node.",

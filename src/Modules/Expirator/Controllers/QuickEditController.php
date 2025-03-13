@@ -283,6 +283,10 @@ class QuickEditController implements InitializableInterface
                 }
             }
 
+            if (empty($taxonomyPluralName)) {
+                $taxonomyPluralName = __('Taxonomy', 'post-expirator');
+            }
+
             $taxonomyTerms = [];
             if (! empty($postTypeDefaultConfig['taxonomy'])) {
                 $taxonomyTerms = get_terms([

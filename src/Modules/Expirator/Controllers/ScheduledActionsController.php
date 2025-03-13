@@ -121,18 +121,18 @@ class ScheduledActionsController implements InitializableInterface
                 __('Future', 'post-expirator'),
                 'manage_options',
                 'publishpress-future',
-                [\PostExpirator_Display::getInstance(), 'settings_tabs'],
+                [\PostExpirator_Display::getInstance(), 'future_actions_tabs'],
                 'dashicons-clock',
                 74
             );
 
             add_submenu_page(
                 'publishpress-future',
-                __('Action Settings', 'post-expirator'),
-                __('Action Settings', 'post-expirator'),
+                __('Future Actions', 'post-expirator'),
+                __('Future Actions', 'post-expirator'),
                 'manage_options',
                 'publishpress-future',
-                [\PostExpirator_Display::getInstance(), 'settings_tabs']
+                [\PostExpirator_Display::getInstance(), 'future_actions_tabs']
             );
 
             $hook_suffix = add_submenu_page(
@@ -325,8 +325,29 @@ class ScheduledActionsController implements InitializableInterface
             );
         }
 
+        if ($hook === WorkflowsHooksAbstract::ACTION_CHECK_EXPIRED_ACTIONS) {
+            $html = __('Checked for expired actions', 'post-expirator');
+        }
+
         if ($hook === WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS) {
             $html = __('Cleaned up orphan workflow scheduled step arguments', 'post-expirator');
+        }
+
+        if ($hook === HooksAbstract::ACTION_RUN_WORKFLOW) {
+            $args = $action->get_args();
+            if (isset($args['postId']) && isset($args['workflow']) && 'expire' === $args['workflow']) {
+                $postId = (int)$args['postId'];
+                $post = get_post($postId);
+                $postTitle = $post ? html_entity_decode(get_the_title($post)) : __('Unknown post', 'post-expirator');
+
+                $html = sprintf(
+                    __('Executed action for: %s (ID: %d)', 'post-expirator'),
+                    $postTitle,
+                    $postId
+                );
+            } else {
+                $html = __('Executed scheduled action', 'post-expirator');
+            }
         }
 
         return $html;

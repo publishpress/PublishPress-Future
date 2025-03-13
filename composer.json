@@ -67,13 +67,13 @@
         "nyholm/psr7": "^1.8"
     },
     "scripts": {
-        "build": "pbuild build",
+        "build": "/scripts/pbuild build",
         "build:up": [
             "@build",
             "@dbox:up"
         ],
-        "build:dir": "pbuild build-dir",
-        "build:clean": "pbuild clean",
+        "build:dir": "/scripts/ build-dir",
+        "build:clean": "/scripts/ clean",
         "build:js-prod": "cross-env NODE_ENV=production npx webpack --progress",
         "build:js-dev": "cross-env NODE_ENV=development npx webpack --progress",
         "build:js": [
@@ -82,7 +82,7 @@
         ],
         "profile:js": "cross-env NODE_ENV=production npx webpack --profile",
         "watch:js": "cross-env NODE_ENV=development npx webpack --watch --progress",
-        "get:version": "pbuild version",
+        "get:version": "/scripts/ version",
         "build:pot-php": "wp i18n make-pot . ./languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests,lib,tmp,doc,*.js,*.js.map,*.jsx --allow-root",
         "build:pot-js": "bash ./dev-workspace/scripts/lang-make-pot-js.sh",
         "build:pot": [
@@ -139,10 +139,10 @@
             "@build:lang",
             "@build:js"
         ],
-        "dbox:up": "pdropbox upload && pdropbox share",
-        "dbox:list": "pdropbox list",
-        "dbox:remove": "pdropbox remove",
-        "dbox:unlink": "pdropbox unlink",
+        "dbox:up": "/scripts/pdropbox upload && /scripts/pdropbox share",
+        "dbox:list": "/scripts/pdropbox list",
+        "dbox:remove": "/scripts/pdropbox remove",
+        "dbox:unlink": "/scripts/pdropbox unlink",
         "tests:env": "bash dev-workspace/scripts/tests-env.sh bootstrap",
         "tests:chromedriver": "source .\/tests/.env && $CHROMEDRIVER_BINARY --port=$CHROMEDRIVER_PORT",
         "tests:wp": "bash dev-workspace/scripts/tests-wp-cli.sh $@",

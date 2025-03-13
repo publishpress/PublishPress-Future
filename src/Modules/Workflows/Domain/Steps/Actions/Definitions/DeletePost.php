@@ -111,6 +111,11 @@ class DeletePost implements StepTypeInterface
         ];
     }
 
+    public function getStepScopedVariablesSchema(): array
+    {
+        return [];
+    }
+
     public function getOutputSchema(): array
     {
         return [

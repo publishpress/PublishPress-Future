@@ -64,7 +64,7 @@ class OnPostSave implements StepTypeInterface
     {
         return [
             [
-                "label" => __("Post Query", "post-expirator"),
+                "label" => __("Conditions", "post-expirator"),
                 "description" => __(
                     "Specify the criteria for posts that will trigger this action.",
                     "post-expirator"
@@ -72,19 +72,12 @@ class OnPostSave implements StepTypeInterface
                 "fields" => [
                     [
                         "name" => "postQuery",
-                        "type" => "postQuery",
-                        "label" => __("Post query", "post-expirator"),
+                        "type" => "postFilter",
+                        "label" => __("Post filter", "post-expirator"),
                         "description" => __(
-                            "The query defines the posts that will trigger this action.",
+                            "The filter defines the posts that will trigger this action.",
                             "post-expirator"
                         ),
-                        "settings" => [
-                            "acceptsInput" => false,
-                            "isPostTypeRequired" => true,
-                            "postTypeDescription" => __("Select the post types that will trigger this action.", "post-expirator"),
-                            "postIdDescription" => __("Enter one or more post IDs. Leave empty to include all posts.", "post-expirator"),
-                            "postStatusDescription" => __("If selected, only posts with these statuses will trigger this action.", "post-expirator"),
-                        ],
                         "default" => [
                             "postSource" => "custom",
                             "postType" => ["post"],
@@ -100,21 +93,6 @@ class OnPostSave implements StepTypeInterface
     public function getValidationSchema(): array
     {
         return [
-            "settings" => [
-                "rules" => [
-                    [
-                        "rule" => "required",
-                        "field" => "postQuery.postType",
-                        "label" => __("Post Type", "post-expirator"),
-                    ],
-                    [
-                        "rule" => "dataType",
-                        "field" => "postQuery.postId",
-                        "type" => "integerList",
-                        "label" => __("Post ID", "post-expirator"),
-                    ],
-                ],
-            ],
             "connections" => [
                 "rules" => [
                     [
@@ -125,16 +103,28 @@ class OnPostSave implements StepTypeInterface
         ];
     }
 
-    public function getOutputSchema(): array
+    public function getStepScopedVariablesSchema(): array
     {
         return [
             [
-                'name' => 'post',
-                'type' => 'post',
-                'label' => __("Saved post", "post-expirator"),
-                'description' => __("The post that was saved, with the new properties.", "post-expirator"),
+                "name" => "post",
+                "type" => "post",
+                "label" => __("Saved post", "post-expirator"),
+                "description" => __("The post that was saved, with the new properties.", "post-expirator"),
+            ],
+            [
+                "name" => "update",
+                "type" => "boolean",
+                "label" => __("Is update", "post-expirator"),
+                "description" => __("Whether the action happened to an existing post or a new post. Enter True for an existing post, or False for a new post.", "post-expirator"),
+                "priority" => 15,
             ]
         ];
+    }
+
+    public function getOutputSchema(): array
+    {
+        return $this->getStepScopedVariablesSchema();
     }
 
     public function getCSSClass(): string

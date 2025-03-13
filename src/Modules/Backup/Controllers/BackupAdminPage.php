@@ -26,47 +26,38 @@ class BackupAdminPage implements InitializableInterface
     public function initialize()
     {
         $this->hooks->addAction(
-            HooksAbstract::ACTION_ADMIN_MENU,
-            [$this, 'addSubmenuPage'],
-            14
-        );
-
-        $this->hooks->addAction(
             HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS,
             [$this, 'enqueueAdminScripts']
         );
-    }
 
-    public function addSubmenuPage()
-    {
-        add_submenu_page(
-            'publishpress-future',
-            'Export / Import',
-            'Export / Import',
-            'manage_options',
-            'future-backup',
-            [$this, 'renderSubmenuPage'],
+        $this->hooks->addFilter(
+            SettingsHooksAbstract::FILTER_ALLOWED_SETTINGS_TABS,
+            [$this, 'filterAllowedSettingsTabs']
+        );
+
+        $this->hooks->addFilter(
+            SettingsHooksAbstract::FILTER_SETTINGS_TABS,
+            [$this, 'filterSettingsTabs']
+        );
+
+        $this->hooks->addAction(
+            SettingsHooksAbstract::ACTION_LOAD_TAB,
+            [$this, 'loadTab']
         );
     }
 
-    public function renderSubmenuPage()
+    public function enqueueAdminScripts($screenId)
     {
-        $showSideBar = $this->hooks->applyFilters(
-            SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
-            ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
-        );
-
-        include __DIR__ . '/../Views/debug-panel.php';
-    }
-
-    public function enqueueAdminScripts()
-    {
-        if (! function_exists('get_current_screen')) {
+        if ($screenId !== 'future_page_publishpress-future-settings') {
             return;
         }
 
-        $currentScreen = get_current_screen();
-        if ($currentScreen->id !== 'future_page_future-backup') {
+        $validTabs = [
+            'export',
+            'import',
+        ];
+
+        if (! isset($_GET['tab']) || ! in_array($_GET['tab'], $validTabs, true)) {
             return;
         }
 
@@ -133,5 +124,56 @@ class BackupAdminPage implements InitializableInterface
             false,
             PUBLISHPRESS_FUTURE_VERSION
         );
+    }
+
+    public function filterAllowedSettingsTabs($allowedTabs)
+    {
+        if (isset($_GET['page']) && $_GET['page'] !== 'publishpress-future-settings') {
+            return $allowedTabs;
+        }
+
+        $allowedTabs[] = 'export';
+        $allowedTabs[] = 'import';
+
+        return $allowedTabs;
+    }
+
+    public function filterSettingsTabs($tabs)
+    {
+        if (isset($_GET['page']) && $_GET['page'] !== 'publishpress-future-settings') {
+            return $tabs;
+        }
+
+        $baseLink = 'admin.php?page=publishpress-future-settings&tab=';
+
+        $tabs[] = [
+            'title' => __('Export', 'post-expirator'),
+            'slug'  => 'export',
+            'link' => admin_url($baseLink . 'export'),
+        ];
+
+        $tabs[] = [
+            'title' => __('Import', 'post-expirator'),
+            'slug'  => 'import',
+            'link' => admin_url($baseLink . 'import'),
+        ];
+
+        return $tabs;
+    }
+
+    public function loadTab($tab)
+    {
+        if ($tab !== 'export' && $tab !== 'import') {
+            return;
+        }
+
+        $basePath = __DIR__ . '/../../../Views/';
+
+        $showSideBar = $this->hooks->applyFilters(
+            SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
+            ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
+        );
+
+        include $basePath . 'backup-tab.php';
     }
 }

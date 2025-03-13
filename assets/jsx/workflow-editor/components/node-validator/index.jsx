@@ -3,11 +3,11 @@ import { store as editorStore } from "../editor-store";
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useEffect, useMemo, useCallback } from "@wordpress/element";
 import { __, sprintf } from "@wordpress/i18n";
-import { nodeHasIncomers, nodeHasOutgoers, getNodeIncomers, getNodeIncomersRecursively } from "../../utils";
+import { nodeHasIncomers, nodeHasOutgoers, getNodeIncomersRecursively } from "../../utils";
 import isEmail from "validator/lib/isEmail";
 import isInt from "validator/lib/isInt";
 import { useDebounce } from "@wordpress/compose";
-import { getExpandedVariablesList, filterVariableOptionsByDataType } from "../../utils";
+import { getNodeVariablesTree, filterVariablesTreeByDataType } from "../../utils";
 
 function isVariable(value) {
     const trimmedValue = value.trim();
@@ -53,39 +53,81 @@ export function NodeValidator({})
             return successfulResult;
         }
 
-        if (variable === '') {
-            return successfulResult;
+        if (typeof variable !== 'object') {
+            variable = [variable];
         }
 
-        let variables = getExpandedVariablesList(node, globalVariables);
+
+        if (ruleData?.skipIfEmpty) {
+            if (variable === '') {
+                return successfulResult;
+            }
+
+            if (Array.isArray(variable) && variable.length === 0) {
+                return successfulResult;
+            }
+
+            if (typeof variable === 'object' && Object.keys(variable).length === 0) {
+                return successfulResult;
+            }
+        }
+
+        let contextVariables = getNodeVariablesTree(node, globalVariables);
 
         if (ruleData?.dataType) {
-            variables = filterVariableOptionsByDataType(variables, ruleData.dataType);
+            if (! Array.isArray(ruleData.dataType)) {
+                ruleData.dataType = [ruleData.dataType];
+            }
+            contextVariables = filterVariablesTreeByDataType(contextVariables, ruleData.dataType);
         }
 
-        let variableIsFound = false;
-        variables.forEach((existentVariable) => {
-            if (existentVariable.id === variable) {
-                variableIsFound = true;
-            }
-        });
+        let onlyValidValues = true;
+        let invalidVariable = '';
 
-        if (variableIsFound) {
+        for (let i = 0; i < variable.length; i++) {
+            const variableItem = variable[i].trim();
+
+            if (! variableItem.startsWith('{{')) {
+                continue;
+            }
+
+            if (! variableItem.endsWith('}}')) {
+                invalidVariable = variableItem;
+                onlyValidValues = false;
+                break;
+            }
+
+            let variableIsFound = false;
+
+            contextVariables.forEach((contextVariable) => {
+                if (contextVariable.id === variableItem) {
+                    variableIsFound = true;
+                }
+            });
+
+            if (! variableIsFound) {
+                onlyValidValues = false;
+                invalidVariable = variableItem;
+                break;
+            }
+        }
+
+        if (onlyValidValues) {
             return successfulResult;
         }
 
         return {
             isValid: false,
             error: sprintf(
-                __('The field "%s" requires a valid variable. Please select one from the available options.', 'post-expirator'),
+                __('The field "%s" contains an invalid variable.', 'post-expirator'),
                 ruleData?.fieldLabel
             ),
             details: sprintf(
-                __('The variable "%s" is not available in the current context.', 'post-expirator'),
-                variable
+                __('The variable "%s" is not available in the current context. Please, check if it is spelled correctly.', 'post-expirator'),
+                invalidVariable
             ),
         };
-    }, [globalVariables, getExpandedVariablesList, filterVariableOptionsByDataType, getNodeTypeByName]);
+    }, [globalVariables, getNodeVariablesTree, filterVariablesTreeByDataType, getNodeTypeByName]);
 
     // We are doing a simple validation here. Maybe we should do a more complex one using a parser in the future.
     const isExpressionValid = useCallback((expression, ruleData) => {
@@ -97,23 +139,38 @@ export function NodeValidator({})
             error: null,
         };
 
+
         if (! expression?.includes('{{')) {
             return successfulResult;
         }
 
-        const slugs = expression.match(/{{[^}]+}}/g);
+        if (expression === '{{input}}') {
+            return successfulResult;
+        }
 
-        if (slugs) {
-            slugs.forEach((slug) => {
-                slug = slug.replace('{{', '').replace('}}', '');
-                slug = slug.trim();
-                slug = slug.split('.')[0];
+        const expressions = expression.match(/{{[^}]+}}/g);
+
+        if (expressions) {
+            expressions.forEach((expression) => {
+                expression = expression.replace('{{', '').replace('}}', '');
+                expression = expression.trim();
+
+                // Remove the optional helper parts, the first and all after the second parts.
+                expression = expression.split(' ');
+                if (expression.length > 1) {
+                    expression = expression[1];
+                } else {
+                    expression = expression[0];
+                }
+
+                const expressionParts = expression.split('.');
+                const slug = expressionParts[0];
 
                 if (slug === 'global') {
                     return successfulResult;
                 }
 
-                if (ruleData?.allowedSlugs?.includes(slug)) {
+                if (ruleData?.allowedVariables?.includes(slug)) {
                     return successfulResult;
                 }
 
@@ -126,6 +183,29 @@ export function NodeValidator({})
                     );
                 }
             });
+        }
+
+        if (expression.includes('{{}}')) {
+            invalidExpression = true;
+            detailsMessage = __('Empty placeholder is not allowed.', 'post-expirator');
+        }
+
+        const countOpenPlaceholders = (expression) => {
+            return (expression.match(/{{/g) || []).length;
+        }
+
+        const countClosePlaceholders = (expression) => {
+            return (expression.match(/}}/g) || []).length;
+        }
+
+        if (countOpenPlaceholders(expression) > countClosePlaceholders(expression)) {
+            invalidExpression = true;
+            detailsMessage = __('Unclosed placeholder are not allowed.', 'post-expirator');
+        }
+
+        if (countOpenPlaceholders(expression) < countClosePlaceholders(expression)) {
+            invalidExpression = true;
+            detailsMessage = __('Unopened placeholder are not allowed.', 'post-expirator');
         }
 
         if (invalidExpression) {

@@ -73,9 +73,14 @@ use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\VersionNotices\Module as ModuleVersionNotices;
 use PublishPress\Future\Modules\WooCommerce\Module as ModuleWooCommerce;
 use PublishPress\Future\Modules\Workflows\DBTableSchemas\WorkflowScheduledStepsSchema;
+use PublishPress\Future\Modules\Workflows\Domain\Caches\PostCache;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHandler;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\WorkflowEngine;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\InputValidators\PostQuery as PostQueryValidator;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\JsonLogicEngine;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHelperInitializer;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHelperRegistry;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHelpers\DateHelper;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\Cron as CronStep;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\General as GeneralStep;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\Post as PostStep;
@@ -96,18 +101,23 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\SendEmail
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\SendRayRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\SetPostTermRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\UpdatePostMetaRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\UpdatePostRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnAdminInitRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnInitRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnLegacyActionTriggerRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostAuthorChangeRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostMetaChangeRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostPublishRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostRowActionRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostSaveRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostScheduleRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostStatusChangeRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostUpdateRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostWorkflowEnableRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnScheduleRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnUserRoleChangeRunner;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
+use PublishPress\Future\Modules\Workflows\Infrastructure\Safety\WorkflowExecutionSafeguard;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncStepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Migrations\V40000WorkflowScheduledStepsSchema;
@@ -413,7 +423,10 @@ return [
             $container->get(ServicesAbstract::DATE_TIME_HANDLER),
             $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY),
             $container->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY),
-            $container->get(ServicesAbstract::DATETIME)
+            $container->get(ServicesAbstract::DATETIME),
+            $container->get(ServicesAbstract::POST_TYPE_SETTINGS_MODEL_FACTORY),
+            $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL),
+            $container->get(ServicesAbstract::MIGRATIONS_FACTORY)
         );
     },
 
@@ -758,7 +771,29 @@ return [
     },
 
     ServicesAbstract::WORKFLOW_VARIABLES_HANDLER => static function (ContainerInterface $container) {
-        return new RuntimeVariablesHandler();
+        return new RuntimeVariablesHandler(
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::RUNTIME_VARIABLES_HELPER_REGISTRY)
+        );
+    },
+
+    ServicesAbstract::RUNTIME_VARIABLES_HELPER_REGISTRY => static function (ContainerInterface $container) {
+        return new RuntimeVariablesHelperRegistry();
+    },
+
+    ServicesAbstract::RUNTIME_VARIABLES_HELPER_INITIALIZER => static function (ContainerInterface $container) {
+        return new RuntimeVariablesHelperInitializer(
+            $container->get(ServicesAbstract::RUNTIME_VARIABLES_HELPER_REGISTRY),
+            [
+                $container->get(ServicesAbstract::RUNTIME_VARIABLES_DATE_HELPER)
+            ]
+        );
+    },
+
+    ServicesAbstract::RUNTIME_VARIABLES_DATE_HELPER => static function (ContainerInterface $container) {
+        return new DateHelper(
+            $container->get(ServicesAbstract::DATE_TIME_HANDLER)
+        );
     },
 
     ServicesAbstract::WORKFLOW_ENGINE => static function (ContainerInterface $container) {
@@ -767,7 +802,8 @@ return [
             $container->get(ServicesAbstract::STEP_TYPES_MODEL),
             $container->get(ServicesAbstract::STEP_RUNNER_FACTORY),
             $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
-            $container->get(ServicesAbstract::LOGGER)
+            $container->get(ServicesAbstract::LOGGER),
+            $container->get(ServicesAbstract::RUNTIME_VARIABLES_HELPER_INITIALIZER)
         );
     },
 
@@ -850,7 +886,8 @@ return [
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER),
-                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD)
                     );
                     break;
 
@@ -861,7 +898,9 @@ return [
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY),
                         $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
                         $container->get(ServicesAbstract::LOGGER),
-                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(ServicesAbstract::POST_CACHE),
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD)
                     );
                     break;
 
@@ -921,7 +960,28 @@ return [
                     );
                     break;
 
-                    // Actions
+                case OnPostAuthorChangeRunner::getNodeTypeName():
+                    $stepRunner = new OnPostAuthorChangeRunner(
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
+                        $container->get(ServicesAbstract::LOGGER)
+                    );
+                    break;
+
+                case OnPostRowActionRunner::getNodeTypeName():
+                    $stepRunner = new OnPostRowActionRunner(
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
+                        $container->get(ServicesAbstract::LOGGER)
+                    );
+                    break;
+
+                case OnUserRoleChangeRunner::getNodeTypeName():
+                    $stepRunner = new OnUserRoleChangeRunner(
+                        $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR),
+                        $container->get(ServicesAbstract::LOGGER)
+                    );
+                    break;
+
+                // Actions
                 case DeletePostRunner::getNodeTypeName():
                     $stepRunner = new DeletePostRunner(
                         $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
@@ -1016,7 +1076,14 @@ return [
                     );
                     break;
 
-                    // Advanced
+                case UpdatePostRunner::getNodeTypeName():
+                    $stepRunner = new UpdatePostRunner(
+                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR),
+                        $container->get(ServicesAbstract::LOGGER)
+                    );
+                    break;
+
+                // Advanced
                 case ScheduleDelayRunner::getNodeTypeName():
                     $stepRunner = new ScheduleDelayRunner(
                         $container->get(ServicesAbstract::CRON_STEP_PROCESSOR),
@@ -1067,7 +1134,10 @@ return [
     },
 
     ServicesAbstract::INPUT_VALIDATOR_POST_QUERY => static function (ContainerInterface $container) {
-        return new PostQueryValidator();
+        return new PostQueryValidator(
+            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
+            $container->get(ServicesAbstract::JSON_LOGIC_ENGINE)
+        );
     },
 
     ServicesAbstract::DATE_TIME_HANDLER => static function (ContainerInterface $container) {
@@ -1077,5 +1147,28 @@ return [
 
     ServicesAbstract::CACHE_POSTS_WITH_FUTURE_ACTION => static function (ContainerInterface $container) {
         return new GenericCacheHandler();
+    },
+
+    ServicesAbstract::JSON_LOGIC_ENGINE => static function (ContainerInterface $container) {
+        return new JsonLogicEngine(
+            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
+        );
+    },
+
+    ServicesAbstract::POST_CACHE => static function (ContainerInterface $container) {
+        return new PostCache(
+            $container->get(ServicesAbstract::HOOKS)
+        );
+    },
+    ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD => static function (ContainerInterface $container) {
+        global $workflowExecutionSafeguard;
+
+        if (! isset($workflowExecutionSafeguard)) {
+            $workflowExecutionSafeguard = new WorkflowExecutionSafeguard(
+                $container->get(ServicesAbstract::HOOKS)
+            );
+        }
+
+        return $workflowExecutionSafeguard;
     },
 ];

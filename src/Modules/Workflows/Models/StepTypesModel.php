@@ -21,18 +21,22 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendR
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SetPostTerm;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\StickPost;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UnstickPost;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePost;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePostMeta;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnAdminInit;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnInit;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnLegacyActionTrigger;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostAuthorChange;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostMetaChange;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostPublish;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostRowAction;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSave;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostStatusChange;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostUpdate;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnSchedule;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnUserRoleChange;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 
@@ -86,6 +90,15 @@ class StepTypesModel implements StepTypesModelInterface
             [
                 "name" => "future",
                 "label" => __("PublishPress Future", "post-expirator"),
+                "icon" => [
+                    "src" => "media-document",
+                    "background" => self::DEFAULT_ICON_BACKGROUND,
+                    "foreground" => self::DEFAULT_ICON_FOREGROUND,
+                ],
+            ],
+            [
+                "name" => "user",
+                "label" => __("User", "post-expirator"),
                 "icon" => [
                     "src" => "media-document",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
@@ -182,6 +195,7 @@ class StepTypesModel implements StepTypesModelInterface
                     "handleSchema" => $instance->getHandleSchema(),
                     "baseSlug" => $instance->getBaseSlug(),
                     "isProFeature" => $instance->isProFeature(),
+                    "stepScopedVariablesSchema" => $instance->getStepScopedVariablesSchema(),
                 ],
                 $type
             );
@@ -202,6 +216,9 @@ class StepTypesModel implements StepTypesModelInterface
             OnLegacyActionTrigger::getNodeTypeName() => new OnLegacyActionTrigger($this->hooks),
             OnSchedule::getNodeTypeName() => new OnSchedule(),
             OnPostMetaChange::getNodeTypeName() => new OnPostMetaChange(),
+            OnPostAuthorChange::getNodeTypeName() => new OnPostAuthorChange(),
+            OnPostRowAction::getNodeTypeName() => new OnPostRowAction(),
+            // OnUserRoleChange::getNodeTypeName() => new OnUserRoleChange(),
         ];
 
         if ($this->settingsFacade->getExperimentalFeaturesStatus()) {
@@ -227,6 +244,7 @@ class StepTypesModel implements StepTypesModelInterface
             AddPostMeta::getNodeTypeName() => new AddPostMeta(),
             DeletePostMeta::getNodeTypeName() => new DeletePostMeta(),
             UpdatePostMeta::getNodeTypeName() => new UpdatePostMeta(),
+            UpdatePost::getNodeTypeName() => new UpdatePost(),
         ];
 
         return $nodesInstances;

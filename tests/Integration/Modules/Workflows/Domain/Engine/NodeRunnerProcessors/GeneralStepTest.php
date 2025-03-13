@@ -3,10 +3,12 @@
 namespace Tests\Modules\Workflows\Domain\Engine\NodeRunnerProcessors;
 
 use Codeception\Test\Descriptor;
+use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\GeneralStep;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHandler;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHelperRegistryInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class GeneralStepTest extends \lucatume\WPBrowser\TestCase\WPTestCase
@@ -16,12 +18,23 @@ class GeneralStepTest extends \lucatume\WPBrowser\TestCase\WPTestCase
      */
     protected $tester;
 
+    /**
+     * @var HookableInterface&\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $hooks;
+
+    /**
+     * @var RuntimeVariablesHelperRegistryInterface&\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $helperRegistry;
+
     public function setUp(): void
     {
         // Before...
         parent::setUp();
 
-        // Your set up methods here.
+        $this->hooks = $this->createMock(HookableInterface::class);
+        $this->helperRegistry = $this->createMock(RuntimeVariablesHelperRegistryInterface::class);
     }
 
     public function tearDown(): void
@@ -32,9 +45,14 @@ class GeneralStepTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         parent::tearDown();
     }
 
+    private function createHandler(): RuntimeVariablesHandler
+    {
+        return new RuntimeVariablesHandler($this->hooks, $this->helperRegistry);
+    }
+
     public function testPrepareLogMessage(): void
     {
-        $variablesHandler = new RuntimeVariablesHandler();
+        $variablesHandler = $this->createHandler();
         $variablesHandler->setAllVariables([
             'global' => [
                 'workflow' => [

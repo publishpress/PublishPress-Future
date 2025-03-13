@@ -100,6 +100,18 @@ class OnLegacyActionTrigger implements StepTypeInterface
         ];
     }
 
+    public function getStepScopedVariablesSchema(): array
+    {
+        return [
+            [
+                "name" => "post",
+                "type" => "post",
+                "label" => __("Action Post", "post-expirator"),
+                "description" => __("The post that triggered the action.", "post-expirator"),
+            ]
+        ];
+    }
+
     public function getOutputSchema(): array
     {
         return [
@@ -107,7 +119,7 @@ class OnLegacyActionTrigger implements StepTypeInterface
                 'name' => 'post',
                 'type' => 'post',
                 'label' => __("Action Post", "post-expirator"),
-                'description' => __("The post that was saved triggering the action.", "post-expirator"),
+                'description' => __("The post that triggered the action.", "post-expirator"),
             ]
         ];
     }

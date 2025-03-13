@@ -337,12 +337,27 @@ class ScheduledActions implements InitializableInterface
                         $argsText .= '<strong>' . __('Trigger: ', 'post-expirator') . '</strong>'
                             . $args['runtimeVariables']['global']['trigger']['value']['label'] . '<br>';
 
-                        // Check if the trigger is related to a post
+                        // Check if the trigger is related to a post and show the post title and permalink
                         if (isset($args['runtimeVariables']['global']['trigger']['value']['slug'])) {
                             $nodeSlug = $args['runtimeVariables']['global']['trigger']['value']['slug'];
 
-                            if (isset($args['runtimeVariables'][$nodeSlug]['postId'])) {
-                                $postId = $args['runtimeVariables'][$nodeSlug]['postId']['value'];
+                            $postId = 0;
+
+                            $commonNamesForPostVariables = [
+                                'postId',
+                                'post',
+                                'postAfter',
+                                'postBefore',
+                            ];
+
+                            foreach ($commonNamesForPostVariables as $commonName) {
+                                if (isset($args['runtimeVariables'][$nodeSlug][$commonName])) {
+                                    $postId = (int) $args['runtimeVariables'][$nodeSlug][$commonName]['value'];
+                                    break;
+                                }
+                            }
+
+                            if (! empty($postId)) {
                                 $post = get_post($postId);
 
                                 if ($post instanceof \WP_Post) {

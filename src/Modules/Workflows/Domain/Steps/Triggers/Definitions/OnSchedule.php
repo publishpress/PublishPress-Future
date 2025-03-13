@@ -66,7 +66,7 @@ class OnSchedule implements StepTypeInterface
                 "fields" => [
                     [
                         "name" => "schedule",
-                        "type" => "dateOffset",
+                        "type" => "schedule",
                         "label" => __("Date offset", "post-expirator"),
                         "settings" => [
                             "hideDateSources" => [
@@ -92,6 +92,13 @@ class OnSchedule implements StepTypeInterface
                     ],
                 ]
             ]
+        ];
+    }
+
+    public function getStepScopedVariablesSchema(): array
+    {
+        return [
+
         ];
     }
 

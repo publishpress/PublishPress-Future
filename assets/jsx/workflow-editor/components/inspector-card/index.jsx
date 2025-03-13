@@ -1,66 +1,148 @@
-import { useSelect } from "@wordpress/data";
-import { store as editorStore } from "../editor-store";
-import {
-    FEATURE_DEVELOPER_MODE,
-    FEATURE_ADVANCED_SETTINGS,
-} from "../../constants";
+import { useDispatch } from "@wordpress/data";
+import { store as workflowStore } from "../workflow-store";
 import { __ } from "@wordpress/i18n";
-export const InspectorCard = ({ title, description, icon, id, slug, isProFeature }) => {
+import {
+    Button,
+    TextareaControl,
+    __experimentalVStack as VStack,
+    __experimentalHStack as HStack,
+    ExternalLink
+} from "@wordpress/components";
+import { useState, useEffect } from "@wordpress/element";
+import SettingPopover from "../setting-popover";
+import { useIsPro } from "../../contexts/pro-context";
+
+const StepDescription = ({ node }) => {
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+    const [description, setDescription] = useState(node.data?.label);
+
     const {
-        isDeveloperModeEnabled,
-        isAdvancedSettingsEnabled,
-        isPro
-    } = useSelect((select) => {
-        return {
-            isDeveloperModeEnabled: select(editorStore).isFeatureActive(FEATURE_DEVELOPER_MODE),
-            isAdvancedSettingsEnabled: select(editorStore).isFeatureActive(FEATURE_ADVANCED_SETTINGS),
-            isPro: select(editorStore).isPro(),
+        updateNode
+    } = useDispatch(workflowStore);
+
+    useEffect(() => {
+        setIsPopoverOpen(false);
+        setDescription(node.data?.label);
+    }, [node]);
+
+    const closePopover = () => {
+        setIsPopoverOpen(false);
+
+        const newNode = {
+            id: node.id,
+            data: {
+                label: description,
+            },
         };
-    });
+
+        updateNode(newNode);
+    };
+
+
+    return (
+        <>
+            {! node.data?.label && (
+                <Button
+                    variant="link"
+                    onClick={() => {
+                        setIsPopoverOpen(true);
+                    }}
+                >
+                    {__("Add a description to this step...", "post-expirator")}
+                </Button>
+            )}
+
+            {node.data?.label && (
+                <>
+                    <VStack>
+                        <div className="workflow-editor-inspector-card__description">
+                            {node.data.label}
+                        </div>
+
+                        <Button
+                            variant="link"
+                            onClick={() => {
+                                setIsPopoverOpen(true);
+                            }}
+                        >
+                            {__("Edit description", "post-expirator")}
+                        </Button>
+                    </VStack>
+                </>
+            )}
+
+            {isPopoverOpen && (
+                <SettingPopover
+                    onClose={closePopover}
+                    className="workflow-editor-inspector-card__description-popover"
+                    title={__("Edit description", "post-expirator")}
+                >
+                    <VStack>
+                        <TextareaControl
+                            value={description}
+                            onChange={(value) => {
+                                setDescription(value);
+                            }}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Escape') {
+                                    closePopover();
+                                }
+                            }}
+                        />
+                    </VStack>
+                </SettingPopover>
+            )}
+        </>
+    );
+}
+
+export const InspectorCard = ({ title, description, icon, id, slug, isProFeature, node }) => {
+    const isPro = useIsPro();
 
     const nodeAttributes = [];
-    if (isDeveloperModeEnabled) {
-        nodeAttributes.push({
-            id: "id",
-            label: "ID",
-            value: id,
-        });
-
-        nodeAttributes.push({
-            id: "slug",
-            label: "Slug",
-            value: slug,
-        });
-    }
 
     return (
         <div className="workflow-editor-inspector-card">
-            <span className="workflow-editor-inspector-icon has-colors">
-                {icon}
-            </span>
             <div className="workflow-editor-inspector-card__content">
-                <h2 className="workflow-editor-inspector-card__title">
-                    {title}
-                    {isProFeature && !isPro && (
-                        <span className="workflow-editor-inspector-card__pro-badge">
-                            {__("Pro", "post-expirator")}
+                <VStack>
+                    <HStack className="workflow-editor-inspector-card__header">
+                        <span className="workflow-editor-inspector-icon has-colors">
+                            {icon}
                         </span>
-                    )}
-                </h2>
-                <div className="workflow-editor-inspector-card__description">
-                    {description}
-                </div>
+                        <h2 className="workflow-editor-inspector-card__title">
+                            {title}
+                            {isProFeature && !isPro && (
+                                <span className="workflow-editor-inspector-card__pro-badge">
+                                    {__("Pro", "post-expirator")}
+                                </span>
+                            )}
+                        </h2>
+                    </HStack>
+                </VStack>
+                <VStack>
+                    <div className="workflow-editor-inspector-card__description">
+                        {description}
+                    </div>
+                </VStack>
 
                 {isProFeature && !isPro && (
-                    <div className="workflow-editor-inspector-card__pro-instructions">
-                        <a href="https://publishpress.com/links/future-workflow-inspector" target="_blank">
-                        {__("Currently this step is being skipped. Upgrade to Pro to unlock this feature.", "post-expirator")}
-                        </a>
-                    </div>
+                    <VStack>
+                        <div className="workflow-editor-inspector-card__pro-instructions">
+                            <ExternalLink href="https://publishpress.com/links/future-workflow-inspector" target="_blank">
+                                {__("Currently this step is being skipped. Upgrade to Pro to unlock this feature.", "post-expirator")}
+                            </ExternalLink>
+                        </div>
+                    </VStack>
+                )}
+
+                {node && node?.data && (
+                    <VStack>
+                        <StepDescription node={node} />
+                    </VStack>
                 )}
 
                 {nodeAttributes.length > 0 && (
-                    <>
+                    <VStack>
                         <table>
                             <tbody>
                                 {nodeAttributes.map((attribute) => {
@@ -73,7 +155,7 @@ export const InspectorCard = ({ title, description, icon, id, slug, isProFeature
                                 })}
                             </tbody>
                         </table>
-                    </>
+                    </VStack>
                 )}
             </div>
         </div>

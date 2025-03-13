@@ -1,21 +1,23 @@
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
-import { CheckboxControl, Button, ToggleControl, Dashicon } from '@wordpress/components';
-import { useState, useRef, useEffect } from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
+import {
+    Button,
+    __experimentalVStack as VStack,
+} from '@wordpress/components';
+import { useState, useEffect } from '@wordpress/element';
+
 const { apiFetch } = wp;
-import { SelectableList } from '../selectable-list';
 import { SettingsTab } from '../settings-tab';
+import { SettingsList } from './components/settings-list';
+import { useExport } from './hooks/export';
 
 const ExportTab = () => {
     const [exportActionWorkflows, setExportActionWorkflows] = useState(true);
     const [exportActionSettings, setExportActionSettings] = useState(true);
-    const [isExporting, setIsExporting] = useState(false);
+    const [isLoadingWorkflows, setIsLoadingWorkflows] = useState(false);
     const [workflows, setWorkflows] = useState([]);
     const [selectedWorkflows, setSelectedWorkflows] = useState([]);
     const [selectedSettings, setSelectedSettings] = useState(['postTypesDefaults', 'general', 'notifications', 'display', 'advanced']);
-
-    const apiRequestControllerRef = useRef(new AbortController());
 
     const settingsOptions = [
         {
@@ -40,151 +42,59 @@ const ExportTab = () => {
         },
     ];
 
-    const { createSuccessNotice, createErrorNotice } = useDispatch('core/notices');
+    const {
+        handleExport,
+        handleExportCancel,
+        isExporting,
+    } = useExport({
+        apiUrl: addQueryArgs(`publishpress-future/v1/backup/export`),
+        exportActionWorkflows,
+        exportActionSettings,
+        workflows: selectedWorkflows,
+        settings: selectedSettings,
+        successNotice: __('Settings exported successfully.', 'post-expirator'),
+        errorNotice: __('Failed to export settings.', 'post-expirator'),
+    });
 
     useEffect(() => {
+        setIsLoadingWorkflows(true);
+
         apiFetch({
             path: addQueryArgs(`publishpress-future/v1/backup/workflows`),
         }).then((result) => {
             setWorkflows(result.workflows);
             setSelectedWorkflows(result.workflows.map((workflow) => workflow.id));
+            setIsLoadingWorkflows(false);
         });
     }, []);
 
-    const handleJsonDataDownload = (resultData) => {
-        // Create a blob with the JSON data
-        const jsonData = JSON.stringify(resultData, null, 2);
-        const blob = new Blob([jsonData], { type: 'application/json' });
-
-        // Create download link and trigger click
-        const downloadUrl = URL.createObjectURL(blob);
-        const date = new Date().toISOString().replace(':', '-').split('.')[0];
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.download = `publishpress-future-backup-${date}.json`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        // Clean up the URL object
-        URL.revokeObjectURL(downloadUrl);
-    };
-
-    const handleExport = async () => {
-        setIsExporting(true);
-
-        const controller = apiRequestControllerRef.current;
-
-        if (controller) {
-            controller.abort();
-        }
-
-        apiRequestControllerRef.current = new AbortController();
-        const { signal } = apiRequestControllerRef.current;
-
-        apiFetch({
-            path: addQueryArgs(`publishpress-future/v1/backup/export`),
-            method: 'POST',
-            data: {
-                exportActionWorkflows: exportActionWorkflows,
-                exportActionSettings: exportActionSettings,
-                workflows: selectedWorkflows,
-                settings: selectedSettings,
-            },
-            signal,
-        }).then((result) => {
-            setIsExporting(false);
-            handleJsonDataDownload(result.data);
-
-            createSuccessNotice(
-                __('Settings exported successfully.', 'post-expirator'),
-                {
-                    type: 'snackbar',
-                    isDismissible: true,
-                    actions: [
-                        {
-                            label: __('Download', 'post-expirator'),
-                            onClick: () => {
-                                handleJsonDataDownload(result.data);
-                            },
-                        },
-                    ],
-                    icon: <Dashicon icon="yes" />,
-                    autoDismiss: true,
-                    explicitDismiss: true,
-                }
-            );
-        }).catch((error) => {
-            if (error.name === 'AbortError') {
-                return;
-            }
-
-            createErrorNotice(
-                error.message || __('Failed to export settings.', 'post-expirator'),
-                {
-                    type: 'snackbar',
-                    isDismissible: true,
-                    actions: [],
-                    icon: <Dashicon icon="no" />,
-                    autoDismiss: true,
-                    explicitDismiss: true,
-                }
-            );
-
-            setIsExporting(false);
-        });
-    };
-
-    const handleExportCancel = () => {
-        const controller = apiRequestControllerRef.current;
-
-        if (controller) {
-            controller.abort();
-        }
-    };
-
-    const handleSelectAllSettings = () => {
-        setSelectedSettings(settingsOptions.map((option) => option.value));
-    };
-
-    const handleUnselectAllSettings = () => {
-        setSelectedSettings([]);
-    };
-
     return (
         <SettingsTab
-            title={__('Export Settings', 'post-expirator')}
+            title={__('Export', 'post-expirator')}
             description={__('Export the plugin settings and workflows to a .json file. This file can be imported later to restore the data or migrate to another site.', 'post-expirator')}
         >
-            <ul id="export-actions">
-                <li key="export-action-workflows">
-                    <CheckboxControl
-                        label={__('Action Workflows', 'post-expirator')}
-                        checked={exportActionWorkflows && workflows.length > 0}
-                        onChange={(value) => setExportActionWorkflows(value)}
-                        disabled={workflows.length === 0}
-                    />
+            <VStack className="pe-settings-tab__export">
+                <SettingsList
+                    items={workflows}
+                    label={__('Action Workflows', 'post-expirator')}
+                    isLoading={isLoadingWorkflows}
+                    checked={exportActionWorkflows}
+                    onCheckboxChange={(value) => setExportActionWorkflows(value)}
+                    selectedItems={selectedWorkflows}
+                    onSelectItems={setSelectedWorkflows}
+                    className="pe-settings-tab__export-workflows"
+                />
 
-                    {exportActionWorkflows && workflows.length > 0 && (
-                        <div className="pe-settings-tab__backup-container">
-                            <SelectableList items={workflows} selectedItems={selectedWorkflows} onSelect={setSelectedWorkflows} />
-                        </div>
-                    )}
-                </li>
-                <li key="export-action-settings">
-                    <CheckboxControl
-                        label={__('Action Settings', 'post-expirator')}
-                        checked={exportActionSettings}
-                        onChange={(value) => setExportActionSettings(value)}
-                    />
-
-                    {exportActionSettings && (
-                        <div className="pe-settings-tab__backup-container">
-                            <SelectableList items={settingsOptions} selectedItems={selectedSettings} onSelect={setSelectedSettings} />
-                        </div>
-                    )}
-                </li>
-            </ul>
+                <SettingsList
+                    items={settingsOptions}
+                    label={__('Action Settings', 'post-expirator')}
+                    checked={exportActionSettings}
+                    onCheckboxChange={(value) => setExportActionSettings(value)}
+                    selectedItems={selectedSettings}
+                    onSelectItems={setSelectedSettings}
+                    className="pe-settings-tab__export-settings"
+                />
+            </VStack>
 
             {(exportActionWorkflows || exportActionSettings) && (
                 <Button isPrimary onClick={handleExport} isBusy={isExporting} disabled={isExporting}>

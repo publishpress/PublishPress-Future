@@ -19,6 +19,7 @@ use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\System\DateTimeHandlerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory;
+use PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -120,6 +121,21 @@ final class Module implements ModuleInterface
      */
     private $dateTimeFacade;
 
+    /**
+     * @var \Closure
+     */
+    private $settingsPostTypesModelFactory;
+
+    /**
+     * @var ExpirationActionsModel
+     */
+    private $actionsModel;
+
+    /**
+     * @var \Closure
+     */
+    private $migrationsFactory;
+
     public function __construct(
         \PublishPress\Future\Core\HookableInterface $hooks,
         SiteFacade $site,
@@ -138,7 +154,10 @@ final class Module implements ModuleInterface
         DateTimeHandlerInterface $dateTimeHandler,
         PostTypeDefaultDataModelFactory $defaultDataModelFactory,
         \Closure $taxonomiesModelFactory,
-        DateTimeFacade $dateTimeFacade
+        DateTimeFacade $dateTimeFacade,
+        \Closure $settingsPostTypesModelFactory,
+        ExpirationActionsModel $actionsModel,
+        $migrationsFactory
     ) {
         $this->hooks = $hooks;
         $this->site = $site;
@@ -158,6 +177,9 @@ final class Module implements ModuleInterface
         $this->defaultDataModelFactory = $defaultDataModelFactory;
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
         $this->dateTimeFacade = $dateTimeFacade;
+        $this->settingsPostTypesModelFactory = $settingsPostTypesModelFactory;
+        $this->actionsModel = $actionsModel;
+        $this->migrationsFactory = $migrationsFactory;
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
         $this->controllers['quick_edit'] = $this->factoryQuickEditController();
@@ -171,6 +193,7 @@ final class Module implements ModuleInterface
         $this->controllers['content'] = $this->factoryContentController();
         $this->controllers['plugins_list'] = $this->factoryPluginsListController();
         $this->controllers['rest_api'] = $this->factoryRestAPIController();
+        $this->controllers['settings'] = $this->factorySettingsController();
     }
 
 
@@ -296,6 +319,19 @@ final class Module implements ModuleInterface
         return new Controllers\BlockEditorController(
             $this->hooks,
             $this->currentUserModelFactory
+        );
+    }
+
+    private function factorySettingsController()
+    {
+        return new Controllers\SettingsController(
+            $this->hooks,
+            $this->settingsFacade,
+            $this->settingsPostTypesModelFactory,
+            $this->taxonomiesModelFactory,
+            $this->actionsModel,
+            $this->migrationsFactory,
+            $this->logger
         );
     }
 }
