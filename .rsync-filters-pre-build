@@ -41,7 +41,6 @@
 - ray-dist.php
 - ray.php
 - screenshot-*.png
-- composer.lock
 - phpstan.neon
 - codeception.yml
 - CHANGELOG.md
