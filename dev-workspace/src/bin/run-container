@@ -27,5 +27,9 @@ elif [ -z "$RUNNING_CONTAINER" ]; then
     run_terminal_service "$@"
 else
     echo "Running existing container"
-    docker exec -it $RUNNING_CONTAINER bash -c "zsh -l"
+    if [ $# -eq 0 ]; then
+        docker exec -it $RUNNING_CONTAINER zsh
+    else
+        docker exec -it $RUNNING_CONTAINER zsh -c "$@"
+    fi
 fi
