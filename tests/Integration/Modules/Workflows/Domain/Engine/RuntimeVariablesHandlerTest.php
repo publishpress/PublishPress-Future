@@ -3,6 +3,8 @@
 namespace Tests\Modules\Workflows\Domain\Engine;
 
 use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHandler;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHelperRegistryInterface;
 
 class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 {
@@ -11,25 +13,37 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
      */
     protected $tester;
 
+    /**
+     * @var HookableInterface&\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $hooks;
+
+    /**
+     * @var RuntimeVariablesHelperRegistryInterface&\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $helperRegistry;
+
     public function setUp(): void
     {
-        // Before...
         parent::setUp();
 
-        // Your set up methods here.
+        $this->hooks = $this->createMock(HookableInterface::class);
+        $this->helperRegistry = $this->createMock(RuntimeVariablesHelperRegistryInterface::class);
     }
 
     public function tearDown(): void
     {
-        // Your tear down methods here.
-
-        // Then...
         parent::tearDown();
+    }
+
+    private function createHandler(): RuntimeVariablesHandler
+    {
+        return new RuntimeVariablesHandler($this->hooks, $this->helperRegistry);
     }
 
     public function testSetAndGetVariables(): void
     {
-        $handler = new RuntimeVariablesHandler();
+        $handler = $this->createHandler();
 
         $handler->setAllVariables([
             'test' => 'value',
@@ -44,7 +58,7 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
 
     public function testGetVariableValueForSimpleVariable(): void
     {
-        $handler = new RuntimeVariablesHandler();
+        $handler = $this->createHandler();
 
         $handler->setAllVariables([
             'test' => 'value',
@@ -75,7 +89,7 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
 
     public function testGetVariableValueForNestedVariable(): void
     {
-        $handler = new RuntimeVariablesHandler();
+        $handler = $this->createHandler();
 
         $handler->setAllVariables([
             'global' => [
@@ -99,7 +113,7 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
 
     public function testSetVariableInNestedArray(): void
     {
-        $handler = new RuntimeVariablesHandler();
+        $handler = $this->createHandler();
 
         $handler->setAllVariables([
             'global' => [
@@ -121,16 +135,16 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
 
     public function testExtractPlaceholdersFromText(): void
     {
-        $handler = new RuntimeVariablesHandler();
+        $handler = $this->createHandler();
 
         $text = 'This is a test {{variable1}} and {{variable2}}';
         $placeholders = $handler->extractExpressionsFromText($text);
         $this->assertEquals(['variable1', 'variable2'], $placeholders);
     }
 
-    public function testReplacePlaceholdersInText(): void
+    public function testResolveExpressionsInText(): void
     {
-        $handler = new RuntimeVariablesHandler();
+        $handler = $this->createHandler();
 
         $handler->setAllVariables([
             'variable1' => 'value1',
@@ -143,7 +157,7 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
         ]);
 
         $text = 'This is a test {{variable1}} and {{variable2}} on the workflow {{global.workflow.id}}';
-        $replacedText = $handler->resolveExpressionsInText($text);
-        $this->assertEquals('This is a test value1 and value2 on the workflow 123', $replacedText);
+        $resolvedText = $handler->resolveExpressionsInText($text);
+        $this->assertEquals('This is a test value1 and value2 on the workflow 123', $resolvedText);
     }
 }
