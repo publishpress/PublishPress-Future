@@ -3,6 +3,7 @@
 TESTS_BASE_PATH=$(pwd)/tests
 WP_CACHE=$(pwd)/dev-workspace/.cache/wordpress
 MYSQL_CACHE=$(pwd)/dev-workspace/.cache/mysql
+MAILHOG_CACHE=$(pwd)/dev-workspace/.cache/mailhog
 DB_USER=testuser
 DB_PASS=testpass
 DB_HOST="127.0.0.1"
@@ -32,17 +33,17 @@ tests_up() {
 
 tests_stop() {
   echo "Stopping..."
-  docker compose -f docker/compose.yaml stop wp-cli wordpress db
+  docker compose -f docker/compose.yaml stop wp-cli wordpress db mailhog
 }
 
 tests_down() {
   echo "Shutting down..."
-  docker compose -f docker/compose.yaml down wp-cli wordpress db
+  docker compose -f docker/compose.yaml down wp-cli wordpress db mailhog
 }
 
 tests_cleanup() {
   echo "Cleaning up..."
-  docker compose -f docker/compose.yaml down -v wp-cli wordpress db
+  docker compose -f docker/compose.yaml down -v wp-cli wordpress db mailhog
 }
 
 get_wp_port() {
@@ -53,22 +54,45 @@ get_db_port() {
   docker compose -f docker/compose.yaml port db 3306 | cut -d: -f2
 }
 
+get_mailhog_port_8025() {
+  docker compose -f docker/compose.yaml port mailhog 8025 | cut -d: -f2
+}
+
+get_mailhog_port_1025() {
+  docker compose -f docker/compose.yaml port mailhog 1025 | cut -d: -f2
+}
+
 tests_info() {
   WP_PORT=$(get_wp_port)
   DB_PORT=$(get_db_port)
+  MAILHOG_PORT_8025=$(get_mailhog_port_8025)
+  MAILHOG_PORT_1025=$(get_mailhog_port_1025)
 
-  echo "WordPress URL: http://$WP_DOMAIN:$WP_PORT"
-  echo "WordPress Admin URL: http://$WP_DOMAIN:$WP_PORT/wp-admin"
-  echo "Admin Credentials: $WP_USER / $WP_PASS"
-  echo "Database URL: mysql://$DB_USER:$DB_PASS@$DB_HOST:$DB_PORT"
-  echo "WordPress Root: $WP_CACHE"
-  echo "MySQL Root: $MYSQL_CACHE"
-  echo "MySQL Database: $DB_NAME"
-  echo "MySQL Host: $DB_HOST"
-  echo "MySQL Port: $DB_PORT"
-  echo "MySQL credentials: $DB_USER / $DB_PASS"
-  echo "WordPress Container ID: $(docker compose -f docker/compose.yaml ps -q wordpress)"
-  echo "MySQL Container ID: $(docker compose -f docker/compose.yaml ps -q db)"
+  echo "=============================================="
+  echo "🌐 WordPress Information"
+  echo "=============================================="
+  echo "📌 Site URL:       http://$WP_DOMAIN:$WP_PORT"
+  echo "📌 Admin URL:      http://$WP_DOMAIN:$WP_PORT/wp-admin"
+  echo "📌 Login:          $WP_USER / $WP_PASS"
+  echo "📌 Root Directory: $WP_CACHE"
+  echo "📌 Container ID:   $(docker compose -f docker/compose.yaml ps -q wordpress)"
+  echo ""
+  echo "=============================================="
+  echo "🗄️  Database Information"
+  echo "=============================================="
+  echo "📌 Connection:     mysql://$DB_USER:$DB_PASS@$DB_HOST:$DB_PORT/$DB_NAME"
+  echo "📌 Database:       $DB_NAME"
+  echo "📌 Host:           $DB_HOST:$DB_PORT"
+  echo "📌 Credentials:    $DB_USER / $DB_PASS"
+  echo "📌 Data Directory: $MYSQL_CACHE"
+  echo "📌 Container ID:   $(docker compose -f docker/compose.yaml ps -q db)"
+  echo ""
+  echo "=============================================="
+  echo "📧 Mail Information"
+  echo "=============================================="
+  echo "📌 Web Interface:  http://$WP_DOMAIN:$MAILHOG_PORT_8025"
+  echo "📌 SMTP Server:    smtp://$WP_DOMAIN:$MAILHOG_PORT_1025"
+  echo "=============================================="
 }
 
 bootstrap() {
@@ -95,6 +119,9 @@ bootstrap() {
 }
 
 if [[ $1 == "up" ]]; then
+  # Create the mailhog cache directory if it doesn't exist
+  mkdir -p "$MAILHOG_CACHE/maildir"
+
   tests_up
 fi
 
@@ -108,7 +135,7 @@ fi
 
 if [[ $1 == "cleanup" ]]; then
   tests_down
-  rm -rf "$WP_CACHE" "$MYSQL_CACHE"
+  rm -rf "$WP_CACHE" "$MYSQL_CACHE" "$MAILHOG_CACHE"
 fi
 
 if [[ $1 == "refresh" ]]; then

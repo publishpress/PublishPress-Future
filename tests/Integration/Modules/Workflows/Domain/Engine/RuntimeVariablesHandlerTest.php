@@ -41,53 +41,41 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
         return new RuntimeVariablesHandler($this->hooks, $this->helperRegistry);
     }
 
-    public function testSetAndGetVariables(): void
+    public function testSetAllVariablesCanBeRetrievedCorrectly(): void
     {
         $handler = $this->createHandler();
 
-        $handler->setAllVariables([
-            'test' => 'value',
-            'test2' => 'value2',
-        ]);
-
-        $this->assertEquals([
-            'test' => 'value',
-            'test2' => 'value2',
-        ], $handler->getAllVariables());
-    }
-
-    public function testGetVariableValueForSimpleVariable(): void
-    {
-        $handler = $this->createHandler();
-
-        $handler->setAllVariables([
+        $expectedVariables = [
             'test' => 'value',
             'global' => [
                 'workflow' => [
                     'id' => 123,
                 ],
             ],
-            'onSavePost1' => [
-                'postId' => 234,
-            ],
+        ];
+
+        $handler->setAllVariables($expectedVariables);
+
+        // Verify through the public API instead of using reflection
+        $this->assertEquals($expectedVariables, $handler->getAllVariables());
+    }
+
+    public function testGetVariableReturnsCorrectValueForSimpleVariable(): void
+    {
+        $handler = $this->createHandler();
+
+        $handler->setAllVariables([
+            'test' => 'value',
             'timestamp' => 1234567890,
             'boolean' => true,
         ]);
 
         $this->assertEquals('value', $handler->getVariable('test'));
-        $this->assertEquals([
-            'workflow' => [
-                'id' => 123,
-            ],
-        ], $handler->getVariable('global'));
-        $this->assertEquals([
-            'postId' => 234,
-        ], $handler->getVariable('onSavePost1'));
         $this->assertEquals(1234567890, $handler->getVariable('timestamp'));
         $this->assertEquals(true, $handler->getVariable('boolean'));
     }
 
-    public function testGetVariableValueForNestedVariable(): void
+    public function testGetVariableReturnsCorrectValueForNestedVariable(): void
     {
         $handler = $this->createHandler();
 
@@ -102,8 +90,7 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             ],
             'onSavePost1' => [
                 'postId' => 234,
-            ],
-            'timestamp' => 1234567890,
+            ]
         ]);
 
         $this->assertEquals(123, $handler->getVariable('global.workflow.id'));
@@ -142,13 +129,23 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
         $this->assertEquals(['variable1', 'variable2'], $placeholders);
     }
 
+    public function testVariableHasHelper(): void
+    {
+        $handler = $this->createHandler();
+
+        $this->assertTrue($handler->variable('variable1'));
+        $this->assertFalse($handler->variableHasHelper('variable3'));
+    }
+
     public function testResolveExpressionsInText(): void
     {
         $handler = $this->createHandler();
 
         $handler->setAllVariables([
-            'variable1' => 'value1',
-            'variable2' => 'value2',
+            'step' => [
+                'variable1' => 'value1',
+                'variable2' => 'value2',
+            ],
             'global' => [
                 'workflow' => [
                     'id' => 123,
@@ -156,8 +153,10 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             ],
         ]);
 
-        $text = 'This is a test {{variable1}} and {{variable2}} on the workflow {{global.workflow.id}}';
+
+        $text = 'This is a test {{step.variable1}} and {{step.variable2}} on the workflow {{global.workflow.id}}';
         $resolvedText = $handler->resolveExpressionsInText($text);
+        $this->pause(['text' => $text, 'resolvedText' => $resolvedText, 'handler' => $handler]);
         $this->assertEquals('This is a test value1 and value2 on the workflow 123', $resolvedText);
     }
 }

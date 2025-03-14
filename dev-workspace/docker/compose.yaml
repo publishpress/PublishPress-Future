@@ -17,11 +17,13 @@ services:
             - ../.cache/.composer/cache:/root/.composer/cache
             - ../.cache/.composer/auth.json:/root/.composer/auth.json
     wordpress:
-        image: wordpress:6.7.2
+        build: ./wordpress
         container_name: ${COMPOSE_PROJECT_NAME}_tests_wordpress
+        image: wordpress:6.7.2
         restart: always
         ports:
           - "60802:80"
+          - "9004:9004"  # Expose Xdebug port
         environment:
             WORDPRESS_DB_HOST: db
             WORDPRESS_DB_USER: testuser
@@ -31,10 +33,12 @@ services:
           - ../.cache/wordpress:/var/www/html/
           - ../../:/var/www/html/wp-content/plugins/post-expirator
           - ../../tests/Support/Data/plugins/pre-tests:/var/www/html/wp-content/plugins/pre-tests
-          - ../../tests/Support/Data/plugins/classic-editor-v1.6.5:/var/www/html/wp-content/plugins/classic-editor
+          - ../.cache/logs/xdebug.log:/var/log/xdebug.log
         depends_on:
             db:
                 condition: service_healthy
+            mailhog:
+                condition: service_started
     db:
         image: mysql:8.0
         container_name: ${COMPOSE_PROJECT_NAME}_tests_db
@@ -49,7 +53,7 @@ services:
         volumes:
             - ../.cache/mysql:/var/lib/mysql
             - ../.cache/logs/mysql:/var/log/mysql
-            - ../docker/mysql/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
+            - ../docker/db/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
         healthcheck:
             test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
             interval: 10s
@@ -68,15 +72,36 @@ services:
             - ../.cache/wordpress:/var/www/html/
             - ../../:/var/www/html/wp-content/plugins/post-expirator
             - ../../tests/Support/Data/plugins/pre-tests:/var/www/html/wp-content/plugins/pre-tests
-            - ../../tests/Support/Data/plugins/classic-editor-v1.6.5:/var/www/html/wp-content/plugins/classic-editor
+            - ./wpcli/prepare-wp.sh:/tmp/prepare-wp.sh
+            - ./wpcli/data/options.sql:/tmp/options.sql
+            - ./wpcli/conf.d/my.cnf:/tmp/my.cnf
         depends_on:
             - wordpress
+            - mailhog
         links:
           - wordpress
           - db
+          - mailhog
         working_dir: /var/www/html
         command: >
-            sh -c '
-            sleep 10;
-            wp core install --url="http://localhost:60802" --title="Test Site" --admin_user="admin" --admin_password="admin" --admin_email="info@example.com" --skip-email;
+            bash -c '
+            sleep 8;
+            sh /tmp/prepare-wp.sh;
             '
+
+    mailhog:
+        image: mailhog/mailhog:latest
+        container_name: ${COMPOSE_PROJECT_NAME}_tests_mailhog
+        ports:
+            - "60980:1025" # SMTP server
+            - "60981:8025" # Web UI
+        environment:
+            - MH_STORAGE=maildir
+            - MH_MAILDIR_PATH=/maildir
+        volumes:
+            - ../.cache/mailhog/maildir:/maildir
+        restart: always
+        networks:
+            - default
+        user: root
+

@@ -9,5 +9,12 @@ set -a
 source ./.env
 set +a
 
-docker compose -f docker/compose.yaml ps | grep _tests_wpcli | grep -q "Up" || docker compose -f docker/compose.yaml up -d wp-cli
+# Check if wp-cli container is running, if not start it
+if ! docker compose -f docker/compose.yaml ps | grep -q "_tests_wpcli.*Up"; then
+    echo "Starting wp-cli container..."
+    docker compose -f docker/compose.yaml up -d wp-cli
+fi
+
+# Execute WP-CLI command and pass all arguments
+echo "Running: wp $@"
 docker compose -f docker/compose.yaml exec wp-cli wp "$@"
