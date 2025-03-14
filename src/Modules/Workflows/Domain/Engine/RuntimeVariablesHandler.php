@@ -193,8 +193,6 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
 
     private function getVariableValue(string $variableName, $dataSource)
     {
-        // FIXME: Do we really need the VariableResolvers? Can't we just use the native PHP values?
-
         if (is_array($dataSource) && isset($dataSource[$variableName])) {
             if (
                 is_object($dataSource[$variableName]) &&
@@ -210,7 +208,7 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
             return $dataSource->{$variableName};
         }
 
-        return '';
+        return (string) $variableName;
     }
 
     private function getVariableValueFromNestedVariable(string $variableName, $dataSource)
