@@ -32,6 +32,13 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             return $value;
         });
         $this->helperRegistry = $this->createMock(RuntimeVariablesHelperRegistryInterface::class);
+        $this->helperRegistry->method('execute')->willReturnCallback(function ($helper, $value, $args) {
+            if ($helper === 'date') {
+                return strtotime($value);
+            }
+
+            return $value;
+        });
     }
 
     public function tearDown(): void
@@ -352,5 +359,138 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
         $resolvedText = $handler->resolveExpressionsInText($text);
 
         $this->assertEquals($text, $resolvedText);
+    }
+
+    public function testResolveExpressionsInArrayWithBasicVariables(): void
+    {
+        $handler = $this->createHandler();
+
+        $handler->setAllVariables([
+            'variable1' => 'value1',
+            'variable2' => 'value2',
+            'variable3' => 'value3',
+            'variable4' => 'value4',
+        ]);
+
+        $array = [
+            'This is a test {{variable1}} and {{variable2}}',
+            'This is another test {{variable3}} and {{variable4}}',
+        ];
+
+        $resolvedArray = $handler->resolveExpressionsInArray($array);
+
+        $this->assertEquals(['This is a test value1 and value2', 'This is another test value3 and value4'], $resolvedArray);
+    }
+
+    public function testResolveExpressionsInJsonLogicWithBasicVariables(): void
+    {
+        $handler = $this->createHandler();
+
+        $handler->setAllVariables([
+            'variable1' => 'value1',
+        ]);
+
+        $jsonLogic = [
+            'var' => '{{variable1}}',
+        ];
+
+        $resolvedJsonLogic = $handler->resolveExpressionsInJsonLogic($jsonLogic);
+
+        $this->assertEquals(['var' => 'value1'], $resolvedJsonLogic);
+    }
+
+    public function testResolveExpressionsInJsonLogicWithSimpleNestedVariable(): void
+    {
+        $handler = $this->createHandler();
+
+        $handler->setAllVariables([
+            'global' => [
+                'workflow' => [
+                    'id' => 123,
+                    'name' => 'Test Workflow',
+                ],
+            ],
+        ]);
+
+        $jsonLogic = [
+            'var' => '{{global.workflow.id}}',
+        ];
+
+        $resolvedJsonLogic = $handler->resolveExpressionsInJsonLogic($jsonLogic);
+
+        $this->assertEquals(['var' => 123], $resolvedJsonLogic);
+    }
+
+    public function testResolveExpressionsInJsonLogicWithMultipleNestedVariables(): void
+    {
+        $handler = $this->createHandler();
+
+        $handler->setAllVariables([
+            'global' => [
+                'workflow' => [
+                    'id' => 123,
+                    'name' => 'Test Workflow',
+                ],
+            ],
+        ]);
+
+        $jsonLogic = [
+            'and' => [
+                '{{global.workflow.id}}',
+                '{{global.workflow.name}}',
+            ],
+        ];
+
+        $resolvedJsonLogic = $handler->resolveExpressionsInJsonLogic($jsonLogic);
+
+        $this->assertEquals(['and' => [123, 'Test Workflow']], $resolvedJsonLogic);
+    }
+
+    public function testResolveExpressionsInJsonLogicWithNestedLogicStructure(): void
+    {
+        $handler = $this->createHandler();
+
+        $handler->setAllVariables([
+            'global' => [
+                'workflow' => [
+                    'id' => 123,
+                    'name' => 'Test Workflow',
+                ],
+            ],
+        ]);
+
+        $jsonLogic = [
+            'and' => [
+                'or' => [
+                    '{{global.workflow.id}}',
+                    '{{global.workflow.name}}',
+                ],
+            ],
+        ];
+
+        $resolvedJsonLogic = $handler->resolveExpressionsInJsonLogic($jsonLogic);
+
+        $this->assertEquals(['and' => ['or' => [123, 'Test Workflow']]], $resolvedJsonLogic);
+    }
+
+    public function testResolveExpressionsInJsonLogicVariableHelper(): void
+    {
+        $handler = $this->createHandler();
+
+        $handler->setAllVariables([
+            'global' => [
+                'workflow' => [
+                    'created' => '2021-01-01',
+                ],
+            ],
+        ]);
+
+        $jsonLogic = [
+            'var' => '{{date global.workflow.created input="Y-m-d" output="U"}}',
+        ];
+
+        $resolvedJsonLogic = $handler->resolveExpressionsInJsonLogic($jsonLogic);
+
+        $this->assertEquals(['var' => 1609459200], $resolvedJsonLogic);
     }
 }

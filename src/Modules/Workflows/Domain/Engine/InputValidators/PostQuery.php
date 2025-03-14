@@ -107,6 +107,10 @@ class PostQuery implements InputValidatorsInterface
     {
         $settingPostIds = $nodeSettings['postQuery']['postIds'] ?? [];
 
+        if (is_object($postId)) {
+            $postId = $postId->ID;
+        }
+
         if (!empty($settingPostIds) && !in_array($postId, $settingPostIds)) {
             return false;
         }

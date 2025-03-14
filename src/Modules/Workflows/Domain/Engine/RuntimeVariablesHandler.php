@@ -78,7 +78,6 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
         foreach ($expressions as $expression) {
             if ($expressionElements = $this->variableHasHelper($expression)) {
                 $value = $this->getVariable($expressionElements['variable']);
-
                 $value = $this->helperRegistry->execute($expressionElements['helper'], $value, $expressionElements['args']);
             } else {
                 $value = $this->getVariable($expression);
