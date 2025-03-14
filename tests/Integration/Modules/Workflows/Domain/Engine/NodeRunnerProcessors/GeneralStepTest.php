@@ -2,7 +2,6 @@
 
 namespace Tests\Modules\Workflows\Domain\Engine\NodeRunnerProcessors;
 
-use Codeception\Test\Descriptor;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
@@ -34,6 +33,9 @@ class GeneralStepTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         parent::setUp();
 
         $this->hooks = $this->createMock(HookableInterface::class);
+        $this->hooks->method('applyFilters')->willReturnCallback(function ($hook, $value) {
+            return $value;
+        });
         $this->helperRegistry = $this->createMock(RuntimeVariablesHelperRegistryInterface::class);
     }
 

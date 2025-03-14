@@ -72,10 +72,15 @@ class DateTimeHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $dateTimeHandler->getCalculatedTimeWithOffset(time(), 'invalid offset');
     }
 
-    #[Examples(['+1 month 13:00', '-5', 'America/New_York', '+1 month 18:00'])]
+    /**
+     * Test timezone offset conversion with fixed offsets to avoid DST issues
+     *
+     * Using fixed timezone offsets instead of named timezones ensures tests
+     * won't fail due to Daylight Saving Time changes throughout the year.
+     */
+    #[Examples(['+1 month 13:00', '-5', 'UTC-5', '+1 month 18:00'])]
     #[Examples(['+1 month 17:00', '0', 'UTC', '+1 month 17:00'])]
-    #[Examples(['+1 month 18:00', '+1', 'Europe/Madrid', '+1 month 17:00'])]
-    #[Examples(['+1 month 14:00', '-3', 'America/Sao_Paulo', '+1 month 17:00'])]
+    #[Examples(['+1 month 18:00', '+1', 'UTC+1', '+1 month 17:00'])]
     #[Examples(['+1 month 14:00', '-3', 'UTC-3', '+1 month 17:00'])]
     #[Examples(['+1 month 13:00', '-4', 'UTC-4', '+1 month 17:00'])]
     #[Examples(['+1 month 22:00', '+5', 'UTC+5', '+1 month 17:00'])]
@@ -88,11 +93,20 @@ class DateTimeHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $timezoneString = $example[2];
         $expectedOffset = $example[3];
 
+        // Mock the timezone setting
         $this->setTimezone($timezoneString, $timezoneOffset);
 
-        $this->assertEquals($expectedOffset, $dateTimeHandler->applySiteTimezoneToUTCOffset($offset));
-
-        $this->setTimezone('UTC', '0');
+        try {
+            $actualOffset = $dateTimeHandler->applySiteTimezoneToUTCOffset($offset);
+            $this->assertEquals(
+                $expectedOffset,
+                $actualOffset,
+                'Failed to apply timezone to offset: ' . $offset
+            );
+        } finally {
+            // Always reset timezone to UTC after test
+            $this->setTimezone('UTC', '0');
+        }
     }
 
     public function testGetDateFormat(): void
