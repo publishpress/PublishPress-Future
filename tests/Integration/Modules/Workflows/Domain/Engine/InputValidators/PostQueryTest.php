@@ -23,22 +23,12 @@ class PostQueryTest extends WPTestCase
      */
     private $jsonLogicEngine;
 
-    /**
-     * @var PostQuery
-     */
-    private $validator;
-
     public function setUp(): void
     {
         parent::setUp();
 
         $this->runtimeVariablesHandler = $this->createMock(RuntimeVariablesHandlerInterface::class);
         $this->jsonLogicEngine = $this->createMock(JsonLogicEngineInterface::class);
-
-        $this->validator = new PostQuery(
-            $this->runtimeVariablesHandler,
-            $this->jsonLogicEngine
-        );
     }
 
     public function tearDown(): void
@@ -46,8 +36,18 @@ class PostQueryTest extends WPTestCase
         parent::tearDown();
     }
 
+    private function createValidator(): PostQuery
+    {
+        return new PostQuery(
+            $this->runtimeVariablesHandler,
+            $this->jsonLogicEngine
+        );
+    }
+
     public function testValidateWithLegacyPostQueryAndInvalidPostType()
     {
+        $validator = $this->createValidator();
+
         $post = (object)[
             'post_type' => 'post'
         ];
@@ -67,13 +67,15 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertFalse($result);
     }
 
     public function testValidateWithLegacyPostQueryAndWorkflowPostType()
     {
+        $validator = $this->createValidator();
+
         $post = (object)[
             'post_type' => Module::POST_TYPE_WORKFLOW
         ];
@@ -93,13 +95,15 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertFalse($result);
     }
 
     public function testValidateWithLegacyPostQueryAndEmptyPostType()
     {
+        $validator = $this->createValidator();
+
         $post = (object)[
             'post_type' => 'post'
         ];
@@ -119,13 +123,15 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertFalse($result);
     }
 
     public function testValidateWithLegacyPostQueryAndValidPostType()
     {
+        $validator = $this->createValidator();
+
         $post = (object)[
             'post_type' => 'post',
             'post_status' => 'publish',
@@ -148,13 +154,15 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertTrue($result);
     }
 
     public function testValidateWithLegacyPostQueryAndInvalidPostId()
     {
+        $validator = $this->createValidator();
+
         $post = (object)[
             'post_type' => 'post',
             'ID' => 123
@@ -176,13 +184,15 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertFalse($result);
     }
 
     public function testValidateWithLegacyPostQueryAndValidPostId()
     {
+        $validator = $this->createValidator();
+
         $post = (object)[
             'post_type' => 'post',
             'post_status' => 'publish',
@@ -206,13 +216,15 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertTrue($result);
     }
 
     public function testValidateWithLegacyPostQueryAndInvalidPostStatus()
     {
+        $validator = $this->createValidator();
+
         $post = (object)[
             'post_type' => 'post',
             'post_status' => 'draft',
@@ -236,13 +248,15 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertFalse($result);
     }
 
     public function testValidateWithLegacyPostQueryAndValidPostStatus()
     {
+        $validator = $this->createValidator();
+
         $post = (object)[
             'post_type' => 'post',
             'post_status' => 'publish',
@@ -266,13 +280,15 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertTrue($result);
     }
 
     public function testValidateWithLegacyPostQueryAndInvalidPostAuthor()
     {
+        $validator = $this->createValidator();
+
         $post = (object)[
             'post_type' => 'post',
             'post_status' => 'publish',
@@ -296,13 +312,15 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertFalse($result);
     }
 
     public function testValidateWithLegacyPostQueryAndValidPostAuthor()
     {
+        $validator = $this->createValidator();
+
         $post = (object)[
             'post_type' => 'post',
             'post_status' => 'publish',
@@ -326,13 +344,15 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertTrue($result);
     }
 
     public function testValidateWithLegacyPostQueryAndValidPostTerms()
     {
+        $validator = $this->createValidator();
+
         $post = (object)[
             'post_type' => 'post',
             'post_status' => 'publish',
@@ -356,13 +376,15 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertTrue($result);
     }
 
     public function testValidateWithLegacyPostQueryAndInvalidPostTerms()
     {
+        $validator = $this->createValidator();
+
         $post = (object)[
             'post_type' => 'post',
             'post_status' => 'publish',
@@ -386,13 +408,15 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertFalse($result);
     }
 
     public function testValidateWithJsonPostQueryAndValidJson()
     {
+        $validator = $this->createValidator();
+
         $node = [
             'data' => [
                 'settings' => [
@@ -408,13 +432,15 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertTrue($result);
     }
 
     public function testValidateWithJsonPostQueryAndInvalidJson()
     {
+        $validator = $this->createValidator();
+
         $node = [
             'data' => [
                 'settings' => [
@@ -430,13 +456,15 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertFalse($result);
     }
 
     public function testValidateWithJsonPostQueryAndEmptyJson()
     {
+        $validator = $this->createValidator();
+
         $node = [
             'data' => [
                 'settings' => [
@@ -452,7 +480,7 @@ class PostQueryTest extends WPTestCase
             'node' => $node
         ];
 
-        $result = $this->validator->validate($args);
+        $result = $validator->validate($args);
 
         $this->assertFalse($result);
     }
