@@ -22,6 +22,11 @@ class JsonLogicEngine implements JsonLogicEngineInterface
         JsonLogic::add_operation($name, $callback);
     }
 
+    public function isLogic($expression)
+    {
+        return JsonLogic::is_logic($expression);
+    }
+
     private function addNewOperations()
     {
         JsonLogic::add_operation('startsWith', [$this, 'operationStartsWith']);
