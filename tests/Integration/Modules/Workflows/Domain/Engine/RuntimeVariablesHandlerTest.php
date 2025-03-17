@@ -369,17 +369,27 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             'variable1' => 'value1',
             'variable2' => 'value2',
             'variable3' => 'value3',
-            'variable4' => 'value4',
+            'variable4' => 'value4'
         ]);
 
         $array = [
+            1,
+            '1',
             'This is a test {{variable1}} and {{variable2}}',
             'This is another test {{variable3}} and {{variable4}}',
         ];
 
         $resolvedArray = $handler->resolveExpressionsInArray($array);
 
-        $this->assertEquals(['This is a test value1 and value2', 'This is another test value3 and value4'], $resolvedArray);
+        $this->assertEquals(
+            [
+                1,
+                '1',
+                'This is a test value1 and value2',
+                'This is another test value3 and value4'
+            ],
+            $resolvedArray
+        );
     }
 
     public function testResolveExpressionsInJsonLogicWithBasicVariables(): void
