@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.4.1] - UNRELEASED
 
+### Fixed
+
+- Fixed fales positive results for invalid JSON logic on post query input validation (Issue #1228).
+
 ### Developers
 
 - Added new method `isLogic` to JsonLogicEngineInterface.
