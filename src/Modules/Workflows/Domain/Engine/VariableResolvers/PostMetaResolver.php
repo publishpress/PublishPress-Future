@@ -28,14 +28,17 @@ class PostMetaResolver implements VariableResolverInterface
         return (string)$this->getValue($name);
     }
 
-    public function compact($name = ''): array
+    public function compact(): array
     {
-        return $this->getValue($name);
+        return [
+            'type' => $this->getType(),
+            'value' => $this->postId
+        ];
     }
 
-    public function getVariable($name = '')
+    public function getVariable()
     {
-        return $this->getValue($name);
+        return $this->postId;
     }
 
     public function __isset($name): bool

@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Developers
 
-- Added new method `isLogic` to JsonLogicEngineInterface.
+- Added new method `isLogic` to `JsonLogicEngineInterface`.
+- Removed arguments from `compact` and `getVariable` methods on `PostMetaResolver` class.
 
 ## [4.4.0] - 13 Mar, 2025
 
