@@ -36,6 +36,10 @@ class PostQuery implements InputValidatorsInterface
 
     private function validateLegacyPostQuery($post, array $nodeSettings)
     {
+        if (! $this->hasValidPost($post)) {
+            return false;
+        }
+
         if (! $this->hasValidPostType($post, $nodeSettings)) {
             return false;
         }
@@ -67,8 +71,14 @@ class PostQuery implements InputValidatorsInterface
             return false;
         }
 
+
         $json = $this->runtimeVariablesHandler->resolveExpressionsInJsonLogic($json);
-        $result = (bool) $this->jsonLogicEngine->apply($json, []);
+
+        $result = $this->jsonLogicEngine->apply($json, []);
+
+        if (! is_bool($result)) {
+            return false;
+        }
 
         return $result;
     }
@@ -78,12 +88,21 @@ class PostQuery implements InputValidatorsInterface
         return ! isset($nodeSettings['postQuery']['json']) && isset($nodeSettings['postQuery']['postType']);
     }
 
-    private function hasValidPostType($post, array $nodeSettings)
+    private function hasValidPost($post)
     {
         if (! is_object($post)) {
             return false;
         }
 
+        if (is_wp_error($post)) {
+            throw new \Exception('Invalid post object: ' . $post->get_error_message());
+        }
+
+        return true;
+    }
+
+    private function hasValidPostType($post, array $nodeSettings)
+    {
         // Prevent to apply actions to workflows
         if ($post->post_type === Module::POST_TYPE_WORKFLOW) {
             return false;

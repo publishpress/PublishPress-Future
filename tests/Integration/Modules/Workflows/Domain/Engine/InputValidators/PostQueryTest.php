@@ -10,6 +10,8 @@ use PublishPress\Future\Modules\Workflows\Interfaces\JsonLogicEngineInterface;
 use PublishPress\Future\Modules\Workflows\Module;
 use Brain\Monkey\Functions;
 use Mockery;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 
 class PostQueryTest extends WPTestCase
 {
@@ -26,9 +28,6 @@ class PostQueryTest extends WPTestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->runtimeVariablesHandler = $this->createMock(RuntimeVariablesHandlerInterface::class);
-        $this->jsonLogicEngine = $this->createMock(JsonLogicEngineInterface::class);
     }
 
     public function tearDown(): void
@@ -38,9 +37,11 @@ class PostQueryTest extends WPTestCase
 
     private function createValidator(): PostQuery
     {
+        $container = Container::getInstance();
+
         return new PostQuery(
-            $this->runtimeVariablesHandler,
-            $this->jsonLogicEngine
+            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
+            $container->get(ServicesAbstract::JSON_LOGIC_ENGINE)
         );
     }
 
@@ -353,19 +354,27 @@ class PostQueryTest extends WPTestCase
     {
         $validator = $this->createValidator();
 
-        $post = (object)[
+        $postID = $this->factory()->post->create([
             'post_type' => 'post',
             'post_status' => 'publish',
             'post_author' => '1',
-            'ID' => 123
-        ];
+        ]);
+
+        $post = get_post($postID);
+
+        $termID = $this->factory()->term->create([
+            'taxonomy' => 'category',
+            'term' => 'test1',
+        ]);
+
+        wp_set_post_terms($postID, $termID, 'category');
 
         $node = [
             'data' => [
                 'settings' => [
                     'postQuery' => [
                         'postType' => ['post'],
-                        'postTerms' => ['category:5']
+                        'postTerms' => ['category:' . $termID]
                     ]
                 ]
             ]
@@ -385,19 +394,20 @@ class PostQueryTest extends WPTestCase
     {
         $validator = $this->createValidator();
 
-        $post = (object)[
+        $postID = $this->factory()->post->create([
             'post_type' => 'post',
             'post_status' => 'publish',
             'post_author' => '1',
-            'ID' => 123
-        ];
+        ]);
+
+        $post = get_post($postID);
 
         $node = [
             'data' => [
                 'settings' => [
                     'postQuery' => [
                         'postType' => ['post'],
-                        'postTerms' => ['category:5']
+                        'postTerms' => ['category:9999999999999999']
                     ]
                 ]
             ]
@@ -421,7 +431,7 @@ class PostQueryTest extends WPTestCase
             'data' => [
                 'settings' => [
                     'postQuery' => [
-                        'json' => ['==', 1, 1]
+                        'json' => ['==' => [1, 1]]
                     ]
                 ]
             ]
@@ -445,7 +455,7 @@ class PostQueryTest extends WPTestCase
             'data' => [
                 'settings' => [
                     'postQuery' => [
-                        'json' => ['==', 1, 2]
+                        'json' => ['invalid-operator', 1, 2]
                     ]
                 ]
             ]
