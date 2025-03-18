@@ -5,9 +5,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.4.1] - UNRELEASED
 
+
+### Changed
+
+- Restored Post ID variables for post related triggers.
+
 ### Fixed
 
-- Fixed fales positive results for invalid JSON logic on post query input validation (Issue #1228).
+- Fixed false positive results for invalid JSON logic on post query input validation (Issue #1228).
+- Fixed scheduled delay tasks registration to not require a custom unique task identifier (Issue #1165).
 
 ### Developers
 

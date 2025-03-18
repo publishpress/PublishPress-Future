@@ -37,6 +37,8 @@ class Cron implements AsyncStepProcessorInterface
 
     public const WHEN_TO_RUN_NOW = 'now';
 
+    private const DEFAULT_PRIORITY = 10;
+
     /**
      * @deprecated version 4.0.0
      */
@@ -170,19 +172,13 @@ class Cron implements AsyncStepProcessorInterface
                 return;
             }
 
-            $priority = (int)($nodeSettings['schedule']['priority'] ?? 10);
-
-            if (empty($priority)) {
-                $priority = 10;
-            }
-
-            $isSingleAction = self::SCHEDULE_RECURRENCE_SINGLE === $recurrence;
-
-            $actionUID = $this->getScheduledActionUniqueId($node);
-            $actionUIDHash = md5($actionUID);
-            $scheduledActionId = 0;
+            $priority = (int)($nodeSettings['schedule']['priority'] ?? self::DEFAULT_PRIORITY);
 
             $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
+
+            $actionUID = $this->getScheduledActionUniqueId($workflowId, $node);
+            $actionUIDHash = md5($actionUID);
+            $scheduledActionId = 0;
 
             $actionArgs = [
                 'workflowId' => $workflowId,
@@ -190,6 +186,7 @@ class Cron implements AsyncStepProcessorInterface
                 'stepLabel' => $node['data']['label'] ?? null,
                 'stepName' => $node['data']['name'],
                 'pluginVersion' => $this->pluginVersion,
+                'actionUIDHash' => $actionUIDHash,
                 // This is not always set, only for some post-related triggers. Used to keep the post ID as reference.
                 'postId' => $this->variablesHandler->getVariable('global.trigger.postId'),
             ];
@@ -198,21 +195,11 @@ class Cron implements AsyncStepProcessorInterface
 
             $scheduledActionsModel = new ScheduledActionsModel();
 
-            $hasFinished = WorkflowScheduledStepModel::getMetaIsFinished($workflowId, $actionUIDHash);
-            $runCount = WorkflowScheduledStepModel::getMetaRunCount($workflowId, $actionUIDHash);
-
-            // Do not run single actions that have already run
-            if ($isSingleAction && $runCount > 0) {
-                $this->addDebugLogMessage(
-                    'Step %s is a single action and has already run, skipping',
-                    $stepSlug
-                );
-
-                return;
-            }
+            $isSingleAction = self::SCHEDULE_RECURRENCE_SINGLE === $recurrence;
+            $isFinished = WorkflowScheduledStepModel::getMetaIsFinished($workflowId, $actionUIDHash);
 
             // If the action is already finished, we don't need to schedule it again.
-            if ($hasFinished) {
+            if ($isFinished) {
                 $this->addDebugLogMessage(
                     'Step %s has already finished, skipping',
                     $stepSlug
@@ -376,11 +363,12 @@ class Cron implements AsyncStepProcessorInterface
         }
     }
 
-    private function getScheduledActionUniqueId(array $node): string
+    private function getScheduledActionUniqueId(int $workflowId, array $node): string
     {
         $uniqueId = [
-            'workflowId' => $this->variablesHandler->getVariable('global.workflow.id'),
-            'stepId' => $node['id']
+            'workflowId' => $workflowId,
+            'stepId' => $node['id'],
+            'timestamp' => time(),
         ];
 
         if (isset($node['data']['settings']['schedule']['uniqueIdExpression'])) {

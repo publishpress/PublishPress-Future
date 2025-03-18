@@ -9,6 +9,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnLegacyActionTrigger;
 
 class OnLegacyActionTriggerRunner implements TriggerRunnerInterface
@@ -89,6 +90,7 @@ class OnLegacyActionTriggerRunner implements TriggerRunnerInterface
 
                 $this->variablesHandler->setVariable($nodeSlug, [
                     'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
+                    'postId' => new IntegerResolver($postId),
                 ]);
 
                 $this->stepProcessor->triggerCallbackIsRunning();

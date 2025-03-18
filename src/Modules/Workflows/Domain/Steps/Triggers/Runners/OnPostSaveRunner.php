@@ -104,6 +104,7 @@ class OnPostSaveRunner implements TriggerRunnerInterface
 
         $this->variablesHandler->setVariable($stepSlug, [
             'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
+            'postId' => new IntegerResolver($postId),
             'update' => new BooleanResolver($update),
         ]);
 
