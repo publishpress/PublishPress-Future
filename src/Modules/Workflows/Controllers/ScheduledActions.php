@@ -385,7 +385,7 @@ class ScheduledActions implements InitializableInterface
             }
         } catch (Throwable $e) {
             $this->logger->error(
-                sprintf('Error showing args in args column: %s', $e->getMessage())
+                sprintf('Error showing args in args column: %s. File: %s:%d', $e->getMessage(), $e->getFile(), $e->getLine())
             );
         }
 

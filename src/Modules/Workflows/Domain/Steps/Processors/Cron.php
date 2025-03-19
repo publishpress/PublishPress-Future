@@ -356,7 +356,7 @@ class Cron implements AsyncStepProcessorInterface
                 );
             }
         } catch (Throwable $e) {
-            $this->addErrorLogMessage('Failed to schedule workflow step "%s"', $stepSlug);
+            $this->addErrorLogMessage('Failed to schedule workflow step "%s". File: %s:%d', $stepSlug, $e->getFile(), $e->getLine());
 
             throw $e;
         }
