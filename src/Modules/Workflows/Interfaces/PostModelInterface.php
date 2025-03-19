@@ -10,7 +10,7 @@ interface PostModelInterface
 
     public function getTitle(): string;
 
-    public function getValidWorkflowsWithManualTrigger(int $postId, string $workflowExecutionId): array;
+    public function getValidWorkflowsWithManualTrigger(int $postId): array;
 
     public function getManuallyEnabledWorkflows(): array;
 
@@ -21,4 +21,6 @@ interface PostModelInterface
     public function removeManuallyEnabledWorkflow(int $workflowId): void;
 
     public function getManuallyEnabledWorkflowsSchedule(int $workflowId): array;
+
+    public function getPostObject(): \WP_Post;
 }

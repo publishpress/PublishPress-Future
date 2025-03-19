@@ -192,20 +192,10 @@ class WorkflowEngine implements WorkflowEngineInterface
             $triggerSteps = $workflow->getTriggerNodes();
             $routineTree = $workflow->getRoutineTree($stepTypes);
 
-            $globalVariables = [
-                'engine_session_id' => $this->engineSessionId,
-                'user' => new UserResolver($currentUser),
-                'site' => new SiteResolver(),
-                'workflow' => new WorkflowResolver(
-                    [
-                        'id' => $workflow->getId(),
-                        'title' => $workflow->getTitle(),
-                        'description' => $workflow->getDescription(),
-                        'modified_at' => $workflow->getModifiedAt(),
-                        'execution_id' => $workflowExecutionId,
-                    ]
-                ),
-            ];
+            $this->prepareExecutionContextForWorkflow(
+                $workflowExecutionId,
+                $workflow
+            );
 
             foreach ($triggerSteps as $triggerStep) {
                 $triggerName = $triggerStep['data']['name'];
@@ -238,21 +228,10 @@ class WorkflowEngine implements WorkflowEngineInterface
 
                 // TODO: Move the trace to the global.workflow variable as we did for the execution_id?
                 $this->currentExecutionTrace = [];
-
-                $globalVariables['trigger'] = new NodeResolver(
-                    [
-                        'id' => $triggerId,
-                        'name' => $triggerName,
-                        'label' => $stepType->getLabel(),
-                        'activation_timestamp' => date('Y-m-d H:i:s'),
-                        'slug' => $triggerStep['data']['slug'],
-                        'postId' => null,
-                    ]
+                $this->prepareExecutionContextForTrigger(
+                    $workflowExecutionId,
+                    $triggerStep
                 );
-
-                $executionContext->setAllVariables([
-                    'global' => $globalVariables,
-                ]);
 
                 // Setup the trigger
                 $this->logger->debug(
@@ -273,6 +252,57 @@ class WorkflowEngine implements WorkflowEngineInterface
         }
 
         $this->logger->debug(self::LOG_PREFIX . ' Engine started and listening for events');
+    }
+
+    public function prepareExecutionContextForWorkflow(
+        string $workflowExecutionId,
+        WorkflowModelInterface $workflowModel
+    ): void {
+        $executionContext = $this->executionContextRegistry->getExecutionContext(
+            $workflowExecutionId
+        );
+
+        $currentUser = wp_get_current_user();
+
+        $globalVariables = [
+            'engine_session_id' => $this->engineSessionId,
+            'user' => new UserResolver($currentUser),
+            'site' => new SiteResolver(),
+            'workflow' => new WorkflowResolver(
+                [
+                    'id' => $workflowModel->getId(),
+                    'title' => $workflowModel->getTitle(),
+                    'description' => $workflowModel->getDescription(),
+                    'modified_at' => $workflowModel->getModifiedAt(),
+                    'execution_id' => $workflowExecutionId,
+                ]
+            ),
+        ];
+
+        $executionContext->setVariable('global', $globalVariables);
+    }
+
+    public function prepareExecutionContextForTrigger(
+        string $workflowExecutionId,
+        array $triggerStep
+    ): void {
+        $stepType = $this->stepTypesModel->getStepType($triggerStep['data']['name']);
+
+        $triggerContext = new NodeResolver(
+            [
+                'id' => $triggerStep['id'],
+                'name' => $triggerStep['data']['name'],
+                'label' => $stepType->getLabel(),
+                'activation_timestamp' => date('Y-m-d H:i:s'),
+                'slug' => $triggerStep['data']['slug'],
+                'postId' => null,
+            ]
+        );
+
+        $executionContext = $this->executionContextRegistry->getExecutionContext(
+            $workflowExecutionId
+        );
+        $executionContext->setVariable('global.trigger', $triggerContext);
     }
 
     public function setCurrentAsyncActionId($actionId)
@@ -422,6 +452,11 @@ class WorkflowEngine implements WorkflowEngineInterface
         return $this->engineSessionId;
     }
 
+    public function generateUniqueId(): string
+    {
+        return wp_generate_uuid4();
+    }
+
     private function getPublishedWorkflowsIds(): array
     {
         $workflowsModel = new WorkflowsModel();
@@ -454,10 +489,5 @@ class WorkflowEngine implements WorkflowEngineInterface
         }
 
         return 'frontend';
-    }
-
-    private function generateUniqueId(): string
-    {
-        return wp_generate_uuid4();
     }
 }

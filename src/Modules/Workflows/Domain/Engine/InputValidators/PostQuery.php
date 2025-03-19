@@ -71,7 +71,6 @@ class PostQuery implements InputValidatorsInterface
             return false;
         }
 
-
         $json = $this->executionContext->resolveExpressionsInJsonLogic($json);
 
         $result = $this->jsonLogicEngine->apply($json, []);

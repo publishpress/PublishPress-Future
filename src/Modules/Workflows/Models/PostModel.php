@@ -7,7 +7,12 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\PostModelInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
+use React\Socket\Server;
+use Services_JSON;
 use WP_Post;
+use WPMailSMTP\Vendor\Google\Service;
 
 class PostModel implements PostModelInterface
 {
@@ -47,18 +52,23 @@ class PostModel implements PostModelInterface
         return $this->post->post_title;
     }
 
-    public function getValidWorkflowsWithManualTrigger(int $postId, string $workflowExecutionId): array
+    public function getValidWorkflowsWithManualTrigger(int $postId): array
     {
         $workflowsModel = new WorkflowsModel();
         $workflows = $workflowsModel->getPublishedWorkflowsWithManualTrigger();
 
-
         $postModel = new PostModel();
         $postModel->load($postId);
+        $postObject = $postModel->getPostObject();
 
         $container = Container::getInstance();
+        // TODO: Inject this
         $postQueryValidatorFactory = $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY);
-        $postQueryValidator = $postQueryValidatorFactory($workflowExecutionId);
+        $workflowEngine = $container->get(ServicesAbstract::WORKFLOW_ENGINE);
+        $executionContextRegistry = $container->get(ServicesAbstract::EXECUTION_CONTEXT_REGISTRY);
+        $hooks = $container->get(ServicesAbstract::HOOKS);
+        $expirablePostModelFactory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+
         $validatedWorkflows = [];
 
         foreach ($workflows as &$workflow) {
@@ -67,14 +77,39 @@ class PostModel implements PostModelInterface
             $workflowModel = new WorkflowModel();
             $workflowModel->load($workflowId);
 
+            // Prepare for a new context
+            $workflowExecutionId = $workflowEngine->generateUniqueId();
+            $postQueryValidator = $postQueryValidatorFactory($workflowExecutionId);
+
+            $workflowEngine->prepareExecutionContextForWorkflow(
+                $workflowExecutionId,
+                $workflowModel
+            );
+
             // Validate the trigger's post query
             $triggers = $workflowModel->getTriggerNodes();
-            foreach ($triggers as $trigger) {
-                if ($trigger['data']['name'] !== OnPostWorkflowEnable::getNodeTypeName()) {
+            foreach ($triggers as $triggerStep) {
+                $triggerName = $triggerStep['data']['name'];
+
+                if ($triggerName !== OnPostWorkflowEnable::getNodeTypeName()) {
                     continue;
                 }
 
-                if ($postQueryValidator->validate(['post' => $this->post, 'node' => $trigger])) {
+                $workflowEngine->prepareExecutionContextForTrigger(
+                    $workflowExecutionId,
+                    $triggerStep
+                );
+
+                // Inject the trigger's data into the execution context
+                $executionContext = $executionContextRegistry->getExecutionContext(
+                    $workflowExecutionId
+                );
+                $executionContext->setVariable($triggerStep['data']['slug'], [
+                    'post' => new PostResolver($postObject, $hooks, '', $expirablePostModelFactory),
+                    'postId' => new IntegerResolver($postId)
+                ]);
+
+                if ($postQueryValidator->validate(['post' => $this->post, 'node' => $triggerStep])) {
                     $validatedWorkflows[] = $workflow;
                 }
             }
@@ -216,5 +251,10 @@ class PostModel implements PostModelInterface
         }
 
         return $schedule;
+    }
+
+    public function getPostObject(): \WP_Post
+    {
+        return $this->post;
     }
 }
