@@ -10,6 +10,8 @@ interface VariableResolverInterface
 
     public function getValueAsString(string $propertyName = ''): string;
 
+    public function setValue(string $propertyName, $value): void;
+
     public function compact(): array;
 
     /**

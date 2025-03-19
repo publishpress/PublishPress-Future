@@ -5,6 +5,7 @@ namespace Tests\Modules\Workflows\Domain\Engine;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContext;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 
 class ExecutionContextTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 {
@@ -198,6 +199,38 @@ class ExecutionContextTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $this->assertEquals(1, $allVariables['user']['id']);
         $this->assertEquals(123, $allVariables['global']['workflow']['id'],
             'Existing structure should be preserved when creating new branches');
+    }
+
+    public function testSetVariableWithVariableResolverInterface(): void
+    {
+        $executionContext = $this->getContext();
+
+        $workflow = [
+            'ID' => 123,
+            'title' => 'Test Workflow',
+            'description' => 'Test Workflow Description',
+            'modified_at' => '2021-01-01 00:00:00',
+            'execution_id' => '00000-00000-00000-00000',
+            'execution_trace' => [],
+        ];
+
+        $workflowResolver = new WorkflowResolver($workflow);
+
+        $executionContext->setAllVariables(
+            [
+                'global' => [
+                    'workflow' => $workflowResolver,
+                ],
+            ]
+        );
+
+        $this->assertEquals(123, $executionContext->getVariable('global.workflow.ID'));
+
+        $executionContext->setVariable('global.workflow.execution_trace', ['step1', 'step2']);
+        $executionContext->setVariable('global.workflow.execution_id', '11111-11111-11111-11111');
+
+        $this->assertEquals(['step1', 'step2'], $executionContext->getVariable('global.workflow.execution_trace'));
+        $this->assertEquals('11111-11111-11111-11111', $executionContext->getVariable('global.workflow.execution_id'));
     }
 
     public function testExtractExpressionsFromTextWithBasicVariables(): void

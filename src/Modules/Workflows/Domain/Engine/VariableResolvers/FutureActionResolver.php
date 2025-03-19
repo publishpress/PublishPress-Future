@@ -18,6 +18,8 @@ class FutureActionResolver implements VariableResolverInterface
      */
     private $postModel;
 
+    private $futureActionCache = [];
+
     public function __construct(object $post, \Closure $postModelFactory)
     {
         $this->post = $post;
@@ -35,24 +37,40 @@ class FutureActionResolver implements VariableResolverInterface
             $property = 'enabled';
         }
 
+        if (isset($this->futureActionCache[$property])) {
+            return $this->futureActionCache[$property];
+        }
+
         switch ($property) {
             case 'enabled':
-                return $this->getPropertyEnabled();
+                $value = $this->getPropertyEnabled();
+                $this->futureActionCache[$property] = $value;
+                return $value;
 
             case 'action':
-                return $this->getPropertyAction();
+                $value = $this->getPropertyAction();
+                $this->futureActionCache[$property] = $value;
+                return $value;
 
             case 'date':
-                return $this->getPropertyDate();
+                $value = $this->getPropertyDate();
+                $this->futureActionCache[$property] = $value;
+                return $value;
 
             case 'date_string':
-                return $this->getPropertyDateString();
+                $value = $this->getPropertyDateString();
+                $this->futureActionCache[$property] = $value;
+                return $value;
 
             case 'terms':
-                return new TermsArrayResolver($this->getPropertyTerms());
+                $value = new TermsArrayResolver($this->getPropertyTerms());
+                $this->futureActionCache[$property] = $value;
+                return $value;
 
             case 'new_status':
-                return $this->getPropertyNewStatus();
+                $value = $this->getPropertyNewStatus();
+                $this->futureActionCache[$property] = $value;
+                return $value;
         }
 
         return '';
@@ -83,6 +101,11 @@ class FutureActionResolver implements VariableResolverInterface
             'terms' => $this->getPropertyTerms(),
             'new_status' => $this->getPropertyNewStatus(),
         ];
+    }
+
+    public function setValue(string $name, $value): void
+    {
+        $this->futureActionCache[$name] = $value;
     }
 
     public function __isset($name): bool

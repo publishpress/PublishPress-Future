@@ -172,6 +172,9 @@ class WorkflowEngine implements WorkflowEngineInterface
             $workflow = new WorkflowModel();
             $workflow->load($workflowId);
 
+            // TODO: Remove this, since we are persisting the execution id for sub routines?
+            $this->currentRunningWorkflow = $workflow;
+
             $this->logger->debug(
                 sprintf(
                     self::LOG_PREFIX . ' Initializing workflow | ID: %d | Title: %s',
@@ -180,14 +183,8 @@ class WorkflowEngine implements WorkflowEngineInterface
                 )
             );
 
-            // TODO: Remove this, since we are persisting the execution id for sub routines?
-            $this->currentRunningWorkflow = $workflow;
-
             $workflowExecutionId = $this->generateUniqueId();
-
-            $executionContext = $this->executionContextRegistry->getExecutionContext(
-                $workflowExecutionId
-            );
+            $this->executionContextRegistry->getExecutionContext($workflowExecutionId);
 
             $triggerSteps = $workflow->getTriggerNodes();
             $routineTree = $workflow->getRoutineTree($stepTypes);
@@ -275,6 +272,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                     'description' => $workflowModel->getDescription(),
                     'modified_at' => $workflowModel->getModifiedAt(),
                     'execution_id' => $workflowExecutionId,
+                    'execution_trace' => [],
                 ]
             ),
         ];

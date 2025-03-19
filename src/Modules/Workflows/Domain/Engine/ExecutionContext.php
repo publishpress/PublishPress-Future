@@ -2,6 +2,7 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine;
 
+use PhpParser\Node\Expr\Instanceof_;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
@@ -273,7 +274,13 @@ class ExecutionContext implements ExecutionContextInterface
         $variableName = explode('.', $variableName);
 
         if (count($variableName) === 1) {
-            $dataSource[$variableName[0]] = $variableValue;
+            if (is_array($dataSource)) {
+                $dataSource[$variableName[0]] = $variableValue;
+            } elseif (is_object($dataSource) && $dataSource instanceof VariableResolverInterface) {
+                $dataSource->setValue($variableName[0], $variableValue);
+            } else {
+                $dataSource->{$variableName[0]} = $variableValue;
+            }
         } else {
             if (!isset($dataSource[$variableName[0]])) {
                 $dataSource[$variableName[0]] = [];

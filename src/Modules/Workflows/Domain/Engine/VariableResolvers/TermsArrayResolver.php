@@ -59,6 +59,13 @@ class TermsArrayResolver implements VariableResolverInterface
         ];
     }
 
+    public function setValue(string $name, $value): void
+    {
+        if (isset($this->variable[$name])) {
+            $this->variable[$name] = $value;
+        }
+    }
+
     public function __isset($name): bool
     {
         return in_array($name, ['ids', 'labels']);

@@ -8,6 +8,8 @@ class UserMetaResolver implements VariableResolverInterface
 {
     private $userId;
 
+    private $userMetaCache = [];
+
     public function __construct(int $userId)
     {
         $this->userId = $userId;
@@ -20,7 +22,14 @@ class UserMetaResolver implements VariableResolverInterface
 
     public function getValue(string $name = '')
     {
-        return get_user_meta($this->userId, $name, true);
+        if (isset($this->userMetaCache[$name])) {
+            return $this->userMetaCache[$name];
+        }
+
+        $value = get_user_meta($this->userId, $name, true);
+        $this->userMetaCache[$name] = $value;
+
+        return $value;
     }
 
     public function getValueAsString(string $name = ''): string
@@ -36,6 +45,11 @@ class UserMetaResolver implements VariableResolverInterface
     public function getVariable($name = '')
     {
         return $this->getValue($name);
+    }
+
+    public function setValue(string $name, $value): void
+    {
+        $this->userMetaCache[$name] = $value;
     }
 
     public function __isset($name): bool

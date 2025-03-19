@@ -149,6 +149,18 @@ class PostResolver implements VariableResolverInterface
         return $this->post;
     }
 
+    public function setValue(string $name, $value): void
+    {
+        if ($name === 'id') {
+            $this->post->ID = $value;
+            return;
+        }
+
+        if (isset($this->post->$name)) {
+            $this->post->$name = $value;
+        }
+    }
+
     public function __isset($name): bool
     {
         return in_array(

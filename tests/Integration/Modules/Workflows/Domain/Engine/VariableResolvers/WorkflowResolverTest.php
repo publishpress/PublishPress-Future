@@ -144,7 +144,7 @@ class WorkflowResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $this->assertNull($resolver->non_existent_property);
     }
 
-    public function testSetDoesNothing(): void
+    public function testSetUpdatesExistentProperty(): void
     {
         $resolver = new WorkflowResolver([
             'id' => 34,
@@ -155,19 +155,31 @@ class WorkflowResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             'execution_trace' => ['step1', 'step2'],
         ]);
 
-        $resolver->id = 35;
-        $resolver->title = 'New Workflow Name';
-        $resolver->description = 'New Workflow description';
-        $resolver->modified_at = '2021-01-02 00:00:00';
-        $resolver->execution_id = '0000-0129-af10-a002';
-        $resolver->execution_trace = ['step1', 'step2', 'step3'];
+        $resolver->setValue('id', 35);
+        $resolver->setValue('title', 'New Workflow Name');
+        $resolver->setValue('description', 'New Workflow description');
+        $resolver->setValue('modified_at', '2021-01-02 00:00:00');
+        $resolver->setValue('execution_id', '0000-0129-af10-a002');
+        $resolver->setValue('execution_trace', ['step1', 'step2', 'step3']);
+
+        $this->assertEquals(35, $resolver->ID);
+        $this->assertEquals('New Workflow Name', $resolver->title);
+        $this->assertEquals('New Workflow description', $resolver->description);
+        $this->assertEquals('2021-01-02 00:00:00', $resolver->modified_at);
+        $this->assertEquals('0000-0129-af10-a002', $resolver->execution_id);
+        $this->assertEquals(['step1', 'step2', 'step3'], $resolver->execution_trace);
+    }
+
+    public function testSetUpDoesNotUpdateNonExistentProperty(): void
+    {
+        $resolver = new WorkflowResolver([
+            'id' => 34,
+        ]);
+
+        $resolver->non_existent_property = 'New Value';
 
         $this->assertEquals(34, $resolver->ID);
-        $this->assertEquals('Workflow Name', $resolver->title);
-        $this->assertEquals('Workflow description', $resolver->description);
-        $this->assertEquals('2021-01-01 00:00:00', $resolver->modified_at);
-        $this->assertEquals('0000-0129-af10-a001', $resolver->execution_id);
-        $this->assertEquals(['step1', 'step2'], $resolver->execution_trace);
+        $this->assertNull($resolver->non_existent_property);
     }
 
     public function testUnsetDoesNothing(): void
