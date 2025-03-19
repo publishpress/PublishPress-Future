@@ -20,8 +20,8 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\Workfl
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncStepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionModel;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionsModel;
@@ -33,7 +33,7 @@ class Cron implements AsyncStepProcessorInterface
 {
     use TimestampCalculator;
 
-    public const DEFAULT_REPEAT_UNTIL_TIMES = 99999999999;
+    public const DEFAULT_REPEAT_UNTIL_TIMES = PHP_INT_MAX;
 
     public const WHEN_TO_RUN_NOW = 'now';
 
@@ -92,19 +92,9 @@ class Cron implements AsyncStepProcessorInterface
     private $cronSchedulesModel;
 
     /**
-     * @var RuntimeVariablesHandlerInterface
-     */
-    private $variablesHandler;
-
-    /**
      * @var string
      */
     private $pluginVersion;
-
-    /**
-     * @var WorkflowEngineInterface
-     */
-    private $workflowEngine;
 
     /**
      * @var LoggerInterface
@@ -116,22 +106,31 @@ class Cron implements AsyncStepProcessorInterface
      */
     private $expirablePostModelFactory;
 
+    /**
+     * @var string
+     */
+    private $workflowExecutionId;
+
+    /**
+     * @var ExecutionContextInterface
+     */
+    private $executionContext;
+
     public function __construct(
         HooksFacade $hooks,
         StepProcessorInterface $stepProcessor,
         CronInterface $cron,
         CronSchedulesModelInterface $cronSchedulesModel,
-        WorkflowEngineInterface $engine,
         string $pluginVersion,
         LoggerInterface $logger,
-        \Closure $expirablePostModelFactory
+        \Closure $expirablePostModelFactory,
+        ExecutionContextInterface $executionContext
     ) {
         $this->hooks = $hooks;
         $this->generalProcessor = $stepProcessor;
         $this->cron = $cron;
         $this->cronSchedulesModel = $cronSchedulesModel;
-        $this->workflowEngine = $engine;
-        $this->variablesHandler = $engine->getVariablesHandler();
+        $this->executionContext = $executionContext;
         $this->pluginVersion = $pluginVersion;
         $this->logger = $logger;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
@@ -174,7 +173,7 @@ class Cron implements AsyncStepProcessorInterface
 
             $priority = (int)($nodeSettings['schedule']['priority'] ?? self::DEFAULT_PRIORITY);
 
-            $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
+            $workflowId = $this->executionContext->getVariable('global.workflow.id');
 
             $actionUID = $this->getScheduledActionUniqueId($workflowId, $node);
             $actionUIDHash = md5($actionUID);
@@ -188,7 +187,7 @@ class Cron implements AsyncStepProcessorInterface
                 'pluginVersion' => $this->pluginVersion,
                 'actionUIDHash' => $actionUIDHash,
                 // This is not always set, only for some post-related triggers. Used to keep the post ID as reference.
-                'postId' => $this->variablesHandler->getVariable('global.trigger.postId'),
+                'postId' => $this->executionContext->getVariable('global.trigger.postId'),
             ];
 
             $compactedArgs = $this->compactArguments($step);
@@ -240,7 +239,7 @@ class Cron implements AsyncStepProcessorInterface
             if ($isSingleAction) {
                 if (self::WHEN_TO_RUN_NOW === $whenToRun) {
                     $scheduledActionId = $this->cron->scheduleAsyncAction(
-                        HooksAbstract::ACTION_ASYNC_EXECUTE_NODE,
+                        HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
                         [$actionArgs],
                         false,
                         $priority
@@ -255,7 +254,7 @@ class Cron implements AsyncStepProcessorInterface
                     // Schedule a single action
                     $scheduledActionId = $this->cron->scheduleSingleAction(
                         $timestamp,
-                        HooksAbstract::ACTION_ASYNC_EXECUTE_NODE,
+                        HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
                         [$actionArgs],
                         false,
                         $priority
@@ -282,7 +281,7 @@ class Cron implements AsyncStepProcessorInterface
                         HooksAbstract::FILTER_INTERVAL_IN_SECONDS,
                         $interval,
                         $nodeSettings,
-                        $this->variablesHandler
+                        $this->executionContext
                     );
                 } else {
                     $recurrence = preg_replace('/^cron_/', '', $recurrence);
@@ -295,7 +294,7 @@ class Cron implements AsyncStepProcessorInterface
                     $scheduledActionId = $this->cron->scheduleRecurringActionInSeconds(
                         $timestamp,
                         $interval,
-                        HooksAbstract::ACTION_ASYNC_EXECUTE_NODE,
+                        HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
                         [$actionArgs],
                         false,
                         $priority
@@ -380,7 +379,7 @@ class Cron implements AsyncStepProcessorInterface
 
             if (! empty($uniqueIdExpression)) {
                 $uniqueId = [
-                    'custom' => $this->variablesHandler->resolveExpressionsInText($uniqueIdExpression),
+                    'custom' => $this->executionContext->resolveExpressionsInText($uniqueIdExpression),
                 ];
             }
         }
@@ -400,7 +399,7 @@ class Cron implements AsyncStepProcessorInterface
             'step' => [
                 'nodeId' => $step['node']['id'],
             ],
-            'runtimeVariables' => $this->variablesHandler->getAllVariables(),
+            'runtimeVariables' => $this->executionContext->getAllVariables(),
         ];
 
         foreach ($compactedArgs['runtimeVariables'] as $context => &$variables) {
@@ -519,7 +518,9 @@ class Cron implements AsyncStepProcessorInterface
          *    "global": {
          *        "workflow": {
          *            "type": "workflow",
-         *            "value": 1417
+         *            "value": 1417,
+         *            "execution_id": "0000-0129-af10-a001",
+         *            "execution_trace": "onPostUpdated_ebtrjpm, savePost_1402"
          *        },
          *        "user": {
          *            "type": "user",
@@ -568,7 +569,7 @@ class Cron implements AsyncStepProcessorInterface
 
                 if ($isLegacyCompact) {
                     if ($variableName === 'workflow') {
-                        $type = 'worfklow';
+                        $type = 'workflow';
                     } elseif ($variableName === 'user') {
                         $type = 'user';
                     } elseif ($variableName === 'site') {
@@ -649,6 +650,8 @@ class Cron implements AsyncStepProcessorInterface
                             'title' => $workflowModel->getTitle(),
                             'description' => $workflowModel->getDescription(),
                             'modified_at' => $workflowModel->getModifiedAt(),
+                            'execution_id' => $value['execution_id'] ?? '',
+                            'execution_trace' => $value['execution_trace'] ?? '',
                         ];
                         break;
                 }
@@ -738,10 +741,10 @@ class Cron implements AsyncStepProcessorInterface
     {
         $expandedArgs = $this->expandArguments($compactedArgs);
 
-        $this->variablesHandler->setAllVariables($expandedArgs['runtimeVariables']);
+        $this->executionContext->setAllVariables($expandedArgs['runtimeVariables']);
 
         // Check if the workflow is still active
-        $workflowId = $this->variablesHandler->getVariable('global.workflow.id');
+        $workflowId = $this->executionContext->getVariable('global.workflow.id');
 
         $workflowModel = new WorkflowModel();
         $workflowModel->load($workflowId);
@@ -808,7 +811,7 @@ class Cron implements AsyncStepProcessorInterface
                 $expandedArgs['step']['node']['data']['slug']
             );
 
-            $this->variablesHandler->setAllVariables($expandedArgs['runtimeVariables']);
+            $this->executionContext->setAllVariables($expandedArgs['runtimeVariables']);
             $this->runNextSteps($expandedArgs['step']);
 
             $scheduledStepModel->incrementRunCount();

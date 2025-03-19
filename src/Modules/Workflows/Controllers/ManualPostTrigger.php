@@ -404,8 +404,9 @@ class ManualPostTrigger implements InitializableInterface
 
             $postModel = new PostModel();
             $postModel->load($post->ID);
+            $workflowExecutionId = wp_generate_uuid4();
 
-            $workflows = $postModel->getValidWorkflowsWithManualTrigger($post->ID);
+            $workflows = $postModel->getValidWorkflowsWithManualTrigger($post->ID, $workflowExecutionId);
 
             if (empty($workflows)) {
                 return;

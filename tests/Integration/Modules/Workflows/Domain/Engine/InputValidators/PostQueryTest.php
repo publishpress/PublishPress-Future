@@ -15,16 +15,6 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 
 class PostQueryTest extends WPTestCase
 {
-    /**
-     * @var RuntimeVariablesHandlerInterface|Mockery\MockInterface
-     */
-    private $runtimeVariablesHandler;
-
-    /**
-     * @var JsonLogicEngineInterface|Mockery\MockInterface
-     */
-    private $jsonLogicEngine;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -38,11 +28,12 @@ class PostQueryTest extends WPTestCase
     private function createValidator(): PostQuery
     {
         $container = Container::getInstance();
-
-        return new PostQuery(
-            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
-            $container->get(ServicesAbstract::JSON_LOGIC_ENGINE)
+        $postQueryValidator = call_user_func(
+            $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY),
+            '000000-000000-000000-000000'
         );
+
+        return $postQueryValidator;
     }
 
     public function testValidateWithLegacyPostQueryAndInvalidPostType()

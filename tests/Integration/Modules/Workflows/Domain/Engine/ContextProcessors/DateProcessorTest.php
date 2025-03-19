@@ -3,10 +3,10 @@
 namespace Tests\Modules\Workflows\Domain\Engine\RuntimeVariablesHelpers;
 
 use PublishPress\Future\Framework\System\DateTimeHandlerInterface;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHelpers\DateHelper;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\ContextProcessors\DateProcessor;
 use lucatume\WPBrowser\TestCase\WPTestCase;
 
-class DateHelperTest extends WPTestCase
+class DateProcessorTest extends WPTestCase
 {
     /**
      * @var \IntegrationTester
@@ -44,58 +44,58 @@ class DateHelperTest extends WPTestCase
         parent::tearDown();
     }
 
-    private function createHelper(): DateHelper
+    private function createProcessor(): DateProcessor
     {
-        return new DateHelper($this->dateTimeHandler);
+        return new DateProcessor($this->dateTimeHandler);
     }
 
     public function testGetType(): void
     {
-        $helper = $this->createHelper();
-        $this->assertEquals('date', $helper->getType());
+        $processor = $this->createProcessor();
+        $this->assertEquals('date', $processor->getType());
     }
 
-    public function testExecuteWithDefaultFormats(): void
+    public function testProcessWithDefaultFormats(): void
     {
-        $helper = $this->createHelper();
+        $processor = $this->createProcessor();
 
         // Test with a valid date using default formats
-        $result = $helper->execute('2023-05-15 14:30:00', []);
+        $result = $processor->process('2023-05-15 14:30:00', []);
 
         // The expected format is the combination of getDateTimeFormat and getTimeFormat
         $this->assertEquals('May 15, 2023 2:30 pm', $result);
     }
 
-    public function testExecuteWithCustomInputFormat(): void
+    public function testProcessWithCustomInputFormat(): void
     {
-        $helper = $this->createHelper();
+        $processor = $this->createProcessor();
 
         // Test with a valid date using custom input format
-        $result = $helper->execute('15/05/2023 14:30', [
+        $result = $processor->process('15/05/2023 14:30', [
             'input' => 'd/m/Y H:i'
         ]);
 
         $this->assertEquals('May 15, 2023 2:30 pm', $result);
     }
 
-    public function testExecuteWithCustomOutputFormat(): void
+    public function testProcessWithCustomOutputFormat(): void
     {
-        $helper = $this->createHelper();
+        $processor = $this->createProcessor();
 
         // Test with a valid date using custom output format
-        $result = $helper->execute('2023-05-15 14:30:00', [
+        $result = $processor->process('2023-05-15 14:30:00', [
             'output' => 'Y-m-d H:i'
         ]);
 
         $this->assertEquals('2023-05-15 14:30', $result);
     }
 
-    public function testExecuteWithBothCustomFormats(): void
+    public function testProcessWithBothCustomFormats(): void
     {
-        $helper = $this->createHelper();
+        $processor = $this->createProcessor();
 
         // Test with a valid date using both custom input and output formats
-        $result = $helper->execute('15/05/2023 14:30', [
+        $result = $processor->process('15/05/2023 14:30', [
             'input' => 'd/m/Y H:i',
             'output' => 'Y-m-d H:i'
         ]);
@@ -103,24 +103,24 @@ class DateHelperTest extends WPTestCase
         $this->assertEquals('2023-05-15 14:30', $result);
     }
 
-    public function testExecuteWithInvalidDate(): void
+    public function testProcessWithInvalidDate(): void
     {
-        $helper = $this->createHelper();
+        $processor = $this->createProcessor();
 
         // Test with an invalid date
         $invalidDate = 'not-a-date';
-        $result = $helper->execute($invalidDate, []);
+        $result = $processor->process($invalidDate, []);
 
         // Should return the original value when date is invalid
         $this->assertEquals($invalidDate, $result);
     }
 
-    public function testExecuteWithPositiveOffset(): void
+    public function testProcessWithPositiveOffset(): void
     {
-        $helper = $this->createHelper();
+        $processor = $this->createProcessor();
 
         // Test with a positive offset (adding time)
-        $result = $helper->execute('2023-05-15 14:30:00', [
+        $result = $processor->process('2023-05-15 14:30:00', [
             'input' => 'Y-m-d H:i:s',
             'output' => 'Y-m-d H:i:s',
             'offset' => '+1 day'
@@ -130,12 +130,12 @@ class DateHelperTest extends WPTestCase
         $this->assertEquals('2023-05-16 14:30:00', $result);
     }
 
-    public function testExecuteWithNegativeOffset(): void
+    public function testProcessWithNegativeOffset(): void
     {
-        $helper = $this->createHelper();
+        $processor = $this->createProcessor();
 
         // Test with a negative offset (subtracting time)
-        $result = $helper->execute('2023-05-15 14:30:00', [
+        $result = $processor->process('2023-05-15 14:30:00', [
             'offset' => '-1 hour',
             'output' => 'Y-m-d H:i:s'
         ]);

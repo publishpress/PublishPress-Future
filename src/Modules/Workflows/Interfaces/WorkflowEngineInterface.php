@@ -8,8 +8,6 @@ interface WorkflowEngineInterface
 {
     public function start();
 
-    public function getVariablesHandler(): RuntimeVariablesHandlerInterface;
-
     public function setCurrentAsyncActionId($actionId);
 
     public function getCurrentAsyncActionId(): int;
@@ -17,4 +15,9 @@ interface WorkflowEngineInterface
     public function getCurrentRunningWorkflow(): WorkflowModelInterface;
 
     public function getCurrentExecutionTrace(): array;
+
+    /**
+     * @since 4.4.1
+     */
+    public function getEngineSessionId(): string;
 }

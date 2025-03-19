@@ -4,13 +4,13 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHelperRegistryInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextProcessorRegistryInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\VariableResolverInterface;
 
 use function wp_json_encode;
 
-class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
+class ExecutionContext implements ExecutionContextInterface
 {
     /**
      * @var HookableInterface
@@ -18,20 +18,27 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
     private $hooks;
 
     /**
-     * @var RuntimeVariablesHelperRegistryInterface
+     * @var ExecutionContextProcessorRegistryInterface
      */
-    private $helperRegistry;
-
-    public function __construct(HookableInterface $hooks, RuntimeVariablesHelperRegistryInterface $helperRegistry)
-    {
-        $this->hooks = $hooks;
-        $this->helperRegistry = $helperRegistry;
-    }
+    private $processorRegistry;
 
     /**
      * @var array
      */
     private $runtimeVariables = [];
+
+    /**
+     * @var array
+     */
+    private $executionTrace = [];
+
+    public function __construct(
+        HookableInterface $hooks,
+        ExecutionContextProcessorRegistryInterface $processorRegistry
+    ) {
+        $this->hooks = $hooks;
+        $this->processorRegistry = $processorRegistry;
+    }
 
     public function setAllVariables(array $runtimeVariables)
     {
@@ -78,7 +85,7 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
         foreach ($expressions as $expression) {
             if ($expressionElements = $this->variableHasHelper($expression)) {
                 $value = $this->getVariable($expressionElements['variable']);
-                $value = $this->helperRegistry->execute($expressionElements['helper'], $value, $expressionElements['args']);
+                $value = $this->processorRegistry->process($expressionElements['helper'], $value, $expressionElements['args']);
             } else {
                 $value = $this->getVariable($expression);
             }

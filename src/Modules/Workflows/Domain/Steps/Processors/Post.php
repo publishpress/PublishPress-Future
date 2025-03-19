@@ -5,8 +5,8 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Processors;
 use Exception;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepPostRelatedProcessorInterface;
 
 class Post implements StepProcessorInterface, StepPostRelatedProcessorInterface
@@ -22,9 +22,9 @@ class Post implements StepProcessorInterface, StepPostRelatedProcessorInterface
     private $generalProcessor;
 
     /**
-     * @var RuntimeVariablesHandlerInterface
+     * @var ExecutionContextInterface
      */
-    private $variablesHandler;
+    private $executionContext;
 
     /**
      * @var LoggerInterface
@@ -34,12 +34,12 @@ class Post implements StepProcessorInterface, StepPostRelatedProcessorInterface
     public function __construct(
         HooksFacade $hooks,
         StepProcessorInterface $generalProcessor,
-        RuntimeVariablesHandlerInterface $variablesHandler,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        ExecutionContextInterface $executionContext
     ) {
         $this->hooks = $hooks;
         $this->generalProcessor = $generalProcessor;
-        $this->variablesHandler = $variablesHandler;
+        $this->executionContext = $executionContext;
         $this->logger = $logger;
     }
 
@@ -67,7 +67,7 @@ class Post implements StepProcessorInterface, StepPostRelatedProcessorInterface
         }
 
         // We look for the "post" variable in the node settings
-        $posts = $this->variablesHandler->getVariable($nodeSettings['post']['variable']);
+        $posts = $this->executionContext->getVariable($nodeSettings['post']['variable']);
 
         if (empty($posts)) {
             $this->addDebugLogMessage(
@@ -166,7 +166,7 @@ class Post implements StepProcessorInterface, StepPostRelatedProcessorInterface
     {
         // Store the postID that triggered the workflow in the global variables so
         // we can trace it back to the post.
-        $globalVariables = $this->variablesHandler->getVariable('global');
+        $globalVariables = $this->executionContext->getVariable('global');
         $triggerVariable = $globalVariables['trigger'];
         $triggerVariable->postId = $postId;
     }

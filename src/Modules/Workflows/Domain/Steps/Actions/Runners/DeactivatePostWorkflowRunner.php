@@ -4,8 +4,8 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeactivatePostWorkflow;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Models\PostModel;
 
@@ -17,9 +17,9 @@ class DeactivatePostWorkflowRunner implements StepRunnerInterface
     private $stepProcessor;
 
     /**
-     * @var RuntimeVariablesHandlerInterface
+     * @var ExecutionContextInterface
      */
-    private $variablesHandler;
+    private $executionContext;
 
     /**
      * @var LoggerInterface
@@ -28,11 +28,11 @@ class DeactivatePostWorkflowRunner implements StepRunnerInterface
 
     public function __construct(
         StepProcessorInterface $stepProcessor,
-        RuntimeVariablesHandlerInterface $variablesHandler,
+        ExecutionContextInterface $executionContext,
         LoggerInterface $logger
     ) {
         $this->stepProcessor = $stepProcessor;
-        $this->variablesHandler = $variablesHandler;
+        $this->executionContext = $executionContext;
         $this->logger = $logger;
     }
 
@@ -54,8 +54,8 @@ class DeactivatePostWorkflowRunner implements StepRunnerInterface
                 $postModel = new PostModel();
                 $postModel->load($postId);
 
-                $workflowResolver = $this->variablesHandler->getVariable($nodeSettings['workflow']['variable']);
-                $workflowId = $workflowResolver->getValue('id');
+                $workflowId = $this->executionContext->getVariable($nodeSettings['workflow']['variable'])
+                    ->getValue('id');
 
                 $postModel->removeManuallyEnabledWorkflow($workflowId);
 

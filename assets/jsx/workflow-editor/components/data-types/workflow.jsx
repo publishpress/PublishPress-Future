@@ -34,6 +34,21 @@ export function WorkflowData() {
                 label: "Metadata",
                 description: "The metadata of the workflow.",
             },
+            {
+                name: "execution_id",
+                type: "string",
+                label: "Execution ID",
+                description: "The unique identifier for the workflow execution.",
+            },
+            {
+                name: "execution_trace",
+                type: "array",
+                label: "Execution Trace",
+                description: "The trace of the workflow execution.",
+                items: {
+                    type: "string",
+                },
+            },
         ],
     };
 }

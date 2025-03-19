@@ -47,17 +47,18 @@ class PostModel implements PostModelInterface
         return $this->post->post_title;
     }
 
-    public function getValidWorkflowsWithManualTrigger(int $postId): array
+    public function getValidWorkflowsWithManualTrigger(int $postId, string $workflowExecutionId): array
     {
         $workflowsModel = new WorkflowsModel();
         $workflows = $workflowsModel->getPublishedWorkflowsWithManualTrigger();
 
-        $container = Container::getInstance();
 
         $postModel = new PostModel();
         $postModel->load($postId);
-        $postQueryValidator = $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY);
 
+        $container = Container::getInstance();
+        $postQueryValidatorFactory = $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY);
+        $postQueryValidator = $postQueryValidatorFactory($workflowExecutionId);
         $validatedWorkflows = [];
 
         foreach ($workflows as &$workflow) {
@@ -146,6 +147,7 @@ class PostModel implements PostModelInterface
         $workflowModel = new WorkflowModel();
 
         $schedule = [];
+        return $schedule;
 
         if (is_null($this->workflowsManuallyEnabled)) {
             // FIXME: Use dependency injection
@@ -155,12 +157,13 @@ class PostModel implements PostModelInterface
             $workflowModel->load($workflowId);
 
             // FIXME: Fix this for the new args table
+            // TODO: Check if we should have another table for holding this information, to avoid all this JSON related stuff.
             $query = "SELECT scheduled_date_gmt, args, extended_args
                 FROM {$wpdb->prefix}actionscheduler_actions
-                WHERE (JSON_EXTRACT(extended_args, '$[0].contextVariables.global.trigger.value.name') = %s)
-                    OR (JSON_EXTRACT(args, '$[0].contextVariables.global.trigger.value.name') = %s)
-                    OR (JSON_EXTRACT(extended_args, '$[0].runtimeVariables.global.trigger.value.name') = %s)
-                    OR (JSON_EXTRACT(args, '$[0].runtimeVariables.global.trigger.value.name') = %s)
+                WHERE (JSON_CONTAINS_PATH(extended_args, 'one', '$[0].contextVariables.global.trigger.value.name') AND JSON_UNQUOTE(JSON_EXTRACT(extended_args, '$[0].contextVariables.global.trigger.value.name')) = %s)
+                    OR (JSON_CONTAINS_PATH(args, 'one', '$[0].contextVariables.global.trigger.value.name') AND JSON_UNQUOTE(JSON_EXTRACT(args, '$[0].contextVariables.global.trigger.value.name')) = %s)
+                    OR (JSON_CONTAINS_PATH(extended_args, 'one', '$[0].runtimeVariables.global.trigger.value.name') AND JSON_UNQUOTE(JSON_EXTRACT(extended_args, '$[0].runtimeVariables.global.trigger.value.name')) = %s)
+                    OR (JSON_CONTAINS_PATH(args, 'one', '$[0].runtimeVariables.global.trigger.value.name') AND JSON_UNQUOTE(JSON_EXTRACT(args, '$[0].runtimeVariables.global.trigger.value.name')) = %s)
                 AND status = 'pending'
                 AND hook = %s
             ";

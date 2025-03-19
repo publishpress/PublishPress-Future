@@ -6,9 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [4.4.1] - UNRELEASED
 
 
+### Added
+
+- Added the `global.engine_session_id` variable.
+
 ### Changed
 
 - Restored Post ID variables for post related triggers.
+- Removed the `global.run_id` global variables and moved it to the workflow global variable as `global.workflow.execution_id`.
+- Renamed workflow variable helpers, to workflow value processors.
 
 ### Fixed
 
@@ -19,6 +25,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Added new method `isLogic` to `JsonLogicEngineInterface`.
 - Removed arguments from `compact` and `getVariable` methods on `PostMetaResolver` class.
+- Added new method `getWorkflowEngine` to the interface `StepProcessorInterface`.
+- Added new method `getWorkflowExecutionId` to the interface `StepProcessorInterface`.
+- Removed the service `WORKFLOW_VARIABLES_HANDLER`, replacing it with the `WORKFLOW_VARIABLES_HANDLER_FACTORY`.
+- Removed the method `getVariablesHandler` from the `WorkflowEngine` class.
+- Renamed "Runtime Variables Handler" to "Workflow Execution Context".
 
 ## [4.4.0] - 13 Mar, 2025
 

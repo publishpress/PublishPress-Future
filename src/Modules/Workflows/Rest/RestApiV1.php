@@ -341,8 +341,9 @@ class RestApiV1 implements RestApiManagerInterface
 
         foreach ($postIds as $postId) {
             $postModel->load($postId);
+            $workflowExecutionId = wp_generate_uuid4();
 
-            $workflowsWithManualTrigger = $postModel->getValidWorkflowsWithManualTrigger($postId);
+            $workflowsWithManualTrigger = $postModel->getValidWorkflowsWithManualTrigger($postId, $workflowExecutionId);
             $manuallyEnabledWorkflows = $postModel->getManuallyEnabledWorkflows();
         }
 
