@@ -4,11 +4,9 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Processors;
 
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayResolver;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use Throwable;
 
@@ -63,11 +61,13 @@ class General implements StepProcessorInterface
     {
         $nextSteps = $this->getNextSteps($step, $branch);
 
+        $workflowExecutionId = $this->executionContext->getVariable('global.workflow.execution_id');
+
         foreach ($nextSteps as $nextStep) {
             /**
              * @var array $nextStep
              */
-            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_STEP, $nextStep);
+            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_STEP, $nextStep, $workflowExecutionId);
         }
     }
 
@@ -150,16 +150,16 @@ class General implements StepProcessorInterface
 
     private function handleStepExecution(array $step): void
     {
-        $currentRunningWorkflow = $this->executionContext->getVariable('global.workflow.id');
+        $currentRunningWorkflowId = $this->executionContext->getVariable('global.workflow.id');
 
-        if (empty($currentRunningWorkflow)) {
+        if (empty($currentRunningWorkflowId)) {
             return;
         }
 
         $stepSlug = $step['node']['data']['slug'];
 
         $this->updateExecutionTraceOnVariablesHandler($stepSlug);
-        $this->logStepExecution($stepSlug, $currentRunningWorkflow);
+        $this->logStepExecution($stepSlug, $currentRunningWorkflowId);
     }
 
     private function updateExecutionTraceOnVariablesHandler(string $stepSlug): void {
@@ -173,13 +173,16 @@ class General implements StepProcessorInterface
         $this->executionContext->setVariable('global.workflow.execution_trace', $currentExecutionTrace);
     }
 
-    private function logStepExecution(string $stepSlug, WorkflowModelInterface $currentRunningWorkflow): void
+    private function logStepExecution(string $stepSlug, int $currentRunningWorkflowId): void
     {
         if (! $this->isWordPressRayInstalled()) {
             return;
         }
 
-        if ($currentRunningWorkflow->isDebugRayShowCurrentRunningStepEnabled()) {
+        $workflowModel = new WorkflowModel();
+        $workflowModel->load($currentRunningWorkflowId);
+
+        if ($workflowModel->isDebugRayShowCurrentRunningStepEnabled()) {
             // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction
             ray($stepSlug)->label('Current running step');
         }

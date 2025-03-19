@@ -104,7 +104,9 @@ class WorkflowEngine implements WorkflowEngineInterface
 
         $this->hooks->addAction(
             HooksAbstract::ACTION_EXECUTE_STEP,
-            [$this, 'executeStepRoutine']
+            [$this, 'executeStepRoutine'],
+            10,
+            2
         );
 
         $this->hooks->addAction(
@@ -313,12 +315,14 @@ class WorkflowEngine implements WorkflowEngineInterface
         return (int) $this->currentAsyncActionId;
     }
 
-    public function executeStepRoutine($step)
+    public function executeStepRoutine($step, $workflowExecutionId)
     {
         $node = $step['node'];
         $nodeName = $node['data']['name'];
 
-        $stepRunner = call_user_func($this->stepRunnerFactory, $nodeName);
+        $stepRunner = call_user_func($this->stepRunnerFactory, $nodeName, $workflowExecutionId);
+
+        $executionContext = $this->executionContextRegistry->getExecutionContext($workflowExecutionId);
 
         if (is_null($stepRunner)) {
             $message = sprintf(
@@ -334,7 +338,7 @@ class WorkflowEngine implements WorkflowEngineInterface
         $this->logger->debug(
             sprintf(
                 self::LOG_PREFIX . '   - Workflow %d: Setting up step | Slug: %s',
-                $this->currentRunningWorkflow->getId(),
+                $executionContext->getVariable('global.workflow.id'),
                 $node['data']['slug']
             )
         );
@@ -360,6 +364,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                 $scheduledStepModel = new WorkflowScheduledStepModel();
                 $scheduledStepModel->loadByActionId($this->currentAsyncActionId);
                 $args = $scheduledStepModel->getArgs();
+                $workflowExecutionId = $args['runtimeVariables']['global']['workflow']['execution_id'];
             } else {
                 // Old format, when the args were saved directly in the actionsscheduler_actions table.
                 if (! isset($args['step']['node']['data']['name'])) {
@@ -371,12 +376,19 @@ class WorkflowEngine implements WorkflowEngineInterface
                 }
 
                 $nodeName = $args['step']['node']['data']['name'];
+
+                $workflowExecutionId = '1_' . $this->generateUniqueId();
             }
+
             $args['actionId'] = $this->currentAsyncActionId;
+            $args['workflowId'] = $originalArgs['workflowId'];
 
-            $stepRunner = call_user_func($this->stepRunnerFactory, $nodeName);
+            $stepRunner = call_user_func($this->stepRunnerFactory, $nodeName, $workflowExecutionId);
 
-            $step = $this->currentRunningWorkflow->getPartialRoutineTreeFromNodeId($args['step']['nodeId']);
+            $workflow = new WorkflowModel();
+            $workflow->load($originalArgs['workflowId']);
+
+            $step = $workflow->getPartialRoutineTreeFromNodeId($originalArgs['stepId']);
 
             if (empty($step)) {
                 throw new \Exception('Step not found');
@@ -385,15 +397,15 @@ class WorkflowEngine implements WorkflowEngineInterface
             $this->logger->debug(
                 sprintf(
                     self::LOG_PREFIX . '   - Workflow %1$d: Executing async step %2$s on action %3$d',
-                    $this->currentRunningWorkflow->getId(),
+                    $originalArgs['workflowId'],
                     $step['node']['data']['slug'] ?? 'unknown',
-                    (int) $this->currentAsyncActionId
+                    $args['actionId']
                 )
             );
 
             $stepRunner->actionCallback($args, $originalArgs);
         } catch (Throwable $e) {
-            $this->logger->error(sprintf(self::LOG_PREFIX . ' Async node runner error: %s', $e->getMessage()));
+            $this->logger->error(sprintf(self::LOG_PREFIX . ' Async node runner error: %s. File: %s:%d', $e->getMessage(), $e->getFile(), $e->getLine()));
         }
     }
 

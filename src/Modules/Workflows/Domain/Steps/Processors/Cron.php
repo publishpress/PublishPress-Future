@@ -181,6 +181,7 @@ class Cron implements AsyncStepProcessorInterface
 
             $actionArgs = [
                 'workflowId' => $workflowId,
+                'workflowExecutionId' => $this->executionContext->getVariable('global.workflow.execution_id'),
                 'stepId' => $node['id'],
                 'stepLabel' => $node['data']['label'] ?? null,
                 'stepName' => $node['data']['name'],
@@ -470,7 +471,8 @@ class Cron implements AsyncStepProcessorInterface
 
         $expandedArgs = [
             'step' => $step,
-            'runtimeVars' => [],
+            'actionId' => $compactArguments['actionId'],
+            'runtimeVariables' => [],
         ];
 
         // Before v3.4.1 the pluginVersion was not included in the compacted arguments
@@ -741,15 +743,13 @@ class Cron implements AsyncStepProcessorInterface
     {
         $expandedArgs = $this->expandArguments($compactedArgs);
 
-        $this->executionContext->setAllVariables($expandedArgs['runtimeVariables']);
+        $workflowId = $compactedArgs['workflowId'];
 
         // Check if the workflow is still active
-        $workflowId = $this->executionContext->getVariable('global.workflow.id');
-
         $workflowModel = new WorkflowModel();
         $workflowModel->load($workflowId);
 
-        $actionId = $this->workflowEngine->getCurrentAsyncActionId();
+        $actionId = $expandedArgs['actionId'];
 
         if (! $workflowModel->isActive()) {
             // TODO: Log this into the scheduler log
