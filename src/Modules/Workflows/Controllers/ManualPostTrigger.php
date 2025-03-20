@@ -174,9 +174,15 @@ class ManualPostTrigger implements InitializableInterface
 
             $postModel = new PostModel();
             $postModel->load($postId);
+
+            $currentlyEnabledWorkflows = $postModel->getManuallyEnabledWorkflows();
             $postModel->setManuallyEnabledWorkflows($manuallyEnabledWorkflows);
 
-            $this->triggerManuallyEnabledWorkflow($postId, $manuallyEnabledWorkflows);
+            $notEnabledWorkflows = array_diff($manuallyEnabledWorkflows, $currentlyEnabledWorkflows);
+
+            if (! empty($notEnabledWorkflows)) {
+                $this->triggerManuallyEnabledWorkflow($postId, $notEnabledWorkflows);
+            }
             // phpcs:enable
         } catch (Throwable $th) {
             $this->logger->error('Error processing quick edit update: ' . $th->getMessage());
@@ -372,9 +378,14 @@ class ManualPostTrigger implements InitializableInterface
                             $manuallyEnabledWorkflows = $manualTriggerAttributes['enabledWorkflows'] ?? [];
                             $manuallyEnabledWorkflows = array_map('intval', $manuallyEnabledWorkflows);
 
+                            $currentlyEnabledWorkflows = $postModel->getManuallyEnabledWorkflows();
                             $postModel->setManuallyEnabledWorkflows($manuallyEnabledWorkflows);
 
-                            $this->triggerManuallyEnabledWorkflow($post->ID, $manuallyEnabledWorkflows);
+                            $notEnabledWorkflows = array_diff($manuallyEnabledWorkflows, $currentlyEnabledWorkflows);
+
+                            if (! empty($notEnabledWorkflows)) {
+                                $this->triggerManuallyEnabledWorkflow($post->ID, $notEnabledWorkflows);
+                            }
 
                             return true;
                         },
@@ -462,9 +473,15 @@ class ManualPostTrigger implements InitializableInterface
 
             $postModel = new PostModel();
             $postModel->load($postId);
+
+            $currentlyEnabledWorkflows = $postModel->getManuallyEnabledWorkflows();
             $postModel->setManuallyEnabledWorkflows($manuallyEnabledWorkflows);
 
-            $this->triggerManuallyEnabledWorkflow($postId, $manuallyEnabledWorkflows);
+            $notEnabledWorkflows = array_diff($manuallyEnabledWorkflows, $currentlyEnabledWorkflows);
+
+            if (! empty($notEnabledWorkflows)) {
+                $this->triggerManuallyEnabledWorkflow($postId, $notEnabledWorkflows);
+            }
             // phpcs:enable
         } catch (Throwable $th) {
             $this->logger->error('Error processing metabox update: ' . $th->getMessage());
