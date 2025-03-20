@@ -19,7 +19,7 @@ interface WorkflowEngineInterface
     /**
      * @since 4.4.1
      */
-    public function getEngineSessionId(): string;
+    public function getEngineExecutionId(): string;
 
     /**
      * @since 4.4.1

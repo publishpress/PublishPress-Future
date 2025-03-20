@@ -135,8 +135,8 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
 
     state = setGlobalVariable(state, {
         payload: {
-            name: 'engine_session_id',
-            label: 'Engine session ID',
+            name: 'engine_execution_id',
+            label: 'Engine execution ID',
             type: 'string',
             runtimeOnly: true,
             description: 'A unique identifier assigned each time the workflow engine runs. Useful for tracking specific workflow executions and debugging.',

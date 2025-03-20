@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Added the `global.engine_session_id` variable.
+- Added the `global.engine_execution_id` variable.
 
 ### Changed
 

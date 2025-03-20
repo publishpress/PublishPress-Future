@@ -4,7 +4,7 @@
 
 ```mermaid
 graph TD
-    A[EngineSessionId<br>One engine run] --> B[WorkflowExecutionId - 1]
+    A[EngineExecutionId<br>One engine run] --> B[WorkflowExecutionId - 1]
     A --> C[WorkflowExecutionId - 2]
     A --> D[WorkflowExecutionId - 3]
 ```

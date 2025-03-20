@@ -55,11 +55,6 @@ class WorkflowEngine implements WorkflowEngineInterface
     private $currentAsyncActionId;
 
     /**
-     * @var WorkflowModelInterface
-     */
-    private $currentRunningWorkflow;
-
-    /**
      * @var array
      */
     private $currentExecutionTrace;
@@ -77,12 +72,12 @@ class WorkflowEngine implements WorkflowEngineInterface
     /**
      * @var string
      */
-    private $engineSessionId;
+    private $engineExecutionId;
 
     /**
      * @var string
      */
-    private $engineSessionContext;
+    private $engineExecutionEnvironment;
 
 
     public function __construct(
@@ -151,22 +146,22 @@ class WorkflowEngine implements WorkflowEngineInterface
 
         $this->executionContextInitializer->initialize();
 
-        $this->engineSessionContext = $this->getEngineSessionContext();
+        $this->engineExecutionEnvironment = $this->getEngineExecutionEnvironment();
 
         $currentUser = wp_get_current_user();
 
         $this->logger->debug(
             sprintf(
-                self::LOG_PREFIX . ' Starting engine | User: %s | Context: %s',
+                self::LOG_PREFIX . ' Starting engine | User: %s | Environment: %s',
                 ($currentUser->ID > 0) ? "ID {$currentUser->ID}" : 'unknown',
-                $this->engineSessionContext
+                $this->engineExecutionEnvironment
             )
         );
 
         $publishedWorkflowsIds = $this->getPublishedWorkflowsIds();
         $stepTypes = $this->getAllStepTypes();
 
-        $this->engineSessionId = $this->generateUniqueId();
+        $this->engineExecutionId = $this->generateUniqueId();
 
         // Setup the workflow triggers
         foreach ($publishedWorkflowsIds as $workflowId) {
@@ -264,7 +259,7 @@ class WorkflowEngine implements WorkflowEngineInterface
         $currentUser = wp_get_current_user();
 
         $globalVariables = [
-            'engine_session_id' => $this->engineSessionId,
+            'engine_execution_id' => $this->engineExecutionId,
             'user' => new UserResolver($currentUser),
             'site' => new SiteResolver(),
             'workflow' => new WorkflowResolver(
@@ -451,15 +446,9 @@ class WorkflowEngine implements WorkflowEngineInterface
         return $this->currentExecutionTrace;
     }
 
-    // TODO: Do we still need this?
-    public function getCurrentRunningWorkflow(): WorkflowModelInterface
+    public function getEngineExecutionId(): string
     {
-        return $this->currentRunningWorkflow;
-    }
-
-    public function getEngineSessionId(): string
-    {
-        return $this->engineSessionId;
+        return $this->engineExecutionId;
     }
 
     public function generateUniqueId(): string
@@ -480,7 +469,12 @@ class WorkflowEngine implements WorkflowEngineInterface
         return $this->stepTypesModel->getAllStepTypesByType();
     }
 
-    private function getEngineSessionContext(): string
+    /**
+     * Determines the execution environment of the workflow engine.
+     *
+     * @return string The environment context (cli, admin, cron, ajax, or frontend)
+     */
+    private function getEngineExecutionEnvironment(): string
     {
         if (defined('WP_CLI')) {
             return 'cli';
