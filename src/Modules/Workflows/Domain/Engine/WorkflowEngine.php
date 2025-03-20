@@ -169,9 +169,6 @@ class WorkflowEngine implements WorkflowEngineInterface
             $workflow = new WorkflowModel();
             $workflow->load($workflowId);
 
-            // TODO: Remove this, since we are persisting the execution id for sub routines?
-            $this->currentRunningWorkflow = $workflow;
-
             $this->logger->debug(
                 sprintf(
                     self::LOG_PREFIX . ' Initializing workflow | ID: %d | Title: %s',
