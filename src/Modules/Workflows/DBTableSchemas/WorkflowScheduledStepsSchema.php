@@ -52,6 +52,7 @@ class WorkflowScheduledStepsSchema implements DBTableSchemaInterface
             'compressed_args' => 'blob NULL',
             'is_compressed' => 'tinyint(1) NOT NULL DEFAULT 0',
             'created_at' => 'datetime NOT NULL DEFAULT CURRENT_TIMESTAMP',
+            'post_id' => 'bigint(20) UNSIGNED NULL',
         ];
     }
 
@@ -63,6 +64,7 @@ class WorkflowScheduledStepsSchema implements DBTableSchemaInterface
             'step_id' => ['step_id', 'action_id'],
             'action_uid_hash' => ['action_uid_hash', 'action_id'],
             'is_recurring' => ['is_recurring', 'action_id'],
+            'post_id' => ['post_id', 'workflow_id', 'action_id'],
         ];
     }
 
