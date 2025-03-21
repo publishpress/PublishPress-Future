@@ -230,6 +230,40 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
         $this->wpdb->query("SET foreign_key_checks = 1");
     }
 
+    public function getTableColumns(): array
+    {
+        $columns = $this->getTableColumnDefinitions();
+
+        return array_column($columns, 'Field');
+    }
+
+    public function getTableColumnDefinitions(): array
+    {
+        $tableName = $this->getTableName();
+        $columns = $this->wpdb->get_results("SHOW COLUMNS FROM `$tableName`");
+
+        return $columns;
+    }
+
+    public function fixColumns(array $columns): void
+    {
+        $tableColumns = $this->getTableColumns();
+
+        foreach ($columns as $columnName => $columnDefinition) {
+            if (! in_array($columnName, $tableColumns)) {
+                $this->addColumn($columnName, $columnDefinition);
+            } else {
+                $this->changeColumn($columnName, $columnDefinition);
+            }
+        }
+    }
+
+    public function addColumn(string $columnName, string $columnDefinition): void
+    {
+        $tableName = $this->getTableName();
+        $this->wpdb->query("ALTER TABLE `$tableName` ADD COLUMN `$columnName` $columnDefinition");
+    }
+
     public function changeColumn(string $column, string $definition): void
     {
         $tableName = $this->getTableName();
