@@ -40,9 +40,9 @@ class ActionArgsSchema implements DBTableSchemaInterface
     private function getColumns(): array
     {
         return [
-            'id' => 'bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT',
-            'cron_action_id' => 'bigint(20) UNSIGNED NOT NULL',
-            'post_id' => 'bigint(20) UNSIGNED NOT NULL',
+            'id' => 'bigint UNSIGNED NOT NULL AUTO_INCREMENT',
+            'cron_action_id' => 'bigint UNSIGNED NOT NULL',
+            'post_id' => 'bigint UNSIGNED NOT NULL',
             'enabled' => "tinyint(1) NOT NULL DEFAULT '0'",
             'scheduled_date' => 'datetime NOT NULL',
             'created_at' => 'datetime NOT NULL',

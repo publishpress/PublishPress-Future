@@ -40,20 +40,20 @@ class WorkflowScheduledStepsSchema implements DBTableSchemaInterface
     private function getColumns(): array
     {
         return [
-            'action_id' => 'bigint(20) UNSIGNED NOT NULL',
-            'workflow_id' => 'bigint(20) UNSIGNED NOT NULL',
+            'action_id' => 'bigint UNSIGNED NOT NULL',
+            'workflow_id' => 'bigint UNSIGNED NOT NULL',
             'step_id' => 'varchar(100) NOT NULL',
             'action_uid_hash' => 'varchar(32) NOT NULL',
             'action_uid' => 'varchar(400) NOT NULL',
             'is_recurring' => 'tinyint(1) NOT NULL DEFAULT 0',
             'repeat_until' => 'set("forever", "times", "date") NOT NULL DEFAULT "forever"',
-            'repeat_times' => 'int(11) NOT NULL DEFAULT 0',
+            'repeat_times' => 'int NOT NULL DEFAULT 0',
             'repeat_until_date' => 'datetime NULL',
             'uncompressed_args' => 'varchar(10000) NULL',
             'compressed_args' => 'blob NULL',
             'is_compressed' => 'tinyint(1) NOT NULL DEFAULT 0',
             'created_at' => 'datetime NOT NULL DEFAULT CURRENT_TIMESTAMP',
-            'post_id' => 'bigint(20) UNSIGNED NULL',
+            'post_id' => 'bigint UNSIGNED NULL',
         ];
     }
 
@@ -135,6 +135,10 @@ class WorkflowScheduledStepsSchema implements DBTableSchemaInterface
     {
         if (! $this->isTableExistent()) {
             $this->createTable();
+        }
+
+        if (! empty($this->handler->checkTableColumns($this->getColumns()))) {
+            $this->handler->fixColumns($this->getColumns());
         }
 
         if (! empty($this->handler->checkTableIndexes($this->getIndexes()))) {
