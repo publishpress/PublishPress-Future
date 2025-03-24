@@ -6,6 +6,10 @@ show_header() {
     echo "================================================"
 }
 
+# Clean up the database
+show_header "Cleaning up the database"
+wp db reset --yes
+
 # Install WordPress
 show_header "Installing WordPress"
 wp core install --url="http://localhost:60802" --title="Future Free - Test Site" --admin_user="admin" --admin_password="admin" --admin_email="test@example.com" --skip-email
