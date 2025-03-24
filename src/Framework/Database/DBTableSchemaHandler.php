@@ -145,6 +145,27 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
         return $mappedIndexes;
     }
 
+    public function checkTableColumns(array $expectedColumns): array
+    {
+        $errors = [];
+
+        $columns = $this->getTableColumns();
+        $columnsDefinitions = $this->getTableColumnDefinitions();
+
+        foreach ($expectedColumns as $columnName => $columnDefinition) {
+            if (! in_array($columnName, $columns)) {
+                $errors[] = 'Column ' . $columnName . ' is missing';
+                continue;
+            }
+
+            if ($columnsDefinitions[$columnName]->Type !== $columnDefinition) {
+                $errors[] = 'Column ' . $columnName . ' has wrong definition: ' . $columnsDefinitions[$columnName]->Type;
+            }
+        }
+
+        return $errors;
+    }
+
     public function checkTableIndexes(array $expectedIndexes): array
     {
         $errors = [];
@@ -242,7 +263,12 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
         $tableName = $this->getTableName();
         $columns = $this->wpdb->get_results("SHOW COLUMNS FROM `$tableName`");
 
-        return $columns;
+        $columnsDefinitions = [];
+        foreach ($columns as $column) {
+            $columnsDefinitions[$column->Field] = $column;
+        }
+
+        return $columnsDefinitions;
     }
 
     public function fixColumns(array $columns): void

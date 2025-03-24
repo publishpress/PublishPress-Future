@@ -155,9 +155,9 @@ class ManualPostTrigger implements InitializableInterface
                 return;
             }
 
-            // Don't update data if the function is called for saving revision.
             $postType = get_post_type((int)$postId);
-            if ($postType === 'revision') {
+            $postTypeToIgnore = ['revision', Module::POST_TYPE_WORKFLOW];
+            if (in_array($postType, $postTypeToIgnore)) {
                 return;
             }
 
@@ -454,9 +454,9 @@ class ManualPostTrigger implements InitializableInterface
                 return;
             }
 
-            // Don't update data if the function is called for saving revision.
             $postType = get_post_type((int)$postId);
-            if ($postType === 'revision') {
+            $postTypeToIgnore = ['revision', Module::POST_TYPE_WORKFLOW];
+            if (in_array($postType, $postTypeToIgnore)) {
                 return;
             }
 

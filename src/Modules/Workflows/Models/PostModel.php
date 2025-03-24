@@ -191,23 +191,19 @@ class PostModel implements PostModelInterface
 
             $workflowModel->load($workflowId);
 
-            // FIXME: Fix this for the new args table
-            // TODO: Check if we should have another table for holding this information, to avoid all this JSON related stuff.
             $query = "SELECT scheduled_date_gmt, args, extended_args
                 FROM {$wpdb->prefix}actionscheduler_actions
-                WHERE (JSON_CONTAINS_PATH(extended_args, 'one', '$[0].contextVariables.global.trigger.value.name') AND JSON_UNQUOTE(JSON_EXTRACT(extended_args, '$[0].contextVariables.global.trigger.value.name')) = %s)
-                    OR (JSON_CONTAINS_PATH(args, 'one', '$[0].contextVariables.global.trigger.value.name') AND JSON_UNQUOTE(JSON_EXTRACT(args, '$[0].contextVariables.global.trigger.value.name')) = %s)
-                    OR (JSON_CONTAINS_PATH(extended_args, 'one', '$[0].runtimeVariables.global.trigger.value.name') AND JSON_UNQUOTE(JSON_EXTRACT(extended_args, '$[0].runtimeVariables.global.trigger.value.name')) = %s)
-                    OR (JSON_CONTAINS_PATH(args, 'one', '$[0].runtimeVariables.global.trigger.value.name') AND JSON_UNQUOTE(JSON_EXTRACT(args, '$[0].runtimeVariables.global.trigger.value.name')) = %s)
+                WHERE ((extended_args LIKE %s OR args LIKE %s)
+                    OR (extended_args LIKE %s OR args LIKE %s))
                 AND status = 'pending'
                 AND hook = %s
             ";
             $query = $wpdb->prepare(
                 $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-                'trigger/core.manually-enabled-for-post',
-                'trigger/core.manually-enabled-for-post',
-                'trigger/core.manually-enabled-for-post',
-                'trigger/core.manually-enabled-for-post',
+                '%"contextVariables":{"global":{"trigger":{"value":{"name":"trigger/core.manually-enabled-for-post"%',
+                '%"contextVariables":{"global":{"trigger":{"value":{"name":"trigger/core.manually-enabled-for-post"%',
+                '%"runtimeVariables":{"global":{"trigger":{"value":{"name":"trigger/core.manually-enabled-for-post"%',
+                '%"runtimeVariables":{"global":{"trigger":{"value":{"name":"trigger/core.manually-enabled-for-post"%',
                 HooksAbstract::ACTION_ASYNC_EXECUTE_STEP
             );
 

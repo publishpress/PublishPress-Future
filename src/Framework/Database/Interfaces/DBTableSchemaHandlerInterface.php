@@ -45,4 +45,6 @@ interface DBTableSchemaHandlerInterface
     public function getTableColumnDefinitions(): array;
 
     public function changeColumn(string $column, string $definition): void;
+
+    public function checkTableColumns(array $expectedColumns): array;
 }
