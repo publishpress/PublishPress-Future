@@ -187,8 +187,10 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
             }
         }
 
-        if (count($indexes) !== count($expectedIndexes)) {
+        if (count($indexes) > count($expectedIndexes)) {
             $errors[] = 'There are more indexes than expected';
+        } elseif (count($indexes) < count($expectedIndexes)) {
+            $errors[] = 'There are less indexes than expected';
         }
 
         return $errors;
