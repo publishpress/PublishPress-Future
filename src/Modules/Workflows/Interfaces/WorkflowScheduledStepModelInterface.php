@@ -50,6 +50,10 @@ interface WorkflowScheduledStepModelInterface
 
     public function getIsCompressed(): bool;
 
+    public function setPostId(int $postId): void;
+
+    public function getPostId(): int;
+
     public function setArgs(array $args): void;
 
     public function getArgs(): array;

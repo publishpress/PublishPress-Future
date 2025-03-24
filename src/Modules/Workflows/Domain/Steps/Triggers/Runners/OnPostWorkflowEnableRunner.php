@@ -126,10 +126,6 @@ class OnPostWorkflowEnableRunner implements TriggerRunnerInterface
             'node' => $this->step['node'],
         ];
 
-        if (! $this->postQueryValidator->validate($postQueryArgs)) {
-            return false;
-        }
-
         // TODO: Do we really need to pass the postID if the post is already being passed?
         $this->executionContext->setVariable(
             $nodeSlug,
@@ -140,6 +136,11 @@ class OnPostWorkflowEnableRunner implements TriggerRunnerInterface
         );
 
         $this->executionContext->setVariable('global.trigger.postId', $postId);
+
+        if (! $this->postQueryValidator->validate($postQueryArgs)) {
+            return false;
+        }
+
         $this->stepProcessor->setPostIdOnTriggerGlobalVariable($postId);
 
         $this->logger->debug(

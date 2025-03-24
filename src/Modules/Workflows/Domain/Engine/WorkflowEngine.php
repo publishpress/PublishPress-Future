@@ -287,7 +287,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                 'label' => $stepType->getLabel(),
                 'activation_timestamp' => date('Y-m-d H:i:s'),
                 'slug' => $triggerStep['data']['slug'],
-                'postId' => null,
+                'postId' => 0,
             ]
         );
 

@@ -8,6 +8,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPo
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\PostModelInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
 use React\Socket\Server;
 use Services_JSON;
@@ -170,9 +171,6 @@ class PostModel implements PostModelInterface
         // Check if the workflow has a scheduled action for this post
         $scheduledActionsModel = new ScheduledActionsModel();
         $scheduledActionsModel->cancelByWorkflowAndPostId($workflowId, $this->post->ID);
-
-        // $scheduledActionsModel = new ScheduledActionsModel();
-        // $scheduledActionsModel->cancelWorkflowScheduledActions($workflowId);
     }
 
     public function getManuallyEnabledWorkflowsSchedule(int $workflowId): array
@@ -182,7 +180,6 @@ class PostModel implements PostModelInterface
         $workflowModel = new WorkflowModel();
 
         $schedule = [];
-        return $schedule;
 
         if (is_null($this->workflowsManuallyEnabled)) {
             // FIXME: Use dependency injection
@@ -191,19 +188,16 @@ class PostModel implements PostModelInterface
 
             $workflowModel->load($workflowId);
 
-            $query = "SELECT scheduled_date_gmt, args, extended_args
-                FROM {$wpdb->prefix}actionscheduler_actions
-                WHERE ((extended_args LIKE %s OR args LIKE %s)
-                    OR (extended_args LIKE %s OR args LIKE %s))
-                AND status = 'pending'
-                AND hook = %s
+            $query = "SELECT aa.scheduled_date_gmt, aa.args, aa.extended_args, aa.action_id
+                FROM {$wpdb->prefix}actionscheduler_actions AS aa
+                INNER JOIN {$wpdb->prefix}ppfuture_workflow_scheduled_steps AS ss ON ss.action_id = aa.action_id
+                WHERE ss.post_id = %d
+                AND aa.status = 'pending'
+                AND aa.hook = %s
             ";
             $query = $wpdb->prepare(
                 $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-                '%"contextVariables":{"global":{"trigger":{"value":{"name":"trigger/core.manually-enabled-for-post"%',
-                '%"contextVariables":{"global":{"trigger":{"value":{"name":"trigger/core.manually-enabled-for-post"%',
-                '%"runtimeVariables":{"global":{"trigger":{"value":{"name":"trigger/core.manually-enabled-for-post"%',
-                '%"runtimeVariables":{"global":{"trigger":{"value":{"name":"trigger/core.manually-enabled-for-post"%',
+                $this->post->ID,
                 HooksAbstract::ACTION_ASYNC_EXECUTE_STEP
             );
 
@@ -218,25 +212,31 @@ class PostModel implements PostModelInterface
         }
 
         foreach ($actionsForWorkflows as $action) {
-            $args = json_decode($action['extended_args'], true);
+            $actionId = $action['action_id'];
+            $scheduledStepModel = new WorkflowScheduledStepModel();
+            $scheduledStepModel->loadByActionId($actionId);
 
-            if (! isset($args[0]['runtimeVariables']['global']['trigger']['value']['slug'])) {
+            $args = $scheduledStepModel->getArgs();
+
+            if (! isset($args['runtimeVariables']['global']['trigger']['value']['slug'])) {
                 continue;
             }
 
-            $triggerSlug = $args[0]['runtimeVariables']['global']['trigger']['value']['slug'];
+            $triggerSlug = $args['runtimeVariables']['global']['trigger']['value']['slug'];
 
-            if (! isset($args[0]['runtimeVariables'][$triggerSlug]['postId'])) {
+            if (! isset($args['runtimeVariables'][$triggerSlug]['postId'])) {
                 continue;
             }
 
-            $postId = $args[0]['runtimeVariables'][$triggerSlug]['postId']['value'];
+            $postId = $args['runtimeVariables'][$triggerSlug]['postId']['value'];
 
             if ($postId !== $this->post->ID) {
                 continue;
             }
 
-            $nextStep = $args[0]['step']['next']['output'][0]['node'];
+            $stepRoutineTree = $workflowModel->getPartialRoutineTreeFromNodeId($args['step']['nodeId']);
+
+            $nextStep = $stepRoutineTree['next']['output'][0]['node'];
 
             $schedule[] = [
                 'workflowId' => $workflowId,
