@@ -12,8 +12,6 @@ interface WorkflowEngineInterface
 
     public function getCurrentAsyncActionId(): int;
 
-    public function getCurrentExecutionTrace(): array;
-
     /**
      * @since 4.4.1
      */

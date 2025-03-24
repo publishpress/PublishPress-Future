@@ -55,11 +55,6 @@ class WorkflowEngine implements WorkflowEngineInterface
     private $currentAsyncActionId;
 
     /**
-     * @var array
-     */
-    private $currentExecutionTrace;
-
-    /**
      * @var InitializableInterface
      */
     private $executionContextInitializer;
@@ -217,8 +212,6 @@ class WorkflowEngine implements WorkflowEngineInterface
                     continue;
                 }
 
-                // TODO: Move the trace to the global.workflow variable as we did for the execution_id?
-                $this->currentExecutionTrace = [];
                 $this->prepareExecutionContextForTrigger(
                     $workflowExecutionId,
                     $triggerStep
@@ -435,12 +428,6 @@ class WorkflowEngine implements WorkflowEngineInterface
     {
         $scheduledActionsModel = new ScheduledActionsModel();
         $scheduledActionsModel->cancelRecurringScheduledActions($workflowId, $stepId);
-    }
-
-    // TODO: Do we still need this?
-    public function getCurrentExecutionTrace(): array
-    {
-        return $this->currentExecutionTrace;
     }
 
     public function getEngineExecutionId(): string
