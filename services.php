@@ -131,6 +131,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContextProcesso
 use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContextProcessorRegistry;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContextRegistry;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
+use PublishPress\Future\Modules\Workflows\Migrations\V44010PostIdOnScheduledStepsSchema;
 
 return [
     ServicesAbstract::PLUGIN_VERSION => PUBLISHPRESS_FUTURE_VERSION,
@@ -674,6 +675,10 @@ return [
                     $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA)
                 ),
                 new V40000WorkflowScheduledStepsSchema(
+                    $container->get(ServicesAbstract::HOOKS),
+                    $container->get(ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA)
+                ),
+                new V44010PostIdOnScheduledStepsSchema(
                     $container->get(ServicesAbstract::HOOKS),
                     $container->get(ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA)
                 ),

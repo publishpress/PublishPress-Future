@@ -68,6 +68,9 @@ abstract class HooksAbstract
     public const ACTION_MIGRATE_WORKFLOW_SCHEDULED_STEPS_SCHEMA =
         'publishpressfuture_migrate_workflow_scheduled_steps_schema';
 
+    public const ACTION_MIGRATE_POST_ID_ON_SCHEDULED_STEPS =
+        'publishpressfuture_migrate_post_id_on_scheduled_steps';
+
     public const ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS = 'publishpressfuture_cleanup_orphan_workflow_args';
 
     public const ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS = 'publishpressfuture_cleanup_finished_scheduled_steps';
