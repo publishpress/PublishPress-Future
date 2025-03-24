@@ -41,7 +41,7 @@ services:
             mailhog:
                 condition: service_started
     db:
-        image: mysql:8.0
+        image: mariadb:11.1
         container_name: ${COMPOSE_PROJECT_NAME}_tests_db
         restart: always
         environment:
