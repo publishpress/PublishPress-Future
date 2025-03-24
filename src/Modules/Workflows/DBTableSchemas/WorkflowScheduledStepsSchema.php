@@ -100,24 +100,22 @@ class WorkflowScheduledStepsSchema implements DBTableSchemaInterface
 
         $columnsErrors = $this->handler->checkTableColumns($this->getColumns());
         if (! empty($columnsErrors)) {
-            $this->handler->registerError(
-                self::HEALTH_ERROR_INVALID_COLUMN,
-                __(
-                    'The table columns are invalid: ',
-                    'post-expirator'
-                ) . implode(', ', $columnsErrors)
-            );
+            foreach ($columnsErrors as $columnError) {
+                $this->handler->registerError(
+                    self::HEALTH_ERROR_INVALID_COLUMN,
+                    $columnError
+                );
+            }
         }
 
         $indexesErrors = $this->handler->checkTableIndexes($this->getIndexes());
         if (! empty($indexesErrors)) {
-            $this->handler->registerError(
-                self::HEALTH_ERROR_INVALID_INDEX,
-                __(
-                    'The table indexes are invalid: ',
-                    'post-expirator'
-                ) . implode(', ', $indexesErrors)
-            );
+            foreach ($indexesErrors as $indexError) {
+                $this->handler->registerError(
+                    self::HEALTH_ERROR_INVALID_INDEX,
+                    $indexError
+                );
+            }
         }
 
         return false === $this->handler->hasErrors();

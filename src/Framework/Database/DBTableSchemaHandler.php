@@ -152,14 +152,37 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
         $columns = $this->getTableColumns();
         $columnsDefinitions = $this->getTableColumnDefinitions();
 
-        foreach ($expectedColumns as $columnName => $columnDefinition) {
+        foreach ($expectedColumns as $columnName => $expectedDefinition) {
+            $expectedDefinition = strtolower($expectedDefinition);
+            $expectedDefinition = str_replace(' not null', '', $expectedDefinition);
+            $expectedDefinition = str_replace(' default current_timestamp', '', $expectedDefinition);
+            $expectedDefinition = str_replace(' null', '', $expectedDefinition);
+            $expectedDefinition = preg_replace('/ default [^,]+/', '', $expectedDefinition);
+            $expectedDefinition = trim($expectedDefinition);
+
+            $currentDefinition = strtolower($columnsDefinitions[$columnName]->Type);
+
+            // Remove spaces between items in SET statements
+            if (strpos($expectedDefinition, 'set(') !== false) {
+                preg_match('/set\(([^)]+)\)/', $expectedDefinition, $matches);
+                if (isset($matches[1])) {
+                    $setItems = $matches[1];
+                    $setItemsWithoutSpaces = str_replace(' ', '', $setItems);
+                    $expectedDefinition = str_replace($setItems, $setItemsWithoutSpaces, $expectedDefinition);
+                }
+
+                // Match the quoted items
+                $currentDefinition = str_replace('\'', '"', $currentDefinition);
+                $expectedDefinition = str_replace('\'', '"', $expectedDefinition);
+            }
+
             if (! in_array($columnName, $columns)) {
-                $errors[] = 'Column ' . $columnName . ' is missing';
+                $errors[] = 'Column "' . $columnName . '" is missing';
                 continue;
             }
 
-            if ($columnsDefinitions[$columnName]->Type !== $columnDefinition) {
-                $errors[] = 'Column ' . $columnName . ' has wrong definition: ' . $columnsDefinitions[$columnName]->Type;
+            if ($currentDefinition !== $expectedDefinition) {
+                $errors[] = 'Column "' . $columnName . '" has wrong definition: ' . $currentDefinition . '. Expected: ' . $expectedDefinition;
             }
         }
 
@@ -198,7 +221,7 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
 
     public function registerError(string $code, string $error): void
     {
-        $this->schemaErrors[$code] = $error;
+        $this->schemaErrors[] = $error;
     }
 
     public function getErrors(): array

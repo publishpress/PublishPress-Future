@@ -102,13 +102,12 @@ class ActionArgsSchema implements DBTableSchemaInterface
 
         $indexesErrors = $this->handler->checkTableIndexes($this->getIndexes());
         if (! empty($indexesErrors)) {
-            $this->handler->registerError(
-                self::HEALTH_ERROR_INVALID_INDEX,
-                __(
-                    'The table indexes are invalid: ',
-                    'post-expirator'
-                ) . implode(', ', $indexesErrors)
-            );
+            foreach ($indexesErrors as $indexError) {
+                $this->handler->registerError(
+                    self::HEALTH_ERROR_INVALID_INDEX,
+                    $indexError
+                );
+            }
         }
 
         return false === $this->handler->hasErrors();
