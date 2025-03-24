@@ -274,7 +274,7 @@ class Cron implements AsyncStepProcessorInterface
                     /**
                      * @param int $interval
                      * @param array $nodeSettings
-                     * @param RuntimeVariablesHandlerInterface $variablesHandler
+                     * @param ExecutionContextInterface $executionContext
                      *
                      * @return int
                      */
@@ -336,6 +336,11 @@ class Cron implements AsyncStepProcessorInterface
                 $scheduledStepModel->setArgs($compactedArgs);
                 $scheduledStepModel->setRunCount(0);
                 $scheduledStepModel->setIsRecurring(! $isSingleAction);
+
+                $postId = (int)($this->executionContext->getVariable('global.trigger.postId') ?? 0);
+                if ($postId) {
+                    $scheduledStepModel->setPostId($postId);
+                }
 
                 if (! $isSingleAction) {
                     $scheduledStepModel->setRepeatUntil($nodeSettings['schedule']['repeatUntil'] ?? 'forever');
