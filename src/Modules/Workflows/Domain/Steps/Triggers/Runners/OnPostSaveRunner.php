@@ -107,6 +107,8 @@ class OnPostSaveRunner implements TriggerRunnerInterface
             'update' => new BooleanResolver($update),
         ]);
 
+        $this->executionContext->setVariable('global.trigger.postId', $postId);
+
         $postQueryArgs = [
             'post' => $post,
             'node' => $this->step['node'],

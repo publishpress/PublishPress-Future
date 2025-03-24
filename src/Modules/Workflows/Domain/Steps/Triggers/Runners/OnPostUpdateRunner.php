@@ -140,6 +140,8 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
             'postId' => new IntegerResolver($postId),
         ]);
 
+        $this->executionContext->setVariable('global.trigger.postId', $postId);
+
         $postQueryArgs = [
             'post' => $postAfter,
             'node' => $this->step['node'],

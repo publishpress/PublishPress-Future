@@ -93,6 +93,8 @@ class OnLegacyActionTriggerRunner implements TriggerRunnerInterface
                     'postId' => new IntegerResolver($postId),
                 ]);
 
+                $this->executionContext->setVariable('global.trigger.postId', $postId);
+
                 $this->stepProcessor->triggerCallbackIsRunning();
 
 
