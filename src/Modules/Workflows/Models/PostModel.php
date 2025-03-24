@@ -236,7 +236,15 @@ class PostModel implements PostModelInterface
 
             $stepRoutineTree = $workflowModel->getPartialRoutineTreeFromNodeId($args['step']['nodeId']);
 
+            if (empty($stepRoutineTree) || empty($stepRoutineTree['next'])) {
+                continue;
+            }
+
             $nextStep = $stepRoutineTree['next']['output'][0]['node'];
+
+            if (empty($nextStep)) {
+                continue;
+            }
 
             $schedule[] = [
                 'workflowId' => $workflowId,
