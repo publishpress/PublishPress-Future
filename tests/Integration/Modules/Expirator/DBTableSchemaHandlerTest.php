@@ -261,7 +261,7 @@ class DBTableSchemaHandlerTest extends NoTransactionWPTestCase
             PRIMARY KEY (id),
             KEY age (age)'
         );
-        $handler = $this->getHandler('new_custom_table_name');
+        $handler = $this->getHandler('new_custom_table_name_fix_indexes');
 
         $indexes = [
             'PRIMARY' => ['id'],
@@ -270,7 +270,9 @@ class DBTableSchemaHandlerTest extends NoTransactionWPTestCase
 
         $handler->fixIndexes($indexes);
 
-        $this->assertEmpty($handler->checkTableIndexes($indexes));
+        $errors = $handler->checkTableIndexes($indexes);
+
+        $this->assertEmpty($errors);
     }
 
     public function testFixIndexesForExtraIndixes(): void
