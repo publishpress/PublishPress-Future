@@ -304,41 +304,14 @@ class Cron implements AsyncStepProcessorInterface
 
             // If the action is scheduled, we need to set the action ID in the scheduled step arguments
             if ($scheduledActionId > 0) {
-                /*
-                 * Setting the action ID is crucial for retrieving scheduled step arguments
-                 * from the wp_ppfuture_workflow_scheduled_steps table, specifically for recurring actions.
-                 * This step ensures that runtime data in the runtimeVariables field is properly
-                 * passed from the just-executed action to any new recurring instances.
-                 * Without this, we would lose important context between recurring executions.
-                 */
-                $argsModel = new ScheduledActionModel();
-                $argsModel->loadByActionId($scheduledActionId);
-                $argsModel->setActionIdOnArgs();
-                $argsModel->update();
-
-                $compactedArgs = $this->compactArguments($step);
-
-                $scheduledStepModel = new WorkflowScheduledStepModel();
-                $scheduledStepModel->setActionId($scheduledActionId);
-                $scheduledStepModel->setWorkflowId($workflowId);
-                $scheduledStepModel->setStepId($node['id']);
-                $scheduledStepModel->setActionUID($actionUID);
-                $scheduledStepModel->setArgs($compactedArgs);
-                $scheduledStepModel->setRunCount(0);
-                $scheduledStepModel->setIsRecurring(! $isSingleAction);
-
-                $postId = (int)($this->executionContext->getVariable('global.trigger.postId') ?? 0);
-                if ($postId) {
-                    $scheduledStepModel->setPostId($postId);
-                }
-
-                if (! $isSingleAction) {
-                    $scheduledStepModel->setRepeatUntil($nodeSettings['schedule']['repeatUntil'] ?? 'forever');
-                    $scheduledStepModel->setRepeatTimes((int)$nodeSettings['schedule']['repeatTimes'] ?? 0);
-                    $scheduledStepModel->setRepeatUntilDate($nodeSettings['schedule']['repeatUntilDate'] ?? '');
-                }
-
-                $scheduledStepModel->insert();
+                $this->saveScheduledStepData(
+                    $scheduledActionId,
+                    $step,
+                    $workflowId,
+                    $actionUID,
+                    $isSingleAction,
+                    $nodeSettings
+                );
 
                 $this->addDebugLogMessage(
                     'Successfully stored workflow step arguments for step "%s" with scheduled action ID %d',
@@ -352,7 +325,12 @@ class Cron implements AsyncStepProcessorInterface
                 );
             }
         } catch (Throwable $e) {
-            $this->addErrorLogMessage('Failed to schedule workflow step "%s". File: %s:%d', $stepSlug, $e->getFile(), $e->getLine());
+            $this->addErrorLogMessage(
+                'Failed to schedule workflow step "%s". File: %s:%d',
+                $stepSlug,
+                $e->getFile(),
+                $e->getLine()
+            );
 
             throw $e;
         }
@@ -371,6 +349,51 @@ class Cron implements AsyncStepProcessorInterface
             // This is not always set, only for some post-related triggers. Used to keep the post ID as reference.
             'postId' => $this->executionContext->getVariable('global.trigger.postId'),
         ];
+    }
+
+    private function saveScheduledStepData(
+        int $scheduledActionId,
+        array $step,
+        int $workflowId,
+        string $actionUID,
+        bool $isSingleAction,
+        array $nodeSettings
+    ) {
+        /*
+         * Setting the action ID is crucial for retrieving scheduled step arguments
+         * from the wp_ppfuture_workflow_scheduled_steps table, specifically for recurring actions.
+         * This step ensures that runtime data in the runtimeVariables field is properly
+         * passed from the just-executed action to any new recurring instances.
+         * Without this, we would lose important context between recurring executions.
+         */
+        $argsModel = new ScheduledActionModel();
+        $argsModel->loadByActionId($scheduledActionId);
+        $argsModel->setActionIdOnArgs();
+        $argsModel->update();
+
+        $compactedArgs = $this->compactArguments($step);
+
+        $scheduledStepModel = new WorkflowScheduledStepModel();
+        $scheduledStepModel->setActionId($scheduledActionId);
+        $scheduledStepModel->setWorkflowId($workflowId);
+        $scheduledStepModel->setStepId($step['id']);
+        $scheduledStepModel->setActionUID($actionUID);
+        $scheduledStepModel->setArgs($compactedArgs);
+        $scheduledStepModel->setRunCount(0);
+        $scheduledStepModel->setIsRecurring(! $isSingleAction);
+
+        $postId = (int)($this->executionContext->getVariable('global.trigger.postId') ?? 0);
+        if ($postId) {
+            $scheduledStepModel->setPostId($postId);
+        }
+
+        if (! $isSingleAction) {
+            $scheduledStepModel->setRepeatUntil($nodeSettings['schedule']['repeatUntil'] ?? 'forever');
+            $scheduledStepModel->setRepeatTimes((int)$nodeSettings['schedule']['repeatTimes'] ?? 0);
+            $scheduledStepModel->setRepeatUntilDate($nodeSettings['schedule']['repeatUntilDate'] ?? '');
+        }
+
+        $scheduledStepModel->insert();
     }
 
     private function getScheduledActionUniqueId(int $workflowId, array $node, $useTimestamp = true): string
