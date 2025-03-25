@@ -22,7 +22,6 @@ use PublishPress\Future\Modules\Workflows\Interfaces\AsyncStepProcessorInterface
 use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionModel;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionsModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
@@ -116,6 +115,71 @@ class Cron implements AsyncStepProcessorInterface
      */
     private $executionContext;
 
+    /**
+     * @var int
+     */
+    private $scheduledActionId;
+
+    /**
+     * @var string
+     */
+    private $stepSlug;
+
+    /**
+     * @var int
+     */
+    private $workflowId;
+
+    /**
+     * @var string
+     */
+    private $actionUID;
+
+    /**
+     * @var string
+     */
+    private $actionUIDHash;
+
+    /**
+     * @var int
+     */
+    private $priority;
+
+    /**
+     * @var bool
+     */
+    private $isSingleAction;
+
+    /**
+     * @var string
+     */
+    private $recurrence;
+
+    /**
+     * @var array
+     */
+    private $nodeSettings;
+
+    /**
+     * @var array
+     */
+    private $step;
+
+    /**
+     * @var bool
+     */
+    private $isFinished;
+
+    /**
+     * @var string
+     */
+    private $whenToRun;
+
+    /**
+     * @var int
+     */
+    private $timestamp;
+
     public function __construct(
         HooksFacade $hooks,
         StepProcessorInterface $stepProcessor,
@@ -139,49 +203,32 @@ class Cron implements AsyncStepProcessorInterface
     public function setup(array $step, callable $actionCallback): void
     {
         try {
-            $stepSlug = $step['node']['data']['slug'];
             $node = $this->getNodeFromStep($step);
-            $nodeSettings = $this->getNodeSettings($node);
-            $workflowId = $this->executionContext->getVariable('global.workflow.id');
-            $actionUID = $this->getScheduledActionUniqueId($workflowId, $node);
-            $actionUIDHash = md5($actionUID);
-            $priority = (int)($nodeSettings['schedule']['priority'] ?? self::DEFAULT_PRIORITY);
-            $isFinished = WorkflowScheduledStepModel::getMetaIsFinished($workflowId, $actionUIDHash);
-            $recurrence = $nodeSettings['schedule']['recurrence'] ?? self::SCHEDULE_RECURRENCE_SINGLE;
-            $isSingleAction = self::SCHEDULE_RECURRENCE_SINGLE === $recurrence;
 
-            $whenToRun = $nodeSettings['schedule']['whenToRun'] ?? self::WHEN_TO_RUN_NOW;
+            $this->stepSlug = $step['node']['data']['slug'];
+            $this->nodeSettings = $this->getNodeSettings($node);
+            $this->workflowId = $this->executionContext->getVariable('global.workflow.id');
+            $this->actionUID = $this->getScheduledActionUniqueId($this->workflowId, $node);
+            $this->actionUIDHash = md5($this->actionUID);
+            $this->priority = (int)($this->nodeSettings['schedule']['priority'] ?? self::DEFAULT_PRIORITY);
+            $this->isFinished = WorkflowScheduledStepModel::getMetaIsFinished($this->workflowId, $this->actionUIDHash);
+            $this->recurrence = $this->nodeSettings['schedule']['recurrence'] ?? self::SCHEDULE_RECURRENCE_SINGLE;
+            $this->isSingleAction = self::SCHEDULE_RECURRENCE_SINGLE === $this->recurrence;
+            $this->whenToRun = $this->nodeSettings['schedule']['whenToRun'] ?? self::WHEN_TO_RUN_NOW;
 
-            // Schedule
-            $timestamp = $this->getCalculatedTimestamp(
-                $nodeSettings,
-                $isSingleAction,
-                $whenToRun
-            );
+            $this->timestamp = $this->getCalculatedTimestamp();
 
-            if ($this->shouldSkipScheduling($timestamp, $isSingleAction, $isFinished, $stepSlug)) {
+            if ($this->shouldSkipScheduling()) {
                 return;
             }
 
-            $this->handleDuplicateAction($nodeSettings, $stepSlug, $actionUIDHash);
+            $this->handleDuplicateAction();
 
-            $this->scheduleAction(
-                $isSingleAction,
-                $timestamp,
-                $stepSlug,
-                $priority,
-                $whenToRun,
-                $recurrence,
-                $nodeSettings,
-                $step,
-                $workflowId,
-                $actionUID,
-                $actionUIDHash
-            );
+            $this->scheduleAction();
         } catch (Throwable $e) {
             $this->addErrorLogMessage(
                 'Failed to schedule workflow step "%s". File: %s:%d',
-                $stepSlug,
+                $this->stepSlug,
                 $e->getFile(),
                 $e->getLine()
             );
@@ -205,14 +252,7 @@ class Cron implements AsyncStepProcessorInterface
         ];
     }
 
-    private function saveScheduledStepData(
-        int $scheduledActionId,
-        array $step,
-        int $workflowId,
-        string $actionUID,
-        bool $isSingleAction,
-        array $nodeSettings
-    ) {
+    private function saveScheduledStepData(int $scheduledActionId) {
         /*
          * Setting the action ID is crucial for retrieving scheduled step arguments
          * from the wp_ppfuture_workflow_scheduled_steps table, specifically for recurring actions.
@@ -225,66 +265,58 @@ class Cron implements AsyncStepProcessorInterface
         $argsModel->setActionIdOnArgs();
         $argsModel->update();
 
-        $compactedArgs = $this->compactArguments($step);
+        $compactedArgs = $this->compactArguments($this->step);
 
         $scheduledStepModel = new WorkflowScheduledStepModel();
         $scheduledStepModel->setActionId($scheduledActionId);
-        $scheduledStepModel->setWorkflowId($workflowId);
-        $scheduledStepModel->setStepId($step['id']);
-        $scheduledStepModel->setActionUID($actionUID);
+        $scheduledStepModel->setWorkflowId($this->workflowId);
+        $scheduledStepModel->setStepId($this->step['id']);
+        $scheduledStepModel->setActionUID($this->actionUID);
         $scheduledStepModel->setArgs($compactedArgs);
         $scheduledStepModel->setRunCount(0);
-        $scheduledStepModel->setIsRecurring(! $isSingleAction);
+        $scheduledStepModel->setIsRecurring(! $this->isSingleAction);
 
         $postId = (int)($this->executionContext->getVariable('global.trigger.postId') ?? 0);
         if ($postId) {
             $scheduledStepModel->setPostId($postId);
         }
 
-        if (! $isSingleAction) {
-            $scheduledStepModel->setRepeatUntil($nodeSettings['schedule']['repeatUntil'] ?? 'forever');
-            $scheduledStepModel->setRepeatTimes((int)$nodeSettings['schedule']['repeatTimes'] ?? 0);
-            $scheduledStepModel->setRepeatUntilDate($nodeSettings['schedule']['repeatUntilDate'] ?? '');
+        if (! $this->isSingleAction) {
+            $scheduledStepModel->setRepeatUntil($this->nodeSettings['schedule']['repeatUntil'] ?? 'forever');
+            $scheduledStepModel->setRepeatTimes((int)$this->nodeSettings['schedule']['repeatTimes'] ?? 0);
+            $scheduledStepModel->setRepeatUntilDate($this->nodeSettings['schedule']['repeatUntilDate'] ?? '');
         }
 
         $scheduledStepModel->insert();
     }
 
-    private function getCalculatedTimestamp(
-        array $nodeSettings,
-        bool $isSingleAction,
-        string $whenToRun
-    ): int {
-        $shouldRunNow = $whenToRun === self::WHEN_TO_RUN_NOW;
+    private function getCalculatedTimestamp(): int {
+        $shouldRunNow = $this->whenToRun === self::WHEN_TO_RUN_NOW;
 
-        if ($isSingleAction && $shouldRunNow) {
+        if ($this->isSingleAction && $shouldRunNow) {
             return 0;
         }
 
         $timestamp = $this->calculateTimestamp(
-            $whenToRun,
-            $nodeSettings['schedule']['dateSource'] ?? self::DATE_SOURCE_CALENDAR,
-            $nodeSettings['schedule']['specificDate'] ?? '',
-            $nodeSettings['schedule']['customDateSource']['expression'] ?? '',
-            $nodeSettings['schedule']['dateOffset'] ?? ''
+            $this->whenToRun,
+            $this->nodeSettings['schedule']['dateSource'] ?? self::DATE_SOURCE_CALENDAR,
+            $this->nodeSettings['schedule']['specificDate'] ?? '',
+            $this->nodeSettings['schedule']['customDateSource']['expression'] ?? '',
+            $this->nodeSettings['schedule']['dateOffset'] ?? ''
         );
 
         return $timestamp;
     }
 
-    private function handleDuplicateAction(
-        array $nodeSettings,
-        string $stepSlug,
-        string $actionUIDHash
-    ): void {
-        $duplicateHandling = $nodeSettings['schedule']['duplicateHandling'] ?? self::DUPLICATE_HANDLING_DEFAULT;
+    private function handleDuplicateAction(): void {
+        $duplicateHandling = $this->nodeSettings['schedule']['duplicateHandling'] ?? self::DUPLICATE_HANDLING_DEFAULT;
 
         switch ($duplicateHandling) {
             case self::DUPLICATE_HANDLING_CREATE_NEW:
                 // If the action is already scheduled, we should create a new one.
                 $this->addDebugLogMessage(
                     'Step %s is already scheduled based on its ID, creating a new one',
-                    $stepSlug
+                    $this->stepSlug
                 );
 
                 // TODO: Make sure the action is not duplicated for the same step and execution ID.
@@ -296,11 +328,11 @@ class Cron implements AsyncStepProcessorInterface
                 // If the action is already scheduled, we should replace it.
                 $this->addDebugLogMessage(
                     'Step %s is already scheduled based on its ID, unscheduling to replace it',
-                    $stepSlug
+                    $this->stepSlug
                 );
 
                 $scheduledActionsModel = new ScheduledActionsModel();
-                $actionId = $scheduledActionsModel->getActionIdByActionUIDHash($actionUIDHash);
+                $actionId = $scheduledActionsModel->getActionIdByActionUIDHash($this->actionUIDHash);
 
                 if ($actionId) {
                     $scheduledActionsModel->cancelActionById($actionId);
@@ -310,41 +342,36 @@ class Cron implements AsyncStepProcessorInterface
         }
     }
 
-    private function scheduleSingleAction(
-        int $timestamp,
-        string $stepSlug,
-        array $actionArgs,
-        int $priority,
-        string $whenToRun
-    ): int {
+    private function scheduleSingleAction(array $actionArgs): int
+    {
         $scheduledActionId = 0;
 
-        if (self::WHEN_TO_RUN_NOW === $whenToRun) {
+        if (self::WHEN_TO_RUN_NOW === $this->whenToRun) {
             $scheduledActionId = $this->cron->scheduleAsyncAction(
                 HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
                 [$actionArgs],
                 false,
-                $priority
+                $this->priority
             );
 
             $this->addDebugLogMessage(
                 'Step "%s" scheduled for immediate execution with async action ID: %d',
-                $stepSlug,
+                $this->stepSlug,
                 $scheduledActionId
             );
         } else {
             // Schedule a single action
             $scheduledActionId = $this->cron->scheduleSingleAction(
-                $timestamp,
+                $this->timestamp,
                 HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
                 [$actionArgs],
                 false,
-                $priority
+                $this->priority
             );
 
             $this->addDebugLogMessage(
                 'Step %s scheduled as a single action with ID %d',
-                $stepSlug,
+                $this->stepSlug,
                 $scheduledActionId
             );
         }
@@ -352,77 +379,39 @@ class Cron implements AsyncStepProcessorInterface
         return $scheduledActionId;
     }
 
-    private function scheduleAction(
-        bool $isSingleAction,
-        int $timestamp,
-        string $stepSlug,
-        int $priority,
-        string $whenToRun,
-        string $recurrence,
-        array $nodeSettings,
-        array $step,
-        int $workflowId,
-        string $actionUID,
-        string $actionUIDHash
-    ): void {
+    private function scheduleAction(): void {
         $scheduledActionId = 0;
-        $actionArgs = $this->getActionArgs($step, $workflowId, $actionUIDHash);
+        $actionArgs = $this->getActionArgs($this->step, $this->workflowId, $this->actionUIDHash);
 
-        if ($isSingleAction) {
-            $scheduledActionId = $this->scheduleSingleAction(
-                $timestamp,
-                $stepSlug,
-                $actionArgs,
-                $priority,
-                $whenToRun
-            );
+        if ($this->isSingleAction) {
+            $scheduledActionId = $this->scheduleSingleAction($actionArgs);
         } else {
-            $scheduledActionId = $this->scheduleRecurringAction(
-                $timestamp,
-                $stepSlug,
-                $actionArgs,
-                $priority,
-                $recurrence,
-                $nodeSettings
-            );
+            $scheduledActionId = $this->scheduleRecurringAction($actionArgs);
         }
 
         // If the action is scheduled, we need to set the action ID in the scheduled step arguments
         if ($scheduledActionId > 0) {
-            $this->saveScheduledStepData(
-                $scheduledActionId,
-                $step,
-                $workflowId,
-                $actionUID,
-                $isSingleAction,
-                $nodeSettings
-            );
+            $this->saveScheduledStepData($scheduledActionId);
 
             $this->addDebugLogMessage(
                 'Successfully stored workflow step arguments for step "%s" with scheduled action ID %d',
-                $stepSlug,
+                $this->stepSlug,
                 $scheduledActionId
             );
         } else {
             $this->addDebugLogMessage(
                 'Failed to schedule action for step %s - no action ID was generated',
-                $stepSlug
+                $this->stepSlug
             );
         }
     }
 
-    private function scheduleRecurringAction(
-        int $timestamp,
-        string $stepSlug,
-        array $actionArgs,
-        int $priority,
-        string $recurrence,
-        array $nodeSettings
-    ): int {
+    private function scheduleRecurringAction(array $actionArgs): int
+    {
         $scheduledActionId = 0;
 
-        if (self::SCHEDULE_RECURRENCE_CUSTOM === $recurrence) {
-            $interval = (int)$nodeSettings['schedule']['repeatInterval'] ?? 0;
+        if (self::SCHEDULE_RECURRENCE_CUSTOM === $this->recurrence) {
+            $interval = (int)$this->nodeSettings['schedule']['repeatInterval'] ?? 0;
 
             /**
              * @param int $interval
@@ -434,11 +423,11 @@ class Cron implements AsyncStepProcessorInterface
             $interval = $this->hooks->applyFilters(
                 HooksAbstract::FILTER_INTERVAL_IN_SECONDS,
                 $interval,
-                $nodeSettings,
+                $this->nodeSettings,
                 $this->executionContext
             );
         } else {
-            $recurrence = preg_replace('/^cron_/', '', $recurrence);
+            $recurrence = preg_replace('/^cron_/', '', $this->recurrence);
 
             $interval = $this->cronSchedulesModel->getCronScheduleValueByName($recurrence);
         }
@@ -446,46 +435,41 @@ class Cron implements AsyncStepProcessorInterface
         if ($interval > 0) {
             // Schedule a recurring action
             $scheduledActionId = $this->cron->scheduleRecurringActionInSeconds(
-                $timestamp,
+                $this->timestamp,
                 $interval,
                 HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
                 [$actionArgs],
                 false,
-                $priority
+                $this->priority
             );
 
             $this->addDebugLogMessage(
                 'Step %s scheduled as recurring action with ID %d',
-                $stepSlug,
+                $this->stepSlug,
                 $scheduledActionId
             );
         } else {
             $this->addDebugLogMessage(
                 'Cannot schedule recurring step %s: Interval value must be greater than 0.',
-                $stepSlug
+                $this->stepSlug
             );
         }
 
         return $scheduledActionId;
     }
 
-    private function shouldSkipScheduling(
-        int $timestamp,
-        bool $isSingleAction,
-        bool $isFinished,
-        string $stepSlug
-    ): bool {
-        if (is_null($timestamp)) {
-            $this->addDebugLogMessage('No timestamp found, skipping step %s', $stepSlug);
+    private function shouldSkipScheduling(): bool {
+        if (is_null($this->timestamp)) {
+            $this->addDebugLogMessage('No timestamp found, skipping step %s', $this->stepSlug);
 
             return true;
         }
 
         // If a repeating action action has finished, we should not schedule it again.
-        if (! $isSingleAction && $isFinished) {
+        if (! $this->isSingleAction && $this->isFinished) {
             $this->addDebugLogMessage(
                 'Step %s has already finished, skipping',
-                $stepSlug
+                $this->stepSlug
             );
 
             return true;
