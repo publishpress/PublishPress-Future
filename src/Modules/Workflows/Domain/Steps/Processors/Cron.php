@@ -165,108 +165,19 @@ class Cron implements AsyncStepProcessorInterface
 
             $this->handleDuplicateAction($nodeSettings, $stepSlug, $actionUIDHash);
 
-            $scheduledActionId = 0;
-            $actionArgs = $this->getActionArgs($step, $workflowId, $actionUIDHash);
-
-            if ($isSingleAction) {
-                if (self::WHEN_TO_RUN_NOW === $whenToRun) {
-                    $scheduledActionId = $this->cron->scheduleAsyncAction(
-                        HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
-                        [$actionArgs],
-                        false,
-                        $priority
-                    );
-
-                    $this->addDebugLogMessage(
-                        'Step "%s" scheduled for immediate execution with async action ID: %d',
-                        $stepSlug,
-                        $scheduledActionId
-                    );
-                } else {
-                    // Schedule a single action
-                    $scheduledActionId = $this->cron->scheduleSingleAction(
-                        $timestamp,
-                        HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
-                        [$actionArgs],
-                        false,
-                        $priority
-                    );
-
-                    $this->addDebugLogMessage(
-                        'Step %s scheduled as a single action with ID %d',
-                        $stepSlug,
-                        $scheduledActionId
-                    );
-                }
-            } else {
-                if (self::SCHEDULE_RECURRENCE_CUSTOM === $recurrence) {
-                    $interval = (int)$nodeSettings['schedule']['repeatInterval'] ?? 0;
-
-                    /**
-                     * @param int $interval
-                     * @param array $nodeSettings
-                     * @param ExecutionContextInterface $executionContext
-                     *
-                     * @return int
-                     */
-                    $interval = $this->hooks->applyFilters(
-                        HooksAbstract::FILTER_INTERVAL_IN_SECONDS,
-                        $interval,
-                        $nodeSettings,
-                        $this->executionContext
-                    );
-                } else {
-                    $recurrence = preg_replace('/^cron_/', '', $recurrence);
-
-                    $interval = $this->cronSchedulesModel->getCronScheduleValueByName($recurrence);
-                }
-
-                if ($interval > 0) {
-                    // Schedule a recurring action
-                    $scheduledActionId = $this->cron->scheduleRecurringActionInSeconds(
-                        $timestamp,
-                        $interval,
-                        HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
-                        [$actionArgs],
-                        false,
-                        $priority
-                    );
-
-                    $this->addDebugLogMessage(
-                        'Step %s scheduled as recurring action with ID %d',
-                        $stepSlug,
-                        $scheduledActionId
-                    );
-                } else {
-                    $this->addDebugLogMessage(
-                        'Cannot schedule recurring step %s: Interval value must be greater than 0.',
-                        $stepSlug
-                    );
-                }
-            }
-
-            // If the action is scheduled, we need to set the action ID in the scheduled step arguments
-            if ($scheduledActionId > 0) {
-                $this->saveScheduledStepData(
-                    $scheduledActionId,
-                    $step,
-                    $workflowId,
-                    $actionUID,
-                    $isSingleAction,
-                    $nodeSettings
-                );
-
-                $this->addDebugLogMessage(
-                    'Successfully stored workflow step arguments for step "%s" with scheduled action ID %d',
-                    $stepSlug,
-                    $scheduledActionId
-                );
-            } else {
-                $this->addDebugLogMessage(
-                    'Failed to schedule action for step %s - no action ID was generated',
-                    $stepSlug
-                );
-            }
+            $this->scheduleAction(
+                $isSingleAction,
+                $timestamp,
+                $stepSlug,
+                $priority,
+                $whenToRun,
+                $recurrence,
+                $nodeSettings,
+                $step,
+                $workflowId,
+                $actionUID,
+                $actionUIDHash
+            );
         } catch (Throwable $e) {
             $this->addErrorLogMessage(
                 'Failed to schedule workflow step "%s". File: %s:%d',
@@ -397,6 +308,165 @@ class Cron implements AsyncStepProcessorInterface
 
                 break;
         }
+    }
+
+    private function scheduleSingleAction(
+        int $timestamp,
+        string $stepSlug,
+        array $actionArgs,
+        int $priority,
+        string $whenToRun
+    ): int {
+        $scheduledActionId = 0;
+
+        if (self::WHEN_TO_RUN_NOW === $whenToRun) {
+            $scheduledActionId = $this->cron->scheduleAsyncAction(
+                HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
+                [$actionArgs],
+                false,
+                $priority
+            );
+
+            $this->addDebugLogMessage(
+                'Step "%s" scheduled for immediate execution with async action ID: %d',
+                $stepSlug,
+                $scheduledActionId
+            );
+        } else {
+            // Schedule a single action
+            $scheduledActionId = $this->cron->scheduleSingleAction(
+                $timestamp,
+                HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
+                [$actionArgs],
+                false,
+                $priority
+            );
+
+            $this->addDebugLogMessage(
+                'Step %s scheduled as a single action with ID %d',
+                $stepSlug,
+                $scheduledActionId
+            );
+        }
+
+        return $scheduledActionId;
+    }
+
+    private function scheduleAction(
+        bool $isSingleAction,
+        int $timestamp,
+        string $stepSlug,
+        int $priority,
+        string $whenToRun,
+        string $recurrence,
+        array $nodeSettings,
+        array $step,
+        int $workflowId,
+        string $actionUID,
+        string $actionUIDHash
+    ): void {
+        $scheduledActionId = 0;
+        $actionArgs = $this->getActionArgs($step, $workflowId, $actionUIDHash);
+
+        if ($isSingleAction) {
+            $scheduledActionId = $this->scheduleSingleAction(
+                $timestamp,
+                $stepSlug,
+                $actionArgs,
+                $priority,
+                $whenToRun
+            );
+        } else {
+            $scheduledActionId = $this->scheduleRecurringAction(
+                $timestamp,
+                $stepSlug,
+                $actionArgs,
+                $priority,
+                $recurrence,
+                $nodeSettings
+            );
+        }
+
+        // If the action is scheduled, we need to set the action ID in the scheduled step arguments
+        if ($scheduledActionId > 0) {
+            $this->saveScheduledStepData(
+                $scheduledActionId,
+                $step,
+                $workflowId,
+                $actionUID,
+                $isSingleAction,
+                $nodeSettings
+            );
+
+            $this->addDebugLogMessage(
+                'Successfully stored workflow step arguments for step "%s" with scheduled action ID %d',
+                $stepSlug,
+                $scheduledActionId
+            );
+        } else {
+            $this->addDebugLogMessage(
+                'Failed to schedule action for step %s - no action ID was generated',
+                $stepSlug
+            );
+        }
+    }
+
+    private function scheduleRecurringAction(
+        int $timestamp,
+        string $stepSlug,
+        array $actionArgs,
+        int $priority,
+        string $recurrence,
+        array $nodeSettings
+    ): int {
+        $scheduledActionId = 0;
+
+        if (self::SCHEDULE_RECURRENCE_CUSTOM === $recurrence) {
+            $interval = (int)$nodeSettings['schedule']['repeatInterval'] ?? 0;
+
+            /**
+             * @param int $interval
+             * @param array $nodeSettings
+             * @param ExecutionContextInterface $executionContext
+             *
+             * @return int
+             */
+            $interval = $this->hooks->applyFilters(
+                HooksAbstract::FILTER_INTERVAL_IN_SECONDS,
+                $interval,
+                $nodeSettings,
+                $this->executionContext
+            );
+        } else {
+            $recurrence = preg_replace('/^cron_/', '', $recurrence);
+
+            $interval = $this->cronSchedulesModel->getCronScheduleValueByName($recurrence);
+        }
+
+        if ($interval > 0) {
+            // Schedule a recurring action
+            $scheduledActionId = $this->cron->scheduleRecurringActionInSeconds(
+                $timestamp,
+                $interval,
+                HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
+                [$actionArgs],
+                false,
+                $priority
+            );
+
+            $this->addDebugLogMessage(
+                'Step %s scheduled as recurring action with ID %d',
+                $stepSlug,
+                $scheduledActionId
+            );
+        } else {
+            $this->addDebugLogMessage(
+                'Cannot schedule recurring step %s: Interval value must be greater than 0.',
+                $stepSlug
+            );
+        }
+
+        return $scheduledActionId;
     }
 
     private function shouldSkipScheduling(
