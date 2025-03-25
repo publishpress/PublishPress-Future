@@ -198,8 +198,8 @@ class Cron implements AsyncStepProcessorInterface
             $isSingleAction = self::SCHEDULE_RECURRENCE_SINGLE === $recurrence;
             $isFinished = WorkflowScheduledStepModel::getMetaIsFinished($workflowId, $actionUIDHash);
 
-            // If the action is already finished, we don't need to schedule it again.
-            if ($isFinished) {
+            // If a repeating action action has finished, we should not schedule it again.
+            if (! $isSingleAction && $isFinished) {
                 $this->addDebugLogMessage(
                     'Step %s has already finished, skipping',
                     $stepSlug
