@@ -163,37 +163,7 @@ class Cron implements AsyncStepProcessorInterface
                 return;
             }
 
-            $duplicateHandling = $nodeSettings['schedule']['duplicateHandling'] ?? self::DUPLICATE_HANDLING_DEFAULT;
-
-            switch ($duplicateHandling) {
-                case self::DUPLICATE_HANDLING_CREATE_NEW:
-                    // If the action is already scheduled, we should create a new one.
-                    $this->addDebugLogMessage(
-                        'Step %s is already scheduled based on its ID, creating a new one',
-                        $stepSlug
-                    );
-
-                    // TODO: Make sure the action is not duplicated for the same step and execution ID.
-                    // Is the execution ID the same for multiple calls to the same action hook?
-                    // Use a session ID instead?
-                    break;
-
-                case self::DUPLICATE_HANDLING_REPLACE:
-                    // If the action is already scheduled, we should replace it.
-                    $this->addDebugLogMessage(
-                        'Step %s is already scheduled based on its ID, unscheduling to replace it',
-                        $stepSlug
-                    );
-
-                    $scheduledActionsModel = new ScheduledActionsModel();
-                    $actionId = $scheduledActionsModel->getActionIdByActionUIDHash($actionUIDHash);
-
-                    if ($actionId) {
-                        $scheduledActionsModel->cancelActionById($actionId);
-                    }
-
-                    break;
-            }
+            $this->handleDuplicateAction($nodeSettings, $stepSlug, $actionUIDHash);
 
             $scheduledActionId = 0;
             $actionArgs = $this->getActionArgs($step, $workflowId, $actionUIDHash);
@@ -389,6 +359,44 @@ class Cron implements AsyncStepProcessorInterface
         );
 
         return $timestamp;
+    }
+
+    private function handleDuplicateAction(
+        array $nodeSettings,
+        string $stepSlug,
+        string $actionUIDHash
+    ): void {
+        $duplicateHandling = $nodeSettings['schedule']['duplicateHandling'] ?? self::DUPLICATE_HANDLING_DEFAULT;
+
+        switch ($duplicateHandling) {
+            case self::DUPLICATE_HANDLING_CREATE_NEW:
+                // If the action is already scheduled, we should create a new one.
+                $this->addDebugLogMessage(
+                    'Step %s is already scheduled based on its ID, creating a new one',
+                    $stepSlug
+                );
+
+                // TODO: Make sure the action is not duplicated for the same step and execution ID.
+                // Is the execution ID the same for multiple calls to the same action hook?
+                // Use a session ID instead?
+                break;
+
+            case self::DUPLICATE_HANDLING_REPLACE:
+                // If the action is already scheduled, we should replace it.
+                $this->addDebugLogMessage(
+                    'Step %s is already scheduled based on its ID, unscheduling to replace it',
+                    $stepSlug
+                );
+
+                $scheduledActionsModel = new ScheduledActionsModel();
+                $actionId = $scheduledActionsModel->getActionIdByActionUIDHash($actionUIDHash);
+
+                if ($actionId) {
+                    $scheduledActionsModel->cancelActionById($actionId);
+                }
+
+                break;
+        }
     }
 
     private function shouldSkipScheduling(
