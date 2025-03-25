@@ -882,7 +882,7 @@ return [
                 WorkflowsHooksAbstract::FILTER_WORKFLOW_ENGINE_MAP_STEP_RUNNER,
                 null,
                 $nodeName,
-                $executionContext
+                $workflowExecutionId
             );
 
             if (is_object($stepRunner)) {
