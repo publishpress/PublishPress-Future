@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fixed false positive results for invalid JSON logic on post query input validation (Issue #1228).
 - Fixed scheduled delay tasks registration to not require a custom unique task identifier (Issue #1165).
+- Fixed detection of completed scheduled actions for single tasks, now properly allowing the same action to be scheduled multiple times (Issue #1165).
 
 ### Developers
 
@@ -479,7 +480,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix some translations in ES, FR, and IT languages, #798
-- Fix “no future actions” message in the scheduled actions list, #788
+- Fix "no future actions" message in the scheduled actions list, #788
 - Try to avoid fatal error for wrong argument counting
 - Minor issues pointed by PHPCS
 - Escape an exception message
@@ -724,7 +725,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Fix JS error Cannot read properties of undefined (reading ‘length’) on the block editor, #561
+- Fix JS error Cannot read properties of undefined (reading 'length') on the block editor, #561
 
 ## [3.1.2] - 07 Nov, 2023
 
