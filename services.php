@@ -1263,7 +1263,8 @@ return [
             return $hooks->applyFilters(
                 WorkflowsHooksAbstract::FILTER_WORKFLOW_ENGINE_MAP_TRIGGER,
                 $stepRunner,
-                $nodeName
+                $nodeName,
+                $executionContext
             );
         };
     },
