@@ -159,19 +159,7 @@ class Cron implements AsyncStepProcessorInterface
                 $whenToRun
             );
 
-            if (is_null($timestamp)) {
-                $this->addDebugLogMessage('No timestamp found, skipping step %s', $stepSlug);
-
-                return;
-            }
-
-            // If a repeating action action has finished, we should not schedule it again.
-            if (! $isSingleAction && $isFinished) {
-                $this->addDebugLogMessage(
-                    'Step %s has already finished, skipping',
-                    $stepSlug
-                );
-
+            if ($this->shouldSkipScheduling($timestamp, $isSingleAction, $isFinished, $stepSlug)) {
                 return;
             }
 
@@ -401,6 +389,31 @@ class Cron implements AsyncStepProcessorInterface
         );
 
         return $timestamp;
+    }
+
+    private function shouldSkipScheduling(
+        int $timestamp,
+        bool $isSingleAction,
+        bool $isFinished,
+        string $stepSlug
+    ): bool {
+        if (is_null($timestamp)) {
+            $this->addDebugLogMessage('No timestamp found, skipping step %s', $stepSlug);
+
+            return true;
+        }
+
+        // If a repeating action action has finished, we should not schedule it again.
+        if (! $isSingleAction && $isFinished) {
+            $this->addDebugLogMessage(
+                'Step %s has already finished, skipping',
+                $stepSlug
+            );
+
+            return true;
+        }
+
+        return false;
     }
 
     private function getScheduledActionUniqueId(int $workflowId, array $node, $useTimestamp = true): string
