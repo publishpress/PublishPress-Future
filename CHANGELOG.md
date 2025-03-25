@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Restored Post ID variables for post related triggers.
 - Removed the `global.run_id` global variables and moved it to the workflow global variable as `global.workflow.execution_id`.
 - Renamed workflow variable helpers, to workflow value processors.
+- Changed default action unique ID by including the current timestamp, making it more unique by default.
 
 ### Fixed
 
