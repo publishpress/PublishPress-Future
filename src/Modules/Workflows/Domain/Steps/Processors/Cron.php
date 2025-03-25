@@ -149,13 +149,14 @@ class Cron implements AsyncStepProcessorInterface
             }
 
             $recurrence = $nodeSettings['schedule']['recurrence'] ?? self::SCHEDULE_RECURRENCE_SINGLE;
+            $isSingleAction = self::SCHEDULE_RECURRENCE_SINGLE === $recurrence;
+
             $whenToRun = $nodeSettings['schedule']['whenToRun'] ?? self::WHEN_TO_RUN_NOW;
-            $duplicateHandling = $nodeSettings['schedule']['duplicateHandling'] ?? self::DUPLICATE_HANDLING_DEFAULT;
+            $shouldRunNow = $whenToRun === self::WHEN_TO_RUN_NOW;
 
             // Schedule
-            if (self::SCHEDULE_RECURRENCE_SINGLE === $recurrence && self::WHEN_TO_RUN_NOW === $whenToRun) {
-                $timestamp = 0;
-            } else {
+            $timestamp = 0;
+            if (! $isSingleAction || ! $shouldRunNow) {
                 $timestamp = $this->calculateTimestamp(
                     $whenToRun,
                     $nodeSettings['schedule']['dateSource'] ?? self::DATE_SOURCE_CALENDAR,
@@ -177,25 +178,6 @@ class Cron implements AsyncStepProcessorInterface
 
             $actionUID = $this->getScheduledActionUniqueId($workflowId, $node);
             $actionUIDHash = md5($actionUID);
-            $scheduledActionId = 0;
-
-            $actionArgs = [
-                'workflowId' => $workflowId,
-                'workflowExecutionId' => $this->executionContext->getVariable('global.workflow.execution_id'),
-                'stepId' => $node['id'],
-                'stepLabel' => $node['data']['label'] ?? null,
-                'stepName' => $node['data']['name'],
-                'pluginVersion' => $this->pluginVersion,
-                'actionUIDHash' => $actionUIDHash,
-                // This is not always set, only for some post-related triggers. Used to keep the post ID as reference.
-                'postId' => $this->executionContext->getVariable('global.trigger.postId'),
-            ];
-
-            $compactedArgs = $this->compactArguments($step);
-
-            $scheduledActionsModel = new ScheduledActionsModel();
-
-            $isSingleAction = self::SCHEDULE_RECURRENCE_SINGLE === $recurrence;
             $isFinished = WorkflowScheduledStepModel::getMetaIsFinished($workflowId, $actionUIDHash);
 
             // If a repeating action action has finished, we should not schedule it again.
@@ -207,6 +189,8 @@ class Cron implements AsyncStepProcessorInterface
 
                 return;
             }
+
+            $duplicateHandling = $nodeSettings['schedule']['duplicateHandling'] ?? self::DUPLICATE_HANDLING_DEFAULT;
 
             switch ($duplicateHandling) {
                 case self::DUPLICATE_HANDLING_CREATE_NEW:
@@ -228,6 +212,7 @@ class Cron implements AsyncStepProcessorInterface
                         $stepSlug
                     );
 
+                    $scheduledActionsModel = new ScheduledActionsModel();
                     $actionId = $scheduledActionsModel->getActionIdByActionUIDHash($actionUIDHash);
 
                     if ($actionId) {
@@ -236,6 +221,9 @@ class Cron implements AsyncStepProcessorInterface
 
                     break;
             }
+
+            $scheduledActionId = 0;
+            $actionArgs = $this->getActionArgs($step, $workflowId, $actionUIDHash);
 
             if ($isSingleAction) {
                 if (self::WHEN_TO_RUN_NOW === $whenToRun) {
@@ -328,6 +316,8 @@ class Cron implements AsyncStepProcessorInterface
                 $argsModel->setActionIdOnArgs();
                 $argsModel->update();
 
+                $compactedArgs = $this->compactArguments($step);
+
                 $scheduledStepModel = new WorkflowScheduledStepModel();
                 $scheduledStepModel->setActionId($scheduledActionId);
                 $scheduledStepModel->setWorkflowId($workflowId);
@@ -368,13 +358,31 @@ class Cron implements AsyncStepProcessorInterface
         }
     }
 
-    private function getScheduledActionUniqueId(int $workflowId, array $node): string
+    private function getActionArgs(array $step, int $workflowId, string $actionUIDHash): array
+    {
+        return [
+            'workflowId' => $workflowId,
+            'workflowExecutionId' => $this->executionContext->getVariable('global.workflow.execution_id'),
+            'stepId' => $step['id'],
+            'stepLabel' => $step['data']['label'] ?? null,
+            'stepName' => $step['data']['name'],
+            'pluginVersion' => $this->pluginVersion,
+            'actionUIDHash' => $actionUIDHash,
+            // This is not always set, only for some post-related triggers. Used to keep the post ID as reference.
+            'postId' => $this->executionContext->getVariable('global.trigger.postId'),
+        ];
+    }
+
+    private function getScheduledActionUniqueId(int $workflowId, array $node, $useTimestamp = true): string
     {
         $uniqueId = [
             'workflowId' => $workflowId,
             'stepId' => $node['id'],
-            'timestamp' => time(),
         ];
+
+        if ($useTimestamp) {
+            $uniqueId['timestamp'] = time();
+        }
 
         if (isset($node['data']['settings']['schedule']['uniqueIdExpression'])) {
             $uniqueIdExpression = $node['data']['settings']['schedule']['uniqueIdExpression'];
