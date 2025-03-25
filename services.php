@@ -1260,8 +1260,6 @@ return [
                     break;
             }
 
-            $hooks = $container->get(ServicesAbstract::HOOKS);
-
             return $hooks->applyFilters(
                 WorkflowsHooksAbstract::FILTER_WORKFLOW_ENGINE_MAP_TRIGGER,
                 $stepRunner,
