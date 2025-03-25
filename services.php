@@ -881,7 +881,8 @@ return [
             $stepRunner = $hooks->applyFilters(
                 WorkflowsHooksAbstract::FILTER_WORKFLOW_ENGINE_MAP_STEP_RUNNER,
                 null,
-                $nodeName
+                $nodeName,
+                $executionContext
             );
 
             if (is_object($stepRunner)) {
