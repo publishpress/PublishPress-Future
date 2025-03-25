@@ -140,45 +140,30 @@ class Cron implements AsyncStepProcessorInterface
     {
         try {
             $stepSlug = $step['node']['data']['slug'];
-
             $node = $this->getNodeFromStep($step);
             $nodeSettings = $this->getNodeSettings($node);
-
-            if (! isset($nodeSettings['schedule'])) {
-                $nodeSettings['schedule'] = [];
-            }
-
+            $workflowId = $this->executionContext->getVariable('global.workflow.id');
+            $actionUID = $this->getScheduledActionUniqueId($workflowId, $node);
+            $actionUIDHash = md5($actionUID);
+            $priority = (int)($nodeSettings['schedule']['priority'] ?? self::DEFAULT_PRIORITY);
+            $isFinished = WorkflowScheduledStepModel::getMetaIsFinished($workflowId, $actionUIDHash);
             $recurrence = $nodeSettings['schedule']['recurrence'] ?? self::SCHEDULE_RECURRENCE_SINGLE;
             $isSingleAction = self::SCHEDULE_RECURRENCE_SINGLE === $recurrence;
 
             $whenToRun = $nodeSettings['schedule']['whenToRun'] ?? self::WHEN_TO_RUN_NOW;
-            $shouldRunNow = $whenToRun === self::WHEN_TO_RUN_NOW;
 
             // Schedule
-            $timestamp = 0;
-            if (! $isSingleAction || ! $shouldRunNow) {
-                $timestamp = $this->calculateTimestamp(
-                    $whenToRun,
-                    $nodeSettings['schedule']['dateSource'] ?? self::DATE_SOURCE_CALENDAR,
-                    $nodeSettings['schedule']['specificDate'] ?? '',
-                    $nodeSettings['schedule']['customDateSource']['expression'] ?? '',
-                    $nodeSettings['schedule']['dateOffset'] ?? ''
-                );
-            }
+            $timestamp = $this->getCalculatedTimestamp(
+                $nodeSettings,
+                $isSingleAction,
+                $whenToRun
+            );
 
             if (is_null($timestamp)) {
                 $this->addDebugLogMessage('No timestamp found, skipping step %s', $stepSlug);
 
                 return;
             }
-
-            $priority = (int)($nodeSettings['schedule']['priority'] ?? self::DEFAULT_PRIORITY);
-
-            $workflowId = $this->executionContext->getVariable('global.workflow.id');
-
-            $actionUID = $this->getScheduledActionUniqueId($workflowId, $node);
-            $actionUIDHash = md5($actionUID);
-            $isFinished = WorkflowScheduledStepModel::getMetaIsFinished($workflowId, $actionUIDHash);
 
             // If a repeating action action has finished, we should not schedule it again.
             if (! $isSingleAction && $isFinished) {
@@ -394,6 +379,28 @@ class Cron implements AsyncStepProcessorInterface
         }
 
         $scheduledStepModel->insert();
+    }
+
+    private function getCalculatedTimestamp(
+        array $nodeSettings,
+        bool $isSingleAction,
+        string $whenToRun
+    ): int {
+        $shouldRunNow = $whenToRun === self::WHEN_TO_RUN_NOW;
+
+        if ($isSingleAction && $shouldRunNow) {
+            return 0;
+        }
+
+        $timestamp = $this->calculateTimestamp(
+            $whenToRun,
+            $nodeSettings['schedule']['dateSource'] ?? self::DATE_SOURCE_CALENDAR,
+            $nodeSettings['schedule']['specificDate'] ?? '',
+            $nodeSettings['schedule']['customDateSource']['expression'] ?? '',
+            $nodeSettings['schedule']['dateOffset'] ?? ''
+        );
+
+        return $timestamp;
     }
 
     private function getScheduledActionUniqueId(int $workflowId, array $node, $useTimestamp = true): string
@@ -889,7 +896,13 @@ class Cron implements AsyncStepProcessorInterface
 
     public function getNodeSettings(array $node)
     {
-        return $this->generalProcessor->getNodeSettings($node);
+        $nodeSettings = $this->generalProcessor->getNodeSettings($node);
+
+        if (! isset($nodeSettings['schedule'])) {
+            $nodeSettings['schedule'] = [];
+        }
+
+        return $nodeSettings;
     }
 
     public function logError(string $message, int $workflowId, array $step)
