@@ -958,7 +958,7 @@ class Cron implements AsyncStepProcessorInterface
 
         if ($markAsCompletedAfterExecution) {
             $this->addDebugLogMessage(
-                'Step scheduled action with ID %d completed',
+                'Scheduled action with ID %d has been successfully completed',
                 $actionId
             );
 
