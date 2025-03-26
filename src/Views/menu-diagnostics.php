@@ -41,7 +41,6 @@ $schemaHealthErrors = [
     $workflowScheduledStepsSchema->getTableName() => $workflowScheduledStepsSchema->getErrors(),
 ];
 
-ray($schemaHealthErrors);
 ?>
 
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
