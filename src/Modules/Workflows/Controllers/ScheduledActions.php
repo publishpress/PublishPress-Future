@@ -125,6 +125,13 @@ class ScheduledActions implements InitializableInterface
             [$this, 'storeWorkflowCompactedArgsForStoredAction'],
             10
         );
+
+        $this->hooks->addFilter(
+            HooksAbstract::FILTER_ACTION_SCHEDULER_ADMIN_NOTICE,
+            [$this, 'filterActionSchedulerAdminNotice'],
+            15,
+            3
+        );
     }
 
     private function getStepFromActionId(string $actionId): array
@@ -213,6 +220,60 @@ class ScheduledActions implements InitializableInterface
         }
 
         return $title;
+    }
+
+    public function filterActionSchedulerAdminNotice($html, $action, $notification)
+    {
+        if ($action->get_group() !== 'publishpress-future') {
+            return $html;
+        }
+
+        $hook = $action->get_hook();
+
+        switch ($hook) {
+            case WorkflowsHooksAbstract::ACTION_WORKFLOW_SAVED:
+                $args = $action->get_args();
+
+            if (isset($args['postId']) && isset($args['workflow']) && 'expire' === $args['workflow']) {
+                $transientName = 'post-expirator-notice-' . (int) $args['postId'];
+                $noticeMessage = get_transient($transientName);
+                delete_transient($transientName);
+
+                // translators: %s is the action description
+                $html = sprintf(
+                    __('Successfully executed action: %s', 'post-expirator'),
+                    $noticeMessage
+                );
+                }
+                break;
+
+            case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_STEP:
+                $html = __('Executed workflow scheduled step', 'post-expirator');
+                break;
+
+            case WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS:
+                $days = $this->settingsFacade->getScheduledWorkflowStepsCleanupRetention();
+
+                $html = sprintf(
+                    __('Cleaned up completed scheduled steps older than %d days', 'post-expirator'),
+                    $days
+                );
+                break;
+
+            case WorkflowsHooksAbstract::ACTION_CHECK_EXPIRED_ACTIONS:
+                $html = __('Checked for expired actions', 'post-expirator');
+                break;
+
+            case WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS:
+                $html = __('Cleaned up orphan workflow scheduled step arguments', 'post-expirator');
+                break;
+
+            case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_STEP_ACTION:
+                $html = __('Unscheduled workflow recurring scheduled step', 'post-expirator');
+                break;
+        }
+
+        return $html;
     }
 
     public function showArgsInArgsColumn($html, $row)
