@@ -121,6 +121,11 @@
       "description": "WordPress hooks",
       "pattern": "hooks",
       "response": "Use our HOOKS service to register hooks. Hook names are defined as constants in the HooksAbstract classes."
+    },
+    {
+      "description": "Changelog",
+      "pattern": "changelog",
+      "response": "Use the CHANGELOG.md file to write the changelog. Use the present tense and the imperative mood. Follow the Keep a Changelog standard and the Semantic Versioning standard. Shorter sentences, shorter paragraphs, but descriptive for general users.."
     }
   ]
 }
