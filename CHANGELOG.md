@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Added the `global.engine_execution_id` variable to the workflows.
 - Added the "Repeats done" output branch to the "Schedule delay" step in the workflow editor - PRO.
+- Added the variables "repeat_count" and "repeat_limit" to the "Schedule delay" step - PRO.
 
 ### Changed
 
@@ -19,11 +20,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Changed default action unique ID by including the current timestamp, making it more unique by default.
 - Changed the label "Next" to "At time" in the output of the "Schedule delay" step in the workflow editor.
 
+### Removed
+
+- Removed the "Allow duplicate scgeduling" option in the Schedule delay step in the workflow editor. To prevent a duplicated action, specify a custom Unique Action Identified after enabling Advanced settings in the workflow editor.
+
 ### Fixed
 
 - Fixed false positive results for invalid JSON logic on post query input validation (Issue #1228).
 - Fixed scheduled delay tasks registration to not require a custom unique task identifier (Issue #1165).
 - Fixed detection of completed scheduled actions for single tasks, now properly allowing the same action to be scheduled multiple times (Issue #1165).
+- Fixed the action that unschedules completed recurring actions - PRO (Issue #1165).
 
 ### Developers
 
