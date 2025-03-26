@@ -1,0 +1,13 @@
+---
+description: Commit message
+globs:
+alwaysApply: true
+---
+
+# Commit messages:
+
+- Write short commit messages.
+- Add a title separated by a blank line and limited to 50 chars.
+- Add more details in the body text if needed.
+- Use the present tense.
+- Use imperative mood.
