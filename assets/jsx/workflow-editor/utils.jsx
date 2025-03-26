@@ -396,6 +396,11 @@ function expandVariableWithChildren(variable) {
 
     variable = formatVariableStructure(variable);
 
+    if (! dataType) {
+        console.log('No data type found for variable', variable);
+        return variable;
+    }
+
     // If the variable is an object, add its properties as children
     if (dataType.primitiveType === 'object') {
         variable.children = getVariableProperties(variable);
