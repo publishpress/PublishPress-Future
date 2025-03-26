@@ -228,8 +228,6 @@ export function getGlobalVariablesExpanded(globalVariables) {
         variable.priority = variable?.priority || DEFAULT_VARIABLE_PRIORITY;
     });
 
-    console.log(globalVariablesExpanded);
-
     return globalVariablesExpanded;
 }
 
