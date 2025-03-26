@@ -913,10 +913,12 @@ class Cron implements AsyncStepProcessorInterface
         $shouldExecute = true;
 
         if ($isRecurrent) {
-            $this->executionContext->setVariable("$stepSlug.is_recurring", true);
-
             // Check if the node has a limit of executions. Default is 'forever'.
             $repeatUntil = $scheduledStepModel->getRepeatUntil();
+            $runCount = (int)$scheduledStepModel->getRunCount();
+
+            $expandedArgs['runtimeVariables'][$stepSlug]['is_recurring'] = true;
+            $expandedArgs['runtimeVariables'][$stepSlug]['repeat_count'] = $runCount + 1;
 
             if ($repeatUntil === 'date') {
                 $repeatUntilDate = strtotime($scheduledStepModel->getRepeatUntilDate() ?? '');
@@ -926,11 +928,9 @@ class Cron implements AsyncStepProcessorInterface
                     $markAsCompletedAfterExecution = true;
                 }
             } elseif ($repeatUntil === 'times') {
-                $runCount = (int)$scheduledStepModel->getRunCount();
                 $runLimit = (int)$scheduledStepModel->getRepeatTimes() ?? self::DEFAULT_REPEAT_UNTIL_TIMES;
 
-                $this->executionContext->setVariable("$stepSlug.repeat_count", $runCount);
-                $this->executionContext->setVariable("$stepSlug.repeat_limit", $runLimit);
+                $expandedArgs['runtimeVariables'][$stepSlug]['repeat_limit'] = $runLimit;
 
                 // Will this be the last execution?
                 if ($runCount >= $runLimit - 1) {
