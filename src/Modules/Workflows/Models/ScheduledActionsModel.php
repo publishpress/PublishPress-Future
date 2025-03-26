@@ -163,21 +163,19 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
     {
         global $wpdb;
 
-        // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching
-        $wpdb->query(
-            // The workflow ID needs to be cast to a string because it's a JSON field.
-            $wpdb->prepare(
-                "UPDATE {$wpdb->prefix}actionscheduler_actions AS asa
-                SET asa.status = 'canceled'
-                WHERE JSON_EXTRACT(asa.args, '$[0].workflowId') = %s
-                    AND JSON_EXTRACT(asa.args, '$[0].actionUIDHash') = %s
-                    AND asa.status = 'pending' AND asa.group_id = %d",
-                $workflowId,
-                $actionUIDHash,
-                $this->getGroupID()
-            )
+        $query = $wpdb->prepare(
+            "UPDATE {$wpdb->prefix}actionscheduler_actions AS asa
+            SET asa.status = 'canceled'
+            WHERE JSON_EXTRACT(asa.extended_args, '$[0].workflowId') = %d
+                AND JSON_UNQUOTE(JSON_EXTRACT(asa.extended_args, '$[0].actionUIDHash')) = %s
+                AND asa.status = 'pending' AND asa.group_id = %d",
+            $workflowId,
+            $actionUIDHash,
+            $this->getGroupID()
         );
-        // phpcs:enable
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $wpdb->query($query);
     }
 
     /**
