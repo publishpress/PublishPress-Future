@@ -50,7 +50,7 @@
     {
       "description": "Short commit messages",
       "pattern": "short commit message",
-      "response": "Write short commit messages. Use the present tense. Use the imperative mood. Keep it under 50 characters."
+      "response": "Write short commit messages. Use the present tense. Use the imperative mood. Keep it under 50 characters in the title and a little more in the body."
     },
     {
       "description": "PSR12 Code style",
