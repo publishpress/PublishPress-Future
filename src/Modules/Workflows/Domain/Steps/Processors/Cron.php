@@ -234,7 +234,6 @@ class Cron implements AsyncStepProcessorInterface
             $this->executionContext->setVariable($this->stepSlug, [
                 'schedule_date' => date('Y-m-d H:i:s', $this->timestamp),
                 'action_uid_hash' => $this->actionUIDHash,
-                'is_recurring' => ! $this->isSingleAction,
                 'repeat_count' => 0,
                 'repeat_limit' => 0,
             ]);
@@ -917,7 +916,6 @@ class Cron implements AsyncStepProcessorInterface
             $repeatUntil = $scheduledStepModel->getRepeatUntil();
             $runCount = (int)$scheduledStepModel->getRunCount();
 
-            $expandedArgs['runtimeVariables'][$stepSlug]['is_recurring'] = true;
             $expandedArgs['runtimeVariables'][$stepSlug]['repeat_count'] = $runCount + 1;
 
             if ($repeatUntil === 'date') {

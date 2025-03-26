@@ -119,12 +119,6 @@ class ScheduleDelay implements StepTypeInterface
                 "description" => __("The unique ID hash of the action that will run.", "post-expirator"),
             ],
             [
-                "name" => "is_recurring",
-                "type" => "boolean",
-                "label" => __("Is recurring", "post-expirator"),
-                "description" => __("Whether the step is recurring.", "post-expirator"),
-            ],
-            [
                 "name" => "repeat_count",
                 "type" => "integer",
                 "label" => __("Repeat count", "post-expirator"),
