@@ -1,0 +1,126 @@
+{
+  "name": "PublishPress Future",
+  "description": "WordPress plugin for scheduling post actions for future dates",
+  "rules": [
+    {
+      "description": "Use functional components for React",
+      "pattern": "React component",
+      "response": "Always use functional components with hooks instead of class components."
+    },
+    {
+      "description": "PHP version requirements",
+      "pattern": "PHP version",
+      "response": "This project requires PHP 7.4 or higher."
+    },
+    {
+      "description": "Project structure conventions",
+      "pattern": "code organization",
+      "response": "Follow the project's organization: Core for base classes, Framework for reusable components, Modules for feature-specific code, Views for templates."
+    },
+    {
+      "description": "Domain Driven Development principles",
+      "pattern": "DDD",
+      "response": "Use Domain Driven Development principles with clear separation of concerns. Place business logic in domain models, not in controllers."
+    },
+    {
+      "description": "Coding standards",
+      "pattern": "coding standards",
+      "response": "Follow WordPress coding standards with PSR-4 autoloading. Use namespaces with PublishPress\\Future prefix."
+    },
+    {
+      "description": "WordPress hooks naming",
+      "pattern": "hook naming",
+      "response": "Prefix all hooks with 'publishpressfuture_' for consistency and to avoid conflicts."
+    },
+    {
+      "description": "i18n standards",
+      "pattern": "translation",
+      "response": "All user-facing strings must be translatable using WordPress __() or similar functions. Use text domain 'post-expirator'."
+    },
+    {
+      "description": "Action Scheduler usage",
+      "pattern": "scheduling",
+      "response": "Use Action Scheduler library instead of WP Cron for reliable task scheduling. But we have a custom service for that."
+    },
+    {
+      "description": "Clean Code practices",
+      "pattern": "clean code",
+      "response": "Follow Clean Code principles: meaningful variable names, small functions with single responsibility, and proper documentation."
+    },
+    {
+      "description": "Short commit messages",
+      "pattern": "short commit message",
+      "response": "Write short commit messages. Use the present tense. Use the imperative mood. Keep it under 50 characters."
+    },
+    {
+      "description": "PSR12 Code style",
+      "pattern": "PSR12",
+      "response": "Follow the PSR12 code style. Use 4 spaces for indentation. Use single quotes for strings."
+    },
+    {
+      "description": "Mininimum WordPress compoatibility",
+      "pattern": "WordPress",
+      "response": "Use WordPress 6.7. If higher versions are required, check with the team first."
+    },
+    {
+      "description": "Naming conventions",
+      "pattern": "naming conventions",
+      "response": "Use lowercase letters for file names. Use dashes for multi-word file names. Use underscores for internal function names. Use camelCase for class names."
+    },
+    {
+      "description": "Code comments",
+      "pattern": "code comments",
+      "response": "Use code comments to explain why behind the code in more complex functions. Keep them short and to the point. Use the present tense. Use the imperative mood."
+    },
+    {
+      "description": "Testable code",
+      "pattern": "testable code",
+      "response": "Write testable code. Use dependency injection to inject dependencies. Use mocks or the services container to test the code. Use the Codeception framework."
+    },
+    {
+      "description": "Documentation",
+      "pattern": "documentation",
+      "response": "Write documentation for all functions and classes. Use the WordPress Codex and the PHPDoc standard."
+    },
+    {
+      "description": "Code quality",
+      "pattern": "code quality",
+      "response": "Write code that is clean, readable, and maintainable. Use the PHPStan framework to check the code quality."
+    },
+    {
+      "description": "Object-oriented programming",
+      "pattern": "OOP",
+      "response": "Use object-oriented programming principles. Use classes and objects. Avoid inheritance, polymorphism, and traits. Use interfaces and composition instead."
+    },
+    {
+      "description": "SOLID principles",
+      "pattern": "SOLID",
+      "response": "Use the SOLID principles to write code that is easy to maintain and extend. Use the Single Responsibility Principle, Open/Closed Principle, Liskov Substitution Principle, Interface Segregation Principle, and Dependency Inversion Principle."
+    },
+    {
+      "description": "Line end",
+      "pattern": "line end",
+      "response": "Use Unix line endings."
+    },
+    {
+      "description": "Variable naming",
+      "pattern": "variable naming",
+      "response": "Use descriptive variable names with auxiliary verbs (e.g. isLoading, hasError)."
+    },
+    {
+      "description": "Function naming",
+      "pattern": "function naming",
+      "response": "Use descriptive function names with auxiliary verbs (e.g. getUser, setUser)."
+    },
+    {
+      "description": "Use our services container",
+      "pattern": "services container",
+      "response": "Use our services container to inject dependencies. Don't use service locator pattern, use dependency injection instead. It is defined in services.php, and services names are defined in the ServicesAbstract class."
+    },
+    {
+      "description": "WordPress hooks",
+      "pattern": "hooks",
+      "response": "Use our HOOKS service to register hooks. Hook names are defined as constants in the HooksAbstract classes."
+    }
+  ]
+}

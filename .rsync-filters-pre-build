@@ -47,3 +47,4 @@
 - gh_token.txt
 - .env
 - .env.example
+- .cursor.json
