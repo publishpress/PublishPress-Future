@@ -161,9 +161,14 @@ class Cron implements AsyncStepProcessorInterface
     private $nodeSettings;
 
     /**
+     * @var string
+     */
+    private $stepId;
+
+    /**
      * @var array
      */
-    private $step;
+    private $stepData;
 
     /**
      * @var bool
@@ -205,8 +210,9 @@ class Cron implements AsyncStepProcessorInterface
         try {
             $node = $this->getNodeFromStep($step);
 
-            $this->step = $step;
-            $this->stepSlug = $this->step['node']['data']['slug'];
+            $this->stepId = $step['node']['id'];
+            $this->stepData = $step['node']['data'];
+            $this->stepSlug = $this->stepData['slug'];
             $this->nodeSettings = $this->getNodeSettings($node);
             $this->workflowId = $this->executionContext->getVariable('global.workflow.id');
             $this->actionUID = $this->getScheduledActionUniqueId($node);
@@ -243,9 +249,9 @@ class Cron implements AsyncStepProcessorInterface
         return [
             'workflowId' => $this->workflowId,
             'workflowExecutionId' => $this->executionContext->getVariable('global.workflow.execution_id'),
-            'stepId' => $this->step['id'],
-            'stepLabel' => $this->step['data']['label'] ?? null,
-            'stepName' => $this->step['data']['name'],
+            'stepId' => $this->stepId,
+            'stepLabel' => $this->stepData['label'] ?? null,
+            'stepName' => $this->stepData['name'],
             'pluginVersion' => $this->pluginVersion,
             'actionUIDHash' => $this->actionUIDHash,
             // This is not always set, only for some post-related triggers. Used to keep the post ID as reference.
@@ -271,7 +277,7 @@ class Cron implements AsyncStepProcessorInterface
         $scheduledStepModel = new WorkflowScheduledStepModel();
         $scheduledStepModel->setActionId($scheduledActionId);
         $scheduledStepModel->setWorkflowId($this->workflowId);
-        $scheduledStepModel->setStepId($this->step['id']);
+        $scheduledStepModel->setStepId($this->stepId);
         $scheduledStepModel->setActionUID($this->actionUID);
         $scheduledStepModel->setArgs($compactedArgs);
         $scheduledStepModel->setRunCount(0);
