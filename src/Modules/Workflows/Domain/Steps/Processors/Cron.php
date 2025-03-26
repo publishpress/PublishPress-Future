@@ -205,10 +205,11 @@ class Cron implements AsyncStepProcessorInterface
         try {
             $node = $this->getNodeFromStep($step);
 
-            $this->stepSlug = $step['node']['data']['slug'];
+            $this->step = $step;
+            $this->stepSlug = $this->step['node']['data']['slug'];
             $this->nodeSettings = $this->getNodeSettings($node);
             $this->workflowId = $this->executionContext->getVariable('global.workflow.id');
-            $this->actionUID = $this->getScheduledActionUniqueId($this->workflowId, $node);
+            $this->actionUID = $this->getScheduledActionUniqueId($node);
             $this->actionUIDHash = md5($this->actionUID);
             $this->priority = (int)($this->nodeSettings['schedule']['priority'] ?? self::DEFAULT_PRIORITY);
             $this->isFinished = WorkflowScheduledStepModel::getMetaIsFinished($this->workflowId, $this->actionUIDHash);
@@ -237,16 +238,16 @@ class Cron implements AsyncStepProcessorInterface
         }
     }
 
-    private function getActionArgs(array $step, int $workflowId, string $actionUIDHash): array
+    private function getActionArgs(): array
     {
         return [
-            'workflowId' => $workflowId,
+            'workflowId' => $this->workflowId,
             'workflowExecutionId' => $this->executionContext->getVariable('global.workflow.execution_id'),
-            'stepId' => $step['id'],
-            'stepLabel' => $step['data']['label'] ?? null,
-            'stepName' => $step['data']['name'],
+            'stepId' => $this->step['id'],
+            'stepLabel' => $this->step['data']['label'] ?? null,
+            'stepName' => $this->step['data']['name'],
             'pluginVersion' => $this->pluginVersion,
-            'actionUIDHash' => $actionUIDHash,
+            'actionUIDHash' => $this->actionUIDHash,
             // This is not always set, only for some post-related triggers. Used to keep the post ID as reference.
             'postId' => $this->executionContext->getVariable('global.trigger.postId'),
         ];
@@ -381,7 +382,7 @@ class Cron implements AsyncStepProcessorInterface
 
     private function scheduleAction(): void {
         $scheduledActionId = 0;
-        $actionArgs = $this->getActionArgs($this->step, $this->workflowId, $this->actionUIDHash);
+        $actionArgs = $this->getActionArgs();
 
         if ($this->isSingleAction) {
             $scheduledActionId = $this->scheduleSingleAction($actionArgs);
@@ -478,10 +479,10 @@ class Cron implements AsyncStepProcessorInterface
         return false;
     }
 
-    private function getScheduledActionUniqueId(int $workflowId, array $node, $useTimestamp = true): string
+    private function getScheduledActionUniqueId(array $node, $useTimestamp = true): string
     {
         $uniqueId = [
-            'workflowId' => $workflowId,
+            'workflowId' => $this->workflowId,
             'stepId' => $node['id'],
         ];
 
