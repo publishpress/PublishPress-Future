@@ -234,6 +234,9 @@ class Cron implements AsyncStepProcessorInterface
             $this->executionContext->setVariable($this->stepSlug, [
                 'schedule_date' => date('Y-m-d H:i:s', $this->timestamp),
                 'action_uid_hash' => $this->actionUIDHash,
+                'is_recurring' => ! $this->isSingleAction,
+                'repeat_count' => 0,
+                'repeat_limit' => 0,
             ]);
 
             $this->scheduleAction();
@@ -899,6 +902,7 @@ class Cron implements AsyncStepProcessorInterface
 
         $isRecurrent = $scheduledStepModel->getIsRecurring();
         $isFinished = $scheduledStepModel->isFinished();
+        $stepSlug = $expandedArgs['step']['node']['data']['slug'];
 
         if ($isRecurrent && $isFinished) {
             $this->cancelScheduledStep($actionId, $originalArgs);
@@ -909,6 +913,8 @@ class Cron implements AsyncStepProcessorInterface
         $shouldExecute = true;
 
         if ($isRecurrent) {
+            $this->executionContext->setVariable("$stepSlug.is_recurring", true);
+
             // Check if the node has a limit of executions. Default is 'forever'.
             $repeatUntil = $scheduledStepModel->getRepeatUntil();
 
@@ -922,6 +928,9 @@ class Cron implements AsyncStepProcessorInterface
             } elseif ($repeatUntil === 'times') {
                 $runCount = (int)$scheduledStepModel->getRunCount();
                 $runLimit = (int)$scheduledStepModel->getRepeatTimes() ?? self::DEFAULT_REPEAT_UNTIL_TIMES;
+
+                $this->executionContext->setVariable("$stepSlug.repeat_count", $runCount);
+                $this->executionContext->setVariable("$stepSlug.repeat_limit", $runLimit);
 
                 // Will this be the last execution?
                 if ($runCount >= $runLimit - 1) {
@@ -938,7 +947,7 @@ class Cron implements AsyncStepProcessorInterface
         if ($shouldExecute) {
             $this->addDebugLogMessage(
                 'Executing step %s',
-                $expandedArgs['step']['node']['data']['slug']
+                $stepSlug
             );
 
             $this->executionContext->setAllVariables($expandedArgs['runtimeVariables']);
