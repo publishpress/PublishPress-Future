@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-13T19:53:18+00:00\n"
+"POT-Creation-Date: 2025-03-26T22:23:07+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -431,27 +431,19 @@ msgstr ""
 msgid "Custom interval in seconds"
 msgstr ""
 
-#: components/data-fields/schedule.jsx:131
+#: components/data-fields/schedule.jsx:127
 msgid "Repeating Action"
 msgstr ""
 
-#: components/data-fields/schedule.jsx:135
+#: components/data-fields/schedule.jsx:131
 msgid "Choose how often this task should repeat. Select 'Non-repeating' for a one-time action or set an interval for automatic recurrence."
 msgstr ""
 
-#: components/data-fields/schedule.jsx:151
-msgid "Allow duplicate scheduled tasks"
-msgstr ""
-
-#: components/data-fields/schedule.jsx:161
-msgid "Allows scheduling tasks even if a similar task exists."
-msgstr ""
-
-#: components/data-fields/schedule.jsx:168
+#: components/data-fields/schedule.jsx:148
 msgid "Unique Task Identifier"
 msgstr ""
 
-#: components/data-fields/schedule.jsx:174
+#: components/data-fields/schedule.jsx:154
 msgid "Define a unique ID to detect and prevent duplicate tasks."
 msgstr ""
 
