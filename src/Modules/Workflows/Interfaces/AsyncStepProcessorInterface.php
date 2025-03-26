@@ -9,7 +9,7 @@ interface AsyncStepProcessorInterface extends StepProcessorInterface
 {
     public function actionCallback(array $compactedArgs, array $originalArgs);
 
-    public function compactArguments(array $step): array;
+    public function compactArguments(string $stepSlug, string $stepId): array;
 
     public function expandArguments(array $compactArguments): array;
 

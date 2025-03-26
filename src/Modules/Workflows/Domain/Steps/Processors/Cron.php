@@ -272,7 +272,7 @@ class Cron implements AsyncStepProcessorInterface
         $argsModel->setActionIdOnArgs();
         $argsModel->update();
 
-        $compactedArgs = $this->compactArguments($this->step);
+        $compactedArgs = $this->compactArguments($this->stepSlug, $this->stepId);
 
         $scheduledStepModel = new WorkflowScheduledStepModel();
         $scheduledStepModel->setActionId($scheduledActionId);
@@ -513,17 +513,17 @@ class Cron implements AsyncStepProcessorInterface
         return wp_json_encode($uniqueId);
     }
 
-    public function compactArguments(array $step): array
+    public function compactArguments(string $stepSlug, string $stepId): array
     {
         $this->addDebugLogMessage(
             'Compacting step %s arguments',
-            $step['node']['data']['slug']
+            $stepSlug
         );
 
         $compactedArgs = [
             'pluginVersion' => $this->pluginVersion,
             'step' => [
-                'nodeId' => $step['node']['id'],
+                'nodeId' => $stepId,
             ],
             'runtimeVariables' => $this->executionContext->getAllVariables(),
         ];
