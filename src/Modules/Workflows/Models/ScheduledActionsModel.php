@@ -159,7 +159,7 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         // phpcs:enable
     }
 
-    public function cancelRecurringScheduledActions(int $workflowId, string $stepId): void
+    public function cancelRecurringScheduledActions(int $workflowId, string $actionUIDHash): void
     {
         global $wpdb;
 
@@ -170,10 +170,10 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
                 "UPDATE {$wpdb->prefix}actionscheduler_actions AS asa
                 SET asa.status = 'canceled'
                 WHERE JSON_EXTRACT(asa.args, '$[0].workflowId') = %s
-                    AND JSON_EXTRACT(asa.args, '$[0].stepId') = %s
+                    AND JSON_EXTRACT(asa.args, '$[0].actionUIDHash') = %s
                     AND asa.status = 'pending' AND asa.group_id = %d",
                 $workflowId,
-                $stepId,
+                $actionUIDHash,
                 $this->getGroupID()
             )
         );

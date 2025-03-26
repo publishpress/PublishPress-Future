@@ -828,7 +828,7 @@ class Cron implements AsyncStepProcessorInterface
         $scheduledActionModel->loadByActionId($actionId);
         $scheduledActionModel->cancel();
 
-        $this->cancelFutureRecurringActions($originalArgs['workflowId'], $originalArgs['stepId']);
+        $this->cancelFutureRecurringActions($originalArgs['workflowId'], $originalArgs['stepId'], $originalArgs['actionUIDHash']);
 
         $this->addDebugLogMessage(
             'Step %s scheduled action cancelled',
@@ -836,14 +836,14 @@ class Cron implements AsyncStepProcessorInterface
         );
     }
 
-    private function cancelFutureRecurringActions(int $workflowId, string $stepId): void
+    private function cancelFutureRecurringActions(int $workflowId, string $stepId, string $actionUIDHash): void
     {
         $this->cron->scheduleSingleAction(
             time() + self::UNSCHEDULE_FUTURE_ACTION_DELAY,
             HooksAbstract::ACTION_UNSCHEDULE_RECURRING_STEP_ACTION,
             [
                 'workflowId' => $workflowId,
-                'stepId' => $stepId,
+                'actionUIDHash' => $actionUIDHash,
             ],
             false,
             10
@@ -956,7 +956,7 @@ class Cron implements AsyncStepProcessorInterface
             );
 
             $this->completeScheduledStep($actionId);
-            $this->cancelFutureRecurringActions($workflowId, $originalArgs['stepId']);
+            $this->cancelFutureRecurringActions($workflowId, $originalArgs['stepId'], $originalArgs['actionUIDHash']);
 
             $this->runNextSteps($expandedArgs['step'], 'finished');
             return;

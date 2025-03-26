@@ -424,10 +424,10 @@ class WorkflowEngine implements WorkflowEngineInterface
         $scheduledActionsModel->cancelWorkflowScheduledActions($workflowId);
     }
 
-    public function unscheduleRecurringNodeAction($workflowId, $stepId)
+    public function unscheduleRecurringStepAction($workflowId, $actionUIDHash)
     {
         $scheduledActionsModel = new ScheduledActionsModel();
-        $scheduledActionsModel->cancelRecurringScheduledActions($workflowId, $stepId);
+        $scheduledActionsModel->cancelRecurringScheduledActions($workflowId, $actionUIDHash);
     }
 
     public function getEngineExecutionId(): string
