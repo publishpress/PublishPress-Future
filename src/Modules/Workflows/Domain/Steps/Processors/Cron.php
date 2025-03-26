@@ -65,11 +65,6 @@ class Cron implements AsyncStepProcessorInterface
 
     public const UNSCHEDULE_FUTURE_ACTION_DELAY = 5;
 
-    public const DUPLICATE_HANDLING_CREATE_NEW = 'create-new';
-    public const DUPLICATE_HANDLING_REPLACE = 'replace';
-
-    public const DUPLICATE_HANDLING_DEFAULT = self::DUPLICATE_HANDLING_REPLACE;
-
     /**
      * @var HooksFacade
      */
@@ -229,8 +224,6 @@ class Cron implements AsyncStepProcessorInterface
                 return;
             }
 
-            $this->handleDuplicateAction();
-
             $this->executionContext->setVariable($this->stepSlug, [
                 'schedule_date' => date('Y-m-d H:i:s', $this->timestamp),
                 'action_uid_hash' => $this->actionUIDHash,
@@ -320,40 +313,6 @@ class Cron implements AsyncStepProcessorInterface
         );
 
         return $timestamp;
-    }
-
-    private function handleDuplicateAction(): void {
-        $duplicateHandling = $this->nodeSettings['schedule']['duplicateHandling'] ?? self::DUPLICATE_HANDLING_DEFAULT;
-
-        switch ($duplicateHandling) {
-            case self::DUPLICATE_HANDLING_CREATE_NEW:
-                // If the action is already scheduled, we should create a new one.
-                $this->addDebugLogMessage(
-                    'Step %s is already scheduled based on its ID, creating a new one',
-                    $this->stepSlug
-                );
-
-                // TODO: Make sure the action is not duplicated for the same step and execution ID.
-                // Is the execution ID the same for multiple calls to the same action hook?
-                // Use a session ID instead?
-                break;
-
-            case self::DUPLICATE_HANDLING_REPLACE:
-                // If the action is already scheduled, we should replace it.
-                $this->addDebugLogMessage(
-                    'Step %s is already scheduled based on its ID, unscheduling to replace it',
-                    $this->stepSlug
-                );
-
-                $scheduledActionsModel = new ScheduledActionsModel();
-                $actionId = $scheduledActionsModel->getActionIdByActionUIDHash($this->actionUIDHash);
-
-                if ($actionId) {
-                    $scheduledActionsModel->cancelActionById($actionId);
-                }
-
-                break;
-        }
     }
 
     private function scheduleSingleAction(array $actionArgs): int
