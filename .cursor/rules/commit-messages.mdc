@@ -1,13 +1,12 @@
 ---
-description: Commit message
-globs:
-alwaysApply: true
+description: For creating git commit messages
+globs: 
+alwaysApply: false
 ---
-
 # Commit messages:
 
-- Write short commit messages.
-- Add a title separated by a blank line and limited to 50 chars.
-- Add more details in the body text if needed.
-- Use the present tense.
-- Use imperative mood.
+- Message structure is composed by 2 parts: summary and description
+- Summary is separated from description by a blank line
+- Message has to be brief enough that it’s easy to read, but detailed enough that it’s easy to understand
+- Use the present tense and imperative mood.
+- Limit summary to 50 chars and description to 72 chars
