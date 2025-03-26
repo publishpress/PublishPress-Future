@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Added the `global.engine_execution_id` variable.
+- Added the `global.engine_execution_id` variable to the workflows.
+- Added the "Repeats done" output branch to the "Schedule delay" step in the workflow editor - PRO.
 
 ### Changed
 
@@ -16,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed the `global.run_id` global variables and moved it to the workflow global variable as `global.workflow.execution_id`.
 - Renamed workflow variable helpers, to workflow value processors.
 - Changed default action unique ID by including the current timestamp, making it more unique by default.
+- Changed the label "Next" to "At time" in the output of the "Schedule delay" step in the workflow editor.
 
 ### Fixed
 

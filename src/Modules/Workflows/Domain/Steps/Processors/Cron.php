@@ -231,6 +231,11 @@ class Cron implements AsyncStepProcessorInterface
 
             $this->handleDuplicateAction();
 
+            $this->executionContext->setVariable($this->stepSlug, [
+                'schedule_date' => date('Y-m-d H:i:s', $this->timestamp),
+                'action_uid_hash' => $this->actionUIDHash,
+            ]);
+
             $this->scheduleAction();
         } catch (Throwable $e) {
             $this->addErrorLogMessage(
@@ -952,6 +957,8 @@ class Cron implements AsyncStepProcessorInterface
 
             $this->completeScheduledStep($actionId);
             $this->cancelFutureRecurringActions($workflowId, $originalArgs['stepId']);
+
+            $this->runNextSteps($expandedArgs['step'], 'finished');
             return;
         }
     }

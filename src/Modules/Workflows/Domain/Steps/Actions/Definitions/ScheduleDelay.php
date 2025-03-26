@@ -105,7 +105,20 @@ class ScheduleDelay implements StepTypeInterface
 
     public function getStepScopedVariablesSchema(): array
     {
-        return [];
+        return [
+            [
+                "name" => "schedule_date",
+                "type" => "datetime",
+                "label" => __("Schedule date", "post-expirator"),
+                "description" => __("The date and time when the step will run.", "post-expirator"),
+            ],
+            [
+                "name" => "action_uid_hash",
+                "type" => "string",
+                "label" => __("Action UID hash", "post-expirator"),
+                "description" => __("The unique ID hash of the action that will run.", "post-expirator"),
+            ]
+        ];
     }
 
     public function getOutputSchema(): array
@@ -117,6 +130,18 @@ class ScheduleDelay implements StepTypeInterface
                 "label" => __("Step input", "post-expirator"),
                 "description" => __("The input data for this step.", "post-expirator"),
             ],
+            [
+                "name" => "schedule_date",
+                "type" => "datetime",
+                "label" => __("Schedule date", "post-expirator"),
+                "description" => __("The date and time when the step will run.", "post-expirator"),
+            ],
+            [
+                "name" => "action_uid_hash",
+                "type" => "string",
+                "label" => __("Action UID hash", "post-expirator"),
+                "description" => __("The unique ID hash of the action that will run.", "post-expirator"),
+            ]
         ];
     }
 
@@ -137,8 +162,13 @@ class ScheduleDelay implements StepTypeInterface
             "source" => [
                 [
                     "id" => "output",
-                    "left" => "50%",
-                    "label" => __("Next", "post-expirator"),
+                    "left" => "30%",
+                    "label" => __("At time", "post-expirator"),
+                ],
+                [
+                    "id" => "finished",
+                    "left" => "70%",
+                    "label" => __("Repeats done", "post-expirator"),
                 ]
             ]
         ];

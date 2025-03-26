@@ -37,20 +37,6 @@ class ScheduleDelayRunner implements AsyncStepRunnerInterface
         $this->stepProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step) {
-                $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
-
-                $this->executionContext->setVariable($nodeSlug, [
-                    'schedule_date' => 0,
-                    'is_recurring' => false,
-                    'recurring_type' => '',
-                    'recurring_interval' => '',
-                    'recurring_interval_unit' => '',
-                    'recurring_count' => '',
-                    'repeat_until' => '',
-                    'repeat_until_date' => '',
-                    'repeat_until_times' => '',
-                ]);
-
                 $this->stepProcessor->setup($step, '__return_true');
             }
         );
