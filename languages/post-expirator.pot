@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-26T22:23:02+00:00\n"
+"POT-Creation-Date: 2025-03-27T15:19:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -1449,36 +1449,36 @@ msgstr ""
 msgid "The ID of the meta added to the post."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:184
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:166
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:140
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:164
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:170
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:149
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:177
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:154
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:170
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:191
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:151
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:166
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:157
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:157
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:204
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:177
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnAdminInit.php:101
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnInit.php:101
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnLegacyActionTrigger.php:139
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:145
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:196
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:145
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:176
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:150
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:145
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:145
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:145
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:157
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:123
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:149
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:182
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:164
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:138
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:162
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:168
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:147
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:175
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:152
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:168
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:189
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:149
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:164
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:155
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:155
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:202
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:175
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnAdminInit.php:100
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnInit.php:100
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnLegacyActionTrigger.php:138
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:144
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:195
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:144
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:175
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:149
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:144
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:144
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:144
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:156
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:122
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:148
 msgid "Next"
 msgstr ""
 
@@ -1608,11 +1608,11 @@ msgstr ""
 msgid "Shows which path was taken: 'true' if conditions were met, or 'false' if they weren't."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:149
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:147
 msgid "True"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:154
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:151
 msgid "False"
 msgstr ""
 
@@ -1826,12 +1826,12 @@ msgstr ""
 msgid "The maximum number of times the scheduled action will be repeated."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:170
-msgid "At time"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:168
+msgid "After delay"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:175
-msgid "Repeats done"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:172
+msgid "After all repetitions"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:17
