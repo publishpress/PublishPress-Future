@@ -170,6 +170,34 @@ class ScheduleDelay implements StepTypeInterface
                 [
                     "id" => "finished",
                     "label" => __("After all repetitions", "post-expirator"),
+                    "conditions" => [
+                        "and" => [
+                            [
+                                "!=" => [
+                                    ["var" => "schedule.recurrence"],
+                                    "single"
+                                ]
+                            ],
+                            [
+                                "!=" => [
+                                    ["var" => "schedule.repeatUntil"],
+                                    "forever"
+                                ]
+                            ],
+                            [
+                                "!=" => [
+                                    ["var" => "schedule"],
+                                    null
+                                ]
+                            ],
+                            [
+                                "!=" => [
+                                    ["var" => "schedule"],
+                                    []
+                                ]
+                                ],
+                        ]
+                    ],
                 ],
             ]
         ];

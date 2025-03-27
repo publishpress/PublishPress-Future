@@ -9,6 +9,7 @@ import { Toolbar, ToolbarGroup, ToolbarButton, Popover } from '@wordpress/compon
 import PlayIcon from "../icons/play";
 import { SIDEBAR_NODE_EDGE } from '../settings-sidebar/constants';
 import { useIsPro } from '../../contexts/pro-context';
+import jsonLogic from "json-logic-js";
 
 export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIcon }) => {
     const {
@@ -102,6 +103,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
     const nodeDescription = data?.label;
     const nodeLabel = nodeType.label || __('Node', 'post-expirator');
     const nodeClassName = nodeType?.className || 'react-flow__node-genericNode';
+    let displayHandle = true;
 
     let targetHandles = null;
     if (nodeType.handleSchema) {
@@ -110,6 +112,16 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
             const targetLeftOffset = 100 / targetHandlesCount / 2;
             targetHandles = nodeType.handleSchema.target.map((handle, index) => {
                 const left = targetLeftOffset + ((100 / targetHandlesCount) * index);
+
+                displayHandle = true;
+                if (handle.conditions) {
+                    displayHandle = jsonLogic.apply(handle.conditions, data.settings);
+                }
+
+                if (! displayHandle) {
+                    return null;
+                }
+
                 return (
                     <Handle
                         key={handle.id + '_target'}
@@ -129,10 +141,19 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
     let handleAreas = null;
     if (nodeType.handleSchema) {
         if (nodeType.handleSchema.source) {
-            const sourceHandlesCount = nodeType.handleSchema.source.length;
+            const handlesToDisplay = nodeType.handleSchema.source.filter((handle) => {
+                if (handle.conditions) {
+                    return jsonLogic.apply(handle.conditions, data.settings);
+                }
+
+                return true;
+            });
+
+            const sourceHandlesCount = handlesToDisplay.length;
             const sourceLeftOffset = 100 / sourceHandlesCount / 2;
-            sourceHandles = nodeType.handleSchema.source.map((handle, index) => {
+            sourceHandles = handlesToDisplay.map((handle, index) => {
                 const left = sourceLeftOffset + ((100 / sourceHandlesCount) * index);
+
                 return (
                     <Handle
                         key={handle.id + '_source'}
@@ -146,7 +167,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                 );
             });
 
-            handleAreas = nodeType.handleSchema.source.map((handle) => {
+            handleAreas = handlesToDisplay.map((handle) => {
                 return (
                     <div
                         key={handle.id + 'handleArea'}
