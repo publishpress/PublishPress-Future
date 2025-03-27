@@ -172,7 +172,6 @@ class OnPostRowAction implements StepTypeInterface
             "source" => [
                 [
                     "id" => "output",
-                    "left" => "50%",
                     "label" => __("Next", "post-expirator"),
                 ]
             ]

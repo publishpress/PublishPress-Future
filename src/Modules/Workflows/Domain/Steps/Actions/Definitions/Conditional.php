@@ -139,18 +139,15 @@ class Conditional implements StepTypeInterface
             "target" => [
                 [
                     "id" => "input",
-                    "left" => "50%",
                 ]
             ],
             "source" => [
                 [
                     "id" => "true",
-                    "left" => "25%",
                     "label" => __("True", "post-expirator"),
                 ],
                 [
                     "id" => "false",
-                    "left" => "75%",
                     "label" => __("False", "post-expirator"),
                 ]
             ]
