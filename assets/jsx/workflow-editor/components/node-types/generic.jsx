@@ -106,14 +106,17 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
     let targetHandles = null;
     if (nodeType.handleSchema) {
         if (nodeType.handleSchema.target) {
-            targetHandles = nodeType.handleSchema.target.map((handle) => {
+            const targetHandlesCount = nodeType.handleSchema.target.length;
+            const targetLeftOffset = 100 / targetHandlesCount / 2;
+            targetHandles = nodeType.handleSchema.target.map((handle, index) => {
+                const left = targetLeftOffset + ((100 / targetHandlesCount) * index);
                 return (
                     <Handle
                         key={handle.id + '_target'}
                         type="target"
                         position={Position.Top}
                         id={handle.id}
-                        style={{ left: handle.left}}
+                        style={{ left: `${left}%`}}
                         isConnectable={isConnectable}
                         className={'handle-target-' + handle.id}
                     />
@@ -126,14 +129,17 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
     let handleAreas = null;
     if (nodeType.handleSchema) {
         if (nodeType.handleSchema.source) {
-            sourceHandles = nodeType.handleSchema.source.map((handle) => {
+            const sourceHandlesCount = nodeType.handleSchema.source.length;
+            const sourceLeftOffset = 100 / sourceHandlesCount / 2;
+            sourceHandles = nodeType.handleSchema.source.map((handle, index) => {
+                const left = sourceLeftOffset + ((100 / sourceHandlesCount) * index);
                 return (
                     <Handle
                         key={handle.id + '_source'}
                         type="source"
                         position={Position.Bottom}
                         id={handle.id}
-                        style={{ left: handle.left }}
+                        style={{ left: `${left}%` }}
                         isConnectable={isConnectable}
                         className={'handle-source-' + handle.id}
                     />

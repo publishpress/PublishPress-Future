@@ -129,7 +129,7 @@ class ScheduleDelay implements StepTypeInterface
                 "type" => "integer",
                 "label" => __("Repeat limit", "post-expirator"),
                 "description" => __("The maximum number of times the scheduled action will be repeated.", "post-expirator"),
-            ]
+            ],
         ];
     }
 
@@ -160,20 +160,17 @@ class ScheduleDelay implements StepTypeInterface
             "target" => [
                 [
                     "id" => "input",
-                    "left" => "50%",
-                ]
+                ],
             ],
             "source" => [
                 [
                     "id" => "output",
-                    "left" => "30%",
                     "label" => __("At time", "post-expirator"),
                 ],
                 [
                     "id" => "finished",
-                    "left" => "70%",
                     "label" => __("Repeats done", "post-expirator"),
-                ]
+                ],
             ]
         ];
     }
