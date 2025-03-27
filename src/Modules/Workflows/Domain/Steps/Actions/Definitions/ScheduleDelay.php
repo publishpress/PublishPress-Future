@@ -165,11 +165,11 @@ class ScheduleDelay implements StepTypeInterface
             "source" => [
                 [
                     "id" => "output",
-                    "label" => __("At time", "post-expirator"),
+                    "label" => __("After delay", "post-expirator"),
                 ],
                 [
                     "id" => "finished",
-                    "label" => __("Repeats done", "post-expirator"),
+                    "label" => __("After all repetitions", "post-expirator"),
                 ],
             ]
         ];
