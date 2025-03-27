@@ -77,6 +77,11 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
     private $isCompressed = false;
 
     /**
+     * @var int
+     */
+    private $postId = 0;
+
+    /**
      * @var array
      */
     private $args;
@@ -211,6 +216,16 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
         return get_post_meta($this->getWorkflowId(), $this->getLastRunAtMetaKey(), true);
     }
 
+    public function setPostId(int $postId): void
+    {
+        $this->postId = $postId;
+    }
+
+    public function getPostId(): int
+    {
+        return (int) $this->postId;
+    }
+
     public function resetRunData(): void
     {
         $this->setRunCount(0);
@@ -342,6 +357,7 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
         $this->setRepeatTimes($row['repeat_times']);
         $this->setRepeatUntilDate($row['repeat_until_date']);
         $this->setIsCompressed((int)$row['is_compressed'] === 1);
+        $this->setPostId($row['post_id'] ?? 0);
         $this->isFinished = null;
 
         if ($this->getIsCompressed()) {
@@ -372,6 +388,7 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
             'repeat_times' => $this->getRepeatTimes(),
             'repeat_until_date' => $this->getRepeatUntilDate(),
             'is_recurring' => $this->getIsRecurring() ? 1 : 0,
+            'post_id' => $this->getPostId(),
         ];
 
         if ($this->getIsCompressed()) {

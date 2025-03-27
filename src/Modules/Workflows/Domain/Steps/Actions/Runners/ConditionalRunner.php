@@ -3,9 +3,9 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\Conditional;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
 class ConditionalRunner implements StepRunnerInterface
@@ -16,9 +16,9 @@ class ConditionalRunner implements StepRunnerInterface
     private $stepProcessor;
 
     /**
-     * @var RuntimeVariablesHandlerInterface
+     * @var ExecutionContextInterface
      */
-    private $variablesHandler;
+    private $executionContext;
 
     /**
      * @var LoggerInterface
@@ -27,11 +27,11 @@ class ConditionalRunner implements StepRunnerInterface
 
     public function __construct(
         StepProcessorInterface $stepProcessor,
-        RuntimeVariablesHandlerInterface $variablesHandler,
+        ExecutionContextInterface $executionContext,
         LoggerInterface $logger
     ) {
         $this->stepProcessor = $stepProcessor;
-        $this->variablesHandler = $variablesHandler;
+        $this->executionContext = $executionContext;
         $this->logger = $logger;
     }
 
@@ -58,7 +58,7 @@ class ConditionalRunner implements StepRunnerInterface
                 unset($step['next']['true']);
                 unset($step['next']['false']);
 
-                $this->variablesHandler->setVariable($nodeSlug, [
+                $this->executionContext->setVariable($nodeSlug, [
                     'branch' => 'true',
                 ]);
 

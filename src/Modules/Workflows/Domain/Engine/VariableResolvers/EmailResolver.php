@@ -47,6 +47,11 @@ class EmailResolver implements VariableResolverInterface
         return $this->variable;
     }
 
+    public function setValue(string $name, $value): void
+    {
+        $this->variable = $value;
+    }
+
     public function __isset($name): bool
     {
         return false;

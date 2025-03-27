@@ -5,14 +5,41 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.4.1] - UNRELEASED
 
+
+### Added
+
+- Added the `global.engine_execution_id` variable to the workflows.
+- Added the "Repeats done" output branch to the "Schedule delay" step in the workflow editor - PRO.
+- Added the variables "repeat_count" and "repeat_limit" to the "Schedule delay" step - PRO.
+
+### Changed
+
+- Restored Post ID variables for post related triggers.
+- Removed the `global.run_id` global variables and moved it to the workflow global variable as `global.workflow.execution_id`.
+- Renamed workflow variable helpers, to workflow value processors.
+- Changed default action unique ID by including the current timestamp, making it more unique by default.
+- Changed the label "Next" to "At time" in the output of the "Schedule delay" step in the workflow editor.
+
+### Removed
+
+- Removed the "Allow duplicate scgeduling" option in the Schedule delay step in the workflow editor. To prevent a duplicated action, specify a custom Unique Action Identified after enabling Advanced settings in the workflow editor.
+
 ### Fixed
 
-- Fixed fales positive results for invalid JSON logic on post query input validation (Issue #1228).
+- Fixed false positive results for invalid JSON logic on post query input validation (Issue #1228).
+- Fixed scheduled delay tasks registration to not require a custom unique task identifier (Issue #1165).
+- Fixed detection of completed scheduled actions for single tasks, now properly allowing the same action to be scheduled multiple times (Issue #1165).
+- Fixed the action that unschedules completed recurring actions - PRO (Issue #1165).
 
 ### Developers
 
 - Added new method `isLogic` to `JsonLogicEngineInterface`.
 - Removed arguments from `compact` and `getVariable` methods on `PostMetaResolver` class.
+- Added new method `getWorkflowEngine` to the interface `StepProcessorInterface`.
+- Added new method `getWorkflowExecutionId` to the interface `StepProcessorInterface`.
+- Removed the service `WORKFLOW_VARIABLES_HANDLER`, replacing it with the `WORKFLOW_VARIABLES_HANDLER_FACTORY`.
+- Removed the method `getVariablesHandler` from the `WorkflowEngine` class.
+- Renamed "Runtime Variables Handler" to "Workflow Execution Context".
 
 ## [4.4.0] - 13 Mar, 2025
 
@@ -461,7 +488,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix some translations in ES, FR, and IT languages, #798
-- Fix “no future actions” message in the scheduled actions list, #788
+- Fix "no future actions" message in the scheduled actions list, #788
 - Try to avoid fatal error for wrong argument counting
 - Minor issues pointed by PHPCS
 - Escape an exception message
@@ -706,7 +733,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Fix JS error Cannot read properties of undefined (reading ‘length’) on the block editor, #561
+- Fix JS error Cannot read properties of undefined (reading 'length') on the block editor, #561
 
 ## [3.1.2] - 07 Nov, 2023
 

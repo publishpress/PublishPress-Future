@@ -2,12 +2,11 @@
 
 namespace Tests\Modules\Workflows\Domain\Engine\NodeRunners\Actions;
 
-use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostDeactivateWorkflow;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\DeactivatePostWorkflowRunner;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Models\PostModel;
 
 class CorePostDeactivateWorkflowTest extends \lucatume\WPBrowser\TestCase\WPTestCase
@@ -65,13 +64,13 @@ class CorePostDeactivateWorkflowTest extends \lucatume\WPBrowser\TestCase\WPTest
 
         $workflows = $this->createWorkflows();
 
-        $runner = new CorePostDeactivateWorkflow(
+        $runner = new DeactivatePostWorkflowRunner(
             $this->makeEmpty(StepProcessorInterface::class, [
                 'executeSafelyWithErrorHandling' => function ($step, $callback, ...$args) {
                     call_user_func($callback, $step, ...$args);
                 }
             ]),
-            $this->makeEmpty(RuntimeVariablesHandlerInterface::class, [
+            $this->makeEmpty(ExecutionContextInterface::class, [
                 'getVariable' => new WorkflowResolver(['id' => $workflows[0]])
             ]),
             $this->makeEmpty(LoggerInterface::class)

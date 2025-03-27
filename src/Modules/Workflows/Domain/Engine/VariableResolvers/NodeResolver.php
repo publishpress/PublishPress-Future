@@ -75,6 +75,13 @@ class NodeResolver implements VariableResolverInterface
         return $this->node;
     }
 
+    public function setValue(string $name, $value): void
+    {
+        if (isset($this->node[$name])) {
+            $this->node[$name] = $value;
+        }
+    }
+
     public function __isset($name): bool
     {
         return in_array($name, ['ID', 'name', 'label', 'activation_timestamp', 'slug', 'postId', 'post_id']);

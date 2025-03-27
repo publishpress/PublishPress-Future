@@ -36,5 +36,15 @@ interface DBTableSchemaHandlerInterface
 
     public function fixIndexes(array $indexes): void;
 
+    public function fixColumns(array $columns): void;
+
+    public function getTableColumns(): array;
+
+    public function addColumn(string $columnName, string $columnDefinition): void;
+
+    public function getTableColumnDefinitions(): array;
+
     public function changeColumn(string $column, string $definition): void;
+
+    public function checkTableColumns(array $expectedColumns): array;
 }

@@ -3,21 +3,21 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\InputValidators;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\JsonLogicEngineInterface;
 use PublishPress\Future\Modules\Workflows\Module;
 
 class PostQuery implements InputValidatorsInterface
 {
-    private RuntimeVariablesHandlerInterface $runtimeVariablesHandler;
+    private ExecutionContextInterface $executionContext;
 
     private JsonLogicEngineInterface $jsonLogicEngine;
 
     public function __construct(
-        RuntimeVariablesHandlerInterface $runtimeVariablesHandler,
+        ExecutionContextInterface $executionContext,
         JsonLogicEngineInterface $jsonLogicEngine
     ) {
-        $this->runtimeVariablesHandler = $runtimeVariablesHandler;
+        $this->executionContext = $executionContext;
         $this->jsonLogicEngine = $jsonLogicEngine;
     }
 
@@ -71,8 +71,7 @@ class PostQuery implements InputValidatorsInterface
             return false;
         }
 
-
-        $json = $this->runtimeVariablesHandler->resolveExpressionsInJsonLogic($json);
+        $json = $this->executionContext->resolveExpressionsInJsonLogic($json);
 
         $result = $this->jsonLogicEngine->apply($json, []);
 
@@ -156,7 +155,7 @@ class PostQuery implements InputValidatorsInterface
             return true;
         }
 
-        $settingPostAuthor = $this->runtimeVariablesHandler->resolveExpressionsInArray($settingPostAuthor);
+        $settingPostAuthor = $this->executionContext->resolveExpressionsInArray($settingPostAuthor);
 
         return in_array($post->post_author, $settingPostAuthor);
     }
@@ -169,7 +168,7 @@ class PostQuery implements InputValidatorsInterface
             return true;
         }
 
-        $settingPostTerms = $this->runtimeVariablesHandler->resolveExpressionsInArray($settingPostTerms);
+        $settingPostTerms = $this->executionContext->resolveExpressionsInArray($settingPostTerms);
 
         $groupedSelectedTerms = [];
 

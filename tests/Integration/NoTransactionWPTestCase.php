@@ -139,6 +139,15 @@ class NoTransactionWPTestCase extends \lucatume\WPBrowser\TestCase\WPTestCase
         return $loaderConfig['tablePrefix'];
     }
 
+    protected function getTableNames(): array
+    {
+        global $wpdb;
+        $tables = $wpdb->get_results('SHOW TABLES');
+        $tables = array_map('current', $tables);
+
+        return $tables;
+    }
+
     protected function dropTable($tableName): void
     {
         global $wpdb;
@@ -160,18 +169,14 @@ class NoTransactionWPTestCase extends \lucatume\WPBrowser\TestCase\WPTestCase
 
     protected function assertTableDoesNotExists($tableName): void
     {
-        global $wpdb;
-        $tables = $wpdb->get_results('SHOW TABLES');
-        $tables = array_map('current', $tables);
+        $tables = $this->getTableNames();
 
         $this->assertNotContains($tableName, $tables);
     }
 
     protected function assertTableExists($tableName): void
     {
-        global $wpdb;
-        $tables = $wpdb->get_results('SHOW TABLES');
-        $tables = array_map('current', $tables);
+        $tables = $this->getTableNames();
 
         $this->assertContains($tableName, $tables);
     }
@@ -197,5 +202,26 @@ class NoTransactionWPTestCase extends \lucatume\WPBrowser\TestCase\WPTestCase
 		) $charsetCollate;";
 
         $wpdb->query($sql);
+    }
+
+    private function getColumns($tableName): array
+    {
+        global $wpdb;
+        $columns = $wpdb->get_results("SHOW COLUMNS FROM `$tableName`");
+        return array_column($columns, 'Field');
+    }
+
+    protected function assertColumnExists($tableName, $columnName): void
+    {
+        $columnNames = $this->getColumns($tableName);
+
+        $this->assertContains($columnName, $columnNames, "Column `$columnName` does not exist in table `$tableName`");
+    }
+
+    protected function assertColumnDoesNotExists($tableName, $columnName): void
+    {
+        $columnNames = $this->getColumns($tableName);
+
+        $this->assertNotContains($columnName, $columnNames, "Column `$columnName` exists in table `$tableName`");
     }
 }

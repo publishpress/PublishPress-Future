@@ -2,58 +2,32 @@
 
 namespace Tests\Modules\Workflows\Domain\Engine;
 
-use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHandler;
-use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHelperRegistryInterface;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContext;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 
-class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCase
+class ExecutionContextTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 {
     /**
      * @var \IntegrationTester
      */
     protected $tester;
 
-    /**
-     * @var HookableInterface&\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $hooks;
+    private const DEFAULT_WORKFLOW_EXECUTION_ID = '000000-00000-00000af';
 
-    /**
-     * @var RuntimeVariablesHelperRegistryInterface&\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $helperRegistry;
-
-    public function setUp(): void
+    private function getContext($executionId = null): ExecutionContext
     {
-        parent::setUp();
+        $container = Container::getInstance();
 
-        $this->hooks = $this->createMock(HookableInterface::class);
-        $this->hooks->method('applyFilters')->willReturnCallback(function ($hook, $value) {
-            return $value;
-        });
-        $this->helperRegistry = $this->createMock(RuntimeVariablesHelperRegistryInterface::class);
-        $this->helperRegistry->method('execute')->willReturnCallback(function ($helper, $value, $args) {
-            if ($helper === 'date') {
-                return strtotime($value);
-            }
-
-            return $value;
-        });
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-    }
-
-    private function createHandler(): RuntimeVariablesHandler
-    {
-        return new RuntimeVariablesHandler($this->hooks, $this->helperRegistry);
+        return $container->get(ServicesAbstract::EXECUTION_CONTEXT_REGISTRY)->getExecutionContext(
+            $executionId ?? self::DEFAULT_WORKFLOW_EXECUTION_ID
+        );
     }
 
     public function testSetAllVariablesCanBeRetrievedCorrectly(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
         $expectedVariables = [
             'test' => 'value',
@@ -64,15 +38,15 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             ],
         ];
 
-        $handler->setAllVariables($expectedVariables);
+        $executionContext->setAllVariables($expectedVariables);
 
         // Verify through the public API instead of using reflection
-        $this->assertEquals($expectedVariables, $handler->getAllVariables());
+        $this->assertEquals($expectedVariables, $executionContext->getAllVariables());
     }
 
     public function testGetVariableReturnsCorrectValueForSimpleVariable(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
         $expectedVariables = [
             'test' => 'value',
@@ -80,31 +54,31 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             'boolean' => true,
         ];
 
-        $handler->setAllVariables($expectedVariables);
+        $executionContext->setAllVariables($expectedVariables);
 
-        $this->assertEquals('value', $handler->getVariable('test'));
-        $this->assertEquals(1234567890, $handler->getVariable('timestamp'));
-        $this->assertEquals(true, $handler->getVariable('boolean'));
+        $this->assertEquals('value', $executionContext->getVariable('test'));
+        $this->assertEquals(1234567890, $executionContext->getVariable('timestamp'));
+        $this->assertEquals(true, $executionContext->getVariable('boolean'));
     }
 
     public function testGetVariableReturnsCorrectValueForEdgeCases(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([]);
+        $executionContext->setAllVariables([]);
 
-        $this->assertEquals('non-existent', $handler->getVariable('non-existent'));
-        $this->assertEquals('', $handler->getVariable(''));
-        $this->assertEquals(false, $handler->getVariable(false));
-        $this->assertEquals(true, $handler->getVariable(true));
-        $this->assertEquals(0, $handler->getVariable(0));
+        $this->assertEquals('non-existent', $executionContext->getVariable('non-existent'));
+        $this->assertEquals('', $executionContext->getVariable(''));
+        $this->assertEquals(false, $executionContext->getVariable(false));
+        $this->assertEquals(true, $executionContext->getVariable(true));
+        $this->assertEquals(0, $executionContext->getVariable(0));
     }
 
     public function testGetVariableReturnsCorrectValueForDeeplyNestedVariable(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'global' => [
                 'workflow' => [
                     'id' => 123,
@@ -112,14 +86,14 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             ],
         ]);
 
-        $this->assertEquals(123, $handler->getVariable('global.workflow.id'));
+        $this->assertEquals(123, $executionContext->getVariable('global.workflow.id'));
     }
 
     public function testGetVariableReturnsCorrectValueFromDifferentBranches(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'global' => [
                 'workflow' => [
                     'id' => 123,
@@ -130,28 +104,28 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             ],
         ]);
 
-        $this->assertEquals(123, $handler->getVariable('global.workflow.id'));
-        $this->assertEquals('Test Site', $handler->getVariable('global.site.name'));
+        $this->assertEquals(123, $executionContext->getVariable('global.workflow.id'));
+        $this->assertEquals('Test Site', $executionContext->getVariable('global.site.name'));
     }
 
     public function testGetVariableReturnsCorrectValueFromTopLevelBranch(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'onSavePost1' => [
                 'postId' => 234,
             ]
         ]);
 
-        $this->assertEquals(234, $handler->getVariable('onSavePost1.postId'));
+        $this->assertEquals(234, $executionContext->getVariable('onSavePost1.postId'));
     }
 
     public function testGetVariableReturnsPathForNonExistentVariable(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'global' => [
                 'workflow' => [
                     'id' => 123,
@@ -161,14 +135,14 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
 
         // This behavior seems unusual - typically you'd expect null or an exception
         // for a non-existent variable, not the path itself
-        $this->assertEquals('non-existent.id', $handler->getVariable('non-existent.id'));
+        $this->assertEquals('non-existent.id', $executionContext->getVariable('non-existent.id'));
     }
 
     public function testSetVariableExtendsExistingNestedStructure(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'global' => [
                 'workflow' => [
                     'id' => 123,
@@ -176,9 +150,9 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             ],
         ]);
 
-        $handler->setVariable('global.site.id', 234);
+        $executionContext->setVariable('global.site.id', 234);
 
-        $allVariables = $handler->getAllVariables();
+        $allVariables = $executionContext->getAllVariables();
 
         $this->assertEquals(234, $allVariables['global']['site']['id']);
         $this->assertEquals(123, $allVariables['global']['workflow']['id'],
@@ -187,9 +161,9 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
 
     public function testSetVariableAddsToExistingBranch(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'global' => [
                 'site' => [
                     'id' => 234,
@@ -197,9 +171,9 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             ],
         ]);
 
-        $handler->setVariable('global.site.name', 'New Site Name');
+        $executionContext->setVariable('global.site.name', 'New Site Name');
 
-        $allVariables = $handler->getAllVariables();
+        $allVariables = $executionContext->getAllVariables();
 
         $this->assertEquals('New Site Name', $allVariables['global']['site']['name']);
         $this->assertEquals(234, $allVariables['global']['site']['id'],
@@ -208,9 +182,9 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
 
     public function testSetVariableCreatesNewBranch(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'global' => [
                 'workflow' => [
                     'id' => 123,
@@ -218,70 +192,102 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             ],
         ]);
 
-        $handler->setVariable('user.id', 1);
+        $executionContext->setVariable('user.id', 1);
 
-        $allVariables = $handler->getAllVariables();
+        $allVariables = $executionContext->getAllVariables();
 
         $this->assertEquals(1, $allVariables['user']['id']);
         $this->assertEquals(123, $allVariables['global']['workflow']['id'],
             'Existing structure should be preserved when creating new branches');
     }
 
+    public function testSetVariableWithVariableResolverInterface(): void
+    {
+        $executionContext = $this->getContext();
+
+        $workflow = [
+            'ID' => 123,
+            'title' => 'Test Workflow',
+            'description' => 'Test Workflow Description',
+            'modified_at' => '2021-01-01 00:00:00',
+            'execution_id' => '00000-00000-00000-00000',
+            'execution_trace' => [],
+        ];
+
+        $workflowResolver = new WorkflowResolver($workflow);
+
+        $executionContext->setAllVariables(
+            [
+                'global' => [
+                    'workflow' => $workflowResolver,
+                ],
+            ]
+        );
+
+        $this->assertEquals(123, $executionContext->getVariable('global.workflow.ID'));
+
+        $executionContext->setVariable('global.workflow.execution_trace', ['step1', 'step2']);
+        $executionContext->setVariable('global.workflow.execution_id', '11111-11111-11111-11111');
+
+        $this->assertEquals(['step1', 'step2'], $executionContext->getVariable('global.workflow.execution_trace'));
+        $this->assertEquals('11111-11111-11111-11111', $executionContext->getVariable('global.workflow.execution_id'));
+    }
+
     public function testExtractExpressionsFromTextWithBasicVariables(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
         $text = 'This is a test {{variable1}} and {{variable2}}';
-        $placeholders = $handler->extractExpressionsFromText($text);
+        $placeholders = $executionContext->extractExpressionsFromText($text);
 
         $this->assertEquals(['variable1', 'variable2'], $placeholders);
     }
 
     public function testExtractExpressionsFromTextWithNestedVariables(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
         $textWithNested = 'Testing {{global.workflow.id}} and {{step.variable}}';
-        $nestedPlaceholders = $handler->extractExpressionsFromText($textWithNested);
+        $nestedPlaceholders = $executionContext->extractExpressionsFromText($textWithNested);
 
         $this->assertEquals(['global.workflow.id', 'step.variable'], $nestedPlaceholders);
     }
 
     public function testExtractExpressionsFromTextWithHelperFunctions(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
         $textWithHelpers = 'Testing {{format date.created}} and {{uppercase user.name}}';
-        $helperPlaceholders = $handler->extractExpressionsFromText($textWithHelpers);
+        $helperPlaceholders = $executionContext->extractExpressionsFromText($textWithHelpers);
 
         $this->assertEquals(['format date.created', 'uppercase user.name'], $helperPlaceholders);
     }
 
     public function testExtractExpressionsFromTextWithHelperFunctionsAndArguments(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
         $textWithHelpers = 'Testing {{format date.created format="Y-m-d"}} and {{date user.created format="Y-m-d" output="U"}}';
-        $helperPlaceholders = $handler->extractExpressionsFromText($textWithHelpers);
+        $helperPlaceholders = $executionContext->extractExpressionsFromText($textWithHelpers);
 
         $this->assertEquals(['format date.created format="Y-m-d"', 'date user.created format="Y-m-d" output="U"'], $helperPlaceholders);
     }
 
     public function testExtractExpressionsFromTextWithNoExpressions(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
         $textWithoutExpressions = 'This text has no expressions';
-        $emptyPlaceholders = $handler->extractExpressionsFromText($textWithoutExpressions);
+        $emptyPlaceholders = $executionContext->extractExpressionsFromText($textWithoutExpressions);
 
         $this->assertEmpty($emptyPlaceholders);
     }
 
     public function testResolveExpressionsInTextWithBasicVariables(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'step' => [
                 'variable1' => 'value1',
                 'variable2' => 'value2',
@@ -289,16 +295,16 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
         ]);
 
         $text = 'This is a test {{step.variable1}} and {{step.variable2}}';
-        $resolvedText = $handler->resolveExpressionsInText($text);
+        $resolvedText = $executionContext->resolveExpressionsInText($text);
 
         $this->assertEquals('This is a test value1 and value2', $resolvedText);
     }
 
     public function testResolveExpressionsInTextWithNestedVariables(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'global' => [
                 'workflow' => [
                     'id' => 123,
@@ -308,16 +314,16 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
         ]);
 
         $text = 'Workflow ID: {{global.workflow.id}}, Name: {{global.workflow.name}}';
-        $resolvedText = $handler->resolveExpressionsInText($text);
+        $resolvedText = $executionContext->resolveExpressionsInText($text);
 
         $this->assertEquals('Workflow ID: 123, Name: Test Workflow', $resolvedText);
     }
 
     public function testResolveExpressionsInTextWithMixedVariables(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'step' => [
                 'variable1' => 'value1',
                 'variable2' => 'value2',
@@ -330,42 +336,42 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
         ]);
 
         $text = 'This is a test {{step.variable1}} and {{step.variable2}} on the workflow {{global.workflow.id}}';
-        $resolvedText = $handler->resolveExpressionsInText($text);
+        $resolvedText = $executionContext->resolveExpressionsInText($text);
 
         $this->assertEquals('This is a test value1 and value2 on the workflow 123', $resolvedText);
     }
 
     public function testResolveExpressionsInTextWithNonExistentVariables(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'step' => [
                 'variable1' => 'value1',
             ],
         ]);
 
         $text = 'This variable exists: {{step.variable1}}, but this one does not: {{step.nonexistent}}';
-        $resolvedText = $handler->resolveExpressionsInText($text);
+        $resolvedText = $executionContext->resolveExpressionsInText($text);
 
         $this->assertEquals('This variable exists: value1, but this one does not: nonexistent', $resolvedText);
     }
 
     public function testResolveExpressionsInTextWithNoExpressions(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
         $text = 'This text has no expressions to resolve';
-        $resolvedText = $handler->resolveExpressionsInText($text);
+        $resolvedText = $executionContext->resolveExpressionsInText($text);
 
         $this->assertEquals($text, $resolvedText);
     }
 
     public function testResolveExpressionsInArrayWithBasicVariables(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'variable1' => 'value1',
             'variable2' => 'value2',
             'variable3' => 'value3',
@@ -379,7 +385,7 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             'This is another test {{variable3}} and {{variable4}}',
         ];
 
-        $resolvedArray = $handler->resolveExpressionsInArray($array);
+        $resolvedArray = $executionContext->resolveExpressionsInArray($array);
 
         $this->assertEquals(
             [
@@ -394,9 +400,9 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
 
     public function testResolveExpressionsInJsonLogicWithBasicVariables(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'variable1' => 'value1',
         ]);
 
@@ -404,16 +410,16 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             'var' => '{{variable1}}',
         ];
 
-        $resolvedJsonLogic = $handler->resolveExpressionsInJsonLogic($jsonLogic);
+        $resolvedJsonLogic = $executionContext->resolveExpressionsInJsonLogic($jsonLogic);
 
         $this->assertEquals(['var' => 'value1'], $resolvedJsonLogic);
     }
 
     public function testResolveExpressionsInJsonLogicWithSimpleNestedVariable(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'global' => [
                 'workflow' => [
                     'id' => 123,
@@ -426,16 +432,16 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             'var' => '{{global.workflow.id}}',
         ];
 
-        $resolvedJsonLogic = $handler->resolveExpressionsInJsonLogic($jsonLogic);
+        $resolvedJsonLogic = $executionContext->resolveExpressionsInJsonLogic($jsonLogic);
 
         $this->assertEquals(['var' => 123], $resolvedJsonLogic);
     }
 
     public function testResolveExpressionsInJsonLogicWithMultipleNestedVariables(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'global' => [
                 'workflow' => [
                     'id' => 123,
@@ -451,16 +457,16 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             ],
         ];
 
-        $resolvedJsonLogic = $handler->resolveExpressionsInJsonLogic($jsonLogic);
+        $resolvedJsonLogic = $executionContext->resolveExpressionsInJsonLogic($jsonLogic);
 
         $this->assertEquals(['and' => [123, 'Test Workflow']], $resolvedJsonLogic);
     }
 
     public function testResolveExpressionsInJsonLogicWithNestedLogicStructure(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'global' => [
                 'workflow' => [
                     'id' => 123,
@@ -478,29 +484,29 @@ class RuntimeVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCas
             ],
         ];
 
-        $resolvedJsonLogic = $handler->resolveExpressionsInJsonLogic($jsonLogic);
+        $resolvedJsonLogic = $executionContext->resolveExpressionsInJsonLogic($jsonLogic);
 
         $this->assertEquals(['and' => ['or' => [123, 'Test Workflow']]], $resolvedJsonLogic);
     }
 
     public function testResolveExpressionsInJsonLogicVariableHelper(): void
     {
-        $handler = $this->createHandler();
+        $executionContext = $this->getContext();
 
-        $handler->setAllVariables([
+        $executionContext->setAllVariables([
             'global' => [
                 'workflow' => [
-                    'created' => '2021-01-01',
+                    'created' => '2021-01-01 00:00:00',
                 ],
             ],
         ]);
 
         $jsonLogic = [
-            'var' => '{{date global.workflow.created input="Y-m-d" output="U"}}',
+            'var' => '{{date global.workflow.created input="Y-m-d H:i:s" output="U"}}',
         ];
 
-        $resolvedJsonLogic = $handler->resolveExpressionsInJsonLogic($jsonLogic);
+        $resolvedJsonLogic = $executionContext->resolveExpressionsInJsonLogic($jsonLogic);
 
-        $this->assertEquals(['var' => 1609459200], $resolvedJsonLogic);
+        $this->assertEquals(['var' => '1609459200'], $resolvedJsonLogic);
     }
 }

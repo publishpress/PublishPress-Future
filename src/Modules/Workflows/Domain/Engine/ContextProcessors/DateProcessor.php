@@ -1,12 +1,12 @@
 <?php
 
-namespace PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHelpers;
+namespace PublishPress\Future\Modules\Workflows\Domain\Engine\ContextProcessors;
 
 use DateTime;
 use PublishPress\Future\Framework\System\DateTimeHandlerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHelperInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextProcessorInterface;
 
-class DateHelper implements RuntimeVariablesHelperInterface
+class DateProcessor implements ExecutionContextProcessorInterface
 {
     private DateTimeHandlerInterface $dateTimeHandler;
 
@@ -20,7 +20,7 @@ class DateHelper implements RuntimeVariablesHelperInterface
         return 'date';
     }
 
-    public function execute(string $value, array $parameters)
+    public function process(string $value, array $parameters)
     {
         $inputFormat = $parameters['input'] ?? 'Y-m-d H:i:s';
         $outputFormat = $parameters['output']

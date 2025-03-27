@@ -81,9 +81,11 @@ class CronToWooActionSchedulerAdapter implements CronInterface
                     $actionId,
                     sprintf(
                         /* translators: %1$s is the name of the hook to be cancelled, %2$s is the exception message. */
-                        __('Caught exception while cancelling action "%1$s": %2$s', 'action-scheduler'),
+                        __('Caught exception while cancelling action "%1$s": %2$s. File: %3$s:%4$d', 'action-scheduler'),
                         $action,
-                        $e->getMessage()
+                        $e->getMessage(),
+                        $e->getFile(),
+                        $e->getLine()
                     )
                 );
 

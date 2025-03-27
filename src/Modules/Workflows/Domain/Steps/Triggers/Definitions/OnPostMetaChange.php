@@ -123,6 +123,12 @@ class OnPostMetaChange implements StepTypeInterface
                 "label" => __("Saved post", "post-expirator"),
                 "description" => __("The post that was saved, with the new properties.", "post-expirator"),
             ],
+            [
+                "name" => "postId",
+                "type" => "integer",
+                "label" => __("Post ID", "post-expirator"),
+                "description" => __("The ID of the post that was updated.", "post-expirator"),
+            ]
         ];
     }
 
@@ -134,6 +140,12 @@ class OnPostMetaChange implements StepTypeInterface
                 'type' => 'post',
                 'label' => __("Post", "post-expirator"),
                 'description' => __("The post that triggered this action.", "post-expirator"),
+            ],
+            [
+                "name" => "postId",
+                "type" => "integer",
+                "label" => __("Post ID", "post-expirator"),
+                "description" => __("The ID of the post that was updated.", "post-expirator"),
             ],
             [
                 'name' => 'action',
@@ -180,7 +192,6 @@ class OnPostMetaChange implements StepTypeInterface
             "source" => [
                 [
                     "id" => "output",
-                    "left" => "50%",
                     "label" => __("Next", "post-expirator"),
                 ]
             ]

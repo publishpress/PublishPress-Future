@@ -38,6 +38,7 @@ import NodePlaceholder from "../node-types/node-placeholder";
 import AutoLayout from "./auto-layout";
 import { __ } from "@wordpress/i18n";
 import { getNodeVariablesTree, filterVariablesTreeByDataType, getNodeById } from "../../utils";
+import { CUSTOM_EVENT_HANDLES_COUNT_CHANGED } from "../../constants";
 
 const GRID_SIZE = 10;
 
@@ -86,6 +87,7 @@ export const FlowEditor = (props) => {
         addNode,
         setSelectedNodes,
         setSelectedEdges,
+        removeEdge,
         setEditedWorkflowAttribute,
         removePlaceholderNodes,
         setDraggingFromHandle,
@@ -125,6 +127,33 @@ export const FlowEditor = (props) => {
     const edgeTypes = useMemo(() => ({
         genericEdge: GenericEdge,
     }), []);
+
+    const handleHandlesCountChanged = useCallback((event) => {
+        // Update all the edges that are connected to the node.
+        const { nodeId, handles } = event.detail;
+        const availableHandlesIds = handles.map((handle) => handle.id);
+        const allEdges = select(workflowStore).getEdges();
+
+        // Get all the edges that are connected to the node at the source handle.
+        const edgesToUpdate = allEdges.filter((edge) => {
+            return edge.source === nodeId && ! availableHandlesIds.includes(edge.sourceHandle);
+        });
+
+        // Remove the edges from the hidden handles.
+        edgesToUpdate.forEach((edge) => {
+            removeEdge(edge.id);
+            setSelectedNodes([nodeId]);
+
+        });
+    }, []);
+
+    useEffect(() => {
+        document.addEventListener(CUSTOM_EVENT_HANDLES_COUNT_CHANGED, handleHandlesCountChanged);
+
+        return () => {
+            document.removeEventListener(CUSTOM_EVENT_HANDLES_COUNT_CHANGED, handleHandlesCountChanged);
+        };
+    }, []);
 
     const updateFlowInEditedWorkflow = useCallback(() => {
         // We need to delay the update of the flow to avoid missing the changes.

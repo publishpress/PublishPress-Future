@@ -167,13 +167,11 @@ class UpdatePostMeta implements StepTypeInterface
             "target" => [
                 [
                     "id" => "input",
-                    "left" => "50%",
                 ]
             ],
             "source" => [
                 [
                     "id" => "output",
-                    "left" => "50%",
                     "label" => __("Next", "post-expirator"),
                 ]
             ]

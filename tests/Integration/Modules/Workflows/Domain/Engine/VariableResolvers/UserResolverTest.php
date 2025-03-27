@@ -216,4 +216,28 @@ class UserResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $this->assertEquals('', $resolver->display_name);
         $this->assertEquals('', $resolver->registered);
     }
+
+    public function testSetValueDoesNothingWhenUserIsNull(): void
+    {
+        $resolver = new UserResolver(null);
+
+        $resolver->setValue('ID', 23);
+
+        $this->assertEquals('', $resolver->ID);
+    }
+
+    public function testSetValueUpdatesProperty(): void
+    {
+        $user = new stdClass();
+        $user->ID = 23;
+        $user->user_login = 'testuser';
+
+        $resolver = new UserResolver($user);
+
+        $resolver->setValue('ID', 24);
+        $resolver->setValue('user_login', 'newuser');
+
+        $this->assertEquals(24, $resolver->ID);
+        $this->assertEquals('newuser', $resolver->user_login);
+    }
 }

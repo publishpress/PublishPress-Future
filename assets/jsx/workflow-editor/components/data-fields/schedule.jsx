@@ -47,8 +47,6 @@ export function Schedule({ name, label, defaultValue, onChange, variables = [], 
     const defaultRepeatDate = new Date();
     defaultRepeatDate.setDate(defaultRepeatDate.getDate() + 7);
 
-    const defaultDuplicateHandling = 'replace';
-
     defaultValue = {
         whenToRun: "now",
         dateSource: "calendar",
@@ -83,8 +81,6 @@ export function Schedule({ name, label, defaultValue, onChange, variables = [], 
     }
 
     const hidePreventDuplicateScheduling = settings?.hidePreventDuplicateScheduling;
-
-    const allowDuplicate = (defaultValue.duplicateHandling || defaultDuplicateHandling) === 'create-new';
 
     const onChangeSetting = useCallback(({ settingName, value }) => {
         const newValue = { ...defaultValue };
@@ -146,22 +142,6 @@ export function Schedule({ name, label, defaultValue, onChange, variables = [], 
                     <>
                         {! hidePreventDuplicateScheduling && (
                             <>
-                                <PanelRow className="margin-bottom-0">
-                                    <ToggleControl
-                                        label={__("Allow duplicate scheduled tasks", "post-expirator")}
-                                        checked={allowDuplicate}
-                                        onChange={(value) => {
-                                            const newValue = (value) ? 'create-new' : 'replace';
-                                            onChangeSetting({ settingName: "duplicateHandling", value: newValue });
-                                        }}
-                                    />
-                                </PanelRow>
-                                <PanelRow className="margin-top-0">
-                                    <DescriptionText
-                                        text={__("Allows scheduling tasks even if a similar task exists.", "post-expirator")}
-                                        helpUrl="https://publishpress.com/docs/schedule-delay/#preventing-duplicate-scheduled-tasks-task-identification-guide"
-                                    />
-                                </PanelRow>
                                 <PanelRow>
                                     <ExpressionBuilder
                                         name="uniqueIdExpression"

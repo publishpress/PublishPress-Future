@@ -21,4 +21,6 @@ interface PostModelInterface
     public function removeManuallyEnabledWorkflow(int $workflowId): void;
 
     public function getManuallyEnabledWorkflowsSchedule(int $workflowId): array;
+
+    public function getPostObject(): \WP_Post;
 }

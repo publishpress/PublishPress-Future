@@ -145,20 +145,19 @@ class OnPostRowAction implements StepTypeInterface
                 "type" => "post",
                 "label" => __("Triggered post", "post-expirator"),
                 "description" => __("The post that triggered the action.", "post-expirator"),
+            ],
+            [
+                "name" => "postId",
+                "type" => "integer",
+                "label" => __("Post ID", "post-expirator"),
+                "description" => __("The ID of the post that triggered the action.", "post-expirator"),
             ]
         ];
     }
 
     public function getOutputSchema(): array
     {
-        return [
-            [
-                'name' => 'post',
-                'type' => 'post',
-                'label' => __("Triggered post", "post-expirator"),
-                'description' => __("The post where the action was triggered.", "post-expirator"),
-            ]
-        ];
+        return $this->getStepScopedVariablesSchema();
     }
 
     public function getCSSClass(): string
@@ -173,7 +172,6 @@ class OnPostRowAction implements StepTypeInterface
             "source" => [
                 [
                     "id" => "output",
-                    "left" => "50%",
                     "label" => __("Next", "post-expirator"),
                 ]
             ]

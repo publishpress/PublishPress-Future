@@ -159,25 +159,23 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         // phpcs:enable
     }
 
-    public function cancelRecurringScheduledActions(int $workflowId, string $stepId): void
+    public function cancelRecurringScheduledActions(int $workflowId, string $actionUIDHash): void
     {
         global $wpdb;
 
-        // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching
-        $wpdb->query(
-            // The workflow ID needs to be cast to a string because it's a JSON field.
-            $wpdb->prepare(
-                "UPDATE {$wpdb->prefix}actionscheduler_actions AS asa
-                SET asa.status = 'canceled'
-                WHERE JSON_EXTRACT(asa.args, '$[0].workflowId') = %s
-                    AND JSON_EXTRACT(asa.args, '$[0].stepId') = %s
-                    AND asa.status = 'pending' AND asa.group_id = %d",
-                $workflowId,
-                $stepId,
-                $this->getGroupID()
-            )
+        $query = $wpdb->prepare(
+            "UPDATE {$wpdb->prefix}actionscheduler_actions AS asa
+            SET asa.status = 'canceled'
+            WHERE JSON_EXTRACT(asa.extended_args, '$[0].workflowId') = %d
+                AND JSON_UNQUOTE(JSON_EXTRACT(asa.extended_args, '$[0].actionUIDHash')) = %s
+                AND asa.status = 'pending' AND asa.group_id = %d",
+            $workflowId,
+            $actionUIDHash,
+            $this->getGroupID()
         );
-        // phpcs:enable
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $wpdb->query($query);
     }
 
     /**
@@ -257,18 +255,18 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         $tableSchema = $wpdb->prefix . 'actionscheduler_actions';
         $groupId = $this->getGroupID();
 
-        $wpdb->query(
-            $wpdb->prepare(
-                "UPDATE {$tableSchema} SET status = 'canceled'
-                WHERE (JSON_EXTRACT(args, '$[0].postId') = %d OR JSON_EXTRACT(extended_args, '$[0].postId') = %d)
-                    AND (JSON_EXTRACT(args, '$[0].workflowId') = %d OR JSON_EXTRACT(extended_args, '$[0].workflowId') = %d)
-                    AND group_id = %d",
-                $postId,
-                $postId,
-                $workflowId,
-                $workflowId,
-                $groupId
-            )
+        $query = $wpdb->prepare(
+            "UPDATE {$tableSchema}
+            INNER JOIN {$wpdb->prefix}ppfuture_workflow_scheduled_steps AS wss ON wss.action_id = {$tableSchema}.action_id
+            SET status = 'canceled'
+            WHERE wss.post_id = %d
+                AND wss.workflow_id = %d
+                AND group_id = %d",
+            $postId,
+            $workflowId,
+            $groupId
         );
+
+        $wpdb->query($query);
     }
 }

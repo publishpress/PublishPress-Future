@@ -7,6 +7,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostPublish;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class OnPostPublishRunner implements TriggerRunnerInterface
 {
@@ -21,6 +22,7 @@ class OnPostPublishRunner implements TriggerRunnerInterface
      * @var LoggerInterface
      */
     private $logger;
+
 
     public function __construct(
         StepProcessorInterface $stepProcessor,

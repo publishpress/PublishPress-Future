@@ -46,6 +46,20 @@ class WorkflowResolver implements VariableResolverInterface
 
             case 'meta':
                 return new WorkflowMetaResolver($this->workflow['ID']);
+
+            case 'execution_id':
+                if (isset($this->workflow['execution_id'])) {
+                    return (string)$this->workflow['execution_id'];
+                }
+
+                return '';
+
+            case 'execution_trace':
+                if (isset($this->workflow['execution_trace'])) {
+                    return (array)$this->workflow['execution_trace'];
+                }
+
+                return [];
         }
 
         return '';
@@ -53,14 +67,22 @@ class WorkflowResolver implements VariableResolverInterface
 
     public function getValueAsString(string $property = ''): string
     {
-        return (string)$this->getValue($property);
+        $value = $this->getValue($property);
+
+        if (is_array($value)) {
+            return implode(', ', $value);
+        }
+
+        return (string)$value;
     }
 
     public function compact(): array
     {
         return [
             'type' => $this->getType(),
-            'value' => $this->getValue('id')
+            'value' => $this->getValue('id'),
+            'execution_id' => $this->getValueAsString('execution_id'),
+            'execution_trace' => $this->getValueAsString('execution_trace'),
         ];
     }
 
@@ -70,6 +92,17 @@ class WorkflowResolver implements VariableResolverInterface
     public function getVariable()
     {
         return $this->workflow;
+    }
+
+    public function setValue(string $propertyName, $value): void
+    {
+        if ($propertyName === 'id') {
+            $propertyName = 'ID';
+        }
+
+        if (isset($this->$propertyName)) {
+            $this->workflow[$propertyName] = $value;
+        }
     }
 
     public function __isset($name): bool
@@ -83,6 +116,8 @@ class WorkflowResolver implements VariableResolverInterface
                 'description',
                 'modified_at',
                 'meta',
+                'execution_id',
+                'execution_trace',
             ]
         );
     }

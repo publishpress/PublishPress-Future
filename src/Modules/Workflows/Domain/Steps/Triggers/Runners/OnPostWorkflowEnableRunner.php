@@ -9,9 +9,9 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostRe
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepPostRelatedProcessorInterface;
 
 class OnPostWorkflowEnableRunner implements TriggerRunnerInterface
@@ -46,9 +46,9 @@ class OnPostWorkflowEnableRunner implements TriggerRunnerInterface
     private $workflowId;
 
     /**
-     * @var RuntimeVariablesHandlerInterface
+     * @var ExecutionContextInterface
      */
-    private $variablesHandler;
+    private $executionContext;
 
     /**
      * @var LoggerInterface
@@ -64,14 +64,14 @@ class OnPostWorkflowEnableRunner implements TriggerRunnerInterface
         HookableInterface $hooks,
         StepPostRelatedProcessorInterface $stepProcessor,
         InputValidatorsInterface $postQueryValidator,
-        RuntimeVariablesHandlerInterface $variablesHandler,
+        ExecutionContextInterface $executionContext,
         LoggerInterface $logger,
         \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
         $this->stepProcessor = $stepProcessor;
         $this->postQueryValidator = $postQueryValidator;
-        $this->variablesHandler = $variablesHandler;
+        $this->executionContext = $executionContext;
         $this->logger = $logger;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
@@ -126,18 +126,20 @@ class OnPostWorkflowEnableRunner implements TriggerRunnerInterface
             'node' => $this->step['node'],
         ];
 
-        if (! $this->postQueryValidator->validate($postQueryArgs)) {
-            return false;
-        }
-
         // TODO: Do we really need to pass the postID if the post is already being passed?
-        $this->variablesHandler->setVariable(
+        $this->executionContext->setVariable(
             $nodeSlug,
             [
                 'postId' => new IntegerResolver($postId),
                 'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
             ]
         );
+
+        $this->executionContext->setVariable('global.trigger.postId', $postId);
+
+        if (! $this->postQueryValidator->validate($postQueryArgs)) {
+            return false;
+        }
 
         $this->stepProcessor->setPostIdOnTriggerGlobalVariable($postId);
 

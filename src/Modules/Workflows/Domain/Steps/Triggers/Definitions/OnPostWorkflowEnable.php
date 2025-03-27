@@ -126,20 +126,19 @@ class OnPostWorkflowEnable implements StepTypeInterface
                 'type' => 'post',
                 'label' => __("Saved post", "post-expirator"),
                 'description' => __("The post that was saved, with the new properties.", "post-expirator"),
+            ],
+            [
+                "name" => "postId",
+                "type" => "integer",
+                "label" => __("Post ID", "post-expirator"),
+                "description" => __("The ID of the post that was saved.", "post-expirator"),
             ]
         ];
     }
 
     public function getOutputSchema(): array
     {
-        return [
-            [
-                'name' => 'post',
-                'type' => 'post',
-                'label' => __("Saved post", "post-expirator"),
-                'description' => __("The post that was saved, with the new properties.", "post-expirator"),
-            ]
-        ];
+        return $this->getStepScopedVariablesSchema();
     }
 
     public function getCSSClass(): string
@@ -154,7 +153,6 @@ class OnPostWorkflowEnable implements StepTypeInterface
             "source" => [
                 [
                     "id" => "output",
-                    "left" => "50%",
                     "label" => __("Next", "post-expirator"),
                 ]
             ]

@@ -228,8 +228,6 @@ export function getGlobalVariablesExpanded(globalVariables) {
         variable.priority = variable?.priority || DEFAULT_VARIABLE_PRIORITY;
     });
 
-    console.log(globalVariablesExpanded);
-
     return globalVariablesExpanded;
 }
 
@@ -397,6 +395,11 @@ function expandVariableWithChildren(variable) {
     const dataType = getDataTypeByName(variable.type);
 
     variable = formatVariableStructure(variable);
+
+    if (! dataType) {
+        console.log('No data type found for variable', variable);
+        return variable;
+    }
 
     // If the variable is an object, add its properties as children
     if (dataType.primitiveType === 'object') {

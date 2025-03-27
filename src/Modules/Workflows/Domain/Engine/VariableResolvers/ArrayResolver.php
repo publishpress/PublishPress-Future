@@ -57,6 +57,13 @@ class ArrayResolver implements VariableResolverInterface
         return $this->variable;
     }
 
+    public function setValue(string $name, $value): void
+    {
+        if (isset($this->variable[$name])) {
+            $this->variable[$name] = $value;
+        }
+    }
+
     public function __isset($name): bool
     {
         return isset($this->variable[$name]);

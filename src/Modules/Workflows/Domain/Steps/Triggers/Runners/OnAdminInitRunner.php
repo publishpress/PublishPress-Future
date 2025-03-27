@@ -19,6 +19,7 @@ class OnAdminInitRunner implements TriggerRunnerInterface
      */
     private $logger;
 
+
     public function __construct(
         StepProcessorInterface $stepProcessor,
         LoggerInterface $logger

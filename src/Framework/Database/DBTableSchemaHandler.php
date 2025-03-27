@@ -145,6 +145,50 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
         return $mappedIndexes;
     }
 
+    public function checkTableColumns(array $expectedColumns): array
+    {
+        $errors = [];
+
+        $columns = $this->getTableColumns();
+        $columnsDefinitions = $this->getTableColumnDefinitions();
+
+        foreach ($expectedColumns as $columnName => $expectedDefinition) {
+            $expectedDefinition = strtolower($expectedDefinition);
+            $expectedDefinition = str_replace(' not null', '', $expectedDefinition);
+            $expectedDefinition = str_replace(' default current_timestamp', '', $expectedDefinition);
+            $expectedDefinition = str_replace(' null', '', $expectedDefinition);
+            $expectedDefinition = preg_replace('/ default [^,]+/', '', $expectedDefinition);
+            $expectedDefinition = trim($expectedDefinition);
+
+            $currentDefinition = strtolower($columnsDefinitions[$columnName]->Type);
+
+            // Remove spaces between items in SET statements
+            if (strpos($expectedDefinition, 'set(') !== false) {
+                preg_match('/set\(([^)]+)\)/', $expectedDefinition, $matches);
+                if (isset($matches[1])) {
+                    $setItems = $matches[1];
+                    $setItemsWithoutSpaces = str_replace(' ', '', $setItems);
+                    $expectedDefinition = str_replace($setItems, $setItemsWithoutSpaces, $expectedDefinition);
+                }
+
+                // Match the quoted items
+                $currentDefinition = str_replace('\'', '"', $currentDefinition);
+                $expectedDefinition = str_replace('\'', '"', $expectedDefinition);
+            }
+
+            if (! in_array($columnName, $columns)) {
+                $errors[] = 'Column "' . $columnName . '" is missing';
+                continue;
+            }
+
+            if ($currentDefinition !== $expectedDefinition) {
+                $errors[] = 'Column "' . $columnName . '" has wrong definition: ' . $currentDefinition . '. Expected: ' . $expectedDefinition;
+            }
+        }
+
+        return $errors;
+    }
+
     public function checkTableIndexes(array $expectedIndexes): array
     {
         $errors = [];
@@ -166,8 +210,10 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
             }
         }
 
-        if (count($indexes) !== count($expectedIndexes)) {
+        if (count($indexes) > count($expectedIndexes)) {
             $errors[] = 'There are more indexes than expected';
+        } elseif (count($indexes) < count($expectedIndexes)) {
+            $errors[] = 'There are less indexes than expected';
         }
 
         return $errors;
@@ -175,7 +221,7 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
 
     public function registerError(string $code, string $error): void
     {
-        $this->schemaErrors[$code] = $error;
+        $this->schemaErrors[] = $error;
     }
 
     public function getErrors(): array
@@ -228,6 +274,45 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
         }
 
         $this->wpdb->query("SET foreign_key_checks = 1");
+    }
+
+    public function getTableColumns(): array
+    {
+        $columns = $this->getTableColumnDefinitions();
+
+        return array_column($columns, 'Field');
+    }
+
+    public function getTableColumnDefinitions(): array
+    {
+        $tableName = $this->getTableName();
+        $columns = $this->wpdb->get_results("SHOW COLUMNS FROM `$tableName`");
+
+        $columnsDefinitions = [];
+        foreach ($columns as $column) {
+            $columnsDefinitions[$column->Field] = $column;
+        }
+
+        return $columnsDefinitions;
+    }
+
+    public function fixColumns(array $columns): void
+    {
+        $tableColumns = $this->getTableColumns();
+
+        foreach ($columns as $columnName => $columnDefinition) {
+            if (! in_array($columnName, $tableColumns)) {
+                $this->addColumn($columnName, $columnDefinition);
+            } else {
+                $this->changeColumn($columnName, $columnDefinition);
+            }
+        }
+    }
+
+    public function addColumn(string $columnName, string $columnDefinition): void
+    {
+        $tableName = $this->getTableName();
+        $this->wpdb->query("ALTER TABLE `$tableName` ADD COLUMN `$columnName` $columnDefinition");
     }
 
     public function changeColumn(string $column, string $definition): void

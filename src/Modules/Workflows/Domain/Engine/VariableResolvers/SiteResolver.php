@@ -6,6 +6,8 @@ use PublishPress\Future\Modules\Workflows\Interfaces\VariableResolverInterface;
 
 class SiteResolver implements VariableResolverInterface
 {
+    private $siteDataCache = [];
+
     public function getType(): string
     {
         return 'site';
@@ -17,28 +19,44 @@ class SiteResolver implements VariableResolverInterface
             $propertyName = 'name';
         }
 
+        if (isset($this->siteDataCache[$propertyName])) {
+            return $this->siteDataCache[$propertyName];
+        }
+
         switch ($propertyName) {
             case 'id':
             case 'ID':
-                return $this->getSiteId();
+                $value = $this->getSiteId();
+                $this->siteDataCache[$propertyName] = $value;
+                return $value;
 
             case 'name':
-                return $this->getSiteName();
+                $value = $this->getSiteName();
+                $this->siteDataCache[$propertyName] = $value;
+                return $value;
 
             case 'description':
-                return $this->getSiteDescription();
+                $value = $this->getSiteDescription();
 
             case 'url':
-                return $this->getSiteUrl();
+                $value = $this->getSiteUrl();
+                $this->siteDataCache[$propertyName] = $value;
+                return $value;
 
             case 'home_url':
-                return $this->getHomeUrl();
+                $value = $this->getHomeUrl();
+                $this->siteDataCache[$propertyName] = $value;
+                return $value;
 
             case 'admin_email':
-                return $this->getAdminEmail();
+                $value = $this->getAdminEmail();
+                $this->siteDataCache[$propertyName] = $value;
+                return $value;
 
             case 'meta':
-                return new SiteMetaResolver($this->getSiteId());
+                $value = new SiteMetaResolver($this->getSiteId());
+                $this->siteDataCache[$propertyName] = $value;
+                return $value;
         }
 
         return '';
@@ -93,6 +111,11 @@ class SiteResolver implements VariableResolverInterface
     public function getVariable()
     {
         return $this->getValue();
+    }
+
+    public function setValue(string $name, $value): void
+    {
+        $this->siteDataCache[$name] = $value;
     }
 
     public function __isset($name): bool

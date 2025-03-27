@@ -40,6 +40,7 @@ $schemaHealthErrors = [
     $debugLogSchema->getTableName() => $debugLogSchema->getErrors(),
     $workflowScheduledStepsSchema->getTableName() => $workflowScheduledStepsSchema->getErrors(),
 ];
+
 ?>
 
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
@@ -81,17 +82,26 @@ $schemaHealthErrors = [
                                 )
                             ); // phpcs:ignore PSR2.Methods.FunctionCallSignature.Indent?>
                             </span>
+
                             <?php foreach ($schemaHealthErrors as $tableName => $errors) : ?>
                                 <?php if (empty($errors)) {
                                     continue;
                                 } ?>
 
-                                <h4><?php echo esc_html($tableName); ?></h4>
-                                <ul>
-                                    <?php foreach ($errors as $error) : ?>
-                                        <li><?php echo esc_html($error); ?></li>
+                                <table class="widefat striped" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <thead>
+                                        <tr>
+                                            <th><strong><?php echo esc_html($tableName); ?></strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($errors as $error) : ?>
+                                            <tr>
+                                            <td><?php echo esc_html($error); ?></td>
+                                        </tr>
                                     <?php endforeach; ?>
-                                </ul>
+                                    </tbody>
+                                </table>
                             <?php endforeach; ?>
 
                             <input type="submit" class="button" name="fix-db-schema" id="fix-db-schema" value="<?php

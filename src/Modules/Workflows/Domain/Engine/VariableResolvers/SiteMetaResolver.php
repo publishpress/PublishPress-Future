@@ -8,6 +8,8 @@ class SiteMetaResolver implements VariableResolverInterface
 {
     private $siteId;
 
+    private $siteMetaCache = [];
+
     public function __construct(int $siteId)
     {
         $this->siteId = $siteId;
@@ -20,7 +22,13 @@ class SiteMetaResolver implements VariableResolverInterface
 
     public function getValue(string $name = '')
     {
-        return get_post_meta($this->siteId, $name, true);
+        if (isset($this->siteMetaCache[$name])) {
+            return $this->siteMetaCache[$name];
+        }
+
+        $value = get_post_meta($this->siteId, $name, true);
+        $this->siteMetaCache[$name] = $value;
+        return $value;
     }
 
     public function getValueAsString(string $name = ''): string
@@ -36,6 +44,11 @@ class SiteMetaResolver implements VariableResolverInterface
     public function getVariable($name = '')
     {
         return $this->getValue($name);
+    }
+
+    public function setValue(string $name, $value): void
+    {
+        $this->siteMetaCache[$name] = $value;
     }
 
     public function __isset($name): bool

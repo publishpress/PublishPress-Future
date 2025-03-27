@@ -215,6 +215,7 @@ class WorkflowScheduledStepsSchemaTest extends NoTransactionWPTestCase
         $this->assertContains('compressed_args', $columnNames);
         $this->assertContains('is_compressed', $columnNames);
         $this->assertContains('created_at', $columnNames);
+        $this->assertContains('post_id', $columnNames);
     }
 
     public function testColumnDataTypes(): void
@@ -240,6 +241,7 @@ class WorkflowScheduledStepsSchemaTest extends NoTransactionWPTestCase
         $this->assertStringContainsString('blob', $columnDefinitions['compressed_args']);
         $this->assertStringContainsString('tinyint(1)', $columnDefinitions['is_compressed']);
         $this->assertStringContainsString('datetime', $columnDefinitions['created_at']);
+        $this->assertStringContainsString('bigint unsigned', $columnDefinitions['post_id']);
     }
 
     public function testDefaultValues(): void
@@ -257,6 +259,7 @@ class WorkflowScheduledStepsSchemaTest extends NoTransactionWPTestCase
         $this->assertEquals('0', $columnDefaults['repeat_times']);
         $this->assertEquals('0', $columnDefaults['is_compressed']);
         $this->assertEquals('CURRENT_TIMESTAMP', $columnDefaults['created_at']);
+        $this->assertNull($columnDefaults['post_id']);
     }
 
     public function testIndexDefinitions(): void
@@ -287,6 +290,8 @@ class WorkflowScheduledStepsSchemaTest extends NoTransactionWPTestCase
                 $this->assertContains($index->Column_name, ['action_uid_hash', 'action_id']);
             } elseif ($index->Key_name === 'is_recurring') {
                 $this->assertContains($index->Column_name, ['is_recurring', 'action_id']);
+            } elseif ($index->Key_name === 'post_id') {
+                $this->assertContains($index->Column_name, ['post_id', 'workflow_id', 'action_id']);
             }
         }
     }
