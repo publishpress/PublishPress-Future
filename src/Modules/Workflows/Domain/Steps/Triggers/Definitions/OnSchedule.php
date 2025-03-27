@@ -119,8 +119,40 @@ class OnSchedule implements StepTypeInterface
             "source" => [
                 [
                     "id" => "output",
-                    "label" => __("Next", "post-expirator"),
-                ]
+                    "label" => __("When scheduled", "post-expirator"),
+                ],
+                [
+                    "id" => "finished",
+                    "label" => __("After all repetitions", "post-expirator"),
+                    "conditions" => [
+                        "and" => [
+                            [
+                                "!=" => [
+                                    ["var" => "schedule.recurrence"],
+                                    "single"
+                                ]
+                            ],
+                            [
+                                "!=" => [
+                                    ["var" => "schedule.repeatUntil"],
+                                    "forever"
+                                ]
+                            ],
+                            [
+                                "!=" => [
+                                    ["var" => "schedule"],
+                                    null
+                                ]
+                            ],
+                            [
+                                "!=" => [
+                                    ["var" => "schedule"],
+                                    []
+                                ]
+                            ],
+                        ]
+                    ],
+                ],
             ]
         ];
     }

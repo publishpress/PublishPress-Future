@@ -1,4 +1,4 @@
-import { Handle, Position } from 'reactflow';
+import { Handle, Position, useUpdateNodeInternals } from 'reactflow';
 import { memo, useEffect, useRef } from '@wordpress/element';
 import NodeIcon from '../node-icon';
 import { useSelect, useDispatch } from "@wordpress/data";
@@ -10,6 +10,7 @@ import PlayIcon from "../icons/play";
 import { SIDEBAR_NODE_EDGE } from '../settings-sidebar/constants';
 import { useIsPro } from '../../contexts/pro-context';
 import jsonLogic from "json-logic-js";
+import { CUSTOM_EVENT_HANDLES_COUNT_CHANGED } from '../../constants';
 
 export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIcon }) => {
     const {
@@ -31,6 +32,8 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
         }
     });
 
+    const updateNodeInternals = useUpdateNodeInternals();
+
     const isPro = useIsPro();
 
     const {
@@ -40,6 +43,8 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
     const {
         openGeneralSidebar,
     } = useDispatch(editorStore);
+
+    const previousHandlesCountRef = useRef();
 
     let nodeType = getNodeTypeByName(data.name);
 
@@ -103,24 +108,36 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
     const nodeDescription = data?.label;
     const nodeLabel = nodeType.label || __('Node', 'post-expirator');
     const nodeClassName = nodeType?.className || 'react-flow__node-genericNode';
-    let displayHandle = true;
 
-    let targetHandles = null;
+    let targetHandles;
+    let handlesToDisplay;
+
     if (nodeType.handleSchema) {
         if (nodeType.handleSchema.target) {
-            const targetHandlesCount = nodeType.handleSchema.target.length;
-            const targetLeftOffset = 100 / targetHandlesCount / 2;
-            targetHandles = nodeType.handleSchema.target.map((handle, index) => {
-                const left = targetLeftOffset + ((100 / targetHandlesCount) * index);
+            handlesToDisplay = filterHandlesByConditions(nodeType.handleSchema.target, data);
 
-                displayHandle = true;
-                if (handle.conditions) {
-                    displayHandle = jsonLogic.apply(handle.conditions, data.settings);
-                }
+            useEffect(() => {
+                if (previousHandlesCountRef.current !== handlesToDisplay.length) {
+                    previousHandlesCountRef.current = handlesToDisplay.length;
 
-                if (! displayHandle) {
-                    return null;
+                    const event = new CustomEvent(CUSTOM_EVENT_HANDLES_COUNT_CHANGED, {
+                        detail: {
+                            nodeId: id,
+                            handlesCount: handlesToDisplay.length,
+                            handles: handlesToDisplay,
+                            originalHandles: nodeType.handleSchema.target,
+                            type: 'target',
+                        },
+                    });
+
+                    document.dispatchEvent(event);
+
+                    updateNodeInternals(id);
                 }
+            }, [handlesToDisplay, updateNodeInternals]);
+
+            targetHandles = handlesToDisplay.map((handle, index) => {
+                const left = calculateLeftPosition(index, handlesToDisplay.length);
 
                 return (
                     <Handle
@@ -128,7 +145,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                         type="target"
                         position={Position.Top}
                         id={handle.id}
-                        style={{ left: `${left}%`}}
+                        style={{ left: `${left}`}}
                         isConnectable={isConnectable}
                         className={'handle-target-' + handle.id}
                     />
@@ -139,20 +156,34 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
 
     let sourceHandles = null;
     let handleAreas = null;
+
     if (nodeType.handleSchema) {
         if (nodeType.handleSchema.source) {
-            const handlesToDisplay = nodeType.handleSchema.source.filter((handle) => {
-                if (handle.conditions) {
-                    return jsonLogic.apply(handle.conditions, data.settings);
+            handlesToDisplay = filterHandlesByConditions(nodeType.handleSchema.source, data);
+
+            useEffect(() => {
+                if (previousHandlesCountRef.current !== handlesToDisplay.length) {
+                    previousHandlesCountRef.current = handlesToDisplay.length;
+
+                    const event = new CustomEvent(CUSTOM_EVENT_HANDLES_COUNT_CHANGED, {
+                        detail: {
+                            nodeId: id,
+                            handlesCount: handlesToDisplay.length,
+                            handles: handlesToDisplay,
+                            originalHandles: nodeType.handleSchema.source,
+                            type: 'source',
+                        },
+                    });
+
+                    document.dispatchEvent(event);
+
+                    updateNodeInternals(id);
                 }
+            }, [handlesToDisplay, updateNodeInternals]);
 
-                return true;
-            });
 
-            const sourceHandlesCount = handlesToDisplay.length;
-            const sourceLeftOffset = 100 / sourceHandlesCount / 2;
             sourceHandles = handlesToDisplay.map((handle, index) => {
-                const left = sourceLeftOffset + ((100 / sourceHandlesCount) * index);
+                const left = calculateLeftPosition(index, handlesToDisplay.length);
 
                 return (
                     <Handle
@@ -160,7 +191,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                         type="source"
                         position={Position.Bottom}
                         id={handle.id}
-                        style={{ left: `${left}%` }}
+                        style={{ left: `${left}` }}
                         isConnectable={isConnectable}
                         className={'handle-source-' + handle.id}
                     />
@@ -321,3 +352,26 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
 });
 
 export default GenericNode;
+
+function filterHandlesByConditions(handles, data) {
+    return handles.filter((handle) => {
+        if (handle.conditions) {
+            return jsonLogic.apply(handle.conditions, data.settings);
+        }
+
+        return true;
+    });
+}
+
+function calculateLeftOffset(handlesCount) {
+    const leftOffset = 100 / handlesCount / 2;
+
+    return leftOffset;
+}
+
+function calculateLeftPosition(index, handlesCount) {
+    const leftOffset = calculateLeftOffset(handlesCount);
+    const left = leftOffset + ((100 / handlesCount) * index);
+
+    return `${left}%`;
+}

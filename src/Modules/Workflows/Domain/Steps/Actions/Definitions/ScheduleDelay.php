@@ -195,7 +195,7 @@ class ScheduleDelay implements StepTypeInterface
                                     ["var" => "schedule"],
                                     []
                                 ]
-                                ],
+                            ],
                         ]
                     ],
                 ],

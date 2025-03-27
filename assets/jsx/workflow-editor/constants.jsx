@@ -27,3 +27,5 @@ export const NODE_TYPE_PLACEHOLDER = 'placeholder';
 
 export const HANDLE_TYPE_TARGET = 'target';
 export const HANDLE_TYPE_SOURCE = 'source';
+
+export const CUSTOM_EVENT_HANDLES_COUNT_CHANGED = 'publishpress_future_workflow_editor_handles_count_changed';
