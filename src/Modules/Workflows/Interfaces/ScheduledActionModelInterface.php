@@ -18,6 +18,8 @@ interface ScheduledActionModelInterface
 
     public function loadByActionId(int $id): void;
 
+    public function loadByActionArg(string $arg, string $value, array $validStatuses = []): void;
+
     public function update(): void;
 
     public function setActionIdOnArgs(): void;

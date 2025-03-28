@@ -12,7 +12,7 @@ class ScheduleDelayRunner implements AsyncStepRunnerInterface
     /**
      * @var AsyncStepProcessorInterface
      */
-    private $stepProcessor;
+    private $asyncStepProcessor;
 
     /**
      * @var ExecutionContextInterface
@@ -20,10 +20,10 @@ class ScheduleDelayRunner implements AsyncStepRunnerInterface
     private $executionContext;
 
     public function __construct(
-        AsyncStepProcessorInterface $stepProcessor,
+        AsyncStepProcessorInterface $asyncStepProcessor,
         ExecutionContextInterface $executionContext
     ) {
-        $this->stepProcessor = $stepProcessor;
+        $this->asyncStepProcessor = $asyncStepProcessor;
         $this->executionContext = $executionContext;
     }
 
@@ -34,10 +34,10 @@ class ScheduleDelayRunner implements AsyncStepRunnerInterface
 
     public function setup(array $step): void
     {
-        $this->stepProcessor->executeSafelyWithErrorHandling(
+        $this->asyncStepProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step) {
-                $this->stepProcessor->setup($step, '__return_true');
+                $this->asyncStepProcessor->setup($step, '__return_true');
             }
         );
     }
@@ -45,8 +45,8 @@ class ScheduleDelayRunner implements AsyncStepRunnerInterface
     /**
      * This method is called when the action is triggered by the scheduler.
      */
-    public function actionCallback(array $expandedArgs, array $originalArgs)
+    public function actionCallback(array $compactedArgs, array $originalArgs)
     {
-        $this->stepProcessor->actionCallback($expandedArgs, $originalArgs);
+        $this->asyncStepProcessor->actionCallback($compactedArgs, $originalArgs);
     }
 }

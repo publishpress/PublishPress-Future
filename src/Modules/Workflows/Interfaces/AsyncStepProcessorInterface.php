@@ -7,7 +7,7 @@ namespace PublishPress\Future\Modules\Workflows\Interfaces;
  */
 interface AsyncStepProcessorInterface extends StepProcessorInterface
 {
-    public function actionCallback(array $compactedArgs, array $originalArgs);
+    public function actionCallback(array $compactedArgs, array $originalArgs, bool $triggerCallbackIsRunning = false);
 
     public function compactArguments(string $stepSlug, string $stepId): array;
 
@@ -18,4 +18,6 @@ interface AsyncStepProcessorInterface extends StepProcessorInterface
     public function completeScheduledStep(int $actionId): void;
 
     public function cancelWorkflowScheduledActions(int $workflowId): void;
+
+    public function isScheduled(string $actionUIDHash): bool;
 }

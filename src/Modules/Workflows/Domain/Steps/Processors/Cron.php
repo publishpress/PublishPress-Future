@@ -2,6 +2,7 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Processors;
 
+use Exception;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
@@ -210,7 +211,22 @@ class Cron implements AsyncStepProcessorInterface
             $this->stepSlug = $this->stepData['slug'];
             $this->nodeSettings = $this->getNodeSettings($node);
             $this->workflowId = $this->executionContext->getVariable('global.workflow.id');
-            $this->actionUID = $this->getScheduledActionUniqueId($node);
+
+            /**
+             * @param bool $useTimestamp
+             * @param int $workflowId
+             * @param array $step
+             *
+             * @return bool
+             */
+            $useTimestamp = (bool) $this->hooks->applyFilters(
+                HooksAbstract::FILTER_SHOULD_USE_TIMESTAMP_ON_ACTION_UID,
+                true,
+                $this->workflowId,
+                $step,
+            );
+
+            $this->actionUID = $this->getScheduledActionUniqueId($node, $useTimestamp);
             $this->actionUIDHash = md5($this->actionUID);
             $this->priority = (int)($this->nodeSettings['schedule']['priority'] ?? self::DEFAULT_PRIORITY);
             $this->isFinished = WorkflowScheduledStepModel::getMetaIsFinished($this->workflowId, $this->actionUIDHash);
@@ -246,7 +262,7 @@ class Cron implements AsyncStepProcessorInterface
 
     private function getActionArgs(): array
     {
-        return [
+        $actionArgs = [
             'workflowId' => $this->workflowId,
             'workflowExecutionId' => $this->executionContext->getVariable('global.workflow.execution_id'),
             'stepId' => $this->stepId,
@@ -257,6 +273,17 @@ class Cron implements AsyncStepProcessorInterface
             // This is not always set, only for some post-related triggers. Used to keep the post ID as reference.
             'postId' => $this->executionContext->getVariable('global.trigger.postId'),
         ];
+
+        $actionArgs = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_CRON_SCHEDULE_RUNNER_ACTION_ARGS,
+            $actionArgs,
+            $this->workflowId,
+            $this->stepData,
+            $this->actionUID,
+            $this->executionContext
+        );
+
+        return $actionArgs;
     }
 
     private function saveScheduledStepData(int $scheduledActionId) {
@@ -448,7 +475,27 @@ class Cron implements AsyncStepProcessorInterface
             return true;
         }
 
-        return false;
+        /**
+         * @param bool $shouldSkip
+         * @param int $workflowId
+         * @param string $stepId
+         * @param string $actionUIDHash
+         * @param ExecutionContextInterface $executionContext
+         * @param array $stepData
+         *
+         * @return bool
+         */
+        $shouldSkip = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_SHOULD_SKIP_SCHEDULING,
+            false,
+            $this->workflowId,
+            $this->stepId,
+            $this->actionUIDHash,
+            $this->executionContext,
+            $this->stepData
+        );
+
+        return $shouldSkip;
     }
 
     private function getScheduledActionUniqueId(array $node, $useTimestamp = true): string
@@ -830,9 +877,16 @@ class Cron implements AsyncStepProcessorInterface
         );
     }
 
-    public function actionCallback(array $compactedArgs, array $originalArgs)
+    public function actionCallback(array $compactedArgs, array $originalArgs, bool $triggerCallbackIsRunning = false)
     {
         $expandedArgs = $this->expandArguments($compactedArgs);
+
+        // Update the execution context with the expanded arguments from the original event
+        $this->executionContext->setAllVariables($expandedArgs['runtimeVariables']);
+
+        if ($triggerCallbackIsRunning) {
+            $this->triggerCallbackIsRunning();
+        }
 
         $workflowId = $compactedArgs['workflowId'];
 
@@ -926,6 +980,18 @@ class Cron implements AsyncStepProcessorInterface
 
             $this->runNextSteps($expandedArgs['step'], 'finished');
             return;
+        }
+    }
+
+    public function isScheduled(string $actionUIDHash): bool
+    {
+        try {
+            $scheduledActionModel = new ScheduledActionModel();
+            $scheduledActionModel->loadByActionArg('actionUIDHash', $actionUIDHash, ['pending', 'in-progress']);
+
+            return true;
+        } catch (Exception $e) {
+            return false;
         }
     }
 

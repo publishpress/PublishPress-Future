@@ -154,4 +154,10 @@ abstract class HooksAbstract
     public const FILTER_WORKFLOW_ROUTE_VARIABLE = 'publishpressfuture_workflow_route_variable';
 
     public const FILTER_DUPLICATE_PREVENTION_THRESHOLD = 'publishpressfuture_duplicate_prevention_threshold';
+
+    public const FILTER_CRON_SCHEDULE_RUNNER_ACTION_ARGS = 'publishpressfuture_cron_schedule_runner_action_args';
+
+    public const FILTER_SHOULD_SKIP_SCHEDULING = 'publishpressfuture_should_skip_scheduling';
+
+    public const FILTER_SHOULD_USE_TIMESTAMP_ON_ACTION_UID = 'publishpressfuture_should_use_timestamp_on_action_uid';
 }
