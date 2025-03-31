@@ -49,6 +49,7 @@ class WorkflowScheduledStepsSchema implements DBTableSchemaInterface
             'repeat_until' => 'set("forever", "times", "date") NOT NULL DEFAULT "forever"',
             'repeat_times' => 'int NOT NULL DEFAULT 0',
             'repeat_until_date' => 'datetime NULL',
+            'repetition_number' => 'int NOT NULL DEFAULT 0',
             'uncompressed_args' => 'varchar(10000) NULL',
             'compressed_args' => 'blob NULL',
             'is_compressed' => 'tinyint(1) NOT NULL DEFAULT 0',

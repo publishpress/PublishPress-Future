@@ -502,7 +502,7 @@ class ScheduledActions implements InitializableInterface
             );
 
             // Check how many times the step has been executed
-            $executedTimes = $stepModel->getRunCount();
+            $executedTimes = $stepModel->getTotalRunCount();
 
             $recurrence .= ' ' . sprintf(
                 // translators: %1$s: executed times, %2$d: total repeat times
@@ -672,6 +672,7 @@ class ScheduledActions implements InitializableInterface
         $newScheduledStepModel->setRepeatUntilDate($oldScheduledStepModel->getRepeatUntilDate());
         $newScheduledStepModel->setRepeatTimes($oldScheduledStepModel->getRepeatTimes());
         $newScheduledStepModel->setRepeatUntil($oldScheduledStepModel->getRepeatUntil());
+        $newScheduledStepModel->setRepetitionNumber($oldScheduledStepModel->getRepetitionNumber());
         $newScheduledStepModel->insert();
     }
 

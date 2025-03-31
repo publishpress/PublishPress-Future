@@ -91,26 +91,26 @@ class WorkflowScheduledStepModelTest extends \lucatume\WPBrowser\TestCase\WPTest
         $this->assertEquals('2024-01-01 00:00:00', $model->getRepeatUntilDate());
     }
 
-    public function testSetAndGetRunCount(): void
+    public function testSetAndgetTotalRunCount(): void
     {
         $model = $this->make(WorkflowScheduledStepModel::class);
         $model->setActionId(1);
         $model->setWorkflowId(1);
         $model->setStepId('step_id');
         $model->setActionUID('action_uid');
-        $model->setRunCount(1);
+        $model->setTotalRunCount(1);
         $model->setArgs(['key' => 'value']);
         $model->insert();
-        $this->assertEquals(1, $model->getRunCount());
+        $this->assertEquals(1, $model->getTotalRunCount());
 
         $model->loadByActionId(1);
-        $this->assertEquals(1, $model->getRunCount());
+        $this->assertEquals(1, $model->getTotalRunCount());
 
-        $model->setRunCount(2);
+        $model->setTotalRunCount(2);
         $model->update();
 
         $model->loadByActionId(1);
-        $this->assertEquals(2, $model->getRunCount());
+        $this->assertEquals(2, $model->getTotalRunCount());
     }
 
     public function testSetAndGetLastRunAt(): void
@@ -243,7 +243,7 @@ class WorkflowScheduledStepModelTest extends \lucatume\WPBrowser\TestCase\WPTest
         $model->setActionUID('action_uid');
         $model->setArgs(['key' => 'value']);
         $model->setLastRunAt('2024-01-01 00:00:00');
-        $model->setRunCount(1);
+        $model->setTotalRunCount(1);
         $model->setRepeatTimes(1);
         $model->setRepeatUntilDate('2024-01-01 00:00:00');
         $model->setIsRecurring(true);
@@ -255,7 +255,7 @@ class WorkflowScheduledStepModelTest extends \lucatume\WPBrowser\TestCase\WPTest
         $model->setActionUID('new_action_uid');
         $model->setArgs(['key' => 'new_value']);
         $model->setLastRunAt('2024-01-03 00:00:00');
-        $model->setRunCount(2);
+        $model->setTotalRunCount(2);
         $model->setRepeatTimes(2);
         $model->setRepeatUntilDate('2024-01-05 00:00:00');
         $model->setIsRecurring(false);
@@ -385,7 +385,7 @@ class WorkflowScheduledStepModelTest extends \lucatume\WPBrowser\TestCase\WPTest
         $this->assertFalse($model->expectCompressedArguments());
     }
 
-    public function testIncrementRunCount(): void
+    public function testincrementTotalRunCount(): void
     {
         global $wpdb;
 
@@ -411,16 +411,16 @@ class WorkflowScheduledStepModelTest extends \lucatume\WPBrowser\TestCase\WPTest
         $model = $this->make(WorkflowScheduledStepModel::class);
         $model->loadByActionId(1);
 
-        $this->assertEquals(0, $model->getRunCount());
+        $this->assertEquals(0, $model->getTotalRunCount());
 
-        $model->incrementRunCount();
+        $model->incrementTotalRunCount();
         $model->update();
 
-        $model->incrementRunCount();
+        $model->incrementTotalRunCount();
         $model->update();
 
         $model->loadByActionId(1);
-        $this->assertEquals(2, $model->getRunCount());
+        $this->assertEquals(2, $model->getTotalRunCount());
     }
 
     public function testUpdateLastRunAt(): void
@@ -451,7 +451,7 @@ class WorkflowScheduledStepModelTest extends \lucatume\WPBrowser\TestCase\WPTest
         $model->setStepId('step_id');
         $model->setActionUID('action_uid');
         $model->setArgs(['key' => 'value']);
-        $model->setRunCount(2);
+        $model->setTotalRunCount(2);
         $model->setLastRunAt('2024-01-01 00:00:00');
         $model->insert();
 
@@ -459,7 +459,7 @@ class WorkflowScheduledStepModelTest extends \lucatume\WPBrowser\TestCase\WPTest
         $model->update();
 
         $model->loadByActionId(8);
-        $this->assertEquals(0, $model->getRunCount());
+        $this->assertEquals(0, $model->getTotalRunCount());
         $this->assertEquals('0000-00-00 00:00:00', $model->getLastRunAt());
     }
 
@@ -529,7 +529,7 @@ class WorkflowScheduledStepModelTest extends \lucatume\WPBrowser\TestCase\WPTest
 
         $this->assertEquals(0, WorkflowScheduledStepModel::getMetaRunCount(1, $model->getActionUIDHash()));
 
-        $model->incrementRunCount();
+        $model->incrementTotalRunCount();
         $model->update();
 
         $this->assertEquals(1, WorkflowScheduledStepModel::getMetaRunCount(1, $model->getActionUIDHash()));

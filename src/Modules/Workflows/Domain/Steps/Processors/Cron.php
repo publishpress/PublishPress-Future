@@ -307,7 +307,7 @@ class Cron implements AsyncStepProcessorInterface
         $scheduledStepModel->setStepId($this->stepId);
         $scheduledStepModel->setActionUID($this->actionUID);
         $scheduledStepModel->setArgs($compactedArgs);
-        $scheduledStepModel->setRunCount(0);
+        $scheduledStepModel->setTotalRunCount(0);
         $scheduledStepModel->setIsRecurring(! $this->isSingleAction);
 
         $postId = (int)($this->executionContext->getVariable('global.trigger.postId') ?? 0);
@@ -319,6 +319,7 @@ class Cron implements AsyncStepProcessorInterface
             $scheduledStepModel->setRepeatUntil($this->nodeSettings['schedule']['repeatUntil'] ?? 'forever');
             $scheduledStepModel->setRepeatTimes((int)$this->nodeSettings['schedule']['repeatTimes'] ?? 0);
             $scheduledStepModel->setRepeatUntilDate($this->nodeSettings['schedule']['repeatUntilDate'] ?? '');
+            $scheduledStepModel->setRepetitionNumber(0);
         }
 
         $scheduledStepModel->insert();
@@ -927,9 +928,9 @@ class Cron implements AsyncStepProcessorInterface
         if ($isRecurrent) {
             // Check if the node has a limit of executions. Default is 'forever'.
             $repeatUntil = $scheduledStepModel->getRepeatUntil();
-            $runCount = (int)$scheduledStepModel->getRunCount();
+            $totalRunCount = (int)$scheduledStepModel->getTotalRunCount();
 
-            $expandedArgs['runtimeVariables'][$stepSlug]['repeat_count'] = $runCount + 1;
+            $expandedArgs['runtimeVariables'][$stepSlug]['repeat_count'] = $totalRunCount + 1;
 
             if ($repeatUntil === 'date') {
                 $repeatUntilDate = strtotime($scheduledStepModel->getRepeatUntilDate() ?? '');
@@ -944,11 +945,11 @@ class Cron implements AsyncStepProcessorInterface
                 $expandedArgs['runtimeVariables'][$stepSlug]['repeat_limit'] = $runLimit;
 
                 // Will this be the last execution?
-                if ($runCount >= $runLimit - 1) {
+                if ($totalRunCount >= $runLimit - 1) {
                     $markAsCompletedAfterExecution = true;
                 }
 
-                if ($runCount >= $runLimit) {
+                if ($totalRunCount >= $runLimit) {
                     $shouldExecute = false;
                     $markAsCompletedAfterExecution = true;
                 }
@@ -964,7 +965,8 @@ class Cron implements AsyncStepProcessorInterface
             $this->executionContext->setAllVariables($expandedArgs['runtimeVariables']);
             $this->runNextSteps($expandedArgs['step']);
 
-            $scheduledStepModel->incrementRunCount();
+            $scheduledStepModel->incrementTotalRunCount();
+            $scheduledStepModel->setRepetitionNumber($scheduledStepModel->getTotalRunCount());
             $scheduledStepModel->updateLastRunAt();
             $scheduledStepModel->update();
         }

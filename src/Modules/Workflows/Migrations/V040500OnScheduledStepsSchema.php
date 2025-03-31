@@ -10,9 +10,9 @@ use PublishPress\Future\Modules\Workflows\HooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-class V44010PostIdOnScheduledStepsSchema implements MigrationInterface
+class V040500OnScheduledStepsSchema implements MigrationInterface
 {
-    public const HOOK = HooksAbstract::ACTION_MIGRATE_POST_ID_ON_SCHEDULED_STEPS;
+    public const HOOK = HooksAbstract::ACTION_MIGRATE_V040500_ON_SCHEDULED_STEPS;
 
     private $hooksFacade;
 
@@ -55,7 +55,7 @@ class V44010PostIdOnScheduledStepsSchema implements MigrationInterface
     public function formatLogActionColumn($text, $row)
     {
         if ($row['hook'] === self::HOOK) {
-            return __('Migrate post_id on scheduled steps schema after v4.4.1', 'publishpress-future');
+            return __('Migrate post_id and repetition_number on scheduled steps schema after v4.5.0', 'publishpress-future');
         }
 
         return $text;
