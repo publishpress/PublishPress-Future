@@ -502,7 +502,7 @@ class ScheduledActions implements InitializableInterface
             );
 
             // Check how many times the step has been executed
-            $executedTimes = $stepModel->getTotalRunCount();
+            $executedTimes = $stepModel->getRepetitionNumber();
 
             $recurrence .= ' ' . sprintf(
                 // translators: %1$s: executed times, %2$d: total repeat times
