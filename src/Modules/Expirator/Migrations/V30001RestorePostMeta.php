@@ -144,7 +144,7 @@ class V30001RestorePostMeta implements MigrationInterface
     public function formatLogActionColumn($text, $row)
     {
         if ($row['hook'] === self::HOOK) {
-            return __('Restore post meta data after v3.0.1', 'publishpress-future');
+            return __('Restore post meta data after v3.0.1', 'post-expirator');
         }
 
         return $text;

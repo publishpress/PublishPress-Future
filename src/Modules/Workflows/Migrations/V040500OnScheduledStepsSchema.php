@@ -55,7 +55,7 @@ class V040500OnScheduledStepsSchema implements MigrationInterface
     public function formatLogActionColumn($text, $row)
     {
         if ($row['hook'] === self::HOOK) {
-            return __('Migrate post_id and repetition_number on scheduled steps schema after v4.5.0', 'publishpress-future');
+            return __('Migrate post_id and repetition_number on scheduled steps schema after v4.5.0', 'post-expirator');
         }
 
         return $text;
