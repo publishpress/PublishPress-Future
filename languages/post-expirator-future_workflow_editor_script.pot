@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-27T15:19:33+00:00\n"
+"POT-Creation-Date: 2025-03-31T20:42:39+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -480,11 +480,11 @@ msgstr ""
 msgid "User ID"
 msgstr ""
 
-#: components/flow-editor/index.jsx:408
+#: components/flow-editor/index.jsx:437
 msgid "Applying auto layout."
 msgstr ""
 
-#: components/flow-editor/index.jsx:433
+#: components/flow-editor/index.jsx:462
 msgid "Auto layout applied."
 msgstr ""
 
@@ -507,7 +507,7 @@ msgid "Pro"
 msgstr ""
 
 #: components/inspector-card/index.jsx:132
-#: components/node-types/generic.jsx:272
+#: components/node-types/generic.jsx:300
 #: components/secondary-sidebar/node-card.jsx:29
 msgid "Currently this step is being skipped. Upgrade to Pro to unlock this feature."
 msgstr ""
@@ -676,7 +676,7 @@ msgstr ""
 
 #: components/node-dev-info-panel/index.jsx:31
 #: components/node-inspector/node-inspector-card.jsx:18
-#: components/node-types/generic.jsx:104
+#: components/node-types/generic.jsx:109
 msgid "Node"
 msgstr ""
 
@@ -776,42 +776,42 @@ msgstr ""
 msgid "No description"
 msgstr ""
 
-#: components/node-types/generic.jsx:52
+#: components/node-types/generic.jsx:57
 msgid "Unknown node: %s"
 msgstr ""
 
-#: components/node-types/generic.jsx:53
+#: components/node-types/generic.jsx:58
 msgid "This is a placeholder node for a node that does not exist."
 msgstr ""
 
-#: components/node-types/generic.jsx:186
+#: components/node-types/generic.jsx:214
 msgid "Step"
 msgstr ""
 
-#: components/node-types/generic.jsx:188
+#: components/node-types/generic.jsx:216
 msgid "Action"
 msgstr ""
 
 #. translators: Patterns tab title in the block inserter.
-#: components/node-types/generic.jsx:190
+#: components/node-types/generic.jsx:218
 #: components/secondary-sidebar/tabs.jsx:30
 msgid "Advanced"
 msgstr ""
 
-#: components/node-types/generic.jsx:192
+#: components/node-types/generic.jsx:220
 msgid "Trigger"
 msgstr ""
 
-#: components/node-types/generic.jsx:239
+#: components/node-types/generic.jsx:267
 msgid "Step actions"
 msgstr ""
 
-#: components/node-types/generic.jsx:245
+#: components/node-types/generic.jsx:273
 #: components/workflow-delete-button/index.jsx:39
 msgid "Delete"
 msgstr ""
 
-#: components/node-types/generic.jsx:280
+#: components/node-types/generic.jsx:308
 msgid "This node has errors"
 msgstr ""
 

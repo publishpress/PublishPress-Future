@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 4.4.1-beta.2\n"
+"Project-Id-Version: PublishPress Future 4.5.0-beta.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-27T15:19:28+00:00\n"
+"POT-Creation-Date: 2025-03-31T20:42:34+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -134,7 +134,7 @@ msgstr ""
 
 #: src/Framework/Logger/DBTableSchemas/DebugLogSchema.php:76
 #: src/Modules/Expirator/DBTableSchemas/ActionArgsSchema.php:84
-#: src/Modules/Workflows/DBTableSchemas/WorkflowScheduledStepsSchema.php:92
+#: src/Modules/Workflows/DBTableSchemas/WorkflowScheduledStepsSchema.php:93
 msgid "The table %s does not exist."
 msgstr ""
 
@@ -402,7 +402,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:141
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:322
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:46
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:447
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:455
 msgid "Scheduled Actions"
 msgstr ""
 
@@ -661,6 +661,22 @@ msgstr ""
 msgid "Unstick"
 msgstr ""
 
+#: src/Modules/Expirator/Migrations/V30000ActionArgsSchema.php:61
+msgid "Migrate legacy actions arguments schema after v3.0.0"
+msgstr ""
+
+#: src/Modules/Expirator/Migrations/V30000ReplaceFooterPlaceholders.php:71
+msgid "Migrate legacy footer placeholders after v3.0.0"
+msgstr ""
+
+#: src/Modules/Expirator/Migrations/V30000WPCronToActionsScheduler.php:121
+msgid "Migrate legacy scheduled actions after v3.0.0"
+msgstr ""
+
+#: src/Modules/Expirator/Migrations/V30001RestorePostMeta.php:147
+msgid "Restore post meta data after v3.0.1"
+msgstr ""
+
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:472
 msgid "Email is disabled."
 msgstr ""
@@ -694,7 +710,7 @@ msgid "Invalid date/time offset \"%s\" for post type \"%s\". Please ensure you u
 msgstr ""
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:52
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:183
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:191
 msgid "Status"
 msgstr ""
 
@@ -946,7 +962,7 @@ msgstr ""
 
 #: src/Modules/Workflows/Controllers/ManualPostTrigger.php:427
 #: src/Modules/Workflows/Controllers/PostType.php:48
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:147
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:148
 #: src/Modules/Workflows/Views/manual-trigger-quick-edit.html.php:9
 msgid "Action Workflows"
 msgstr ""
@@ -1249,27 +1265,27 @@ msgstr ""
 msgid "If you have any questions or need help, click the help button in the top right corner to access the support resources."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:185
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:193
 msgid "Triggers"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:212
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:347
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:348
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:220
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:355
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:356
 msgid "Deactivate"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:212
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:341
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:342
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:220
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:349
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:350
 msgid "Activate"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:254
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:262
 msgid "—"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:420
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:428
 msgid "Action Workflow Editor"
 msgstr ""
 
@@ -1403,7 +1419,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:146
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:125
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:147
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:130
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:131
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:146
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:142
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:167
@@ -1424,7 +1440,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:147
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:126
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:148
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:131
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:132
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:147
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:143
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:168
@@ -1456,7 +1472,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:168
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:147
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:175
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:152
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:153
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:168
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:189
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:149
@@ -1477,7 +1493,6 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:144
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:144
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:156
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:122
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:148
 msgid "Next"
 msgstr ""
@@ -1716,19 +1731,13 @@ msgstr ""
 msgid "The query defines the posts that will be retrieved by this action."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:111
-msgid "Queried post"
-msgstr ""
-
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:112
-msgid "The post that was queried."
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:124
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:125
 msgid "Array of queried post IDs"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:125
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:113
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:126
 msgid "The posts found following the criteria of the query."
 msgstr ""
 
@@ -1795,34 +1804,42 @@ msgid "Schedule > Unique ID Expression"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:112
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:104
 msgid "Schedule date"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:113
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:105
 msgid "The date and time when the step will run."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:118
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:110
 msgid "Action UID hash"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:119
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:111
 msgid "The unique ID hash of the action that will run."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:124
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:116
 msgid "Repeat count"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:125
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:117
 msgid "The number of times the scheduled action has been repeated."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:130
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:122
 msgid "Repeat limit"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:131
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:123
 msgid "The maximum number of times the scheduled action will be repeated."
 msgstr ""
 
@@ -1831,6 +1848,7 @@ msgid "After delay"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:172
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:149
 msgid "After all repetitions"
 msgstr ""
 
@@ -2479,6 +2497,10 @@ msgstr ""
 msgid "Date offset"
 msgstr ""
 
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:145
+msgid "When scheduled"
+msgstr ""
+
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:32
 msgid "User role is changed"
 msgstr ""
@@ -2529,6 +2551,14 @@ msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:131
 msgid "The roles that were removed from the user."
+msgstr ""
+
+#: src/Modules/Workflows/Migrations/V040500OnScheduledStepsSchema.php:58
+msgid "Migrate post_id and repetition_number on scheduled steps schema after v4.5.0"
+msgstr ""
+
+#: src/Modules/Workflows/Migrations/V40000WorkflowScheduledStepsSchema.php:58
+msgid "Migrate workflow scheduled steps schema after v4.0.0"
 msgstr ""
 
 #: src/Modules/Workflows/Models/StepTypesModel.php:101
@@ -2588,6 +2618,10 @@ msgstr ""
 msgid "Loading the workflow editor..."
 msgstr ""
 
+#: src/Modules/Workflows/Views/editor.html.php:18
+msgid "You need to enable JavaScript to run this app."
+msgstr ""
+
 #: src/Views/ad-banner-right-sidebar.php:12
 msgid "Upgrade to PublishPress Future Pro"
 msgstr ""
@@ -2640,13 +2674,13 @@ msgstr ""
 msgid "View Knowledge Base"
 msgstr ""
 
-#. translators: %1$s opens a span tag, %2$s is the action name, %3$s ends a span tag, %4$s is the a span tag, %5$s is the a span tag, %6$s is the a span tag
-#: src/Views/expire-column.php:73
-msgid "%1$s%2$s%3$s on %5$s%4$s%6$s"
+#: src/Views/expire-column.php:68
+msgid "Overdue: "
 msgstr ""
 
-#: src/Views/expire-column.php:83
-msgid "Overdue action"
+#. translators: %1$s opens a span tag, %2$s is the action name, %3$s ends a span tag, %4$s is the a span tag, %5$s is the a span tag, %6$s is the a span tag
+#: src/Views/expire-column.php:77
+msgid "%1$s%2$s%3$s on %5$s%4$s%6$s"
 msgstr ""
 
 #: src/Views/expire-column.php:115
