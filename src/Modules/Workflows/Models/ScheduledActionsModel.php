@@ -151,7 +151,7 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
                 WHERE (
                     meta_key LIKE '" . WorkflowScheduledStepModel::META_FINISHED_PREFIX . "%%'
                     OR meta_key LIKE '" . WorkflowScheduledStepModel::META_LAST_RUN_AT_PREFIX . "%%'
-                    OR meta_key LIKE '" . WorkflowScheduledStepModel::META_RUN_COUNT_PREFIX . "%%'
+                    OR meta_key LIKE '" . WorkflowScheduledStepModel::META_TOTAL_RUN_COUNT_PREFIX . "%%'
                 ) AND post_id = %d",
                 $workflowId
             )

@@ -55,7 +55,7 @@ class V40000WorkflowScheduledStepsSchema implements MigrationInterface
     public function formatLogActionColumn($text, $row)
     {
         if ($row['hook'] === self::HOOK) {
-            return __('Migrate workflow scheduled steps schema after v4.0.0', 'publishpress-future');
+            return __('Migrate workflow scheduled steps schema after v4.0.0', 'post-expirator');
         }
 
         return $text;

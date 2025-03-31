@@ -68,7 +68,7 @@ class V30000ReplaceFooterPlaceholders implements MigrationInterface
     public function formatLogActionColumn($text, $row)
     {
         if ($row['hook'] === self::HOOK) {
-            return __('Migrate legacy footer placeholders after v3.0.0', 'publishpress-future');
+            return __('Migrate legacy footer placeholders after v3.0.0', 'post-expirator');
         }
         return $text;
     }
