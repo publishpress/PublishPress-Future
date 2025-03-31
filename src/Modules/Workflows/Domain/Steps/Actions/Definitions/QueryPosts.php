@@ -106,11 +106,12 @@ class QueryPosts implements StepTypeInterface
     {
         return [
             [
-                "name" => "post",
-                "type" => "post",
-                "label" => __("Queried post", "post-expirator"),
-                "description" => __("The post that was queried.", "post-expirator"),
-            ]
+                "name" => "posts",
+                "type" => "array",
+                "itemsType" => "integer",
+                "label" => __("Array of queried post IDs", "post-expirator"),
+                "description" => __("The posts found following the criteria of the query.", "post-expirator"),
+            ],
         ];
     }
 
