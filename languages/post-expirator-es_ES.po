@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Plugins - PublishPress Future: Automatically Unpublish "
 "WordPress Posts - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
-"POT-Creation-Date: 2025-01-30T20:47:03+00:00\n"
-"PO-Revision-Date: 2025-02-02 18:08+0100\n"
+"POT-Creation-Date: 2025-03-13T19:53:13+00:00\n"
+"PO-Revision-Date: 2025-03-15 10:51+0100\n"
 "Last-Translator: Anderson Grüdtner Martins <anderson@publishpress.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -19,7 +19,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: post-expirator.php
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:120
-#: src/Modules/Workflows/Models/StepTypesModel.php:88
+#: src/Modules/Workflows/Models/StepTypesModel.php:92
 msgid "PublishPress Future"
 msgstr "PublishPress Future"
 
@@ -47,27 +47,27 @@ msgstr "PublishPress"
 msgid "http://publishpress.com"
 msgstr "https://publishpress.com"
 
-#: legacy/classes/Display.class.php:112
+#: legacy/classes/Display.class.php:112 legacy/classes/Display.class.php:140
 msgid "You do not have permission to configure PublishPress Future."
 msgstr "No tienes permisos para configurar PublishPress Future."
 
-#: legacy/classes/Display.class.php:126
+#: legacy/classes/Display.class.php:154
 msgid "Debug is disabled"
 msgstr "﻿Depuración desactivada"
 
-#: legacy/classes/Display.class.php:216
+#: legacy/classes/Display.class.php:244
 msgid "Debugging Disabled"
 msgstr "﻿Depuración desactivada"
 
-#: legacy/classes/Display.class.php:221
+#: legacy/classes/Display.class.php:249
 msgid "Debugging Enabled"
 msgstr "Depuración activada"
 
-#: legacy/classes/Display.class.php:229
+#: legacy/classes/Display.class.php:257
 msgid "Debugging Table Emptied"
 msgstr "Tabla de depuración vaciada"
 
-#: legacy/classes/Display.class.php:235
+#: legacy/classes/Display.class.php:263
 msgid ""
 "The legacy future actions migration has been enqueued and will run "
 "asynchronously."
@@ -75,7 +75,7 @@ msgstr ""
 "La migración de acciones Future heredadas se ha puesto en cola y se "
 "ejecutará de forma asíncrona."
 
-#: legacy/classes/Display.class.php:244
+#: legacy/classes/Display.class.php:272
 msgid ""
 "The legacy actions arguments restoration has been enqueued and will run "
 "asynchronously."
@@ -83,48 +83,48 @@ msgstr ""
 "La restauración de los argumentos de las acciones heredadas se ha puesto en "
 "cola y se ejecutará de forma asíncrona."
 
-#: legacy/classes/Display.class.php:259
+#: legacy/classes/Display.class.php:287
 msgid "The database schema was fixed."
 msgstr "Se ha corregido el esquema de la base de datos."
 
-#: legacy/classes/Display.class.php:264
+#: legacy/classes/Display.class.php:292
 msgid ""
 "The database schema could not be fixed. Please, contact the support team."
 msgstr ""
 "No se ha podido corregir el esquema de la base de datos. Por favor, contacta "
 "con el equipo de soporte."
 
-#: legacy/classes/Display.class.php:333 legacy/classes/Display.class.php:380
-#: legacy/classes/Display.class.php:413
+#: legacy/classes/Display.class.php:361 legacy/classes/Display.class.php:408
+#: legacy/classes/Display.class.php:441
 msgid "Saved Options!"
 msgstr "¡Opciones guardadas!"
 
 #. translators: %1$s is the plugin name, %2$s is the star rating markup
-#: legacy/classes/Display.class.php:499
+#: legacy/classes/Display.class.php:527
 msgid "If you like %1$s, please leave us a %2$s rating. Thank you!"
 msgstr "Si te gusta %1$s, por favor, déjanos una valoración de %2$s. ¡Gracias!"
 
-#: legacy/classes/Display.class.php:514
+#: legacy/classes/Display.class.php:542
 msgid "About PublishPress Future"
 msgstr "Acerca de PublishPress Future"
 
-#: legacy/classes/Display.class.php:516
+#: legacy/classes/Display.class.php:544
 msgid "About"
 msgstr "Acerca de"
 
-#: legacy/classes/Display.class.php:522
+#: legacy/classes/Display.class.php:550
 msgid "Future Documentation"
 msgstr "Documentación de Future"
 
-#: legacy/classes/Display.class.php:524
+#: legacy/classes/Display.class.php:552
 msgid "Documentation"
 msgstr "Documentación"
 
-#: legacy/classes/Display.class.php:530
+#: legacy/classes/Display.class.php:558
 msgid "Contact the PublishPress team"
 msgstr "Contacta con el equipo de PublishPress"
 
-#: legacy/classes/Display.class.php:532
+#: legacy/classes/Display.class.php:560
 msgid "Contact"
 msgstr "Contacto"
 
@@ -132,15 +132,15 @@ msgstr "Contacto"
 msgid "No taxonomies found"
 msgstr "No se han encontrado taxonomías"
 
-#: services.php:127 src/Modules/Settings/SettingsFacade.php:117
+#: services.php:138 src/Modules/Settings/SettingsFacade.php:119
 msgid "l F jS, Y"
 msgstr "l, j F Y"
 
-#: services.php:131 src/Modules/Settings/SettingsFacade.php:118
+#: services.php:142 src/Modules/Settings/SettingsFacade.php:120
 msgid "g:ia"
 msgstr "g:ia"
 
-#: services.php:132 src/Modules/Settings/SettingsFacade.php:119
+#: services.php:143 src/Modules/Settings/SettingsFacade.php:121
 msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
 msgstr "La entrada caduca en EXPIRATIONTIME el ACTIONDATE"
 
@@ -161,27 +161,31 @@ msgstr "Los índices de la tabla no son válidos: "
 msgid "Invalid date time offset."
 msgstr "Desplazamiento de fecha y hora no válido."
 
-#: src/Modules/Backup/Controllers/BackupRestApi.php:138
+#: src/Modules/Backup/Controllers/BackupAdminPage.php:150
+msgid "Export"
+msgstr "Exportar"
+
+#: src/Modules/Backup/Controllers/BackupAdminPage.php:156
+msgid "Import"
+msgstr "Importar"
+
+#: src/Modules/Backup/Controllers/BackupRestApi.php:137
 msgid "Failed to get workflows. Check the logs for more details."
 msgstr ""
 "No se han podido obtener los flujos de trabajo. Comprueba los registros para "
 "más detalles."
 
-#: src/Modules/Backup/Controllers/BackupRestApi.php:190
+#: src/Modules/Backup/Controllers/BackupRestApi.php:189
 msgid "Failed to export the file. Check the logs for more details."
 msgstr ""
 "No se ha podido exportar el archivo. Comprueba los registros para obtener "
 "más detalles."
 
-#: src/Modules/Backup/Controllers/BackupRestApi.php:378
+#: src/Modules/Backup/Controllers/BackupRestApi.php:353
 msgid "Failed to import the file. Check the logs for more details."
 msgstr ""
 "No se ha podido importar el archivo. Comprueba los registros para obtener "
 "más detalles."
-
-#: src/Modules/Backup/Views/debug-panel.php:8
-msgid "Export / Import"
-msgstr "Exportar/Importar"
 
 #: src/Modules/Debug/Controllers/Controller.php:72
 msgid "You do not have sufficient permissions to access this page."
@@ -191,150 +195,161 @@ msgstr "No tienes permisos suficientes para acceder a esta página."
 msgid "Invalid nonce."
 msgstr "Nonce no válido."
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:125
-#: src/Modules/Expirator/Controllers/BulkEditController.php:167
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:119
+#: src/Modules/Expirator/Controllers/BulkEditController.php:157
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:363
+#: src/Modules/Expirator/Controllers/QuickEditController.php:287
+#: src/Modules/Expirator/Controllers/SettingsController.php:278
+msgid "Taxonomy"
+msgstr "Taxonomía"
+
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:132
+#: src/Modules/Expirator/Controllers/BulkEditController.php:171
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:137
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:369
-#: src/Modules/Expirator/Controllers/QuickEditController.php:297
-#: src/Views/menu-display.php:139
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:376
+#: src/Modules/Expirator/Controllers/QuickEditController.php:301
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:131
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:132
+#: src/Modules/Expirator/Controllers/SettingsController.php:527
+#: src/Views/menu-display.php:139 src/Views/tabs-future-actions.php:46
 msgid "Future Actions"
 msgstr "Acciones Future"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:126
-#: src/Modules/Expirator/Controllers/BulkEditController.php:168
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:370
-#: src/Modules/Expirator/Controllers/QuickEditController.php:298
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:133
+#: src/Modules/Expirator/Controllers/BulkEditController.php:172
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:377
+#: src/Modules/Expirator/Controllers/QuickEditController.php:302
 #: src/Views/menu-display.php:162
 msgid "Enable Future Action"
 msgstr "Activar caducidad de la entrada"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:145
-#: src/Modules/Expirator/Controllers/BulkEditController.php:189
-#: src/Modules/Expirator/Controllers/QuickEditController.php:319
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:152
+#: src/Modules/Expirator/Controllers/BulkEditController.php:193
+#: src/Modules/Expirator/Controllers/QuickEditController.php:323
 msgid "Categories"
 msgstr "Categorìas"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:148
-#: src/Modules/Expirator/Controllers/BulkEditController.php:192
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:393
-#: src/Modules/Expirator/Controllers/QuickEditController.php:322
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:155
+#: src/Modules/Expirator/Controllers/BulkEditController.php:196
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:400
+#: src/Modules/Expirator/Controllers/QuickEditController.php:326
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:49
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:151
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:141
 msgid "Action"
 msgstr "Acción"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:149
-#: src/Modules/Expirator/Controllers/BulkEditController.php:195
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:396
-#: src/Modules/Expirator/Controllers/QuickEditController.php:325
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:156
+#: src/Modules/Expirator/Controllers/BulkEditController.php:199
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:403
+#: src/Modules/Expirator/Controllers/QuickEditController.php:329
 msgid "Loading"
 msgstr "Cargando"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:150
-#: src/Modules/Expirator/Controllers/BulkEditController.php:193
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:394
-#: src/Modules/Expirator/Controllers/QuickEditController.php:323
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:157
+#: src/Modules/Expirator/Controllers/BulkEditController.php:197
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:401
+#: src/Modules/Expirator/Controllers/QuickEditController.php:327
 msgid "Show Calendar"
 msgstr "Muestra el calendario"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:151
-#: src/Modules/Expirator/Controllers/BulkEditController.php:194
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:395
-#: src/Modules/Expirator/Controllers/QuickEditController.php:324
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:158
+#: src/Modules/Expirator/Controllers/BulkEditController.php:198
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:402
+#: src/Modules/Expirator/Controllers/QuickEditController.php:328
 msgid "Hide Calendar"
 msgstr "Oculta el calendario"
 
 #. translators: the text between {} is the link to the settings page.
 #. translators: the text between {{}} is the link to the settings page.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:153
-#: src/Modules/Expirator/Controllers/BulkEditController.php:197
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:398
-#: src/Modules/Expirator/Controllers/QuickEditController.php:327
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:160
+#: src/Modules/Expirator/Controllers/BulkEditController.php:201
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:405
+#: src/Modules/Expirator/Controllers/QuickEditController.php:331
 msgid "Timezone is controlled by the {WordPress Settings}."
 msgstr "La zona horaria se controla mediante los {Ajustes de WordPress}."
 
 #. translators: %s is the name of the taxonomy in plural form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:160
-#: src/Modules/Expirator/Controllers/BulkEditController.php:204
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:405
-#: src/Modules/Expirator/Controllers/QuickEditController.php:331
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:167
+#: src/Modules/Expirator/Controllers/BulkEditController.php:208
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:412
+#: src/Modules/Expirator/Controllers/QuickEditController.php:335
 msgid "No %s found."
 msgstr "No se ha encontrado %s."
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:163
-#: src/Modules/Expirator/Controllers/BulkEditController.php:208
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:408
-#: src/Modules/Expirator/Controllers/QuickEditController.php:334
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:170
+#: src/Modules/Expirator/Controllers/BulkEditController.php:212
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:415
+#: src/Modules/Expirator/Controllers/QuickEditController.php:338
 msgid "You must assign a taxonomy to this post type to use this feature."
 msgstr ""
 "Debe asignar una taxonomía a este tipo de entrada para utilizar esta función."
 
 #. translators: %s is the name of the taxonomy in plural form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:168
-#: src/Modules/Expirator/Controllers/BulkEditController.php:218
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:413
-#: src/Modules/Expirator/Controllers/QuickEditController.php:336
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:175
+#: src/Modules/Expirator/Controllers/BulkEditController.php:222
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:420
+#: src/Modules/Expirator/Controllers/QuickEditController.php:340
 msgid "New %s"
 msgstr "Nuevo %s"
 
 #. translators: %s is the name of the taxonomy in plural form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:170
-#: src/Modules/Expirator/Controllers/BulkEditController.php:220
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:415
-#: src/Modules/Expirator/Controllers/QuickEditController.php:338
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:177
+#: src/Modules/Expirator/Controllers/BulkEditController.php:224
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:422
+#: src/Modules/Expirator/Controllers/QuickEditController.php:342
 msgid "%s to remove"
 msgstr "%s a eliminar"
 
 #. translators: %s is the name of the taxonomy in plural form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:172
-#: src/Modules/Expirator/Controllers/BulkEditController.php:222
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:417
-#: src/Modules/Expirator/Controllers/QuickEditController.php:340
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:179
+#: src/Modules/Expirator/Controllers/BulkEditController.php:226
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:424
+#: src/Modules/Expirator/Controllers/QuickEditController.php:344
 msgid "%s to add"
 msgstr "%s a añadir"
 
 #. translators: %s is the name of the taxonomy in singular form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:175
-#: src/Modules/Expirator/Controllers/BulkEditController.php:225
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:420
-#: src/Modules/Expirator/Controllers/QuickEditController.php:342
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:182
+#: src/Modules/Expirator/Controllers/BulkEditController.php:229
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:427
+#: src/Modules/Expirator/Controllers/QuickEditController.php:346
 msgid "Search for %s"
 msgstr "Búsqueda por %s"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:178
-#: src/Modules/Expirator/Controllers/BulkEditController.php:228
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:423
-#: src/Modules/Expirator/Controllers/QuickEditController.php:343
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:185
+#: src/Modules/Expirator/Controllers/BulkEditController.php:232
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:430
+#: src/Modules/Expirator/Controllers/QuickEditController.php:347
 msgid "Select an action"
 msgstr "Selecciona una acción"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:179
-#: src/Modules/Expirator/Controllers/BulkEditController.php:229
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:424
-#: src/Modules/Expirator/Controllers/QuickEditController.php:344
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:186
+#: src/Modules/Expirator/Controllers/BulkEditController.php:233
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:431
+#: src/Modules/Expirator/Controllers/QuickEditController.php:348
 msgid "Select a date"
 msgstr "Selecciona una fecha"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:180
-#: src/Modules/Expirator/Controllers/BulkEditController.php:230
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:425
-#: src/Modules/Expirator/Controllers/QuickEditController.php:345
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:187
+#: src/Modules/Expirator/Controllers/BulkEditController.php:234
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:432
+#: src/Modules/Expirator/Controllers/QuickEditController.php:349
 msgid "Date cannot be in the past"
 msgstr "La fecha no puede estar en el pasado"
 
 #. translators: %s is the name of the taxonomy in singular form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:183
-#: src/Modules/Expirator/Controllers/BulkEditController.php:233
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:428
-#: src/Modules/Expirator/Controllers/QuickEditController.php:348
-#: src/Modules/Settings/Controllers/Controller.php:270
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:190
+#: src/Modules/Expirator/Controllers/BulkEditController.php:237
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:435
+#: src/Modules/Expirator/Controllers/QuickEditController.php:352
+#: src/Modules/Expirator/Controllers/SettingsController.php:296
 msgid "Please select one or more %s"
 msgstr "Por favor, selecciona uno o más %s"
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:186
-#: src/Modules/Expirator/Controllers/BulkEditController.php:236
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:431
-#: src/Modules/Expirator/Controllers/QuickEditController.php:351
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:193
+#: src/Modules/Expirator/Controllers/BulkEditController.php:240
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:438
+#: src/Modules/Expirator/Controllers/QuickEditController.php:355
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:85
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:91
 msgid "New status"
@@ -357,37 +372,40 @@ msgid "Update Future Actions from Post Metadata"
 msgstr ""
 "Actualiza las acciones de Future a partir de los metadatos de la entrada"
 
-#: src/Modules/Expirator/Controllers/BulkEditController.php:207
+#: src/Modules/Expirator/Controllers/BulkEditController.php:211
 msgid "Future Action Update"
 msgstr "Actualizaciòn de las acciones de Future"
 
-#: src/Modules/Expirator/Controllers/BulkEditController.php:212
+#: src/Modules/Expirator/Controllers/BulkEditController.php:216
 msgid "— No Change —"
 msgstr "— Sin cambios —"
 
-#: src/Modules/Expirator/Controllers/BulkEditController.php:213
+#: src/Modules/Expirator/Controllers/BulkEditController.php:217
 msgid "Add or update action for posts"
 msgstr "Añade o actualiza la acción para las entradas"
 
-#: src/Modules/Expirator/Controllers/BulkEditController.php:214
+#: src/Modules/Expirator/Controllers/BulkEditController.php:218
 msgid "Add action if none exists for posts"
 msgstr "Añade una acción si no hay ninguna para las entradas"
 
-#: src/Modules/Expirator/Controllers/BulkEditController.php:215
+#: src/Modules/Expirator/Controllers/BulkEditController.php:219
 msgid "Update the existing actions for posts"
 msgstr "Actualiza las acciones existentes para las entradas"
 
-#: src/Modules/Expirator/Controllers/BulkEditController.php:216
+#: src/Modules/Expirator/Controllers/BulkEditController.php:220
 msgid "Remove action from posts"
 msgstr "Quitar acción de las entradas"
 
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:390
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:397
 msgid "Category"
 msgstr "Categorìa"
 
 #: src/Modules/Expirator/Controllers/PluginsListController.php:46
+#: src/Modules/Expirator/Controllers/SettingsController.php:131
+#: src/Modules/Expirator/Controllers/SettingsController.php:132
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:67
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:67
+#: src/Views/tabs-settings.php:44
 msgid "Settings"
 msgstr "Ajustes"
 
@@ -405,15 +423,9 @@ msgstr "Ninguna acción Future"
 msgid "Future"
 msgstr "Future"
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:131
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:132
-#: src/Modules/Settings/Controllers/Controller.php:601 src/Views/tabs.php:64
-msgid "Action Settings"
-msgstr "Ajustes de las acciones"
-
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:140
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:141
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:338
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:359
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:46
 #: src/Modules/Workflows/Controllers/WorkflowsList.php:447
 msgid "Scheduled Actions"
@@ -444,10 +456,160 @@ msgid "Cleaned up completed scheduled steps older than %d days"
 msgstr "Se han limpiado los pasos programados completados de más de %d días"
 
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:329
+msgid "Checked for expired actions"
+msgstr "Marcado para acciones caducadas"
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:333
 msgid "Cleaned up orphan workflow scheduled step arguments"
 msgstr ""
 "Se han limpiado los argumentos huérfanos de los pasos programados del flujo "
 "de trabajo"
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:341
+#| msgid "Unstick post"
+msgid "Unknown post"
+msgstr "Entrada desconocida"
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:344
+msgid "Executed action for: %s (ID: %d)"
+msgstr "Acción ejecutada para: %s (ID: %d)"
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:349
+#| msgid "Executed workflow scheduled step"
+msgid "Executed scheduled action"
+msgstr "Acción programada ejecutada"
+
+#. translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
+#: src/Modules/Expirator/Controllers/SettingsController.php:250
+#: src/Views/menu-general.php:41
+msgid ""
+"Set the offset to use for the default action date and time. For information "
+"on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or "
+"%2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, "
+"use only terms in English."
+msgstr ""
+"Establece el desplazamiento que se utilizará para la fecha y hora de la "
+"acción por defecto. Para obtener información sobre el formato, consulta "
+"%1$s. Por ejemplo, puedes introducir %2$s+1 month%3$s or %2$s+1 week 2 days "
+"4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Por favor, introduce solo "
+"términos en inglés."
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:260
+msgid "Default Values"
+msgstr "Valores por defecto"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:261
+msgid ""
+"Use the values below to set the default actions/values to be used for each "
+"for the corresponding post types.  These values can all be overwritten when "
+"creating/editing the post/page."
+msgstr ""
+"Utiliza los siguientes valores para establecer las acciones/valores por "
+"defecto que se utilizarán para cada uno de los tipos de contenido "
+"correspondientes. Estos valores se pueden sobrescribir al crear/editar la "
+"publicación/página."
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:265
+msgid "Active"
+msgstr "Activa"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:266
+msgid "Activate the PublishPress Future actions for this post type"
+msgstr "Activa las acciones de PublishPress Future para este tipo de contenido"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:267
+msgid "Default Action"
+msgstr "Acción por defecto"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:268
+msgid "Select the default action for the post type."
+msgstr "Elige la acción de caducidad por defecto para el tipo de contenido."
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:272
+#: src/Views/taxonomy-field.php:14
+msgid "Select the taxonomy to be used for actions."
+msgstr "Selecciona la taxonomía que se utilizará para las acciones."
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:276
+msgid "Automatically create actions"
+msgstr "Crear acciones automáticamente"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:277
+msgid ""
+"This will automatically create an action for new posts, using the default "
+"settings on this screen"
+msgstr ""
+"Esto creará automáticamente una acción para las nuevas entradas, utilizando "
+"los ajustes por defecto en esta pantalla"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:279
+msgid ""
+"No taxonomies found for this post type. Taxonomy actions will not be "
+"available."
+msgstr ""
+"No se han encontrado taxonomías para este tipo de entrada. Las acciones de "
+"taxonomía no estarán disponibles."
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:280
+#: src/Views/menu-notifications.php:116 src/Views/menu-notifications.php:169
+msgid "Who to Notify"
+msgstr "A quién avisar"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:281
+msgid ""
+"Enter a comma separated list of emails that you would like to be notified "
+"when the action runs."
+msgstr ""
+"Introduce una lista de correos electrónicos separada por comas a los que te "
+"gustaría avisar cuando caduque la entrada."
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:285
+#: src/Views/menu-general.php:29
+msgid "Default Date/Time Offset"
+msgstr "Duración por defecto de fecha/hora"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:288
+#: src/Views/menu-general.php:48
+msgid "PHP strtotime function"
+msgstr "Función strtotime de PHP"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:292
+msgid "Default terms:"
+msgstr "Términos por defecto:"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:293
+msgid "Save changes"
+msgstr "Guardar los cambios"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:294
+msgid "Wait for the validation..."
+msgstr "Espera la validación…"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:297
+#: src/Modules/Expirator/Controllers/SettingsController.php:341
+msgid "Date Preview"
+msgstr "Vista previa de la fecha"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:298
+#: src/Modules/Expirator/Controllers/SettingsController.php:342
+msgid "Current Date"
+msgstr "Fecha actual"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:299
+#: src/Modules/Expirator/Controllers/SettingsController.php:343
+msgid "Computed Date"
+msgstr "Fecha calculada"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:300
+#: src/Modules/Expirator/Controllers/SettingsController.php:344
+msgid "Error"
+msgstr "Error"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:443
+msgid "Form Validation Failure: Sorry, your nonce did not verify."
+msgstr ""
+"Fallo de validación del formulario: Lo sentimos, tu nonce no ha podido "
+"verificarse."
 
 #: src/Modules/Expirator/Controllers/ShortcodeController.php:95
 msgid ""
@@ -760,218 +922,92 @@ msgid "Completed"
 msgstr "Completado"
 
 #. translators: %1$s: post type label, %2$d: post ID, %3$s: post link tag start, %4$s: post title, %5$s: post link tag end
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:464
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:465
 msgid "%1$s: [%2$d] %3$s%4$s%5$s"
 msgstr "%1$s: [%2$d] %3$s%4$s%5$s"
 
 #. translators: %s is the new status
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:499
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:500
 msgid "New Status: %s"
 msgstr "Nuevo estado: %s"
 
 #. translators: %s is the list of terms
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:507
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:508
 msgid "Terms: %s"
 msgstr "Términos: %s"
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:610
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:611
 msgid "View log"
 msgstr "Ver registro"
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:621
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:622
 msgid "Action: "
 msgstr "Acción: "
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:627
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:628
 msgid "Status: "
 msgstr "Estado: "
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:633
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:634
 msgid "Arguments: "
 msgstr "Argumentos: "
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:639
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:640
 msgid "Scheduled date: "
 msgstr "Fecha programada: "
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:653
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:654
 #: src/Views/menu-diagnostics.php:204
 msgid "Date"
 msgstr "Fecha"
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:654
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:655
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:70
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:100
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:148
 msgid "Message"
 msgstr "Mensaje"
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:688
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:689
 msgid "Async"
 msgstr "Asíncrona"
 
 #. translators: %s is the date interval in human readable format in the past
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:705
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:706
 msgid " (%s ago)"
 msgstr " (hace %s)"
 
 #. translators: %s is the date interval in human readable format in the present or future
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:711
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:712
 msgid " (%s)"
 msgstr " (%s)"
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:735
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:736
 msgid "Now!"
 msgstr "¡Ahora!"
 
 #. translators: %s: time interval
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:785
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:786
 msgid "Every %s"
 msgstr "Cada %s"
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:791
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:792
 msgid "Non-repeating"
 msgstr "No-repetir"
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:801
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:802
 msgid "No Scheduled Actions."
 msgstr "No hay acciones programadas."
 
-#. translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
-#: src/Modules/Settings/Controllers/Controller.php:224
-#: src/Views/menu-general.php:40
-msgid ""
-"Set the offset to use for the default action date and time. For information "
-"on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or "
-"%2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, "
-"use only terms in English."
-msgstr ""
-"Establece el desplazamiento que se utilizará para la fecha y hora de la "
-"acción por defecto. Para obtener información sobre el formato, consulta "
-"%1$s. Por ejemplo, puedes introducir %2$s+1 month%3$s or %2$s+1 week 2 days "
-"4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Por favor, introduce solo "
-"términos en inglés."
-
-#: src/Modules/Settings/Controllers/Controller.php:234
-msgid "Default Values"
-msgstr "Valores por defecto"
-
-#: src/Modules/Settings/Controllers/Controller.php:235
-msgid ""
-"Use the values below to set the default actions/values to be used for each "
-"for the corresponding post types.  These values can all be overwritten when "
-"creating/editing the post/page."
-msgstr ""
-"Utiliza los siguientes valores para establecer las acciones/valores por "
-"defecto que se utilizarán para cada uno de los tipos de contenido "
-"correspondientes. Estos valores se pueden sobrescribir al crear/editar la "
-"publicación/página."
-
-#: src/Modules/Settings/Controllers/Controller.php:239
-msgid "Active"
-msgstr "Activa"
-
-#: src/Modules/Settings/Controllers/Controller.php:240
-msgid "Activate the PublishPress Future actions for this post type"
-msgstr "Activa las acciones de PublishPress Future para este tipo de contenido"
-
-#: src/Modules/Settings/Controllers/Controller.php:241
-msgid "Default Action"
-msgstr "Acción por defecto"
-
-#: src/Modules/Settings/Controllers/Controller.php:242
-msgid "Select the default action for the post type."
-msgstr "Elige la acción de caducidad por defecto para el tipo de contenido."
-
-#: src/Modules/Settings/Controllers/Controller.php:246
-#: src/Views/taxonomy-field.php:14
-msgid "Select the taxonomy to be used for actions."
-msgstr "Selecciona la taxonomía que se utilizará para las acciones."
-
-#: src/Modules/Settings/Controllers/Controller.php:250
-msgid "Auto-enable"
-msgstr "Activación automática"
-
-#: src/Modules/Settings/Controllers/Controller.php:251
-msgid "Enabled for all new posts"
-msgstr "Activado para todas las nuevas entradas"
-
-#: src/Modules/Settings/Controllers/Controller.php:252
-msgid "Taxonomy"
-msgstr "Taxonomía"
-
-#: src/Modules/Settings/Controllers/Controller.php:253
-msgid ""
-"No taxonomies found for this post type. Taxonomy actions will not be "
-"available."
-msgstr ""
-"No se han encontrado taxonomías para este tipo de entrada. Las acciones de "
-"taxonomía no estarán disponibles."
-
-#: src/Modules/Settings/Controllers/Controller.php:254
-#: src/Views/menu-notifications.php:116 src/Views/menu-notifications.php:169
-msgid "Who to Notify"
-msgstr "A quién avisar"
-
-#: src/Modules/Settings/Controllers/Controller.php:255
-msgid ""
-"Enter a comma separated list of emails that you would like to be notified "
-"when the action runs."
-msgstr ""
-"Introduce una lista de correos electrónicos separada por comas a los que te "
-"gustaría avisar cuando caduque la entrada."
-
-#: src/Modules/Settings/Controllers/Controller.php:259
-#: src/Views/menu-general.php:29
-msgid "Default Date/Time Offset"
-msgstr "Duración por defecto de fecha/hora"
-
-#: src/Modules/Settings/Controllers/Controller.php:262
-#: src/Views/menu-general.php:47
-msgid "PHP strtotime function"
-msgstr "Función strtotime de PHP"
-
-#: src/Modules/Settings/Controllers/Controller.php:266
-msgid "Default terms:"
-msgstr "Términos por defecto:"
-
-#: src/Modules/Settings/Controllers/Controller.php:267
-msgid "Save changes"
-msgstr "Guardar los cambios"
-
-#: src/Modules/Settings/Controllers/Controller.php:268
-msgid "Wait for the validation..."
-msgstr "Espera la validación…"
-
-#: src/Modules/Settings/Controllers/Controller.php:271
-#: src/Modules/Settings/Controllers/Controller.php:318
-msgid "Date Preview"
-msgstr "Vista previa de la fecha"
-
-#: src/Modules/Settings/Controllers/Controller.php:272
-#: src/Modules/Settings/Controllers/Controller.php:319
-msgid "Current Date"
-msgstr "Fecha actual"
-
-#: src/Modules/Settings/Controllers/Controller.php:273
-#: src/Modules/Settings/Controllers/Controller.php:320
-msgid "Computed Date"
-msgstr "Fecha calculada"
-
-#: src/Modules/Settings/Controllers/Controller.php:274
-#: src/Modules/Settings/Controllers/Controller.php:321
-msgid "Error"
-msgstr "Error"
-
-#: src/Modules/Settings/Controllers/Controller.php:352
+#: src/Modules/Settings/Controllers/Controller.php:208
 msgid "Scheduled Workflow Steps Cleanup"
 msgstr "Limpieza de pasos programados del flujo de trabajo"
 
-#: src/Modules/Settings/Controllers/Controller.php:353
+#: src/Modules/Settings/Controllers/Controller.php:209
 msgid "Automatically remove scheduled workflow steps"
 msgstr "Eliminar automáticamente los pasos programados del flujo de trabajo"
 
-#: src/Modules/Settings/Controllers/Controller.php:357
+#: src/Modules/Settings/Controllers/Controller.php:213
 msgid ""
 "Automatically remove scheduled workflow steps that have been marked as "
 "failed, completed, or cancelled."
@@ -979,11 +1015,11 @@ msgstr ""
 "Eliminar automáticamente los pasos programados del flujo de trabajo que se "
 "hayan marcado como fallidos, completados o anulados."
 
-#: src/Modules/Settings/Controllers/Controller.php:361
+#: src/Modules/Settings/Controllers/Controller.php:217
 msgid "Retain all scheduled workflow steps"
 msgstr "Retener todos los pasos programados del flujo de trabajo"
 
-#: src/Modules/Settings/Controllers/Controller.php:365
+#: src/Modules/Settings/Controllers/Controller.php:221
 msgid ""
 "Retain all scheduled workflow steps indefinitely, including those marked as "
 "failed, completed, or cancelled. This may impact database performance over "
@@ -993,11 +1029,11 @@ msgstr ""
 "incluidos los marcados como fallidos, completados o cancelados. Esto puede "
 "afectar al rendimiento de la base de datos con el tiempo."
 
-#: src/Modules/Settings/Controllers/Controller.php:369
+#: src/Modules/Settings/Controllers/Controller.php:225
 msgid "Retention"
 msgstr "Retención"
 
-#: src/Modules/Settings/Controllers/Controller.php:370
+#: src/Modules/Settings/Controllers/Controller.php:226
 msgid ""
 "The duration, in days, for which completed, failed, and canceled scheduled "
 "workflow steps will be preserved before automatic removal."
@@ -1006,15 +1042,9 @@ msgstr ""
 "trabajo programados completados, fallidos y anulados antes de su eliminación "
 "automática."
 
-#: src/Modules/Settings/Controllers/Controller.php:374
+#: src/Modules/Settings/Controllers/Controller.php:230
 msgid "days"
 msgstr "días"
-
-#: src/Modules/Settings/Controllers/Controller.php:481
-msgid "Form Validation Failure: Sorry, your nonce did not verify."
-msgstr ""
-"Fallo de validación del formulario: Lo sentimos, tu nonce no ha podido "
-"verificarse."
 
 #. translators: %1$s and %2$s are placeholders for the link to by the Pro version
 #: src/Modules/VersionNotices/Module.php:95
@@ -1025,8 +1055,8 @@ msgstr ""
 "Estás usando PublishPress Future Free. La versión Pro tiene más "
 "características y soporte. %1$sActualizar a Pro%2$s"
 
-#: src/Modules/VersionNotices/Module.php:133
-#: src/Views/ad-banner-right-sidebar.php:37
+#: src/Modules/VersionNotices/Module.php:137
+#: src/Views/ad-banner-right-sidebar.php:39
 msgid "Upgrade to Pro"
 msgstr "Actualizar a Pro"
 
@@ -1219,42 +1249,42 @@ msgid "Step:"
 msgstr "Paso:"
 
 #: src/Modules/Workflows/Controllers/ScheduledActions.php:337
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:357
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:372
 msgid "Trigger: "
 msgstr "Disparador:"
 
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:350
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:365
 msgid "Post:"
 msgstr "Entrada:"
 
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:361
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:376
 msgid "Steps:"
 msgstr "Pasos:"
 
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:368
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:383
 msgid "Workflow recurring scheduled action"
 msgstr "Acción programada recurrente de flujo de trabajo"
 
 #. translators: %1$s: recurrence, %2$s: date
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:413
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:428
 msgid "%1$s until %2$s"
 msgstr "%1$s hasta %2$s"
 
 #. translators: %1$s: recurrence, %2$d: repeat times
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:423
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:438
 msgid "%1$s for %2$d times"
 msgstr "%1$s por %2$d veces"
 
 #. translators: %1$s: executed times, %2$d: total repeat times
-#: src/Modules/Workflows/Controllers/ScheduledActions.php:433
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:448
 msgid "[%1$s/%2$d]"
 msgstr "[%1$s/%2$d]"
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:239
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:263
 msgid "Welcome to the workflow editor"
 msgstr "Bienvenido al editor de flujos de trabajo"
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:240
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:264
 msgid ""
 "In the PublishPress Workflow Editor, each workflow step is presented as a "
 "distinct 'node' in the workflow."
@@ -1262,11 +1292,11 @@ msgstr ""
 "En el editor de flujo de trabajo de PublishPress, cada paso del flujo de "
 "trabajo se presenta como un «nodo» distinto en el flujo de trabajo."
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:244
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:268
 msgid "Use your imagination"
 msgstr "Usa tu imaginación"
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:245
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:269
 msgid ""
 "You're free to create very distinct workflows in your site, according to "
 "your needs."
@@ -1274,11 +1304,11 @@ msgstr ""
 "Eres libre de crear flujos de trabajo muy distintos en tu sitio, según tus "
 "necesidades."
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:249
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:273
 msgid "A basic workflow"
 msgstr "Un flujo de trabajo básico"
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:250
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:274
 msgid ""
 "Every workflow requires at least two steps connected to each other: one "
 "trigger and one action."
@@ -1286,11 +1316,11 @@ msgstr ""
 "Todo flujo de trabajo requiere al menos dos pasos conectados entre sí: un "
 "disparador y una acción."
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:254
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:278
 msgid "Add steps to your workflow"
 msgstr "Añadir pasos a tu flujo de trabajo"
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:255
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:279
 msgid ""
 "Drag and drop steps to add them to your workflow. Connect the steps to "
 "create a workflow."
@@ -1298,19 +1328,19 @@ msgstr ""
 "Arrastra y suelta los pasos para añadirlos a tu flujo de trabajo. Conecta "
 "los pasos para crear un flujo de trabajo."
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:259
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:283
 msgid "Output and input"
 msgstr "Salida y entrada"
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:260
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:284
 msgid "Linked steps can pass data forward as input to the next step."
 msgstr "Los pasos enlazados pueden pasar datos como entrada al siguiente paso."
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:264
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:288
 msgid "Customize the workflow"
 msgstr "Personalizar el flujo de trabajo"
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:265
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:289
 msgid ""
 "Click on a step to customize it. You can change the step's settings in the "
 "right sidebar."
@@ -1318,11 +1348,11 @@ msgstr ""
 "Haz clic en un paso para personalizarlo. Puedes cambiar la configuración del "
 "paso en la barra lateral derecha."
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:269
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:293
 msgid "Workflow validation"
 msgstr "Validación del flujo de trabajo"
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:270
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:294
 msgid ""
 "Error messages will appear for any unfilled required settings, missed "
 "connections, or invalid values. Select the step to view the corresponding "
@@ -1332,21 +1362,21 @@ msgstr ""
 "conexiones perdidas o valores no válidos. Selecciona el paso para ver el "
 "error correspondiente en la barra lateral."
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:274
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:298
 msgid "Publish your workflow"
 msgstr "Publica tu flujo de trabajo"
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:275
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:299
 msgid "When you're ready, click the publish button to make your workflow live."
 msgstr ""
 "Cuando estés listo, haz clic en el botón «Publicar» para activar tu flujo de "
 "trabajo."
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:279
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:303
 msgid "Need help?"
 msgstr "¿Necesitas ayuda?"
 
-#: src/Modules/Workflows/Controllers/WorkflowEditor.php:280
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:304
 msgid ""
 "If you have any questions or need help, click the help button in the top "
 "right corner to access the support resources."
@@ -1380,13 +1410,6 @@ msgstr "Editor de flujo de trabajo de acciones"
 
 #: src/Modules/Workflows/Domain/DataType/PostQuery.php:16
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:67
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:64
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:64
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:67
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:64
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:64
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:64
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:82
 msgid "Post Query"
 msgstr "Consulta de entrada"
 
@@ -1433,6 +1456,7 @@ msgstr "Este paso añade el meta de la entrada a una entrada."
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:64
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:64
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:64
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:64
 msgid "Target Post"
 msgstr "Entrada de destino"
@@ -1474,7 +1498,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:98
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:91
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:91
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:163
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:153
 msgid "Meta key"
 msgstr "Clave meta"
 
@@ -1503,91 +1527,98 @@ msgstr "El valor meta para añadir a la entrada."
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:123
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:114
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:114
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:118
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:128
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:145
-#: src/Modules/Workflows/Models/StepTypesModel.php:79
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:135
+#: src/Modules/Workflows/Models/StepTypesModel.php:83
 msgid "Post"
 msgstr "Publicación"
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:149
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:137
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:111
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:135
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:113
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:141
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:120
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:142
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:142
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:141
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:112
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:162
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:122
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:137
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:128
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:128
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:142
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:154
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:142
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:116
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:140
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:118
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:146
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:125
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:147
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:130
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:146
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:117
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:167
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:127
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:142
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:133
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:133
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:174
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:147
 msgid "Step input"
 msgstr "Entrada del paso"
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:150
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:138
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:112
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:136
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:114
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:142
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:121
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:143
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:143
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:142
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:113
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:163
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:123
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:138
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:129
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:129
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:143
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:155
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:143
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:117
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:141
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:119
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:147
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:126
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:148
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:131
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:147
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:118
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:168
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:128
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:143
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:134
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:134
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:175
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:148
 msgid "The input data for this step."
 msgstr "Los datos de entrada para este paso."
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:155
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:148
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:148
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:157
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:160
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:153
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:153
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:147
 msgid "Meta ID"
 msgstr "ID meta"
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:156
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:149
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:161
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:154
 msgid "The ID of the meta added to the post."
 msgstr "El ID del meta añadido a la entrada."
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:179
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:161
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:135
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:159
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:165
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:144
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:172
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:166
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:165
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:136
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:186
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:146
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:161
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:152
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:152
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:172
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnAdminInit.php:96
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnInit.php:96
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnLegacyActionTrigger.php:128
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:194
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:156
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:153
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:156
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:157
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:156
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:167
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:116
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostMeta.php:184
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AddPostTerm.php:166
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:140
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:164
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:170
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:149
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:177
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:154
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:170
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:141
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:191
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:151
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:166
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:157
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:157
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:204
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:177
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnAdminInit.php:101
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnInit.php:101
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnLegacyActionTrigger.php:140
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:152
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:184
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:152
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:177
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:143
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:152
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:152
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:152
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:158
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:123
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:149
 msgid "Next"
 msgstr "Siguiente"
 
@@ -1633,12 +1664,15 @@ msgid "Terms"
 msgstr "Términos"
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:32
-msgid "Append to debug log"
-msgstr "Añadir al registro de depuración"
+#| msgid "Append to debug log"
+msgid "Send to debug log"
+msgstr "Enviar al registro de depuración"
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:37
-msgid "This step appends the flow's data to the debug log."
-msgstr "Este paso añade los datos del flujo al registro de depuración."
+#| msgid "This step appends the flow's data to the debug log."
+msgid "This step transmits the workflow's data to the debug log."
+msgstr ""
+"Este paso transmite los datos del flujo de trabajo al registro de depuración."
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:64
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:97
@@ -1675,7 +1709,6 @@ msgid "Post to Change Status"
 msgstr "Entrada para cambiar estado"
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:71
-#| msgid "This step transitions a post to a different status."
 msgid "Choose the post that will be moved to a different status."
 msgstr "Elige la entrada que se moverá a un estado diferente."
 
@@ -1701,6 +1734,15 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:73
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:99
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:100
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:64
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:64
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:64
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:67
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:67
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:64
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:64
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:64
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:82
 msgid "Conditions"
 msgstr "Condiciones"
 
@@ -1708,19 +1750,23 @@ msgstr "Condiciones"
 msgid "The conditions that must be met for deciding which branch to take."
 msgstr "Las condiciones que deben cumplirse para decidir qué rama tomar."
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:119
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:124
 msgid "Branch"
 msgstr "Rama"
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:120
-msgid "The current branch on this step: 'true' or 'false'."
-msgstr "La rama actual en este paso: «verdadero» o «falso»."
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:125
+msgid ""
+"Shows which path was taken: 'true' if conditions were met, or 'false' if "
+"they weren't."
+msgstr ""
+"Muestra qué camino se tomó: «verdadero» si se cumplieron las condiciones, o "
+"«falso» si no se cumplieron."
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:143
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:149
 msgid "True"
 msgstr "Verdadero"
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:148
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/Conditional.php:154
 msgid "False"
 msgstr "Falso"
 
@@ -1833,13 +1879,6 @@ msgstr ""
 "flujo de trabajo."
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:72
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:73
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:73
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:76
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:73
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:73
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:73
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:91
 msgid "Post query"
 msgstr "Consulta de entrada"
 
@@ -1847,34 +1886,21 @@ msgstr "Consulta de entrada"
 msgid "The query defines the posts that will be retrieved by this action."
 msgstr "La consulta define las entradas que serán recuperadas por esta acción."
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:110
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:119
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:105
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:108
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:105
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:105
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:105
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:122
-msgid "Post Type"
-msgstr "Tipo de entrada"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:111
+#| msgid "Query posts"
+msgid "Queried post"
+msgstr "Entrada consultada"
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:116
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:121
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:125
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:111
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:114
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:111
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:111
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:111
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:128
-msgid "Post ID"
-msgstr "ID de la entrada"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:112
+#| msgid "The meta key that was changed."
+msgid "The post that was queried."
+msgstr "La entrada que se ha consultado."
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:136
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:124
 msgid "Array of queried post IDs"
 msgstr "Array de IDs de las entradas consultadas"
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:137
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:125
 msgid "The posts found following the criteria of the query."
 msgstr "Las entradas encontradas siguiendo los criterios de la consulta."
 
@@ -1935,9 +1961,8 @@ msgid "A scheduled delay between steps."
 msgstr "Un retraso programado entre pasos."
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:73
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:70
-msgid "Date offset"
-msgstr "Cambio de fecha"
+msgid "When to run"
+msgstr "Cuándo ejecutar"
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:98
 msgid "Unique ID Expression"
@@ -2009,8 +2034,9 @@ msgid "Send to Ray"
 msgstr "Enviar a Ray"
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:37
-msgid "This step transmits the flow's data to Ray (by Spatie)."
-msgstr "Este paso transmite los datos del flujo a Ray (por Spatie)."
+#| msgid "This step transmits the flow's data to Ray (by Spatie)."
+msgid "This step transmits the workflow's data to Ray (by Spatie)."
+msgstr "Este paso transmite los datos del flujo de trabajo a Ray (por Spatie)."
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:65
 msgid "The data to be sent to Ray."
@@ -2121,6 +2147,116 @@ msgstr ""
 "Elige la entrada que se desmarcará como fija. Puedes seleccionar una "
 "variable de entrada o introducir un ID de entrada."
 
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:32
+#| msgid "Update post meta"
+msgid "Update post"
+msgstr "Actualizar entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:37
+#| msgid "This step deletes a post."
+msgid "This step updates a post."
+msgstr "Este paso actualiza una entrada."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:65
+#| msgid "Select which post will be deleted."
+msgid "Select which post will be updated."
+msgstr "Selecciona qué entrada se actualizará."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:70
+#| msgid "Post to Update Meta"
+msgid "Post to Update"
+msgstr "Entrada para actualizar"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:71
+#| msgid "Choose the post that will be deleted."
+msgid "Choose the post that will be updated."
+msgstr "Elige la entrada que será actualizada."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:85
+#| msgid "Post ID"
+msgid "Post Data"
+msgstr "Datos de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:86
+#| msgid "Select which post will be marked as sticky."
+msgid "Select which data should be updated in the post."
+msgstr "Selecciona qué datos deben actualizarse en la entrada."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:91
+#| msgid "Post is updated"
+msgid "Post data"
+msgstr "Datos de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:92
+#| msgid "The meta to update for the post."
+msgid "The data to update for the post."
+msgstr "Los datos a actualizar para la entrada."
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:124
+#| msgid "Post to Delete"
+msgid "Post title"
+msgstr "Título de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:125
+msgid "Post data > Post title"
+msgstr "Datos de la entrada > Título de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:130
+#| msgid "Footer Contents"
+msgid "Post content"
+msgstr "Contenido de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:131
+msgid "Post data > Post content"
+msgstr "Datos de la entrada > Contenido de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:136
+#| msgid "Post Query"
+msgid "Post excerpt"
+msgstr "Extracto de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:137
+msgid "Post data > Post excerpt"
+msgstr "Datos de la entrada > Extracto de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:142
+#| msgid "Post is updated"
+msgid "Post date"
+msgstr "Fecha de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:143
+#| msgid "Post is updated"
+msgid "Post data > Post date"
+msgstr "Datos de la entrada > Fecha de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:148
+#| msgid "Post Type"
+msgid "Post name"
+msgstr "Nombre de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:149
+msgid "Post data > Post name"
+msgstr "Datos de la entrada > Nombre de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:154
+#| msgid "Post is saved"
+msgid "Post password"
+msgstr "Contraseña de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:155
+msgid "Post data > Post password"
+msgstr "Datos de la entrada > Contraseña de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:180
+#| msgid "Update post meta"
+msgid "Updated post"
+msgstr "Entrada actualizada"
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:181
+#| msgid "The post to update."
+msgid "The post data after the update."
+msgstr "Los datos de la entrada después de la actualización."
+
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:32
 msgid "Update post meta"
 msgstr "Actualiza el meta de la entrada"
@@ -2138,7 +2274,6 @@ msgid "Post to Update Meta"
 msgstr "Entrada para actualizar meta"
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:71
-#| msgid "The terms that will be added to the posts."
 msgid "Choose the post that will have its meta updated."
 msgstr "Elige la entrada que tendrá su meta actualizado."
 
@@ -2154,7 +2289,7 @@ msgstr "La clave meta a actualizar para la entrada."
 msgid "The meta value to update for the post."
 msgstr "El valor meta a actualizar para la entrada."
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:149
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:154
 msgid "The ID of the meta updated for the post."
 msgstr "El ID del meta actualizado para la entrada."
 
@@ -2187,12 +2322,108 @@ msgstr ""
 "desplegable de las opciones de «Acciones de Future»."
 
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnLegacyActionTrigger.php:109
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnLegacyActionTrigger.php:121
 msgid "Action Post"
 msgstr "Entrada de la acción"
 
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnLegacyActionTrigger.php:110
-msgid "The post that was saved triggering the action."
-msgstr "La entrada que se guardó y que disparó la acción."
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnLegacyActionTrigger.php:122
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:147
+#| msgid "The post that triggered this action."
+msgid "The post that triggered the action."
+msgstr "La entrada que desencadenó la acción."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:32
+#| msgid "Post status changed"
+msgid "Post author changed"
+msgstr "Autor de la entrada cambiado"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:37
+#| msgid "This trigger activates when an existing post is updated."
+msgid "This trigger activates when an existing post author is changed."
+msgstr ""
+"Este disparador se activa cuando el autor de una entrada existente es "
+"cambiado."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:65
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:65
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:65
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:68
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:68
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:65
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:65
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:65
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:83
+msgid "Specify the criteria for posts that will trigger this action."
+msgstr "Especifica los criterios para las entradas que activarán esta acción."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:73
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:73
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:73
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:76
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:76
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:73
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:73
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:73
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:91
+#| msgid "Post Query"
+msgid "Post filter"
+msgstr "Filtro de la entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:74
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:74
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:74
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:77
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:77
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:74
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:74
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:74
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:92
+#| msgid "The query defines the posts that will trigger this action."
+msgid "The filter defines the posts that will trigger this action."
+msgstr "El filtro define las entradas que activarán esta acción."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:109
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:127
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:109
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:109
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:127
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:109
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:127
+msgid "Post Before Update"
+msgstr "La entrada antes de la actualización"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:110
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:128
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:110
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:128
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:110
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:128
+msgid "The post that was saved, with the old properties."
+msgstr "La entrada se ha guardado con las viejas propriedades."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:115
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:133
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:115
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:115
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:133
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:115
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:133
+msgid "Post After Update"
+msgstr "La entrada después de la actualización"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:116
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:134
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:124
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:113
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:116
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:134
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:116
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:134
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:128
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:140
+msgid "The post that was saved, with the new properties."
+msgstr "La entrada se ha guardado con las nuevas propriedades."
 
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:32
 msgid "Post meta changed"
@@ -2202,72 +2433,37 @@ msgstr "Meta de la entrada cambiada"
 msgid "This trigger activates when a post meta field is changed."
 msgstr "Este disparador se activa cuando un meta de la entrada es cambiado."
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:65
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:65
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:68
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:65
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:65
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:65
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:83
-msgid "Specify the criteria for posts that will trigger this action."
-msgstr "Especifica los criterios para las entradas que activarán esta acción."
-
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:74
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:74
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:77
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:74
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:74
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:74
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:92
-msgid "The query defines the posts that will trigger this action."
-msgstr "La consulta define las entradas que dispararán esta acción."
-
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:82
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:82
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:84
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:82
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:81
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:81
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:98
-msgid "Select the post types that will trigger this action."
-msgstr "Selecciona el tipo de contenido que activará esta acción."
-
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:83
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:83
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:85
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:83
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:82
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:82
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:99
-msgid "Enter one or more post IDs. Leave empty to include all posts."
-msgstr ""
-"Introduce uno o más IDs de entrada. Déjalo vacío para incluir todas las "
-"entradas."
-
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:95
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:88
 msgid "Meta settings"
 msgstr "Ajustes meta"
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:96
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:89
 msgid "Specify the criteria for the meta to watch for changes."
 msgstr "Especifique los criterios de meta para observar los cambios."
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:101
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:94
 msgid "Meta keys"
 msgstr "Claves meta"
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:102
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:95
 msgid ""
 "This field allow you to choose the post meta that will trigger this action."
 msgstr ""
 "Este campo te permite elegir el meta de la entrada que desencadenará esta "
 "acción."
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:146
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:123
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:112
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:127
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:139
+msgid "Saved post"
+msgstr "Entrada guardada"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:136
 msgid "The post that triggered this action."
 msgstr "La entrada que desencadenó esta acción."
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:152
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:142
 msgid ""
 "The action taken when the meta key is changed: 'added', 'updated' or "
 "'deleted'."
@@ -2275,27 +2471,27 @@ msgstr ""
 "La acción que se realiza cuando se modifica la clave meta: «añadido», "
 "«actualizado» o «suprimido»."
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:158
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:148
 msgid "The meta ID."
 msgstr "ID de meta."
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:164
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:154
 msgid "The meta key that was changed."
 msgstr "La clave meta que se ha cambiado."
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:169
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:159
 msgid "New meta value"
 msgstr "Nuevo valor meta"
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:170
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:160
 msgid "The new meta value."
 msgstr "El nuevo valor meta."
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:175
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:165
 msgid "Old meta value"
 msgstr "Viejo valor meta"
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:176
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:166
 msgid "The meta value before the change."
 msgstr "El valor meta antes del cambio."
 
@@ -2307,35 +2503,97 @@ msgstr "Entrada publicada"
 msgid "This trigger activates when a post is published."
 msgstr "Este disparador se activa cuando una entrada es publicada."
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:131
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:131
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:132
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:131
-msgid "Post Before Update"
-msgstr "La entrada antes de la actualización"
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:110
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:128
+#| msgid "The post that was saved, with the old properties."
+msgid "The post that was published, with the old properties."
+msgstr "La entrada que se publicó, con las antiguas propiedades."
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:132
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:132
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:133
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:132
-msgid "The post that was saved, with the old properties."
-msgstr "La entrada se ha guardado con las viejas propriedades."
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:116
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:134
+#| msgid "The post that was saved, with the new properties."
+msgid "The post that was published, with the new properties."
+msgstr "La entrada que se publicó, con las nuevas propiedades."
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:137
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:137
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:138
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:137
-msgid "Post After Update"
-msgstr "La entrada después de la actualización"
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:127
+#| msgid "Post is published"
+msgid "Post Before Publish"
+msgstr "Entrada antes de la publicación"
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:138
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:135
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:138
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:139
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:138
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:149
-msgid "The post that was saved, with the new properties."
-msgstr "La entrada se ha guardado con las nuevas propriedades."
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostPublish.php:133
+#| msgid "Post is published"
+msgid "Post After Publish"
+msgstr "Entrada después de la publicación"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:32
+#| msgid "Manually enabled via Future Actions box"
+msgid "Manually run via posts row action"
+msgstr "Ejecuta manualmente a través de la acción de línea de entrada"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:37
+msgid ""
+"This trigger creates a custom post row action and activates when the row "
+"action is clicked in the Posts list screen."
+msgstr ""
+"Este disparador crea una acción de fila de entrada personalizada y se activa "
+"cuando se hace clic en la acción de fila en la pantalla de lista de entradas."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:91
+#| msgid "Action"
+msgid "Row Action"
+msgstr "Acción de filas"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:92
+#| msgid ""
+#| "The title of the metabox that will be displayed in the post edit screen."
+msgid ""
+"Configure the post row action that will be created in the Posts list screen."
+msgstr ""
+"Configura la acción de la fila de entradas que se creará en la pantalla de "
+"la lista de entradas."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:100
+msgid "Action label"
+msgstr "Etiqueta de la acción"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:101
+#| msgid "The label of the checkbox that enables the trigger."
+msgid "The label of the action created in the post row for this trigger."
+msgstr ""
+"La etiqueta de la acción creada en la fila de entrada para este disparador."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:106
+#| msgid "Workflow"
+msgid "Run workflow"
+msgstr "Ejecutar el flujo de trabajo"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:112
+#| msgid "Use your imagination"
+msgid "Ask for confirmation"
+msgstr "Pregunta por la confirmación"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:113
+msgid ""
+"If enabled, the user will be asked to confirm the action before it is "
+"executed."
+msgstr ""
+"Si está activada, se pedirá al usuario que confirme la acción antes de "
+"ejecutarla."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:119
+msgid "Are you sure you want to run this action?"
+msgstr "¿Estás seguro de ejecutar esta acción?"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:146
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:158
+#| msgid "Triggers"
+msgid "Triggered post"
+msgstr "Entrada desencadenada"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostRowAction.php:159
+#| msgid "The post that triggered this action."
+msgid "The post where the action was triggered."
+msgstr "La entrada donde se ha desencadenado la acción."
 
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:32
 msgid "Post is saved"
@@ -2349,18 +2607,18 @@ msgstr ""
 "Este disparador se activa siempre al guardar una entrada, independientemente "
 "de si se acaba de crear, importar o actualizar."
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:86
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:83
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:83
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:100
-msgid "If selected, only posts with these statuses will trigger this action."
-msgstr ""
-"Si se selecciona, solo las entradas con estos estados activarán esta acción."
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:118
+#| msgid "Post is updated"
+msgid "Is update"
+msgstr "Es actualización"
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:134
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:148
-msgid "Saved post"
-msgstr "Entrada guardada"
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSave.php:119
+msgid ""
+"Whether the action happened to an existing post or a new post. Enter True "
+"for an existing post, or False for a new post."
+msgstr ""
+"Si la acción ocurrió en una entrada existente o en una nueva. Introduce "
+"«Verdadero» para una entrada existente o «Falso» para una entrada nueva."
 
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:32
 msgid "Post is scheduled"
@@ -2369,6 +2627,30 @@ msgstr "Entrada programada"
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:37
 msgid "This trigger activates when a post is scheduled."
 msgstr "Este disparador se activa cuando una entrada es programada."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:109
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:127
+#| msgid "Post Before Update"
+msgid "Post Before Schedule"
+msgstr "Entrada antes de la programación"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:110
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:128
+#| msgid "The post that was saved, with the old properties."
+msgid "The post that was scheduled, with the old properties."
+msgstr "La entrada que se ha programado con las antiguas propriedades."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:115
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:133
+#| msgid "Post After Update"
+msgid "Post After Schedule"
+msgstr "Entrada después de la programación"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:116
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostSchedule.php:134
+#| msgid "The post that was saved, with the new properties."
+msgid "The post that was scheduled, with the new properties."
+msgstr "La entrada que se ha programado con las nuevas propriedades."
 
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:32
 msgid "Post status changed"
@@ -2416,9 +2698,6 @@ msgid "On schedule"
 msgstr "Con la programación"
 
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:37
-#| msgid ""
-#| "his trigger allows you to run a workflow at a specific time, or relative "
-#| "to another date. You can also use this trigger to repeat workflows."
 msgid ""
 "This trigger allows you to run a workflow at a specific time, or relative to "
 "another date. You can also use this trigger to repeat workflows."
@@ -2431,51 +2710,126 @@ msgstr ""
 msgid "Choose a schedule to activate the workflow."
 msgstr "Elige un programa para activar el flujo de trabajo."
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:97
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnSchedule.php:70
+msgid "Date offset"
+msgstr "Cambio de fecha"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:32
+msgid "User role is changed"
+msgstr "El perfil de usuario ha cambiado"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:37
+#| msgid "This trigger activates when a post meta field is changed."
+msgid "This trigger activates when a user's role is changed."
+msgstr "Este disparador se activa cuando un perfil de usuario ha cambiado."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:64
+#| msgid "Post Query"
+msgid "User Query"
+msgstr "Consulta del usuario"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:65
+#| msgid "Specify the criteria for posts that will trigger this action."
+msgid ""
+"Specify the criteria for users whose role changes will trigger this action."
+msgstr ""
+"Especifica los criterios para los usuarios cuyos cambios de perfil "
+"desencadenarán esta acción."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:73
+#| msgid "Post query"
+msgid "User query"
+msgstr "Consulta del usuario"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:74
+#| msgid "The query defines the posts that will trigger this action."
+msgid "The query defines the users that will trigger this action."
+msgstr "La consulta define los usuarios que desencadenarán esta acción."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:80
+#| msgid "The meta value before the change."
+msgid "User Role before change"
+msgstr "Perfil de usuario antes del cambio"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:118
+#| msgid "The meta key that was changed."
+msgid "User that data was changed for"
+msgstr "Usuario para el que se modificaron los datos"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:119
+#| msgid "The meta key that was changed."
+msgid "The user that data was changed for."
+msgstr "El usuario al que se le cambiaron los datos."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:124
+msgid "Added roles"
+msgstr "Perfiles añadidos"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:125
+#| msgid "The terms that will be added to the posts."
+msgid "The roles that were added to the user."
+msgstr "Los perfiles que se han añadido al usuario."
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:130
+#| msgid "Remove all %s"
+msgid "Removed roles"
+msgstr "Perfiles eliminados"
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnUserRoleChange.php:131
+#| msgid "The terms that will be removed from the posts."
+msgid "The roles that were removed from the user."
+msgstr "Los perfiles que se han eliminado del usuario."
+
+#: src/Modules/Workflows/Models/StepTypesModel.php:101
+msgid "User"
+msgstr "Usuario"
+
+#: src/Modules/Workflows/Models/StepTypesModel.php:110
 msgid "Site"
 msgstr "Sitio"
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:106
+#: src/Modules/Workflows/Models/StepTypesModel.php:119
 msgid "Flow Control"
 msgstr "Control de flujo"
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:115
+#: src/Modules/Workflows/Models/StepTypesModel.php:128
 msgid "Asynchronous"
 msgstr "Asíncrona"
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:124 src/Views/tabs.php:53
+#: src/Modules/Workflows/Models/StepTypesModel.php:137
+#: src/Views/tabs-settings.php:33
 msgid "Debug"
 msgstr "Depurar"
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:133
+#: src/Modules/Workflows/Models/StepTypesModel.php:146
 msgid "Data Query"
 msgstr "Consulta de datos"
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:142
+#: src/Modules/Workflows/Models/StepTypesModel.php:155
 msgid "Messages"
 msgstr "Mensajes"
 
-#: src/Modules/Workflows/Rest/RestApiV1.php:49
-#: src/Modules/Workflows/Rest/RestApiV1.php:103
-#: src/Modules/Workflows/Rest/RestApiV1.php:123
+#: src/Modules/Workflows/Rest/RestApiV1.php:50
+#: src/Modules/Workflows/Rest/RestApiV1.php:104
+#: src/Modules/Workflows/Rest/RestApiV1.php:124
 msgid "The ID of the workflow"
 msgstr "El ID del flujo de trabajo"
 
-#: src/Modules/Workflows/Rest/RestApiV1.php:70
+#: src/Modules/Workflows/Rest/RestApiV1.php:71
 msgid "The post type"
 msgstr "El tipo de contenido"
 
-#: src/Modules/Workflows/Rest/RestApiV1.php:143
+#: src/Modules/Workflows/Rest/RestApiV1.php:144
 msgid "The taxonomy name"
 msgstr "El nombre de la taxonomía"
 
-#: src/Modules/Workflows/Rest/RestApiV1.php:163
+#: src/Modules/Workflows/Rest/RestApiV1.php:164
 msgid "The post ID"
 msgstr "El ID de la entrada"
 
-#: src/Modules/Workflows/Rest/RestApiV1.php:199
-#: src/Modules/Workflows/Rest/RestApiV1.php:225
-#: src/Modules/Workflows/Rest/RestApiV1.php:286
+#: src/Modules/Workflows/Rest/RestApiV1.php:214
+#: src/Modules/Workflows/Rest/RestApiV1.php:240
+#: src/Modules/Workflows/Rest/RestApiV1.php:301
 msgid "Workflow not found"
 msgstr "Flujo de trabajo no encontrado"
 
@@ -2492,47 +2846,54 @@ msgid "Enhance the power of PublishPress Future with the Pro version:"
 msgstr "Mejora la potencia de PublishPress Future con la versión Pro:"
 
 #: src/Views/ad-banner-right-sidebar.php:25
-msgid "Design custom workflows with multiple actions"
-msgstr "Diseña flujo de trabajo con acciones múltiples"
+#| msgid "Action Workflows list"
+msgid "Additional workflow triggers"
+msgstr "Disparadores de flujo de trabajo adicionales"
 
 #: src/Views/ad-banner-right-sidebar.php:27
-msgid "Schedule actions based on the post's publishing date"
-msgstr ""
-"Programa la fecha de la acción en función de la fecha de publicación de la "
-"entrada"
+#| msgid "Action Workflows list"
+msgid "Additional workflow actions"
+msgstr "Acciones del flujo de trabajo adicionales"
 
 #: src/Views/ad-banner-right-sidebar.php:29
-msgid "Move posts to custom statuses"
-msgstr "Mover entradas a estados personalizados"
+#| msgid "Publish your workflow"
+msgid "Schedule your workflows"
+msgstr "Programa tus flujos de trabajo"
 
 #: src/Views/ad-banner-right-sidebar.php:31
+#| msgid "Insert into workflow"
+msgid "Manage metadata with workflows"
+msgstr "Gestionar los metadatos con flujos de trabajo"
+
+#: src/Views/ad-banner-right-sidebar.php:33
+#| msgid "Migrate Legacy Future Actions"
+msgid "Advanced features for Future Actions"
+msgstr "Características avanzadas para acciones de Future"
+
+#: src/Views/ad-banner-right-sidebar.php:35
 msgid "Use other plugins to control Future Actions"
 msgstr "Usa otros plugins para controlar las acciones de \"Future\""
 
-#: src/Views/ad-banner-right-sidebar.php:33
-msgid "Enjoy fast and professional support"
-msgstr "Disfruta de un soporte rápido y profesional"
-
-#: src/Views/ad-banner-right-sidebar.php:45
+#: src/Views/ad-banner-right-sidebar.php:47
 msgid "Need PublishPress Future Support?"
 msgstr "¿Necesitas soporte para PublishPress Future?"
 
-#: src/Views/ad-banner-right-sidebar.php:51
+#: src/Views/ad-banner-right-sidebar.php:53
 msgid "If you need help or have a new feature request, let us know."
 msgstr ""
 "Si necesitas ayuda o tienes una petición de nueva característica, háznoslo "
 "saber."
 
-#: src/Views/ad-banner-right-sidebar.php:57
+#: src/Views/ad-banner-right-sidebar.php:59
 msgid "Request Support"
 msgstr "Solicitar soporte"
 
-#: src/Views/ad-banner-right-sidebar.php:68
+#: src/Views/ad-banner-right-sidebar.php:69
 msgid "Detailed documentation is also available on the plugin website."
 msgstr ""
 "También hay disponible una documentación detallada en la web del plugin."
 
-#: src/Views/ad-banner-right-sidebar.php:75
+#: src/Views/ad-banner-right-sidebar.php:76
 msgid "View Knowledge Base"
 msgstr "Ver la base de conocimiento"
 
@@ -2626,6 +2987,11 @@ msgid "Save Changes"
 msgstr "Guardar los cambios"
 
 #: src/Views/menu-debug-log.php:13
+#| msgid "Debug Logging"
+msgid "Debug Log"
+msgstr "Registro de depuración"
+
+#: src/Views/menu-debug-log.php:15
 msgid ""
 "Below is a dump of the debugging table, this should be useful for "
 "troubleshooting."
@@ -2633,16 +2999,16 @@ msgstr ""
 "A continuación tienes un volcado de la tabla de depuración, esto debería ser "
 "útil para solucionar problemas."
 
-#: src/Views/menu-debug-log.php:36
+#: src/Views/menu-debug-log.php:38
 msgid "Debugging table is currently empty."
 msgstr "La tabla de depuración está vacía."
 
-#: src/Views/menu-debug-log.php:57
+#: src/Views/menu-debug-log.php:59
 msgid "Number of logs to display:"
 msgstr "Número de registros a visualizar:"
 
 #. translators: %s is the number of results in the debug log. %s is the size of the log in the most appropriate unit.
-#: src/Views/menu-debug-log.php:80
+#: src/Views/menu-debug-log.php:82
 msgid ""
 "Showing the latest %d of %d results. The approximate size of the log is %s."
 msgstr ""
@@ -2650,19 +3016,19 @@ msgstr ""
 "es %s."
 
 #. translators: %s is the size of the log in the most appropriate unit.
-#: src/Views/menu-debug-log.php:88
+#: src/Views/menu-debug-log.php:90
 msgid "Showing all %d results. The approximate size of the log is %s."
 msgstr "Mostrando los %d resultados. El tamaño aproximado del registro es %s."
 
-#: src/Views/menu-debug-log.php:98
+#: src/Views/menu-debug-log.php:100
 msgid "Copy Debug Log"
 msgstr "Copiar el registro de depuración"
 
-#: src/Views/menu-debug-log.php:104
+#: src/Views/menu-debug-log.php:106
 msgid "Download Entire Log"
 msgstr "Descarga el registro completo"
 
-#: src/Views/menu-debug-log.php:115
+#: src/Views/menu-debug-log.php:117
 msgid "Debug log copied to clipboard!"
 msgstr "¡Registro de depuración copiado en el portapapeles!"
 
@@ -3036,35 +3402,36 @@ msgstr ""
 msgid "Defaults"
 msgstr "Valores por defecto"
 
-#: src/Views/menu-general.php:58
+#: src/Views/menu-general.php:59
 msgid "Calendar Visibility"
 msgstr "Visibilidad del calendario"
 
-#: src/Views/menu-general.php:64
+#: src/Views/menu-general.php:65
 msgid "Remember last state"
 msgstr "Recordar el último estado"
 
-#: src/Views/menu-general.php:66
+#: src/Views/menu-general.php:67
 msgid "Shows or hides the calendar based on the last user interaction."
 msgstr ""
 "Muestra u oculta el calendario en función de la última interacción del "
 "usuario."
 
-#: src/Views/menu-general.php:71
+#: src/Views/menu-general.php:72
 msgid "Always hidden"
 msgstr "Siempre ocultado"
 
-#: src/Views/menu-general.php:73
+#: src/Views/menu-general.php:74
 msgid "The calendar is always hidden by default."
 msgstr "El calendario está siempre ocultado por defecto."
 
-#: src/Views/menu-general.php:79
+#: src/Views/menu-general.php:80
 msgid "Permissions"
 msgstr "Permisos"
 
-#: src/Views/menu-general.php:84
-msgid "Choose Which User Roles Can Use PublishPress Future"
-msgstr "Elige qué perfiles pueden usar PublishPress Fruture"
+#: src/Views/menu-general.php:85
+#| msgid "Choose Which User Roles Can Use PublishPress Future"
+msgid "Choose Which User Roles Can Create Future Actions"
+msgstr "Elige qué perfiles de usuario pueden crear acciones de Future"
 
 #: src/Views/menu-notifications.php:50
 msgid "Email Notification"
@@ -3133,32 +3500,75 @@ msgstr ""
 "Introduce una lista de correos electrónicos separados por comas a los que te "
 "gustaría avisar cuando se detecten acciones vencidas."
 
-#: src/Views/tabs.php:20
+#: src/Views/tabs-future-actions.php:20
 msgid "Post Types"
 msgstr "Tipos de contenido"
 
-#: src/Views/tabs.php:25
+#: src/Views/tabs-future-actions.php:25
 msgid "General"
 msgstr "General"
 
-#: src/Views/tabs.php:30
+#: src/Views/tabs-future-actions.php:30
 msgid "Notifications"
 msgstr "Avisos"
 
-#: src/Views/tabs.php:35
+#: src/Views/tabs-future-actions.php:35
 msgid "Display"
 msgstr "Visualización"
 
-#: src/Views/tabs.php:40
+#: src/Views/tabs-settings.php:20
 msgid "Advanced"
 msgstr "Avanzado"
 
-#: src/Views/tabs.php:45
+#: src/Views/tabs-settings.php:25
 msgid "Diagnostics and Tools"
 msgstr "Diagnóstico y herramientas"
 
-#~ msgid "The post to update."
-#~ msgstr "La entrada de actualizar."
+#~ msgid "Export / Import"
+#~ msgstr "Exportar/Importar"
+
+#~ msgid "Action Settings"
+#~ msgstr "Ajustes de las acciones"
+
+#~ msgid "Auto-enable"
+#~ msgstr "Activación automática"
+
+#~ msgid "Enabled for all new posts"
+#~ msgstr "Activado para todas las nuevas entradas"
+
+#~ msgid "The current branch on this step: 'true' or 'false'."
+#~ msgstr "La rama actual en este paso: «verdadero» o «falso»."
+
+#~ msgid "The post that was saved triggering the action."
+#~ msgstr "La entrada que se guardó y que disparó la acción."
+
+#~ msgid "Select the post types that will trigger this action."
+#~ msgstr "Selecciona el tipo de contenido que activará esta acción."
+
+#~ msgid "Enter one or more post IDs. Leave empty to include all posts."
+#~ msgstr ""
+#~ "Introduce uno o más IDs de entrada. Déjalo vacío para incluir todas las "
+#~ "entradas."
+
+#~ msgid ""
+#~ "If selected, only posts with these statuses will trigger this action."
+#~ msgstr ""
+#~ "Si se selecciona, solo las entradas con estos estados activarán esta "
+#~ "acción."
+
+#~ msgid "Design custom workflows with multiple actions"
+#~ msgstr "Diseña flujo de trabajo con acciones múltiples"
+
+#~ msgid "Schedule actions based on the post's publishing date"
+#~ msgstr ""
+#~ "Programa la fecha de la acción en función de la fecha de publicación de "
+#~ "la entrada"
+
+#~ msgid "Move posts to custom statuses"
+#~ msgstr "Mover entradas a estados personalizados"
+
+#~ msgid "Enjoy fast and professional support"
+#~ msgstr "Disfruta de un soporte rápido y profesional"
 
 #~ msgid ""
 #~ "Select the variable that contains the post to update. It can be a post "
