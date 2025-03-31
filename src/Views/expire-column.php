@@ -28,7 +28,6 @@ $actionType = $postModel->getExpirationType();
 $action = $postModel->getExpirationAction();
 $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
 $isOverdueAction = $actionDateUnix < time();
-$isOverdueAction = true;
 
 ?>
 <div
