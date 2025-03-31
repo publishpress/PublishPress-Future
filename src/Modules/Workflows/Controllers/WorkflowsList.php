@@ -6,6 +6,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as FutureCoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
@@ -176,6 +177,13 @@ class WorkflowsList implements InitializableInterface
         //     PUBLISHPRESS_FUTURE_VERSION,
         //     true
         // );
+
+        wp_enqueue_style(
+            'pp-future-workflows-list',
+            Plugin::getAssetUrl('css/workflows-list.css'),
+            [],
+            PUBLISHPRESS_FUTURE_VERSION
+        );
     }
 
     public function addCustomColumns($columns)
