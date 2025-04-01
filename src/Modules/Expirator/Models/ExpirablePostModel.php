@@ -15,6 +15,7 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory;
+use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -374,7 +375,11 @@ class ExpirablePostModel extends PostModel
                 || $this->expirationDate === '1970-01-01 00:00:00'
                 || $this->expirationDate === '0000-00-00 00:00:00'
             ) {
-                $defaultDataParts = $this->defaultDataModel->getActionDateParts($this->getPostId());
+                try {
+                    $defaultDataParts = $this->defaultDataModel->getActionDateParts($this->getPostId());
+                } catch (Throwable $e) {
+                    $defaultDataParts = [];
+                }
 
                 if (! empty($defaultDataParts['iso'])) {
                     $this->expirationDate = $defaultDataParts['iso'];
