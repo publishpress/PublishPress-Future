@@ -221,7 +221,13 @@ class ScheduledActions implements InitializableInterface
             }
         } catch (Throwable $e) {
             $this->logger->error(
-                sprintf('Error showing title in hook column: %s. File: %s:%d', $e->getMessage(), $e->getFile(), $e->getLine())
+                sprintf(
+                    'Error customizing title "%s" in hook column: %s. File: %s:%d',
+                    $title,
+                    $e->getMessage(),
+                    $e->getFile(),
+                    $e->getLine()
+                )
             );
         }
 
@@ -452,7 +458,13 @@ class ScheduledActions implements InitializableInterface
             }
         } catch (Throwable $e) {
             $this->logger->error(
-                sprintf('Error showing args in args column: %s. File: %s:%d', $e->getMessage(), $e->getFile(), $e->getLine())
+                sprintf(
+                    'Error showing args for action %d in args column: %s. File: %s:%d',
+                    $actionId,
+                    $e->getMessage(),
+                    $e->getFile(),
+                    $e->getLine()
+                )
             );
         }
 
@@ -522,7 +534,13 @@ class ScheduledActions implements InitializableInterface
             }
         } catch (Throwable $e) {
             $this->logger->error(
-                sprintf('Error showing recurrence in recurrence column: %s. File: %s:%d', $e->getMessage(), $e->getFile(), $e->getLine())
+                sprintf(
+                    'Error showing recurrence for action %d in recurrence column: %s. File: %s:%d',
+                    $row['ID'],
+                    $e->getMessage(),
+                    $e->getFile(),
+                    $e->getLine()
+                )
             );
         }
 
