@@ -180,43 +180,49 @@ class ScheduledActions implements InitializableInterface
 
     public function showTitleInHookColumn($title, $row)
     {
-        $actionModel = new ScheduledActionModel();
-        $actionModel->loadByActionId($row['ID']);
+        try {
+            $actionModel = new ScheduledActionModel();
+            $actionModel->loadByActionId($row['ID']);
 
-        $hook = $actionModel->getHook();
+            $hook = $actionModel->getHook();
 
-        switch ($hook) {
-            case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_STEP:
-                $step = $this->getStepFromActionId($row['ID']);
+            switch ($hook) {
+                case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_STEP:
+                    $step = $this->getStepFromActionId($row['ID']);
 
-                if (empty($step)) {
+                    if (empty($step)) {
+                        break;
+                    }
+
+                    $stepModel = new WorkflowScheduledStepModel();
+                    $stepModel->loadByActionId($row['ID']);
+
+                    $title = $stepModel->getIsRecurring() ?
+                        __('Workflow repeating scheduled step', 'post-expirator') :
+                        __('Workflow scheduled step', 'post-expirator');
+
                     break;
-                }
 
-                $stepModel = new WorkflowScheduledStepModel();
-                $stepModel->loadByActionId($row['ID']);
+                case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_STEP_ACTION:
+                case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION:
+                    $title = __('Unschedule workflow recurring scheduled step', 'post-expirator');
+                    break;
 
-                $title = $stepModel->getIsRecurring() ?
-                    __('Workflow repeating scheduled step', 'post-expirator') :
-                    __('Workflow scheduled step', 'post-expirator');
+                case WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS:
+                    $title = __('Cleanup orphan workflow scheduled step arguments', 'post-expirator');
+                    break;
 
-                break;
-
-            case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_STEP_ACTION:
-            case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION:
-                $title = __('Unschedule workflow recurring scheduled step', 'post-expirator');
-                break;
-
-            case WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS:
-                $title = __('Cleanup orphan workflow scheduled step arguments', 'post-expirator');
-                break;
-
-            case WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS:
-                $title = sprintf(
-                    __('Clean up completed scheduled steps older than %d days', 'post-expirator'),
-                    $this->settingsFacade->getScheduledWorkflowStepsCleanupRetention()
-                );
-                break;
+                case WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS:
+                    $title = sprintf(
+                        __('Clean up completed scheduled steps older than %d days', 'post-expirator'),
+                        $this->settingsFacade->getScheduledWorkflowStepsCleanupRetention()
+                    );
+                    break;
+            }
+        } catch (Throwable $e) {
+            $this->logger->error(
+                sprintf('Error showing title in hook column: %s. File: %s:%d', $e->getMessage(), $e->getFile(), $e->getLine())
+            );
         }
 
         return $title;
@@ -455,63 +461,69 @@ class ScheduledActions implements InitializableInterface
 
     public function showRecurrenceInRecurrenceColumn($recurrence, $row)
     {
-        $step = $this->getStepFromActionId($row['ID']);
+        try {
+            $step = $this->getStepFromActionId($row['ID']);
 
-        if (empty($step)) {
-            return $recurrence;
-        }
+            if (empty($step)) {
+                return $recurrence;
+            }
 
-        // Show the recurrence information
-        $stepModel = new WorkflowScheduledStepModel();
-        $stepModel->loadByActionId($row['ID']);
+            // Show the recurrence information
+            $stepModel = new WorkflowScheduledStepModel();
+            $stepModel->loadByActionId($row['ID']);
 
-        if (! $stepModel->getIsRecurring()) {
-            return $recurrence;
-        }
+            if (! $stepModel->getIsRecurring()) {
+                return $recurrence;
+            }
 
-        $repeatUntil = $stepModel->getRepeatUntil();
+            $repeatUntil = $stepModel->getRepeatUntil();
 
-        // Repeat until forever
-        if ($repeatUntil === 'forever') {
-            return $recurrence;
-        }
+            // Repeat until forever
+            if ($repeatUntil === 'forever') {
+                return $recurrence;
+            }
 
-        // Repeat until a specific date
-        if ($repeatUntil === 'date') {
-            $dateFormat = get_option('date_format');
-            $timeFormat = get_option('time_format');
-            $dateTimeFormat = $dateFormat . ' ' . $timeFormat;
+            // Repeat until a specific date
+            if ($repeatUntil === 'date') {
+                $dateFormat = get_option('date_format');
+                $timeFormat = get_option('time_format');
+                $dateTimeFormat = $dateFormat . ' ' . $timeFormat;
 
-            $formattedDate = wp_date($dateTimeFormat, strtotime($stepModel->getRepeatUntilDate()));
+                $formattedDate = wp_date($dateTimeFormat, strtotime($stepModel->getRepeatUntilDate()));
 
-            return sprintf(
-                // translators: %1$s: recurrence, %2$s: date
-                __('%1$s until %2$s', 'post-expirator'),
-                $recurrence,
-                $formattedDate
+                return sprintf(
+                    // translators: %1$s: recurrence, %2$s: date
+                    __('%1$s until %2$s', 'post-expirator'),
+                    $recurrence,
+                    $formattedDate
+                );
+            }
+
+            // Repeat until a specific number of times
+            if ($repeatUntil === 'times') {
+                $recurrence = sprintf(
+                    // translators: %1$s: recurrence, %2$d: repeat times
+                    __('%1$s for %2$d times', 'post-expirator'),
+                    $recurrence,
+                    $stepModel->getRepeatTimes()
+                );
+
+                // Check how many times the step has been executed
+                $executedTimes = $stepModel->getRepetitionNumber();
+
+                $recurrence .= ' ' . sprintf(
+                    // translators: %1$s: executed times, %2$d: total repeat times
+                    __('[%1$s/%2$d]', 'post-expirator'),
+                    $executedTimes,
+                    $stepModel->getRepeatTimes()
+                );
+
+                return $recurrence;
+            }
+        } catch (Throwable $e) {
+            $this->logger->error(
+                sprintf('Error showing recurrence in recurrence column: %s. File: %s:%d', $e->getMessage(), $e->getFile(), $e->getLine())
             );
-        }
-
-        // Repeat until a specific number of times
-        if ($repeatUntil === 'times') {
-            $recurrence = sprintf(
-                // translators: %1$s: recurrence, %2$d: repeat times
-                __('%1$s for %2$d times', 'post-expirator'),
-                $recurrence,
-                $stepModel->getRepeatTimes()
-            );
-
-            // Check how many times the step has been executed
-            $executedTimes = $stepModel->getRepetitionNumber();
-
-            $recurrence .= ' ' . sprintf(
-                // translators: %1$s: executed times, %2$d: total repeat times
-                __('[%1$s/%2$d]', 'post-expirator'),
-                $executedTimes,
-                $stepModel->getRepeatTimes()
-            );
-
-            return $recurrence;
         }
 
         return $recurrence;
