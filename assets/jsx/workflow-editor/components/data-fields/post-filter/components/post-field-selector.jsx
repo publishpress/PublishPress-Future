@@ -19,7 +19,7 @@ export const PostFieldSelector = ({ value, handleOnChange, options, context, ...
         value={value}
         handleOnChange={handleOnChange}
         context={context}
-        singleVariableOnly={true}
+        singleVariableOnly={false}
         {...props}
     />;
 };

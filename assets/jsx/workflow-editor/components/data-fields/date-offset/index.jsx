@@ -142,7 +142,7 @@ export const DateOffset = ({ name, label, defaultValue, onChange, variables = []
                                         onChangeSetting({ settingName: 'customDateSource', value });
                                     }}
                                     variables={allVariables}
-                                    singleVariableOnly={true}
+                                    singleVariableOnly={false}
                                     readOnlyPreview={true}
                                     description={__("Click the button to choose a custom date source from variables that can provide a date.", "post-expirator")}
                                     wrapOnPreview={false}
