@@ -340,6 +340,10 @@ class Cron implements AsyncStepProcessorInterface
             $this->nodeSettings['schedule']['dateOffset'] ?? ''
         );
 
+        if (is_null($timestamp)) {
+            $timestamp = 0;
+        }
+
         return $timestamp;
     }
 
@@ -460,8 +464,8 @@ class Cron implements AsyncStepProcessorInterface
     }
 
     private function shouldSkipScheduling(): bool {
-        if (is_null($this->timestamp)) {
-            $this->addDebugLogMessage('No timestamp found, skipping step %s', $this->stepSlug);
+        if (empty($this->timestamp)) {
+            $this->addDebugLogMessage('Cannot schedule step %s: Timestamp is empty or invalid', $this->stepSlug);
 
             return true;
         }
