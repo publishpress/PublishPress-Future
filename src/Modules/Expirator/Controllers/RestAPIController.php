@@ -266,89 +266,99 @@ class RestAPIController implements InitializableInterface
                 'publishpress_future_action',
                 [
                     'get_callback' => function ($post) {
-                        $postModelFactory = $this->expirablePostModelFactory;
-                        $postModel = $postModelFactory($post['id']);
+                        try {
+                            $postModelFactory = $this->expirablePostModelFactory;
+                            $postModel = $postModelFactory($post['id']);
 
-                        $date = $postModel->getExpirationDateString(false);
-                        $action = $postModel->getExpirationType();
-                        $newStatus = $postModel->getExpirationNewStatus();
-                        $terms = $postModel->getExpirationCategoryIDs();
-                        $taxonomy = $postModel->getExpirationTaxonomy();
+                            $date = $postModel->getExpirationDateString(false);
+                            $action = $postModel->getExpirationType();
+                            $newStatus = $postModel->getExpirationNewStatus();
+                            $terms = $postModel->getExpirationCategoryIDs();
+                            $taxonomy = $postModel->getExpirationTaxonomy();
 
-                        if (empty($date)) {
-                            $defaultDataModelFactory = Container::getInstance()->get(
-                                ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY
-                            );
-                            $defaultDataModel = $defaultDataModelFactory->create($post['post_type']);
+                            if (empty($date)) {
+                                $defaultDataModelFactory = Container::getInstance()->get(
+                                    ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY
+                                );
+                                $defaultDataModel = $defaultDataModelFactory->create($post['post_type']);
 
-                            $defaultExpirationDate = $defaultDataModel->getActionDateParts($post['id']);
-                            $date = $defaultExpirationDate['iso'];
+                                $defaultExpirationDate = $defaultDataModel->getActionDateParts($post['id']);
+                                $date = $defaultExpirationDate['iso'];
 
-                            $action = $defaultDataModel->getAction();
-                            $newStatus = $defaultDataModel->getNewStatus();
-                            $terms = [];
-                            $taxonomy = '';
+                                $action = $defaultDataModel->getAction();
+                                $newStatus = $defaultDataModel->getNewStatus();
+                                $terms = [];
+                                $taxonomy = '';
+                            }
+
+                            return [
+                                'enabled' => $postModel->isExpirationEnabled(),
+                                'date' => $date,
+                                'action' => $action,
+                                'newStatus' => $newStatus,
+                                'terms' => $terms,
+                                'taxonomy' => $taxonomy,
+                            ];
+                        } catch (Exception $e) {
+                            $this->logger->error('Error getting future action data: ' . $e->getMessage());
+                            return null;
                         }
-
-                        return [
-                            'enabled' => $postModel->isExpirationEnabled(),
-                            'date' => $date,
-                            'action' => $action,
-                            'newStatus' => $newStatus,
-                            'terms' => $terms,
-                            'taxonomy' => $taxonomy,
-                        ];
                     },
                     'update_callback' => function ($value, $post) {
-                        if (! $this->currentUserModel->userCanExpirePosts()) {
+                        try {
+                            if (! $this->currentUserModel->userCanExpirePosts()) {
+                                return false;
+                            }
+
+                            if (isset($value['enabled']) && (bool)$value['enabled']) {
+                                $expireType = sanitize_text_field($value['action']);
+                                $newStatus = sanitize_key($value['newStatus']);
+
+                                if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+                                    $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                                    $newStatus = 'draft';
+                                }
+
+                                if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+                                    $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                                    $newStatus = 'private';
+                                }
+
+                                if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+                                    $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                                    $newStatus = 'trash';
+                                }
+
+                                $opts = [
+                                    'expireType' => $expireType,
+                                    'newStatus' => $newStatus,
+                                    'category' => array_map('sanitize_text_field', $value['terms']),
+                                    'categoryTaxonomy' => sanitize_text_field($value['taxonomy']),
+                                ];
+
+                                $modelFactory = $this->taxonomiesModelFactory;
+                                $taxonomiesModel = $modelFactory();
+                                $opts['category'] = $taxonomiesModel->normalizeTermsCreatingIfNecessary(
+                                    $opts['categoryTaxonomy'],
+                                    $opts['category']
+                                );
+
+                                $this->hooks->doAction(
+                                    HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
+                                    $post->ID,
+                                    strtotime($value['date']),
+                                    $opts
+                                );
+                                return true;
+                            }
+
+                            $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $post->ID);
+
+                            return true;
+                        } catch (Exception $e) {
+                            $this->logger->error('Error saving future action data: ' . $e->getMessage());
                             return false;
                         }
-
-                        if (isset($value['enabled']) && (bool)$value['enabled']) {
-                            $expireType = sanitize_text_field($value['action']);
-                            $newStatus = sanitize_key($value['newStatus']);
-
-                            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
-                                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
-                                $newStatus = 'draft';
-                            }
-
-                            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
-                                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
-                                $newStatus = 'private';
-                            }
-
-                            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
-                                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
-                                $newStatus = 'trash';
-                            }
-
-                            $opts = [
-                                'expireType' => $expireType,
-                                'newStatus' => $newStatus,
-                                'category' => array_map('sanitize_text_field', $value['terms']),
-                                'categoryTaxonomy' => sanitize_text_field($value['taxonomy']),
-                            ];
-
-                            $modelFactory = $this->taxonomiesModelFactory;
-                            $taxonomiesModel = $modelFactory();
-                            $opts['category'] = $taxonomiesModel->normalizeTermsCreatingIfNecessary(
-                                $opts['categoryTaxonomy'],
-                                $opts['category']
-                            );
-
-                            $this->hooks->doAction(
-                                HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
-                                $post->ID,
-                                strtotime($value['date']),
-                                $opts
-                            );
-                            return true;
-                        }
-
-                        $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $post->ID);
-
-                        return true;
                     },
                     'schema' => [
                         'description' => 'Future action',
