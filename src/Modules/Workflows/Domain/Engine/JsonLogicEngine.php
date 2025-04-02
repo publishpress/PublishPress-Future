@@ -92,7 +92,7 @@ class JsonLogicEngine implements JsonLogicEngineInterface
         if (is_string($array) && strpos($array, ',') !== false) {
             $array = explode(',', $array);
             $array = array_map('trim', $array);
-        } else if (is_string($array)) {
+        } elseif (is_string($array)) {
             return $this->operationContains($array, $value);
         }
 

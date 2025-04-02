@@ -146,18 +146,19 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         wp_enqueue_style('wp-jquery-ui-dialog');
     }
 
-    protected function get_request_orderby() {
+    protected function get_request_orderby()
+    {
 
-		$valid_sortable_columns = array_values( $this->sort_by );
+        $valid_sortable_columns = array_values($this->sort_by);
 
-		if ( ! empty( $_GET['orderby'] ) && in_array( $_GET['orderby'], $valid_sortable_columns, true ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$orderby = sanitize_text_field( wp_unslash( $_GET['orderby'] ) ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		} else {
-			$orderby = $valid_sortable_columns[0];
-		}
+        if (! empty($_GET['orderby']) && in_array($_GET['orderby'], $valid_sortable_columns, true)) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $orderby = sanitize_text_field(wp_unslash($_GET['orderby'])); //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        } else {
+            $orderby = $valid_sortable_columns[0];
+        }
 
-		return $orderby;
-	}
+        return $orderby;
+    }
 
     protected function get_request_order()
     {

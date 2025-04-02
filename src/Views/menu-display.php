@@ -337,13 +337,13 @@ $shortcodeWrapperClass = $settingsFacade->getShortcodeWrapperClass();
                                         $expirationdateDefaultDateFormat = $dateTimeFacade->getDefaultDateFormat();
                                     }
 
-if (empty($expirationdateDefaultTimeFormat)) {
-    $expirationdateDefaultTimeFormat = $dateTimeFacade->getDefaultTimeFormat();
-}
+                                    if (empty($expirationdateDefaultTimeFormat)) {
+                                        $expirationdateDefaultTimeFormat = $dateTimeFacade->getDefaultTimeFormat();
+                                    }
 
-echo esc_html(date_i18n(
-    "$expirationdateDefaultDateFormat $expirationdateDefaultTimeFormat"
-)); ?>
+                                    echo esc_html(date_i18n(
+                                        "$expirationdateDefaultDateFormat $expirationdateDefaultTimeFormat"
+                                    )); ?>
                                 </p>
                             </li>
                             <li>
@@ -418,7 +418,7 @@ echo esc_html(date_i18n(
                             'div' => '&lt;div&gt;',
                             'span' => '&lt;span&gt;',
                         ];
-?>
+                        ?>
                         <div class="pp-settings-field-row">
                             <select name="shortcode-wrapper" id="shortcode-wrapper">
                                 <?php foreach ($wrapperOptions as $value => $label) : ?>
@@ -466,44 +466,44 @@ echo esc_html(date_i18n(
                                             esc_html__('%s - Available options:', 'post-expirator'),
                                             '<code>type</code>'
                                         );
-echo '<ul>';
-echo '<li>' . sprintf(
+                                        echo '<ul>';
+                                        echo '<li>' . sprintf(
     // translators: %s is a code tag that wraps the shortcode attribute value
-    esc_html__('%s - Displays complete date/time.  Default value.', 'post-expirator'),
-    '<code>full</code>'
-);
-echo '</li>';
-echo '<li>' . sprintf(
+                                            esc_html__('%s - Displays complete date/time.  Default value.', 'post-expirator'),
+                                            '<code>full</code>'
+                                        );
+                                        echo '</li>';
+                                        echo '<li>' . sprintf(
     // translators: %s is a code tag that wraps the shortcode attribute value
-    esc_html__('%s - Displays date only', 'post-expirator'),
-    '<code>date</code>'
-);
-echo '</li>';
-echo '<li>' . sprintf(
+                                            esc_html__('%s - Displays date only', 'post-expirator'),
+                                            '<code>date</code>'
+                                        );
+                                        echo '</li>';
+                                        echo '<li>' . sprintf(
     // translators: %s is a code tag that wraps the shortcode attribute value
-    esc_html__('%s - Displays time only', 'post-expirator'),
-    '<code>time</code>'
-);
-echo '</li>';
-echo '</ul>';
-?>
+                                            esc_html__('%s - Displays time only', 'post-expirator'),
+                                            '<code>time</code>'
+                                        );
+                                        echo '</li>';
+                                        echo '</ul>';
+                                        ?>
                                 </p>
                             </li>
                             <li>
                                 <p><?php
-    echo sprintf(
+                                echo sprintf(
         // translators: %s is a code tag that wraps the shortcode attribute dateformat
-        esc_html__('%s - Format set here will override the value set on the settings page', 'post-expirator'),
-        '<code>dateformat</code>'
-    ); ?></p>
+                                    esc_html__('%s - Format set here will override the value set on the settings page', 'post-expirator'),
+                                    '<code>dateformat</code>'
+                                ); ?></p>
                             </li>
                             <li>
                                 <p><?php
-        echo sprintf(
+                                echo sprintf(
             // translators: %s is a code tag that wraps the shortcode attribute timeformat
-            esc_html__('%s - Format set here will override the value set on the settings page', 'post-expirator'),
-            '<code>timeformat</code>'
-        ); ?></p>
+                                    esc_html__('%s - Format set here will override the value set on the settings page', 'post-expirator'),
+                                    '<code>timeformat</code>'
+                                ); ?></p>
                             </li>
                         </ul>
                     </td>
@@ -525,7 +525,7 @@ echo '</ul>';
     if ($showSideBar) {
         include __DIR__ . '/ad-banner-right-sidebar.php';
     }
-?>
+    ?>
 </div>
 <script>
     jQuery(document).ready(function($) {

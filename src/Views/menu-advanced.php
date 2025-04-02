@@ -141,7 +141,7 @@ $preserveData = $settingsFacade->getSettingPreserveData();
     if ($showSideBar) {
         include __DIR__ . '/ad-banner-right-sidebar.php';
     }
-?>
+    ?>
 </div>
 <?php
 // phpcs:enable

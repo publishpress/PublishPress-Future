@@ -39,7 +39,6 @@ if (empty($results)) {
 }
 
 if (! empty($results)) {
-
     echo '<div class="pp-debug-log">';
 
     $logCountOptions = [

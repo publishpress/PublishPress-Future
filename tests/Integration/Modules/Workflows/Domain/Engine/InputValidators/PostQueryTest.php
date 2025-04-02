@@ -2,8 +2,7 @@
 
 namespace PublishPress\Future\Tests\Integration\Modules\Workflows\Domain\Engine\InputValidators;
 
-
-use \lucatume\WPBrowser\TestCase\WPTestCase;
+use lucatume\WPBrowser\TestCase\WPTestCase;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\InputValidators\PostQuery;
 use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\JsonLogicEngineInterface;

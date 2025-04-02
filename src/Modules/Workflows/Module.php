@@ -150,7 +150,6 @@ final class Module implements InitializableInterface
     public function initialize()
     {
         $this->initializeControllers();
-
     }
 
     private function initializeControllers()
@@ -239,5 +238,4 @@ final class Module implements InitializableInterface
 
         return $variableName;
     }
-
 }

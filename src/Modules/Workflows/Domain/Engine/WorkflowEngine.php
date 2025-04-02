@@ -334,7 +334,6 @@ class WorkflowEngine implements WorkflowEngineInterface
     public function executeAsyncStepRoutine($args)
     {
         try {
-
             if (is_null($args)) {
                 $message = self::LOG_PREFIX . ' Async node runner error, no args found';
 

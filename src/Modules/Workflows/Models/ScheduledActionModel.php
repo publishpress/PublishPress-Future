@@ -62,13 +62,13 @@ class ScheduledActionModel implements ScheduledActionModelInterface
     {
         global $wpdb;
 
-        $arg = preg_replace( '/[^a-zA-Z0-9_\-]/', '', $arg);
+        $arg = preg_replace('/[^a-zA-Z0-9_\-]/', '', $arg);
         $value = sanitize_text_field($value);
 
         $where = '';
         if (! empty($validStatuse)) {
             $statuses = implode(',', $validStatuses);
-            $statuses = preg_replace( '/[^a-zA-Z0-9_\-,]/', '', $statuses);
+            $statuses = preg_replace('/[^a-zA-Z0-9_\-,]/', '', $statuses);
             $where = ' AND status IN (' . $statuses . ')';
         }
 

@@ -162,7 +162,8 @@ class General implements StepProcessorInterface
         $this->logStepExecution($stepSlug, $currentRunningWorkflowId);
     }
 
-    private function updateExecutionTraceOnVariablesHandler(string $stepSlug): void {
+    private function updateExecutionTraceOnVariablesHandler(string $stepSlug): void
+    {
         $currentExecutionTrace = $this->executionContext->getVariable('global.workflow.execution_trace');
         if (! is_array($currentExecutionTrace)) {
             $currentExecutionTrace = [];

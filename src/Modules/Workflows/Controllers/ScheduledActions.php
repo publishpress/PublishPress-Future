@@ -246,16 +246,16 @@ class ScheduledActions implements InitializableInterface
             case WorkflowsHooksAbstract::ACTION_WORKFLOW_SAVED:
                 $args = $action->get_args();
 
-            if (isset($args['postId']) && isset($args['workflow']) && 'expire' === $args['workflow']) {
-                $transientName = 'post-expirator-notice-' . (int) $args['postId'];
-                $noticeMessage = get_transient($transientName);
-                delete_transient($transientName);
+                if (isset($args['postId']) && isset($args['workflow']) && 'expire' === $args['workflow']) {
+                    $transientName = 'post-expirator-notice-' . (int) $args['postId'];
+                    $noticeMessage = get_transient($transientName);
+                    delete_transient($transientName);
 
-                // translators: %s is the action description
-                $html = sprintf(
-                    __('Successfully executed action: %s', 'post-expirator'),
-                    $noticeMessage
-                );
+                    // translators: %s is the action description
+                    $html = sprintf(
+                        __('Successfully executed action: %s', 'post-expirator'),
+                        $noticeMessage
+                    );
                 }
                 break;
 

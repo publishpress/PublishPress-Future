@@ -38,6 +38,7 @@ class SiteResolver implements VariableResolverInterface
             case 'description':
                 $value = $this->getSiteDescription();
 
+                // no break
             case 'url':
                 $value = $this->getSiteUrl();
                 $this->siteDataCache[$propertyName] = $value;
