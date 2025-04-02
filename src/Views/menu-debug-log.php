@@ -53,7 +53,7 @@ if (! empty($results)) {
 
     echo '<div class="pp-debug-log-count">';
     echo '<form method="get">';
-    echo '<input type="hidden" name="page" value="publishpress-future">';
+    echo '<input type="hidden" name="page" value="publishpress-future-settings">';
     echo '<input type="hidden" name="tab" value="viewdebug">';
     echo '<label for="log-count">' . esc_html__('Number of logs to display:', 'post-expirator') . '</label>';
     echo '<select id="log-count" name="log_count" onchange="this.form.submit()">';
