@@ -127,7 +127,7 @@
         "check:lint": "phplint --no-cache",
         "check:cs": "phpcs",
         "check:stan": "phpstan",
-        "check:longpath": "longpath .",
+        "check:longpath": "longpath dist/post-expirator/",
         "check:pot-diff": "php dev-workspace/scripts/php/bin/pptk pot:diff https://raw.githubusercontent.com/publishpress/PublishPress-Future/refs/heads/main/languages/post-expirator.pot ./languages/post-expirator.pot",
         "check:pot-diff-md": "php dev-workspace/scripts/php/bin/pptk pot:diff https://raw.githubusercontent.com/publishpress/PublishPress-Future/refs/heads/main/languages/post-expirator.pot ./languages/post-expirator.pot -m",
         "fix:cs": "phpcbf --standard=.phpcs.xml",
