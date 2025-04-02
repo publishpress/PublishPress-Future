@@ -57,6 +57,7 @@ class BackupAdminPage implements InitializableInterface
             'import',
         ];
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No need for nonce verification when just loading scripts
         if (! isset($_GET['tab']) || ! in_array($_GET['tab'], $validTabs, true)) {
             return;
         }
@@ -128,6 +129,7 @@ class BackupAdminPage implements InitializableInterface
 
     public function filterAllowedSettingsTabs($allowedTabs)
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No need for nonce verification when just comparing page
         if (isset($_GET['page']) && $_GET['page'] !== 'publishpress-future-settings') {
             return $allowedTabs;
         }
@@ -140,6 +142,7 @@ class BackupAdminPage implements InitializableInterface
 
     public function filterSettingsTabs($tabs)
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No need for nonce verification when just comparing page
         if (isset($_GET['page']) && $_GET['page'] !== 'publishpress-future-settings') {
             return $tabs;
         }
