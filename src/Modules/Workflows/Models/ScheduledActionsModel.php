@@ -163,19 +163,19 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
     {
         global $wpdb;
 
-        $query = $wpdb->prepare(
-            "UPDATE {$wpdb->prefix}actionscheduler_actions AS asa
-            SET asa.status = 'canceled'
-            WHERE JSON_EXTRACT(asa.extended_args, '$[0].workflowId') = %d
-                AND JSON_UNQUOTE(JSON_EXTRACT(asa.extended_args, '$[0].actionUIDHash')) = %s
-                AND asa.status = 'pending' AND asa.group_id = %d",
-            $workflowId,
-            $actionUIDHash,
-            $this->getGroupID()
-        );
-
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
-        $wpdb->query($query);
+        $wpdb->query(
+            $wpdb->prepare(
+                "UPDATE {$wpdb->prefix}actionscheduler_actions AS asa
+                SET asa.status = 'canceled'
+                WHERE JSON_EXTRACT(asa.extended_args, '$[0].workflowId') = %d
+                    AND JSON_UNQUOTE(JSON_EXTRACT(asa.extended_args, '$[0].actionUIDHash')) = %s
+                    AND asa.status = 'pending' AND asa.group_id = %d",
+                $workflowId,
+                $actionUIDHash,
+                $this->getGroupID()
+            )
+        );
     }
 
     /**
@@ -231,6 +231,7 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         $tableSchema = $wpdb->prefix . 'actionscheduler_actions';
         $groupId = $this->getGroupID();
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $results = $wpdb->get_results(
             $wpdb->prepare(
                 "SELECT *
@@ -255,18 +256,22 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         $tableSchema = $wpdb->prefix . 'actionscheduler_actions';
         $groupId = $this->getGroupID();
 
-        $query = $wpdb->prepare(
-            "UPDATE {$tableSchema}
-            INNER JOIN {$wpdb->prefix}ppfuture_workflow_scheduled_steps AS wss ON wss.action_id = {$tableSchema}.action_id
-            SET status = 'canceled'
-            WHERE wss.post_id = %d
-                AND wss.workflow_id = %d
-                AND group_id = %d",
-            $postId,
-            $workflowId,
-            $groupId
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $wpdb->query(
+            $wpdb->prepare(
+                "UPDATE %i
+                INNER JOIN %i AS wss ON wss.action_id = %i.action_id
+                SET status = 'canceled'
+                WHERE wss.post_id = %d
+                    AND wss.workflow_id = %d
+                    AND group_id = %d",
+                $tableSchema,
+                $wpdb->prefix . 'ppfuture_workflow_scheduled_steps',
+                $tableSchema,
+                $postId,
+                $workflowId,
+                $groupId
+            )
         );
-
-        $wpdb->query($query);
     }
 }

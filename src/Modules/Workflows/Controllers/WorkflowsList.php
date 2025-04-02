@@ -449,11 +449,12 @@ class WorkflowsList implements InitializableInterface
             : 'page-title-action';
 
         // Insert the button into the DOM via JavaScript
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
         echo '<script type="text/javascript">
             jQuery(document).ready(function($) {
-                $(".wrap .' . esc_js($titleClass) . ':first").after(\'' . esc_js($customButton) . '\');
+                $(".wrap .' . esc_js($titleClass) . ':first").after(\'' . $customButton . '\');
             });
         </script>';
+        // phpcs:enable
     }
 }

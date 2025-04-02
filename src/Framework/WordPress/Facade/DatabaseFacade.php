@@ -89,12 +89,17 @@ class DatabaseFacade
     /**
      * @param string $tableName
      *
-     * @return void
+     * @return bool
      */
-    public function dropTable($tableName)
+    public function dropTable($tableName): bool
     {
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange
-        $this->wpdb->query('DROP TABLE IF EXISTS `' . esc_sql($tableName) . '`');
+        return $this->query(
+            $this->prepare(
+                'DROP TABLE IF EXISTS %i',
+                $tableName
+            )
+        );
     }
 
     /**

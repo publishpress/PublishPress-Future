@@ -8,6 +8,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 /**
  * WordPress reviews functions.
  */
+// phpcs:ignore PSR1.Classes.ClassDeclaration.MissingNamespace, Squiz.Classes.ValidClassName.NotCamelCaps
 abstract class PostExpirator_Reviews
 {
     /**

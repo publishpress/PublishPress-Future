@@ -564,9 +564,11 @@ class ManualPostTrigger implements InitializableInterface
 
     private function saveBulkEditData()
     {
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.NonceVerification.Recommended
-        $strategy = $_REQUEST['future_workflow_manual_strategy'] ?? 'no-change';
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
+        $strategy = sanitize_text_field($_REQUEST['future_workflow_manual_strategy'] ?? 'no-change');
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
         $postIds = array_map('intval', (array)$_REQUEST['post']);
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
         $selectedWorkflows = array_map('intval', (array)$_REQUEST['future_workflow_manual_trigger']);
 
         if (empty($postIds) || $strategy === 'no-change') {
@@ -586,5 +588,6 @@ class ManualPostTrigger implements InitializableInterface
 
             $postModel->setManuallyEnabledWorkflows($selectedWorkflows);
         }
+        // phpcs:enable
     }
 }
