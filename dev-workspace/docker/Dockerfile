@@ -2,7 +2,7 @@ ARG NODE_VERSION=18
 
 FROM node:$NODE_VERSION-alpine AS node
 
-FROM publishpress/dev-workspace-terminal:generic-4.3.5
+FROM publishpress/dev-workspace-terminal:generic-4.3.6
 
 ENV PLUGIN_NAME="PublishPress Future"
 ENV PLUGIN_TYPE="FREE"
