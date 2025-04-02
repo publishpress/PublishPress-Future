@@ -6,7 +6,7 @@ labels: release
 assignees: ''
 ---
 
-To release the Free plugin, please make sure to check all the checkboxes below.
+To release the Free plugin, please check all the checkboxes below.
 
 ### Pre-release Checklist
 - [ ] Create the release branch as `release-<version>` based on the development branch.
