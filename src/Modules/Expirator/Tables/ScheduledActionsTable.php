@@ -17,6 +17,7 @@ use PublishPress\Future\Modules\Expirator\Models\PostTypeModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 class ScheduledActionsTable extends \ActionScheduler_ListTable
 {
     /**
@@ -824,3 +825,5 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         echo esc_html__('No Scheduled Actions.', 'post-expirator');
     }
 }
+
+// phpcs:enable PSR1.Methods.CamelCapsMethodName.NotCamelCaps

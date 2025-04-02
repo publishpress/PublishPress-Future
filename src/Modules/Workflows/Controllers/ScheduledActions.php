@@ -504,7 +504,7 @@ class ScheduledActions implements InitializableInterface
                 $formattedDate = wp_date($dateTimeFormat, strtotime($stepModel->getRepeatUntilDate()));
 
                 return sprintf(
-                    // translators: %1$s: recurrence, %2$s: date
+                    /* translators: %1$s is the recurrence, %2$s is the date */
                     __('%1$s until %2$s', 'post-expirator'),
                     $recurrence,
                     $formattedDate
@@ -514,7 +514,7 @@ class ScheduledActions implements InitializableInterface
             // Repeat until a specific number of times
             if ($repeatUntil === 'times') {
                 $recurrence = sprintf(
-                    // translators: %1$s: recurrence, %2$d: repeat times
+                    /* translators: %1$s is the recurrence, %2$d is the repeat times */
                     __('%1$s for %2$d times', 'post-expirator'),
                     $recurrence,
                     $stepModel->getRepeatTimes()
@@ -524,7 +524,7 @@ class ScheduledActions implements InitializableInterface
                 $executedTimes = $stepModel->getRepetitionNumber();
 
                 $recurrence .= ' ' . sprintf(
-                    // translators: %1$s: executed times, %2$d: total repeat times
+                    /* translators: %1$s is the executed times, %2$d is the total repeat times */
                     __('[%1$s/%2$d]', 'post-expirator'),
                     $executedTimes,
                     $stepModel->getRepeatTimes()

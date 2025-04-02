@@ -317,7 +317,7 @@ class WorkflowEngine implements WorkflowEngineInterface
 
             $this->logger->error($message);
 
-            throw new \Exception($message);
+            throw new \Exception(esc_html($message));
         }
 
         $this->logger->debug(
@@ -337,7 +337,7 @@ class WorkflowEngine implements WorkflowEngineInterface
             if (is_null($args)) {
                 $message = self::LOG_PREFIX . ' Async node runner error, no args found';
 
-                throw new \Exception($message);
+                throw new \Exception(esc_html($message));
             }
 
             $originalArgs = $args;

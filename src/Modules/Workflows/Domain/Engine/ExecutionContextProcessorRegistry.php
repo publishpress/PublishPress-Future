@@ -18,7 +18,7 @@ class ExecutionContextProcessorRegistry implements ExecutionContextProcessorRegi
     {
         if (!$this->hasProcessor($type)) {
             throw new \InvalidArgumentException(
-                sprintf('Execution context processor "%s" not found', $type)
+                sprintf('Execution context processor "%s" not found', esc_html($type))
             );
         }
 
