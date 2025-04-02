@@ -47,6 +47,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed the display of scheduled actions for posts when workflows are manually enabled using the checkbox (Issue #1230).
 - Fixed error message "Schedule step is required for this workflow" on any repeating scheduled step in the Scheduled Actions list (Issue #1229).
 - Fixed step validation error message about the field "Post" containing an invalid variable (Issue #1210).
+- Fixed wrong redirection after selecting custom number of debug logs to display (Issue #1264).
 
 ### Developers
 
