@@ -3,14 +3,15 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.4.1] - UNRELEASED
+## [4.5.0] - 3 Apr, 2025
 
 
 ### Added
 
 - Added the `global.engine_execution_id` variable to the workflows.
-- Added the "Repeats done" output branch to the "Schedule delay" step in the workflow editor - PRO.
+- Added the "After all repetitions" output branch to the "Schedule delay" step and "On schedule" trigger when repetition is enabled - PRO (Issue #1245).
 - Added the variables "repeat_count" and "repeat_limit" to the "Schedule delay" step - PRO.
+- Added more detailed debug messages when sending emails, helping to troubleshoot email sending errors (Issue #1232).
 
 ### Changed
 
@@ -19,6 +20,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Renamed workflow variable helpers, to workflow value processors.
 - Changed default action unique ID by including the current timestamp, making it more unique by default.
 - Changed the label "Next" to "At time" in the output of the "Schedule delay" step in the workflow editor.
+- Removed not useful fields from the Quick Edit panel for Workflows: date, password, and others (Issue #1178).
+- Allow editing custom post field selection expression for adding variable processor (e.g. date) and formatting the used value. Singlevariables expression builder is editable instead of readonly (Issue #1238).
+- Implemented default sorting of scheduled actions by most recent first, providing better visibility of upcoming tasks (Issue #1242).
 
 ### Removed
 
@@ -30,6 +34,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed scheduled delay tasks registration to not require a custom unique task identifier (Issue #1165).
 - Fixed detection of completed scheduled actions for single tasks, now properly allowing the same action to be scheduled multiple times (Issue #1165).
 - Fixed the action that unschedules completed recurring actions - PRO (Issue #1165).
+- Fixed issue with "On Schedule" trigger that was incorrectly scheduling recurring actions every few seconds instead of respecting the configured interval when repetition was enabled (Issue #1245).
+- Fixed incorrect execution count display in the Scheduled Actions page for repeating workflows that have a limit on number of executions (Issue #1249).
+- Imnproved text on the overdue action message in the posts list, removing red icon (#Issue 1193).
+- Fixed false positive error on step validation for steps connected to the Query Posts step, saying the variable "....posts" do not exists (Issue #1255).
+- Updated translations for ES, FR and IT languages (Issues #1256, #1225).
+- Fixed default workflows (samples), updating the trigger conditions for the new conditional query builder (Issue #1243).
+- Fixed uncautch exceptions adding error handling to some hook callbacks.
+- Fixed fatal error generated on posts lists when an invalid default future action date offset is configured for the post type (Issue #1224).
+- Fixed wrong repetition inverval for the "On schedule" trigger (Issue #1259).
+- Fixed wrong error message on database scheam check when an index is missed (Issue #1236).
+- Fixed the display of scheduled actions for posts when workflows are manually enabled using the checkbox (Issue #1230).
+- Fixed error message "Schedule step is required for this workflow" on any repeating scheduled step in the Scheduled Actions list (Issue #1229).
+- Fixed step validation error message about the field "Post" containing an invalid variable (Issue #1210).
+- Fixed wrong redirection after selecting custom number of debug logs to display (Issue #1264).
 
 ### Developers
 
@@ -40,6 +58,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed the service `WORKFLOW_VARIABLES_HANDLER`, replacing it with the `WORKFLOW_VARIABLES_HANDLER_FACTORY`.
 - Removed the method `getVariablesHandler` from the `WorkflowEngine` class.
 - Renamed "Runtime Variables Handler" to "Workflow Execution Context".
+- Added new columns to the table `_ppfuture_workflow_scheduled_steps`: `post_id` and `repetition_number`.
 
 ## [4.4.0] - 13 Mar, 2025
 

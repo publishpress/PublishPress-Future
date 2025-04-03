@@ -94,7 +94,7 @@ class PostQuery implements InputValidatorsInterface
         }
 
         if (is_wp_error($post)) {
-            throw new \Exception('Invalid post object: ' . $post->get_error_message());
+            throw new \Exception(esc_html('Invalid post object: ' . $post->get_error_message()));
         }
 
         return true;

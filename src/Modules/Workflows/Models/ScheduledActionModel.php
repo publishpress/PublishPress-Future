@@ -62,23 +62,25 @@ class ScheduledActionModel implements ScheduledActionModelInterface
     {
         global $wpdb;
 
-        $arg = preg_replace( '/[^a-zA-Z0-9_\-]/', '', $arg);
+        $arg = preg_replace('/[^a-zA-Z0-9_\-]/', '', $arg);
         $value = sanitize_text_field($value);
 
         $where = '';
         if (! empty($validStatuse)) {
             $statuses = implode(',', $validStatuses);
-            $statuses = preg_replace( '/[^a-zA-Z0-9_\-,]/', '', $statuses);
+            $statuses = preg_replace('/[^a-zA-Z0-9_\-,]/', '', $statuses);
             $where = ' AND status IN (' . $statuses . ')';
         }
 
-        $query = $wpdb->prepare(
-            "SELECT * FROM %i WHERE JSON_UNQUOTE(JSON_EXTRACT(extended_args, '$[0]." . $arg . "')) = %s" . $where, // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-            $wpdb->prefix . 'actionscheduler_actions',
-            $value
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $row = $wpdb->get_row(
+            $wpdb->prepare(
+                "SELECT * FROM %i WHERE JSON_UNQUOTE(JSON_EXTRACT(extended_args, '$[0]." . $arg . "')) = %s" . $where, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                $wpdb->prefix . 'actionscheduler_actions',
+                $value
+            ),
+            ARRAY_A
         );
-
-        $row = $wpdb->get_row($query, ARRAY_A);
 
 
         if (empty($row)) {

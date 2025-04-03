@@ -286,7 +286,8 @@ class Cron implements AsyncStepProcessorInterface
         return $actionArgs;
     }
 
-    private function saveScheduledStepData(int $scheduledActionId) {
+    private function saveScheduledStepData(int $scheduledActionId)
+    {
         /*
          * Setting the action ID is crucial for retrieving scheduled step arguments
          * from the wp_ppfuture_workflow_scheduled_steps table, specifically for recurring actions.
@@ -325,7 +326,8 @@ class Cron implements AsyncStepProcessorInterface
         $scheduledStepModel->insert();
     }
 
-    private function getCalculatedTimestamp(): int {
+    private function getCalculatedTimestamp(): int
+    {
         $shouldRunNow = $this->whenToRun === self::WHEN_TO_RUN_NOW;
 
         if ($this->isSingleAction && $shouldRunNow) {
@@ -384,7 +386,8 @@ class Cron implements AsyncStepProcessorInterface
         return $scheduledActionId;
     }
 
-    private function scheduleAction(): void {
+    private function scheduleAction(): void
+    {
         $scheduledActionId = 0;
         $actionArgs = $this->getActionArgs();
 
@@ -463,7 +466,8 @@ class Cron implements AsyncStepProcessorInterface
         return $scheduledActionId;
     }
 
-    private function shouldSkipScheduling(): bool {
+    private function shouldSkipScheduling(): bool
+    {
         if (empty($this->timestamp)) {
             $this->addDebugLogMessage('Cannot schedule step %s: Timestamp is empty or invalid', $this->stepSlug);
 

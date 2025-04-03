@@ -110,7 +110,7 @@ class ExecutionContext implements ExecutionContextInterface
             return $array;
         }
 
-        return array_map(fn($item) => $this->resolveExpressionsInText($item), $array);
+        return array_map(fn ($item) => $this->resolveExpressionsInText($item), $array);
     }
 
     /**

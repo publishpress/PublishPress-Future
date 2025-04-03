@@ -281,7 +281,6 @@ class ClassicEditorController implements InitializableInterface
     public function enqueueScripts()
     {
         try {
-
             $currentScreen = get_current_screen();
 
             if (

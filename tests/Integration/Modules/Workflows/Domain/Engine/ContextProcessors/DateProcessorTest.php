@@ -36,7 +36,7 @@ class DateProcessorTest extends WPTestCase
                 }
 
                 return $timestamp;
-        });
+            });
     }
 
     public function tearDown(): void

@@ -155,8 +155,11 @@ class ExecutionContextTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $allVariables = $executionContext->getAllVariables();
 
         $this->assertEquals(234, $allVariables['global']['site']['id']);
-        $this->assertEquals(123, $allVariables['global']['workflow']['id'],
-            'Existing nested structure should be preserved');
+        $this->assertEquals(
+            123,
+            $allVariables['global']['workflow']['id'],
+            'Existing nested structure should be preserved'
+        );
     }
 
     public function testSetVariableAddsToExistingBranch(): void
@@ -176,8 +179,11 @@ class ExecutionContextTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $allVariables = $executionContext->getAllVariables();
 
         $this->assertEquals('New Site Name', $allVariables['global']['site']['name']);
-        $this->assertEquals(234, $allVariables['global']['site']['id'],
-            'Existing values in the same branch should be preserved');
+        $this->assertEquals(
+            234,
+            $allVariables['global']['site']['id'],
+            'Existing values in the same branch should be preserved'
+        );
     }
 
     public function testSetVariableCreatesNewBranch(): void
@@ -197,8 +203,11 @@ class ExecutionContextTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $allVariables = $executionContext->getAllVariables();
 
         $this->assertEquals(1, $allVariables['user']['id']);
-        $this->assertEquals(123, $allVariables['global']['workflow']['id'],
-            'Existing structure should be preserved when creating new branches');
+        $this->assertEquals(
+            123,
+            $allVariables['global']['workflow']['id'],
+            'Existing structure should be preserved when creating new branches'
+        );
     }
 
     public function testSetVariableWithVariableResolverInterface(): void

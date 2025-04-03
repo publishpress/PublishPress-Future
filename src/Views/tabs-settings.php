@@ -57,7 +57,7 @@ $tabs = $hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_TABS, $tabs);
         <?php
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $html;
-?>
+        ?>
 
     </div>
 </div>

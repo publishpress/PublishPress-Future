@@ -33,21 +33,15 @@ class DateTimeHandler implements DateTimeHandlerInterface
     {
         // Validate offset format before processing
         if (empty($offset)) {
-            throw new InvalidArgumentException(__('Empty date time offset.', 'post-expirator'));
+            throw new InvalidArgumentException(esc_html__('Empty date time offset.', 'post-expirator'));
         }
 
         $offset = $this->translateFixedTimeOnOffsetToUTC($offset);
 
-        // Suppress warnings and catch false return
         $calculatedTime = @strtotime($offset, $currentTime);
 
         if ($calculatedTime === false) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    __('Invalid date time offset', 'post-expirator'),
-                    $offset
-                )
-            );
+            throw new InvalidArgumentException(esc_html__('Invalid date time offset', 'post-expirator'));
         }
 
         return $calculatedTime;

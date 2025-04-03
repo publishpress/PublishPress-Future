@@ -145,6 +145,7 @@ class HooksFacade implements HookableInterface
             $e->getLine()
         );
 
+        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
         @error_log($message);
     }
 }

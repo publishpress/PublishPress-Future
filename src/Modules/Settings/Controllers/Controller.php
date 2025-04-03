@@ -180,6 +180,7 @@ class Controller implements InitializableInterface
                 PUBLISHPRESS_FUTURE_VERSION
             );
 
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             if (! isset($_GET['tab']) || $_GET['tab'] === 'advanced') {
                 wp_enqueue_script(
                     'publishpress-future-settings-advanced-panel',
@@ -233,7 +234,7 @@ class Controller implements InitializableInterface
                             'scheduledStepsCleanupStatus' => $this->settings->getScheduledWorkflowStepsCleanupStatus(),
                             'scheduledStepsCleanupRetention' => $this->settings->getScheduledWorkflowStepsCleanupRetention(),
                         ],
-                        'settingsTab' => $_GET['tab'] ?? 'defaults',
+                        'settingsTab' => $this->getCurrentTab(),
                     ]
                 );
             }

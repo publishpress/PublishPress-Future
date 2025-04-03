@@ -8,6 +8,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
 /**
  * Utility functions.
  */
+// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
+// phpcs:ignore PSR1.Classes.ClassDeclaration.MissingNamespace, Squiz.Classes.ValidClassName.NotCamelCaps
 class PostExpirator_Util
 {
     /**

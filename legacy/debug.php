@@ -11,6 +11,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
  *
  * @deprecated 2.8.0
  */
+// phpcs:ignore PSR1.Classes.ClassDeclaration.MissingNamespace
 class PostExpiratorDebug
 {
     /**

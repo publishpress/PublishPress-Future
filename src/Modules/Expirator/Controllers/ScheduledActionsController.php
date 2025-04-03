@@ -318,6 +318,7 @@ class ScheduledActionsController implements InitializableInterface
 
     public function onFilterAdminTitle($adminTitle, $title)
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No need for nonce verification when just comparing page
         if (isset($_GET['page']) && $_GET['page'] === 'publishpress-future-scheduled-actions') {
             return str_replace($title, __('Scheduled Actions', 'post-expirator'), $adminTitle);
         }

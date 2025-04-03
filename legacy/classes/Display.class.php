@@ -2,7 +2,6 @@
 
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
-use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
 use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
@@ -15,6 +14,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
 /**
  * The class that is responsible for all the displays.
  */
+// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
+// phpcs:ignore PSR1.Classes.ClassDeclaration.MissingNamespace, Squiz.Classes.ValidClassName.NotCamelCaps
 class PostExpirator_Display
 {
     /**
@@ -208,7 +209,7 @@ class PostExpirator_Display
                 $this->settingsFacade->setMetaboxCheckboxLabel(sanitize_text_field($_POST['expirationdate-metabox-checkbox-label']));
                 $this->settingsFacade->setShortcodeWrapper(sanitize_text_field($_POST['shortcode-wrapper']));
                 $this->settingsFacade->setShortcodeWrapperClass(sanitize_text_field($_POST['shortcode-wrapper-class']));
-                // phpcs:enable
+                // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
             }
         }
 
@@ -228,7 +229,7 @@ class PostExpirator_Display
     private function menu_diagnostics()
     {
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
             if (
                 ! isset($_POST['_postExpiratorMenuDiagnostics_nonce']) || ! wp_verify_nonce(
                     sanitize_key($_POST['_postExpiratorMenuDiagnostics_nonce']),
@@ -349,13 +350,15 @@ class PostExpirator_Display
                 $this->settingsFacade->setHideCalendarByDefault(
                     isset($_POST['expired-hide-calendar-by-default']) && $_POST['expired-hide-calendar-by-default'] == '1'
                 );
-                // phpcs:enable
+                // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 
                 if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
                     $_POST['allow-user-roles'] = [];
                 }
 
-                $this->settingsFacade->setAllowUserRoles($_POST['allow-user-roles']);
+                $allowUserRoles = array_map('sanitize_text_field', $_POST['allow-user-roles']);
+
+                $this->settingsFacade->setAllowUserRoles($allowUserRoles);
 
                 echo "<div id='message' class='updated fade'><p>";
                 esc_html_e('Saved Options!', 'post-expirator');
@@ -382,8 +385,15 @@ class PostExpirator_Display
                     'postexpirator_menu_notifications'
                 )
             ) {
-                print 'Form Validation Failure: Sorry, your nonce did not verify.';
-                exit;
+                throw new \Exception('The nonce did not verify.');
+            }
+
+            if (! isset($_POST['expired-email-notification-list'])) {
+                throw new \Exception('The expired email notification list is not set.');
+            }
+
+            if (! isset($_POST['past-due-actions-notification-list'])) {
+                throw new \Exception('The past due actions notification list is not set.');
             }
 
             $expiredEmailNotificationList = explode(',', sanitize_text_field($_POST['expired-email-notification-list']));
@@ -402,7 +412,7 @@ class PostExpirator_Display
             $this->settingsFacade->setEmailNotificationAddressesList($expiredEmailNotificationList);
             $this->settingsFacade->setPastDueActionsNotificationStatus((bool)$_POST['past-due-actions-notification']);
             $this->settingsFacade->setPastDueActionsNotificationAddressesList($pastDueActionsNotificationList);
-            // phpcs:enable
+            // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 
             echo "<div id='message' class='updated fade'><p>";
             esc_html_e('Saved Options!', 'post-expirator');
@@ -434,6 +444,10 @@ class PostExpirator_Display
                 print 'Form Validation Failure: Sorry, your nonce did not verify.';
                 exit;
             } else {
+                if (! isset($_POST['expired-preserve-data-deactivating'])) {
+                    throw new \Exception('The expired preserve data deactivating option is not set.');
+                }
+
                 // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdatePreserveData', (int)$_POST['expired-preserve-data-deactivating']);
 
@@ -528,7 +542,7 @@ class PostExpirator_Display
                         '<strong>PublishPress Future</strong>',
                         '<span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span>'
                     );
-        ?>
+                    ?>
                 </a>
             </div>
 
@@ -539,25 +553,25 @@ class PostExpirator_Display
                     <li>
                         <a href="https://publishpress.com/future/" target="_blank" rel="noopener noreferrer"
                            title="<?php
-                esc_attr_e('About PublishPress Future', 'post-expirator'); ?>">
+                            esc_attr_e('About PublishPress Future', 'post-expirator'); ?>">
                             <?php
-                esc_html_e('About', 'post-expirator'); ?>
+                            esc_html_e('About', 'post-expirator'); ?>
                         </a>
                     </li>
                     <li>
                         <a href="https://publishpress.com/knowledge-base/future-introduction/" target="_blank"
                            rel="noopener noreferrer" title="<?php
-                esc_attr_e('Future Documentation', 'post-expirator'); ?>">
+                            esc_attr_e('Future Documentation', 'post-expirator'); ?>">
                             <?php
-                esc_html_e('Documentation', 'post-expirator'); ?>
+                            esc_html_e('Documentation', 'post-expirator'); ?>
                         </a>
                     </li>
                     <li>
                         <a href="https://publishpress.com/publishpress-support/" target="_blank" rel="noopener noreferrer"
                            title="<?php
-                esc_attr_e('Contact the PublishPress team', 'post-expirator'); ?>">
+                            esc_attr_e('Contact the PublishPress team', 'post-expirator'); ?>">
                             <?php
-                esc_html_e('Contact', 'post-expirator'); ?>
+                            esc_html_e('Contact', 'post-expirator'); ?>
                         </a>
                     </li>
                 </ul>
@@ -566,7 +580,7 @@ class PostExpirator_Display
             <div class="pp-pressshack-logo">
                 <a href="https://publishpress.com" target="_blank" rel="noopener noreferrer">
                     <img src="<?php
-        echo esc_url(plugins_url('../assets/images/publishpress-logo.png', dirname(__FILE__))) ?>"/>
+                    echo esc_url(plugins_url('../assets/images/publishpress-logo.png', dirname(__FILE__))) ?>"/>
                 </a>
             </div>
         </footer>

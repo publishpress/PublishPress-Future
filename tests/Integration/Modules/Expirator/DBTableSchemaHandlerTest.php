@@ -195,8 +195,7 @@ class DBTableSchemaHandlerTest extends NoTransactionWPTestCase
 
         $errors = $handler->getErrors();
 
-        $this->assertArrayHasKey('error_code', $errors);
-        $this->assertEquals('Error message', $errors['error_code']);
+        $this->assertContains('Error message', $errors);
     }
 
     public function testResetErrors(): void

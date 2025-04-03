@@ -186,6 +186,7 @@ class SettingsController implements InitializableInterface
                 return;
             }
 
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No need for nonce verification when just comparing page
             if (!isset($_GET['page']) || $_GET['page'] !== 'publishpress-future') {
                 return;
             }
@@ -523,6 +524,7 @@ class SettingsController implements InitializableInterface
 
     public function onFilterAdminTitle($adminTitle, $title)
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No need for nonce verification when just comparing page
         if (isset($_GET['page']) && $_GET['page'] === 'publishpress-future') {
             return str_replace($title, __('Future Actions', 'post-expirator'), $adminTitle);
         }
