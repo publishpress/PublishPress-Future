@@ -49,7 +49,12 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
         $tableName = $this->getTableName();
 
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
-        $table = $this->wpdb->get_var("SHOW TABLES LIKE '$tableName'");
+        $table = $this->wpdb->get_var(
+            $this->wpdb->prepare(
+                "SHOW TABLES LIKE %s",
+                $tableName
+            )
+        );
 
         return $table === $tableName;
     }
@@ -179,6 +184,11 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
             $expectedDefinition = preg_replace('/ default [^,]+/', '', $expectedDefinition);
             $expectedDefinition = trim($expectedDefinition);
 
+            if (! in_array($columnName, $columns)) {
+                $errors[] = 'Column "' . $columnName . '" is missing';
+                continue;
+            }
+
             $currentDefinition = strtolower($columnsDefinitions[$columnName]->Type);
 
             // Remove spaces between items in SET statements
@@ -193,11 +203,6 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
                 // Match the quoted items
                 $currentDefinition = str_replace('\'', '"', $currentDefinition);
                 $expectedDefinition = str_replace('\'', '"', $expectedDefinition);
-            }
-
-            if (! in_array($columnName, $columns)) {
-                $errors[] = 'Column "' . $columnName . '" is missing';
-                continue;
             }
 
             if ($currentDefinition !== $expectedDefinition) {
@@ -276,7 +281,7 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
                     // Drop the index for recreation
                     $this->wpdb->query(
                         $this->wpdb->prepare(
-                            "DROP INDEX %i ON %s",
+                            "DROP INDEX %i ON %i",
                             $indexName,
                             $this->getTableName()
                         )
@@ -293,7 +298,7 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
                 // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 $this->wpdb->query(
                     $this->wpdb->prepare(
-                        "CREATE $unique INDEX %i ON %s ($columns)",
+                        "CREATE $unique INDEX %i ON %i ($columns)",
                         $indexName,
                         $this->getTableName()
                     )
@@ -308,7 +313,7 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
                 // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
                 $this->wpdb->query(
                     $this->wpdb->prepare(
-                        "DROP INDEX %i ON %s",
+                        "DROP INDEX %i ON %i",
                         $indexName,
                         $this->getTableName()
                     )
@@ -330,7 +335,12 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
     public function getTableColumnDefinitions(): array
     {
         $tableName = $this->getTableName();
-        $columns = $this->wpdb->get_results("SHOW COLUMNS FROM `$tableName`");
+        $columns = $this->wpdb->get_results(
+            $this->wpdb->prepare(
+                "SHOW COLUMNS FROM %i",
+                $tableName
+            )
+        );
 
         $columnsDefinitions = [];
         foreach ($columns as $column) {
