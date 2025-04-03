@@ -177,36 +177,30 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
         $columnsDefinitions = $this->getTableColumnDefinitions();
 
         foreach ($expectedColumns as $columnName => $expectedDefinition) {
-            $expectedDefinition = strtolower($expectedDefinition);
-            $expectedDefinition = str_replace(' not null', '', $expectedDefinition);
-            $expectedDefinition = str_replace(' default current_timestamp', '', $expectedDefinition);
-            $expectedDefinition = str_replace(' null', '', $expectedDefinition);
-            $expectedDefinition = preg_replace('/ default [^,]+/', '', $expectedDefinition);
-            $expectedDefinition = trim($expectedDefinition);
-
-            if (! in_array($columnName, $columns)) {
+            // Check if column exists
+            if (!in_array($columnName, $columns)) {
                 $errors[] = 'Column "' . $columnName . '" is missing';
                 continue;
             }
 
-            $currentDefinition = strtolower($columnsDefinitions[$columnName]->Type);
+            // Parse the expected type info
+            $typeInfo = $this->parseColumnType($expectedDefinition);
+            $basicType = $typeInfo['type'];
 
-            // Remove spaces between items in SET statements
-            if (strpos($expectedDefinition, 'set(') !== false) {
-                preg_match('/set\(([^)]+)\)/', $expectedDefinition, $matches);
-                if (isset($matches[1])) {
-                    $setItems = $matches[1];
-                    $setItemsWithoutSpaces = str_replace(' ', '', $setItems);
-                    $expectedDefinition = str_replace($setItems, $setItemsWithoutSpaces, $expectedDefinition);
-                }
+            // Get the current column basic type
+            $currentType = $columnsDefinitions[$columnName]->Type;
+            $currentTypeInfo = $this->parseColumnType($currentType);
+            $currentBasicType = $currentTypeInfo['type'];
 
-                // Match the quoted items
-                $currentDefinition = str_replace('\'', '"', $currentDefinition);
-                $expectedDefinition = str_replace('\'', '"', $expectedDefinition);
+            // Compare basic types (without size)
+            if ($currentBasicType !== $basicType) {
+                $errors[] = 'Column "' . $columnName . '" has wrong type: ' . $currentBasicType . '. Expected: ' . $basicType;
+                continue;
             }
 
-            if ($currentDefinition !== $expectedDefinition) {
-                $errors[] = 'Column "' . $columnName . '" has wrong definition: ' . $currentDefinition . '. Expected: ' . $expectedDefinition;
+            // Check size constraints for relevant types
+            if (!$this->checkColumnSize($columnName, $expectedDefinition)) {
+                $errors[] = 'Column "' . $columnName . '" has wrong size. Expected: ' . $expectedDefinition . ', Got: ' . $currentType;
             }
         }
 
@@ -373,5 +367,71 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
     {
         $tableName = $this->getTableName();
         $this->wpdb->query("ALTER TABLE `$tableName` MODIFY COLUMN `$column` $definition");
+    }
+
+    public function checkColumnSize(string $column, string $expectedType): bool
+    {
+        $tableName = $this->getTableName();
+        $dbName = DB_NAME;
+
+        // Parse expected type to extract size information
+        $typeInfo = $this->parseColumnType($expectedType);
+        $typeName = $typeInfo['type'];
+        $expectedSize = $typeInfo['size'] ?? null;
+
+        if (empty($expectedSize)) {
+            return true; // No size to check
+        }
+
+        // For character types (VARCHAR, CHAR, etc.)
+        if (in_array($typeName, ['varchar', 'char', 'text', 'tinytext', 'mediumtext', 'longtext'])) {
+            $actualLength = $this->getColumnLength($column);
+            return $actualLength == $expectedSize;
+        }
+
+        // For numeric types (DECIMAL, NUMERIC with precision/scale)
+        if (in_array($typeName, ['decimal', 'numeric'])) {
+            list($precision, $scale) = explode(',', $expectedSize);
+            $precision = (int)trim($precision);
+            $scale = (int)trim($scale);
+
+            // phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $columnInfo = $this->wpdb->get_row(
+                $this->wpdb->prepare(
+                    "SELECT NUMERIC_PRECISION, NUMERIC_SCALE FROM information_schema.COLUMNS
+                    WHERE TABLE_SCHEMA = %s AND TABLE_NAME = %s AND COLUMN_NAME = %s",
+                    $dbName,
+                    $tableName,
+                    $column
+                )
+            );
+            // phpcs:enable
+
+            return $columnInfo && (int)$columnInfo->NUMERIC_PRECISION === $precision &&
+                   (int)$columnInfo->NUMERIC_SCALE === $scale;
+        }
+
+        // For integer types where display width doesn't affect storage but might be a compatibility concern
+        if (in_array($typeName, ['tinyint', 'smallint', 'mediumint', 'int', 'bigint'])) {
+            // For these types, we could check NUMERIC_PRECISION but it's less critical
+            // since the display width doesn't affect storage capacity
+            return true;
+        }
+
+        return true;
+    }
+
+    private function parseColumnType(string $typeDefinition): array
+    {
+        $typeDefinition = strtolower(trim($typeDefinition));
+
+        if (preg_match('/^([a-z]+)(?:\(([^)]+)\))?/', $typeDefinition, $matches)) {
+            return [
+                'type' => $matches[1],
+                'size' => $matches[2] ?? null,
+            ];
+        }
+
+        return ['type' => $typeDefinition];
     }
 }
