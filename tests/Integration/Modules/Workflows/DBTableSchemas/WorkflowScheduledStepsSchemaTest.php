@@ -86,7 +86,7 @@ class WorkflowScheduledStepsSchemaTest extends NoTransactionWPTestCase
         $this->assertTableDoesNotExists($schema->getTableName());
     }
 
-    public function testIsTableHealthy(): void
+    public function testIsTableHealthyWhenTableIsHealthy(): void
     {
         $schema = $this->getSchema();
         $this->assertTrue($schema->isTableHealthy());

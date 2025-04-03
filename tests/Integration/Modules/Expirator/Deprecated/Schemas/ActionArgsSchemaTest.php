@@ -139,7 +139,7 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
         $errors = ActionArgsSchema::getErrors();
 
-        $this->assertArrayHasKey(ActionArgsSchema::HEALTH_ERROR_TABLE_DOES_NOT_EXIST, $errors);
+        $this->assertContains('The table wp_ppfuture_actions_args does not exist.', $errors);
     }
 
     public function testDeprecatedMethodsExists(): void

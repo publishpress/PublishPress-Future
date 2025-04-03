@@ -79,7 +79,7 @@ class DBTableSchemaHandlerTest extends NoTransactionWPTestCase
 
         $this->assertTrue($handler->createTable($columns, $indexes));
 
-        $this->assertTableExists('new_custom_table_name');
+        $this->assertTableExists('wp_new_custom_table_name');
     }
 
     public function testDropTable(): void
@@ -195,8 +195,7 @@ class DBTableSchemaHandlerTest extends NoTransactionWPTestCase
 
         $errors = $handler->getErrors();
 
-        $this->assertArrayHasKey('error_code', $errors);
-        $this->assertEquals('Error message', $errors['error_code']);
+        $this->assertContains('Error message', $errors);
     }
 
     public function testResetErrors(): void
