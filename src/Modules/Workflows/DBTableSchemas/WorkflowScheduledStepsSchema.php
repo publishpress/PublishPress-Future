@@ -97,6 +97,9 @@ class WorkflowScheduledStepsSchema implements DBTableSchemaInterface
                     $tablePrefix . $this->getTableName()
                 )
             );
+
+            // Table do not exists, we don't need to check columns and indexes.
+            return false;
         }
 
         $columnsErrors = $this->handler->checkTableColumns($this->getColumns());
