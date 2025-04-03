@@ -124,6 +124,9 @@ class PostTypeDefaultDataModel
         ];
     }
 
+    /**
+     * @throws \Exception
+     */
     public function getActionDateParts(int $postId = null): array
     {
         $dateTimeOffset = $this->getDateTimeOffset($this->postType);

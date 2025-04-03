@@ -38,9 +38,9 @@ interface WorkflowScheduledStepModelInterface
 
     public function getRepeatUntilDate(): string;
 
-    public function setRunCount(int $runCount): void;
+    public function setTotalRunCount(int $totalRunCount): void;
 
-    public function getRunCount(): int;
+    public function getTotalRunCount(): int;
 
     public function setLastRunAt(string $lastRunAt): void;
 
@@ -49,6 +49,10 @@ interface WorkflowScheduledStepModelInterface
     public function setIsCompressed(bool $isCompressed): void;
 
     public function getIsCompressed(): bool;
+
+    public function setPostId(int $postId): void;
+
+    public function getPostId(): int;
 
     public function setArgs(array $args): void;
 
@@ -64,7 +68,7 @@ interface WorkflowScheduledStepModelInterface
 
     public function expectCompressedArguments(): bool;
 
-    public function incrementRunCount(): void;
+    public function incrementTotalRunCount(): void;
 
     public function updateLastRunAt(): void;
 
@@ -77,4 +81,8 @@ interface WorkflowScheduledStepModelInterface
     public static function getMetaIsFinished(int $workflowId, string $actionUIDHash): bool;
 
     public static function getMetaRunCount(int $workflowId, string $actionUIDHash): int;
+
+    public function setRepetitionNumber(int $repetitionNumber): void;
+
+    public function getRepetitionNumber(): int;
 }

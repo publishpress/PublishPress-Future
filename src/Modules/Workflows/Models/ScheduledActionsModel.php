@@ -151,7 +151,7 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
                 WHERE (
                     meta_key LIKE '" . WorkflowScheduledStepModel::META_FINISHED_PREFIX . "%%'
                     OR meta_key LIKE '" . WorkflowScheduledStepModel::META_LAST_RUN_AT_PREFIX . "%%'
-                    OR meta_key LIKE '" . WorkflowScheduledStepModel::META_RUN_COUNT_PREFIX . "%%'
+                    OR meta_key LIKE '" . WorkflowScheduledStepModel::META_TOTAL_RUN_COUNT_PREFIX . "%%'
                 ) AND post_id = %d",
                 $workflowId
             )
@@ -159,25 +159,23 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         // phpcs:enable
     }
 
-    public function cancelRecurringScheduledActions(int $workflowId, string $stepId): void
+    public function cancelRecurringScheduledActions(int $workflowId, string $actionUIDHash): void
     {
         global $wpdb;
 
-        // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $wpdb->query(
-            // The workflow ID needs to be cast to a string because it's a JSON field.
             $wpdb->prepare(
                 "UPDATE {$wpdb->prefix}actionscheduler_actions AS asa
                 SET asa.status = 'canceled'
-                WHERE JSON_EXTRACT(asa.args, '$[0].workflowId') = %s
-                    AND JSON_EXTRACT(asa.args, '$[0].stepId') = %s
+                WHERE JSON_EXTRACT(asa.extended_args, '$[0].workflowId') = %d
+                    AND JSON_UNQUOTE(JSON_EXTRACT(asa.extended_args, '$[0].actionUIDHash')) = %s
                     AND asa.status = 'pending' AND asa.group_id = %d",
                 $workflowId,
-                $stepId,
+                $actionUIDHash,
                 $this->getGroupID()
             )
         );
-        // phpcs:enable
     }
 
     /**
@@ -233,6 +231,7 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         $tableSchema = $wpdb->prefix . 'actionscheduler_actions';
         $groupId = $this->getGroupID();
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $results = $wpdb->get_results(
             $wpdb->prepare(
                 "SELECT *
@@ -257,15 +256,19 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         $tableSchema = $wpdb->prefix . 'actionscheduler_actions';
         $groupId = $this->getGroupID();
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $wpdb->query(
             $wpdb->prepare(
-                "UPDATE {$tableSchema} SET status = 'canceled'
-                WHERE (JSON_EXTRACT(args, '$[0].postId') = %d OR JSON_EXTRACT(extended_args, '$[0].postId') = %d)
-                    AND (JSON_EXTRACT(args, '$[0].workflowId') = %d OR JSON_EXTRACT(extended_args, '$[0].workflowId') = %d)
+                "UPDATE %i
+                INNER JOIN %i AS wss ON wss.action_id = %i.action_id
+                SET status = 'canceled'
+                WHERE wss.post_id = %d
+                    AND wss.workflow_id = %d
                     AND group_id = %d",
+                $tableSchema,
+                $wpdb->prefix . 'ppfuture_workflow_scheduled_steps',
+                $tableSchema,
                 $postId,
-                $postId,
-                $workflowId,
                 $workflowId,
                 $groupId
             )

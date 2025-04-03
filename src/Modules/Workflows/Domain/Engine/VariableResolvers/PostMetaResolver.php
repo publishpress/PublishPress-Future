@@ -8,6 +8,8 @@ class PostMetaResolver implements VariableResolverInterface
 {
     private $postId;
 
+    private $postMetaCache = [];
+
     public function __construct(int $postId)
     {
         $this->postId = $postId;
@@ -20,7 +22,13 @@ class PostMetaResolver implements VariableResolverInterface
 
     public function getValue(string $name = '')
     {
-        return get_post_meta($this->postId, $name, true);
+        if (isset($this->postMetaCache[$name])) {
+            return $this->postMetaCache[$name];
+        }
+
+        $value = get_post_meta($this->postId, $name, true);
+        $this->postMetaCache[$name] = $value;
+        return $value;
     }
 
     public function getValueAsString(string $name = ''): string
@@ -28,14 +36,22 @@ class PostMetaResolver implements VariableResolverInterface
         return (string)$this->getValue($name);
     }
 
-    public function compact($name = ''): array
+    public function compact(): array
     {
-        return $this->getValue($name);
+        return [
+            'type' => $this->getType(),
+            'value' => $this->postId
+        ];
     }
 
-    public function getVariable($name = '')
+    public function getVariable()
     {
-        return $this->getValue($name);
+        return $this->postId;
+    }
+
+    public function setValue(string $name, $value): void
+    {
+        $this->postMetaCache[$name] = $value;
     }
 
     public function __isset($name): bool

@@ -25,6 +25,7 @@ $showSideBar = $hooks->applyFilters(
 echo '<div class="pp-columns-wrapper' . ($showSideBar ? ' pp-enable-sidebar' : '') . '">';
 echo '<div class="pp-column-left">';
 
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $currentLogCount = isset($_GET['log_count']) ? (int)$_GET['log_count'] : 500;
 /**
  * @var LoggerInterface $logger
@@ -39,7 +40,6 @@ if (empty($results)) {
 }
 
 if (! empty($results)) {
-
     echo '<div class="pp-debug-log">';
 
     $logCountOptions = [
@@ -54,13 +54,13 @@ if (! empty($results)) {
 
     echo '<div class="pp-debug-log-count">';
     echo '<form method="get">';
-    echo '<input type="hidden" name="page" value="publishpress-future">';
+    echo '<input type="hidden" name="page" value="publishpress-future-settings">';
     echo '<input type="hidden" name="tab" value="viewdebug">';
     echo '<label for="log-count">' . esc_html__('Number of logs to display:', 'post-expirator') . '</label>';
     echo '<select id="log-count" name="log_count" onchange="this.form.submit()">';
     foreach ($logCountOptions as $value => $label) {
         $selected = $currentLogCount === $value ? ' selected' : '';
-        echo '<option value="' . esc_attr((string)$value) . '"' . $selected . '>' . esc_html($label) . '</option>';
+        echo '<option value="' . esc_attr((string)$value) . '"' . $selected . '>' . esc_html($label) . '</option>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     }
     echo '</select>';
     echo '</form>';
@@ -70,7 +70,7 @@ if (! empty($results)) {
 
     echo '<textarea readonly>';
     foreach ($results as $result) {
-        printf("%s: %s\n", $result['timestamp'], esc_html($result['message']));
+        printf("%s: %s\n", esc_html($result['timestamp']), esc_html($result['message']));
     }
     echo '</textarea>';
 
@@ -80,16 +80,16 @@ if (! empty($results)) {
         echo '<p id="debug-log-length">' . sprintf(
             // translators: %s is the number of results in the debug log. %s is the size of the log in the most appropriate unit.
             esc_html__('Showing the latest %d of %d results. The approximate size of the log is %s.', 'post-expirator'),
-            $totalDisplayedLogs,
-            $totalLogs,
-            PostExpirator_Util::formatBytes($logSizeInBytes)
+            esc_html($totalDisplayedLogs),
+            esc_html($totalLogs),
+            esc_html(PostExpirator_Util::formatBytes($logSizeInBytes))
         ) . '</p>';
     } else {
         echo '<p id="debug-log-length">' . sprintf(
             // translators: %s is the size of the log in the most appropriate unit.
             esc_html__('Showing all %d results. The approximate size of the log is %s.', 'post-expirator'),
-            $totalLogs,
-            PostExpirator_Util::formatBytes($logSizeInBytes)
+            esc_html($totalLogs),
+            esc_html(PostExpirator_Util::formatBytes($logSizeInBytes))
         ) . '</p>';
     }
 

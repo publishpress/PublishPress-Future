@@ -98,13 +98,36 @@ class OnSchedule implements StepTypeInterface
     public function getStepScopedVariablesSchema(): array
     {
         return [
-
+            [
+                "name" => "schedule_date",
+                "type" => "datetime",
+                "label" => __("Schedule date", "post-expirator"),
+                "description" => __("The date and time when the step will run.", "post-expirator"),
+            ],
+            [
+                "name" => "action_uid_hash",
+                "type" => "string",
+                "label" => __("Action UID hash", "post-expirator"),
+                "description" => __("The unique ID hash of the action that will run.", "post-expirator"),
+            ],
+            [
+                "name" => "repeat_count",
+                "type" => "integer",
+                "label" => __("Repeat count", "post-expirator"),
+                "description" => __("The number of times the scheduled action has been repeated.", "post-expirator"),
+            ],
+            [
+                "name" => "repeat_limit",
+                "type" => "integer",
+                "label" => __("Repeat limit", "post-expirator"),
+                "description" => __("The maximum number of times the scheduled action will be repeated.", "post-expirator"),
+            ],
         ];
     }
 
     public function getOutputSchema(): array
     {
-        return [];
+        return $this->getStepScopedVariablesSchema();
     }
 
     public function getCSSClass(): string
@@ -119,9 +142,40 @@ class OnSchedule implements StepTypeInterface
             "source" => [
                 [
                     "id" => "output",
-                    "left" => "50%",
-                    "label" => __("Next", "post-expirator"),
-                ]
+                    "label" => __("When scheduled", "post-expirator"),
+                ],
+                [
+                    "id" => "finished",
+                    "label" => __("After all repetitions", "post-expirator"),
+                    "conditions" => [
+                        "and" => [
+                            [
+                                "!=" => [
+                                    ["var" => "schedule.recurrence"],
+                                    "single"
+                                ]
+                            ],
+                            [
+                                "!=" => [
+                                    ["var" => "schedule.repeatUntil"],
+                                    "forever"
+                                ]
+                            ],
+                            [
+                                "!=" => [
+                                    ["var" => "schedule"],
+                                    null
+                                ]
+                            ],
+                            [
+                                "!=" => [
+                                    ["var" => "schedule"],
+                                    []
+                                ]
+                            ],
+                        ]
+                    ],
+                ],
             ]
         ];
     }

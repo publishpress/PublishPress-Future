@@ -3,9 +3,9 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendRay;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
 class SendRayRunner implements StepRunnerInterface
@@ -16,9 +16,9 @@ class SendRayRunner implements StepRunnerInterface
     private $stepProcessor;
 
     /**
-     * @var RuntimeVariablesHandlerInterface
+     * @var ExecutionContextInterface
      */
-    private $variablesHandler;
+    private $executionContext;
 
     /**
      * @var LoggerInterface
@@ -27,11 +27,11 @@ class SendRayRunner implements StepRunnerInterface
 
     public function __construct(
         StepProcessorInterface $stepProcessor,
-        RuntimeVariablesHandlerInterface $variablesHandler,
+        ExecutionContextInterface $executionContext,
         LoggerInterface $logger
     ) {
         $this->stepProcessor = $stepProcessor;
-        $this->variablesHandler = $variablesHandler;
+        $this->executionContext = $executionContext;
         $this->logger = $logger;
     }
 
@@ -85,10 +85,10 @@ class SendRayRunner implements StepRunnerInterface
                 }
 
                 if ($expression === '{{input}}') {
-                    $output = $this->variablesHandler->getAllVariables();
+                    $output = $this->executionContext->getAllVariables();
                     unset($output['global']);
                 } else {
-                    $output = $this->variablesHandler->resolveExpressionsInText($expression);
+                    $output = $this->executionContext->resolveExpressionsInText($expression);
                 }
 
                 // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction

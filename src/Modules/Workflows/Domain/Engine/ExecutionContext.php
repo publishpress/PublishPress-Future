@@ -2,15 +2,16 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine;
 
+use PhpParser\Node\Expr\Instanceof_;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHelperRegistryInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextProcessorRegistryInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\VariableResolverInterface;
 
 use function wp_json_encode;
 
-class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
+class ExecutionContext implements ExecutionContextInterface
 {
     /**
      * @var HookableInterface
@@ -18,20 +19,27 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
     private $hooks;
 
     /**
-     * @var RuntimeVariablesHelperRegistryInterface
+     * @var ExecutionContextProcessorRegistryInterface
      */
-    private $helperRegistry;
-
-    public function __construct(HookableInterface $hooks, RuntimeVariablesHelperRegistryInterface $helperRegistry)
-    {
-        $this->hooks = $hooks;
-        $this->helperRegistry = $helperRegistry;
-    }
+    private $processorRegistry;
 
     /**
      * @var array
      */
     private $runtimeVariables = [];
+
+    /**
+     * @var array
+     */
+    private $executionTrace = [];
+
+    public function __construct(
+        HookableInterface $hooks,
+        ExecutionContextProcessorRegistryInterface $processorRegistry
+    ) {
+        $this->hooks = $hooks;
+        $this->processorRegistry = $processorRegistry;
+    }
 
     public function setAllVariables(array $runtimeVariables)
     {
@@ -78,8 +86,7 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
         foreach ($expressions as $expression) {
             if ($expressionElements = $this->variableHasHelper($expression)) {
                 $value = $this->getVariable($expressionElements['variable']);
-
-                $value = $this->helperRegistry->execute($expressionElements['helper'], $value, $expressionElements['args']);
+                $value = $this->processorRegistry->process($expressionElements['helper'], $value, $expressionElements['args']);
             } else {
                 $value = $this->getVariable($expression);
             }
@@ -103,7 +110,7 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
             return $array;
         }
 
-        return array_map(fn($item) => $this->resolveExpressionsInText($item), $array);
+        return array_map(fn ($item) => $this->resolveExpressionsInText($item), $array);
     }
 
     /**
@@ -193,8 +200,6 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
 
     private function getVariableValue(string $variableName, $dataSource)
     {
-        // FIXME: Do we really need the VariableResolvers? Can't we just use the native PHP values?
-
         if (is_array($dataSource) && isset($dataSource[$variableName])) {
             if (
                 is_object($dataSource[$variableName]) &&
@@ -210,7 +215,7 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
             return $dataSource->{$variableName};
         }
 
-        return '';
+        return (string) $variableName;
     }
 
     private function getVariableValueFromNestedVariable(string $variableName, $dataSource)
@@ -269,7 +274,13 @@ class RuntimeVariablesHandler implements RuntimeVariablesHandlerInterface
         $variableName = explode('.', $variableName);
 
         if (count($variableName) === 1) {
-            $dataSource[$variableName[0]] = $variableValue;
+            if (is_array($dataSource)) {
+                $dataSource[$variableName[0]] = $variableValue;
+            } elseif (is_object($dataSource) && $dataSource instanceof VariableResolverInterface) {
+                $dataSource->setValue($variableName[0], $variableValue);
+            } else {
+                $dataSource->{$variableName[0]} = $variableValue;
+            }
         } else {
             if (!isset($dataSource[$variableName[0]])) {
                 $dataSource[$variableName[0]] = [];

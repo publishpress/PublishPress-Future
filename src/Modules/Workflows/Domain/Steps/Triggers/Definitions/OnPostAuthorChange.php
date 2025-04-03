@@ -102,20 +102,7 @@ class OnPostAuthorChange implements StepTypeInterface
 
     public function getStepScopedVariablesSchema(): array
     {
-        return [
-            [
-                'name' => 'postBefore',
-                'type' => 'post',
-                'label' => __("Post Before Update", "post-expirator"),
-                'description' => __("The post that was saved, with the old properties.", "post-expirator"),
-            ],
-            [
-                'name' => 'postAfter',
-                'type' => 'post',
-                'label' => __("Post After Update", "post-expirator"),
-                'description' => __("The post that was saved, with the new properties.", "post-expirator"),
-            ]
-        ];
+        return $this->getOutputSchema();
     }
 
     public function getOutputSchema(): array
@@ -132,6 +119,12 @@ class OnPostAuthorChange implements StepTypeInterface
                 'type' => 'post',
                 'label' => __("Post After Update", "post-expirator"),
                 'description' => __("The post that was saved, with the new properties.", "post-expirator"),
+            ],
+            [
+                "name" => "postId",
+                "type" => "integer",
+                "label" => __("Post ID", "post-expirator"),
+                "description" => __("The ID of the post that was updated.", "post-expirator"),
             ]
         ];
     }
@@ -148,7 +141,6 @@ class OnPostAuthorChange implements StepTypeInterface
             "source" => [
                 [
                     "id" => "output",
-                    "left" => "50%",
                     "label" => __("Next", "post-expirator"),
                 ]
             ]

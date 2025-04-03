@@ -56,20 +56,20 @@ $pluginFacade = PostExpirator_Facade::getInstance();
                 </tr>
                 <tr valign="top">
                     <th scope="row"><label for="expired-hide-calendar-by-default"><?php
-                                                                                    esc_html_e('Calendar Visibility', 'post-expirator'); ?></label></th>
+                                                    esc_html_e('Calendar Visibility', 'post-expirator'); ?></label></th>
                     <td>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="expired-hide-calendar-by-default" id="expired-hide-calendar-by-default-false"
                                 value="0" <?php echo $calendarHiddenByDefault ? '' : 'checked="checked"'; ?> /> <label
                                 for="expired-hide-calendar-by-default-false"><?php
-                                                                                esc_html_e('Remember last state', 'post-expirator'); ?></label>
+                                                esc_html_e('Remember last state', 'post-expirator'); ?></label>
                         </div>
                         <p class="description"><?php esc_html_e('Shows or hides the calendar based on the last user interaction.', 'post-expirator'); ?></p>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="expired-hide-calendar-by-default" id="expired-hide-calendar-by-default-true"
                                 value="1" <?php echo $calendarHiddenByDefault ? 'checked="checked"' : ''; ?> /> <label
                                 for="expired-hide-calendar-by-default-true"><?php
-                                                                            esc_html_e('Always hidden', 'post-expirator'); ?></label>
+                                            esc_html_e('Always hidden', 'post-expirator'); ?></label>
                         </div>
                         <p class="description"><?php esc_html_e('The calendar is always hidden by default.', 'post-expirator'); ?></p>
                     </td>
@@ -88,25 +88,25 @@ $pluginFacade = PostExpirator_Facade::getInstance();
                         <?php
                         foreach ($userRoles as $role_name => $role_label) : ?>
                             <label for="allow-user-role-<?php
-                                                        echo esc_attr($role_name); ?>">
+                            echo esc_attr($role_name); ?>">
                                 <input type="checkbox"
                                     id="allow-user-role-<?php
-                                                        echo esc_attr($role_name); ?>"
+                                    echo esc_attr($role_name); ?>"
                                     name="allow-user-roles[]"
                                     <?php
                                     if ('administrator' === $role_name) :
                                         echo 'disabled="disabled"';
                                     endif; ?>
                                     value="<?php
-                                            echo esc_attr($role_name); ?>"
+                                    echo esc_attr($role_name); ?>"
                                     <?php
                                     if ($pluginFacade->user_role_can_expire_posts($role_name)) :
-                                    ?>checked="checked" <?php
-                                                    endif;
-                                                        ?> />
+                                        ?>checked="checked" <?php
+                                    endif;
+                                    ?> />
                                 <?php echo esc_html(translate_user_role($role_label)); ?>
                             </label>
-                        <?php
+                            <?php
                         endforeach;
                         ?>
                     </td>
@@ -115,7 +115,7 @@ $pluginFacade = PostExpirator_Facade::getInstance();
             <p class="submit">
                 <input type="submit" name="expirationdateSave" class="button-primary"
                     value="<?php
-                            esc_attr_e('Save Changes', 'post-expirator'); ?>" />
+                    esc_attr_e('Save Changes', 'post-expirator'); ?>" />
             </p>
         </form>
     </div>

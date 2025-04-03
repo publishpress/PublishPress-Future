@@ -7,6 +7,7 @@
 namespace PublishPress\Future\Framework\WordPress\Facade;
 
 use PublishPress\Future\Core\HookableInterface;
+use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -50,12 +51,18 @@ class HooksFacade implements HookableInterface
      */
     public function applyFilters($filterName, $valueToBeFiltered, ...$args)
     {
-        $params = array_merge([
-            $filterName,
-            $valueToBeFiltered
-        ], $args);
+        try {
+            $params = array_merge([
+                $filterName,
+                $valueToBeFiltered
+            ], $args);
 
-        return call_user_func_array('apply_filters', $params);
+            return call_user_func_array('apply_filters', $params);
+        } catch (Throwable $e) {
+            $this->logError($e, sprintf('Error applying filter %s', $filterName));
+
+            return $valueToBeFiltered;
+        }
     }
 
     /**
@@ -96,11 +103,17 @@ class HooksFacade implements HookableInterface
      */
     public function doAction($actionName, ...$args)
     {
-        $params = array_merge([
-            $actionName,
-        ], $args);
+        try {
+            $params = array_merge([
+                $actionName,
+            ], $args);
 
-        return call_user_func_array('do_action', $params);
+            return call_user_func_array('do_action', $params);
+        } catch (Throwable $e) {
+            $this->logError($e, sprintf('Error executing action %s', $actionName));
+
+            return;
+        }
     }
 
     public static function registerActivationHook($pluginFile, $callback)
@@ -120,5 +133,19 @@ class HooksFacade implements HookableInterface
     public function ksesRemoveFilters()
     {
         \kses_remove_filters();
+    }
+
+    protected function logError(Throwable $e, string $message)
+    {
+        $message = sprintf(
+            '%s: %s. File: %s:%d',
+            $message,
+            $e->getMessage(),
+            $e->getFile(),
+            $e->getLine()
+        );
+
+        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+        @error_log($message);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace PublishPress\Future\Modules\Workflows\Interfaces;
 
-interface RuntimeVariablesHandlerInterface
+interface ExecutionContextInterface
 {
     public function setAllVariables(array $runtimeVariables);
 

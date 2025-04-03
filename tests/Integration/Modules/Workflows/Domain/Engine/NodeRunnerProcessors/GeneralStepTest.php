@@ -2,13 +2,14 @@
 
 namespace Tests\Modules\Workflows\Domain\Engine\NodeRunnerProcessors;
 
-use Codeception\Test\Descriptor;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\GeneralStep;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHandler;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHelperRegistryInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContext;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\General;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class GeneralStepTest extends \lucatume\WPBrowser\TestCase\WPTestCase
@@ -24,36 +25,25 @@ class GeneralStepTest extends \lucatume\WPBrowser\TestCase\WPTestCase
     private $hooks;
 
     /**
-     * @var RuntimeVariablesHelperRegistryInterface&\PHPUnit\Framework\MockObject\MockObject
+     * @var ExecutionContextProcessorInterface&\PHPUnit\Framework\MockObject\MockObject
      */
-    private $helperRegistry;
+    private $contextProcessor;
 
-    public function setUp(): void
+    private const DEFAULT_WORKFLOW_EXECUTION_ID = '000000-00000-00000af';
+
+    private function getContext(): ExecutionContext
     {
-        // Before...
-        parent::setUp();
+        $container = Container::getInstance();
 
-        $this->hooks = $this->createMock(HookableInterface::class);
-        $this->helperRegistry = $this->createMock(RuntimeVariablesHelperRegistryInterface::class);
-    }
-
-    public function tearDown(): void
-    {
-        // Your tear down methods here.
-
-        // Then...
-        parent::tearDown();
-    }
-
-    private function createHandler(): RuntimeVariablesHandler
-    {
-        return new RuntimeVariablesHandler($this->hooks, $this->helperRegistry);
+        return $container->get(ServicesAbstract::EXECUTION_CONTEXT_REGISTRY)->getExecutionContext(
+            $executionId ?? self::DEFAULT_WORKFLOW_EXECUTION_ID
+        );
     }
 
     public function testPrepareLogMessage(): void
     {
-        $variablesHandler = $this->createHandler();
-        $variablesHandler->setAllVariables([
+        $executionContext = $this->getContext();
+        $executionContext->setAllVariables([
             'global' => [
                 'workflow' => [
                     'id' => 123,
@@ -62,13 +52,9 @@ class GeneralStepTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             ],
         ]);
 
-        $processor = new GeneralStep(
-            $this->makeEmpty(HooksFacade::class),
-            $this->makeEmpty(WorkflowEngineInterface::class, [
-                'getVariablesHandler' => $variablesHandler,
-            ]),
-            $this->makeEmpty(LoggerInterface::class)
-        );
+        $container = Container::getInstance();
+        $processorFactory = $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR_FACTORY);
+        $processor = call_user_func($processorFactory, self::DEFAULT_WORKFLOW_EXECUTION_ID);
 
         $this->assertEquals(
             '[WF Engine]   - Workflow 123: Setting up step step1',

@@ -295,7 +295,24 @@ class QuickEditController implements InitializableInterface
                 ]);
             }
 
-            $defaultExpirationDate = $defaultDataModel->getActionDateParts();
+            try {
+                $defaultExpirationDate = $defaultDataModel->getActionDateParts();
+            } catch (Throwable $e) {
+                $now = time();
+                $gmDate = gmdate('Y-m-d H:i:s', $now);
+                $calculatedDate = $now;
+
+                $defaultExpirationDate = [
+                    'year' => date('Y', $now),
+                    'month' => date('m', $now),
+                    'day' => date('d', $now),
+                    'hour' => date('H', $now),
+                    'minute' => date('i', $now),
+                    'ts' => $calculatedDate,
+                    'iso' => $gmDate
+                ];
+            }
+
             $nonce = wp_create_nonce('__future_action');
 
             $metaboxTitle = $this->settingsFacade->getMetaboxTitle() ?? __('Future Actions', 'post-expirator');

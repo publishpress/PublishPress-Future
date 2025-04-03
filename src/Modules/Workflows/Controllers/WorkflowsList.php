@@ -6,6 +6,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as FutureCoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
@@ -163,19 +164,12 @@ class WorkflowsList implements InitializableInterface
             return;
         }
 
-        // wp_enqueue_style("wp-jquery-ui-dialog");
-        // wp_enqueue_script("jquery-ui-dialog");
-
-        // wp_enqueue_script(
-        //     "future_workflow_list_script",
-        //     Plugin::getScriptUrl('workflowList'),
-        //     [
-        //         "jquery",
-        //         "jquery-ui-dialog",
-        //     ],
-        //     PUBLISHPRESS_FUTURE_VERSION,
-        //     true
-        // );
+        wp_enqueue_style(
+            'pp-future-workflows-list',
+            Plugin::getAssetUrl('css/workflows-list.css'),
+            [],
+            PUBLISHPRESS_FUTURE_VERSION
+        );
     }
 
     public function addCustomColumns($columns)
@@ -230,10 +224,10 @@ class WorkflowsList implements InitializableInterface
 
         echo sprintf(
             '<a href="%s"><i class="pp-future-workflow-status-icon dashicons dashicons-%s %s" title="%s"></i> </a>',
-            $toggleUrl,
-            $icon,
-            $iconClass,
-            $title
+            esc_url($toggleUrl),
+            esc_attr($icon),
+            esc_attr($iconClass),
+            esc_attr($title)
         );
     }
 
@@ -317,6 +311,8 @@ class WorkflowsList implements InitializableInterface
                     )
                 )
             );
+
+            exit;
         } catch (Throwable $th) {
             $this->logger->error('Error updating workflow status: ' . $th->getMessage());
         }
@@ -411,6 +407,7 @@ class WorkflowsList implements InitializableInterface
 
     public function fixWorkflowEditorPageTitle()
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         if (!isset($_GET['page']) || 'future_workflow_editor' !== $_GET['page']) {
             return;
         }
@@ -452,11 +449,12 @@ class WorkflowsList implements InitializableInterface
             : 'page-title-action';
 
         // Insert the button into the DOM via JavaScript
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
         echo '<script type="text/javascript">
             jQuery(document).ready(function($) {
-                $(".wrap .' . $titleClass . ':first").after(\'' . $customButton . '\');
+                $(".wrap .' . esc_js($titleClass) . ':first").after(\'' . $customButton . '\');
             });
         </script>';
+        // phpcs:enable
     }
 }

@@ -22,6 +22,11 @@ class JsonLogicEngine implements JsonLogicEngineInterface
         JsonLogic::add_operation($name, $callback);
     }
 
+    public function isLogic($expression)
+    {
+        return JsonLogic::is_logic($expression);
+    }
+
     private function addNewOperations()
     {
         JsonLogic::add_operation('startsWith', [$this, 'operationStartsWith']);
@@ -87,7 +92,7 @@ class JsonLogicEngine implements JsonLogicEngineInterface
         if (is_string($array) && strpos($array, ',') !== false) {
             $array = explode(',', $array);
             $array = array_map('trim', $array);
-        } else if (is_string($array)) {
+        } elseif (is_string($array)) {
             return $this->operationContains($array, $value);
         }
 

@@ -11,6 +11,8 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
  * @access private
  * @deprecated 3.1.4
  */
+// phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps, PSR1.Methods.CamelCapsMethodName.NotCamelCaps
+// phpcs:ignore PSR1.Classes.ClassDeclaration.MissingNamespace
 class Walker_PostExpirator_Category_Checklist extends Walker
 {
     /**
@@ -122,3 +124,4 @@ class Walker_PostExpirator_Category_Checklist extends Walker
         $output .= "</li>\n";
     }
 }
+// phpcs:enable

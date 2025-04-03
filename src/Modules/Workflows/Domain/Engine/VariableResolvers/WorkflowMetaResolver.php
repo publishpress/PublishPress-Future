@@ -8,6 +8,8 @@ class WorkflowMetaResolver implements VariableResolverInterface
 {
     private $workflowId;
 
+    private $metaCache = [];
+
     public function __construct(int $workflowId)
     {
         $this->workflowId = $workflowId;
@@ -20,7 +22,15 @@ class WorkflowMetaResolver implements VariableResolverInterface
 
     public function getValue(string $name = '')
     {
-        return get_post_meta($this->workflowId, $name, true);
+        if (isset($this->metaCache[$name])) {
+            return $this->metaCache[$name];
+        }
+
+        $value = get_post_meta($this->workflowId, $name, true);
+
+        $this->metaCache[$name] = $value;
+
+        return $value;
     }
 
     public function getValueAsString(string $name = ''): string
@@ -30,12 +40,23 @@ class WorkflowMetaResolver implements VariableResolverInterface
 
     public function compact($name = ''): array
     {
-        return $this->getValue($name);
+        return [
+            'type' => $this->getType(),
+            'value' => $this->getValue($name),
+        ];
     }
 
     public function getVariable($name = '')
     {
         return $this->getValue($name);
+    }
+
+    public function setValue(string $name, $value): void
+    {
+        // We only change the cached value, not the actual meta
+        $this->metaCache[$name] = $value;
+
+        return;
     }
 
     public function __isset($name): bool

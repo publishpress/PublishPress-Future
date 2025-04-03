@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-30T20:47:07+00:00\n"
-"PO-Revision-Date: 2025-01-31 10:04+0100\n"
+"POT-Creation-Date: 2025-03-13T19:53:18+00:00\n"
+"PO-Revision-Date: 2025-03-14 14:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -14,27 +14,19 @@ msgstr ""
 "X-Generator: Poedit 3.4.4\n"
 "X-Domain: publishpress-future-pro\n"
 
-#: components/data-fields/conditional/index.jsx:89
-msgid "Not"
-msgstr "Not"
+#: components/data-fields/conditional/components/conditional-hoc.jsx:41
+msgid "Add Group"
+msgstr "Aggiungi gruppo"
 
-#: components/data-fields/conditional/index.jsx:235
-msgid "Edit condition"
-msgstr "Modifica condizione"
+#: components/data-fields/conditional/components/conditional-hoc.jsx:42
+msgid "Add Rule"
+msgstr "Aggiungi regola"
 
-#: components/data-fields/conditional/index.jsx:263
-msgid ""
-"This conditional will only be evaluated in the Pro version. In the Free "
-"version, it will always return true."
-msgstr ""
-"Questa condizione sarà valutata solo nella versione Pro. Nella versione "
-"Free, restituirà sempre true."
-
-#: components/data-fields/conditional/index.jsx:270
+#: components/data-fields/conditional/components/conditional-hoc.jsx:55
 msgid "Condition"
 msgstr "Condizione"
 
-#: components/data-fields/conditional/index.jsx:275
+#: components/data-fields/conditional/components/conditional-hoc.jsx:56
 msgid ""
 "Create rules that will continue the workflow only if certain conditions are "
 "met."
@@ -42,52 +34,63 @@ msgstr ""
 "Crea regole che continuino il flusso di lavoro solo se sono soddisfatte "
 "determinate condizioni."
 
-#: components/data-fields/conditional/index.jsx:291
-msgid "Add Group"
-msgstr "Aggiungi gruppo"
+#: components/data-fields/conditional/components/conditional-hoc.jsx:57
+msgid "Edit condition"
+msgstr "Modifica condizione"
 
-#: components/data-fields/conditional/index.jsx:292
-msgid "Add Rule"
-msgstr "Aggiungi regola"
+#: components/data-fields/conditional/components/conditional-hoc.jsx:58
+msgid ""
+"Conditional logic is a Pro feature. Upgrade to create advanced conditions "
+"for your workflows."
+msgstr ""
+"La logica condizionale è una caratteristica Pro. Aggiorna per creare "
+"condizioni avanzate per i tuoi flussi di lavoro."
 
-#: components/data-fields/date-offset.jsx:27
-msgid "As soon as possible"
-msgstr "Prima possibile"
+#: components/data-fields/conditional/components/not-toggle.jsx:30
+msgid "Not"
+msgstr "Not"
 
-#: components/data-fields/date-offset.jsx:28
-msgid "On a specific date"
-msgstr "In una data specifica"
-
-#: components/data-fields/date-offset.jsx:29
-msgid "Relative to a specific date"
-msgstr "Rispetto a una data specifica"
-
-#: components/data-fields/date-offset.jsx:33
+#: components/data-fields/date-offset/index.jsx:61
 msgid "Selected in the calendar"
 msgstr "Selezionati nel calendario"
 
-#: components/data-fields/date-offset.jsx:34
+#: components/data-fields/date-offset/index.jsx:62
+#: components/data-fields/post-data/post-date.jsx:59
 msgid "When the trigger is activated"
 msgstr "Quando il trigger è attivato"
 
-#: components/data-fields/date-offset.jsx:35
+#: components/data-fields/date-offset/index.jsx:63
+#: components/data-fields/post-data/post-date.jsx:63
 msgid "When the step is activated"
 msgstr "Quando il passaggio è attivato"
 
-#: components/data-fields/date-offset.jsx:36
-#: components/data-fields/date-offset.jsx:206
+#: components/data-fields/date-offset/index.jsx:64
+#: components/data-fields/date-offset/index.jsx:139
+#: components/data-fields/post-data/post-date.jsx:72
 msgid "Custom date source"
 msgstr "Fonte della data personalizzata"
 
-#: components/data-fields/date-offset.jsx:175
-msgid "When to run"
-msgstr "Quando eseguire"
+#: components/data-fields/date-offset/index.jsx:80
+msgid "As soon as possible"
+msgstr "Prima possibile"
 
-#: components/data-fields/date-offset.jsx:186
+#: components/data-fields/date-offset/index.jsx:81
+msgid "On a specific date"
+msgstr "In una data specifica"
+
+#: components/data-fields/date-offset/index.jsx:82
+msgid "Relative to a specific date"
+msgstr "Rispetto a una data specifica"
+
+#: components/data-fields/date-offset/index.jsx:86
+msgid "Unchanged"
+msgstr "Non modificato"
+
+#: components/data-fields/date-offset/index.jsx:119
 msgid "Date source"
 msgstr "Fonte della data"
 
-#: components/data-fields/date-offset.jsx:214
+#: components/data-fields/date-offset/index.jsx:147
 msgid ""
 "Click the button to choose a custom date source from variables that can "
 "provide a date."
@@ -95,31 +98,31 @@ msgstr ""
 "Fai clic sul pulsante per scegliere la sorgente della data tra le variabili "
 "che possono fornire una data."
 
-#: components/data-fields/date-offset.jsx:226
+#: components/data-fields/date-offset/index.jsx:159
 msgid "Offset"
 msgstr "Offset"
 
-#: components/data-fields/date-offset.jsx:235
+#: components/data-fields/date-offset/index.jsx:168
 msgid "Date Preview"
 msgstr "Anteprima della data"
 
-#: components/data-fields/date-offset.jsx:236
+#: components/data-fields/date-offset/index.jsx:169
 msgid "Current Date"
 msgstr "Data attuale"
 
-#: components/data-fields/date-offset.jsx:237
+#: components/data-fields/date-offset/index.jsx:170
 msgid "Computed Date"
 msgstr "Data calcolata"
 
-#: components/data-fields/date-offset.jsx:248
+#: components/data-fields/date-offset/index.jsx:181
 msgid "Error: "
 msgstr "Errore: "
 
-#: components/data-fields/date-offset.jsx:255
+#: components/data-fields/date-offset/index.jsx:188
 msgid "Click for more information"
 msgstr "Fai clic per maggiori informazioni"
 
-#: components/data-fields/date-offset.jsx:264
+#: components/data-fields/date-offset/index.jsx:197
 msgid ""
 "For more information on formatting, see the %sPHP strtotime function%s. For "
 "example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 "
@@ -129,46 +132,6 @@ msgstr ""
 "strtotime%s. Ad esempio, si può inserire %s+1 mese%s o %s+1 settimana 2 "
 "giorni 4 ore 2 secondi%s o %sgiovedì prossimo%s. Si prega di utilizzare solo "
 "frasi in inglese."
-
-#: components/data-fields/date-offset.jsx:290
-msgid "Repeating Action"
-msgstr "Azione ripetibile"
-
-#: components/data-fields/date-offset.jsx:294
-msgid ""
-"Choose how often this task should repeat. Select 'Non-repeating' for a one-"
-"time action or set an interval for automatic recurrence."
-msgstr ""
-"Scegli la frequenza di ripetizione dell'attività. Seleziona “Non ripetere” "
-"per un'azione una tantum o impostare un intervallo per la ripetizione "
-"automatica."
-
-#: components/data-fields/date-offset.jsx:310
-msgid "Allow duplicate scheduled tasks"
-msgstr "Consenti la duplicazione di attività programmate"
-
-#: components/data-fields/date-offset.jsx:320
-msgid "Allows scheduling tasks even if a similar task exists."
-msgstr ""
-"Consente la programmazione di attività anche se esiste un'attività simile."
-
-#: components/data-fields/date-offset.jsx:327
-msgid "Unique Task Identifier"
-msgstr "Identificatore di attività unico"
-
-#: components/data-fields/date-offset.jsx:333
-msgid "Define a unique ID to detect and prevent duplicate tasks."
-msgstr ""
-"Definisci un ID univoco per individuare e prevenire le attività duplicate."
-
-#: components/data-fields/date-offset.jsx:346
-msgid "Task Execution Order"
-msgstr "Ordine di esecuzione delle attività"
-
-#: components/data-fields/date-offset.jsx:354
-msgid "Defines the execution order for this task in relation to others."
-msgstr ""
-"Definisce l'ordine di esecuzione di quest'attività rispetto alle altre."
 
 #: components/data-fields/debug-data.jsx:39
 msgid "All received input"
@@ -214,35 +177,47 @@ msgstr "Allerta"
 msgid "Level"
 msgstr "Livello"
 
-#: components/data-fields/expression-builder/column-item.jsx:23
+#: components/data-fields/expression-builder/autocompleters/post-statuses.jsx:10
+#: components/data-fields/post-query/index.jsx:117
+#: components/data-fields/post-search-query/components/query-fields.jsx:29
+msgid "Post Status"
+msgstr "Stato dell'articolo"
+
+#: components/data-fields/expression-builder/autocompleters/post-types.jsx:10
+#: components/data-fields/post-query/index.jsx:50
+#: components/data-fields/post-search-query/components/query-fields.jsx:33
+msgid "Post Type"
+msgstr "Tipo di articolo"
+
+#: components/data-fields/expression-builder/column-item.jsx:24
 msgid "Insert"
 msgstr "Inserisci"
 
-#: components/data-fields/expression-builder/index.jsx:117
+#: components/data-fields/expression-builder/index.jsx:135
 msgid "Edit"
 msgstr "Modifica"
 
-#: components/data-fields/expression-builder/index.jsx:161
+#: components/data-fields/expression-builder/index.jsx:178
 msgid "Select a variable from the list below."
 msgstr "Seleziona una variabile dalla lista sottostante."
 
-#: components/data-fields/expression-builder/index.jsx:165
+#: components/data-fields/expression-builder/index.jsx:182
 msgid "Type your expression here or use the variables below."
 msgstr "Digita qui la tua espressione o usa le variabili sottostanti."
 
-#: components/data-fields/expression-builder/index.jsx:192
+#: components/data-fields/expression-builder/index.jsx:209
 msgid "Variables"
 msgstr "Variabili"
 
-#: components/data-fields/expression-builder/index.jsx:195
+#: components/data-fields/expression-builder/index.jsx:212
 msgid "Double-click on a variable to select it."
 msgstr "Fai doppio clic su una variabile per selezionarla."
 
-#: components/data-fields/expression-builder/index.jsx:199
+#: components/data-fields/expression-builder/index.jsx:216
 msgid "Double-click on any variable to add it to your expression."
 msgstr "Fai doppio clic su una variabile per aggiungerla alla tua espressione."
 
-#: components/data-fields/expression-builder/index.jsx:211
+#: components/data-fields/expression-builder/index.jsx:228
 msgid "Hover over a variable to see its description."
 msgstr "Passa il mouse sopra una variabile per vederne la descrizione."
 
@@ -250,37 +225,203 @@ msgstr "Passa il mouse sopra una variabile per vederne la descrizione."
 msgid "Learn more"
 msgstr "Approfondisci"
 
-#: components/data-fields/post-query.jsx:47
-msgid "Post Type"
-msgstr "Tipo di articolo"
+#: components/data-fields/post-data/index.jsx:32
+#: components/data-fields/post-search-query/components/query-fields.jsx:25
+#| msgid "Post ID"
+msgid "Post Date"
+msgstr "Data dell'articolo"
 
-#: components/data-fields/post-query.jsx:60
+#: components/data-fields/post-data/index.jsx:38
+msgid "Update the post date"
+msgstr "Aggiorna data articolo"
+
+#: components/data-fields/post-data/index.jsx:42
+#: components/data-fields/post-search-query/components/query-fields.jsx:9
+msgid "Post Title"
+msgstr "Titolo dell'articolo"
+
+#: components/data-fields/post-data/index.jsx:48
+msgid "Update the post title"
+msgstr "Aggiorna titolo articolo"
+
+#: components/data-fields/post-data/index.jsx:52
+#| msgid "Post Type"
+msgid "Post Name"
+msgstr "Nome dell'articolo"
+
+#: components/data-fields/post-data/index.jsx:58
+msgid "Update the post name"
+msgstr "Aggiorna nome articolo"
+
+#: components/data-fields/post-data/index.jsx:62
+#: components/data-fields/post-search-query/components/query-fields.jsx:13
+msgid "Post Content"
+msgstr "Contenuto dell'articolo"
+
+#: components/data-fields/post-data/index.jsx:68
+msgid "Update the post content"
+msgstr "Aggiorna contenuto articolo"
+
+#: components/data-fields/post-data/index.jsx:72
+#: components/data-fields/post-search-query/components/query-fields.jsx:17
+msgid "Post Excerpt"
+msgstr "Riassunto dell'articolo"
+
+#: components/data-fields/post-data/index.jsx:78
+msgid "Update the post excerpt"
+msgstr "Aggiorna riassunto articolo"
+
+#: components/data-fields/post-data/index.jsx:82
+#| msgid "Post selection"
+msgid "Post Discussion"
+msgstr "Discussione dell'articolo"
+
+#: components/data-fields/post-data/index.jsx:86
+msgid "Update the post discussion"
+msgstr "Aggiorna discussione articolo"
+
+#: components/data-fields/post-data/index.jsx:90
+msgid "Post Password"
+msgstr "Password dell'articolo"
+
+#: components/data-fields/post-data/index.jsx:96
+msgid "Update the post password"
+msgstr "Aggiorna password articolo"
+
+#: components/data-fields/post-data/index.jsx:100
+#: components/data-fields/post-query/index.jsx:132
+#: components/data-fields/post-search-query/components/query-fields.jsx:21
+msgid "Post Author"
+msgstr "Autore dell'articolo"
+
+#: components/data-fields/post-data/index.jsx:106
+msgid "Update the post author"
+msgstr "Aggiorna autore articolo"
+
+#: components/data-fields/post-data/post-author.jsx:62
+msgid "Unable to load the list of authors. Please try again."
+msgstr "Impossibile caricare l'elenco autori. Riprova."
+
+#: components/data-fields/post-data/post-author.jsx:80
+#: components/data-fields/post-data/post-date.jsx:84
+#: components/data-fields/post-data/post-discussion.jsx:32
+#: components/data-fields/post-data/post-text.jsx:27
+msgid "Do not update"
+msgstr "Non aggiornare"
+
+#: components/data-fields/post-data/post-author.jsx:102
+msgid "Author"
+msgstr "Autore"
+
+#: components/data-fields/post-data/post-discussion.jsx:36
+msgid "Comments only"
+msgstr "Solo commenti"
+
+#: components/data-fields/post-data/post-discussion.jsx:37
+#: components/data-fields/post-data/post-discussion.jsx:56
+msgid "Closed"
+msgstr "Chiuso"
+
+#: components/data-fields/post-data/post-discussion.jsx:38
+msgid "Pings only"
+msgstr "Solo i ping"
+
+#: components/data-fields/post-data/post-discussion.jsx:39
+#: components/data-fields/post-data/post-discussion.jsx:51
+msgid "Open"
+msgstr "Apri"
+
+#: components/data-fields/post-data/post-discussion.jsx:46
+msgid "Changed..."
+msgstr "Modificato…"
+
+#: components/data-fields/post-data/post-discussion.jsx:53
+msgid "Visitors can add new comments and replies."
+msgstr "I visitatori possono aggiungere nuovi commenti e risposte."
+
+#: components/data-fields/post-data/post-discussion.jsx:58
+msgid ""
+"Visitors can not add new comments or replies. Existing comments remain "
+"visible."
+msgstr ""
+"I visitatori non possono aggiungere nuovi commenti o risposte. I commenti "
+"esistenti restano visibili."
+
+#: components/data-fields/post-data/post-discussion.jsx:97
+msgid "Enable pinbacks & trackbacks"
+msgstr "Abilitare i pinback e i trackback"
+
+#: components/data-fields/post-data/post-discussion.jsx:104
+msgid "Learn more about pinbacks & trackbacks"
+msgstr "Approfondisci i pinback e i trackback"
+
+#: components/data-fields/post-data/post-text.jsx:31
+msgid "Clear content"
+msgstr "Pulisci contenuto"
+
+#: components/data-fields/post-filter/components/post-filter.jsx:83
+#| msgid "Post Type"
+msgid "Post Filter"
+msgstr "Filtro articoli"
+
+#: components/data-fields/post-filter/components/post-filter.jsx:84
+msgid "Create filters to query specific posts based on conditions."
+msgstr ""
+"Crea filtri per eseguire query su articoli specifici in base a condizioni."
+
+#: components/data-fields/post-filter/components/post-filter.jsx:85
+msgid "Edit filters"
+msgstr "Modifica filtri"
+
+#: components/data-fields/post-query/index.jsx:78
 msgid "Post selection"
 msgstr "Seleziona articoli"
 
-#: components/data-fields/post-query.jsx:63
+#: components/data-fields/post-query/index.jsx:81
 msgid "Post received as input"
 msgstr "Articoli ricevuti come input"
 
-#: components/data-fields/post-query.jsx:64
+#: components/data-fields/post-query/index.jsx:82
+#: components/data-fields/user-query.jsx:61
 msgid "Custom query"
 msgstr "Query personalizzata"
 
-#: components/data-fields/post-query.jsx:87
+#: components/data-fields/post-query/index.jsx:105
+#: components/data-fields/post-search-query/components/query-fields.jsx:5
 msgid "Post ID"
 msgstr "ID articolo"
 
-#: components/data-fields/post-query.jsx:99
-msgid "Post Status"
-msgstr "Stato dell'articolo"
+#: components/data-fields/post-query/index.jsx:145
+msgid "Post Terms"
+msgstr "Termini dell'articolo"
 
-#: components/data-fields/post-query.jsx:115
+#: components/data-fields/post-query/index.jsx:160
+#: components/data-fields/user-query.jsx:95
 msgid "Separate multiple values with commas or Enter key."
 msgstr "Separare i valori multipli con virgole oppure con il tasto \"Invio\"."
 
-#: components/data-fields/post-query.jsx:121
+#: components/data-fields/post-query/index.jsx:166
+#: components/data-fields/user-query.jsx:101
 msgid "* Required field"
 msgstr "*Campo obbligatorio"
+
+#: components/data-fields/post-search-query/components/post-search-query.jsx:84
+msgid "Post Search Query"
+msgstr "Query di ricerca articolo"
+
+#: components/data-fields/post-search-query/components/post-search-query.jsx:85
+msgid "Create a search query to filter posts based on conditions."
+msgstr ""
+"Crea una query di ricerca per filtrare gli articoli in base alle condizioni."
+
+#: components/data-fields/post-search-query/components/post-search-query.jsx:86
+msgid "Edit query"
+msgstr "Modifica query"
+
+#: components/data-fields/post-search-query/components/query-fields.jsx:37
+#| msgid "Post Status"
+msgid "Post Parent"
+msgstr "Genitore dell'articolo"
 
 #: components/data-fields/post-status.jsx:40
 msgid "New Status"
@@ -322,6 +463,37 @@ msgstr "Non ripetibile"
 msgid "Custom interval in seconds"
 msgstr "Intervallo personalizzato in secondi"
 
+#: components/data-fields/schedule.jsx:131
+msgid "Repeating Action"
+msgstr "Azione ripetibile"
+
+#: components/data-fields/schedule.jsx:135
+msgid ""
+"Choose how often this task should repeat. Select 'Non-repeating' for a one-"
+"time action or set an interval for automatic recurrence."
+msgstr ""
+"Scegli la frequenza di ripetizione dell'attività. Seleziona “Non ripetere” "
+"per un'azione una tantum o impostare un intervallo per la ripetizione "
+"automatica."
+
+#: components/data-fields/schedule.jsx:151
+msgid "Allow duplicate scheduled tasks"
+msgstr "Consenti la duplicazione di attività programmate"
+
+#: components/data-fields/schedule.jsx:161
+msgid "Allows scheduling tasks even if a similar task exists."
+msgstr ""
+"Consente la programmazione di attività anche se esiste un'attività simile."
+
+#: components/data-fields/schedule.jsx:168
+msgid "Unique Task Identifier"
+msgstr "Identificatore di attività unico"
+
+#: components/data-fields/schedule.jsx:174
+msgid "Define a unique ID to detect and prevent duplicate tasks."
+msgstr ""
+"Definisci un ID univoco per individuare e prevenire le attività duplicate."
+
 #: components/data-fields/taxonomy-terms.jsx:60
 msgid "Taxonomy"
 msgstr "Tassonomia"
@@ -339,11 +511,27 @@ msgstr "Termini specifici"
 msgid "Terms"
 msgstr "Termini"
 
-#: components/flow-editor/index.jsx:405
+#: components/data-fields/user-query.jsx:44
+msgid "User Role"
+msgstr "Ruolo utente"
+
+#: components/data-fields/user-query.jsx:57
+msgid "User selection"
+msgstr "Seleziona utente"
+
+#: components/data-fields/user-query.jsx:60
+msgid "User received as input"
+msgstr "Utente ricevuto come input"
+
+#: components/data-fields/user-query.jsx:84
+msgid "User ID"
+msgstr "ID utente"
+
+#: components/flow-editor/index.jsx:408
 msgid "Applying auto layout."
 msgstr "Applicando il layout automatico."
 
-#: components/flow-editor/index.jsx:430
+#: components/flow-editor/index.jsx:433
 msgid "Auto layout applied."
 msgstr "Layout automatico applicato."
 
@@ -351,13 +539,23 @@ msgstr "Layout automatico applicato."
 msgid "Back"
 msgstr "Indietro"
 
-#: components/inspector-card/index.jsx:46
-#: components/secondary-sidebar/node-card.jsx:22
+#: components/inspector-card/index.jsx:51
+msgid "Add a description to this step..."
+msgstr "Aggiungi una descrizione a questo passaggio…"
+
+#: components/inspector-card/index.jsx:68
+#: components/inspector-card/index.jsx:78
+msgid "Edit description"
+msgstr "Modifica descrizione"
+
+#: components/inspector-card/index.jsx:116
+#: components/secondary-sidebar/node-card.jsx:16
 msgid "Pro"
 msgstr "Pro"
 
-#: components/inspector-card/index.jsx:57 components/node-types/generic.jsx:243
-#: components/secondary-sidebar/node-card.jsx:35
+#: components/inspector-card/index.jsx:132
+#: components/node-types/generic.jsx:242
+#: components/secondary-sidebar/node-card.jsx:29
 msgid ""
 "Currently this step is being skipped. Upgrade to Pro to unlock this feature."
 msgstr ""
@@ -395,6 +593,15 @@ msgstr "Ripeti"
 #: components/left-toolbar/undo.jsx:31
 msgid "Undo"
 msgstr "Annulla"
+
+#: components/loading-message/index.jsx:7
+#: components/node-dev-info-panel/index.jsx:18
+msgid "Loading..."
+msgstr "Caricamento in corso…"
+
+#: components/loading-message/index.jsx:12
+msgid "Wait, we are loading the workflow..."
+msgstr "Attendi, caricamento del flusso di lavoro in corso…"
 
 #. translators: button label text should, if possible, be under 16 characters.
 #: components/more-menu/menu-dropdown.jsx:11
@@ -517,53 +724,58 @@ msgstr "Guida di benvenuto disattivata"
 msgid "Help"
 msgstr "Aiuto"
 
-#: components/node-dev-info-panel/index.jsx:18
-msgid "Loading..."
-msgstr "Caricamento in corso…"
-
 #: components/node-dev-info-panel/index.jsx:23
 msgid "Developer Info"
 msgstr "Informazioni sviluppatore"
 
-#: components/node-dev-info-panel/index.jsx:30
+#: components/node-dev-info-panel/index.jsx:31
 #: components/node-inspector/node-inspector-card.jsx:18
 #: components/node-types/generic.jsx:103
 msgid "Node"
 msgstr "Nodo"
 
-#: components/node-dev-info-panel/index.jsx:43
+#: components/node-dev-info-panel/index.jsx:41
+#| msgid "Node"
+msgid "Node Data"
+msgstr "Dati del nodo"
+
+#: components/node-dev-info-panel/index.jsx:51
+msgid "Node Settings"
+msgstr "Impostazioni del nodo"
+
+#: components/node-dev-info-panel/index.jsx:65
 msgid "Node Type"
 msgstr "Tipo di nodo"
 
-#: components/node-inspector/index.jsx:102
+#: components/node-inspector/index.jsx:99
 msgid "No element selected."
 msgstr "Nessun elemento selezionato."
 
-#: components/node-inspector/index.jsx:110
+#: components/node-inspector/index.jsx:107
 msgid "Multiple and different elements selected."
 msgstr "Molti e differenti elementi selezionati."
 
-#: components/node-inspector/index.jsx:120
+#: components/node-inspector/index.jsx:117
 msgid "%d steps selected"
 msgstr "%d passaggi selezionati"
 
-#: components/node-inspector/index.jsx:123
+#: components/node-inspector/index.jsx:120
 msgid "Multiple steps selected."
 msgstr "Passaggi multipli selezionati."
 
-#: components/node-inspector/index.jsx:134
+#: components/node-inspector/index.jsx:131
 msgid "%d connections selected"
 msgstr "%d connessioni selezionate"
 
-#: components/node-inspector/index.jsx:137
+#: components/node-inspector/index.jsx:134
 msgid "Multiple connections selected."
 msgstr "Connessioni multiple selezionate."
 
-#: components/node-inspector/index.jsx:171
+#: components/node-inspector/index.jsx:166
 msgid "Connection"
 msgstr "Connessione"
 
-#: components/node-inspector/index.jsx:172
+#: components/node-inspector/index.jsx:167
 msgid ""
 "The connection between nodes in the workflow. Signifies the path along which "
 "data or control flow one node to another."
@@ -581,7 +793,7 @@ msgstr "Input"
 
 #: components/node-inspector/node-data-flow-panel.jsx:89
 msgid "This step receives the following input from previous step:"
-msgstr "Questa fase riceve l'input seguente dalla fase precedente:"
+msgstr "Questa passaggio riceve l'input seguente dalla fase precedente:"
 
 #: components/node-inspector/node-data-flow-panel.jsx:100
 msgid "This step does not receive any input from previous step."
@@ -593,36 +805,32 @@ msgstr "Risultati"
 
 #: components/node-inspector/node-data-flow-panel.jsx:109
 msgid "This step outputs the following data:"
-msgstr "Questa fase mostra i seguenti dati:"
+msgstr "Questo passaggio mostra i seguenti dati:"
 
 #: components/node-inspector/node-data-flow-panel.jsx:120
 msgid "This step does not output any data."
 msgstr "Questo passaggio non produce alcun dato."
 
 #: components/node-inspector/node-data-flow-panel.jsx:125
+#| msgid "Step Details"
+msgid "Step Scoped Variables"
+msgstr "Variabili mirati del pasaggio"
+
+#: components/node-inspector/node-data-flow-panel.jsx:129
+msgid "This step receives the following step scoped variables:"
+msgstr "Questa fase riceve le seguenti variabili mirate del passaggio:"
+
+#: components/node-inspector/node-data-flow-panel.jsx:140
+msgid "This step does not have any step scoped variables."
+msgstr "Questo passaggio non ha alcuna variabile mirata del passaggio."
+
+#: components/node-inspector/node-data-flow-panel.jsx:145
 msgid "Global Variables"
 msgstr "Variabili globali"
 
-#: components/node-inspector/node-data-flow-panel.jsx:129
+#: components/node-inspector/node-data-flow-panel.jsx:149
 msgid "No global variables are declared"
 msgstr "Nessuna variabile globale dichiarata"
-
-#: components/node-inspector/node-details-panel.jsx:37
-msgid "Step Details"
-msgstr "Dettagli del passaggio"
-
-#: components/node-inspector/node-details-panel.jsx:41
-#: components/workflow-summary/index.jsx:57
-msgid "Description"
-msgstr "Descrizione"
-
-#: components/node-inspector/node-details-panel.jsx:44
-msgid ""
-"Add a brief description to help distinguish this step from similar ones in "
-"your workflow."
-msgstr ""
-"Aggiungi una descrizione affinché si distingua questo passaggio dagli altri "
-"simili nel tuo flusso di lavoro."
 
 #: components/node-inspector/node-inspector-card.jsx:19
 msgid "No description"
@@ -663,7 +871,7 @@ msgstr "Azioni del passaggio"
 msgid "Delete"
 msgstr "Elimina"
 
-#: components/node-types/generic.jsx:251
+#: components/node-types/generic.jsx:250
 msgid "This node has errors"
 msgstr "Questo nodo ha degli errori"
 
@@ -697,62 +905,6 @@ msgstr "Convalida"
 msgid "All checks have passed for this step."
 msgstr "Tutti i controlli per questo passaggio sono stati superati."
 
-#: components/node-validator/index.jsx:80
-msgid ""
-"The field \"%s\" requires a valid variable. Please select one from the "
-"available options."
-msgstr ""
-"Per il campo \"%s\" è obbligatoria una variante valida. Selezionane una "
-"dalle opzioni disponibili."
-
-#: components/node-validator/index.jsx:84
-msgid "The variable \"%s\" is not available in the current context."
-msgstr "La variabile \"%s\" non è disponibile nel contesto attuale."
-
-#. translators: %s is the workflow step slug.
-#: components/node-validator/index.jsx:124
-msgid "\"%s\" is not a variable or step slug."
-msgstr "\"%s\" non è una variabile o uno slug del passaggio."
-
-#. translators: %s is the field label.
-#: components/node-validator/index.jsx:136
-msgid "Invalid expression on %s"
-msgstr "Espressione non valida su %s"
-
-#: components/node-validator/index.jsx:167
-msgid "This step requires a connection from a previous step."
-msgstr "Questo passaggio richiede una connessione con un passaggio precedente."
-
-#: components/node-validator/index.jsx:177
-msgid "This step requires a connection to a following step."
-msgstr "Questo passaggio richiede una connessione con un passaggio successivo."
-
-#: components/node-validator/index.jsx:240
-#: components/node-validator/index.jsx:261
-msgid "The field %s is required."
-msgstr "Il campo %s è obbligatorio."
-
-#: components/node-validator/index.jsx:283
-msgid "The field %s must be a valid email address."
-msgstr ""
-"Il campo %s deve essere un elenco di indirizzi email validi separati da "
-"virgole."
-
-#: components/node-validator/index.jsx:299
-msgid "The field %s must be a valid email address list separated by commas."
-msgstr ""
-"Il campo %s deve essere un elenco di indirizzi email validi separati da "
-"virgole."
-
-#: components/node-validator/index.jsx:313
-msgid "The field %s must be an integer."
-msgstr "Il campo %s deve essere un numero intero."
-
-#: components/node-validator/index.jsx:328
-msgid "The field %s must be an integer list separated by commas."
-msgstr ""
-"Il campo %s deve essere un elenco di numeri interi separati da virgole."
-
 #: components/pro-feature-button/index.jsx:26
 msgid "Upgrade to Pro to unlock this feature."
 msgstr "Aggiorna a Pro e sblocca questa caratteristica."
@@ -782,7 +934,7 @@ msgstr "Nodi"
 msgid "A tip for using the workflow editor"
 msgstr "Un suggerimento per usare l'editor di flusso di lavoro"
 
-#: components/secondary-sidebar/node-card.jsx:37
+#: components/secondary-sidebar/node-card.jsx:31
 msgid "Drag this node to preview its options in your workflow."
 msgstr ""
 "Trascina questo nodo per visualizzare l'anteprima delle su opzioni nel tuo "
@@ -1024,6 +1176,10 @@ msgstr "Sommario"
 msgid "Title"
 msgstr "Titolo"
 
+#: components/workflow-summary/index.jsx:57
+msgid "Description"
+msgstr "Descrizione"
+
 #: components/workflow-switch-to-draft-button/index.jsx:33
 msgid "Are you sure you want to unpublish this workflow?"
 msgstr "Vuoi davvero non pubblicare questo flusso di lavoro?"
@@ -1035,6 +1191,74 @@ msgstr "Bozza"
 #: components/workflow-switch-to-draft-button/index.jsx:52
 msgid "Switch to draft"
 msgstr "Passa alla bozza"
+
+#~ msgid ""
+#~ "This conditional will only be evaluated in the Pro version. In the Free "
+#~ "version, it will always return true."
+#~ msgstr ""
+#~ "Questa condizione sarà valutata solo nella versione Pro. Nella versione "
+#~ "Free, restituirà sempre true."
+
+#~ msgid "When to run"
+#~ msgstr "Quando eseguire"
+
+#~ msgid "Task Execution Order"
+#~ msgstr "Ordine di esecuzione delle attività"
+
+#~ msgid "Defines the execution order for this task in relation to others."
+#~ msgstr ""
+#~ "Definisce l'ordine di esecuzione di quest'attività rispetto alle altre."
+
+#~ msgid ""
+#~ "Add a brief description to help distinguish this step from similar ones "
+#~ "in your workflow."
+#~ msgstr ""
+#~ "Aggiungi una descrizione affinché si distingua questo passaggio dagli "
+#~ "altri simili nel tuo flusso di lavoro."
+
+#~ msgid ""
+#~ "The field \"%s\" requires a valid variable. Please select one from the "
+#~ "available options."
+#~ msgstr ""
+#~ "Per il campo \"%s\" è obbligatoria una variante valida. Selezionane una "
+#~ "dalle opzioni disponibili."
+
+#~ msgid "The variable \"%s\" is not available in the current context."
+#~ msgstr "La variabile \"%s\" non è disponibile nel contesto attuale."
+
+#~ msgid "\"%s\" is not a variable or step slug."
+#~ msgstr "\"%s\" non è una variabile o uno slug del passaggio."
+
+#~ msgid "Invalid expression on %s"
+#~ msgstr "Espressione non valida su %s"
+
+#~ msgid "This step requires a connection from a previous step."
+#~ msgstr ""
+#~ "Questo passaggio richiede una connessione con un passaggio precedente."
+
+#~ msgid "This step requires a connection to a following step."
+#~ msgstr ""
+#~ "Questo passaggio richiede una connessione con un passaggio successivo."
+
+#~ msgid "The field %s is required."
+#~ msgstr "Il campo %s è obbligatorio."
+
+#~ msgid "The field %s must be a valid email address."
+#~ msgstr ""
+#~ "Il campo %s deve essere un elenco di indirizzi email validi separati da "
+#~ "virgole."
+
+#~ msgid "The field %s must be a valid email address list separated by commas."
+#~ msgstr ""
+#~ "Il campo %s deve essere un elenco di indirizzi email validi separati da "
+#~ "virgole."
+
+#~ msgid "The field %s must be an integer."
+#~ msgstr "Il campo %s deve essere un numero intero."
+
+#~ msgid "The field %s must be an integer list separated by commas."
+#~ msgstr ""
+#~ "Il campo %s deve essere un elenco di numeri interi separati da virgole."
 
 #~ msgid "Skip task if already exists"
 #~ msgstr "Salta l'attività se esiste già"

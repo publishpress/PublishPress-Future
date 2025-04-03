@@ -17,6 +17,7 @@ use PublishPress\Future\Modules\Expirator\Models\PostTypeModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 class ScheduledActionsTable extends \ActionScheduler_ListTable
 {
     /**
@@ -112,6 +113,14 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
                 'names'   => _n_noop('%s second', '%s seconds', 'post-expirator'),
             ),
         );
+
+        $this->sort_by = [
+            'action_id',
+            'schedule',
+            'hook',
+            'group',
+            'status',
+        ];
     }
 
     public function enqueueScripts()
@@ -136,6 +145,20 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         );
 
         wp_enqueue_style('wp-jquery-ui-dialog');
+    }
+
+    protected function get_request_orderby()
+    {
+
+        $valid_sortable_columns = array_values($this->sort_by);
+
+        if (! empty($_GET['orderby']) && in_array($_GET['orderby'], $valid_sortable_columns, true)) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $orderby = sanitize_text_field(wp_unslash($_GET['orderby'])); //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        } else {
+            $orderby = $valid_sortable_columns[0];
+        }
+
+        return $orderby;
     }
 
     protected function get_request_order()
@@ -802,3 +825,5 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         echo esc_html__('No Scheduled Actions.', 'post-expirator');
     }
 }
+
+// phpcs:enable PSR1.Methods.CamelCapsMethodName.NotCamelCaps

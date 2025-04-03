@@ -155,9 +155,9 @@ class ManualPostTrigger implements InitializableInterface
                 return;
             }
 
-            // Don't update data if the function is called for saving revision.
             $postType = get_post_type((int)$postId);
-            if ($postType === 'revision') {
+            $postTypeToIgnore = ['revision', Module::POST_TYPE_WORKFLOW];
+            if (in_array($postType, $postTypeToIgnore)) {
                 return;
             }
 
@@ -174,9 +174,15 @@ class ManualPostTrigger implements InitializableInterface
 
             $postModel = new PostModel();
             $postModel->load($postId);
+
+            $currentlyEnabledWorkflows = $postModel->getManuallyEnabledWorkflows();
             $postModel->setManuallyEnabledWorkflows($manuallyEnabledWorkflows);
 
-            $this->triggerManuallyEnabledWorkflow($postId, $manuallyEnabledWorkflows);
+            $notEnabledWorkflows = array_diff($manuallyEnabledWorkflows, $currentlyEnabledWorkflows);
+
+            if (! empty($notEnabledWorkflows)) {
+                $this->triggerManuallyEnabledWorkflow($postId, $notEnabledWorkflows);
+            }
             // phpcs:enable
         } catch (Throwable $th) {
             $this->logger->error('Error processing quick edit update: ' . $th->getMessage());
@@ -372,9 +378,14 @@ class ManualPostTrigger implements InitializableInterface
                             $manuallyEnabledWorkflows = $manualTriggerAttributes['enabledWorkflows'] ?? [];
                             $manuallyEnabledWorkflows = array_map('intval', $manuallyEnabledWorkflows);
 
+                            $currentlyEnabledWorkflows = $postModel->getManuallyEnabledWorkflows();
                             $postModel->setManuallyEnabledWorkflows($manuallyEnabledWorkflows);
 
-                            $this->triggerManuallyEnabledWorkflow($post->ID, $manuallyEnabledWorkflows);
+                            $notEnabledWorkflows = array_diff($manuallyEnabledWorkflows, $currentlyEnabledWorkflows);
+
+                            if (! empty($notEnabledWorkflows)) {
+                                $this->triggerManuallyEnabledWorkflow($post->ID, $notEnabledWorkflows);
+                            }
 
                             return true;
                         },
@@ -443,9 +454,9 @@ class ManualPostTrigger implements InitializableInterface
                 return;
             }
 
-            // Don't update data if the function is called for saving revision.
             $postType = get_post_type((int)$postId);
-            if ($postType === 'revision') {
+            $postTypeToIgnore = ['revision', Module::POST_TYPE_WORKFLOW];
+            if (in_array($postType, $postTypeToIgnore)) {
                 return;
             }
 
@@ -462,9 +473,15 @@ class ManualPostTrigger implements InitializableInterface
 
             $postModel = new PostModel();
             $postModel->load($postId);
+
+            $currentlyEnabledWorkflows = $postModel->getManuallyEnabledWorkflows();
             $postModel->setManuallyEnabledWorkflows($manuallyEnabledWorkflows);
 
-            $this->triggerManuallyEnabledWorkflow($postId, $manuallyEnabledWorkflows);
+            $notEnabledWorkflows = array_diff($manuallyEnabledWorkflows, $currentlyEnabledWorkflows);
+
+            if (! empty($notEnabledWorkflows)) {
+                $this->triggerManuallyEnabledWorkflow($postId, $notEnabledWorkflows);
+            }
             // phpcs:enable
         } catch (Throwable $th) {
             $this->logger->error('Error processing metabox update: ' . $th->getMessage());
@@ -547,9 +564,11 @@ class ManualPostTrigger implements InitializableInterface
 
     private function saveBulkEditData()
     {
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.NonceVerification.Recommended
-        $strategy = $_REQUEST['future_workflow_manual_strategy'] ?? 'no-change';
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
+        $strategy = sanitize_text_field($_REQUEST['future_workflow_manual_strategy'] ?? 'no-change');
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
         $postIds = array_map('intval', (array)$_REQUEST['post']);
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
         $selectedWorkflows = array_map('intval', (array)$_REQUEST['future_workflow_manual_trigger']);
 
         if (empty($postIds) || $strategy === 'no-change') {
@@ -569,5 +588,6 @@ class ManualPostTrigger implements InitializableInterface
 
             $postModel->setManuallyEnabledWorkflows($selectedWorkflows);
         }
+        // phpcs:enable
     }
 }

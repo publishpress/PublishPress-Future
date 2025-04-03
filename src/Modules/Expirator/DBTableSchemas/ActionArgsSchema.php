@@ -40,9 +40,9 @@ class ActionArgsSchema implements DBTableSchemaInterface
     private function getColumns(): array
     {
         return [
-            'id' => 'bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT',
-            'cron_action_id' => 'bigint(20) UNSIGNED NOT NULL',
-            'post_id' => 'bigint(20) UNSIGNED NOT NULL',
+            'id' => 'bigint UNSIGNED NOT NULL AUTO_INCREMENT',
+            'cron_action_id' => 'bigint UNSIGNED NOT NULL',
+            'post_id' => 'bigint UNSIGNED NOT NULL',
             'enabled' => "tinyint(1) NOT NULL DEFAULT '0'",
             'scheduled_date' => 'datetime NOT NULL',
             'created_at' => 'datetime NOT NULL',
@@ -102,13 +102,12 @@ class ActionArgsSchema implements DBTableSchemaInterface
 
         $indexesErrors = $this->handler->checkTableIndexes($this->getIndexes());
         if (! empty($indexesErrors)) {
-            $this->handler->registerError(
-                self::HEALTH_ERROR_INVALID_INDEX,
-                __(
-                    'The table indexes are invalid: ',
-                    'post-expirator'
-                ) . implode(', ', $indexesErrors)
-            );
+            foreach ($indexesErrors as $indexError) {
+                $this->handler->registerError(
+                    self::HEALTH_ERROR_INVALID_INDEX,
+                    $indexError
+                );
+            }
         }
 
         return false === $this->handler->hasErrors();

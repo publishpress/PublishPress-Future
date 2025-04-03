@@ -5,26 +5,26 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\ScheduleDelay;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncStepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncStepRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 
 class ScheduleDelayRunner implements AsyncStepRunnerInterface
 {
     /**
      * @var AsyncStepProcessorInterface
      */
-    private $stepProcessor;
+    private $asyncStepProcessor;
 
     /**
-     * @var RuntimeVariablesHandlerInterface
+     * @var ExecutionContextInterface
      */
-    private $variablesHandler;
+    private $executionContext;
 
     public function __construct(
-        AsyncStepProcessorInterface $stepProcessor,
-        RuntimeVariablesHandlerInterface $variablesHandler
+        AsyncStepProcessorInterface $asyncStepProcessor,
+        ExecutionContextInterface $executionContext
     ) {
-        $this->stepProcessor = $stepProcessor;
-        $this->variablesHandler = $variablesHandler;
+        $this->asyncStepProcessor = $asyncStepProcessor;
+        $this->executionContext = $executionContext;
     }
 
     public static function getNodeTypeName(): string
@@ -34,24 +34,10 @@ class ScheduleDelayRunner implements AsyncStepRunnerInterface
 
     public function setup(array $step): void
     {
-        $this->stepProcessor->executeSafelyWithErrorHandling(
+        $this->asyncStepProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step) {
-                $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
-
-                $this->variablesHandler->setVariable($nodeSlug, [
-                    'schedule_date' => 0,
-                    'is_recurring' => false,
-                    'recurring_type' => '',
-                    'recurring_interval' => '',
-                    'recurring_interval_unit' => '',
-                    'recurring_count' => '',
-                    'repeat_until' => '',
-                    'repeat_until_date' => '',
-                    'repeat_until_times' => '',
-                ]);
-
-                $this->stepProcessor->setup($step, '__return_true');
+                $this->asyncStepProcessor->setup($step, '__return_true');
             }
         );
     }
@@ -59,8 +45,8 @@ class ScheduleDelayRunner implements AsyncStepRunnerInterface
     /**
      * This method is called when the action is triggered by the scheduler.
      */
-    public function actionCallback(array $expandedArgs, array $originalArgs)
+    public function actionCallback(array $compactedArgs, array $originalArgs)
     {
-        $this->stepProcessor->actionCallback($expandedArgs, $originalArgs);
+        $this->asyncStepProcessor->actionCallback($compactedArgs, $originalArgs);
     }
 }

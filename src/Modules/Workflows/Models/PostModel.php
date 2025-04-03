@@ -7,7 +7,13 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\PostModelInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
+use React\Socket\Server;
+use Services_JSON;
 use WP_Post;
+use WPMailSMTP\Vendor\Google\Service;
 
 class PostModel implements PostModelInterface
 {
@@ -52,11 +58,17 @@ class PostModel implements PostModelInterface
         $workflowsModel = new WorkflowsModel();
         $workflows = $workflowsModel->getPublishedWorkflowsWithManualTrigger();
 
-        $container = Container::getInstance();
-
         $postModel = new PostModel();
         $postModel->load($postId);
-        $postQueryValidator = $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY);
+        $postObject = $postModel->getPostObject();
+
+        $container = Container::getInstance();
+        // TODO: Inject this
+        $postQueryValidatorFactory = $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY);
+        $workflowEngine = $container->get(ServicesAbstract::WORKFLOW_ENGINE);
+        $executionContextRegistry = $container->get(ServicesAbstract::EXECUTION_CONTEXT_REGISTRY);
+        $hooks = $container->get(ServicesAbstract::HOOKS);
+        $expirablePostModelFactory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
 
         $validatedWorkflows = [];
 
@@ -66,14 +78,39 @@ class PostModel implements PostModelInterface
             $workflowModel = new WorkflowModel();
             $workflowModel->load($workflowId);
 
+            // Prepare for a new context
+            $workflowExecutionId = $workflowEngine->generateUniqueId();
+            $postQueryValidator = $postQueryValidatorFactory($workflowExecutionId);
+
+            $workflowEngine->prepareExecutionContextForWorkflow(
+                $workflowExecutionId,
+                $workflowModel
+            );
+
             // Validate the trigger's post query
             $triggers = $workflowModel->getTriggerNodes();
-            foreach ($triggers as $trigger) {
-                if ($trigger['data']['name'] !== OnPostWorkflowEnable::getNodeTypeName()) {
+            foreach ($triggers as $triggerStep) {
+                $triggerName = $triggerStep['data']['name'];
+
+                if ($triggerName !== OnPostWorkflowEnable::getNodeTypeName()) {
                     continue;
                 }
 
-                if ($postQueryValidator->validate(['post' => $this->post, 'node' => $trigger])) {
+                $workflowEngine->prepareExecutionContextForTrigger(
+                    $workflowExecutionId,
+                    $triggerStep
+                );
+
+                // Inject the trigger's data into the execution context
+                $executionContext = $executionContextRegistry->getExecutionContext(
+                    $workflowExecutionId
+                );
+                $executionContext->setVariable($triggerStep['data']['slug'], [
+                    'post' => new PostResolver($postObject, $hooks, '', $expirablePostModelFactory),
+                    'postId' => new IntegerResolver($postId)
+                ]);
+
+                if ($postQueryValidator->validate(['post' => $this->post, 'node' => $triggerStep])) {
                     $validatedWorkflows[] = $workflow;
                 }
             }
@@ -134,9 +171,6 @@ class PostModel implements PostModelInterface
         // Check if the workflow has a scheduled action for this post
         $scheduledActionsModel = new ScheduledActionsModel();
         $scheduledActionsModel->cancelByWorkflowAndPostId($workflowId, $this->post->ID);
-
-        // $scheduledActionsModel = new ScheduledActionsModel();
-        // $scheduledActionsModel->cancelWorkflowScheduledActions($workflowId);
     }
 
     public function getManuallyEnabledWorkflowsSchedule(int $workflowId): array
@@ -154,22 +188,16 @@ class PostModel implements PostModelInterface
 
             $workflowModel->load($workflowId);
 
-            // FIXME: Fix this for the new args table
-            $query = "SELECT scheduled_date_gmt, args, extended_args
-                FROM {$wpdb->prefix}actionscheduler_actions
-                WHERE (JSON_EXTRACT(extended_args, '$[0].contextVariables.global.trigger.value.name') = %s)
-                    OR (JSON_EXTRACT(args, '$[0].contextVariables.global.trigger.value.name') = %s)
-                    OR (JSON_EXTRACT(extended_args, '$[0].runtimeVariables.global.trigger.value.name') = %s)
-                    OR (JSON_EXTRACT(args, '$[0].runtimeVariables.global.trigger.value.name') = %s)
-                AND status = 'pending'
-                AND hook = %s
+            $query = "SELECT aa.scheduled_date_gmt, aa.args, aa.extended_args, aa.action_id
+                FROM {$wpdb->prefix}actionscheduler_actions AS aa
+                INNER JOIN {$wpdb->prefix}ppfuture_workflow_scheduled_steps AS ss ON ss.action_id = aa.action_id
+                WHERE ss.post_id = %d
+                AND aa.status = 'pending'
+                AND aa.hook = %s
             ";
             $query = $wpdb->prepare(
                 $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-                'trigger/core.manually-enabled-for-post',
-                'trigger/core.manually-enabled-for-post',
-                'trigger/core.manually-enabled-for-post',
-                'trigger/core.manually-enabled-for-post',
+                $this->post->ID,
                 HooksAbstract::ACTION_ASYNC_EXECUTE_STEP
             );
 
@@ -184,25 +212,39 @@ class PostModel implements PostModelInterface
         }
 
         foreach ($actionsForWorkflows as $action) {
-            $args = json_decode($action['extended_args'], true);
+            $actionId = $action['action_id'];
+            $scheduledStepModel = new WorkflowScheduledStepModel();
+            $scheduledStepModel->loadByActionId($actionId);
 
-            if (! isset($args[0]['runtimeVariables']['global']['trigger']['value']['slug'])) {
+            $args = $scheduledStepModel->getArgs();
+
+            if (! isset($args['runtimeVariables']['global']['trigger']['value']['slug'])) {
                 continue;
             }
 
-            $triggerSlug = $args[0]['runtimeVariables']['global']['trigger']['value']['slug'];
+            $triggerSlug = $args['runtimeVariables']['global']['trigger']['value']['slug'];
 
-            if (! isset($args[0]['runtimeVariables'][$triggerSlug]['postId'])) {
+            if (! isset($args['runtimeVariables'][$triggerSlug]['postId'])) {
                 continue;
             }
 
-            $postId = $args[0]['runtimeVariables'][$triggerSlug]['postId']['value'];
+            $postId = $args['runtimeVariables'][$triggerSlug]['postId']['value'];
 
             if ($postId !== $this->post->ID) {
                 continue;
             }
 
-            $nextStep = $args[0]['step']['next']['output'][0]['node'];
+            $stepRoutineTree = $workflowModel->getPartialRoutineTreeFromNodeId($args['step']['nodeId']);
+
+            if (empty($stepRoutineTree) || empty($stepRoutineTree['next'])) {
+                continue;
+            }
+
+            $nextStep = $stepRoutineTree['next']['output'][0]['node'];
+
+            if (empty($nextStep)) {
+                continue;
+            }
 
             $schedule[] = [
                 'workflowId' => $workflowId,
@@ -213,5 +255,10 @@ class PostModel implements PostModelInterface
         }
 
         return $schedule;
+    }
+
+    public function getPostObject(): \WP_Post
+    {
+        return $this->post;
     }
 }

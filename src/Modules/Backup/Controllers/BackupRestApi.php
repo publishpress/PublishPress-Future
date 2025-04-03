@@ -130,7 +130,7 @@ class BackupRestApi implements InitializableInterface
                 200
             );
         } catch (Throwable $e) {
-            $this->logger->error('Error getting workflows: ' . $e->getMessage());
+            $this->logger->error('Error getting workflows: ' . $e->getMessage() . '. File: ' . $e->getFile() . ':' . $e->getLine());
 
             return new WP_REST_Response(
                 [
@@ -182,7 +182,7 @@ class BackupRestApi implements InitializableInterface
                 200
             );
         } catch (Throwable $e) {
-            $this->logger->error('Error exporting backup: ' . $e->getMessage());
+            $this->logger->error('Error exporting backup: ' . $e->getMessage() . '. File: ' . $e->getFile() . ':' . $e->getLine());
 
             return new WP_REST_Response(
                 [
@@ -346,7 +346,7 @@ class BackupRestApi implements InitializableInterface
                 200
             );
         } catch (Throwable $e) {
-            $this->logger->error('Error importing backup: ' . $e->getMessage());
+            $this->logger->error('Error importing backup: ' . $e->getMessage() . '. File: ' . $e->getFile() . ':' . $e->getLine());
 
             return new WP_REST_Response(
                 [

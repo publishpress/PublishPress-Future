@@ -150,7 +150,6 @@ final class Module implements InitializableInterface
     public function initialize()
     {
         $this->initializeControllers();
-
     }
 
     private function initializeControllers()
@@ -229,10 +228,14 @@ final class Module implements InitializableInterface
     {
         // The execution_id variable is deprecated.
         if ($variableName === 'global.execution_id') {
-            return 'global.run_id';
+            return 'global.workflow.execution_id';
+        }
+
+        // The run_id variable is deprecated.
+        if ($variableName === 'global.run_id') {
+            return 'global.workflow.execution_id';
         }
 
         return $variableName;
     }
-
 }

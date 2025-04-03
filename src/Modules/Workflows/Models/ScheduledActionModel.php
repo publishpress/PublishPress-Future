@@ -55,6 +55,43 @@ class ScheduledActionModel implements ScheduledActionModelInterface
             throw new Exception('Scheduled action not found');
         }
 
+        $this->setPropertiesFromRow($row);
+    }
+
+    public function loadByActionArg(string $arg, string $value, array $validStatuses = []): void
+    {
+        global $wpdb;
+
+        $arg = preg_replace('/[^a-zA-Z0-9_\-]/', '', $arg);
+        $value = sanitize_text_field($value);
+
+        $where = '';
+        if (! empty($validStatuse)) {
+            $statuses = implode(',', $validStatuses);
+            $statuses = preg_replace('/[^a-zA-Z0-9_\-,]/', '', $statuses);
+            $where = ' AND status IN (' . $statuses . ')';
+        }
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $row = $wpdb->get_row(
+            $wpdb->prepare(
+                "SELECT * FROM %i WHERE JSON_UNQUOTE(JSON_EXTRACT(extended_args, '$[0]." . $arg . "')) = %s" . $where, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                $wpdb->prefix . 'actionscheduler_actions',
+                $value
+            ),
+            ARRAY_A
+        );
+
+
+        if (empty($row)) {
+            throw new Exception('Scheduled action not found');
+        }
+
+        $this->setPropertiesFromRow($row);
+    }
+
+    private function setPropertiesFromRow(array $row): void
+    {
         $this->actionId = $row['action_id'];
         $this->hook = $row['hook'];
         $this->status = $row['status'];

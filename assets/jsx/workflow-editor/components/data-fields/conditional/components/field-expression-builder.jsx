@@ -6,6 +6,6 @@ export const FieldExpressionBuilder = ({ value, handleOnChange, context }) => {
         handleOnChange={handleOnChange}
         context={context}
         readOnlyPreview={true}
-        singleVariableOnly={true}
+        singleVariableOnly={false}
     />;
 };

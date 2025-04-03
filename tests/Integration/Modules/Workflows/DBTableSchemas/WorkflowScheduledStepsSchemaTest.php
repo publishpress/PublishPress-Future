@@ -86,7 +86,7 @@ class WorkflowScheduledStepsSchemaTest extends NoTransactionWPTestCase
         $this->assertTableDoesNotExists($schema->getTableName());
     }
 
-    public function testIsTableHealthy(): void
+    public function testIsTableHealthyWhenTableIsHealthy(): void
     {
         $schema = $this->getSchema();
         $this->assertTrue($schema->isTableHealthy());
@@ -190,5 +190,109 @@ class WorkflowScheduledStepsSchemaTest extends NoTransactionWPTestCase
 
         $schema->fixTable();
         $this->assertTrue($schema->isTableHealthy());
+    }
+
+    public function testColumnDefinitions(): void
+    {
+        $schema = $this->getSchema();
+        $this->dropTable($schema->getTableName());
+        $this->assertTrue($schema->createTable());
+
+        $columns = $this->wpdb->get_results("SHOW COLUMNS FROM {$schema->getTableName()}");
+        $columnNames = array_column($columns, 'Field');
+
+        // Test required columns exist
+        $this->assertContains('action_id', $columnNames);
+        $this->assertContains('workflow_id', $columnNames);
+        $this->assertContains('step_id', $columnNames);
+        $this->assertContains('action_uid_hash', $columnNames);
+        $this->assertContains('action_uid', $columnNames);
+        $this->assertContains('is_recurring', $columnNames);
+        $this->assertContains('repeat_until', $columnNames);
+        $this->assertContains('repeat_times', $columnNames);
+        $this->assertContains('repeat_until_date', $columnNames);
+        $this->assertContains('uncompressed_args', $columnNames);
+        $this->assertContains('compressed_args', $columnNames);
+        $this->assertContains('is_compressed', $columnNames);
+        $this->assertContains('created_at', $columnNames);
+        $this->assertContains('post_id', $columnNames);
+    }
+
+    public function testColumnDataTypes(): void
+    {
+        $schema = $this->getSchema();
+        $this->dropTable($schema->getTableName());
+        $this->assertTrue($schema->createTable());
+
+        $columns = $this->wpdb->get_results("SHOW COLUMNS FROM {$schema->getTableName()}");
+        $columnDefinitions = array_column($columns, 'Type', 'Field');
+
+        // Test data types
+        $this->assertStringContainsString('bigint unsigned', $columnDefinitions['action_id']);
+        $this->assertStringContainsString('bigint unsigned', $columnDefinitions['workflow_id']);
+        $this->assertStringContainsString('varchar(100)', $columnDefinitions['step_id']);
+        $this->assertStringContainsString('varchar(32)', $columnDefinitions['action_uid_hash']);
+        $this->assertStringContainsString('varchar(400)', $columnDefinitions['action_uid']);
+        $this->assertStringContainsString('tinyint(1)', $columnDefinitions['is_recurring']);
+        $this->assertStringContainsString('set', $columnDefinitions['repeat_until']);
+        $this->assertStringContainsString('int', $columnDefinitions['repeat_times']);
+        $this->assertStringContainsString('datetime', $columnDefinitions['repeat_until_date']);
+        $this->assertStringContainsString('varchar(10000)', $columnDefinitions['uncompressed_args']);
+        $this->assertStringContainsString('blob', $columnDefinitions['compressed_args']);
+        $this->assertStringContainsString('tinyint(1)', $columnDefinitions['is_compressed']);
+        $this->assertStringContainsString('datetime', $columnDefinitions['created_at']);
+        $this->assertStringContainsString('bigint unsigned', $columnDefinitions['post_id']);
+    }
+
+    public function testDefaultValues(): void
+    {
+        $schema = $this->getSchema();
+        $this->dropTable($schema->getTableName());
+        $this->assertTrue($schema->createTable());
+
+        $columns = $this->wpdb->get_results("SHOW COLUMNS FROM {$schema->getTableName()}");
+        $columnDefaults = array_column($columns, 'Default', 'Field');
+
+        // Test default values
+        $this->assertEquals('0', $columnDefaults['is_recurring']);
+        $this->assertEquals('forever', $columnDefaults['repeat_until']);
+        $this->assertEquals('0', $columnDefaults['repeat_times']);
+        $this->assertEquals('0', $columnDefaults['is_compressed']);
+        $this->assertEquals('CURRENT_TIMESTAMP', $columnDefaults['created_at']);
+        $this->assertNull($columnDefaults['post_id']);
+    }
+
+    public function testIndexDefinitions(): void
+    {
+        $schema = $this->getSchema();
+        $this->dropTable($schema->getTableName());
+        $this->assertTrue($schema->createTable());
+
+        $indexes = $this->wpdb->get_results("SHOW INDEX FROM {$schema->getTableName()}");
+        $indexNames = array_unique(array_column($indexes, 'Key_name'));
+
+        // Test required indexes exist
+        $this->assertContains('PRIMARY', $indexNames);
+        $this->assertContains('workflow_id', $indexNames);
+        $this->assertContains('step_id', $indexNames);
+        $this->assertContains('action_uid_hash', $indexNames);
+        $this->assertContains('is_recurring', $indexNames);
+
+        // Test index columns
+        foreach ($indexes as $index) {
+            if ($index->Key_name === 'PRIMARY') {
+                $this->assertEquals('action_id', $index->Column_name);
+            } elseif ($index->Key_name === 'workflow_id') {
+                $this->assertContains($index->Column_name, ['workflow_id', 'action_id']);
+            } elseif ($index->Key_name === 'step_id') {
+                $this->assertContains($index->Column_name, ['step_id', 'action_id']);
+            } elseif ($index->Key_name === 'action_uid_hash') {
+                $this->assertContains($index->Column_name, ['action_uid_hash', 'action_id']);
+            } elseif ($index->Key_name === 'is_recurring') {
+                $this->assertContains($index->Column_name, ['is_recurring', 'action_id']);
+            } elseif ($index->Key_name === 'post_id') {
+                $this->assertContains($index->Column_name, ['post_id', 'workflow_id', 'action_id']);
+            }
+        }
     }
 }

@@ -68,6 +68,12 @@ abstract class HooksAbstract
     public const ACTION_MIGRATE_WORKFLOW_SCHEDULED_STEPS_SCHEMA =
         'publishpressfuture_migrate_workflow_scheduled_steps_schema';
 
+    public const ACTION_MIGRATE_V040500_ON_SCHEDULED_STEPS =
+        'publishpressfuture_migrate_post_id_on_scheduled_steps';
+
+    public const ACTION_MIGRATE_REPETITION_NUMBER_ON_SCHEDULED_STEPS =
+        'publishpressfuture_migrate_repetition_number_on_scheduled_steps';
+
     public const ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS = 'publishpressfuture_cleanup_orphan_workflow_args';
 
     public const ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS = 'publishpressfuture_cleanup_finished_scheduled_steps';
@@ -151,4 +157,10 @@ abstract class HooksAbstract
     public const FILTER_WORKFLOW_ROUTE_VARIABLE = 'publishpressfuture_workflow_route_variable';
 
     public const FILTER_DUPLICATE_PREVENTION_THRESHOLD = 'publishpressfuture_duplicate_prevention_threshold';
+
+    public const FILTER_CRON_SCHEDULE_RUNNER_ACTION_ARGS = 'publishpressfuture_cron_schedule_runner_action_args';
+
+    public const FILTER_SHOULD_SKIP_SCHEDULING = 'publishpressfuture_should_skip_scheduling';
+
+    public const FILTER_SHOULD_USE_TIMESTAMP_ON_ACTION_UID = 'publishpressfuture_should_use_timestamp_on_action_uid';
 }

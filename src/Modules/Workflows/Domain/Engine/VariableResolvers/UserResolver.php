@@ -98,6 +98,15 @@ class UserResolver implements VariableResolverInterface
         return $this->user;
     }
 
+    public function setValue(string $name, $value): void
+    {
+        if (isset($this->user->$name)) {
+            $this->user->$name = $value;
+        }
+
+        return;
+    }
+
     public function __isset($name): bool
     {
         return in_array(

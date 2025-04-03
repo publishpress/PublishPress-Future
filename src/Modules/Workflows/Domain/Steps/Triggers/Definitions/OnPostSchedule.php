@@ -114,26 +114,19 @@ class OnPostSchedule implements StepTypeInterface
                 'type' => 'post',
                 'label' => __("Post After Schedule", "post-expirator"),
                 'description' => __("The post that was scheduled, with the new properties.", "post-expirator"),
+            ],
+            [
+                "name" => "postId",
+                "type" => "integer",
+                "label" => __("Post ID", "post-expirator"),
+                "description" => __("The ID of the post that was scheduled.", "post-expirator"),
             ]
         ];
     }
 
     public function getOutputSchema(): array
     {
-        return [
-            [
-                'name' => 'postBefore',
-                'type' => 'post',
-                'label' => __("Post Before Schedule", "post-expirator"),
-                'description' => __("The post that was scheduled, with the old properties.", "post-expirator"),
-            ],
-            [
-                'name' => 'postAfter',
-                'type' => 'post',
-                'label' => __("Post After Schedule", "post-expirator"),
-                'description' => __("The post that was scheduled, with the new properties.", "post-expirator"),
-            ]
-        ];
+        return $this->getStepScopedVariablesSchema();
     }
 
     public function getCSSClass(): string
@@ -148,7 +141,6 @@ class OnPostSchedule implements StepTypeInterface
             "source" => [
                 [
                     "id" => "output",
-                    "left" => "50%",
                     "label" => __("Next", "post-expirator"),
                 ]
             ]

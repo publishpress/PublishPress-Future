@@ -23,13 +23,13 @@ trait TimestampCalculator
                 if ($dateSource === 'calendar') {
                     $timestamp = strtotime($specificDate);
                 } elseif ($dateSource === 'event') {
-                    $timestamp = $this->variablesHandler->getVariable('global.trigger.activation_timestamp');
+                    $timestamp = $this->executionContext->getVariable('global.trigger.activation_timestamp');
                 } elseif ($dateSource === 'step') {
                     $timestamp = time();
                 } elseif ($dateSource === 'custom') {
-                    $timestamp = $this->variablesHandler->resolveExpressionsInText($customDate);
+                    $timestamp = $this->executionContext->resolveExpressionsInText($customDate);
                 } else {
-                    $timestamp = $this->variablesHandler->getVariable($dateSource);
+                    $timestamp = $this->executionContext->getVariable($dateSource);
                 }
 
                 break;

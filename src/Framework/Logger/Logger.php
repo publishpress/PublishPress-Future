@@ -108,6 +108,7 @@ class Logger implements LoggerInterface
 
     public function isDownloadLogRequested()
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         return is_admin() && isset($_GET['action']) && $_GET['action'] === 'publishpress_future_debug_log';
     }
 
@@ -206,6 +207,7 @@ class Logger implements LoggerInterface
         $this->log(LogLevel::ERROR, $message, $context);
 
         if (function_exists('error_log')) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
             error_log('PUBLISHPRESS FUTURE - ' . $message);
         }
     }

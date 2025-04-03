@@ -121,7 +121,7 @@ class AddPostTerm implements StepTypeInterface
                         "rule" => "validVariable",
                         "field" => "post.variable",
                         "fieldLabel" => __("Post", "post-expirator"),
-                        "dataType" => "post",
+                        "dataType" => ["post", "array:integer", "integer"],
                     ],
                 ],
             ],
@@ -156,13 +156,11 @@ class AddPostTerm implements StepTypeInterface
             "target" => [
                 [
                     "id" => "input",
-                    "left" => "50%",
                 ]
             ],
             "source" => [
                 [
                     "id" => "output",
-                    "left" => "50%",
                     "label" => __("Next", "post-expirator"),
                 ]
             ]

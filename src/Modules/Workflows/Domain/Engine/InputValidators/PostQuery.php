@@ -3,21 +3,21 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\InputValidators;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\JsonLogicEngineInterface;
 use PublishPress\Future\Modules\Workflows\Module;
 
 class PostQuery implements InputValidatorsInterface
 {
-    private RuntimeVariablesHandlerInterface $runtimeVariablesHandler;
+    private ExecutionContextInterface $executionContext;
 
     private JsonLogicEngineInterface $jsonLogicEngine;
 
     public function __construct(
-        RuntimeVariablesHandlerInterface $runtimeVariablesHandler,
+        ExecutionContextInterface $executionContext,
         JsonLogicEngineInterface $jsonLogicEngine
     ) {
-        $this->runtimeVariablesHandler = $runtimeVariablesHandler;
+        $this->executionContext = $executionContext;
         $this->jsonLogicEngine = $jsonLogicEngine;
     }
 
@@ -36,6 +36,10 @@ class PostQuery implements InputValidatorsInterface
 
     private function validateLegacyPostQuery($post, array $nodeSettings)
     {
+        if (! $this->hasValidPost($post)) {
+            return false;
+        }
+
         if (! $this->hasValidPostType($post, $nodeSettings)) {
             return false;
         }
@@ -67,8 +71,13 @@ class PostQuery implements InputValidatorsInterface
             return false;
         }
 
-        $json = $this->runtimeVariablesHandler->resolveExpressionsInJsonLogic($json);
-        $result = (bool) $this->jsonLogicEngine->apply($json, []);
+        $json = $this->executionContext->resolveExpressionsInJsonLogic($json);
+
+        $result = $this->jsonLogicEngine->apply($json, []);
+
+        if (! is_bool($result)) {
+            return false;
+        }
 
         return $result;
     }
@@ -78,12 +87,21 @@ class PostQuery implements InputValidatorsInterface
         return ! isset($nodeSettings['postQuery']['json']) && isset($nodeSettings['postQuery']['postType']);
     }
 
-    private function hasValidPostType($post, array $nodeSettings)
+    private function hasValidPost($post)
     {
         if (! is_object($post)) {
             return false;
         }
 
+        if (is_wp_error($post)) {
+            throw new \Exception(esc_html('Invalid post object: ' . $post->get_error_message()));
+        }
+
+        return true;
+    }
+
+    private function hasValidPostType($post, array $nodeSettings)
+    {
         // Prevent to apply actions to workflows
         if ($post->post_type === Module::POST_TYPE_WORKFLOW) {
             return false;
@@ -106,6 +124,10 @@ class PostQuery implements InputValidatorsInterface
     private function hasValidPostId($postId, array $nodeSettings)
     {
         $settingPostIds = $nodeSettings['postQuery']['postIds'] ?? [];
+
+        if (is_object($postId)) {
+            $postId = $postId->ID;
+        }
 
         if (!empty($settingPostIds) && !in_array($postId, $settingPostIds)) {
             return false;
@@ -133,7 +155,7 @@ class PostQuery implements InputValidatorsInterface
             return true;
         }
 
-        $settingPostAuthor = $this->runtimeVariablesHandler->resolveExpressionsInArray($settingPostAuthor);
+        $settingPostAuthor = $this->executionContext->resolveExpressionsInArray($settingPostAuthor);
 
         return in_array($post->post_author, $settingPostAuthor);
     }
@@ -146,7 +168,7 @@ class PostQuery implements InputValidatorsInterface
             return true;
         }
 
-        $settingPostTerms = $this->runtimeVariablesHandler->resolveExpressionsInArray($settingPostTerms);
+        $settingPostTerms = $this->executionContext->resolveExpressionsInArray($settingPostTerms);
 
         $groupedSelectedTerms = [];
 

@@ -118,6 +118,13 @@ class OnPostSave implements StepTypeInterface
                 "label" => __("Is update", "post-expirator"),
                 "description" => __("Whether the action happened to an existing post or a new post. Enter True for an existing post, or False for a new post.", "post-expirator"),
                 "priority" => 15,
+            ],
+            [
+                "name" => "postId",
+                "type" => "integer",
+                "label" => __("Saved post ID", "post-expirator"),
+                "description" => __("The ID of the post that was saved.", "post-expirator"),
+                "priority" => 20,
             ]
         ];
     }
@@ -139,7 +146,6 @@ class OnPostSave implements StepTypeInterface
             "source" => [
                 [
                     "id" => "output",
-                    "left" => "50%",
                     "label" => __("Next", "post-expirator"),
                 ]
             ]

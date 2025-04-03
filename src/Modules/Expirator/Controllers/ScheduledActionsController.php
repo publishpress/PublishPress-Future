@@ -296,43 +296,6 @@ class ScheduledActionsController implements InitializableInterface
 
         $hook = $action->get_hook();
 
-        if ($hook === WorkflowsHooksAbstract::ACTION_WORKFLOW_SAVED) {
-            $args = $action->get_args();
-
-            if (isset($args['postId']) && isset($args['workflow']) && 'expire' === $args['workflow']) {
-                $transientName = 'post-expirator-notice-' . (int) $args['postId'];
-                $noticeMessage = get_transient($transientName);
-                delete_transient($transientName);
-
-                // translators: %s is the action description
-                $html = sprintf(
-                    __('Successfully executed action: %s', 'post-expirator'),
-                    $noticeMessage
-                );
-            }
-        }
-
-        if ($hook === WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_STEP) {
-            $html = __('Executed workflow scheduled step', 'post-expirator');
-        }
-
-        if ($hook === WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS) {
-            $days = $this->settingsFacade->getScheduledWorkflowStepsCleanupRetention();
-
-            $html = sprintf(
-                __('Cleaned up completed scheduled steps older than %d days', 'post-expirator'),
-                $days
-            );
-        }
-
-        if ($hook === WorkflowsHooksAbstract::ACTION_CHECK_EXPIRED_ACTIONS) {
-            $html = __('Checked for expired actions', 'post-expirator');
-        }
-
-        if ($hook === WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS) {
-            $html = __('Cleaned up orphan workflow scheduled step arguments', 'post-expirator');
-        }
-
         if ($hook === HooksAbstract::ACTION_RUN_WORKFLOW) {
             $args = $action->get_args();
             if (isset($args['postId']) && isset($args['workflow']) && 'expire' === $args['workflow']) {
@@ -355,6 +318,7 @@ class ScheduledActionsController implements InitializableInterface
 
     public function onFilterAdminTitle($adminTitle, $title)
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No need for nonce verification when just comparing page
         if (isset($_GET['page']) && $_GET['page'] === 'publishpress-future-scheduled-actions') {
             return str_replace($title, __('Scheduled Actions', 'post-expirator'), $adminTitle);
         }

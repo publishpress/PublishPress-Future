@@ -15,7 +15,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
     </div>
     <noscript>
         <div class="notice notice-error">
-            <p><?php esc_html_e('You need to enable JavaScript to run this app.', 'publishpress-future'); ?></p>
+            <p><?php esc_html_e('You need to enable JavaScript to run this app.', 'post-expirator'); ?></p>
         </div>
     </noscript>
 </div>

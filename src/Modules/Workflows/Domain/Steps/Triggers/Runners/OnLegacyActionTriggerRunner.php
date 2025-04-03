@@ -7,9 +7,10 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostRe
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnLegacyActionTrigger;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 
 class OnLegacyActionTriggerRunner implements TriggerRunnerInterface
 {
@@ -34,11 +35,6 @@ class OnLegacyActionTriggerRunner implements TriggerRunnerInterface
     private $stepProcessor;
 
     /**
-     * @var RuntimeVariablesHandlerInterface
-     */
-    private $variablesHandler;
-
-    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -48,16 +44,21 @@ class OnLegacyActionTriggerRunner implements TriggerRunnerInterface
      */
     private $expirablePostModelFactory;
 
+    /**
+     * @var ExecutionContextInterface
+     */
+    private $executionContext;
+
     public function __construct(
         HookableInterface $hooks,
         StepProcessorInterface $stepProcessor,
-        RuntimeVariablesHandlerInterface $variablesHandler,
+        ExecutionContextInterface $executionContext,
         LoggerInterface $logger,
         \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
         $this->stepProcessor = $stepProcessor;
-        $this->variablesHandler = $variablesHandler;
+        $this->executionContext = $executionContext;
         $this->logger = $logger;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
@@ -87,9 +88,12 @@ class OnLegacyActionTriggerRunner implements TriggerRunnerInterface
             function ($step, $postId, $post) {
                 $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
-                $this->variablesHandler->setVariable($nodeSlug, [
+                $this->executionContext->setVariable($nodeSlug, [
                     'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
+                    'postId' => new IntegerResolver($postId),
                 ]);
+
+                $this->executionContext->setVariable('global.trigger.postId', $postId);
 
                 $this->stepProcessor->triggerCallbackIsRunning();
 

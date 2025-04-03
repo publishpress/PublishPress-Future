@@ -40,6 +40,7 @@ $schemaHealthErrors = [
     $debugLogSchema->getTableName() => $debugLogSchema->getErrors(),
     $workflowScheduledStepsSchema->getTableName() => $workflowScheduledStepsSchema->getErrors(),
 ];
+
 ?>
 
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
@@ -79,19 +80,28 @@ $schemaHealthErrors = [
                                     count($schemaHealthErrors),
                                     'post-expirator'
                                 )
-                            ); // phpcs:ignore PSR2.Methods.FunctionCallSignature.Indent?>
+                                  ); // phpcs:ignore PSR2.Methods.FunctionCallSignature.Indent?>
                             </span>
+
                             <?php foreach ($schemaHealthErrors as $tableName => $errors) : ?>
                                 <?php if (empty($errors)) {
                                     continue;
                                 } ?>
 
-                                <h4><?php echo esc_html($tableName); ?></h4>
-                                <ul>
-                                    <?php foreach ($errors as $error) : ?>
-                                        <li><?php echo esc_html($error); ?></li>
-                                    <?php endforeach; ?>
-                                </ul>
+                                <table class="widefat striped" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <thead>
+                                        <tr>
+                                            <th><strong><?php echo esc_html($tableName); ?></strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($errors as $error) : ?>
+                                            <tr>
+                                            <td><?php echo esc_html($error); ?></td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
                             <?php endforeach; ?>
 
                             <input type="submit" class="button" name="fix-db-schema" id="fix-db-schema" value="<?php
@@ -186,15 +196,15 @@ $schemaHealthErrors = [
                             <?php
                             $cron = PostExpirator_CronFacade::get_plugin_cron_events();
 
-                    ?>
+                            ?>
                             <p><?php
                          // phpcs:disable Generic.Files.LineLength.TooLong, PSR2.Methods.FunctionCallSignature.Indent
-                    esc_html_e(
-                        'The below table will show all currently scheduled cron events for the plugin with the next run time.',
-                        'post-expirator'
-                    );
+                            esc_html_e(
+                            'The below table will show all currently scheduled cron events for the plugin with the next run time.',
+                            'post-expirator'
+                               );
                     // phpcs:enable
-                    ?></p>
+                                ?></p>
 
                             <div>
                                 <table class="striped wp-list-table widefat fixed table-view-list">
@@ -213,48 +223,48 @@ $schemaHealthErrors = [
                                     </thead>
                                     <tbody>
                                         <?php
-                            $printPostEvent = function ($post) use ($container) {
-                                echo esc_html("$post->ID: $post->post_title (status: $post->post_status)");
+                                        $printPostEvent = function ($post) use ($container) {
+                                            echo esc_html("$post->ID: $post->post_title (status: $post->post_status)");
 
-                                $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-                                $postModel = $factory($post->ID);
-                                $attributes = $postModel->getExpirationDataAsArray();
+                                            $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+                                            $postModel = $factory($post->ID);
+                                            $attributes = $postModel->getExpirationDataAsArray();
 
-                                echo ': <span class="post-expiration-attributes">';
-                                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-                                print_r($attributes);
-                                echo '</span>';
-                            };
+                                            echo ': <span class="post-expiration-attributes">';
+                                            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+                                            print_r($attributes);
+                                            echo '</span>';
+                                        };
 
                     // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
                     foreach ($cron as $time => $value) {
-                        foreach ($value as $eventKey => $eventValue) {
-                            echo '<tr class="pe-event">';
-                            echo '<td>' . esc_html($dateTimeFacade->getWpDate('r', $time))
-                                . '</td>';
-                            echo '<td>' . esc_html($eventKey) . '</td>';
-                            $eventValueKeys = array_keys($eventValue);
-                            echo '<td>';
-                            foreach ($eventValueKeys as $eventGUID) {
-                                if (false === empty($eventValue[$eventGUID]['args'])) {
-                                    echo '<div class="pe-event-post" title="' . esc_attr((string)$eventGUID) . '">';
-                                    foreach ($eventValue[$eventGUID]['args'] as $value) {
-                                        $eventPost = get_post((int)$value);
+        foreach ($value as $eventKey => $eventValue) {
+            echo '<tr class="pe-event">';
+            echo '<td>' . esc_html($dateTimeFacade->getWpDate('r', $time))
+                . '</td>';
+            echo '<td>' . esc_html($eventKey) . '</td>';
+            $eventValueKeys = array_keys($eventValue);
+            echo '<td>';
+            foreach ($eventValueKeys as $eventGUID) {
+                if (false === empty($eventValue[$eventGUID]['args'])) {
+                    echo '<div class="pe-event-post" title="' . esc_attr((string)$eventGUID) . '">';
+                    foreach ($eventValue[$eventGUID]['args'] as $value) {
+                        $eventPost = get_post((int)$value);
 
-                                        if (
-                                            false === empty($eventPost)
-                                            && false === is_wp_error($eventPost)
-                                            && is_object($eventPost)
-                                        ) {
-                                            $printPostEvent($eventPost);
-                                        }
-                                    }
-                                    echo '</div>';
-                                }
-                            }
-                            echo '</td>';
-                            echo '</tr>';
+                        if (
+                            false === empty($eventPost)
+                            && false === is_wp_error($eventPost)
+                            && is_object($eventPost)
+                        ) {
+                            $printPostEvent($eventPost);
                         }
+                    }
+                    echo '</div>';
+                }
+            }
+            echo '</td>';
+            echo '</tr>';
+        }
                     }
                     // phpcs:enable?>
                                     </tbody>
@@ -267,7 +277,7 @@ $schemaHealthErrors = [
                                     'post-expirator'
                                 );
                     // phpcs:enable
-                    ?></p>
+                                ?></p>
                         </td>
                     </tr>
                 <?php endif; ?>
@@ -279,7 +289,7 @@ $schemaHealthErrors = [
     if ($showSideBar) {
         include __DIR__ . '/ad-banner-right-sidebar.php';
     }
-?>
+    ?>
 </div>
 <?php
 

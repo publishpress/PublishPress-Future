@@ -35,10 +35,20 @@ div.pe-qe-fields > div {
     color: #e08f63;
 }
 
+.post-expire-col .icon-overdue {
+    color: #353535;
+}
+
+.post-expire-col .future-action-overdue {
+    font-style: italic;
+}
+
 .pe-qe-fields input.invalid {
     border: 2px solid #b15b5b;
     background-color: #ffdede;
 }
+
+
 
 .future-action-gray {
     color: #afafaf;

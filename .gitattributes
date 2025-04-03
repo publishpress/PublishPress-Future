@@ -45,3 +45,4 @@ yarn.lock export-ignore
 phpstan.neon export-ignore
 CHANGELOG.md export-ignore
 codeception.yml export-ignore
+/.cursor export-ignore

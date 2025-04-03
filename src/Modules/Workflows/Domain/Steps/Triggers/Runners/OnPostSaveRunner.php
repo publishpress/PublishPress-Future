@@ -3,7 +3,6 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners;
 
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreventer;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
@@ -11,9 +10,9 @@ use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\InputValidatorsInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSave;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowExecutionSafeguardInterface;
 
 class OnPostSaveRunner implements TriggerRunnerInterface
@@ -44,11 +43,6 @@ class OnPostSaveRunner implements TriggerRunnerInterface
     private $workflowId;
 
     /**
-     * @var RuntimeVariablesHandlerInterface
-     */
-    private $variablesHandler;
-
-    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -63,19 +57,24 @@ class OnPostSaveRunner implements TriggerRunnerInterface
      */
     private $executionSafeguard;
 
+    /**
+     * @var ExecutionContextInterface
+     */
+    private $executionContext;
+
     public function __construct(
         HookableInterface $hooks,
         StepProcessorInterface $stepProcessor,
         InputValidatorsInterface $postQueryValidator,
-        RuntimeVariablesHandlerInterface $variablesHandler,
         LoggerInterface $logger,
         \Closure $expirablePostModelFactory,
-        WorkflowExecutionSafeguardInterface $executionSafeguard
+        WorkflowExecutionSafeguardInterface $executionSafeguard,
+        ExecutionContextInterface $executionContext
     ) {
         $this->hooks = $hooks;
         $this->stepProcessor = $stepProcessor;
         $this->postQueryValidator = $postQueryValidator;
-        $this->variablesHandler = $variablesHandler;
+        $this->executionContext = $executionContext;
         $this->logger = $logger;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->executionSafeguard = $executionSafeguard;
@@ -102,10 +101,13 @@ class OnPostSaveRunner implements TriggerRunnerInterface
             return;
         }
 
-        $this->variablesHandler->setVariable($stepSlug, [
+        $this->executionContext->setVariable($stepSlug, [
             'post' => new PostResolver($post, $this->hooks, '', $this->expirablePostModelFactory),
+            'postId' => new IntegerResolver($postId),
             'update' => new BooleanResolver($update),
         ]);
+
+        $this->executionContext->setVariable('global.trigger.postId', $postId);
 
         $postQueryArgs = [
             'post' => $post,

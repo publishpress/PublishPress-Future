@@ -12,6 +12,7 @@ class WorkflowScheduledStepsSchema implements DBTableSchemaInterface
 {
     public const HEALTH_ERROR_TABLE_DOES_NOT_EXIST = 'table_does_not_exist';
     public const HEALTH_ERROR_INVALID_INDEX = 'invalid_index';
+    public const HEALTH_ERROR_INVALID_COLUMN = 'invalid_column';
 
     /**
      * @var DBTableSchemaHandlerInterface
@@ -48,10 +49,12 @@ class WorkflowScheduledStepsSchema implements DBTableSchemaInterface
             'repeat_until' => 'set("forever", "times", "date") NOT NULL DEFAULT "forever"',
             'repeat_times' => 'int(11) NOT NULL DEFAULT 0',
             'repeat_until_date' => 'datetime NULL',
+            'repetition_number' => 'int(11) NOT NULL DEFAULT 0',
             'uncompressed_args' => 'varchar(10000) NULL',
             'compressed_args' => 'blob NULL',
             'is_compressed' => 'tinyint(1) NOT NULL DEFAULT 0',
             'created_at' => 'datetime NOT NULL DEFAULT CURRENT_TIMESTAMP',
+            'post_id' => 'bigint(20) UNSIGNED NULL',
         ];
     }
 
@@ -63,6 +66,7 @@ class WorkflowScheduledStepsSchema implements DBTableSchemaInterface
             'step_id' => ['step_id', 'action_id'],
             'action_uid_hash' => ['action_uid_hash', 'action_id'],
             'is_recurring' => ['is_recurring', 'action_id'],
+            'post_id' => ['post_id', 'workflow_id', 'action_id'],
         ];
     }
 
@@ -93,17 +97,29 @@ class WorkflowScheduledStepsSchema implements DBTableSchemaInterface
                     $tablePrefix . $this->getTableName()
                 )
             );
+
+            // Table do not exists, we don't need to check columns and indexes.
+            return false;
+        }
+
+        $columnsErrors = $this->handler->checkTableColumns($this->getColumns());
+        if (! empty($columnsErrors)) {
+            foreach ($columnsErrors as $columnError) {
+                $this->handler->registerError(
+                    self::HEALTH_ERROR_INVALID_COLUMN,
+                    $columnError
+                );
+            }
         }
 
         $indexesErrors = $this->handler->checkTableIndexes($this->getIndexes());
         if (! empty($indexesErrors)) {
-            $this->handler->registerError(
-                self::HEALTH_ERROR_INVALID_INDEX,
-                __(
-                    'The table indexes are invalid: ',
-                    'post-expirator'
-                ) . implode(', ', $indexesErrors)
-            );
+            foreach ($indexesErrors as $indexError) {
+                $this->handler->registerError(
+                    self::HEALTH_ERROR_INVALID_INDEX,
+                    $indexError
+                );
+            }
         }
 
         return false === $this->handler->hasErrors();
@@ -123,6 +139,10 @@ class WorkflowScheduledStepsSchema implements DBTableSchemaInterface
     {
         if (! $this->isTableExistent()) {
             $this->createTable();
+        }
+
+        if (! empty($this->handler->checkTableColumns($this->getColumns()))) {
+            $this->handler->fixColumns($this->getColumns());
         }
 
         if (! empty($this->handler->checkTableIndexes($this->getIndexes()))) {

@@ -2,9 +2,9 @@
 
 namespace PublishPress\Future\Modules\Workflows\Interfaces;
 
-interface RuntimeVariablesHelperInterface
+interface ExecutionContextProcessorInterface
 {
     public function getType(): string;
 
-    public function execute(string $value, array $parameters);
+    public function process(string $value, array $parameters);
 }

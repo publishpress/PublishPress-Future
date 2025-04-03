@@ -10,7 +10,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowScheduledStepModelI
 
 class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
 {
-    public const META_RUN_COUNT_PREFIX = '_pp_workflow_step_run_count_';
+    public const META_TOTAL_RUN_COUNT_PREFIX = '_pp_workflow_step_run_count_';
 
     public const META_LAST_RUN_AT_PREFIX = '_pp_workflow_step_last_run_at_';
 
@@ -64,7 +64,12 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
     /**
      * @var int
      */
-    private $runCount = 0;
+    private $repetitionNumber = 0;
+
+    /**
+     * @var int
+     */
+    private $totalRunCount = 0;
 
     /**
      * @var string
@@ -75,6 +80,11 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
      * @var bool
      */
     private $isCompressed = false;
+
+    /**
+     * @var int
+     */
+    private $postId = 0;
 
     /**
      * @var array
@@ -177,9 +187,9 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
         return $this->repeatUntilDate;
     }
 
-    private function getRunCountMetaKey(): string
+    private function getTotalRunCountMetaKey(): string
     {
-        return self::META_RUN_COUNT_PREFIX . $this->getActionUIDHash();
+        return self::META_TOTAL_RUN_COUNT_PREFIX . $this->getActionUIDHash();
     }
 
     private function getLastRunAtMetaKey(): string
@@ -187,16 +197,16 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
         return self::META_LAST_RUN_AT_PREFIX . $this->getActionUIDHash();
     }
 
-    public function setRunCount(int $runCount): void
+    public function setTotalRunCount(int $totalRunCount): void
     {
-        $this->runCount = $runCount;
+        $this->totalRunCount = $totalRunCount;
 
-        update_post_meta($this->getWorkflowId(), $this->getRunCountMetaKey(), $runCount);
+        update_post_meta($this->getWorkflowId(), $this->getTotalRunCountMetaKey(), $totalRunCount);
     }
 
-    public function getRunCount(): int
+    public function getTotalRunCount(): int
     {
-        return (int) get_post_meta($this->getWorkflowId(), $this->getRunCountMetaKey(), true);
+        return (int) get_post_meta($this->getWorkflowId(), $this->getTotalRunCountMetaKey(), true);
     }
 
     public function setLastRunAt(string $lastRunAt): void
@@ -211,9 +221,19 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
         return get_post_meta($this->getWorkflowId(), $this->getLastRunAtMetaKey(), true);
     }
 
+    public function setPostId(int $postId): void
+    {
+        $this->postId = $postId;
+    }
+
+    public function getPostId(): int
+    {
+        return (int) $this->postId;
+    }
+
     public function resetRunData(): void
     {
-        $this->setRunCount(0);
+        $this->setTotalRunCount(0);
         $this->setLastRunAt('0000-00-00 00:00:00');
     }
 
@@ -342,6 +362,8 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
         $this->setRepeatTimes($row['repeat_times']);
         $this->setRepeatUntilDate($row['repeat_until_date']);
         $this->setIsCompressed((int)$row['is_compressed'] === 1);
+        $this->setPostId($row['post_id'] ?? 0);
+        $this->setRepetitionNumber($row['repetition_number'] ?? 0);
         $this->isFinished = null;
 
         if ($this->getIsCompressed()) {
@@ -372,6 +394,8 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
             'repeat_times' => $this->getRepeatTimes(),
             'repeat_until_date' => $this->getRepeatUntilDate(),
             'is_recurring' => $this->getIsRecurring() ? 1 : 0,
+            'post_id' => $this->getPostId(),
+            'repetition_number' => $this->getTotalRunCount(),
         ];
 
         if ($this->getIsCompressed()) {
@@ -432,9 +456,9 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
         return $this->decodeArguments($args);
     }
 
-    public function incrementRunCount(): void
+    public function incrementTotalRunCount(): void
     {
-        $this->setRunCount($this->getRunCount() + 1);
+        $this->setTotalRunCount($this->getTotalRunCount() + 1);
     }
 
     public function updateLastRunAt(): void
@@ -474,8 +498,18 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
 
     public static function getMetaRunCount(int $workflowId, string $actionUIDHash): int
     {
-        $metaKey = self::META_RUN_COUNT_PREFIX . $actionUIDHash;
+        $metaKey = self::META_TOTAL_RUN_COUNT_PREFIX . $actionUIDHash;
 
         return (int) get_post_meta($workflowId, $metaKey, true);
+    }
+
+    public function setRepetitionNumber(int $repetitionNumber): void
+    {
+        $this->repetitionNumber = $repetitionNumber;
+    }
+
+    public function getRepetitionNumber(): int
+    {
+        return (int) $this->repetitionNumber;
     }
 }

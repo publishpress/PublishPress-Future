@@ -22,6 +22,7 @@ use PublishPress\Future\Modules\Expirator\Migrations\V30104ArgsColumnLength;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\Migrations\V40000WorkflowScheduledStepsSchema;
+use PublishPress\Future\Modules\Workflows\Migrations\V040500OnScheduledStepsSchema;
 use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -185,6 +186,7 @@ class Plugin implements InitializableInterface
                 // Fresh install. Run migrations that create the DB tables.
                 $container->get(ServicesAbstract::HOOKS)->doAction(V30000ActionArgsSchema::HOOK);
                 $container->get(ServicesAbstract::HOOKS)->doAction(V40000WorkflowScheduledStepsSchema::HOOK);
+                $container->get(ServicesAbstract::HOOKS)->doAction(V040500OnScheduledStepsSchema::HOOK);
             } else {
                 if (version_compare($version, '1.6.1') === -1) {
                     update_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);
@@ -296,6 +298,12 @@ class Plugin implements InitializableInterface
                 if (version_compare($version, '4.0.0', '<')) {
                     $container->get(ServicesAbstract::HOOKS)->doAction(
                         V40000WorkflowScheduledStepsSchema::HOOK
+                    );
+                }
+
+                if (version_compare($version, '4.5.0', '<')) {
+                    $container->get(ServicesAbstract::HOOKS)->doAction(
+                        V040500OnScheduledStepsSchema::HOOK
                     );
                 }
             }

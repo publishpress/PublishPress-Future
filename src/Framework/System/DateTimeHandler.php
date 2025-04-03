@@ -4,7 +4,7 @@ namespace PublishPress\Future\Framework\System;
 
 use DateTime;
 use DateTimeZone;
-use Exception;
+use InvalidArgumentException;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -31,12 +31,17 @@ class DateTimeHandler implements DateTimeHandlerInterface
     // Manually apply the fixed time after calculation can solve the issue.
     public function getCalculatedTimeWithOffset(int $currentTime, string $offset): int
     {
+        // Validate offset format before processing
+        if (empty($offset)) {
+            throw new InvalidArgumentException(esc_html__('Empty date time offset.', 'post-expirator'));
+        }
+
         $offset = $this->translateFixedTimeOnOffsetToUTC($offset);
 
-        $calculatedTime = strtotime($offset, $currentTime);
+        $calculatedTime = @strtotime($offset, $currentTime);
 
-        if (empty($calculatedTime)) {
-            throw new Exception(__('Invalid date time offset.', 'post-expirator'));
+        if ($calculatedTime === false) {
+            throw new InvalidArgumentException(esc_html__('Invalid date time offset', 'post-expirator'));
         }
 
         return $calculatedTime;
