@@ -154,9 +154,10 @@
         "tests:stop": "bash dev-workspace/scripts/tests-env.sh stop",
         "tests:clean": [
             "bash dev-workspace/scripts/tests-env.sh cleanup",
-            "@tests:clean-logs"
+            "@tests:clean-cache"
         ],
-        "tests:clean-logs": "rm -f dev-workspace/cache/logs/*",
+        "tests:clean-logs": "rm -f dev-workspace/.cache/logs/*",
+        "tests:clean-cache": "rm -rf dev-workspace/.cache/*",
         "tests:db-logs": "bash dev-workspace/scripts/tests-db-logs.sh $@",
         "tests:info": "bash dev-workspace/scripts/tests-env.sh info",
         "tests:refresh": "bash dev-workspace/scripts/tests-env.sh refresh",
@@ -221,6 +222,8 @@
         "tests:activate": "Activates the plugin within the WordPress test environment using WP-CLI.",
         "tests:chromedriver": "Starts the ChromeDriver server.",
         "tests:clean": "Cleans up the Codeception cache and generated files.",
+        "tests:clean-cache": "Cleans up the Codeception cache.",
+        "tests:clean-logs": "Cleans up the Codeception logs.",
         "tests:db-export": "Exports the WordPress database to a SQL file.",
         "tests:db-import": "Imports a SQL file into the WordPress test database.",
         "tests:down": "Stops the test environment removing the containers.",
