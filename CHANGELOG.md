@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
-- Removed the "Allow duplicate scgeduling" option in the Schedule delay step in the workflow editor. To prevent a duplicated action, specify a custom Unique Action Identified after enabling Advanced settings in the workflow editor.
+- Removed the "Allow duplicate scheduling" option in the Schedule delay step in the workflow editor. To prevent a duplicated action, specify a custom Unique Action Identified after enabling Advanced settings in the workflow editor.
 
 ### Fixed
 
@@ -36,14 +36,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed the action that unschedules completed recurring actions - PRO (Issue #1165).
 - Fixed issue with "On Schedule" trigger that was incorrectly scheduling recurring actions every few seconds instead of respecting the configured interval when repetition was enabled (Issue #1245).
 - Fixed incorrect execution count display in the Scheduled Actions page for repeating workflows that have a limit on number of executions (Issue #1249).
-- Imnproved text on the overdue action message in the posts list, removing red icon (#Issue 1193).
+- Improved text on the overdue action message in the posts list, removing red icon (#Issue 1193).
 - Fixed false positive error on step validation for steps connected to the Query Posts step, saying the variable "....posts" do not exists (Issue #1255).
 - Updated translations for ES, FR and IT languages (Issues #1256, #1225).
 - Fixed default workflows (samples), updating the trigger conditions for the new conditional query builder (Issue #1243).
-- Fixed uncautch exceptions adding error handling to some hook callbacks.
+- Fixed uncaught exceptions adding error handling to some hook callbacks.
 - Fixed fatal error generated on posts lists when an invalid default future action date offset is configured for the post type (Issue #1224).
 - Fixed wrong repetition inverval for the "On schedule" trigger (Issue #1259).
-- Fixed wrong error message on database scheam check when an index is missed (Issue #1236).
+- Fixed wrong error message on database schema check when an index is missed (Issue #1236).
 - Fixed the display of scheduled actions for posts when workflows are manually enabled using the checkbox (Issue #1230).
 - Fixed error message "Schedule step is required for this workflow" on any repeating scheduled step in the Scheduled Actions list (Issue #1229).
 - Fixed step validation error message about the field "Post" containing an invalid variable (Issue #1210).
