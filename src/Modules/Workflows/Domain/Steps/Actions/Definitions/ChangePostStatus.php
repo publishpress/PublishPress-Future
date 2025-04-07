@@ -119,7 +119,7 @@ class ChangePostStatus implements StepTypeInterface
                         "rule" => "validVariable",
                         "field" => "post.variable",
                         "fieldLabel" => __("Post", "post-expirator"),
-                        "dataType" => "post",
+                        "dataType" => ["post", "array:integer"],
                     ],
                 ],
             ],
