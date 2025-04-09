@@ -23,7 +23,7 @@ trait InfiniteLoopPreventer
     }
 
     /**
-     * @deprecated 4.4.0 Use the class WorkflowExecutionSafeguard instead
+     * @deprecated 4.4.0 Use the interface WorkflowExecutionSafeguardInterface instead
      */
     protected function isInfiniteLoopDetected(int $workflowId, array $step, string $uniqueId = ''): bool
     {
