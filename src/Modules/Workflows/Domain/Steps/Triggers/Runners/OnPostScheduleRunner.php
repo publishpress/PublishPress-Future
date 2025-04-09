@@ -2,17 +2,13 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners;
 
-use PublishPress\Future\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreventer;
 use PublishPress\Future\Modules\Workflows\Interfaces\TriggerRunnerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSchedule;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
-use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class OnPostScheduleRunner implements TriggerRunnerInterface
 {
-    use InfiniteLoopPreventer;
-
     /**
      * @var StepProcessorInterface
      */
@@ -22,11 +18,6 @@ class OnPostScheduleRunner implements TriggerRunnerInterface
      * @var LoggerInterface
      */
     private $logger;
-
-    /**
-     * @var string
-     */
-    private $workflowExecutionId;
 
     public function __construct(
         StepProcessorInterface $stepProcessor,
