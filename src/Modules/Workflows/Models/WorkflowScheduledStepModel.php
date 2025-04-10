@@ -96,11 +96,6 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
      */
     private $isFinished = null;
 
-    public function __construct()
-    {
-        $this->isCompressed = $this->expectCompressedArguments();
-    }
-
     public function setActionId(int $actionId): void
     {
         $this->actionId = $actionId;
@@ -396,13 +391,10 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
             'is_recurring' => $this->getIsRecurring() ? 1 : 0,
             'post_id' => $this->getPostId(),
             'repetition_number' => $this->getTotalRunCount(),
+            'uncompressed_args' => $this->encodeArguments($this->getArgs()),
+            // We don't store compressed arguments anymore. Keeping this for backwards compatibility.
+            'compressed_args' => null,
         ];
-
-        if ($this->getIsCompressed()) {
-            $row['compressed_args'] = $this->encodeAndCompressArguments($this->getArgs());
-        } else {
-            $row['uncompressed_args'] = $this->encodeArguments($this->getArgs());
-        }
 
         return $row;
     }

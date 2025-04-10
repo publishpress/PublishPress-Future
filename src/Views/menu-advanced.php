@@ -28,42 +28,6 @@ $preserveData = $settingsFacade->getSettingPreserveData();
 
                 <?php $hooks->doAction(HooksAbstract::ACTION_SETTINGS_TAB_ADVANCED_BEFORE); ?>
 
-                <!-- Enable step schedule's compressed args -->
-                <tr valign="top">
-                    <th scope="row">
-                        <?php esc_html_e('Workflow Step Schedule\'s Arguments Compression', 'post-expirator'); ?>
-                    </th>
-                    <td>
-                        <div class="pp-settings-field-row">
-                            <input type="radio" name="future-step-schedule-compressed-args"
-                                id="future-step-schedule-compressed-args-enabled"
-                                value="1"
-                                <?php echo $settingsFacade->getStepScheduleCompressedArgsStatus() ? 'checked' : ''; ?> />
-                            <label for="future-step-schedule-compressed-args-enabled"><?php
-                                esc_html_e('Compress the arguments', 'post-expirator'); ?></label>
-                            <p class="description offset">
-                                <?php esc_html_e(
-                                    'Compress the arguments of the step schedule to save memory in the database, saving them as binary data.', // phpcs:ignore Generic.Files.LineLength.TooLong
-                                    'post-expirator'
-                                ); ?>
-                            </p>
-                        </div>
-                        <div class="pp-settings-field-row">
-                            <input type="radio" name="future-step-schedule-compressed-args"
-                                id="future-step-schedule-compressed-args-disabled"
-                                value="0"
-                                <?php echo !$settingsFacade->getStepScheduleCompressedArgsStatus() ? 'checked' : ''; ?> />
-                            <label for="future-step-schedule-compressed-args-disabled"><?php
-                                                                esc_html_e('Do not compress the arguments', 'post-expirator'); ?></label>
-                            <p class="description offset">
-                                <?php esc_html_e(
-                                    'Do not compress the arguments of the step schedule, storing them as plain text.',
-                                    'post-expirator'
-                                ); ?>
-                            </p>
-                        </div>
-                    </td>
-                </tr>
                 <!-- Configure the Scheduled Workflow's Cron Cleanup Rules -->
                 <tr id="scheduled-steps-cleanup-settings">
                     <!-- React component -->
