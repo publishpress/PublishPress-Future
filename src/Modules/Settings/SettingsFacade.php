@@ -356,7 +356,8 @@ class SettingsFacade
 
     public function getStepScheduleCompressedArgsStatus(): bool
     {
-        return (bool)$this->options->getOption(self::OPTION_STEP_SCHEDULE_COMPRESSED_ARGS, false);
+        // We don't use this feature anymore. But we keep the option for backwards compatibility on existing data.
+        return false;
     }
 
     public function getScheduledWorkflowStepsCleanupStatus(): bool
