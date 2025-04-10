@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { Fieldset } from '../fieldset';
+import { __ } from '@wordpress/i18n';
 
 import './css/style.css';
 
@@ -59,6 +60,25 @@ window.inlineEditPost.edit = function (button, id) {
             postId={postId}
             apiUrl={apiUrl}
             nonce={nonce}
+            wrapper={({workflowsWithManualTrigger, children}) => {
+                if (workflowsWithManualTrigger.length === 0) {
+                    return children;
+                }
+
+                return (
+                    <fieldset class="inline-edit-col-left post-expirator-quick-edit-fieldset">
+                        <div class="future-quick-edit-fieldset">
+                            <div class="title">{__('Action Workflows', 'post-expirator')}</div>
+                            <div class="inline-edit-col">
+                                <div class="inline-edit-group">
+                                    {children}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                );
+            }}
         />
     );
 
