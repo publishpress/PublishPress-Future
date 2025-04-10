@@ -2824,10 +2824,10 @@
     classcat "^5.0.3"
     zustand "^4.4.1"
 
-"@reduxjs/toolkit@^2.3.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-2.5.0.tgz#4679b09b4da211cb9a821803aabf86a13c96fbfa"
-  integrity sha512-awNe2oTodsZ6LmRqmkFhtb/KH03hUhxOamEQy411m3Njj3BbFvoBovxo4Q1cBWnV1ErprVj9MlF0UPXkng0eyg==
+"@reduxjs/toolkit@^2.6.1":
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-2.6.1.tgz#532ef3d3f1656461b421f0ba0a4fa1628163a0c5"
+  integrity sha512-SSlIqZNYhqm/oMkXbtofwZSt9lrncblzo6YcZ9zoX+zLngRBrCOjK4lNLdkNucJF58RHOWrD9txT3bT3piH7Zw==
   dependencies:
     immer "^10.0.3"
     redux "^5.0.1"
@@ -12435,15 +12435,15 @@ react-lifecycles-compat@~3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-querybuilder@^7.7.0:
-  version "7.7.1"
-  resolved "https://registry.yarnpkg.com/react-querybuilder/-/react-querybuilder-7.7.1.tgz#3e98e0e7b97c41019b451d1863974cddc665092e"
-  integrity sha512-1AYVNMqw7UDjqd3MchWWJTC1o++xPFUJF+VfajURa6kxqcKBq7SGET5mPXfmM+UdE1zHjToGpE8a+fN8JfAbxw==
+react-querybuilder@^8.0.0:
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/react-querybuilder/-/react-querybuilder-8.5.0.tgz#a973a86a1f18cfc81c2737bf3730a5fddea84b60"
+  integrity sha512-Aw/J+PDURBeGvgGeN2TLEcoyxduCQ82eW1chl9hKD46D3Yz0Tjhpqzx/co3oya2PqjHkJ+uA6Ta43o5SFQzH4g==
   dependencies:
-    "@reduxjs/toolkit" "^2.3.0"
+    "@reduxjs/toolkit" "^2.6.1"
     immer "^10.1.1"
     numeric-quantity "^2.0.1"
-    react-redux "^9.1.2"
+    react-redux "^9.2.0"
 
 react-ray@^1.1.2:
   version "1.1.2"
@@ -12453,7 +12453,7 @@ react-ray@^1.1.2:
     node-ray "^1.19.4"
     react "~16.0.0"
 
-react-redux@^9.1.2:
+react-redux@^9.2.0:
   version "9.2.0"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-9.2.0.tgz#96c3ab23fb9a3af2cb4654be4b51c989e32366f5"
   integrity sha512-ROY9fvHhwOD9ySfrF0wmvu//bKCQ6AeZZq1nJNtbDC+kk5DuSuNX/n6YWYF/SYy7bSba4D4FSz8DJeKY/S/r+g==
