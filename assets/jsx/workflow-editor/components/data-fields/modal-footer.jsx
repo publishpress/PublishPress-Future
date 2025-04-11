@@ -7,7 +7,7 @@ export const ModalFooter = ({ onClose, children }) => {
             {children ? (
                 children
             ) : (
-                <Button variant="secondary" onClick={onClose}>
+                <Button variant="primary" onClick={onClose}>
                     {__("OK", "post-expirator")}
                 </Button>
             )}
