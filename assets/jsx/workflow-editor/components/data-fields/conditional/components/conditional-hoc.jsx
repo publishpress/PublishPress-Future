@@ -17,6 +17,7 @@ import { useModalManagement } from '../hooks/useModalManagement';
 import { useEditorSetup } from '../hooks/useEditorSetup';
 import { useLegacyVariables } from '../hooks/useLegacyVariables';
 import { useIsPro } from '../../../../contexts/pro-context';
+import { ModalFooter } from './../../modal-footer'
 
 import 'react-querybuilder/dist/query-builder.css';
 import '../../../../css/query-builder.css';
@@ -140,7 +141,7 @@ export const withConditional = ({
                         onClose={onCloseModal}
                         title={modalTitle}
                         onRequestClose={onCloseModal}
-                        className="conditional-editor-modal"
+                        className="workflow-editor-modal conditional-editor-modal"
                     >
                         <p>
                             {modalDescription}
@@ -162,6 +163,7 @@ export const withConditional = ({
                                 getDefaultField={getDefaultField}
                             />
                         </QueryBuilderDnD>
+                        <ModalFooter onClose={ onCloseModal } />
                     </Modal>
                 )}
             </div>

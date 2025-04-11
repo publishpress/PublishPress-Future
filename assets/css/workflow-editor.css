@@ -70,3 +70,25 @@ body.admin_page_future_workflow_editor {
 .edit-post-sidebar .interface-complementary-area-header__small {
     display: none;
 }
+
+/* workflow editor modal */
+.workflow-editor-modal .components-modal__content {
+    margin-bottom: 72px;
+}
+
+.workflow-editor-modal .components-modal__header button.components-button {
+    display: none;
+}
+
+.workflow-editor-modal .workflow-editor-modal-footer {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    left: 0;
+    padding: 24px;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    bottom: 0;
+    justify-content: flex-end;
+}
