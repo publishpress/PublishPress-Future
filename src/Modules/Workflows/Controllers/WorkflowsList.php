@@ -110,6 +110,18 @@ class WorkflowsList implements InitializableInterface
             'admin_footer',
             [$this, "addScheduledActionsButton"]
         );
+
+        $this->hooks->addAction(
+            "post_updated_messages",
+            [$this, "filterPostUpdatedMessages"]
+        );
+
+        $this->hooks->addAction(
+            "bulk_post_updated_messages",
+            [$this, "filterBulkPostUpdatedMessages"],
+            10,
+            2
+        );
     }
 
     public function adminMenu()
@@ -457,4 +469,125 @@ class WorkflowsList implements InitializableInterface
         </script>';
         // phpcs:enable
     }
+
+    /**
+     * Customize the post messages for the Action Workflows
+     *
+     * @param array $messages
+     *
+     * @return array
+     */
+    public function filterPostUpdatedMessages($messages) 
+    {
+        global $post, $current_screen;
+    
+        if (Module::POST_TYPE_WORKFLOW !== $current_screen->post_type) {
+            return $messages;
+        }
+        
+        $post_type = Module::POST_TYPE_WORKFLOW;
+        $post_type_object = get_post_type_object($post_type);
+        $singular = $post_type_object->labels->singular_name;
+    
+        $messages[$post_type][1]  = sprintf(
+            __('%s updated.', 'post-expirator'), 
+            $singular
+        );
+        $messages[$post_type][4]  = sprintf(
+            __('%s updated.', 'post-expirator'), 
+            $singular
+        );
+        
+        $messages[$post_type][5] = isset($_GET['revision'])
+        ? sprintf(
+            /* translators: 1: Post type singular label, 2: Revision title */
+            __('%1$s restored to revision from %2$s', 'post-expirator'),
+            $singular, 
+            wp_post_revision_title((int) $_GET['revision'], false)
+        )
+        : false;
+
+        $messages[$post_type][6]  = sprintf(
+            __('%s published.', 'post-expirator'), 
+            $singular
+        );
+        $messages[$post_type][7]  = sprintf(
+            __('%s saved.', 'post-expirator'),
+             $singular
+        );
+        $messages[$post_type][8]  = sprintf(
+            __('%s submitted.', 'post-expirator'), 
+            $singular
+        );
+        $messages[$post_type][9] = sprintf(
+            /* translators: 1: Post type singular label, 2: Scheduled date */
+            __('%1$s scheduled for: <strong>%2$s</strong>.', 'post-expirator'),
+            $singular,
+            date_i18n('M j, Y @ G:i', strtotime($post->post_date))
+        );
+        $messages[$post_type][10] = sprintf(
+            __('%s draft updated.', 'post-expirator'),
+             $singular
+        );
+    
+        return $messages;
+    }
+    
+    
+    
+    /**
+     * Customize the post messages for the Action Workflows bulk action.
+     *
+     * @param array $bulk_messages
+     * @param array $bulk_counts
+     *
+     * @return array
+     */
+    public function filterBulkPostUpdatedMessages($bulk_messages, $bulk_counts) 
+    {
+        global $current_screen;
+    
+        if (Module::POST_TYPE_WORKFLOW !== $current_screen->post_type) {
+            return $bulk_messages;
+        }
+    
+        $post_type = Module::POST_TYPE_WORKFLOW;
+        $post_type_object = get_post_type_object($post_type);
+        $singular = $post_type_object->labels->singular_name;
+        $plural   = $post_type_object->labels->name;
+    
+        $bulk_messages[$post_type]['updated']   = _n(
+            "%s $singular updated.",
+            "%s $plural updated.",
+            $bulk_counts['updated'],
+            'post-expirator'
+        );
+        $bulk_messages[$post_type]['locked']    = _n(
+            "%s $singular not updated, someone is editing it.",
+            "%s $plural not updated, someone is editing them.",
+            $bulk_counts['locked'],
+            'post-expirator'
+        );
+        $bulk_messages[$post_type]['deleted']   = _n(
+            "%s $singular permanently deleted.",
+            "%s $plural permanently deleted.",
+            $bulk_counts['deleted'],
+            'post-expirator'
+        );
+        $bulk_messages[$post_type]['trashed']   = _n(
+            "%s $singular moved to the Trash.",
+            "%s $plural moved to the Trash.",
+            $bulk_counts['trashed'],
+            'post-expirator'
+        );
+        $bulk_messages[$post_type]['untrashed'] = _n(
+            "%s $singular restored from the Trash.",
+            "%s $plural restored from the Trash.",
+            $bulk_counts['untrashed'],
+            'post-expirator'
+        );
+    
+        return $bulk_messages;
+    }
+    
 }

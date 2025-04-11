@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## UNRELEASED
 
+### Changed
+
+- Update Action Workflows post action and bulk edit messages (Issue #1219).
+
 ### Removed
 
 - Remove the option to compact scheduled actions data (Issue #1233).
