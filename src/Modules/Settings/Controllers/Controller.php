@@ -326,12 +326,8 @@ class Controller implements InitializableInterface
         : 0;
         $this->settings->setExperimentalFeaturesStatus($experimentalFeaturesStatus);
 
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
-        $stepScheduleCompressedArgsStatus = isset($_POST['future-step-schedule-compressed-args'])
-            // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            ? (int) $_POST['future-step-schedule-compressed-args']
-            : 0;
-        $this->settings->setStepScheduleCompressedArgsStatus($stepScheduleCompressedArgsStatus);
+        // We don't use this feature anymore. But we keep the option for backwards compatibility on existing data.
+        $this->settings->setStepScheduleCompressedArgsStatus(false);
 
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
         $stepScheduleCleanupStatus = isset($_POST['future-step-schedule-cleanup'])

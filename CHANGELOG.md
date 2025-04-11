@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Change Action Workflows Editor Modals "X" to "OK" and move the button to the bottom (Issue #1182).
+### Removed
+
+### Removed
+
+- Remove the option to compact scheduled actions data (Issue #1233).
 
 ### Developers
 

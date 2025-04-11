@@ -1186,7 +1186,8 @@ function Fieldset(_ref) {
     postId = _ref.postId,
     apiUrl = _ref.apiUrl,
     nonce = _ref.nonce,
-    onChange = _ref.onChange;
+    onChange = _ref.onChange,
+    wrapper = _ref.wrapper;
   var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useSelect)(function (select) {
       return {
         workflowsWithManualTrigger: select(_store__WEBPACK_IMPORTED_MODULE_2__.store).getWorkflowsWithManualTrigger(),
@@ -1232,7 +1233,17 @@ function Fieldset(_ref) {
       }
     });
   });
-  return /*#__PURE__*/React.createElement(React.Fragment, null, controls.length > 0 && /*#__PURE__*/React.createElement("div", {
+  if (!wrapper) {
+    wrapper = function wrapper(_ref2) {
+      var children = _ref2.children;
+      return children;
+    };
+  }
+  var WrapperElement = wrapper;
+  return /*#__PURE__*/React.createElement(WrapperElement, {
+    workflowsWithManualTrigger: workflowsWithManualTrigger,
+    workflowsEnabledForPost: workflowsEnabledForPost
+  }, controls.length > 0 && /*#__PURE__*/React.createElement("div", {
     id: "post-expirator-".concat(context, "-wrapper")
   }, /*#__PURE__*/React.createElement("input", {
     type: "hidden",
