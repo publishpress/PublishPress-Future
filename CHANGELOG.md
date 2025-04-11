@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## UNRELEASED
 
+### Changed
+
+- Change Action Workflows Editor Modals "X" to "OK" and move the button to the bottom (Issue #1182).
+
 ### Developers
 
 - Remove unused InitineLoopPreventer trait from some classes, replacing it with the service "future.free/workflow-execution-safeguard".
