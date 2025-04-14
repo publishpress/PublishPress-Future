@@ -49,6 +49,10 @@ jobs:
         run: |
           $GITHUB_WORKSPACE/dev-workspace/run composer check:lint
 
+      - name: Run PHPCS check
+        run: |
+          $GITHUB_WORKSPACE/dev-workspace/run composer check:cs
+
       - name: Run Long Path check
         run: |
           $GITHUB_WORKSPACE/dev-workspace/run composer check:longpath
