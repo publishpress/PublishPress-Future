@@ -2,7 +2,8 @@
 
 namespace PublishPress\Future\Modules\Workflows\Rest;
 
-use PublishPress\Future\Modules\Settings\SettingsFacade;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use WP_Error;
 use WP_REST_Server;
 use PublishPress\Future\Modules\Workflows\Interfaces\RestApiManagerInterface;
@@ -26,13 +27,13 @@ class RestApiV1 implements RestApiManagerInterface
     public const PERMISSION_DELETE = 'edit_posts';
 
     /**
-     * @var SettingsFacade
+     * @var HookableInterface
      */
-    private SettingsFacade $settingsFacade;
+    private HookableInterface $hooks;
 
-    public function __construct(SettingsFacade $settingsFacade)
+    public function __construct(HookableInterface $hooks)
     {
-        $this->settingsFacade = $settingsFacade;
+        $this->hooks = $hooks;
     }
 
     public function register()
@@ -183,6 +184,8 @@ class RestApiV1 implements RestApiManagerInterface
                 'show_in_rest' => true,
             ]
         );
+
+        $this->hooks->doAction(HooksAbstract::ACTION_REGISTER_REST_ROUTES);
     }
 
 
