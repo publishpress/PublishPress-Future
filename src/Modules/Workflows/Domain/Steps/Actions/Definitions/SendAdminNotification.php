@@ -79,12 +79,11 @@ class SendAdminNotification implements StepTypeInterface
                 "fields" => [
                     [
                         "name" => "recipient",
-                        "type" => "userQuery",
-                        "label" => __("Recipient", "post-expirator"),
-                        "description" => __("The recipient of the admin notification.", "post-expirator"),
+                        "type" => "expression",
+                        "label" => __("Recipients", "post-expirator"),
+                        "description" => __("A comma-separated list of user names, ids, or user roles to send the message to.", "post-expirator"),
                         "default" => [
-                            "userSource" => "custom",
-                            "userRole" => ["administrator"],
+                            "expression" => "administrator",
                         ],
                     ],
                 ],
@@ -125,6 +124,23 @@ class SendAdminNotification implements StepTypeInterface
             ],
             "settings" => [
                 "rules" => [
+                    [
+                        "rule" => "required",
+                        "field" => "recipient.expression",
+                        "label" => __("Recipient", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "dataType",
+                        "field" => "recipient.expression",
+                        "label" => __("Recipient", "post-expirator"),
+                        "type" => "emailList",
+                    ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "recipient.expression",
+                        "label" => __("Recipient", "post-expirator"),
+                        "fieldLabel" => __("Email Message > Recipient", "post-expirator"),
+                    ],
                     [
                         "rule" => "validExpression",
                         "field" => "subject.expression",
