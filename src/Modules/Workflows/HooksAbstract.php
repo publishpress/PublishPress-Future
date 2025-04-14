@@ -165,4 +165,6 @@ abstract class HooksAbstract
     public const FILTER_SHOULD_USE_TIMESTAMP_ON_ACTION_UID = 'publishpressfuture_should_use_timestamp_on_action_uid';
 
     public const ACTION_REGISTER_REST_ROUTES = 'publishpressfuture_register_rest_routes';
+
+    public const FILTER_REGISTER_REST_ROUTES = 'publishpressfuture_register_rest_routes';
 }

@@ -3,6 +3,7 @@
 namespace PublishPress\Future\Modules\Workflows\Rest;
 
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\RestApiManagerInterface;
 
 class RestApiManager implements RestApiManagerInterface
@@ -26,6 +27,14 @@ class RestApiManager implements RestApiManagerInterface
                 $this->hooks
             )
         ];
+
+        /**
+         * @param RestApiManagerInterface[] $apiManagers
+         */
+        $apiManagers = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_REGISTER_REST_ROUTES,
+            $apiManagers
+        );
 
         foreach ($apiManagers as $apiManater) {
             $apiManater->register();
