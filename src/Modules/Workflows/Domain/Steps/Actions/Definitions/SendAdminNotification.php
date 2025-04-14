@@ -130,12 +130,6 @@ class SendAdminNotification implements StepTypeInterface
                         "label" => __("Recipient", "post-expirator"),
                     ],
                     [
-                        "rule" => "dataType",
-                        "field" => "recipient.expression",
-                        "label" => __("Recipient", "post-expirator"),
-                        "type" => "emailList",
-                    ],
-                    [
                         "rule" => "validExpression",
                         "field" => "recipient.expression",
                         "label" => __("Recipient", "post-expirator"),
