@@ -761,7 +761,7 @@ return [
 
     ServicesAbstract::WORKFLOWS_REST_API_MANAGER => static function (ContainerInterface $container) {
         return new RestApiManager(
-            $container->get(ServicesAbstract::SETTINGS)
+            $container->get(ServicesAbstract::HOOKS)
         );
     },
 
