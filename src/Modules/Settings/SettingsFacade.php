@@ -592,10 +592,6 @@ class SettingsFacade
         $settings = [
             'defaultDateFormat' => $this->getDefaultDateFormat(),
             'defaultTimeFormat' => $this->getDefaultTimeFormat(),
-            'metaboxTitle' => $this->getMetaboxTitle(),
-            'metaboxCheckboxLabel' => $this->getMetaboxCheckboxLabel(),
-            'columnStyle' => $this->getColumnStyle(),
-            'timeFormatForDatePicker' => $this->getTimeFormatForDatePicker(),
             'showInPostFooter' => $this->getShowInPostFooter(),
             'footerContents' => $this->getFooterContents(),
             'footerStyle' => $this->getFooterStyle(),
@@ -608,14 +604,24 @@ class SettingsFacade
         return $settings;
     }
 
+    public function getAdminSettings(): array
+    {
+        $settings = [
+            'metaboxTitle' => $this->getMetaboxTitle(),
+            'metaboxCheckboxLabel' => $this->getMetaboxCheckboxLabel(),
+            'columnStyle' => $this->getColumnStyle(),
+            'timeFormatForDatePicker' => $this->getTimeFormatForDatePicker()
+        ];
+
+        $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_ADMIN, $settings);
+
+        return $settings;
+    }
+
     public function setDisplaySettings(array $settings): void
     {
         $this->setDefaultDateFormat($settings['defaultDateFormat'] ?? '');
         $this->setDefaultTimeFormat($settings['defaultTimeFormat'] ?? '');
-        $this->setMetaboxTitle($settings['metaboxTitle'] ?? '');
-        $this->setMetaboxCheckboxLabel($settings['metaboxCheckboxLabel'] ?? '');
-        $this->setColumnStyle($settings['columnStyle'] ?? '');
-        $this->setTimeFormatForDatePicker($settings['timeFormatForDatePicker'] ?? '');
         $this->setShowInPostFooter($settings['showInPostFooter'] ?? false);
         $this->setFooterContents($settings['footerContents'] ?? '');
         $this->setFooterStyle($settings['footerStyle'] ?? '');
@@ -623,6 +629,16 @@ class SettingsFacade
         $this->setShortcodeWrapperClass($settings['shortcodeWrapperClass'] ?? '');
 
         do_action(HooksAbstract::ACTION_SETTINGS_SET_DISPLAY, $settings);
+    }
+
+    public function setAdminSettings(array $settings): void
+    {
+        $this->setMetaboxTitle($settings['metaboxTitle'] ?? '');
+        $this->setMetaboxCheckboxLabel($settings['metaboxCheckboxLabel'] ?? '');
+        $this->setColumnStyle($settings['columnStyle'] ?? '');
+        $this->setTimeFormatForDatePicker($settings['timeFormatForDatePicker'] ?? '');
+
+        do_action(HooksAbstract::ACTION_SETTINGS_SET_ADMIN, $settings);
     }
 
     public function getAdvancedSettings(): array

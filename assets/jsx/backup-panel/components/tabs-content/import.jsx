@@ -117,6 +117,10 @@ const ImportTab = () => {
             id: 'display',
         },
         {
+            title: __('Admin', 'post-expirator'),
+            id: 'admin',
+        },
+        {
             title: __('Advanced', 'post-expirator'),
             id: 'advanced',
         },

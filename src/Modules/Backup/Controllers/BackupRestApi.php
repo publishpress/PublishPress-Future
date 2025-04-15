@@ -257,6 +257,10 @@ class BackupRestApi implements InitializableInterface
             $settings = array_merge($settings, $this->getDisplaySettings());
         }
 
+        if (in_array('admin', $selectedSettings)) {
+            $settings = array_merge($settings, $this->getAdminSettings());
+        }
+
         if (in_array('advanced', $selectedSettings)) {
             $settings = array_merge($settings, $this->getAdvancedSettings());
         }
@@ -302,6 +306,13 @@ class BackupRestApi implements InitializableInterface
     {
         return [
             'display' => $this->settingsFacade->getDisplaySettings(),
+        ];
+    }
+
+    private function getAdminSettings(): array
+    {
+        return [
+            'admin' => $this->settingsFacade->getAdminSettings(),
         ];
     }
 
@@ -389,6 +400,10 @@ class BackupRestApi implements InitializableInterface
 
         if (isset($settings['display'])) {
             $this->settingsFacade->setDisplaySettings($settings['display']);
+        }
+
+        if (isset($settings['admin'])) {
+            $this->settingsFacade->setAdminSettings($settings['admin']);
         }
 
         if (isset($settings['advanced'])) {
