@@ -73,7 +73,7 @@ class WorkflowsList implements InitializableInterface
         );
 
         $this->hooks->addAction(
-            "post_row_actions",
+            HooksAbstract::FILTER_POST_ROW_ACTIONS,
             [$this, "renderStatusAction"],
             10,
             2
@@ -99,14 +99,14 @@ class WorkflowsList implements InitializableInterface
         );
 
         $this->hooks->addAction(
-            'the_title',
+            HooksAbstract::FILTER_THE_TITLE,
             [$this, "addWorkflowStatusToTitle"],
             10,
             2
         );
 
         $this->hooks->addAction(
-            'admin_footer',
+            HooksAbstract::ACTION_ADMIN_FOOTER,
             [$this, "addScheduledActionsButton"]
         );
     }
