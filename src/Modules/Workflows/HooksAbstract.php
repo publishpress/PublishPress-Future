@@ -166,5 +166,5 @@ abstract class HooksAbstract
 
     public const ACTION_REGISTER_REST_ROUTES = 'publishpressfuture_register_rest_routes';
 
-    public const FILTER_REGISTER_REST_ROUTES = 'publishpressfuture_register_rest_routes';
+    public const FILTER_REGISTER_REST_ROUTES = 'publishpressfuture_filter_rest_routes';
 }
