@@ -23,9 +23,7 @@ class RestApiManager implements RestApiManagerInterface
     public function register()
     {
         $apiManagers = [
-            new RestApiV1(
-                $this->hooks
-            )
+            new RestApiV1($this->hooks)
         ];
 
         /**
