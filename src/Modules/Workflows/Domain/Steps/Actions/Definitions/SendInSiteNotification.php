@@ -37,7 +37,7 @@ class SendInSiteNotification implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "sendAdminNotification";
+        return "sendInSiteNotification";
     }
 
     public function getLabel(): string
