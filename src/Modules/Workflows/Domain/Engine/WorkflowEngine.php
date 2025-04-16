@@ -482,6 +482,10 @@ class WorkflowEngine implements WorkflowEngineInterface
             return 'ajax';
         }
 
+        if (defined('REST_REQUEST')) {
+            return 'rest';
+        }
+
         return 'frontend';
     }
 }
