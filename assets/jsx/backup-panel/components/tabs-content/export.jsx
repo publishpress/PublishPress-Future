@@ -17,7 +17,7 @@ const ExportTab = () => {
     const [isLoadingWorkflows, setIsLoadingWorkflows] = useState(false);
     const [workflows, setWorkflows] = useState([]);
     const [selectedWorkflows, setSelectedWorkflows] = useState([]);
-    const [selectedSettings, setSelectedSettings] = useState(['postTypesDefaults', 'general', 'notifications', 'display', 'advanced']);
+    const [selectedSettings, setSelectedSettings] = useState(['postTypesDefaults', 'general', 'notifications', 'display', 'admin', 'advanced']);
 
     const settingsOptions = [
         {
@@ -35,6 +35,10 @@ const ExportTab = () => {
         {
             title: __('Display', 'post-expirator'),
             id: 'display',
+        },
+        {
+            title: __('Admin', 'post-expirator'),
+            id: 'admin',
         },
         {
             title: __('Advanced', 'post-expirator'),

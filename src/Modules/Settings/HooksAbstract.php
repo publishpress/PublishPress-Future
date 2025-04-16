@@ -29,11 +29,13 @@ abstract class HooksAbstract
     public const FILTER_SETTINGS_GENERAL = 'publishpressfuture_settings_general';
     public const FILTER_SETTINGS_NOTIFICATIONS = 'publishpressfuture_settings_notifications';
     public const FILTER_SETTINGS_DISPLAY = 'publishpressfuture_settings_display';
+    public const FILTER_SETTINGS_ADMIN = 'publishpressfuture_settings_admin';
     public const FILTER_SETTINGS_ADVANCED = 'publishpressfuture_settings_advanced';
     public const FILTER_SETTINGS_POST_TYPE_DEFAULTS = 'publishpressfuture_settings_post_type_defaults';
     public const ACTION_SETTINGS_SET_POST_TYPE_DEFAULTS = 'publishpressfuture_settings_set_post_type_defaults';
     public const ACTION_SETTINGS_SET_GENERAL = 'publishpressfuture_settings_set_general';
     public const ACTION_SETTINGS_SET_NOTIFICATIONS = 'publishpressfuture_settings_set_notifications';
     public const ACTION_SETTINGS_SET_DISPLAY = 'publishpressfuture_settings_set_display';
+    public const ACTION_SETTINGS_SET_ADMIN = 'publishpressfuture_settings_set_admin';
     public const ACTION_SETTINGS_SET_ADVANCED = 'publishpressfuture_settings_set_advanced';
 }
