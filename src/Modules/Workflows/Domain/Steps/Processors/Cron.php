@@ -355,7 +355,7 @@ class Cron implements AsyncStepProcessorInterface
 
         if (self::WHEN_TO_RUN_NOW === $this->whenToRun) {
             $scheduledActionId = $this->cron->scheduleAsyncAction(
-                HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
+                HooksAbstract::ACTION_SCHEDULED_STEP_EXECUTE,
                 [$actionArgs],
                 false,
                 $this->priority
@@ -370,7 +370,7 @@ class Cron implements AsyncStepProcessorInterface
             // Schedule a single action
             $scheduledActionId = $this->cron->scheduleSingleAction(
                 $this->timestamp,
-                HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
+                HooksAbstract::ACTION_SCHEDULED_STEP_EXECUTE,
                 [$actionArgs],
                 false,
                 $this->priority
@@ -445,7 +445,7 @@ class Cron implements AsyncStepProcessorInterface
             $scheduledActionId = $this->cron->scheduleRecurringActionInSeconds(
                 $this->timestamp,
                 $interval,
-                HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
+                HooksAbstract::ACTION_SCHEDULED_STEP_EXECUTE,
                 [$actionArgs],
                 false,
                 $this->priority

@@ -198,7 +198,7 @@ class PostModel implements PostModelInterface
             $query = $wpdb->prepare(
                 $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 $this->post->ID,
-                HooksAbstract::ACTION_ASYNC_EXECUTE_STEP
+                HooksAbstract::ACTION_SCHEDULED_STEP_EXECUTE
             );
 
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
