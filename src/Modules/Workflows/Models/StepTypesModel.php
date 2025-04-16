@@ -16,7 +16,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\Delet
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\QueryPosts;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\RemovePostTerm;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\ScheduleDelay;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendAdminNotification;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendInSiteNotification;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendEmail;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendRay;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SetPostTerm;
@@ -245,7 +245,7 @@ class StepTypesModel implements StepTypesModelInterface
             DeletePostMeta::getNodeTypeName() => new DeletePostMeta(),
             UpdatePostMeta::getNodeTypeName() => new UpdatePostMeta(),
             UpdatePost::getNodeTypeName() => new UpdatePost(),
-            SendAdminNotification::getNodeTypeName() => new SendAdminNotification(),
+            SendInSiteNotification::getNodeTypeName() => new SendInSiteNotification(),
         ];
 
         return $nodesInstances;

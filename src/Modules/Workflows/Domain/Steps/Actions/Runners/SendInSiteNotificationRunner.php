@@ -4,10 +4,10 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendAdminNotification;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendInSiteNotification;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
-class SendAdminNotificationRunner implements StepRunnerInterface
+class SendInSiteNotificationRunner implements StepRunnerInterface
 {
     /**
      * @var StepProcessorInterface
@@ -29,7 +29,7 @@ class SendAdminNotificationRunner implements StepRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return SendAdminNotification::getNodeTypeName();
+        return SendInSiteNotification::getNodeTypeName();
     }
 
     public function setup(array $step): void

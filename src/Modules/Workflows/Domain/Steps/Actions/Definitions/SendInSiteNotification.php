@@ -5,11 +5,11 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class SendAdminNotification implements StepTypeInterface
+class SendInSiteNotification implements StepTypeInterface
 {
     public static function getNodeTypeName(): string
     {
-        return "action/core.send-admin-notification";
+        return "action/core.send-in-site-notification";
     }
 
     public static function getDefaultSubject()
@@ -42,12 +42,12 @@ class SendAdminNotification implements StepTypeInterface
 
     public function getLabel(): string
     {
-        return __("Send admin notification", "post-expirator");
+        return __("Send in-site notification", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This step dispatches a message to the admin panel.", "post-expirator");
+        return __("This step dispatches a message to the in-site notification.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -75,13 +75,13 @@ class SendAdminNotification implements StepTypeInterface
         return [
             [
                 "label" => __("Recipient", "post-expirator"),
-                "description" => __("The recipient of the admin notification.", "post-expirator"),
+                "description" => __("The recipient of the in-site notification.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "recipient",
                         "type" => "expression",
                         "label" => __("Recipients", "post-expirator"),
-                        "description" => __("A comma-separated list of user names, ids, or user roles to send the message to.", "post-expirator"),
+                        "description" => __("A comma-separated list of user names, ids, emails or user roles to send the message to.", "post-expirator"),
                         "default" => [
                             "expression" => "administrator",
                         ],
