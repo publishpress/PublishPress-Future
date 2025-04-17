@@ -11,7 +11,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Move Metabox, Future Actions Column and Editor "Future Actions" fields from Display to New "Admin" tab (Issue #1215).
 - Update Action Workflows post action and bulk edit messages (Issue #1219).
 
-
 ### Removed
 
 - Remove the option to compact scheduled actions data (Issue #1233).
