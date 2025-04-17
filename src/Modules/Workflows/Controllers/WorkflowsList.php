@@ -72,7 +72,7 @@ class WorkflowsList implements InitializableInterface
             [$this, "addCustomColumns"]
         );
 
-        $this->hooks->addAction(
+        $this->hooks->addFilter(
             HooksAbstract::FILTER_POST_ROW_ACTIONS,
             [$this, "renderStatusAction"],
             10,
@@ -98,7 +98,7 @@ class WorkflowsList implements InitializableInterface
             [$this, "updateWorkflowStatus"]
         );
 
-        $this->hooks->addAction(
+        $this->hooks->addFilter(
             HooksAbstract::FILTER_THE_TITLE,
             [$this, "addWorkflowStatusToTitle"],
             10,
