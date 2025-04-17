@@ -3,7 +3,6 @@
 namespace PublishPress\Future\Modules\Workflows\Controllers;
 
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Core\HooksAbstract as FutureCoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Core\Plugin;
@@ -95,7 +94,7 @@ class WorkflowsList implements InitializableInterface
         );
 
         $this->hooks->addAction(
-            FutureCoreHooksAbstract::ACTION_ADMIN_INIT,
+            CoreHooksAbstract::ACTION_ADMIN_INIT,
             [$this, "updateWorkflowStatus"]
         );
 

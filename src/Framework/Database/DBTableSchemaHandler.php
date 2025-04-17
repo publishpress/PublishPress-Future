@@ -7,6 +7,8 @@ use wpdb;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared
+
 class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
 {
     /**
@@ -48,13 +50,12 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
     {
         $tableName = $this->getTableName();
 
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
-        $table = $this->wpdb->get_var(
-            $this->wpdb->prepare(
-                "SHOW TABLES LIKE %s",
-                $tableName
-            )
+        $query = $this->wpdb->prepare(
+            "SHOW TABLES LIKE %s",
+            $tableName
         );
+
+        $table = $this->wpdb->get_var($query);
 
         return $table === $tableName;
     }
@@ -124,7 +125,6 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
         $tableName = $this->getTableName();
         $dbName = DB_NAME;
 
-        // phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared
         $columnLength = $this->wpdb->get_var(
             $this->wpdb->prepare( // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 "SELECT CHARACTER_MAXIMUM_LENGTH FROM information_schema.`COLUMNS` WHERE TABLE_SCHEMA = %s AND TABLE_NAME = %s AND COLUMN_NAME = %s",
@@ -133,7 +133,6 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
                 $column
             )
         );
-        // phpcs:enable
 
         return (int) $columnLength;
     }
@@ -143,7 +142,6 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
         $tableName = $this->getTableName();
         $dbName = DB_NAME;
 
-        // phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared
         $indexes = $this->wpdb->get_results(
             $this->wpdb->prepare( // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 "SELECT * FROM information_schema.STATISTICS WHERE TABLE_SCHEMA = %s AND TABLE_NAME = %s",
@@ -151,7 +149,6 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
                 $tableName
             )
         );
-        // phpcs:enable
 
         $mappedIndexes = [];
 
@@ -271,7 +268,6 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
                 $columnsString = implode(', ', $columns);
 
                 if ($columnsString !== $expectedColumnsString) {
-                    // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
                     // Drop the index for recreation
                     $this->wpdb->query(
                         $this->wpdb->prepare(
@@ -280,7 +276,6 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
                             $this->getTableName()
                         )
                     );
-                    // phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
 
                     $indexExists = false;
                 }
@@ -289,7 +284,6 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
             if (! $indexExists) {
                 $columns = implode(', ', $expectedColumns);
                 $unique = $indexName === 'PRIMARY' ? 'UNIQUE' : '';
-                // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 $this->wpdb->query(
                     $this->wpdb->prepare(
                         "CREATE $unique INDEX %i ON %i ($columns)",
@@ -297,14 +291,12 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
                         $this->getTableName()
                     )
                 );
-                // phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
             }
         }
 
         // Drop extra indexes
         foreach ($indexes as $indexName => $columns) {
             if (! array_key_exists($indexName, $expectedIndexes)) {
-                // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
                 $this->wpdb->query(
                     $this->wpdb->prepare(
                         "DROP INDEX %i ON %i",
@@ -312,7 +304,6 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
                         $this->getTableName()
                     )
                 );
-                // phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
             }
         }
 

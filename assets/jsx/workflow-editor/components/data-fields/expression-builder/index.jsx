@@ -15,6 +15,7 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-handlebars";
 import "ace-builds/src-noconflict/theme-textmate";
 import "ace-builds/src-noconflict/ext-language_tools";
+import { ModalFooter } from './../modal-footer'
 
 import './style.css';
 
@@ -171,7 +172,7 @@ export const ExpressionBuilder = ({
             <Modal
                 title={label}
                 onRequestClose={onClose}
-                className="expression-builder-modal"
+                className="workflow-editor-modal expression-builder-modal"
             >
                 <div style={{ minWidth: '600px', maxWidth: '600px' }}>
                     {singleVariableOnly && (
@@ -236,6 +237,7 @@ export const ExpressionBuilder = ({
                         />
                     </div>
                 </div>
+                <ModalFooter onClose={ onClose } />
             </Modal>
         )}
     </div>;

@@ -36,6 +36,11 @@ $tabs = [
         'slug'  => 'display',
         'link' => admin_url($baseLink . 'display'),
     ],
+    [
+        'title' => __('Admin', 'post-expirator'),
+        'slug'  => 'admin',
+        'link' => admin_url($baseLink . 'admin'),
+    ],
 ];
 
 $tabs = $hooks->applyFilters(HooksAbstract::FILTER_FUTURE_ACTIONS_TABS, $tabs);

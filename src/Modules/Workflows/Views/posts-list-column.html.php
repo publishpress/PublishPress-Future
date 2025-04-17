@@ -12,7 +12,7 @@ $hasListedWorkflows = false;
 $container = Container::getInstance();
 $cachePostsWithFutureActions = $container->get(ServicesAbstract::CACHE_POSTS_WITH_FUTURE_ACTION);
 
-foreach ($enabledWorkflows as $workflowModel):
+foreach ($enabledWorkflows as $workflowModel) :
     $schedules = $postModel->getManuallyEnabledWorkflowsSchedule($workflowModel->getId());
     $workflowLabel = $workflowModel->getManualSelectionLabel();
 
