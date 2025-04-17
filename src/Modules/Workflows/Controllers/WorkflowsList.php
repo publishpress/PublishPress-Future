@@ -171,8 +171,8 @@ class WorkflowsList implements InitializableInterface
             return;
         }
 
-        global $postType;
-        if (Module::POST_TYPE_WORKFLOW !== $postType) {
+        global $post_type;
+        if (Module::POST_TYPE_WORKFLOW !== $post_type) {
             return;
         }
 
