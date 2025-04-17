@@ -110,12 +110,12 @@ class WorkflowsList implements InitializableInterface
             [$this, "addScheduledActionsButton"]
         );
 
-        $this->hooks->addAction(
+        $this->hooks->addFilter(
             HooksAbstract::FILTER_POST_UPDATED_MESSAGES,
             [$this, "filterPostUpdatedMessages"]
         );
 
-        $this->hooks->addAction(
+        $this->hooks->addFilter(
             HooksAbstract::FILTER_BULK_POST_UPDATED_MESSAGES,
             [$this, "filterBulkPostUpdatedMessages"],
             10,
