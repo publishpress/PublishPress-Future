@@ -6,7 +6,7 @@ if [[ ! $(pwd) =~ .*dev-workspace$ ]]; then
 fi
 
 set -a
-source ../../.env
+source ../.env
 set +a
 
 DB_EXPORT_FILE=/var/www/html/wp-content/plugins/$PLUGIN_SLUG/tests/Support/Data/dump.sql

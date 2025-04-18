@@ -6,7 +6,7 @@ if [[ ! $(pwd) =~ .*dev-workspace$ ]]; then
 fi
 
 set -a
-source ../../.env
+source ../.env
 set +a
 
 # Check if the plugin slug is set
