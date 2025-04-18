@@ -92,11 +92,7 @@ services:
             - db
             - mailhog
         working_dir: /var/www/html
-        command: >
-            /bin/sh -c '
-            sh /tmp/prepare-wp.sh;
-            tail -f /dev/null
-            '
+        command: ["/bin/sh", "-c", "sh /tmp/prepare-wp.sh"]
     mailhog:
         image: mailhog/mailhog:latest
         container_name: ${COMPOSE_PROJECT_NAME}_test_mailhog
