@@ -706,7 +706,7 @@ class ScheduledActions implements InitializableInterface
         $newScheduledStepModel->insert();
     }
 
-    private function verifyOperationTimeout(string $actionUid, int $timeout = null): bool
+    private function verifyOperationTimeout(string $actionUid, ?int $timeout = null): bool
     {
         $transientKey = 'publishpressfuture_' . $actionUid;
 
