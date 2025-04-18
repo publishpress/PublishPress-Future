@@ -588,5 +588,4 @@ class WorkflowsList implements InitializableInterface
 
         return $bulk_messages;
     }
-
 }
