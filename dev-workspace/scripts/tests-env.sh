@@ -18,7 +18,7 @@ if [[ ! $(pwd) =~ .*dev-workspace$ ]]; then
 fi
 
 set -a
-source ./.env
+source ../.env
 set +a
 
 if [[ $# -eq 0 ]] || [[ $1 == "-h" ]]; then

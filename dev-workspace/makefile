@@ -9,25 +9,22 @@ help:
 .PHONY: build buildpush update
 
 build:
-	source ./.env && \
+	source ../.env && \
 	CONTAINER_NAME=$${CONTAINER_NAME} \
 	IMAGE_NAME=$${IMAGE_NAME} \
-	BIN_PATH=$${BIN_PATH} \
 	CACHE_PATH=$${CACHE_PATH} \
-	$${BIN_PATH}/exec build "$$@";
+	sh ./scripts/services-build-images.sh "$$@";
 
 push:
-	source ./.env && \
+	source ../.env && \
 	CONTAINER_NAME=$${CONTAINER_NAME} \
 	IMAGE_NAME=$${IMAGE_NAME} \
-	BIN_PATH=$${BIN_PATH} \
 	CACHE_PATH=$${CACHE_PATH} \
-	$${BIN_PATH}/exec build-push "$$@";
+	sh ./scripts/terminal-build-push-image.sh $${IMAGE_NAME} "$$@";
 
 update:
-	source ./.env && \
+	source ../.env && \
 	CONTAINER_NAME=$${CONTAINER_NAME} \
 	IMAGE_NAME=$${IMAGE_NAME} \
-	BIN_PATH=$${BIN_PATH} \
 	CACHE_PATH=$${CACHE_PATH} \
-	$${BIN_PATH}/exec update "$$@"
+	sh ./scripts/services-pull-images.sh "$$@";

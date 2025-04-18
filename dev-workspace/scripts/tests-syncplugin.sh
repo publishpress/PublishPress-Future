@@ -8,7 +8,7 @@
 # Usage: bash syncplugin.sh [source_directory]
 # =========================================================
 
-source tests/.env
+source .env
 
 PLUGIN_DESTINATION=$WORDPRESS_ROOT_DIR/wp-content/plugins/$PLUGIN_SLUG
 

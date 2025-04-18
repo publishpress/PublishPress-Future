@@ -5,7 +5,7 @@ WP_CACHE=$(pwd)/dev-workspace/.cache/wordpress
 SOURCE_PLUGIN_PATH=$(pwd)
 
 set -a
-source ./.env
+source ../.env
 set +a
 
 # Sync the plugin files to the test environment

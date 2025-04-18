@@ -2,7 +2,8 @@ name: ${CONTAINER_NAME}
 
 services:
     terminal:
-        build: .
+        build: ./terminal/
+        container_name: ${CONTAINER_NAME}_terminal
         image: ${IMAGE_NAME}
         command: ["zsh"]
         stdin_open: true
@@ -19,7 +20,7 @@ services:
             - ../.cache/.composer/auth.json:/root/.composer/auth.json
     db:
         image: mariadb:latest
-        container_name: ${COMPOSE_PROJECT_NAME}_test_db
+        container_name: ${CONTAINER_NAME}_test_db
         restart: always
         environment:
             MARIADB_DATABASE: wordpress
@@ -35,12 +36,10 @@ services:
         healthcheck:
             test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
             start_period: 10s
-            interval: 10s
-            timeout: 5s
             retries: 3
     wordpress:
         build: ./test-environment/wordpress
-        container_name: ${COMPOSE_PROJECT_NAME}_test_wordpress
+        container_name: ${CONTAINER_NAME}_test_wordpress
         restart: always
         environment:
             WORDPRESS_DB_HOST: db
@@ -62,12 +61,10 @@ services:
                 condition: service_started
         healthcheck:
             test: ["CMD", "test", "-f", "/var/www/html/wp-config.php"]
-            interval: 10s
-            timeout: 10s
             retries: 3
     wpcli:
         image: wordpress:cli-php8.4
-        container_name: ${COMPOSE_PROJECT_NAME}_test_wpcli
+        container_name: ${CONTAINER_NAME}_test_wpcli
         environment:
             WORDPRESS_DB_HOST: db
             WORDPRESS_DB_USER: wordpress
@@ -95,7 +92,7 @@ services:
         command: ["/bin/sh", "-c", "sh /tmp/prepare-wp.sh"]
     mailhog:
         image: mailhog/mailhog:latest
-        container_name: ${COMPOSE_PROJECT_NAME}_test_mailhog
+        container_name: ${CONTAINER_NAME}_test_mailhog
         ports:
             - "60980:1025" # SMTP server
             - "60981:8025" # Web UI

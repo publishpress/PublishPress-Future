@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-RUNNING_CONTAINER=$($BIN_PATH/detect-running-container)
+RUNNING_CONTAINER=$(sh ./scripts/terminal-detect-running-container.sh)
 
 if [ -z "$RUNNING_CONTAINER" ]; then
     echo "Container is not running"

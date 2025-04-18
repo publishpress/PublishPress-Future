@@ -7,10 +7,9 @@ fi
 
 set -a
 source .env
-source ../tests/.env
 set +a
 
-DB_CONTAINER_NAME=${PROJECT_NAME}_tests_db
+DB_CONTAINER_NAME=${CONTAINER_NAME}_tests_db
 DB_LOGS_FILE="${PWD}/.cache/logs/mysql/general.log"
 
 run_mysql_query() {

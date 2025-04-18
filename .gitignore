@@ -22,7 +22,6 @@ ray.php
 .phplint.cache*
 
 /tests-*
-/tests/.env
 assets/js/*.map
 webpack-bundle-stats.json
 webpack-bundle-stats.html
