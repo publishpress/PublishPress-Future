@@ -30,7 +30,7 @@ rsync -a \
   --exclude='dev-workspace' \
   --exclude='dist' \
   --exclude='docs' \
-  --exclude='vendor' \
+  --exclude='/vendor' \
   --exclude='.cursor' \
   --exclude='.phplint.cache' \
   --exclude='.babelrc' \
