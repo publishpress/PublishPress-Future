@@ -106,6 +106,12 @@ class WorkflowEngine implements WorkflowEngineInterface
         );
 
         $this->hooks->addAction(
+            HooksAbstract::ACTION_EVENT_DRIVEN_STEP_EXECUTE,
+            [$this, "executeEventDrivenStepRoutine"],
+            10
+        );
+
+        $this->hooks->addAction(
             HooksAbstract::ACTION_UNSCHEDULE_RECURRING_STEP_ACTION,
             [$this, "unscheduleRecurringStepAction"],
             10,
@@ -392,6 +398,59 @@ class WorkflowEngine implements WorkflowEngineInterface
             $this->logger->error(
                 sprintf(
                     self::LOG_PREFIX . ' Scheduled step runner error: %s. File: %s:%d',
+                    $e->getMessage(),
+                    $e->getFile(),
+                    $e->getLine()
+                )
+            );
+        }
+    }
+
+    public function executeEventDrivenStepRoutine($args)
+    {
+        try {
+            if (is_null($args)) {
+                $message = self::LOG_PREFIX . ' Event driven step runner error, no args found';
+
+                throw new \Exception(esc_html($message));
+            }
+
+            $originalArgs = $args;
+
+
+            $nodeName = $args['stepName'];
+            $scheduledStepModel = new WorkflowScheduledStepModel();
+            $scheduledStepModel->loadByActionId($this->currentAsyncActionId);
+            $args = $scheduledStepModel->getArgs();
+            $workflowExecutionId = $args['runtimeVariables']['global']['workflow']['execution_id'];
+
+            $args['workflowId'] = $originalArgs['workflowId'];
+
+            $stepRunner = call_user_func($this->stepRunnerFactory, $nodeName, $workflowExecutionId);
+
+            $workflow = new WorkflowModel();
+            $workflow->load($originalArgs['workflowId']);
+
+            $step = $workflow->getPartialRoutineTreeFromNodeId($originalArgs['stepId']);
+
+            if (empty($step)) {
+                throw new \Exception('Step not found');
+            }
+
+            $this->logger->debug(
+                sprintf(
+                    self::LOG_PREFIX . '   - Workflow %1$d: Executing event driven step %2$s on action %3$d',
+                    $originalArgs['workflowId'],
+                    $step['node']['data']['slug'] ?? 'unknown',
+                    $args['actionId']
+                )
+            );
+
+            $stepRunner->actionCallback($args, $originalArgs);
+        } catch (Throwable $e) {
+            $this->logger->error(
+                sprintf(
+                    self::LOG_PREFIX . ' Event driven step runner error: %s. File: %s:%d',
                     $e->getMessage(),
                     $e->getFile(),
                     $e->getLine()
