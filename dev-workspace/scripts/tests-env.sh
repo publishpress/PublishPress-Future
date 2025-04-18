@@ -28,22 +28,22 @@ fi
 
 tests_up() {
   echo "Starting..."
-  docker compose -f docker/compose.yaml up wp-cli
+  docker compose -f docker/compose.yaml up wpcli
 }
 
 tests_stop() {
   echo "Stopping..."
-  docker compose -f docker/compose.yaml stop wp-cli wordpress db mailhog
+  docker compose -f docker/compose.yaml stop wpcli wordpress db mailhog
 }
 
 tests_down() {
   echo "Shutting down..."
-  docker compose -f docker/compose.yaml down wp-cli wordpress db mailhog
+  docker compose -f docker/compose.yaml down wpcli wordpress db mailhog
 }
 
 tests_cleanup() {
   echo "Cleaning up..."
-  docker compose -f docker/compose.yaml down -v wp-cli wordpress db mailhog
+  docker compose -f docker/compose.yaml down -v wpcli wordpress db mailhog
 }
 
 get_wp_port() {

@@ -6,6 +6,11 @@ use Tests\Support\EndToEndTester;
 
 class ActivationCest
 {
+    public function _before(EndToEndTester $I): void
+    {
+        // Code here will be executed before each test.
+    }
+
     public function test_plugin_is_activated(EndToEndTester $I): void
     {
         $I->loginAsAdmin();

@@ -16,7 +16,7 @@ modules:
             tablePrefix: '%TEST_TABLE_PREFIX%'
             domain: '%WORDPRESS_DOMAIN%'
             adminEmail: 'admin@%WORDPRESS_DOMAIN%'
-            dump: 'tests/Support/Data/dump.sql'
+            dump: 'dev-workspace/.cache/wordpress/dump.sql'
             title: 'Integration Tests'
             theme: ''
             plugins:

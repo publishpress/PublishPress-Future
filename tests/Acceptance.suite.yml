@@ -36,7 +36,7 @@ modules:
                   download.default_directory: "..."
         lucatume\WPBrowser\Module\WPDb:
             dbUrl: '%WORDPRESS_DB_URL%'
-            dump: 'tests/Support/Data/dump.sql'
+            dump: 'dev-workspace/.cache/wordpress/dump.sql'
             populate: true
             cleanup: true
             reconnect: false

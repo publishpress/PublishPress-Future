@@ -1,4 +1,6 @@
-FROM wordpress:6.7.2
+FROM wordpress:latest
+
+COPY 99-custom.ini /usr/local/etc/php/conf.d/
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -6,13 +8,22 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
-    && docker-php-ext-install zip
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    locales \
+    && docker-php-ext-install zip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd \
+    && a2enmod headers \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install Xdebug
-RUN pecl install xdebug-3.3.1 && \
+RUN pecl install xdebug-3.4.2 && \
     docker-php-ext-enable xdebug
 
 # Configure Xdebug

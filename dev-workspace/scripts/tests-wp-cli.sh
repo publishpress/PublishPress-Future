@@ -17,4 +17,4 @@ fi
 
 # Execute WP-CLI command and pass all arguments
 echo "Running: wp $@"
-docker compose -f docker/compose.yaml exec wp-cli wp "$@"
+docker compose -f docker/compose.yaml exec wpcli wp "$@"
