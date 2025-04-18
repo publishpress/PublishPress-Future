@@ -511,7 +511,7 @@ class WorkflowsList implements InitializableInterface
         );
         $messages[$postType][7]  = sprintf(
             __('%s saved.', 'post-expirator'),
-             $singular
+            $singular
         );
         $messages[$postType][8]  = sprintf(
             __('%s submitted.', 'post-expirator'),
@@ -525,7 +525,7 @@ class WorkflowsList implements InitializableInterface
         );
         $messages[$postType][10] = sprintf(
             __('%s draft updated.', 'post-expirator'),
-             $singular
+            $singular
         );
 
         return $messages;
@@ -586,5 +586,4 @@ class WorkflowsList implements InitializableInterface
 
         return $bulk_messages;
     }
-
 }
