@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+set -a
+source ../../.env
+set +a
+
 # If the legacy dir "cache" exists, move its content to $CACHE_PATH and remove it.
 if [[ -d "cache" ]]; then
     mv cache/* $CACHE_PATH

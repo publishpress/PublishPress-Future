@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-source /project/dev-workspace/scripts/lang-constants.sh
+set -a
+source ../../.env
+set +a
 
 export JSX_SCRIPTS="workflow-editor/future_workflow_editor_script backup-panel/future_backup_panel"
 
@@ -12,8 +14,8 @@ do
         package="${scriptHandlers[0]}"
         handler="${scriptHandlers[1]}"
         source_path="./assets/jsx/${package}"
-        pot_file="./$LANG_DIR/${PLUGIN_NAME}-$handler.pot"
-        po_file="./$LANG_DIR/$PLUGIN_NAME-${locale}-$handler.po"
+        pot_file="./$LANG_DIR/${PLUGIN_SLUG}-$handler.pot"
+        po_file="./$LANG_DIR/$PLUGIN_SLUG-${locale}-$handler.po"
 
         wp i18n make-pot $source_path $pot_file --domain=$LANG_DOMAIN  --allow-root
 
