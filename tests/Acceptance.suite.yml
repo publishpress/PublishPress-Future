@@ -50,10 +50,7 @@ modules:
             loadOnly: true
             wpRootFolder: '%WORDPRESS_ROOT_DIR%'
             domain: '%WORDPRESS_DOMAIN%'
-            dbHost: "%WORDPRESS_DB_HOST%"
-            dbName: "%WORDPRESS_DB_NAME%"
-            dbUser: "%WORDPRESS_DB_USER%"
-            dbPassword: "%WORDPRESS_DB_PASSWORD%"
+            dbUrl: "%WORDPRESS_DB_URL%"
             plugins: ['post-expirator/post-expirator.php']
         Sequence:
             prefix: "uid_"
