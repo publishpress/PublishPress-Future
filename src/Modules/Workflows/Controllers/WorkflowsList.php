@@ -488,6 +488,8 @@ class WorkflowsList implements InitializableInterface
 
         $postTypeObject = get_post_type_object($postType);
         $singular       = $postTypeObject->labels->singular_name;
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Safe to use in post update message.
+        $postRevision = isset($_GET['revision']) ? (int) $_GET['revision'] : null;
 
         $messages[$postType][1]  = sprintf(
             __('%s updated.', 'post-expirator'),
@@ -497,12 +499,12 @@ class WorkflowsList implements InitializableInterface
             __('%s updated.', 'post-expirator'),
             $singular
         );
-        $messages[$postType][5] = isset($_GET['revision'])
+        $messages[$postType][5] = $postRevision
         ? sprintf(
             /* translators: 1: Post type singular label, 2: Revision title */
             __('%1$s restored to revision from %2$s', 'post-expirator'),
             $singular,
-            wp_post_revision_title((int) $_GET['revision'], false)
+            wp_post_revision_title($postRevision, false)
         )
         : false;
         $messages[$postType][6]  = sprintf(
@@ -586,4 +588,5 @@ class WorkflowsList implements InitializableInterface
 
         return $bulk_messages;
     }
+
 }
