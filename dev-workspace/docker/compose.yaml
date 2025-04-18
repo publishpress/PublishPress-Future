@@ -31,7 +31,7 @@ services:
         volumes:
             - ../.cache/mysql:/var/lib/mysql
             - ../.cache/logs/mysql:/var/log/mysql
-            - ./db/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
+            - ./test-environment/db/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
         healthcheck:
             test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
             start_period: 10s
@@ -39,7 +39,7 @@ services:
             timeout: 5s
             retries: 3
     wordpress:
-        build: ./wordpress
+        build: ./test-environment/wordpress
         container_name: ${COMPOSE_PROJECT_NAME}_test_wordpress
         restart: always
         environment:
@@ -77,9 +77,9 @@ services:
             - ../.cache/wordpress:/var/www/html/
             - ../../:/var/www/html/wp-content/plugins/post-expirator
             - ../../tests/Support/Data/plugins/pre-tests:/var/www/html/wp-content/plugins/pre-tests
-            - ./wpcli/prepare-wp.sh:/tmp/prepare-wp.sh
-            - ./wpcli/conf.d/my.cnf:/tmp/my.cnf
-            - ./wpcli/options.sql:/tmp/options.sql
+            - ./test-environment/wpcli/prepare-wp.sh:/tmp/prepare-wp.sh
+            - ./test-environment/wpcli/conf.d/my.cnf:/tmp/my.cnf
+            - ./test-environment/wpcli/options.sql:/tmp/options.sql
         depends_on:
             wordpress:
                 condition: service_healthy
