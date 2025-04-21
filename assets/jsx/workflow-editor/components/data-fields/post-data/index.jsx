@@ -49,13 +49,13 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
             />
             <PostTextControl
                 name="name"
-                label={__('Post Name', 'post-expirator')}
+                label={__('Post Slug', 'post-expirator')}
                 defaultValue={defaultValue?.name}
                 onChange={(settingName, value) => onChangeSetting({ settingName: "name", value })}
                 settings={settings}
                 variables={variables}
                 onClosePopover={() => onClosePopover("name")}
-                checkboxLabel={__("Update the post name", "post-expirator")}
+                checkboxLabel={__("Update the Post Slug", "post-expirator")}
             />
             <PostTextControl
                 name="content"
