@@ -29,12 +29,12 @@ class UpdatePost implements StepTypeInterface
 
     public function getLabel(): string
     {
-        return __("Update post", "post-expirator");
+        return __("Update post details", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This step updates a post.", "post-expirator");
+        return __("This step updates key information about each post such as the data, title, content, author, and more.", "post-expirator");
     }
 
     public function getIcon(): string
