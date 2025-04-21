@@ -55,7 +55,7 @@ export function PostData({ name, label, defaultValue, onChange, settings, variab
                 settings={settings}
                 variables={variables}
                 onClosePopover={() => onClosePopover("name")}
-                checkboxLabel={__("Update the Post Slug", "post-expirator")}
+                checkboxLabel={__("Update the post slug", "post-expirator")}
             />
             <PostTextControl
                 name="content"
