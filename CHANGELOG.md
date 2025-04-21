@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Added Scrollbar to Workflow Editor left sidebar (Issue #1281)
+- Added Scrollbar to Workflow Editor left sidebar (Issue #1281).
 
 ### Changed
 
