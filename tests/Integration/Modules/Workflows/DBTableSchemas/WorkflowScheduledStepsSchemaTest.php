@@ -258,7 +258,7 @@ class WorkflowScheduledStepsSchemaTest extends NoTransactionWPTestCase
         $this->assertEquals('forever', $columnDefaults['repeat_until']);
         $this->assertEquals('0', $columnDefaults['repeat_times']);
         $this->assertEquals('0', $columnDefaults['is_compressed']);
-        $this->assertEquals('CURRENT_TIMESTAMP', $columnDefaults['created_at']);
+        $this->assertEquals('current_timestamp()', $columnDefaults['created_at']);
         $this->assertNull($columnDefaults['post_id']);
     }
 
