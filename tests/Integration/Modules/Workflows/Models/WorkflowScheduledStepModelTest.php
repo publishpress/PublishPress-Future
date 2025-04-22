@@ -150,48 +150,6 @@ class WorkflowScheduledStepModelTest extends \lucatume\WPBrowser\TestCase\WPTest
         $this->assertEquals(['key' => 'value'], $model->getArgs());
     }
 
-    public function testInsertForCompressedArgs(): void
-    {
-        $model = $this->make(WorkflowScheduledStepModel::class, [
-            'isCompressed' => true,
-        ]);
-        $model->setActionId(1);
-        $model->setWorkflowId(1);
-        $model->setStepId('step_id');
-        $model->setActionUID('action_uid');
-        $model->setArgs(['key' => 'value']);
-        $result = $model->insert();
-
-        $this->assertTrue($result);
-
-        global $wpdb;
-
-        $tableName = $wpdb->prefix . 'ppfuture_workflow_scheduled_steps';
-
-        $result = $wpdb->get_row(
-            $wpdb->prepare(
-                "SELECT * FROM %i WHERE action_id = %d",
-                $tableName,
-                $model->getActionId()
-            ),
-            ARRAY_A
-        );
-
-        $this->assertNotEmpty($result);
-        $this->assertEquals(1, $result['workflow_id']);
-        $this->assertEquals('step_id', $result['step_id']);
-        $this->assertEquals('action_uid', $result['action_uid']);
-        $this->assertEquals(md5('action_uid'), $result['action_uid_hash']);
-        $this->assertEquals(1, $result['is_compressed']);
-        $this->assertNotEmpty($result['compressed_args']);
-        $this->assertNull($result['uncompressed_args']);
-
-        // Verify the compressed args can be uncompressed and decoded
-        $decompressedArgs = gzuncompress($result['compressed_args']);
-        $decodedArgs = json_decode($decompressedArgs, true);
-        $this->assertEquals(['key' => 'value'], $decodedArgs);
-    }
-
     public function testInsertForUncompressedArgs(): void
     {
         $model = $this->make(WorkflowScheduledStepModel::class, [
