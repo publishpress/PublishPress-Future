@@ -149,7 +149,10 @@
         "test:activate": "bash dev-workspace/scripts/tests-activate-plugin.sh $@",
         "test:db-export": "bash dev-workspace/scripts/tests-db-export.sh $@",
         "test:db-import": "bash dev-workspace/scripts/tests-db-import.sh $@",
-        "test:up": "bash dev-workspace/scripts/tests-env.sh up",
+        "test:up": [
+            "bash dev-workspace/scripts/tests-env.sh up",
+            "@test:info"
+        ],
         "test:down": "bash dev-workspace/scripts/tests-env.sh down",
         "test:stop": "bash dev-workspace/scripts/tests-env.sh stop",
         "test:clean": [
