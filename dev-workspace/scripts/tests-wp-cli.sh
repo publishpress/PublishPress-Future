@@ -11,8 +11,8 @@ set +a
 
 # Check if wp-cli container is running, if not start it
 if ! docker compose -f docker/compose.yaml ps | grep -q "_tests_wpcli.*Up"; then
-    echo "Starting wp-cli container..."
-    docker compose -f docker/compose.yaml up -d wp-cli
+    echo "Starting wpcli container..."
+    docker compose -f docker/compose.yaml up -d wpcli
 fi
 
 # Execute WP-CLI command and pass all arguments
