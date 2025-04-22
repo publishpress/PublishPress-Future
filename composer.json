@@ -143,7 +143,7 @@
         "dbox:list": "/scripts/pdropbox list",
         "dbox:remove": "/scripts/pdropbox remove",
         "dbox:unlink": "/scripts/pdropbox unlink",
-        "test:sync": "bash dev-workspace/scripts/tests-syncplugin.sh ./",
+        "test:sync": "bash dev-workspace/scripts/tests-sync-plugin.sh ./",
         "test:driver": "source ./.env && $CHROMEDRIVER_BINARY --port=$CHROMEDRIVER_PORT",
         "test:wp": "bash dev-workspace/scripts/tests-wp-cli.sh $@",
         "test:activate": "bash dev-workspace/scripts/tests-activate-plugin.sh $@",
@@ -164,8 +164,11 @@
         "test:refresh": "bash dev-workspace/scripts/tests-env.sh refresh",
         "test:snippets": "composer codecept gherkin:snippets $@",
         "test:steps": "composer codecept gherkin:steps $@",
-        "test:copy-dump": "cp dev-workspace/.cache/wordpress/dump.sql tests/Support/Data/dump.sql",
-        "test": "bash dev-workspace/scripts/tests-run.sh $@",
+        "test:update-dump": "cp dev-workspace/.cache/wordpress/dump.sql tests/Support/Data/dump.sql",
+        "test": [
+            "@test:sync",
+            "vendor/bin/codecept run $@"
+        ],
         "test:debug": "php -d xdebug.mode=debug -d xdebug.start_with_request=yes vendor/bin/codecept run $@",
         "codecept": "./vendor/bin/codecept $@",
         "docker:cleanup": "docker system prune -f",
