@@ -1,4 +1,4 @@
-FROM wordpress:latest
+FROM wordpress:6.8-php8.3
 
 COPY conf.d/99-custom.ini /usr/local/etc/php/conf.d/
 

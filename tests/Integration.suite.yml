@@ -10,12 +10,12 @@ modules:
         - Sequence
     config:
         lucatume\WPBrowser\Module\WPLoader:
-            wpRootFolder: "%WORDPRESS_ROOT_DIR%"
-            dbUrl: "%WORDPRESS_DB_URL%"
+            wpRootFolder: "%WPTESTS_ROOT_DIR%"
+            dbUrl: "%WPTESTS_DB_URL%"
             wpDebug: true
-            tablePrefix: '%TEST_TABLE_PREFIX%'
-            domain: '%WORDPRESS_DOMAIN%'
-            adminEmail: 'admin@%WORDPRESS_DOMAIN%'
+            tablePrefix: '%WPTESTS_TEST_TABLE_PREFIX%'
+            domain: '%WPTESTS_DOMAIN%'
+            adminEmail: 'admin@%WPTESTS_DOMAIN%'
             dump: 'dev-workspace/.cache/wordpress/dump.sql'
             title: 'Integration Tests'
             theme: ''

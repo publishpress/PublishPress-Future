@@ -12,7 +12,7 @@ wp db reset --yes
 
 # Install WordPress
 show_header "WordPress installation"
-wp core is-installed || wp core install --url="http://localhost:60802" --title="Future Free - Test Site" --admin_user="admin" --admin_password="admin" --admin_email="test@example.com" --skip-email
+wp core is-installed || wp core install --url="$1" --title="$2" --admin_user="admin" --admin_password="admin" --admin_email="test@example.com" --skip-email
 
 # Make sure WP is updated
 show_header "Updating WordPress"

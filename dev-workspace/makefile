@@ -11,20 +11,20 @@ help:
 build:
 	source ../.env && \
 	CONTAINER_NAME=$${CONTAINER_NAME} \
-	IMAGE_NAME=$${IMAGE_NAME} \
+	TERMINAL_IMAGE_NAME=$${TERMINAL_IMAGE_NAME} \
 	CACHE_PATH=$${CACHE_PATH} \
 	sh ./scripts/services-build-images.sh "$$@";
 
 push:
 	source ../.env && \
 	CONTAINER_NAME=$${CONTAINER_NAME} \
-	IMAGE_NAME=$${IMAGE_NAME} \
+	TERMINAL_IMAGE_NAME=$${TERMINAL_IMAGE_NAME} \
 	CACHE_PATH=$${CACHE_PATH} \
-	sh ./scripts/terminal-build-push-image.sh $${IMAGE_NAME} "$$@";
+	sh ./scripts/terminal-build-push-image.sh $${TERMINAL_IMAGE_NAME} "$$@";
 
 update:
 	source ../.env && \
 	CONTAINER_NAME=$${CONTAINER_NAME} \
-	IMAGE_NAME=$${IMAGE_NAME} \
+	TERMINAL_IMAGE_NAME=$${TERMINAL_IMAGE_NAME} \
 	CACHE_PATH=$${CACHE_PATH} \
 	sh ./scripts/services-pull-images.sh "$$@";

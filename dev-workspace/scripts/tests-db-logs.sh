@@ -9,8 +9,8 @@ set -a
 source ../.env
 set +a
 
-DB_CONTAINER_NAME=${CONTAINER_NAME}_tests_db
-DB_LOGS_FILE="${PWD}/.cache/logs/mysql/general.log"
+DB_CONTAINER_NAME=${CONTAINER_NAME}_env_db_tests
+DB_LOGS_FILE="${PWD}/.cache/logs/db_tests/general.log"
 
 run_mysql_query() {
   docker exec -i $DB_CONTAINER_NAME bash -c "mysql -u root -proot -e '$1' 2>&1 | grep  -v \"Using a password\""
