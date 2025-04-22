@@ -4,13 +4,6 @@ TESTS_BASE_PATH=$(pwd)/tests
 WP_CACHE=$(pwd)/dev-workspace/.cache/wordpress
 MYSQL_CACHE=$(pwd)/dev-workspace/.cache/mysql
 MAILHOG_CACHE=$(pwd)/dev-workspace/.cache/mailhog
-DB_USER=testuser
-DB_PASS=testpass
-DB_HOST="127.0.0.1"
-DB_NAME=testdb
-WP_DOMAIN=localhost
-WP_USER=admin
-WP_PASS=admin
 
 # If not in the `dev-workspace` directory, change to it
 if [[ ! $(pwd) =~ .*dev-workspace$ ]]; then
@@ -20,6 +13,11 @@ fi
 set -a
 source ../.env
 set +a
+
+DB_USER=$(echo $WORDPRESS_DB_URL | sed -E 's/mysql:\/\/([^:]+):.*/\1/')
+DB_PASS=$(echo $WORDPRESS_DB_URL | sed -E 's/mysql:\/\/.*:(.*)@.*/\1/')
+DB_HOST=$(echo $WORDPRESS_DB_URL | sed -E 's/mysql:\/\/.*@.*\/(.*)/\1/')
+DB_NAME=$(echo $WORDPRESS_DB_URL | sed -E 's/mysql:\/\/.*@.*\/(.*)/\1/')
 
 if [[ $# -eq 0 ]] || [[ $1 == "-h" ]]; then
   echo "Usage: $0 [up|stop|down|clenaup|refresh|info]"
@@ -71,9 +69,9 @@ tests_info() {
   echo "=============================================="
   echo "🌐 WordPress Information"
   echo "=============================================="
-  echo "📌 Site URL:       http://$WP_DOMAIN:$WP_PORT"
-  echo "📌 Admin URL:      http://$WP_DOMAIN:$WP_PORT/wp-admin"
-  echo "📌 Login:          $WP_USER / $WP_PASS"
+  echo "📌 Site URL:       http://$WORDPRESS_DOMAIN:$WP_PORT"
+  echo "📌 Admin URL:      http://$WORDPRESS_DOMAIN:$WP_PORT/wp-admin"
+  echo "📌 Login:          $WORDPRESS_ADMIN_USER / $WORDPRESS_ADMIN_PASSWORD"
   echo "📌 Root Directory: $WP_CACHE"
   echo "📌 Container ID:   $(docker compose -f docker/compose.yaml ps -q wordpress)"
   echo ""
@@ -90,8 +88,8 @@ tests_info() {
   echo "=============================================="
   echo "📧 Mail Information"
   echo "=============================================="
-  echo "📌 Web Interface:  http://$WP_DOMAIN:$MAILHOG_PORT_8025"
-  echo "📌 SMTP Server:    smtp://$WP_DOMAIN:$MAILHOG_PORT_1025"
+  echo "📌 Web Interface:  http://$WORDPRESS_DOMAIN:$MAILHOG_PORT_8025"
+  echo "📌 SMTP Server:    smtp://$WORDPRESS_DOMAIN:$MAILHOG_PORT_1025"
   echo "=============================================="
 }
 
