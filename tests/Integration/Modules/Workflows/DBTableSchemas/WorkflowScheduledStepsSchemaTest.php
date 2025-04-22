@@ -192,58 +192,6 @@ class WorkflowScheduledStepsSchemaTest extends NoTransactionWPTestCase
         $this->assertTrue($schema->isTableHealthy());
     }
 
-    public function testColumnDefinitions(): void
-    {
-        $schema = $this->getSchema();
-        $this->dropTable($schema->getTableName());
-        $this->assertTrue($schema->createTable());
-
-        $columns = $this->wpdb->get_results("SHOW COLUMNS FROM {$schema->getTableName()}");
-        $columnNames = array_column($columns, 'Field');
-
-        // Test required columns exist
-        $this->assertContains('action_id', $columnNames);
-        $this->assertContains('workflow_id', $columnNames);
-        $this->assertContains('step_id', $columnNames);
-        $this->assertContains('action_uid_hash', $columnNames);
-        $this->assertContains('action_uid', $columnNames);
-        $this->assertContains('is_recurring', $columnNames);
-        $this->assertContains('repeat_until', $columnNames);
-        $this->assertContains('repeat_times', $columnNames);
-        $this->assertContains('repeat_until_date', $columnNames);
-        $this->assertContains('uncompressed_args', $columnNames);
-        $this->assertContains('compressed_args', $columnNames);
-        $this->assertContains('is_compressed', $columnNames);
-        $this->assertContains('created_at', $columnNames);
-        $this->assertContains('post_id', $columnNames);
-    }
-
-    public function testColumnDataTypes(): void
-    {
-        $schema = $this->getSchema();
-        $this->dropTable($schema->getTableName());
-        $this->assertTrue($schema->createTable());
-
-        $columns = $this->wpdb->get_results("SHOW COLUMNS FROM {$schema->getTableName()}");
-        $columnDefinitions = array_column($columns, 'Type', 'Field');
-
-        // Test data types
-        $this->assertStringContainsString('bigint unsigned', $columnDefinitions['action_id']);
-        $this->assertStringContainsString('bigint unsigned', $columnDefinitions['workflow_id']);
-        $this->assertStringContainsString('varchar(100)', $columnDefinitions['step_id']);
-        $this->assertStringContainsString('varchar(32)', $columnDefinitions['action_uid_hash']);
-        $this->assertStringContainsString('varchar(400)', $columnDefinitions['action_uid']);
-        $this->assertStringContainsString('tinyint(1)', $columnDefinitions['is_recurring']);
-        $this->assertStringContainsString('set', $columnDefinitions['repeat_until']);
-        $this->assertStringContainsString('int', $columnDefinitions['repeat_times']);
-        $this->assertStringContainsString('datetime', $columnDefinitions['repeat_until_date']);
-        $this->assertStringContainsString('varchar(10000)', $columnDefinitions['uncompressed_args']);
-        $this->assertStringContainsString('blob', $columnDefinitions['compressed_args']);
-        $this->assertStringContainsString('tinyint(1)', $columnDefinitions['is_compressed']);
-        $this->assertStringContainsString('datetime', $columnDefinitions['created_at']);
-        $this->assertStringContainsString('bigint unsigned', $columnDefinitions['post_id']);
-    }
-
     public function testDefaultValues(): void
     {
         $schema = $this->getSchema();

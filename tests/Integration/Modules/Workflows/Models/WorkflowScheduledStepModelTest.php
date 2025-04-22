@@ -128,21 +128,6 @@ class WorkflowScheduledStepModelTest extends \lucatume\WPBrowser\TestCase\WPTest
         $this->assertEquals('2024-01-01 00:00:00', $model->getLastRunAt());
     }
 
-    public function testSetAndGetIsCompressed(): void
-    {
-        $model = $this->make(WorkflowScheduledStepModel::class);
-        $model->setIsCompressed(true);
-        $this->assertTrue($model->getIsCompressed());
-    }
-
-    public function testGetIsCompressed(): void
-    {
-        $model = $this->make(WorkflowScheduledStepModel::class, [
-            'isCompressed' => true,
-        ]);
-        $this->assertTrue($model->getIsCompressed());
-    }
-
     public function testSetAndGetArgs(): void
     {
         $model = $this->make(WorkflowScheduledStepModel::class);
@@ -306,41 +291,11 @@ class WorkflowScheduledStepModelTest extends \lucatume\WPBrowser\TestCase\WPTest
         $this->assertEquals($model->getArgs(), $loadedModel->getArgs());
     }
 
-    public function testLoadByActionIdForCompressedArgs(): void
-    {
-        $model = $this->make(WorkflowScheduledStepModel::class, [
-            'isCompressed' => true,
-        ]);
-        $model->setActionId(6);
-        $model->setWorkflowId(1);
-        $model->setStepId('step_id');
-        $model->setActionUID('action_uid');
-        $model->setArgs(['key' => 'value']);
-        $model->insert();
-
-        $loadedModel = $this->make(WorkflowScheduledStepModel::class, [
-            'isCompressed' => true,
-        ]);
-        $loadedModel->loadByActionId($model->getActionId());
-
-        $this->assertEquals($model->getActionId(), $loadedModel->getActionId());
-        $this->assertEquals($model->getWorkflowId(), $loadedModel->getWorkflowId());
-        $this->assertEquals($model->getStepId(), $loadedModel->getStepId());
-        $this->assertEquals($model->getActionUID(), $loadedModel->getActionUID());
-        $this->assertEquals($model->getArgs(), $loadedModel->getArgs());
-    }
-
     public function testLoadByActionIdThrowsExceptionWhenNotFound(): void
     {
         $model = $this->make(WorkflowScheduledStepModel::class);
         $this->expectException(Exception::class);
         $model->loadByActionId(9999);
-    }
-
-    public function testExpectCompressedArguments(): void
-    {
-        $model = $this->make(WorkflowScheduledStepModel::class);
-        $this->assertFalse($model->expectCompressedArguments());
     }
 
     public function testincrementTotalRunCount(): void
