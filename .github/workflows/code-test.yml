@@ -37,6 +37,10 @@ jobs:
           $GITHUB_WORKSPACE/dev-workspace/run composer validate
           $GITHUB_WORKSPACE/dev-workspace/run composer install
 
+      - name: Create .env file
+        run: |
+          cp $GITHUB_WORKSPACE/.env.example $GITHUB_WORKSPACE/.env
+
       - name: Run Unit Tests
         run: |
           $GITHUB_WORKSPACE/dev-workspace/run composer test Unit
