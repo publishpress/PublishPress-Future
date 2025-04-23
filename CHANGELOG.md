@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Change Action Workflows Editor Modals "X" to "OK" and move the button to the bottom (Issue #1182).
 - Move Metabox, Future Actions Column and Editor "Future Actions" fields from Display to New "Admin" tab (Issue #1215).
+- Move Export and Import to first tabs in Settings (Issue #1213).
 
 ### Removed
 
