@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## UNRELEASED
 
+### Added
+
+- Added Scrollbar to Workflow Editor left sidebar (Issue #1281).
+
 ### Changed
 
 - Change Action Workflows Editor Modals "X" to "OK" and move the button to the bottom (Issue #1182).
