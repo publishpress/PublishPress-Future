@@ -163,4 +163,8 @@ abstract class HooksAbstract
     public const FILTER_SHOULD_SKIP_SCHEDULING = 'publishpressfuture_should_skip_scheduling';
 
     public const FILTER_SHOULD_USE_TIMESTAMP_ON_ACTION_UID = 'publishpressfuture_should_use_timestamp_on_action_uid';
+
+    public const FILTER_POST_UPDATED_MESSAGES = 'post_updated_messages';
+
+    public const FILTER_BULK_POST_UPDATED_MESSAGES = 'bulk_post_updated_messages';
 }
