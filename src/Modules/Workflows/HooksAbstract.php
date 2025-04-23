@@ -169,4 +169,8 @@ abstract class HooksAbstract
     public const FILTER_POST_ROW_ACTIONS = 'post_row_actions';
 
     public const ACTION_ADMIN_FOOTER = 'admin_footer';
+
+    public const FILTER_POST_UPDATED_MESSAGES = 'post_updated_messages';
+
+    public const FILTER_BULK_POST_UPDATED_MESSAGES = 'bulk_post_updated_messages';
 }
