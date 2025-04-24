@@ -145,7 +145,10 @@
         "test:driver": "source ./.env && $CHROMEDRIVER_BINARY --port=$CHROMEDRIVER_PORT",
         "wp:tests": "bash dev-workspace/scripts/tests-wp-cli.sh wp_tests_cli $@",
         "wp:dev": "bash dev-workspace/scripts/tests-wp-cli.sh wp_dev_cli $@",
-        "dev:up": "bash dev-workspace/scripts/env.sh up dev",
+        "dev:up": [
+            "bash dev-workspace/scripts/env.sh up dev",
+            "@dev:info"
+        ],
         "dev:stop": "bash dev-workspace/scripts/env.sh stop dev",
         "dev:down": "bash dev-workspace/scripts/env.sh down dev",
         "dev:cleanup": "bash dev-workspace/scripts/env.sh cleanup dev",

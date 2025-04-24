@@ -21,6 +21,14 @@ CACHE_BASE_PATH=$(pwd)/.cache
 WP_CACHE=$CACHE_BASE_PATH/wp_${SERVICE_TYPE}
 DB_CACHE=$CACHE_BASE_PATH/db_${SERVICE_TYPE}
 
+if [[ $SERVICE_TYPE == "tests" ]]; then
+  WP_DOMAIN=$WP_TESTS_DOMAIN
+fi
+
+if [[ $SERVICE_TYPE == "dev" ]]; then
+  WP_DOMAIN=$WP_DEV_DOMAIN
+fi
+
 MAILHOG_CACHE=$CACHE_BASE_PATH/mailhog
 
 WP_DB_USER=$(echo $WP_DB_URL | sed -E 's/mysql:\/\/([^:]+):.*/\1/')
