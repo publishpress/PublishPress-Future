@@ -46,7 +46,7 @@ jobs:
 
       - name: Start services
         run: |
-          $GITHUB_WORKSPACE/dev-workspace/run docker test:up
+          $GITHUB_WORKSPACE/dev-workspace/run composer test:up
 
       - name: Run Unit Tests
         run: |
