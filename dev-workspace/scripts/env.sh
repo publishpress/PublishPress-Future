@@ -35,8 +35,8 @@ MAILHOG_CACHE=$CACHE_BASE_PATH/mailhog
 
 WP_DB_USER=$(echo $WP_DB_URL | sed -E 's/mysql:\/\/([^:]+):.*/\1/')
 WP_DB_PASS=$(echo $WP_DB_URL | sed -E 's/mysql:\/\/.*:(.*)@.*/\1/')
-WP_DB_HOST=$(echo $WP_DB_URL | sed -E 's/mysql:\/\/.*@.*\/(.*)/\1/')
-WP_DB_NAME=$(echo $WP_DB_URL | sed -E 's/mysql:\/\/.*@.*\/(.*)/\1/')
+WP_DB_HOST=$(echo $WP_DB_URL | sed -E 's/mysql:\/\/.*@([^:]+):.*/\1/')
+WP_DB_NAME=$(echo $WP_DB_URL | sed -E 's/mysql:\/\/.*@.*\/([^\/]+)$/\1/')
 
 
 service_up() {
