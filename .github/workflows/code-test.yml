@@ -49,7 +49,7 @@ jobs:
 
       - name: Fix permissions
         run: |
-          sudo chmod -R 777 $GITHUB_WORKSPACE/dev-workspace/.cache
+          docker exec -it future_free_env_wp_tests chmod -R 777 /var/www/html
 
       - name: Start services
         run: |
