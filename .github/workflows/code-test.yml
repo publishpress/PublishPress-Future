@@ -35,6 +35,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
 
+      - name: Set up Docker
+        uses: docker/setup-docker-action@v4
+
       - name: Set up Docker Compose
         uses: docker/setup-compose-action@v1
 
