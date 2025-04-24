@@ -48,10 +48,6 @@ wp option update admin_email_lifespan 2060442225 && echo -e "\e[32mAdmin email v
 # Update WP Mail SMTP options
 wp db import /tmp/options.sql && echo -e "\e[32mWP Mail SMTP options updated\e[0m";
 
-# Dump the database
-show_header "Dumping the database"
-wp db export /var/www/html/dump.sql && echo -e "\e[32mDatabase dump saved to /var/www/html/dump.sql\e[0m";
-
 # Send test email
 show_header "Sending test email"
 wp eval "wp_mail(\"test@example.com\", \"Test Email from WP-CLI Installer\", \"This is a test email sent from the WordPress CLI installer script to verify SMTP settings and server connectivity.\");"

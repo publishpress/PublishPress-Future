@@ -47,13 +47,11 @@ jobs:
           $GITHUB_WORKSPACE/dev-workspace/run composer validate
           $GITHUB_WORKSPACE/dev-workspace/run composer install
 
-      - name: Fix permissions
-        run: |
-          docker exec -it future_free_env_wp_tests chmod -R 777 /var/www/html
-
       - name: Start services
         run: |
           composer test:up
+          echo "Fixing permissions..."
+          docker exec -it future_free_env_wp_tests chmod -R 777 /var/www/html/*
 
       - name: Run Unit Tests
         run: |
