@@ -1,4 +1,4 @@
-name: VIP Scans and other code checks
+name: Unit and Integration Tests
 on:
   push:
     branches:
