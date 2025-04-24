@@ -49,8 +49,7 @@ jobs:
 
       - name: Fix permissions
         run: |
-          sudo chown -R $USER:$GROUP $GITHUB_WORKSPACE
-          sudo chmod -R 777 $GITHUB_WORKSPACE
+          sudo chmod -R 777 $GITHUB_WORKSPACE/dev-workspace/.cache
 
       - name: Start services
         run: |
