@@ -75,6 +75,10 @@ get_mailhog_port_1025() {
   docker compose -f $COMPOSE_FILE port mailhog 1025 | cut -d: -f2
 }
 
+get_container_id() {
+  docker compose -f $COMPOSE_FILE ps -q $1
+}
+
 service_info() {
   WP_PORT=$(get_wp_port wp_${SERVICE_TYPE})
   DB_PORT=$(get_db_port db_${SERVICE_TYPE})
@@ -88,7 +92,7 @@ service_info() {
   echo "📌 Admin URL:      http://$WP_DOMAIN:$WP_PORT/wp-admin"
   echo "📌 Login:          $WP_ADMIN_USER / $WP_ADMIN_PASSWORD"
   echo "📌 Root Directory: $WP_CACHE"
-  echo "📌 Container ID:   $(docker compose -f docker/compose.yaml ps -q wp_${SERVICE_TYPE})"
+  echo "📌 Container ID:   $(get_container_id wp_${SERVICE_TYPE})"
   echo ""
   echo "📌 DB Url:         mysql://$WP_DB_USER:$WP_DB_PASS@$WP_DB_HOST:$DB_PORT"
   echo "📌 DB Name:        $WP_DB_NAME"
@@ -96,14 +100,14 @@ service_info() {
   echo "📌 DB User:        $WP_DB_USER"
   echo "📌 DB Pass:        $WP_DB_PASS"
   echo "📌 Data Directory: $WP_DB_CACHE"
-  echo "📌 Container ID:   $(docker compose -f docker/compose.yaml ps -q db_${SERVICE_TYPE})"
+  echo "📌 Container ID:   $(get_container_id db_${SERVICE_TYPE})"
   echo ""
   echo "=============================================="
   echo "📧 Mail Information"
   echo "=============================================="
   echo "📌 Web Interface:  http://$WP_DOMAIN:$MAILHOG_PORT_8025"
   echo "📌 SMTP Server:    smtp://$WP_DOMAIN:$MAILHOG_PORT_1025"
-  echo "📌 Container ID:   $(docker compose -f docker/compose.yaml ps -q mailhog)"
+  echo "📌 Container ID:   $(get_container_id mailhog)"
   echo ""
   echo "=============================================="
 }
