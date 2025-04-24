@@ -28,7 +28,7 @@ jobs:
       - name: Setup tmate session for Debugging, if inputs.tmate_enabled is true
         uses: mxschmitt/action-tmate@v3
         if: ${{ inputs.tmate_enabled }}
-        timeout-minutes: 10
+        timeout-minutes: 30
         with:
           detached: true
 
