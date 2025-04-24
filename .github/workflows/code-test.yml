@@ -47,6 +47,11 @@ jobs:
           $GITHUB_WORKSPACE/dev-workspace/run composer validate
           $GITHUB_WORKSPACE/dev-workspace/run composer install
 
+      - name: Fix permissions
+        run: |
+          sudo chown -R $USER:$GROUP $GITHUB_WORKSPACE
+          sudo chmod -R 777 $GITHUB_WORKSPACE
+
       - name: Start services
         run: |
           composer test:up
