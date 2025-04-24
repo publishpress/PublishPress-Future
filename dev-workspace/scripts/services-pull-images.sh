@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sh ./scripts/services-init-cache.sh
+bash ./scripts/services-init-cache.sh
 
 CACHE_NAME_LAST_UPDATE="$CACHE_PATH/.last_image_update_check"
 ONE_DAY_IN_SECONDS=86400
