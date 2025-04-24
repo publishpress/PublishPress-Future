@@ -184,4 +184,14 @@ abstract class HooksAbstract
     public const ACTION_REGISTER_REST_ROUTES = 'publishpressfuture_register_rest_routes';
 
     public const FILTER_REGISTER_REST_ROUTES = 'publishpressfuture_filter_rest_routes';
+
+    public const FILTER_THE_TITLE = 'the_title';
+
+    public const FILTER_POST_ROW_ACTIONS = 'post_row_actions';
+
+    public const ACTION_ADMIN_FOOTER = 'admin_footer';
+
+    public const FILTER_POST_UPDATED_MESSAGES = 'post_updated_messages';
+
+    public const FILTER_BULK_POST_UPDATED_MESSAGES = 'bulk_post_updated_messages';
 }

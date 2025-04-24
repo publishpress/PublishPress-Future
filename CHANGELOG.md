@@ -8,10 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Added SendInSiteNotification step for in-site notifications - PRO (Issue #1290).
+- Added Scrollbar to Workflow Editor left sidebar (Issue #1281).
 
 ### Changed
 
 - Change Action Workflows Editor Modals "X" to "OK" and move the button to the bottom (Issue #1182).
+- Move Metabox, Future Actions Column and Editor "Future Actions" fields from Display to New "Admin" tab (Issue #1215).
+- Update Workflow Action "Update post" label and description (Issue #1283).
+- Update Workflow Action "Post Name" to "Post Slug" (Issue #1282).
+- Update Action Workflows post action and bulk edit messages (Issue #1219).
 
 ### Removed
 
