@@ -25,6 +25,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Remove unused InitineLoopPreventer trait from some classes, replacing it with the service "future.free/workflow-execution-safeguard".
 
+### Fixed
+
+- Fixed workflow editor filter area autocomplete dropdown overlapping content (Issue #1303).
+
 ## [4.5.0] - 7 Apr, 2025
 
 
