@@ -50,5 +50,5 @@ interface ExecutionContextInterface
     /**
      * @since 4.6.0
      */
-    public function expandRuntimeVariables(array $compactedVariables, bool $isLegacyCompact = false): array
+    public function expandRuntimeVariables(array $compactedVariables, bool $isLegacyCompact = false): array;
 }
