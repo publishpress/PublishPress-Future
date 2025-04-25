@@ -642,7 +642,7 @@ var ExportTab = function ExportTab() {
     _useState10 = _slicedToArray(_useState9, 2),
     selectedWorkflows = _useState10[0],
     setSelectedWorkflows = _useState10[1];
-  var _useState11 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(['postTypesDefaults', 'general', 'notifications', 'display', 'advanced']),
+  var _useState11 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(['postTypesDefaults', 'general', 'notifications', 'display', 'admin', 'advanced']),
     _useState12 = _slicedToArray(_useState11, 2),
     selectedSettings = _useState12[0],
     setSelectedSettings = _useState12[1];
@@ -658,6 +658,9 @@ var ExportTab = function ExportTab() {
   }, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Display', 'post-expirator'),
     id: 'display'
+  }, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Admin', 'post-expirator'),
+    id: 'admin'
   }, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Advanced', 'post-expirator'),
     id: 'advanced'
@@ -1238,6 +1241,9 @@ var ImportTab = function ImportTab() {
   }, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Display', 'post-expirator'),
     id: 'display'
+  }, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Admin', 'post-expirator'),
+    id: 'admin'
   }, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Advanced', 'post-expirator'),
     id: 'advanced'
