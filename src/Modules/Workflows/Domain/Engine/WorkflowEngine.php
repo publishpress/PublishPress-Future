@@ -446,6 +446,11 @@ class WorkflowEngine implements WorkflowEngineInterface
         return wp_generate_uuid4();
     }
 
+    public function getExecutionContextRegistry(): ExecutionContextRegistryInterface
+    {
+        return $this->executionContextRegistry;
+    }
+
     private function getPublishedWorkflowsIds(): array
     {
         $workflowsModel = new WorkflowsModel();
