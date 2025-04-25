@@ -55,14 +55,6 @@ abstract class HooksAbstract
     public const ACTION_SCHEDULED_STEP_EXECUTE = 'publishpressfuture_workflow_async_execute_node';
 
     /**
-     * Represents steps that run asynchronously in response to external events.
-     * Uses a new hook name since this is a new feature.
-     *
-     * @since 4.6.0
-     */
-    public const ACTION_EVENT_DRIVEN_STEP_EXECUTE = 'publishpressfuture_workflow_event_driven_execute_step';
-
-    /**
      * @deprecated 4.3.2 Use ACTION_UNSCHEDULE_RECURRING_STEP_ACTION instead.
      */
     public const ACTION_UNSCHEDULE_RECURRING_NODE_ACTION =
