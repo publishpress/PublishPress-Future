@@ -779,7 +779,8 @@ return [
     ServicesAbstract::EXECUTION_CONTEXT_REGISTRY => static function (ContainerInterface $container) {
         return new ExecutionContextRegistry(
             $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::EXECUTION_CONTEXT_PROCESSOR_REGISTRY)
+            $container->get(ServicesAbstract::EXECUTION_CONTEXT_PROCESSOR_REGISTRY),
+            $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
         );
     },
 
