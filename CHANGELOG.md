@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Update ES, FR, and IT translations, #1270
+- Update ES, FR, and IT translations (Issue #1270).
 
 ### Developers
 
