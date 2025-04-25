@@ -186,4 +186,6 @@ abstract class HooksAbstract
     public const FILTER_POST_UPDATED_MESSAGES = 'post_updated_messages';
 
     public const FILTER_BULK_POST_UPDATED_MESSAGES = 'bulk_post_updated_messages';
+
+    public const ACTION_DELETE_EXPIRED_DONE_ACTIONS = 'publishpressfuture_delete_expired_done_actions';
 }

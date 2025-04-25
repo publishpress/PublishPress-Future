@@ -652,6 +652,8 @@ class ScheduledActions implements InitializableInterface
     public function deleteExpiredDoneActions()
     {
         (new ScheduledActionsModel())->deleteExpiredDoneActions();
+
+        $this->hooks->doAction(WorkflowsHooksAbstract::ACTION_DELETE_EXPIRED_DONE_ACTIONS);
     }
 
     /*
