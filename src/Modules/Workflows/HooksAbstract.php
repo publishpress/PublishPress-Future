@@ -33,7 +33,7 @@ abstract class HooksAbstract
     public const ACTION_EXECUTE_STEP = 'publishpressfuture_workflow_execute_node';
 
     /**
-     * @deprecated 4.3.2 Use ACTION_ASYNC_EXECUTE_STEP instead.
+     * @deprecated 4.3.2 Use ACTION_SCHEDULED_STEP_EXECUTE instead.
      */
     public const ACTION_ASYNC_EXECUTE_NODE = 'publishpressfuture_workflow_async_execute_node';
 
@@ -42,8 +42,17 @@ abstract class HooksAbstract
      * to avoid breaking async actions scheduled by the old constant.
      *
      * @since 4.3.2
+     * @deprecated 4.6.0 Use ACTION_SCHEDULED_STEP_EXECUTE instead.
      */
     public const ACTION_ASYNC_EXECUTE_STEP = 'publishpressfuture_workflow_async_execute_node';
+
+    /**
+     * Represents steps that are scheduled to run at a specific time.
+     * Uses the same hook name as ACTION_ASYNC_EXECUTE_STEP for backward compatibility.
+     *
+     * @since 4.6.0
+     */
+    public const ACTION_SCHEDULED_STEP_EXECUTE = 'publishpressfuture_workflow_async_execute_node';
 
     /**
      * @deprecated 4.3.2 Use ACTION_UNSCHEDULE_RECURRING_STEP_ACTION instead.
@@ -164,6 +173,10 @@ abstract class HooksAbstract
 
     public const FILTER_SHOULD_USE_TIMESTAMP_ON_ACTION_UID = 'publishpressfuture_should_use_timestamp_on_action_uid';
 
+    public const ACTION_REGISTER_REST_ROUTES = 'publishpressfuture_register_rest_routes';
+
+    public const FILTER_REGISTER_REST_ROUTES = 'publishpressfuture_filter_rest_routes';
+
     public const FILTER_THE_TITLE = 'the_title';
 
     public const FILTER_POST_ROW_ACTIONS = 'post_row_actions';
@@ -173,4 +186,6 @@ abstract class HooksAbstract
     public const FILTER_POST_UPDATED_MESSAGES = 'post_updated_messages';
 
     public const FILTER_BULK_POST_UPDATED_MESSAGES = 'bulk_post_updated_messages';
+
+    public const ACTION_DELETE_EXPIRED_DONE_ACTIONS = 'publishpressfuture_delete_expired_done_actions';
 }

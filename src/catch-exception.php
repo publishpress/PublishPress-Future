@@ -15,7 +15,7 @@ namespace PublishPress\Future {
 
     if (! function_exists(__NAMESPACE__ . '\\logError')) {
 
-        function logError(string $message, Throwable $e = null, bool $addTrace = false): void
+        function logError(string $message, ?Throwable $e = null, bool $addTrace = false): void
         {
             if (! function_exists('error_log')) {
                 return;
