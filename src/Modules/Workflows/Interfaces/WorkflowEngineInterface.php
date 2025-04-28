@@ -37,4 +37,9 @@ interface WorkflowEngineInterface
      * @since 4.4.1
      */
     public function generateUniqueId(): string;
+
+    /**
+     * @since 4.6.0
+     */
+    public function getExecutionContextRegistry(): ExecutionContextRegistryInterface;
 }

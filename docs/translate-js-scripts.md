@@ -1,6 +1,6 @@
 # Translate JS scripts
 
-* Edit the `dev-workspace/scripts/lang-constants.sh` file adding the script handle to the `LANG_SCRIPT_HANDLERS` variable.
+* Edit the `.env` file adding the script handle to the `LANG_SCRIPT_HANDLERS` variable.
 * Edit the `dev-workspace/scripts/lang-make-pot-js.sh` file adding the script path to the `JSX_SCRIPTS` variable.
 * Enqueue the `wp-i18n` script in the `enqueueAdminScripts` method.
 * Add the `wp-i18n` as a dependency to the script that needs translation.

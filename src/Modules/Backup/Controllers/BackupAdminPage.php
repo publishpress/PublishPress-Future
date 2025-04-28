@@ -37,7 +37,13 @@ class BackupAdminPage implements InitializableInterface
 
         $this->hooks->addFilter(
             SettingsHooksAbstract::FILTER_SETTINGS_TABS,
-            [$this, 'filterSettingsTabs']
+            [$this, 'filterSettingsTabs'],
+            11
+        );
+
+        $this->hooks->addFilter(
+            SettingsHooksAbstract::FILTER_SETTINGS_DEFAULT_TAB,
+            [$this, 'filterSettingsDefaultTab']
         );
 
         $this->hooks->addAction(
@@ -58,7 +64,10 @@ class BackupAdminPage implements InitializableInterface
         ];
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No need for nonce verification when just loading scripts
-        if (! isset($_GET['tab']) || ! in_array($_GET['tab'], $validTabs, true)) {
+        $currentTab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
+        $defaultTab = $this->settingsFacade->getSettingsDefaultTab();
+
+        if (! in_array($currentTab, $validTabs, true) && ! in_array($defaultTab, $validTabs, true)) {
             return;
         }
 
@@ -149,19 +158,34 @@ class BackupAdminPage implements InitializableInterface
 
         $baseLink = 'admin.php?page=publishpress-future-settings&tab=';
 
-        $tabs[] = [
-            'title' => __('Export', 'post-expirator'),
-            'slug'  => 'export',
-            'link' => admin_url($baseLink . 'export'),
+        $backupTabs = [
+            [
+                'title' => __('Export', 'post-expirator'),
+                'slug'  => 'export',
+                'link'  => admin_url($baseLink . 'export'),
+            ],
+            [
+                'title' => __('Import', 'post-expirator'),
+                'slug'  => 'import',
+                'link'  => admin_url($baseLink . 'import'),
+            ]
         ];
 
-        $tabs[] = [
-            'title' => __('Import', 'post-expirator'),
-            'slug'  => 'import',
-            'link' => admin_url($baseLink . 'import'),
-        ];
+        $tabs = array_merge($backupTabs, $tabs);
 
         return $tabs;
+    }
+
+    public function filterSettingsDefaultTab($defaultTab)
+    {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No need for nonce verification when just comparing page
+        if (isset($_GET['page']) && $_GET['page'] !== 'publishpress-future-settings') {
+            return $defaultTab;
+        }
+
+        $defaultTab = 'export';
+
+        return $defaultTab;
     }
 
     public function loadTab($tab)

@@ -16,6 +16,7 @@ abstract class HooksAbstract
     public const FILTER_ALLOWED_TABS = 'publishpressfuture_allowed_tabs';
     public const FILTER_ALLOWED_SETTINGS_TABS = 'publishpressfuture_allowed_settings_tabs';
     public const FILTER_SETTINGS_TABS = 'publishpressfuture_settings_tabs';
+    public const FILTER_SETTINGS_DEFAULT_TAB = 'publishpressfuture_settings_default_tab';
     public const FILTER_FUTURE_ACTIONS_TABS = 'publishpressfuture_future_actions_tabs';
     public const ACTION_LOAD_TAB = 'publishpressfuture_load_tab';
     public const FILTER_SHOW_PRO_BANNER = 'publishpressfuture_show_pro_banner';

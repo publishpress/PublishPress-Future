@@ -187,7 +187,7 @@ class ScheduledActions implements InitializableInterface
             $hook = $actionModel->getHook();
 
             switch ($hook) {
-                case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_STEP:
+                case WorkflowsHooksAbstract::ACTION_SCHEDULED_STEP_EXECUTE:
                     $step = $this->getStepFromActionId($row['ID']);
 
                     if (empty($step)) {
@@ -259,7 +259,7 @@ class ScheduledActions implements InitializableInterface
                 }
                 break;
 
-            case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_STEP:
+            case WorkflowsHooksAbstract::ACTION_SCHEDULED_STEP_EXECUTE:
                 $html = __('Executed workflow scheduled step', 'post-expirator');
                 break;
 
@@ -309,7 +309,7 @@ class ScheduledActions implements InitializableInterface
 
             switch ($hook) {
                 case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_NODE:
-                case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_STEP:
+                case WorkflowsHooksAbstract::ACTION_SCHEDULED_STEP_EXECUTE:
                     if (ScheduledActionModel::argsAreOnNewFormat((array) $args)) {
                         $scheduledStepModel = new WorkflowScheduledStepModel();
                         $scheduledStepModel->loadByActionId($actionId);
@@ -652,6 +652,8 @@ class ScheduledActions implements InitializableInterface
     public function deleteExpiredDoneActions()
     {
         (new ScheduledActionsModel())->deleteExpiredDoneActions();
+
+        $this->hooks->doAction(WorkflowsHooksAbstract::ACTION_DELETE_EXPIRED_DONE_ACTIONS);
     }
 
     /*
@@ -667,7 +669,7 @@ class ScheduledActions implements InitializableInterface
         $actionModel = new ScheduledActionModel();
         $actionModel->loadByActionId($actionId);
 
-        if ($actionModel->getHook() !== WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_STEP) {
+        if ($actionModel->getHook() !== WorkflowsHooksAbstract::ACTION_SCHEDULED_STEP_EXECUTE) {
             return;
         }
 
@@ -706,7 +708,7 @@ class ScheduledActions implements InitializableInterface
         $newScheduledStepModel->insert();
     }
 
-    private function verifyOperationTimeout(string $actionUid, int $timeout = null): bool
+    private function verifyOperationTimeout(string $actionUid, ?int $timeout = null): bool
     {
         $transientKey = 'publishpressfuture_' . $actionUid;
 

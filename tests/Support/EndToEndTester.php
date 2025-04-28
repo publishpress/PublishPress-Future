@@ -23,7 +23,17 @@ class EndToEndTester extends \Codeception\Actor
 {
     use _generated\EndToEndTesterActions;
 
-    /**
-     * Define custom actions here
-     */
+    public function havePluginActivated($pluginPath = 'post-expirator/post-expirator.php')
+    {
+        $activePlugins = $this->grabOptionFromDatabase('active_plugins');
+        $activePlugins[] = $pluginPath;
+        $this->haveOptionInDatabase('active_plugins', $activePlugins);
+    }
+
+    public function havePluginDeactivated($pluginPath = 'post-expirator/post-expirator.php')
+    {
+        $activePlugins = $this->grabOptionFromDatabase('active_plugins');
+        $activePlugins = array_diff($activePlugins, [$pluginPath]);
+        $this->haveOptionInDatabase('active_plugins', $activePlugins);
+    }
 }

@@ -141,8 +141,10 @@ class PostExpirator_Display
             wp_die(esc_html__('You do not have permission to configure PublishPress Future.', 'post-expirator'));
         }
 
+        $defaultTab = $this->settingsFacade->getSettingsDefaultTab();
+
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : 'advanced';
+        $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : $defaultTab;
 
         $allowed_tabs = ['advanced', 'diagnostics', 'viewdebug' ];
         $allowed_tabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_SETTINGS_TABS, $allowed_tabs);
@@ -157,7 +159,7 @@ class PostExpirator_Display
         }
 
         if (empty($tab) || ! in_array($tab, $allowed_tabs, true)) {
-            $tab = 'advanced';
+            $tab = $this->settingsFacade::SETTINGS_DEFAULT_TAB;
         }
 
         ob_start();
