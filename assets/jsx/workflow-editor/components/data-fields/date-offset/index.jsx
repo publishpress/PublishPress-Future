@@ -56,8 +56,6 @@ export const DateOffset = ({ name, label, defaultValue, onChange, variables = []
         }
     }, [defaultValue, name, onChange]);
 
-    console.log(defaultValue);
-
     const dateSourceOptions = useMemo(() => {
         let dateSourceOptions = [
             { name: __("Selected in the calendar", "post-expirator"), id: "calendar" },

@@ -16,8 +16,6 @@ export function ConditionalDateOffset({ name, label, defaultValue, onChange, set
         }
     }
 
-    console.log(defaultValue);
-
     return (
         <>
             <VStack>

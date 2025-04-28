@@ -45,7 +45,6 @@ var BackupPanel = function BackupPanel() {
   var getTabFromUrl = function getTabFromUrl() {
     var url = new URL(window.location.href);
     var tab = url.searchParams.get('tab');
-    console.log(tab);
     if (tab && tabs.some(function (t) {
       return t.value === tab;
     })) {
