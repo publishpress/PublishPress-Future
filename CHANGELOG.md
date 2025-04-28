@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Update ES, FR, and IT translations (Issue #1270).
 - Fixed REST API request detection to workflow engine execution environment identification (Issue #1290).
 - Fixed duplicate FILTER_REGISTER_REST_ROUTES constant (Issue #1290).
 
