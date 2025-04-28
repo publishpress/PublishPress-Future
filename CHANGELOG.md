@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Added notification center icon to the admin topbar for in-site notifications - PRO feature (Issue #1290).
 - Added SendInSiteNotification step for in-site notifications - PRO (Issue #1290).
 - Added Scrollbar to Workflow Editor left sidebar (Issue #1281).
 
