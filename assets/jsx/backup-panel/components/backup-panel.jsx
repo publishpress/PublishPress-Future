@@ -23,8 +23,6 @@ const BackupPanel = () => {
         const url = new URL(window.location.href);
         const tab = url.searchParams.get('tab');
 
-        console.log(tab);
-
         if (tab && tabs.some((t) => t.value === tab)) {
             return tab;
         }

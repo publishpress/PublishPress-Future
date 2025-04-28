@@ -41,4 +41,14 @@ interface ExecutionContextInterface
      * @since 4.3.4
      */
     public function resolveExpressionsInJsonLogic(array $jsonLogicExpression): array;
+
+    /**
+     * @since 4.6.0
+     */
+    public function getCompactedRuntimeVariables(): array;
+
+    /**
+     * @since 4.6.0
+     */
+    public function expandRuntimeVariables(array $compactedVariables, bool $isLegacyCompact = false): array;
 }

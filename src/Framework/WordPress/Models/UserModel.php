@@ -54,4 +54,9 @@ class UserModel
 
         return $userInstance->has_cap($capability);
     }
+
+    public function getId(): int
+    {
+        return $this->userId;
+    }
 }

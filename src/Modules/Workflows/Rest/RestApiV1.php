@@ -2,7 +2,8 @@
 
 namespace PublishPress\Future\Modules\Workflows\Rest;
 
-use PublishPress\Future\Modules\Settings\SettingsFacade;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use WP_Error;
 use WP_REST_Server;
 use PublishPress\Future\Modules\Workflows\Interfaces\RestApiManagerInterface;
@@ -11,6 +12,7 @@ use PublishPress\Future\Modules\Workflows\Models\PostModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 
+// TODO: Move this to a controller on the workflows module.
 class RestApiV1 implements RestApiManagerInterface
 {
     public const ERROR_WORKFLOW_NOT_FOUND = 'publishpressfuture_workflow_not_found';
@@ -26,13 +28,13 @@ class RestApiV1 implements RestApiManagerInterface
     public const PERMISSION_DELETE = 'edit_posts';
 
     /**
-     * @var SettingsFacade
+     * @var HookableInterface
      */
-    private SettingsFacade $settingsFacade;
+    private HookableInterface $hooks;
 
-    public function __construct(SettingsFacade $settingsFacade)
+    public function __construct(HookableInterface $hooks)
     {
-        $this->settingsFacade = $settingsFacade;
+        $this->hooks = $hooks;
     }
 
     public function register()
@@ -183,6 +185,8 @@ class RestApiV1 implements RestApiManagerInterface
                 'show_in_rest' => true,
             ]
         );
+
+        $this->hooks->doAction(HooksAbstract::ACTION_REGISTER_REST_ROUTES);
     }
 
 

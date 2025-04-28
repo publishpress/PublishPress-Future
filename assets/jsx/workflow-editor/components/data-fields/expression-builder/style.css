@@ -80,6 +80,8 @@
 
 .ace_editor.ace_autocomplete {
     z-index: 999999999;
+    margin-top: 5px;
+    padding-bottom: 5px;
 }
 
 .components-modal__screen-overlay {

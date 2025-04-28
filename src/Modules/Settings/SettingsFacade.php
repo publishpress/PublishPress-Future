@@ -12,6 +12,7 @@ use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use WP_Role;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -59,6 +60,8 @@ class SettingsFacade
     public const DEFAULT_CUSTOM_DATE = '+1 week';
 
     public const DEFAULT_CUSTOM_DATE_OFFSET = '+1 week';
+
+    public const SETTINGS_DEFAULT_TAB = 'advanced';
 
     /**
      * @param HookableInterface $hooks
@@ -687,5 +690,13 @@ class SettingsFacade
     public function getPastDueActionsNotificationAddressesList(): array
     {
         return explode(',', $this->options->getOption('pastDueActionsNotificationList', ''));
+    }
+
+    public function getSettingsDefaultTab()
+    {
+
+        $defaultTab = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_SETTINGS_DEFAULT_TAB, self::SETTINGS_DEFAULT_TAB);
+
+        return $defaultTab;
     }
 }

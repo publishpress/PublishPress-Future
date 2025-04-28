@@ -6,11 +6,14 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 
 $container = Container::getInstance();
 $hooks = $container->get(ServicesAbstract::HOOKS);
+$settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+$defaultTab = $settingsFacade->getSettingsDefaultTab();
+
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-$current_tab = empty($_GET['tab']) ? 'advanced' : sanitize_title(wp_unslash($_GET['tab']));
+$current_tab = empty($_GET['tab']) ? $defaultTab : sanitize_title(wp_unslash($_GET['tab']));
 
 $debugIsEnabled = $hooks->applyFilters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
 $baseLink = 'admin.php?page=publishpress-future-settings&tab=';
