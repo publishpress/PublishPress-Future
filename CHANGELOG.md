@@ -5,19 +5,35 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## UNRELEASED
 
+### Added
+
+- Added notification center icon to the admin topbar for in-site notifications - PRO feature (Issue #1290).
+- Added SendInSiteNotification step for in-site notifications - PRO (Issue #1290).
+- Added Scrollbar to Workflow Editor left sidebar (Issue #1281).
+
 ### Changed
 
 - Change Action Workflows Editor Modals "X" to "OK" and move the button to the bottom (Issue #1182).
 - Move Metabox, Future Actions Column and Editor "Future Actions" fields from Display to New "Admin" tab (Issue #1215).
 - Move Export and Import to first tabs in Settings (Issue #1213).
+- Update Workflow Action "Update post" label and description (Issue #1283).
+- Update Workflow Action "Post Name" to "Post Slug" (Issue #1282).
+- Update Action Workflows post action and bulk edit messages (Issue #1219).
 
 ### Removed
 
 - Remove the option to compact scheduled actions data (Issue #1233).
 
+### Fixed
+
+- Fixed REST API request detection to workflow engine execution environment identification (Issue #1290).
+- Fixed duplicate FILTER_REGISTER_REST_ROUTES constant (Issue #1290).
+
 ### Developers
 
 - Remove unused InitineLoopPreventer trait from some classes, replacing it with the service "future.free/workflow-execution-safeguard".
+- Refactored workflow hooks replacing ACTION_ASYNC_EXECUTE_STEP with ACTION_SCHEDULED_STEP_EXECUTE for better semantic clarity.
+- Added getId method to UserModel for retrieving user ID;
 
 ## [4.5.0] - 7 Apr, 2025
 

@@ -6,7 +6,7 @@ if [[ ! $(pwd) =~ .*dev-workspace$ ]]; then
 fi
 
 set -a
-source ./.env
+source ../.env
 set +a
 
-sh $BIN_PATH/exec stop
+sh ./scripts/terminal-service-stop.sh

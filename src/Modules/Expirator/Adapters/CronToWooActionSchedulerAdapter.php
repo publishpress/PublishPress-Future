@@ -35,7 +35,7 @@ class CronToWooActionSchedulerAdapter implements CronInterface
     protected $logger;
 
     public function __construct(
-        LoggerInterface $logger = null
+        ?LoggerInterface $logger = null
     ) {
         $this->logger = $logger;
     }

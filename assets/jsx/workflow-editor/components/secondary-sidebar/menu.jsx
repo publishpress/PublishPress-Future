@@ -201,22 +201,24 @@ export function InserterMenu({
                         label={__('Search for triggers and steps', 'post-expirator')}
                         placeholder={__('Search')}
                     />
-                    {!!filterValue && (
-                        <InserterSearchResults
-                            filterValue={filterValue}
-                            onSelect={onSelect}
-                            onHover={onHover}
-                        />
-                    )}
+                    <div className="block-editor-tabbed-sidebar__tabpanel">
+                        {!!filterValue && (
+                            <InserterSearchResults
+                                filterValue={filterValue}
+                                onSelect={onSelect}
+                                onHover={onHover}
+                            />
+                        )}
 
-                    {!filterValue && (
-                        <InserterTabs
-                            onSelect={onSelectTab}
-                            initialTabName={currentInserterTab}
-                        >
-                            {getCurrentTab}
-                        </InserterTabs>
-                    )}
+                        {!filterValue && (
+                            <InserterTabs
+                                onSelect={onSelectTab}
+                                initialTabName={currentInserterTab}
+                            >
+                                {getCurrentTab}
+                            </InserterTabs>
+                        )}
+                    </div>
                 </div>
             </div>
             {showInserterHelpPanel && hoveredItem && (
