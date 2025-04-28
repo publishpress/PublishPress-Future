@@ -34,6 +34,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Refactored workflow hooks replacing ACTION_ASYNC_EXECUTE_STEP with ACTION_SCHEDULED_STEP_EXECUTE for better semantic clarity.
 - Added getId method to UserModel for retrieving user ID;
 
+### Fixed
+
+- Fixed workflow editor filter area autocomplete dropdown overlapping content (Issue #1303).
+
 ## [4.5.0] - 7 Apr, 2025
 
 
