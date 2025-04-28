@@ -28,7 +28,7 @@ jobs:
       - name: Setup tmate session for Debugging, if inputs.tmate_enabled is true
         uses: mxschmitt/action-tmate@v3
         if: ${{ inputs.tmate_enabled }}
-        timeout-minutes: 30
+        timeout-minutes: 10
         with:
           detached: true
 
@@ -50,11 +50,6 @@ jobs:
       - name: Start services
         run: |
           composer test:up
-
-      - name: Fix permissions
-        run: |
-          container_id=$(docker compose -f $GITHUB_WORKSPACE/dev-workspace/docker/compose.yaml ps -q wp_tests)
-          docker exec $container_id chmod -R 777 /var/www/html/wp-content
 
       - name: Run Unit Tests
         run: |
