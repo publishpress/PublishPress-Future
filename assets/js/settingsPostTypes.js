@@ -752,7 +752,16 @@ var FutureActionPanelBlockEditor = function FutureActionPanelBlockEditor(props) 
     }
     editPostAttribute(newAttribute);
   };
-  var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+  var rawData = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+  var data = rawData || {
+    enabled: false,
+    action: '',
+    newStatus: '',
+    date: '',
+    terms: [],
+    taxonomy: '',
+    extraData: {}
+  };
   var _useDispatch2 = useDispatch('core/editor'),
     lockPostSaving = _useDispatch2.lockPostSaving,
     unlockPostSaving = _useDispatch2.unlockPostSaving;
