@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Fixed editor error when editing a resuable block (Issue #1324).
+- Fixed editor error when editing a reuseable block (Issue #1324).
 
 ### Developers
 
