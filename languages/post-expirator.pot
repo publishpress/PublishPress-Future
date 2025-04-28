@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-28T21:05:03+00:00\n"
+"POT-Creation-Date: 2025-04-28T21:17:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -46,70 +46,70 @@ msgstr ""
 msgid "You do not have permission to configure PublishPress Future."
 msgstr ""
 
-#: legacy/classes/Display.class.php:155
+#: legacy/classes/Display.class.php:157
 msgid "Debug is disabled"
 msgstr ""
 
-#: legacy/classes/Display.class.php:276
+#: legacy/classes/Display.class.php:278
 msgid "Debugging Disabled"
 msgstr ""
 
-#: legacy/classes/Display.class.php:281
+#: legacy/classes/Display.class.php:283
 msgid "Debugging Enabled"
 msgstr ""
 
-#: legacy/classes/Display.class.php:289
+#: legacy/classes/Display.class.php:291
 msgid "Debugging Table Emptied"
 msgstr ""
 
-#: legacy/classes/Display.class.php:295
+#: legacy/classes/Display.class.php:297
 msgid "The legacy future actions migration has been enqueued and will run asynchronously."
 msgstr ""
 
-#: legacy/classes/Display.class.php:304
+#: legacy/classes/Display.class.php:306
 msgid "The legacy actions arguments restoration has been enqueued and will run asynchronously."
 msgstr ""
 
-#: legacy/classes/Display.class.php:319
+#: legacy/classes/Display.class.php:321
 msgid "The database schema was fixed."
 msgstr ""
 
-#: legacy/classes/Display.class.php:324
+#: legacy/classes/Display.class.php:326
 msgid "The database schema could not be fixed. Please, contact the support team."
 msgstr ""
 
-#: legacy/classes/Display.class.php:395
-#: legacy/classes/Display.class.php:449
-#: legacy/classes/Display.class.php:486
+#: legacy/classes/Display.class.php:397
+#: legacy/classes/Display.class.php:451
+#: legacy/classes/Display.class.php:488
 msgid "Saved Options!"
 msgstr ""
 
 #. translators: %1$s is the plugin name, %2$s is the star rating markup
-#: legacy/classes/Display.class.php:572
+#: legacy/classes/Display.class.php:574
 msgid "If you like %1$s, please leave us a %2$s rating. Thank you!"
 msgstr ""
 
-#: legacy/classes/Display.class.php:587
+#: legacy/classes/Display.class.php:589
 msgid "About PublishPress Future"
 msgstr ""
 
-#: legacy/classes/Display.class.php:589
+#: legacy/classes/Display.class.php:591
 msgid "About"
 msgstr ""
 
-#: legacy/classes/Display.class.php:595
+#: legacy/classes/Display.class.php:597
 msgid "Future Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:597
+#: legacy/classes/Display.class.php:599
 msgid "Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:603
+#: legacy/classes/Display.class.php:605
 msgid "Contact the PublishPress team"
 msgstr ""
 
-#: legacy/classes/Display.class.php:605
+#: legacy/classes/Display.class.php:607
 msgid "Contact"
 msgstr ""
 
@@ -118,17 +118,17 @@ msgid "No taxonomies found"
 msgstr ""
 
 #: services.php:140
-#: src/Modules/Settings/SettingsFacade.php:119
+#: src/Modules/Settings/SettingsFacade.php:122
 msgid "l F jS, Y"
 msgstr ""
 
 #: services.php:144
-#: src/Modules/Settings/SettingsFacade.php:120
+#: src/Modules/Settings/SettingsFacade.php:123
 msgid "g:ia"
 msgstr ""
 
 #: services.php:145
-#: src/Modules/Settings/SettingsFacade.php:121
+#: src/Modules/Settings/SettingsFacade.php:124
 msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
 msgstr ""
 
@@ -150,11 +150,11 @@ msgstr ""
 msgid "Invalid date time offset"
 msgstr ""
 
-#: src/Modules/Backup/Controllers/BackupAdminPage.php:153
+#: src/Modules/Backup/Controllers/BackupAdminPage.php:163
 msgid "Export"
 msgstr ""
 
-#: src/Modules/Backup/Controllers/BackupAdminPage.php:159
+#: src/Modules/Backup/Controllers/BackupAdminPage.php:168
 msgid "Import"
 msgstr ""
 
@@ -383,7 +383,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/SettingsController.php:132
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:67
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:67
-#: src/Views/tabs-settings.php:44
+#: src/Views/tabs-settings.php:47
 msgid "Settings"
 msgstr ""
 
@@ -924,35 +924,35 @@ msgstr ""
 msgid "No Scheduled Actions."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:209
+#: src/Modules/Settings/Controllers/Controller.php:211
 msgid "Scheduled Workflow Steps Cleanup"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:210
+#: src/Modules/Settings/Controllers/Controller.php:212
 msgid "Automatically remove scheduled workflow steps"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:214
+#: src/Modules/Settings/Controllers/Controller.php:216
 msgid "Automatically remove scheduled workflow steps that have been marked as failed, completed, or cancelled."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:218
+#: src/Modules/Settings/Controllers/Controller.php:220
 msgid "Retain all scheduled workflow steps"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:222
+#: src/Modules/Settings/Controllers/Controller.php:224
 msgid "Retain all scheduled workflow steps indefinitely, including those marked as failed, completed, or cancelled. This may impact database performance over time."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:226
+#: src/Modules/Settings/Controllers/Controller.php:228
 msgid "Retention"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:227
+#: src/Modules/Settings/Controllers/Controller.php:229
 msgid "The duration, in days, for which completed, failed, and canceled scheduled workflow steps will be preserved before automatic removal."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:231
+#: src/Modules/Settings/Controllers/Controller.php:233
 msgid "days"
 msgstr ""
 
@@ -2671,7 +2671,7 @@ msgid "Asynchronous"
 msgstr ""
 
 #: src/Modules/Workflows/Models/StepTypesModel.php:138
-#: src/Views/tabs-settings.php:33
+#: src/Views/tabs-settings.php:36
 msgid "Debug"
 msgstr ""
 
@@ -3258,10 +3258,10 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: src/Views/tabs-settings.php:20
+#: src/Views/tabs-settings.php:23
 msgid "Advanced"
 msgstr ""
 
-#: src/Views/tabs-settings.php:25
+#: src/Views/tabs-settings.php:28
 msgid "Diagnostics and Tools"
 msgstr ""
