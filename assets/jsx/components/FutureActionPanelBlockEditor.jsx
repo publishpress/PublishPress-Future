@@ -39,7 +39,16 @@ export const FutureActionPanelBlockEditor = (props) => {
         editPostAttribute(newAttribute);
     }
 
-    const data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+    const rawData = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+    const data = rawData || {
+        enabled: false,
+        action: '',
+        newStatus: '',
+        date: '',
+        terms: [],
+        taxonomy: '',
+        extraData: {}
+    };
 
     const { lockPostSaving, unlockPostSaving } = useDispatch('core/editor');
 

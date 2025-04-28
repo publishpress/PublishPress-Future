@@ -20,25 +20,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Update Workflow Action "Post Name" to "Post Slug" (Issue #1282).
 - Update Action Workflows post action and bulk edit messages (Issue #1219).
 
-### Removed
-
-- Remove the option to compact scheduled actions data (Issue #1233).
-
 ### Fixed
 
+- Fixed editor error when editing a reuseable block (Issue #1324).
 - Update ES, FR, and IT translations (Issue #1270).
 - Fixed REST API request detection to workflow engine execution environment identification (Issue #1290).
 - Fixed duplicate FILTER_REGISTER_REST_ROUTES constant (Issue #1290).
+- Fixed workflow editor filter area autocomplete dropdown overlapping content (Issue #1303).
+
+### Removed
+
+- Remove the option to compact scheduled actions data (Issue #1233).
 
 ### Developers
 
 - Remove unused InitineLoopPreventer trait from some classes, replacing it with the service "future.free/workflow-execution-safeguard".
 - Refactored workflow hooks replacing ACTION_ASYNC_EXECUTE_STEP with ACTION_SCHEDULED_STEP_EXECUTE for better semantic clarity.
 - Added getId method to UserModel for retrieving user ID;
-
-### Fixed
-
-- Fixed workflow editor filter area autocomplete dropdown overlapping content (Issue #1303).
 
 ## [4.5.0] - 7 Apr, 2025
 
