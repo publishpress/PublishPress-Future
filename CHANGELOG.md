@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Remove the option to compact scheduled actions data (Issue #1233).
 
+### Fixed
+
+- Fixed editor error when editing a resuable block (Issue #1324).
+
 ### Developers
 
 - Remove unused InitineLoopPreventer trait from some classes, replacing it with the service "future.free/workflow-execution-safeguard".
