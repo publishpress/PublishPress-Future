@@ -155,6 +155,8 @@ class Controller implements InitializableInterface
                 return;
             }
 
+            $defaultTab = $this->settings->getSettingsDefaultTab();
+
             wp_enqueue_style(
                 'pe-footer',
                 Plugin::getAssetUrl('css/footer.css'),
@@ -181,7 +183,7 @@ class Controller implements InitializableInterface
             );
 
             // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-            if (! isset($_GET['tab']) || $_GET['tab'] === 'advanced') {
+            if ((! isset($_GET['tab']) && $defaultTab === 'advanced') || (isset($_GET['tab']) && $_GET['tab'] === 'advanced')) {
                 wp_enqueue_script(
                     'publishpress-future-settings-advanced-panel',
                     Plugin::getScriptUrl('settingsAdvanced'),
@@ -252,12 +254,14 @@ class Controller implements InitializableInterface
         ];
 
         $allowedTabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_SETTINGS_TABS, $allowedTabs);
+        $defaultTab = $this->settings->getSettingsDefaultTab();
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
+        $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : $defaultTab;
 
-        if (empty($tab) || ! in_array($tab, $allowedTabs, true)) {
-            $tab = 'advanced';
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        if (! isset($_GET['tab']) || ! in_array($tab, $allowedTabs, true)) {
+            $tab = $this->settings::SETTINGS_DEFAULT_TAB;
         }
 
         return $tab;
