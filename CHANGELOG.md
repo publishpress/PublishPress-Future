@@ -32,6 +32,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Remove the option to compact scheduled actions data (Issue #1233).
 
+### Fixed
+
+- Fixed REST API request detection to workflow engine execution environment identification (Issue #1290).
+- Fixed duplicate FILTER_REGISTER_REST_ROUTES constant (Issue #1290).
+
 ### Developers
 
 - Remove unused InitineLoopPreventer trait from some classes, replacing it with the service "future.free/workflow-execution-safeguard".
