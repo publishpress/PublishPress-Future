@@ -155,8 +155,6 @@ class WorkflowEngine implements WorkflowEngineInterface
 
         $this->engineExecutionId = $this->generateUniqueId();
 
-        $this->runWorkflows($this->getPublishedWorkflowsIds());
-
         $this->logger->debug(self::LOG_PREFIX . ' Engine started and listening for events');
     }
 
