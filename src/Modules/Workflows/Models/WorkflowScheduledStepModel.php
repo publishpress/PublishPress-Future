@@ -361,12 +361,7 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
         $this->setRepetitionNumber($row['repetition_number'] ?? 0);
         $this->isFinished = null;
 
-        if ($this->getIsCompressed()) {
-            $args = $this->uncompressAndDecodeArguments($row['compressed_args'] ?? []);
-            $this->setArgs($args);
-        } else {
-            $this->setArgs($this->decodeArguments($row['uncompressed_args'] ?? []));
-        }
+        $this->setArgs($this->decodeArguments($row['uncompressed_args'] ?? []));
     }
 
     private function getTableSchema(): DBTableSchemaInterface
@@ -426,26 +421,6 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
         $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
         return $settingsFacade->getStepScheduleCompressedArgsStatus();
-    }
-
-    private function encodeAndCompressArguments(array $args): string
-    {
-        $args = $this->encodeArguments($args);
-
-        if (function_exists('gzcompress')) {
-            $args = gzcompress($args);
-        }
-
-        return $args;
-    }
-
-    private function uncompressAndDecodeArguments(string $args): array
-    {
-        if (function_exists('gzuncompress')) {
-            $args = gzuncompress($args);
-        }
-
-        return $this->decodeArguments($args);
     }
 
     public function incrementTotalRunCount(): void

@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove unused InitineLoopPreventer trait from some classes, replacing it with the service "future.free/workflow-execution-safeguard".
 - Refactored workflow hooks replacing ACTION_ASYNC_EXECUTE_STEP with ACTION_SCHEDULED_STEP_EXECUTE for better semantic clarity.
 - Added getId method to UserModel for retrieving user ID;
+- Refactor WorkflowScheduledStepModel to simplify argument handling by removing compression logic and directly decoding uncompressed arguments.
 
 ## [4.5.0] - 7 Apr, 2025
 
