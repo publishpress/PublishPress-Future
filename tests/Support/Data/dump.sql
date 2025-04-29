@@ -1,4 +1,4 @@
-/*M!999999\- enable the sandbox mode */ 
+/*M!999999\- enable the sandbox mode */
 -- MariaDB dump 10.19-11.4.5-MariaDB, for Linux (aarch64)
 --
 -- Host: db_tests    Database: wordpress
@@ -46,7 +46,7 @@ CREATE TABLE `wp_actionscheduler_actions` (
   KEY `group_id` (`group_id`),
   KEY `last_attempt_gmt` (`last_attempt_gmt`),
   KEY `claim_id_status_scheduled_date_gmt` (`claim_id`,`status`,`scheduled_date_gmt`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,7 +129,7 @@ CREATE TABLE `wp_actionscheduler_logs` (
   PRIMARY KEY (`log_id`),
   KEY `action_id` (`action_id`),
   KEY `log_date_gmt` (`log_date_gmt`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -210,8 +210,6 @@ CREATE TABLE `wp_comments` (
 
 LOCK TABLES `wp_comments` WRITE;
 /*!40000 ALTER TABLE `wp_comments` DISABLE KEYS */;
-INSERT INTO `wp_comments` VALUES
-(1,1,'A WordPress Commenter','wapuu@wordpress.example','https://wordpress.org/','','2025-04-22 23:48:19','2025-04-22 23:48:19','Hi, this is a comment.\nTo get started with moderating, editing, and deleting comments, please visit the Comments screen in the dashboard.\nCommenter avatars come from <a href=\"https://gravatar.com/\">Gravatar</a>.',0,'1','','comment',0,0);
 /*!40000 ALTER TABLE `wp_comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,7 +263,7 @@ CREATE TABLE `wp_options` (
   PRIMARY KEY (`option_id`),
   UNIQUE KEY `option_name` (`option_name`),
   KEY `autoload` (`autoload`)
-) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=218 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -450,7 +448,7 @@ CREATE TABLE `wp_postexpirator_debug` (
   `blog` int(9) NOT NULL,
   `message` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -477,7 +475,7 @@ CREATE TABLE `wp_postmeta` (
   PRIMARY KEY (`meta_id`),
   KEY `post_id` (`post_id`),
   KEY `meta_key` (`meta_key`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=234 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -486,25 +484,6 @@ CREATE TABLE `wp_postmeta` (
 
 LOCK TABLES `wp_postmeta` WRITE;
 /*!40000 ALTER TABLE `wp_postmeta` DISABLE KEYS */;
-INSERT INTO `wp_postmeta` VALUES
-(1,2,'_wp_page_template','default'),
-(2,3,'_wp_page_template','default'),
-(3,4,'_pp_workflow_debug_ray_show_queries','0'),
-(4,4,'_pp_workflow_debug_ray_show_emails','0'),
-(5,4,'_pp_workflow_debug_ray_show_wordpress_errors','0'),
-(6,4,'_pp_workflow_debug_ray_show_current_running_step','0'),
-(7,5,'_pp_workflow_debug_ray_show_queries','0'),
-(8,5,'_pp_workflow_debug_ray_show_emails','0'),
-(9,5,'_pp_workflow_debug_ray_show_wordpress_errors','0'),
-(10,5,'_pp_workflow_debug_ray_show_current_running_step','0'),
-(11,6,'_pp_workflow_debug_ray_show_queries','0'),
-(12,6,'_pp_workflow_debug_ray_show_emails','0'),
-(13,6,'_pp_workflow_debug_ray_show_wordpress_errors','0'),
-(14,6,'_pp_workflow_debug_ray_show_current_running_step','0'),
-(15,7,'_pp_workflow_debug_ray_show_queries','0'),
-(16,7,'_pp_workflow_debug_ray_show_emails','0'),
-(17,7,'_pp_workflow_debug_ray_show_wordpress_errors','0'),
-(18,7,'_pp_workflow_debug_ray_show_current_running_step','0');
 /*!40000 ALTER TABLE `wp_postmeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -544,7 +523,7 @@ CREATE TABLE `wp_posts` (
   KEY `type_status_date` (`post_type`,`post_status`,`post_date`,`ID`),
   KEY `post_parent` (`post_parent`),
   KEY `post_author` (`post_author`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -553,15 +532,80 @@ CREATE TABLE `wp_posts` (
 
 LOCK TABLES `wp_posts` WRITE;
 /*!40000 ALTER TABLE `wp_posts` DISABLE KEYS */;
-INSERT INTO `wp_posts` VALUES
-(1,1,'2025-04-22 23:48:19','2025-04-22 23:48:19','<!-- wp:paragraph -->\n<p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>\n<!-- /wp:paragraph -->','Hello world!','','publish','open','open','','hello-world','','','2025-04-22 23:48:19','2025-04-22 23:48:19','',0,'http://localhost:8002/?p=1',0,'post','',1),
-(2,1,'2025-04-22 23:48:19','2025-04-22 23:48:19','<!-- wp:paragraph -->\n<p>This is an example page. It\'s different from a blog post because it will stay in one place and will show up in your site navigation (in most themes). Most people start with an About page that introduces them to potential site visitors. It might say something like this:</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:quote -->\n<blockquote class=\"wp-block-quote\"><p>Hi there! I\'m a bike messenger by day, aspiring actor by night, and this is my website. I live in Los Angeles, have a great dog named Jack, and I like pi&#241;a coladas. (And gettin\' caught in the rain.)</p></blockquote>\n<!-- /wp:quote -->\n\n<!-- wp:paragraph -->\n<p>...or something like this:</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:quote -->\n<blockquote class=\"wp-block-quote\"><p>The XYZ Doohickey Company was founded in 1971, and has been providing quality doohickeys to the public ever since. Located in Gotham City, XYZ employs over 2,000 people and does all kinds of awesome things for the Gotham community.</p></blockquote>\n<!-- /wp:quote -->\n\n<!-- wp:paragraph -->\n<p>As a new WordPress user, you should go to <a href=\"http://localhost:8002/wp-admin/\">your dashboard</a> to delete this page and create new pages for your content. Have fun!</p>\n<!-- /wp:paragraph -->','Sample Page','','publish','closed','open','','sample-page','','','2025-04-22 23:48:19','2025-04-22 23:48:19','',0,'http://localhost:8002/?page_id=2',0,'page','',0),
-(3,1,'2025-04-22 23:48:19','2025-04-22 23:48:19','<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Who we are</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>Our website address is: http://localhost:8002.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Comments</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>When visitors leave comments on the site we collect the data shown in the comments form, and also the visitor&#8217;s IP address and browser user agent string to help spam detection.</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph -->\n<p>An anonymized string created from your email address (also called a hash) may be provided to the Gravatar service to see if you are using it. The Gravatar service privacy policy is available here: https://automattic.com/privacy/. After approval of your comment, your profile picture is visible to the public in the context of your comment.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Media</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>If you upload images to the website, you should avoid uploading images with embedded location data (EXIF GPS) included. Visitors to the website can download and extract any location data from images on the website.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Cookies</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>If you leave a comment on our site you may opt-in to saving your name, email address and website in cookies. These are for your convenience so that you do not have to fill in your details again when you leave another comment. These cookies will last for one year.</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph -->\n<p>If you visit our login page, we will set a temporary cookie to determine if your browser accepts cookies. This cookie contains no personal data and is discarded when you close your browser.</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph -->\n<p>When you log in, we will also set up several cookies to save your login information and your screen display choices. Login cookies last for two days, and screen options cookies last for a year. If you select &quot;Remember Me&quot;, your login will persist for two weeks. If you log out of your account, the login cookies will be removed.</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph -->\n<p>If you edit or publish an article, an additional cookie will be saved in your browser. This cookie includes no personal data and simply indicates the post ID of the article you just edited. It expires after 1 day.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Embedded content from other websites</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>Articles on this site may include embedded content (e.g. videos, images, articles, etc.). Embedded content from other websites behaves in the exact same way as if the visitor has visited the other website.</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph -->\n<p>These websites may collect data about you, use cookies, embed additional third-party tracking, and monitor your interaction with that embedded content, including tracking your interaction with the embedded content if you have an account and are logged in to that website.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Who we share your data with</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>If you request a password reset, your IP address will be included in the reset email.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">How long we retain your data</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>If you leave a comment, the comment and its metadata are retained indefinitely. This is so we can recognize and approve any follow-up comments automatically instead of holding them in a moderation queue.</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph -->\n<p>For users that register on our website (if any), we also store the personal information they provide in their user profile. All users can see, edit, or delete their personal information at any time (except they cannot change their username). Website administrators can also see and edit that information.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">What rights you have over your data</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>If you have an account on this site, or have left comments, you can request to receive an exported file of the personal data we hold about you, including any data you have provided to us. You can also request that we erase any personal data we hold about you. This does not include any data we are obliged to keep for administrative, legal, or security purposes.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Where your data is sent</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>Visitor comments may be checked through an automated spam detection service.</p>\n<!-- /wp:paragraph -->\n','Privacy Policy','','draft','closed','open','','privacy-policy','','','2025-04-22 23:48:19','2025-04-22 23:48:19','',0,'http://localhost:8002/?page_id=3',0,'page','',0),
-(4,0,'2025-04-22 23:48:34','0000-00-00 00:00:00','{\"nodes\":[{\"id\":\"n1717543440185\",\"type\":\"trigger\",\"position\":{\"x\":0,\"y\":-140},\"data\":{\"name\":\"trigger\\/core.post-updated\",\"elementaryType\":\"trigger\",\"version\":1,\"slug\":\"onPostUpdated1\",\"settings\":{\"postQuery\":{\"postSource\":\"custom\",\"postType\":[],\"postId\":[],\"postStatus\":[],\"json\":{\"and\":[{\"==\":[{\"var\":\"{{onPostUpdated1.postAfter.type}}\"},\"post\"]}]},\"natural\":\"{{onPostUpdated1.postAfter.type}} is \'post\'\"}}},\"width\":140,\"height\":68,\"selected\":true,\"positionAbsolute\":{\"x\":0,\"y\":-140},\"dragging\":false},{\"id\":\"n1717543448599\",\"type\":\"generic\",\"position\":{\"x\":0,\"y\":-20},\"data\":{\"name\":\"action\\/core.send-email\",\"elementaryType\":\"action\",\"version\":1,\"slug\":\"sendEmail1\",\"settings\":{\"recipient\":{\"recipient\":\"global.site.admin_email\",\"custom\":\"\"},\"subject\":\"Post updated: {{onPostUpdated1.postBefore.title}}\",\"message\":\"The post \\\"{{onPostUpdated1.postBefore.title}} was updated.\\n\\nThe new title is \\\"{{onPostUpdated1.postAfter.title}}\\\".\"}},\"width\":140,\"height\":68,\"selected\":false,\"positionAbsolute\":{\"x\":0,\"y\":-20},\"dragging\":false}],\"edges\":[{\"source\":\"n1717543440185\",\"sourceHandle\":\"output\",\"target\":\"n1717543448599\",\"targetHandle\":\"input\",\"type\":\"genericEdge\",\"id\":\"n1717543440185-output-n1717543448599-input\",\"markerEnd\":{\"type\":\"arrowclosed\"}}],\"viewport\":{\"x\":360,\"y\":1079.5,\"zoom\":2},\"editorVersion\":\"4.5.0\"}','Notify when a post is updated','Notify the site admin when a post is updated.','draft','closed','closed','','','','','2025-04-22 23:48:34','2025-04-22 23:48:34','',0,'http://localhost:8002/?p=4',0,'ppfuture_workflow','',0),
-(5,0,'2025-04-22 23:48:34','0000-00-00 00:00:00','{\"nodes\":[{\"id\":\"n1717531507668\",\"type\":\"trigger\",\"position\":{\"x\":12,\"y\":12},\"data\":{\"name\":\"trigger\\/core.save-post\",\"elementaryType\":\"trigger\",\"version\":2,\"slug\":\"onSavePost1\",\"settings\":{\"postQuery\":{\"postSource\":\"custom\",\"postType\":[\"post\"],\"postId\":[],\"postStatus\":[\"publish\"],\"json\":{\"and\":[{\"==\":[{\"var\":\"{{onSavePost1.post.type}}\"},\"post\"]},{\"==\":[{\"var\":\"{{onSavePost1.post.status}}\"},\"publish\"]}]},\"natural\":\"{{onSavePost1.post.type}} is \'post\', and {{onSavePost1.post.status}} is \'publish\'\"}}},\"width\":140,\"height\":68,\"selected\":true,\"targetPosition\":\"top\",\"sourcePosition\":\"bottom\",\"$H\":284,\"x\":12,\"y\":12,\"positionAbsolute\":{\"x\":12,\"y\":12},\"dragging\":false},{\"id\":\"n1717531530334\",\"type\":\"generic\",\"position\":{\"x\":12,\"y\":252},\"data\":{\"name\":\"action\\/core.post-change-status\",\"elementaryType\":\"action\",\"version\":1,\"slug\":\"changePostStatus1\",\"settings\":{\"newStatus\":{\"newStatus\":\"publish\",\"status\":\"draft\"},\"post\":{\"variable\":\"{{onSavePost1.post}}\"}}},\"width\":140,\"height\":68,\"selected\":false,\"positionAbsolute\":{\"x\":12,\"y\":252},\"dragging\":false,\"targetPosition\":\"top\",\"sourcePosition\":\"bottom\",\"$H\":333,\"x\":12,\"y\":252},{\"id\":\"n1717531533130\",\"type\":\"generic\",\"position\":{\"x\":12,\"y\":132},\"data\":{\"name\":\"advanced\\/core.schedule\",\"elementaryType\":\"advanced\",\"version\":1,\"slug\":\"schedule1\",\"settings\":{\"schedule\":{\"whenToRun\":\"offset\",\"dateSource\":\"onSavePost1.post.post_date\",\"recurrence\":\"single\",\"repeatUntil\":\"forever\",\"repeatInterval\":\"3600\",\"repeatTimes\":\"5\",\"repeatUntilDate\":\"2024-06-11T20:06:02.100Z\",\"unique\":true,\"priority\":\"10\",\"specificDate\":\"2024-06-07T20:06:02.100Z\",\"dateOffset\":\"+7 days\"}}},\"width\":140,\"height\":68,\"selected\":false,\"positionAbsolute\":{\"x\":12,\"y\":132},\"dragging\":false,\"targetPosition\":\"top\",\"sourcePosition\":\"bottom\",\"$H\":335,\"x\":12,\"y\":132},{\"id\":\"n1717531536270\",\"type\":\"generic\",\"position\":{\"x\":12,\"y\":372},\"data\":{\"name\":\"action\\/core.send-email\",\"elementaryType\":\"action\",\"version\":1,\"slug\":\"sendEmail1\",\"settings\":{\"recipient\":{\"recipient\":\"global.site.admin_email\",\"custom\":\"\"}}},\"width\":140,\"height\":68,\"targetPosition\":\"top\",\"sourcePosition\":\"bottom\",\"$H\":337,\"x\":12,\"y\":372,\"selected\":false,\"dragging\":false,\"positionAbsolute\":{\"x\":12,\"y\":372}}],\"edges\":[{\"source\":\"n1717531507668\",\"sourceHandle\":\"output\",\"target\":\"n1717531533130\",\"targetHandle\":\"input\",\"type\":\"genericEdge\",\"id\":\"n1717531507668-output-n1717531533130-input\",\"markerEnd\":{\"type\":\"arrowclosed\"}},{\"source\":\"n1717531533130\",\"sourceHandle\":\"output\",\"target\":\"n1717531530334\",\"targetHandle\":\"input\",\"type\":\"genericEdge\",\"id\":\"n1717531533130-output-n1717531530334-input\",\"markerEnd\":{\"type\":\"arrowclosed\"}},{\"source\":\"n1717531530334\",\"sourceHandle\":\"output\",\"target\":\"n1717531536270\",\"targetHandle\":\"input\",\"type\":\"genericEdge\",\"id\":\"n1717531530334-output-n1717531536270-input\",\"markerEnd\":{\"type\":\"arrowclosed\"}}],\"viewport\":{\"x\":416,\"y\":535.5,\"zoom\":2},\"editorVersion\":\"4.5.0\"}','Unpublish to Draft after a week','Change the post status to Draft a week after it was published.','draft','closed','closed','','','','','2025-04-22 23:48:34','2025-04-22 23:48:34','',0,'http://localhost:8002/?p=5',0,'ppfuture_workflow','',0),
-(6,0,'2025-04-22 23:48:34','0000-00-00 00:00:00','{\"nodes\":[{\"id\":\"n1717542854679\",\"type\":\"trigger\",\"position\":{\"x\":20,\"y\":-100},\"data\":{\"name\":\"trigger\\/core.save-post\",\"elementaryType\":\"trigger\",\"version\":2,\"slug\":\"onSavePost1\",\"settings\":{\"postQuery\":{\"postSource\":\"custom\",\"postType\":[\"post\"],\"postId\":[],\"postStatus\":[\"publish\"],\"json\":{\"and\":[{\"==\":[{\"var\":\"{{onSavePost1.post.type}}\"},\"post\"]},{\"==\":[{\"var\":\"{{onSavePost1.post.status}}\"},\"publish\"]}]},\"natural\":\"{{onSavePost1.post.type}} is \'post\', and {{onSavePost1.post.status}} is \'publish\'\"}}},\"width\":140,\"height\":68,\"selected\":true,\"positionAbsolute\":{\"x\":20,\"y\":-100},\"dragging\":false,\"targetPosition\":\"top\",\"sourcePosition\":\"bottom\",\"$H\":284,\"x\":12,\"y\":12},{\"id\":\"n1717542934571\",\"type\":\"generic\",\"position\":{\"x\":20,\"y\":140},\"data\":{\"name\":\"action\\/core.post-change-status\",\"elementaryType\":\"action\",\"version\":1,\"slug\":\"changePostStatus1\",\"settings\":{\"newStatus\":{\"newStatus\":\"publish\",\"status\":\"draft\"},\"post\":{\"variable\":\"{{onSavePost1.post}}\"}}},\"width\":140,\"height\":68,\"selected\":false,\"positionAbsolute\":{\"x\":20,\"y\":140},\"dragging\":false,\"targetPosition\":\"top\",\"sourcePosition\":\"bottom\",\"$H\":286,\"x\":12,\"y\":252},{\"id\":\"n1717542946349\",\"type\":\"generic\",\"position\":{\"x\":20,\"y\":20},\"data\":{\"name\":\"advanced\\/core.schedule\",\"elementaryType\":\"advanced\",\"version\":1,\"slug\":\"schedule1\",\"settings\":{\"schedule\":{\"whenToRun\":\"offset\",\"dateSource\":\"onSavePost1.post.post_date\",\"recurrence\":\"single\",\"repeatUntil\":\"forever\",\"repeatInterval\":\"3600\",\"repeatTimes\":\"5\",\"repeatUntilDate\":\"2024-06-11T23:16:24.422Z\",\"unique\":true,\"priority\":\"10\",\"specificDate\":\"2024-06-07T23:16:24.422Z\",\"dateOffset\":\"+15 days\"}}},\"width\":140,\"height\":68,\"selected\":false,\"positionAbsolute\":{\"x\":20,\"y\":20},\"dragging\":false,\"targetPosition\":\"top\",\"sourcePosition\":\"bottom\",\"$H\":288,\"x\":12,\"y\":132},{\"id\":\"n1717543017933\",\"type\":\"generic\",\"position\":{\"x\":0,\"y\":250},\"data\":{\"name\":\"action\\/core.replace-post-terms\",\"elementaryType\":\"action\",\"version\":1,\"slug\":\"replacePostTerms1\",\"settings\":{\"taxonomyTerms\":{\"taxonomy\":\"category\",\"terms\":[]},\"post\":{\"variable\":\"{{onSavePost1.post}}\"}}},\"width\":163,\"height\":68,\"selected\":false,\"positionAbsolute\":{\"x\":0,\"y\":250},\"dragging\":false},{\"id\":\"n1717543063491\",\"type\":\"generic\",\"position\":{\"x\":20,\"y\":360},\"data\":{\"name\":\"action\\/core.send-email\",\"elementaryType\":\"action\",\"version\":1,\"slug\":\"sendEmail1\",\"settings\":{\"recipient\":{\"recipient\":\"global.site.admin_email\",\"custom\":\"\"}}},\"width\":140,\"height\":68,\"selected\":false,\"positionAbsolute\":{\"x\":20,\"y\":360},\"dragging\":false}],\"edges\":[{\"source\":\"n1717542854679\",\"sourceHandle\":\"output\",\"target\":\"n1717542946349\",\"targetHandle\":\"input\",\"type\":\"genericEdge\",\"id\":\"reactflow__edge-n1717542854679output-n1717542946349input\",\"sections\":[{\"id\":\"reactflow__edge-n1717542854679output-n1717542946349input_s0\",\"startPoint\":{\"x\":87,\"y\":62},\"endPoint\":{\"x\":87,\"y\":132},\"incomingShape\":\"n1717542854679\",\"outgoingShape\":\"n1717542946349\"}],\"container\":\"root\",\"selected\":false,\"markerEnd\":{\"type\":\"arrowclosed\"}},{\"source\":\"n1717542946349\",\"sourceHandle\":\"output\",\"target\":\"n1717542934571\",\"targetHandle\":\"input\",\"type\":\"genericEdge\",\"id\":\"n1717542946349-output-n1717542934571-input\",\"sections\":[{\"id\":\"n1717542946349-output-n1717542934571-input_s0\",\"startPoint\":{\"x\":87,\"y\":182},\"endPoint\":{\"x\":87,\"y\":252},\"incomingShape\":\"n1717542946349\",\"outgoingShape\":\"n1717542934571\"}],\"container\":\"root\",\"selected\":false,\"markerEnd\":{\"type\":\"arrowclosed\"}},{\"source\":\"n1717542934571\",\"sourceHandle\":\"output\",\"target\":\"n1717543017933\",\"targetHandle\":\"input\",\"type\":\"genericEdge\",\"id\":\"n1717542934571-output-n1717543017933-input\",\"markerEnd\":{\"type\":\"arrowclosed\"}},{\"source\":\"n1717543017933\",\"sourceHandle\":\"output\",\"target\":\"n1717543063491\",\"targetHandle\":\"input\",\"type\":\"genericEdge\",\"id\":\"n1717543017933-output-n1717543063491-input\",\"markerEnd\":{\"type\":\"arrowclosed\"}}],\"viewport\":{\"x\":403,\"y\":659.5,\"zoom\":2},\"editorVersion\":\"4.5.0\"}','Unpublish and change category after one week','Move the post to draft and add a category after 15 days.','draft','closed','closed','','','','','2025-04-22 23:48:34','2025-04-22 23:48:34','',0,'http://localhost:8002/?p=6',0,'ppfuture_workflow','',0),
-(7,0,'2025-04-22 23:48:34','0000-00-00 00:00:00','{\"nodes\":[{\"id\":\"n1717531365606\",\"type\":\"trigger\",\"position\":{\"x\":12,\"y\":12},\"data\":{\"name\":\"trigger\\/core.save-post\",\"elementaryType\":\"trigger\",\"version\":2,\"slug\":\"onSavePost1\",\"settings\":{\"postQuery\":{\"postSource\":\"custom\",\"postType\":[\"post\"],\"postId\":[],\"postStatus\":[\"publish\"],\"json\":{\"and\":[{\"==\":[{\"var\":\"{{onSavePost1.post.type}}\"},\"post\"]},{\"==\":[{\"var\":\"{{onSavePost1.post.status}}\"},\"publish\"]}]},\"natural\":\"{{onSavePost1.post.type}} is \'post\', and {{onSavePost1.post.status}} is \'publish\'\"}}},\"width\":140,\"height\":68,\"targetPosition\":\"top\",\"sourcePosition\":\"bottom\",\"$H\":284,\"x\":12,\"y\":12,\"selected\":true,\"positionAbsolute\":{\"x\":12,\"y\":12},\"dragging\":false},{\"id\":\"n1717531386494\",\"type\":\"generic\",\"position\":{\"x\":12,\"y\":132},\"data\":{\"name\":\"advanced\\/core.schedule\",\"elementaryType\":\"advanced\",\"version\":1,\"slug\":\"schedule1\",\"settings\":{\"schedule\":{\"whenToRun\":\"offset\",\"dateSource\":\"onSavePost1.post.post_date\",\"recurrence\":\"single\",\"repeatUntil\":\"forever\",\"repeatInterval\":\"3600\",\"repeatTimes\":\"5\",\"repeatUntilDate\":\"2024-06-11T20:03:33.442Z\",\"unique\":true,\"priority\":\"10\",\"specificDate\":\"2024-06-07T20:03:33.442Z\",\"dateOffset\":\"+30 days\"}}},\"width\":140,\"height\":68,\"selected\":false,\"positionAbsolute\":{\"x\":12,\"y\":132},\"dragging\":false,\"targetPosition\":\"top\",\"sourcePosition\":\"bottom\",\"$H\":333,\"x\":12,\"y\":132},{\"id\":\"n1717531395486\",\"type\":\"generic\",\"position\":{\"x\":12,\"y\":252},\"data\":{\"name\":\"action\\/core.add-post-terms\",\"elementaryType\":\"action\",\"version\":1,\"slug\":\"addPostTerms1\",\"settings\":{\"taxonomyTerms\":{\"taxonomy\":\"category\",\"terms\":[]},\"post\":{\"variable\":\"{{onSavePost1.post}}\"}}},\"width\":155,\"height\":68,\"targetPosition\":\"top\",\"sourcePosition\":\"bottom\",\"$H\":335,\"x\":12,\"y\":252,\"selected\":false,\"positionAbsolute\":{\"x\":12,\"y\":252}},{\"id\":\"n1717531398637\",\"type\":\"generic\",\"position\":{\"x\":12,\"y\":372},\"data\":{\"name\":\"action\\/core.send-email\",\"elementaryType\":\"action\",\"version\":1,\"slug\":\"sendEmail1\",\"settings\":{\"recipient\":{\"recipient\":\"global.site.admin_email\",\"custom\":\"\"}}},\"width\":140,\"height\":68,\"targetPosition\":\"top\",\"sourcePosition\":\"bottom\",\"$H\":337,\"x\":12,\"y\":372,\"selected\":false,\"dragging\":false,\"positionAbsolute\":{\"x\":12,\"y\":372}}],\"edges\":[{\"source\":\"n1717531365606\",\"sourceHandle\":\"output\",\"target\":\"n1717531386494\",\"targetHandle\":\"input\",\"type\":\"genericEdge\",\"id\":\"n1717531365606-output-n1717531386494-input\",\"markerEnd\":{\"type\":\"arrowclosed\"}},{\"source\":\"n1717531386494\",\"sourceHandle\":\"output\",\"target\":\"n1717531395486\",\"targetHandle\":\"input\",\"type\":\"genericEdge\",\"id\":\"n1717531386494-output-n1717531395486-input\",\"markerEnd\":{\"type\":\"arrowclosed\"}},{\"source\":\"n1717531395486\",\"sourceHandle\":\"output\",\"target\":\"n1717531398637\",\"targetHandle\":\"input\",\"type\":\"genericEdge\",\"id\":\"n1717531395486-output-n1717531398637-input\",\"markerEnd\":{\"type\":\"arrowclosed\"}}],\"viewport\":{\"x\":406,\"y\":550.5,\"zoom\":2},\"editorVersion\":\"4.5.0\"}','Add extra categories one month after publishing','Sample workflow to add extra categories one month after publishing','draft','closed','closed','','','','','2025-04-22 23:48:34','2025-04-22 23:48:34','',0,'http://localhost:8002/?p=7',0,'ppfuture_workflow','',0);
 /*!40000 ALTER TABLE `wp_posts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wp_ppfuture_actions_args`
+--
+
+DROP TABLE IF EXISTS `wp_ppfuture_actions_args`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wp_ppfuture_actions_args` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `cron_action_id` bigint(20) unsigned NOT NULL,
+  `post_id` bigint(20) unsigned NOT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT 0,
+  `scheduled_date` datetime NOT NULL,
+  `created_at` datetime NOT NULL,
+  `args` varchar(1000) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `post_id` (`post_id`,`id`),
+  KEY `enabled_post_id` (`post_id`,`enabled`,`id`),
+  KEY `cron_action_id` (`cron_action_id`,`id`),
+  KEY `enabled_cron_action_id` (`cron_action_id`,`enabled`,`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wp_ppfuture_actions_args`
+--
+
+LOCK TABLES `wp_ppfuture_actions_args` WRITE;
+/*!40000 ALTER TABLE `wp_ppfuture_actions_args` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wp_ppfuture_actions_args` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wp_ppfuture_workflow_scheduled_steps`
+--
+
+DROP TABLE IF EXISTS `wp_ppfuture_workflow_scheduled_steps`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wp_ppfuture_workflow_scheduled_steps` (
+  `action_id` bigint(20) unsigned NOT NULL,
+  `workflow_id` bigint(20) unsigned NOT NULL,
+  `step_id` varchar(100) NOT NULL,
+  `action_uid_hash` varchar(32) NOT NULL,
+  `action_uid` varchar(400) NOT NULL,
+  `is_recurring` tinyint(1) NOT NULL DEFAULT 0,
+  `repeat_until` set('forever','times','date') NOT NULL DEFAULT 'forever',
+  `repeat_times` int(11) NOT NULL DEFAULT 0,
+  `repeat_until_date` datetime DEFAULT NULL,
+  `repetition_number` int(11) NOT NULL DEFAULT 0,
+  `uncompressed_args` varchar(10000) DEFAULT NULL,
+  `compressed_args` blob DEFAULT NULL,
+  `is_compressed` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `post_id` bigint(20) unsigned DEFAULT NULL,
+  PRIMARY KEY (`action_id`),
+  KEY `workflow_id` (`workflow_id`,`action_id`),
+  KEY `step_id` (`step_id`,`action_id`),
+  KEY `action_uid_hash` (`action_uid_hash`,`action_id`),
+  KEY `is_recurring` (`is_recurring`,`action_id`),
+  KEY `post_id` (`post_id`,`workflow_id`,`action_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wp_ppfuture_workflow_scheduled_steps`
+--
+
+LOCK TABLES `wp_ppfuture_workflow_scheduled_steps` WRITE;
+/*!40000 ALTER TABLE `wp_ppfuture_workflow_scheduled_steps` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wp_ppfuture_workflow_scheduled_steps` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -586,8 +630,6 @@ CREATE TABLE `wp_term_relationships` (
 
 LOCK TABLES `wp_term_relationships` WRITE;
 /*!40000 ALTER TABLE `wp_term_relationships` DISABLE KEYS */;
-INSERT INTO `wp_term_relationships` VALUES
-(1,1,0);
 /*!40000 ALTER TABLE `wp_term_relationships` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -608,7 +650,7 @@ CREATE TABLE `wp_term_taxonomy` (
   PRIMARY KEY (`term_taxonomy_id`),
   UNIQUE KEY `term_id_taxonomy` (`term_id`,`taxonomy`),
   KEY `taxonomy` (`taxonomy`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -618,7 +660,7 @@ CREATE TABLE `wp_term_taxonomy` (
 LOCK TABLES `wp_term_taxonomy` WRITE;
 /*!40000 ALTER TABLE `wp_term_taxonomy` DISABLE KEYS */;
 INSERT INTO `wp_term_taxonomy` VALUES
-(1,1,'category','',0,1);
+(1,1,'category','',0,0);
 /*!40000 ALTER TABLE `wp_term_taxonomy` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -664,7 +706,7 @@ CREATE TABLE `wp_terms` (
   PRIMARY KEY (`term_id`),
   KEY `slug` (`slug`(191)),
   KEY `name` (`name`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -766,4 +808,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2025-04-22 23:48:34
+-- Dump completed on 2025-04-29 15:01:37
