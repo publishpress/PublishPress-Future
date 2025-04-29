@@ -224,6 +224,12 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
             )
         );
 
+        $this->hooks->doAction(
+            HooksAbstract::ACTION_WORKFLOW_TRIGGER_EXECUTED,
+            $this->workflowId,
+            $this->step
+        );
+
         $this->stepProcessor->runNextSteps($this->step);
     }
 }

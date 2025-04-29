@@ -146,6 +146,13 @@ class OnPostWorkflowEnableRunner implements TriggerRunnerInterface
         );
 
         $this->stepProcessor->triggerCallbackIsRunning();
+
+        $this->hooks->doAction(
+            HooksAbstract::ACTION_WORKFLOW_TRIGGER_EXECUTED,
+            $this->workflowId,
+            $this->step
+        );
+
         $this->stepProcessor->runNextSteps($this->step);
     }
 
