@@ -212,6 +212,7 @@ final class Module implements InitializableInterface
         }
 
         $this->workflowEngine->start();
+        $this->workflowEngine->runWorkflows();
     }
 
     private function registerHooks()

@@ -8,6 +8,11 @@ interface WorkflowEngineInterface
 {
     public function start();
 
+    /**
+     * @since 4.6.0
+     */
+    public function runWorkflows(array $workflowIdsToRun = []);
+
     public function setCurrentAsyncActionId($actionId);
 
     public function getCurrentAsyncActionId(): int;

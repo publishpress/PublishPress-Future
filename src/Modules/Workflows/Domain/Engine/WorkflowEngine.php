@@ -143,7 +143,7 @@ class WorkflowEngine implements WorkflowEngineInterface
 
         $this->engineExecutionEnvironment = $this->getEngineExecutionEnvironment();
 
-        $currentUser = wp_get_current_user();
+        $currentUser = $this->getCurrentUser();
 
         $this->logger->debug(
             sprintf(
@@ -153,13 +153,29 @@ class WorkflowEngine implements WorkflowEngineInterface
             )
         );
 
-        $publishedWorkflowsIds = $this->getPublishedWorkflowsIds();
-        $stepTypes = $this->getAllStepTypes();
-
         $this->engineExecutionId = $this->generateUniqueId();
 
+        $this->runWorkflows($this->getPublishedWorkflowsIds());
+
+        $this->logger->debug(self::LOG_PREFIX . ' Engine started and listening for events');
+    }
+
+    public function runWorkflows(array $workflowIdsToRun = [])
+    {
+        $this->logger->debug(self::LOG_PREFIX . ' Running workflows');
+
+        if (empty($workflowIdsToRun)) {
+            $this->logger->debug(self::LOG_PREFIX . ' No specific workflows to run, getting all published workflows');
+
+            $workflowIdsToRun = $this->getPublishedWorkflowsIds();
+        }
+
+        $stepTypes = $this->getAllStepTypes();
+
         // Setup the workflow triggers
-        foreach ($publishedWorkflowsIds as $workflowId) {
+        foreach ($workflowIdsToRun as $workflowId) {
+            $workflowId = (int) $workflowId;
+
             /** @var WorkflowModelInterface $workflow */
             $workflow = new WorkflowModel();
             $workflow->load($workflowId);
@@ -235,7 +251,7 @@ class WorkflowEngine implements WorkflowEngineInterface
             );
         }
 
-        $this->logger->debug(self::LOG_PREFIX . ' Engine started and listening for events');
+        $this->logger->debug(self::LOG_PREFIX . ' All workflows initialized');
     }
 
     public function prepareExecutionContextForWorkflow(
@@ -246,7 +262,7 @@ class WorkflowEngine implements WorkflowEngineInterface
             $workflowExecutionId
         );
 
-        $currentUser = wp_get_current_user();
+        $currentUser = $this->getCurrentUser();
 
         $globalVariables = [
             'engine_execution_id' => $this->engineExecutionId,
@@ -492,5 +508,12 @@ class WorkflowEngine implements WorkflowEngineInterface
         }
 
         return 'frontend';
+    }
+
+    private function getCurrentUser(): \WP_User
+    {
+        $currentUser = wp_get_current_user();
+
+        return $currentUser;
     }
 }
