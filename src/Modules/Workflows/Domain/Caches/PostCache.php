@@ -22,6 +22,7 @@ class PostCache implements PostCacheInterface
 
     public function setup(): void
     {
+        $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'cacheFirstInsert'], 10, 3);
         $this->hooks->addAction(HooksAbstract::ACTION_PRE_POST_UPDATE, [$this, 'cachePermalink'], 15);
         $this->hooks->addAction(HooksAbstract::ACTION_POST_UPDATED, [$this, 'cachePosts'], 15, 3);
     }
@@ -57,5 +58,30 @@ class PostCache implements PostCacheInterface
     public function getCachedPosts(int $postId): ?array
     {
         return $this->postCache[$postId] ?? null;
+    }
+
+    /**
+     * Handle post insert or update early.
+     *
+     * This runs before wp_after_insert_post and as a result, we're using it to capture
+     * the initial auto-draft creation when the editor is first opened.
+     *
+     * @param int       $postId    The post ID.
+     * @param \WP_Post  $post      The post object after save.
+     * @param bool      $isUpdate  True if updating existing post, false if inserting new post.
+     *
+     * @return void;
+     */
+    public function cacheFirstInsert(int $postId, \WP_Post $post, bool $isUpdate): void
+    {
+        // Only cache first-time auto-draft/inherit creation
+        if (! $isUpdate) {
+            $this->postCache[$postId] = [
+                'postBefore' => null,
+                'postAfter'  => $post,
+            ];
+
+            $this->permalinkCache[$postId]['postAfter'] = get_permalink($postId);
+        }
     }
 }
