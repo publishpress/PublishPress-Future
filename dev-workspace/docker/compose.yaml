@@ -56,7 +56,7 @@ services:
             WORDPRESS_DEBUG: true
         ports:
             - "8011:80"
-            - "9006:9004"  # Expose Xdebug port
+            - "9001:9004"  # Expose Xdebug port
         volumes:
           - ../.cache/wp_tests:/var/www/html/
           - ../../:/var/www/html/wp-content/plugins/post-expirator
@@ -132,7 +132,7 @@ services:
             WORDPRESS_DEBUG: true
         ports:
             - "8012:80"
-            - "9004:9004"  # Expose Xdebug port
+            - "9002:9004"  # Expose Xdebug port
         volumes:
           - ../.cache/wp_dev:/var/www/html/
           - ../../:/var/www/html/wp-content/plugins/post-expirator
