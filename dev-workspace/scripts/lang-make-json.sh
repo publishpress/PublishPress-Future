@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -a
-source ../.env
+source /project/.env
 set +a
 
 for locale in $LANG_LOCALES

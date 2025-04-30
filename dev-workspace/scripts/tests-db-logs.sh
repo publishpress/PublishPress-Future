@@ -6,7 +6,7 @@ if [[ ! $(pwd) =~ .*dev-workspace$ ]]; then
 fi
 
 set -a
-source ../.env
+source /project/.env
 set +a
 
 DB_CONTAINER_NAME=${CONTAINER_NAME}_env_db_tests
