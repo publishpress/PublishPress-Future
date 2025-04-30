@@ -1,12 +1,11 @@
 ---
 description: For creating git commit messages
-globs: 
+globs:
 alwaysApply: false
 ---
 # Commit messages:
 
-- Message structure is composed by 2 parts: summary and description
-- Summary is separated from description by a blank line
-- Message has to be brief enough that it’s easy to read, but detailed enough that it’s easy to understand
+- Message structure is composed by 2 parts separated by a blank line: summary (max 50 chars) and description (max 72 chars)
 - Use the present tense and imperative mood.
-- Limit summary to 50 chars and description to 72 chars
+- For composer references update of PublishPress/PublishPress-Future, say it is an update for the free plugin
+- Keep messages concise and to the point, avoiding unnecessary details or verbosity
