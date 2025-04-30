@@ -77,7 +77,7 @@ class DebugLogSchema implements DBTableSchemaInterface
                         'The table %s does not exist.',
                         'post-expirator'
                     ),
-                    $tablePrefix . 'ppfuture_actions_args'
+                    $this->getTableName()
                 )
             );
         }
