@@ -76,12 +76,25 @@ class PostCache implements PostCacheInterface
     {
         // Only cache first-time auto-draft/inherit creation
         if (! $isUpdate) {
+            // set current post as postAfter
+            $postAfter = $post;
+
+            // make sure postBefore is not empty by cloning to inherit status
+            $postBefore = clone $post;
+            $postBefore->post_status = 'inherit';
+
+            // cache the post
             $this->postCache[$postId] = [
-                'postBefore' => null,
-                'postAfter'  => $post,
+                'postBefore' => $postBefore,
+                'postAfter'  => $postAfter,
             ];
 
-            $this->permalinkCache[$postId]['postAfter'] = get_permalink($postId);
+            // cache permalink
+            $permalink = get_permalink($postId);
+            $this->permalinkCache[$postId] = [
+                'postBefore' => $permalink,
+                'postAfter'  => $permalink,
+            ];
         }
     }
 }
