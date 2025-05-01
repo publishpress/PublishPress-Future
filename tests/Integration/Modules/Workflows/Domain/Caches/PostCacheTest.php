@@ -34,119 +34,164 @@ class PostCacheTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         // Setup the hooks
         $this->postCache->setup();
-
-        // Create a test post
-        $this->postId = $this->factory->post->create([
-            'post_title' => 'Original Title',
-            'post_content' => 'Original Content',
-            'post_status' => 'publish'
-        ]);
-
-        // Get the post object
-        $this->postBefore = get_post($this->postId);
     }
 
     public function tearDown(): void
     {
-        wp_delete_post($this->postId, true);
         parent::tearDown();
     }
 
-    public function testSetupRegistersHooks()
+    public function testCacheForFirstInsert(): void
     {
-        // Check if our hooks are registered
-        $this->assertTrue(has_action(HooksAbstract::ACTION_PRE_POST_UPDATE));
-        $this->assertTrue(has_action(HooksAbstract::ACTION_POST_UPDATED));
-    }
-
-    public function testCachePermalinkViaHook()
-    {
-        // Trigger the pre-update hook
-        do_action(HooksAbstract::ACTION_PRE_POST_UPDATE, $this->postId);
-
-        // Get the cached permalink
-        $cachedPermalink = $this->postCache->getCachedPermalink($this->postId);
-
-        // Assert that the permalink was cached correctly
-        $this->assertNotNull($cachedPermalink);
-        $this->assertEquals(get_permalink($this->postId), $cachedPermalink['postBefore']);
-        $this->assertNull($cachedPermalink['postAfter']);
-    }
-
-    public function testCachePostsViaHook()
-    {
-        // Update the post to create a different version
-        wp_update_post([
-            'ID' => $this->postId,
-            'post_title' => 'Updated Title',
-            'post_content' => 'Updated Content'
+        $postId = wp_insert_post([
+            'post_title' => 'Original Title',
+            'post_content' => 'Original Content',
+            'post_status' => 'publish',
         ]);
 
-        // Get the updated post
-        $this->postAfter = get_post($this->postId);
+        $this->assertNotEmpty($postId);
 
-        // Trigger the post-updated hook
-        do_action(HooksAbstract::ACTION_POST_UPDATED, $this->postId, $this->postAfter, $this->postBefore);
+        $cache = $this->postCache->getCacheForPostId($postId);
+        $permalink = get_permalink($postId);
 
-        // Get the cached posts
-        $cachedPosts = $this->postCache->getCachedPosts($this->postId);
+        $this->assertNotEmpty($cache);
+        $this->assertArrayHasKey('postBefore', $cache);
+        $this->assertArrayHasKey('postAfter', $cache);
+        $this->assertArrayHasKey('permalinkBefore', $cache);
+        $this->assertArrayHasKey('permalinkAfter', $cache);
 
-        // Assert that the posts were cached correctly
-        $this->assertNotNull($cachedPosts);
-        $this->assertSame($this->postAfter, $cachedPosts['postAfter']);
-        $this->assertSame($this->postBefore, $cachedPosts['postBefore']);
+        $this->assertNotNull($cache['postBefore']);
+        $this->assertNotNull($cache['postAfter']);
+        $this->assertNotNull($cache['permalinkBefore']);
+        $this->assertNotNull($cache['permalinkAfter']);
+
+        $this->assertEquals($cache['postBefore']->post_title, 'Original Title');
+        $this->assertEquals($cache['postAfter']->post_title, 'Original Title');
+
+        $this->assertEquals($cache['postBefore']->ID, $postId);
+        $this->assertEquals($cache['postAfter']->ID, $postId);
+
+        $this->assertEquals($cache['postBefore']->post_status, 'new');
+        $this->assertEquals($cache['postAfter']->post_status, 'publish');
+
+        $this->assertEquals($cache['permalinkBefore'], $permalink);
+        $this->assertEquals($cache['permalinkAfter'], $permalink);
     }
 
-    public function testCachePostsAndPermalinkViaHooks()
+    public function testCacheForUpdate(): void
     {
-        // First trigger the pre-update hook
-        do_action(HooksAbstract::ACTION_PRE_POST_UPDATE, $this->postId);
-
-        // Update the post to create a different version
-        wp_update_post([
-            'ID' => $this->postId,
-            'post_title' => 'Updated Title',
-            'post_content' => 'Updated Content'
+        $postId = wp_insert_post([
+            'post_title' => 'Original Title',
+            'post_content' => 'Original Content',
+            'post_status' => 'draft',
         ]);
 
-        // Get the updated post
-        $this->postAfter = get_post($this->postId);
+        $this->assertNotEmpty($postId);
 
-        // Then trigger the post-updated hook
-        do_action(HooksAbstract::ACTION_POST_UPDATED, $this->postId, $this->postAfter, $this->postBefore);
+        $postId = wp_update_post([
+            'ID' => $postId,
+            'post_title' => 'Updated Title',
+            'post_content' => 'Updated Content',
+        ]);
 
-        // Get the cached permalink
-        $cachedPermalink = $this->postCache->getCachedPermalink($this->postId);
+        $cache = $this->postCache->getCacheForPostId($postId);
+        $permalink = get_permalink($postId);
 
-        // Assert that both before and after permalinks are set
-        $this->assertNotNull($cachedPermalink);
-        $this->assertEquals(get_permalink($this->postId), $cachedPermalink['postBefore']);
-        $this->assertEquals(get_permalink($this->postId), $cachedPermalink['postAfter']);
+        $this->assertNotEmpty($cache);
+        $this->assertArrayHasKey('postBefore', $cache);
+        $this->assertArrayHasKey('postAfter', $cache);
+        $this->assertArrayHasKey('permalinkBefore', $cache);
+        $this->assertArrayHasKey('permalinkAfter', $cache);
 
-        // Also check the cached posts
-        $cachedPosts = $this->postCache->getCachedPosts($this->postId);
-        $this->assertNotNull($cachedPosts);
-        $this->assertSame($this->postAfter, $cachedPosts['postAfter']);
-        $this->assertSame($this->postBefore, $cachedPosts['postBefore']);
+        $this->assertNotNull($cache['postBefore']);
+        $this->assertNotNull($cache['postAfter']);
+        $this->assertNotNull($cache['permalinkBefore']);
+        $this->assertNotNull($cache['permalinkAfter']);
+
+        $this->assertEquals($cache['postBefore']->post_title, 'Original Title');
+        $this->assertEquals($cache['postAfter']->post_title, 'Updated Title');
+
+        $this->assertEquals($cache['postBefore']->ID, $postId);
+        $this->assertEquals($cache['postAfter']->ID, $postId);
+
+        $this->assertEquals($cache['permalinkBefore'], $permalink);
+        $this->assertEquals($cache['permalinkAfter'], $permalink);
     }
 
-    public function testGetCachedPermalinkForNonExistentPost()
+    public function testCacheForPostTransition(): void
     {
-        // Try to get a cached permalink for a non-existent post
-        $nonExistentPostId = 99999;
-        $cachedPermalink = $this->postCache->getCachedPermalink($nonExistentPostId);
+        $postId = wp_insert_post([
+            'post_title' => 'Original Title',
+            'post_content' => 'Original Content',
+            'post_status' => 'publish',
+        ]);
 
-        // Assert that null is returned
-        $this->assertNull($cachedPermalink);
+        $this->assertNotEmpty($postId);
+
+        $postId = wp_update_post([
+            'ID' => $postId,
+            'post_status' => 'draft',
+        ]);
+
+        $cache = $this->postCache->getCacheForPostId($postId);
+
+        $permalink = get_permalink($postId);
+
+        $this->assertNotEmpty($cache);
+        $this->assertArrayHasKey('postBefore', $cache);
+        $this->assertArrayHasKey('postAfter', $cache);
+        $this->assertArrayHasKey('permalinkBefore', $cache);
+        $this->assertArrayHasKey('permalinkAfter', $cache);
+
+        $this->assertNotNull($cache['postBefore']);
+        $this->assertNotNull($cache['postAfter']);
+        $this->assertNotNull($cache['permalinkBefore']);
+        $this->assertNotNull($cache['permalinkAfter']);
+
+        $this->assertEquals($cache['postBefore']->post_title, 'Original Title');
+        $this->assertEquals($cache['postAfter']->post_title, 'Original Title');
+
+        $this->assertEquals($cache['postBefore']->ID, $postId);
+        $this->assertEquals($cache['postAfter']->ID, $postId);
+
+        $this->assertEquals($cache['permalinkBefore'], $permalink);
+        $this->assertEquals($cache['permalinkAfter'], $permalink);
     }
 
-    public function testGetCachedPostsForNonExistentPost()
+    public function testCacheForPostPublishedTransition(): void
     {
-        // Try to get cached posts for a non-existent post
-        $nonExistentPostId = 99999;
-        $cachedPosts = $this->postCache->getCachedPosts($nonExistentPostId);
+        $postId = wp_insert_post([
+            'post_title' => 'Original Title',
+            'post_content' => 'Original Content',
+            'post_status' => 'draft',
+        ]);
 
-        // Assert that null is returned
-        $this->assertNull($cachedPosts);
+        $this->assertNotEmpty($postId);
+
+        wp_publish_post($postId);
+
+        $cache = $this->postCache->getCacheForPostId($postId);
+
+        $permalink = get_permalink($postId);
+
+        $this->assertNotEmpty($cache);
+        $this->assertArrayHasKey('postBefore', $cache);
+        $this->assertArrayHasKey('postAfter', $cache);
+        $this->assertArrayHasKey('permalinkBefore', $cache);
+        $this->assertArrayHasKey('permalinkAfter', $cache);
+
+        $this->assertNotNull($cache['postBefore']);
+        $this->assertNotNull($cache['postAfter']);
+        $this->assertNotNull($cache['permalinkBefore']);
+        $this->assertNotNull($cache['permalinkAfter']);
+
+        $this->assertEquals($cache['postBefore']->post_title, 'Original Title');
+        $this->assertEquals($cache['postAfter']->post_title, 'Original Title');
+
+        $this->assertEquals($cache['postBefore']->ID, $postId);
+        $this->assertEquals($cache['postAfter']->ID, $postId);
+
+        $this->assertEquals($cache['permalinkBefore'], $permalink);
+        $this->assertEquals($cache['permalinkAfter'], $permalink);
     }
 }
