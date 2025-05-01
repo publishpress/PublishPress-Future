@@ -22,80 +22,6 @@ services:
             - ../.cache/.composer/cache:/root/.composer/cache
             - ../.cache/.composer/auth.json:/root/.composer/auth.json
     ##############################################################################
-    # Development
-    ##############################################################################
-    db_dev:
-        image: mariadb:latest
-        container_name: ${CONTAINER_NAME}_env_db_dev
-        restart: always
-        environment:
-            MARIADB_DATABASE: wordpress
-            MARIADB_USER: wordpress
-            MARIADB_PASSWORD: wordpress
-            MARIADB_ROOT_PASSWORD: root
-        ports:
-          - "3310:3306"
-        volumes:
-            - ../.cache/db_dev:/var/lib/mysql
-            - ../.cache/logs/db_dev:/var/log/mysql
-            - ./wp/db/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
-        healthcheck:
-            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-            start_period: 10s
-            retries: 3
-    wp_dev:
-        build: ./wp/wordpress
-        image: ${WP_IMAGE_NAME}
-        container_name: ${CONTAINER_NAME}_env_wp_dev
-        restart: always
-        environment:
-            WORDPRESS_DB_HOST: db_dev
-            WORDPRESS_DB_USER: wordpress
-            WORDPRESS_DB_PASSWORD: wordpress
-            WORDPRESS_DB_NAME: wordpress
-            WORDPRESS_DEBUG: true
-        ports:
-            - "8001:80"
-            - "9004:9004"  # Expose Xdebug port
-        volumes:
-          - ../.cache/wp_dev:/var/www/html/
-          - ../../:/var/www/html/wp-content/plugins/post-expirator
-        depends_on:
-            db_dev:
-                condition: service_healthy
-            mailhog:
-                condition: service_started
-        healthcheck:
-            test: ["CMD", "test", "-f", "/var/www/html/wp-config.php"]
-            retries: 3
-    wp_dev_cli:
-        image: wordpress:cli-php8.4
-        container_name: ${CONTAINER_NAME}_env_wp_dev_cli
-        environment:
-            WORDPRESS_DB_HOST: db_dev
-            WORDPRESS_DB_USER: wordpress
-            WORDPRESS_DB_PASSWORD: wordpress
-            WORDPRESS_DB_NAME: wordpress
-        volumes:
-            - ../.cache/wp_dev:/var/www/html/
-            - ../../:/var/www/html/wp-content/plugins/post-expirator
-            - ./wp/wpcli/prepare-wp.sh:/tmp/prepare-wp.sh
-            - ./wp/wpcli/conf.d/my.cnf:/tmp/my.cnf
-            - ./wp/wpcli/options.sql:/tmp/options.sql
-        depends_on:
-            wp_dev:
-                condition: service_healthy
-            db_dev:
-                condition: service_healthy
-            mailhog:
-                condition: service_started
-        links:
-            - wp_dev
-            - db_dev
-            - mailhog
-        working_dir: /var/www/html
-        command: ["/bin/sh", "-c", "sh /tmp/prepare-wp.sh http://localhost:8001 future-free-wp_dev"]
-    ##############################################################################
     # Tests
     ##############################################################################
     db_tests:
@@ -129,8 +55,8 @@ services:
             WORDPRESS_DB_NAME: wordpress
             WORDPRESS_DEBUG: true
         ports:
-            - "8002:80"
-            - "9006:9004"  # Expose Xdebug port
+            - "8011:80"
+            - "9011:9004"  # Expose Xdebug port
         volumes:
           - ../.cache/wp_tests:/var/www/html/
           - ../../:/var/www/html/wp-content/plugins/post-expirator
@@ -170,7 +96,82 @@ services:
             - db_tests
             - mailhog
         working_dir: /var/www/html
-        command: ["/bin/sh", "-c", "sh /tmp/prepare-wp.sh http://localhost:8002 future-free-wp_tests"]
+        command: ["/bin/sh", "-c", "sh /tmp/prepare-wp.sh http://localhost:8011 future-free-wp_tests"]
+    ##############################################################################
+    # Development
+    ##############################################################################
+    db_dev:
+        image: mariadb:latest
+        container_name: ${CONTAINER_NAME}_env_db_dev
+        restart: always
+        environment:
+            MARIADB_DATABASE: wordpress
+            MARIADB_USER: wordpress
+            MARIADB_PASSWORD: wordpress
+            MARIADB_ROOT_PASSWORD: root
+        ports:
+          - "3312:3306"
+        volumes:
+            - ../.cache/db_dev:/var/lib/mysql
+            - ../.cache/logs/db_dev:/var/log/mysql
+            - ./wp/db/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
+        healthcheck:
+            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+            start_period: 10s
+            retries: 3
+    wp_dev:
+        build: ./wp/wordpress
+        image: ${WP_IMAGE_NAME}
+        container_name: ${CONTAINER_NAME}_env_wp_dev
+        restart: always
+        environment:
+            WORDPRESS_DB_HOST: db_dev
+            WORDPRESS_DB_USER: wordpress
+            WORDPRESS_DB_PASSWORD: wordpress
+            WORDPRESS_DB_NAME: wordpress
+            WORDPRESS_DEBUG: true
+        ports:
+            - "8012:80"
+            - "9012:9004"  # Expose Xdebug port
+        volumes:
+          - ../.cache/wp_dev:/var/www/html/
+          - ../../:/var/www/html/wp-content/plugins/post-expirator
+        depends_on:
+            db_dev:
+                condition: service_healthy
+            mailhog:
+                condition: service_started
+        healthcheck:
+            test: ["CMD", "test", "-f", "/var/www/html/wp-config.php"]
+            retries: 3
+    wp_dev_cli:
+        image: wordpress:cli-php8.4
+        container_name: ${CONTAINER_NAME}_env_wp_dev_cli
+        environment:
+            WORDPRESS_DB_HOST: db_dev
+            WORDPRESS_DB_USER: wordpress
+            WORDPRESS_DB_PASSWORD: wordpress
+            WORDPRESS_DB_NAME: wordpress
+        volumes:
+            - ../.cache/wp_dev:/var/www/html/
+            - ../../:/var/www/html/wp-content/plugins/post-expirator
+            - ./wp/wpcli/prepare-wp.sh:/tmp/prepare-wp.sh
+            - ./wp/wpcli/conf.d/my.cnf:/tmp/my.cnf
+            - ./wp/wpcli/options.sql:/tmp/options.sql
+        depends_on:
+            wp_dev:
+                condition: service_healthy
+            db_dev:
+                condition: service_healthy
+            mailhog:
+                condition: service_started
+        links:
+            - wp_dev
+            - db_dev
+            - mailhog
+        working_dir: /var/www/html
+        command: ["/bin/sh", "-c", "sh /tmp/prepare-wp.sh http://localhost:8012 future-free-wp_dev"]
+
     ##############################################################################
     # Mailhog
     ##############################################################################
@@ -178,8 +179,8 @@ services:
         image: mailhog/mailhog:latest
         container_name: ${CONTAINER_NAME}_env_mailhog
         ports:
-            - "8003:8025" # Web UI
-            - "8125:1025" # SMTP server
+            - "8013:8025" # Web UI
+            - "8014:1025" # SMTP server
         environment:
             - MH_STORAGE=maildir
             - MH_MAILDIR_PATH=/maildir

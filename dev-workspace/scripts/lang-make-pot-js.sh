@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
 set -a
-source ../.env
+source /project/.env
 set +a
-
-export JSX_SCRIPTS="workflow-editor/future_workflow_editor_script backup-panel/future_backup_panel"
 
 for locale in $LANG_LOCALES
 do

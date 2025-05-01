@@ -6,7 +6,7 @@ fi
 
 # Make sure environment variables are loaded
 set -a
-source ../.env
+source /project/.env
 set +a
 
 docker compose -f docker/compose.yaml build

@@ -67,6 +67,11 @@
         "nyholm/psr7": "^1.8"
     },
     "scripts": {
+        "build:all": [
+            "@build:js",
+            "@build:lang",
+            "@build"
+        ],
         "build": "/scripts/pbuild build",
         "build:up": [
             "@build",
@@ -115,7 +120,8 @@
             "@check:php-8.0",
             "@check:php-8.1",
             "@check:php-8.2",
-            "@check:php-8.3"
+            "@check:php-8.3",
+            "@check:php-8.4"
         ],
         "check:php-5.6": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 5.6 ./post-expirator.php",
         "check:php-7.4": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4",
@@ -123,6 +129,7 @@
         "check:php-8.1": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1",
         "check:php-8.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.2",
         "check:php-8.3": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.3",
+        "check:php-8.4": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.4",
         "check:lint": "phplint --no-cache",
         "check:cs": "phpcs",
         "check:stan": "phpstan",
@@ -143,6 +150,16 @@
         "dbox:remove": "/scripts/pdropbox remove",
         "dbox:unlink": "/scripts/pdropbox unlink",
         "test:driver": "source ./.env && $CHROMEDRIVER_BINARY --port=$CHROMEDRIVER_PORT",
+        "up": [
+            "@test:up",
+            "@dev:up",
+            "@dev:info",
+            "@test:info"
+        ],
+        "down": [
+            "@test:down",
+            "@dev:down"
+        ],
         "wp:tests": "bash dev-workspace/scripts/tests-wp-cli.sh wp_tests_cli $@",
         "wp:dev": "bash dev-workspace/scripts/tests-wp-cli.sh wp_dev_cli $@",
         "dev:up": [
@@ -272,7 +289,9 @@
         "info:versions": "Gets the version of the main tools available",
         "set:version": "Sets the version of the plugin",
         "pre-release": "Creates a release branch and a pull request for the release",
-        "pr-link": "Gets the pull request URL for the release branch"
+        "pr-link": "Gets the pull request URL for the release branch",
+        "up": "Starts both test and development environments and displays their information.",
+        "down": "Stops both test and development environments."
     },
     "extra": {
         "plugin-slug": "post-expirator",

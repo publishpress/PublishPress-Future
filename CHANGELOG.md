@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed duplicate FILTER_REGISTER_REST_ROUTES constant (Issue #1290).
 - Fixed workflow editor filter area autocomplete dropdown overlapping content (Issue #1303).
 - Fixed PHP Warning: Trying to access array offset on null when opening new post, (Issue #1311).
+- Fixed DB tables that were not created after fresh install unless we visit the admin (Issue #1319).
 
 ### Removed
 
