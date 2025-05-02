@@ -1,0 +1,78 @@
+name: Unit and Integration Tests in the Pro plugin
+on:
+  push:
+    branches:
+      - 'main'
+      - 'develop'
+      - 'release/*'
+      - 'release-*'
+
+  pull_request:
+    branches:
+      - '*'
+
+  workflow_call:
+
+  workflow_dispatch:
+    inputs:
+      tmate_enabled:
+        type: boolean
+        description: 'Enable "tmate" for debugging'
+        required: false
+        default: false
+jobs:
+  check:
+    name: Test the code in the Pro plugin
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup tmate session for Debugging, if inputs.tmate_enabled is true
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ inputs.tmate_enabled }}
+        timeout-minutes: 10
+        with:
+          detached: true
+
+      - name: Checkout pro plugin and update the branch in the composer.json file
+        run: |
+          git clone https://github.com/publishpress/publishpress-future-pro.git .
+          # Check if the branch exists in the repository
+          if ! git ls-remote --heads origin ${{ github.ref_name }} | grep -q ${{ github.ref_name }}; then
+            echo "Branch ${{ github.ref_name }} does not exist in the pro repository. Using develop branch instead."
+            git checkout develop
+          else
+            git checkout ${{ github.ref_name }}
+          fi
+          # Change the branch in the composer.json file
+          sed -i 's/"publishpress\/publishpress-future": "[^"]*"/"publishpress\/publishpress-future": "dev-${{ github.ref_name }}"/g' lib/composer.json
+          composer install
+
+      - name: Verify Docker installation
+        run: docker --version
+
+      - name: Create .env file
+        run: |
+          cp $GITHUB_WORKSPACE/.env.example $GITHUB_WORKSPACE/.env
+
+      - name: Prepare composer
+        run: |
+          $GITHUB_WORKSPACE/dev-workspace/run composer validate
+          $GITHUB_WORKSPACE/dev-workspace/run composer install
+
+      - name: Start services
+        run: |
+          composer test:up
+
+      - name: Fix permissions
+        run: |
+          container_id=$(docker compose -f $GITHUB_WORKSPACE/dev-workspace/docker/compose.yaml ps -q wp_tests)
+          docker exec $container_id chmod -R 777 /var/www/html/wp-content
+
+      - name: Run Unit Tests
+        run: |
+          composer test Unit
+
+      - name: Run Integration Tests
+        run: |
+          composer test Integration
+
+
