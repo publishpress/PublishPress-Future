@@ -34,7 +34,7 @@ jobs:
 
       - name: Checkout pro plugin and update the branch in the composer.json file
         run: |
-          git clone https://github.com/publishpress/publishpress-future-pro.git .
+          git clone https://${{ secrets.GH_TOKEN }}@github.com/publishpress/publishpress-future-pro.git .
           # Check if the branch exists in the repository
           if ! git ls-remote --heads origin ${{ github.ref_name }} | grep -q ${{ github.ref_name }}; then
             echo "Branch ${{ github.ref_name }} does not exist in the pro repository. Using develop branch instead."
