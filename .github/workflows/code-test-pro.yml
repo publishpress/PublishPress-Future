@@ -1,4 +1,7 @@
 name: Unit and Integration Tests in the Pro plugin
+permissions:
+  contents: read
+  pull-requests: write
 on:
   push:
     branches:
