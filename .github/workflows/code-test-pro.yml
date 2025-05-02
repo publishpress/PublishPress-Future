@@ -30,7 +30,6 @@ jobs:
     steps:
       - name: Setup tmate session for Debugging, if inputs.tmate_enabled is true
         uses: mxschmitt/action-tmate@v3
-        if: ${{ inputs.tmate_enabled }}
         timeout-minutes: 10
         with:
           detached: true
@@ -46,7 +45,7 @@ jobs:
             git checkout ${{ github.ref_name }}
           fi
           # Change the branch in the composer.json file
-          sed -i 's/"publishpress\\\\\\/publishpress-future": "[^"]*"/"publishpress\\\\\\/publishpress-future": "dev-${{ github.ref_name }}"/g' lib/composer.json
+          sed -i 's/"publishpress\/publishpress-future": "[^"]*"/"publishpress\/publishpress-future": "dev-${{ github.ref_name }}"/g' lib/composer.json
           composer install
 
       - name: Verify Docker installation
