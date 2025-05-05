@@ -21,13 +21,17 @@ CACHE_BASE_PATH=$(pwd)/.cache
 WP_CACHE=$CACHE_BASE_PATH/wp_${SERVICE_TYPE}
 DB_CACHE=$CACHE_BASE_PATH/db_${SERVICE_TYPE}
 
+remove_port_from_domain() {
+  echo $1 | sed -E 's/:.*//'
+}
+
 if [[ $SERVICE_TYPE == "tests" ]]; then
-  WP_DOMAIN=$WP_TESTS_DOMAIN
+  WP_DOMAIN=$(remove_port_from_domain $WP_TESTS_DOMAIN)
   WP_DB_URL=$WP_TESTS_DB_URL
 fi
 
 if [[ $SERVICE_TYPE == "dev" ]]; then
-  WP_DOMAIN=$WP_DEV_DOMAIN
+  WP_DOMAIN=$(remove_port_from_domain $WP_DEV_DOMAIN)
   WP_DB_URL=$WP_DEV_DB_URL
 fi
 
