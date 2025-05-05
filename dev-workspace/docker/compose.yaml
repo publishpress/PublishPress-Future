@@ -56,11 +56,12 @@ services:
             WORDPRESS_DEBUG: true
         ports:
             - "8011:80"
-            - "9011:9004"  # Expose Xdebug port
         volumes:
           - ../.cache/wp_tests:/var/www/html/
           - ../../:/var/www/html/wp-content/plugins/post-expirator
           - ../../tests/Support/Data/plugins/pre-tests:/var/www/html/wp-content/plugins/pre-tests
+          - ./wp/wordpress/conf.d/97-custom.ini:/usr/local/etc/php/conf.d/97-custom.ini
+          - ./wp/wordpress/conf.d/98-xdebug.ini:/usr/local/etc/php/conf.d/98-xdebug.ini
         depends_on:
             db_tests:
                 condition: service_healthy
@@ -84,6 +85,8 @@ services:
             - ./wp/wpcli/prepare-wp.sh:/tmp/prepare-wp.sh
             - ./wp/wpcli/conf.d/my.cnf:/tmp/my.cnf
             - ./wp/wpcli/options.sql:/tmp/options.sql
+            - ./wp/wordpress/conf.d/97-custom.ini:/usr/local/etc/php/conf.d/97-custom.ini
+            - ./wp/wordpress/conf.d/98-xdebug.ini:/usr/local/etc/php/conf.d/98-xdebug.ini
         depends_on:
             wp_tests:
                 condition: service_healthy
@@ -132,10 +135,11 @@ services:
             WORDPRESS_DEBUG: true
         ports:
             - "8012:80"
-            - "9012:9004"  # Expose Xdebug port
         volumes:
           - ../.cache/wp_dev:/var/www/html/
           - ../../:/var/www/html/wp-content/plugins/post-expirator
+          - ./wp/wordpress/conf.d/97-custom.ini:/usr/local/etc/php/conf.d/97-custom.ini
+          - ./wp/wordpress/conf.d/98-xdebug.ini:/usr/local/etc/php/conf.d/98-xdebug.ini
         depends_on:
             db_dev:
                 condition: service_healthy
@@ -144,6 +148,8 @@ services:
         healthcheck:
             test: ["CMD", "test", "-f", "/var/www/html/wp-config.php"]
             retries: 3
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
     wp_dev_cli:
         image: wordpress:cli-php8.4
         container_name: ${CONTAINER_NAME}_env_wp_dev_cli
@@ -158,6 +164,8 @@ services:
             - ./wp/wpcli/prepare-wp.sh:/tmp/prepare-wp.sh
             - ./wp/wpcli/conf.d/my.cnf:/tmp/my.cnf
             - ./wp/wpcli/options.sql:/tmp/options.sql
+            - ./wp/wordpress/conf.d/97-custom.ini:/usr/local/etc/php/conf.d/97-custom.ini
+            - ./wp/wordpress/conf.d/98-xdebug.ini:/usr/local/etc/php/conf.d/98-xdebug.ini
         depends_on:
             wp_dev:
                 condition: service_healthy
