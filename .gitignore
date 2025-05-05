@@ -28,3 +28,7 @@ webpack-bundle-stats-*.json
 webpack-bundle-stats-*.html
 gh_token.txt
 .env
+# VS Code user-specific settings
+.vscode/
+# Keep the workspace file tracked
+!publishpress-future.code-workspace
