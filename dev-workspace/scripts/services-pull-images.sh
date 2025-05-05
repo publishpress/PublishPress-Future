@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
+if [[ ! $(pwd) =~ .*dev-workspace$ ]]; then
+  cd dev-workspace
+fi
+
+source ../.env
+
 bash ./scripts/services-init-cache.sh
+
 
 CACHE_NAME_LAST_UPDATE="$CACHE_PATH/.last_image_update_check"
 ONE_DAY_IN_SECONDS=86400
@@ -17,7 +24,7 @@ is_online() {
 }
 
 pull_image() {
-    docker compose -f docker/compose.yaml pull
+    docker compose --env-file ../.env -f docker/compose.yaml pull
 }
 
 run_update() {
