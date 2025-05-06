@@ -14,20 +14,24 @@ if [[ $# -eq 0 ]] || [[ $1 == "-h" ]]; then
   exit 1
 fi
 
-SERVICE_TYPE="${2:-dev}"
+PROFILE="${2:-dev}"
 
 COMPOSE_FILE=docker/compose.yaml
 CACHE_BASE_PATH=$(pwd)/.cache
-WP_CACHE=$CACHE_BASE_PATH/wp_${SERVICE_TYPE}
-DB_CACHE=$CACHE_BASE_PATH/db_${SERVICE_TYPE}
+WP_CACHE=$CACHE_BASE_PATH/wp_${PROFILE}
+DB_CACHE=$CACHE_BASE_PATH/db_${PROFILE}
 
-if [[ $SERVICE_TYPE == "tests" ]]; then
-  WP_DOMAIN=$WP_TESTS_DOMAIN
+remove_port_from_domain() {
+  echo $1 | sed -E 's/:.*//'
+}
+
+if [[ ${PROFILE} == "test" ]]; then
+  WP_DOMAIN=$(remove_port_from_domain $WP_TESTS_DOMAIN)
   WP_DB_URL=$WP_TESTS_DB_URL
 fi
 
-if [[ $SERVICE_TYPE == "dev" ]]; then
-  WP_DOMAIN=$WP_DEV_DOMAIN
+if [[ ${PROFILE} == "dev" ]]; then
+  WP_DOMAIN=$(remove_port_from_domain $WP_DEV_DOMAIN)
   WP_DB_URL=$WP_DEV_DB_URL
 fi
 
@@ -41,22 +45,22 @@ WP_DB_NAME=$(echo $WP_DB_URL | sed -E 's/mysql:\/\/.*@.*\/([^\/]+)$/\1/')
 
 service_up() {
   echo "Starting..."
-  docker compose -f $COMPOSE_FILE up wp_${SERVICE_TYPE}_cli
+  docker compose -f $COMPOSE_FILE --profile ${PROFILE} up -d
 }
 
 service_stop() {
   echo "Stopping..."
-  docker compose -f $COMPOSE_FILE stop wp_${SERVICE_TYPE}_cli wp_${SERVICE_TYPE} db_${SERVICE_TYPE} mailhog
+  docker compose -f $COMPOSE_FILE --profile ${PROFILE} stop
 }
 
 service_down() {
   echo "Shutting down..."
-  docker compose -f $COMPOSE_FILE down wp_${SERVICE_TYPE}_cli wp_${SERVICE_TYPE} db_${SERVICE_TYPE} mailhog
+  docker compose -f $COMPOSE_FILE --profile ${PROFILE} down
 }
 
 service_cleanup() {
   echo "Cleaning up..."
-  docker compose -f $COMPOSE_FILE down -v wp_${SERVICE_TYPE}_cli wp_${SERVICE_TYPE} db_${SERVICE_TYPE} mailhog
+  docker compose -f $COMPOSE_FILE --profile ${PROFILE} down
 }
 
 get_wp_port() {
@@ -80,34 +84,34 @@ get_container_id() {
 }
 
 service_info() {
-  WP_PORT=$(get_wp_port wp_${SERVICE_TYPE})
-  DB_PORT=$(get_db_port db_${SERVICE_TYPE})
+  WP_PORT=$(get_wp_port wp_${PROFILE})
+  DB_PORT=$(get_db_port db_${PROFILE})
   MAILHOG_PORT_8025=$(get_mailhog_port_8025)
   MAILHOG_PORT_1025=$(get_mailhog_port_1025)
 
   echo "=============================================="
-  echo "🌐 WordPress Development Information"
+  echo "WordPress Development Information"
   echo "=============================================="
-  echo "📌 Site URL:       http://$WP_DOMAIN:$WP_PORT"
-  echo "📌 Admin URL:      http://$WP_DOMAIN:$WP_PORT/wp-admin"
-  echo "📌 Login:          $WP_ADMIN_USER / $WP_ADMIN_PASSWORD"
-  echo "📌 Root Directory: $WP_CACHE"
-  echo "📌 Container ID:   $(get_container_id wp_${SERVICE_TYPE})"
+  echo "Site URL:       http://$WP_DOMAIN:$WP_PORT"
+  echo "Admin URL:      http://$WP_DOMAIN:$WP_PORT/wp-admin"
+  echo "Login:          $WP_ADMIN_USER / $WP_ADMIN_PASSWORD"
+  echo "Root Directory: $WP_CACHE"
+  echo "Container ID:   $(get_container_id wp_${PROFILE})"
   echo ""
-  echo "📌 DB Url:         mysql://$WP_DB_USER:$WP_DB_PASS@$WP_DB_HOST:$DB_PORT"
-  echo "📌 DB Name:        $WP_DB_NAME"
-  echo "📌 DB Host:        $WP_DB_HOST:$DB_PORT"
-  echo "📌 DB User:        $WP_DB_USER"
-  echo "📌 DB Pass:        $WP_DB_PASS"
-  echo "📌 Data Directory: $WP_DB_CACHE"
-  echo "📌 Container ID:   $(get_container_id db_${SERVICE_TYPE})"
+  echo "DB Url:         mysql://$WP_DB_USER:$WP_DB_PASS@$WP_DB_HOST:$DB_PORT"
+  echo "DB Name:        $WP_DB_NAME"
+  echo "DB Host:        $WP_DB_HOST:$DB_PORT"
+  echo "DB User:        $WP_DB_USER"
+  echo "DB Pass:        $WP_DB_PASS"
+  echo "Data Directory: $WP_DB_CACHE"
+  echo "Container ID:   $(get_container_id db_${PROFILE})"
   echo ""
   echo "=============================================="
-  echo "📧 Mail Information"
+  echo "Mail Information"
   echo "=============================================="
-  echo "📌 Web Interface:  http://$WP_DOMAIN:$MAILHOG_PORT_8025"
-  echo "📌 SMTP Server:    smtp://$WP_DOMAIN:$MAILHOG_PORT_1025"
-  echo "📌 Container ID:   $(get_container_id mailhog)"
+  echo "Web Interface:  http://$WP_DOMAIN:$MAILHOG_PORT_8025"
+  echo "SMTP Server:    smtp://$WP_DOMAIN:$MAILHOG_PORT_1025"
+  echo "Container ID:   $(get_container_id mailhog)"
   echo ""
   echo "=============================================="
 }

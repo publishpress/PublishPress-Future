@@ -160,7 +160,7 @@
             "@test:down",
             "@dev:down"
         ],
-        "wp:tests": "bash dev-workspace/scripts/tests-wp-cli.sh wp_tests_cli $@",
+        "wp:tests": "bash dev-workspace/scripts/tests-wp-cli.sh wp_test_cli $@",
         "wp:dev": "bash dev-workspace/scripts/tests-wp-cli.sh wp_dev_cli $@",
         "dev:up": [
             "bash dev-workspace/scripts/env.sh up dev",
@@ -179,24 +179,28 @@
         "test:db-export": "bash dev-workspace/scripts/tests-db-export.sh $@",
         "test:db-import": "bash dev-workspace/scripts/tests-db-import.sh $@",
         "test:up": [
-            "bash dev-workspace/scripts/env.sh up tests",
+            "bash dev-workspace/scripts/env.sh up test",
             "@test:info"
         ],
-        "test:down": "bash dev-workspace/scripts/env.sh down tests",
-        "test:stop": "bash dev-workspace/scripts/env.sh stop tests",
+        "test:down": "bash dev-workspace/scripts/env.sh down test",
+        "test:stop": "bash dev-workspace/scripts/env.sh stop test",
         "test:clean": [
-            "bash dev-workspace/scripts/env.sh cleanup tests",
+            "bash dev-workspace/scripts/env.sh cleanup test",
             "@test:clean-cache",
             "composer codecept clean"
         ],
-        "test:clean-logs": "rm -f dev-workspace/.cache/logs/db_tests/",
-        "test:clean-cache": "rm -rf dev-workspace/.cache/wp_tests && rm -rf dev-workspace/.cache/db_tests",
+        "test:clean-logs": "rm -f dev-workspace/.cache/logs/db_test/",
+        "test:clean-cache": "rm -rf dev-workspace/.cache/wp_test && rm -rf dev-workspace/.cache/db_test",
         "test:db-logs": "bash dev-workspace/scripts/tests-db-logs.sh $@",
-        "test:info": "bash dev-workspace/scripts/env.sh info tests",
-        "test:refresh": "bash dev-workspace/scripts/env.sh refresh tests",
+        "test:info": "bash dev-workspace/scripts/env.sh info test",
+        "test:refresh": "bash dev-workspace/scripts/env.sh refresh test",
         "test:snippets": "composer codecept gherkin:snippets $@",
         "test:steps": "composer codecept gherkin:steps $@",
         "test": "vendor/bin/codecept run $@",
+        "test:all": [
+            "vendor/bin/codecept run Unit",
+            "vendor/bin/codecept run Integration"
+        ],
         "test:debug": "php -d xdebug.mode=debug -d xdebug.start_with_request=yes vendor/bin/codecept run $@",
         "codecept": "./vendor/bin/codecept $@",
         "docker:cleanup": "docker system prune -f",

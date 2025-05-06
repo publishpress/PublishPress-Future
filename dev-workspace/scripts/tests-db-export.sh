@@ -11,4 +11,4 @@ set +a
 
 DB_EXPORT_FILE=/var/www/html/wp-content/plugins/$PLUGIN_SLUG/tests/Support/Data/dump.sql
 
-bash ./scripts/tests-wp-cli.sh wp_tests_cli db export $DB_EXPORT_FILE
+bash ./scripts/tests-wp-cli.sh wp_test_cli db export $DB_EXPORT_FILE
