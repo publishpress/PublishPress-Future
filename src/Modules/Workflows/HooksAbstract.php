@@ -16,9 +16,19 @@ abstract class HooksAbstract
 
     public const ACTION_POST_UPDATED = 'post_updated';
 
+    /**
+     * @since 4.6.0
+     */
+    public const ACTION_TRANSITION_POST_STATUS = 'transition_post_status';
+
     public const ACTION_INIT = 'init';
 
     public const ACTION_ADMIN_INIT = 'admin_init';
+
+    /**
+     * @since 4.6.0
+     */
+    public const ACTION_WP_INSERT_POST_DATA = 'wp_insert_post_data';
 
     public const ACTION_TRIGGER_FIRED = 'publishpressfuture_workflow_trigger_fired_';
 

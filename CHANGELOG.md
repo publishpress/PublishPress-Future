@@ -27,16 +27,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed REST API request detection to workflow engine execution environment identification (Issue #1290).
 - Fixed duplicate FILTER_REGISTER_REST_ROUTES constant (Issue #1290).
 - Fixed workflow editor filter area autocomplete dropdown overlapping content (Issue #1303).
+- Fixed PHP Warning: Trying to access array offset on null when opening new post, (Issue #1311).
 - Fixed DB tables that were not created after fresh install unless we visit the admin (Issue #1319).
+- Fixed support for caching during post insertion and status transition (Issue #1311).
 
 ### Removed
 
 - Remove the option to compact scheduled actions data (Issue #1233).
-
-### Fixed
-
-- Fixed REST API request detection to workflow engine execution environment identification (Issue #1290).
-- Fixed duplicate FILTER_REGISTER_REST_ROUTES constant (Issue #1290).
 
 ### Developers
 
@@ -44,6 +41,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Refactored workflow hooks replacing ACTION_ASYNC_EXECUTE_STEP with ACTION_SCHEDULED_STEP_EXECUTE for better semantic clarity.
 - Added getId method to UserModel for retrieving user ID;
 - Refactor WorkflowScheduledStepModel to simplify argument handling by removing compression logic and directly decoding uncompressed arguments.
+- Replace methods ``getCachedPermalink` and `getCachedPosts` with a unified method: `getCacheForPostId` on the class `PostCache` and interface `PostCacheInterface`. Retrieves cached post and permalink data, including both postBefore and postAfter states.
+- All triggers now emit the hook `publishpressfuture_workflow_trigger_executed` after execution.
 
 ## [4.5.0] - 7 Apr, 2025
 
