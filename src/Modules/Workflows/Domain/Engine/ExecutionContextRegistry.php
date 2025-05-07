@@ -21,12 +21,19 @@ class ExecutionContextRegistry implements ExecutionContextRegistryInterface
      */
     private $executionContextProcessorRegistry;
 
+    /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
+
     public function __construct(
         HookableInterface $hooks,
-        ExecutionContextProcessorRegistryInterface $executionContextProcessorRegistry
+        ExecutionContextProcessorRegistryInterface $executionContextProcessorRegistry,
+        \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
         $this->executionContextProcessorRegistry = $executionContextProcessorRegistry;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
     public function getExecutionContext(string $workflowExecutionId): ExecutionContextInterface
@@ -34,7 +41,8 @@ class ExecutionContextRegistry implements ExecutionContextRegistryInterface
         if (!isset($this->executionContexts[$workflowExecutionId])) {
             $this->executionContexts[$workflowExecutionId] = new ExecutionContext(
                 $this->hooks,
-                $this->executionContextProcessorRegistry
+                $this->executionContextProcessorRegistry,
+                $this->expirablePostModelFactory
             );
         }
 

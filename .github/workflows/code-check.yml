@@ -32,6 +32,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
 
+      - name: Create .env file
+        run: |
+          cp $GITHUB_WORKSPACE/.env.example $GITHUB_WORKSPACE/.env
+
       - name: Prepare composer
         run: |
           $GITHUB_WORKSPACE/dev-workspace/run composer validate
@@ -48,6 +52,10 @@ jobs:
       - name: Run Lint check
         run: |
           $GITHUB_WORKSPACE/dev-workspace/run composer check:lint
+
+      - name: Run PHPCS check
+        run: |
+          $GITHUB_WORKSPACE/dev-workspace/run composer check:cs
 
       - name: Run Long Path check
         run: |

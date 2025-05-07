@@ -116,7 +116,7 @@ class PostExpirator_Display
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
 
-        $allowed_tabs = ['defaults', 'general', 'display', 'notifications', ];
+        $allowed_tabs = ['defaults', 'general', 'display', 'admin', 'notifications', ];
         $allowed_tabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
 
         if (empty($tab) || ! in_array($tab, $allowed_tabs, true)) {
@@ -141,8 +141,10 @@ class PostExpirator_Display
             wp_die(esc_html__('You do not have permission to configure PublishPress Future.', 'post-expirator'));
         }
 
+        $defaultTab = $this->settingsFacade->getSettingsDefaultTab();
+
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : 'advanced';
+        $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : $defaultTab;
 
         $allowed_tabs = ['advanced', 'diagnostics', 'viewdebug' ];
         $allowed_tabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_SETTINGS_TABS, $allowed_tabs);
@@ -157,7 +159,7 @@ class PostExpirator_Display
         }
 
         if (empty($tab) || ! in_array($tab, $allowed_tabs, true)) {
-            $tab = 'advanced';
+            $tab = $this->settingsFacade::SETTINGS_DEFAULT_TAB;
         }
 
         ob_start();
@@ -203,10 +205,6 @@ class PostExpirator_Display
                 $this->settingsFacade->setShowInPostFooter((bool)$_POST['expired-display-footer']);
                 $this->settingsFacade->setFooterContents(wp_kses($_POST['expired-footer-contents'], []));
                 $this->settingsFacade->setFooterStyle(wp_kses($_POST['expired-footer-style'], []));
-                $this->settingsFacade->setColumnStyle(sanitize_key($_POST['future-action-column-style']));
-                $this->settingsFacade->setTimeFormatForDatePicker(sanitize_key($_POST['future-action-time-format']));
-                $this->settingsFacade->setMetaboxTitle(sanitize_text_field($_POST['expirationdate-metabox-title']));
-                $this->settingsFacade->setMetaboxCheckboxLabel(sanitize_text_field($_POST['expirationdate-metabox-checkbox-label']));
                 $this->settingsFacade->setShortcodeWrapper(sanitize_text_field($_POST['shortcode-wrapper']));
                 $this->settingsFacade->setShortcodeWrapperClass(sanitize_text_field($_POST['shortcode-wrapper-class']));
                 // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
@@ -221,6 +219,41 @@ class PostExpirator_Display
         ];
 
         $this->render_template('menu-display', $params);
+    }
+
+    /**
+     * Admn menu.
+     */
+    private function menu_admin()
+    {
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        if (isset($_POST['expirationdateSaveAdmin']) && sanitize_key($_POST['expirationdateSaveAdmin'])) {
+            if (
+                ! isset($_POST['_postExpiratorMenuAdmin_nonce']) || ! wp_verify_nonce(
+                    sanitize_key($_POST['_postExpiratorMenuAdmin_nonce']),
+                    'postexpirator_menu_admin'
+                )
+            ) {
+                print 'Form Validation Failure: Sorry, your nonce did not verify.';
+                exit;
+            } else {
+                // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+                $this->settingsFacade->setColumnStyle(sanitize_key($_POST['future-action-column-style']));
+                $this->settingsFacade->setTimeFormatForDatePicker(sanitize_key($_POST['future-action-time-format']));
+                $this->settingsFacade->setMetaboxTitle(sanitize_text_field($_POST['expirationdate-metabox-title']));
+                $this->settingsFacade->setMetaboxCheckboxLabel(sanitize_text_field($_POST['expirationdate-metabox-checkbox-label']));
+                // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+            }
+        }
+
+        $params = [
+            'showSideBar' => $this->hooks->applyFilters(
+                SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
+                ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
+            ),
+        ];
+
+        $this->render_template('menu-admin', $params);
     }
 
     /**

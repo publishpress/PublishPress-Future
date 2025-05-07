@@ -100,8 +100,8 @@ class WorkflowEngine implements WorkflowEngineInterface
         );
 
         $this->hooks->addAction(
-            HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
-            [$this, "executeAsyncStepRoutine"],
+            HooksAbstract::ACTION_SCHEDULED_STEP_EXECUTE,
+            [$this, "executeScheduledStepRoutine"],
             10
         );
 
@@ -143,7 +143,7 @@ class WorkflowEngine implements WorkflowEngineInterface
 
         $this->engineExecutionEnvironment = $this->getEngineExecutionEnvironment();
 
-        $currentUser = wp_get_current_user();
+        $currentUser = $this->getCurrentUser();
 
         $this->logger->debug(
             sprintf(
@@ -153,13 +153,27 @@ class WorkflowEngine implements WorkflowEngineInterface
             )
         );
 
-        $publishedWorkflowsIds = $this->getPublishedWorkflowsIds();
-        $stepTypes = $this->getAllStepTypes();
-
         $this->engineExecutionId = $this->generateUniqueId();
 
+        $this->logger->debug(self::LOG_PREFIX . ' Engine started and listening for events');
+    }
+
+    public function runWorkflows(array $workflowIdsToRun = [])
+    {
+        $this->logger->debug(self::LOG_PREFIX . ' Running workflows');
+
+        if (empty($workflowIdsToRun)) {
+            $this->logger->debug(self::LOG_PREFIX . ' No specific workflows to run, getting all published workflows');
+
+            $workflowIdsToRun = $this->getPublishedWorkflowsIds();
+        }
+
+        $stepTypes = $this->getAllStepTypes();
+
         // Setup the workflow triggers
-        foreach ($publishedWorkflowsIds as $workflowId) {
+        foreach ($workflowIdsToRun as $workflowId) {
+            $workflowId = (int) $workflowId;
+
             /** @var WorkflowModelInterface $workflow */
             $workflow = new WorkflowModel();
             $workflow->load($workflowId);
@@ -235,7 +249,7 @@ class WorkflowEngine implements WorkflowEngineInterface
             );
         }
 
-        $this->logger->debug(self::LOG_PREFIX . ' Engine started and listening for events');
+        $this->logger->debug(self::LOG_PREFIX . ' All workflows initialized');
     }
 
     public function prepareExecutionContextForWorkflow(
@@ -246,7 +260,7 @@ class WorkflowEngine implements WorkflowEngineInterface
             $workflowExecutionId
         );
 
-        $currentUser = wp_get_current_user();
+        $currentUser = $this->getCurrentUser();
 
         $globalVariables = [
             'engine_execution_id' => $this->engineExecutionId,
@@ -331,11 +345,11 @@ class WorkflowEngine implements WorkflowEngineInterface
         $stepRunner->setup($step);
     }
 
-    public function executeAsyncStepRoutine($args)
+    public function executeScheduledStepRoutine($args)
     {
         try {
             if (is_null($args)) {
-                $message = self::LOG_PREFIX . ' Async node runner error, no args found';
+                $message = self::LOG_PREFIX . ' Scheduled step runner error, no args found';
 
                 throw new \Exception(esc_html($message));
             }
@@ -352,7 +366,7 @@ class WorkflowEngine implements WorkflowEngineInterface
             } else {
                 // Old format, when the args were saved directly in the actionsscheduler_actions table.
                 if (! isset($args['step']['node']['data']['name'])) {
-                    $message = self::LOG_PREFIX . ' Async node runner error, no step name found';
+                    $message = self::LOG_PREFIX . ' Scheduled step runner error, no step name found';
 
                     $this->logger->error($message);
 
@@ -380,7 +394,7 @@ class WorkflowEngine implements WorkflowEngineInterface
 
             $this->logger->debug(
                 sprintf(
-                    self::LOG_PREFIX . '   - Workflow %1$d: Executing async step %2$s on action %3$d',
+                    self::LOG_PREFIX . '   - Workflow %1$d: Executing scheduled step %2$s on action %3$d',
                     $originalArgs['workflowId'],
                     $step['node']['data']['slug'] ?? 'unknown',
                     $args['actionId']
@@ -389,7 +403,14 @@ class WorkflowEngine implements WorkflowEngineInterface
 
             $stepRunner->actionCallback($args, $originalArgs);
         } catch (Throwable $e) {
-            $this->logger->error(sprintf(self::LOG_PREFIX . ' Async node runner error: %s. File: %s:%d', $e->getMessage(), $e->getFile(), $e->getLine()));
+            $this->logger->error(
+                sprintf(
+                    self::LOG_PREFIX . ' Scheduled step runner error: %s. File: %s:%d',
+                    $e->getMessage(),
+                    $e->getFile(),
+                    $e->getLine()
+                )
+            );
         }
     }
 
@@ -439,6 +460,11 @@ class WorkflowEngine implements WorkflowEngineInterface
         return wp_generate_uuid4();
     }
 
+    public function getExecutionContextRegistry(): ExecutionContextRegistryInterface
+    {
+        return $this->executionContextRegistry;
+    }
+
     private function getPublishedWorkflowsIds(): array
     {
         $workflowsModel = new WorkflowsModel();
@@ -475,6 +501,17 @@ class WorkflowEngine implements WorkflowEngineInterface
             return 'ajax';
         }
 
+        if (defined('REST_REQUEST')) {
+            return 'rest';
+        }
+
         return 'frontend';
+    }
+
+    private function getCurrentUser(): \WP_User
+    {
+        $currentUser = wp_get_current_user();
+
+        return $currentUser;
     }
 }

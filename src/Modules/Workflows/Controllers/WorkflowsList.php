@@ -3,7 +3,6 @@
 namespace PublishPress\Future\Modules\Workflows\Controllers;
 
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Core\HooksAbstract as FutureCoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Core\Plugin;
@@ -73,8 +72,8 @@ class WorkflowsList implements InitializableInterface
             [$this, "addCustomColumns"]
         );
 
-        $this->hooks->addAction(
-            "post_row_actions",
+        $this->hooks->addFilter(
+            HooksAbstract::FILTER_POST_ROW_ACTIONS,
             [$this, "renderStatusAction"],
             10,
             2
@@ -95,20 +94,32 @@ class WorkflowsList implements InitializableInterface
         );
 
         $this->hooks->addAction(
-            FutureCoreHooksAbstract::ACTION_ADMIN_INIT,
+            CoreHooksAbstract::ACTION_ADMIN_INIT,
             [$this, "updateWorkflowStatus"]
         );
 
-        $this->hooks->addAction(
-            'the_title',
+        $this->hooks->addFilter(
+            HooksAbstract::FILTER_THE_TITLE,
             [$this, "addWorkflowStatusToTitle"],
             10,
             2
         );
 
         $this->hooks->addAction(
-            'admin_footer',
+            HooksAbstract::ACTION_ADMIN_FOOTER,
             [$this, "addScheduledActionsButton"]
+        );
+
+        $this->hooks->addFilter(
+            HooksAbstract::FILTER_POST_UPDATED_MESSAGES,
+            [$this, "filterPostUpdatedMessages"]
+        );
+
+        $this->hooks->addFilter(
+            HooksAbstract::FILTER_BULK_POST_UPDATED_MESSAGES,
+            [$this, "filterBulkPostUpdatedMessages"],
+            10,
+            2
         );
     }
 
@@ -456,5 +467,125 @@ class WorkflowsList implements InitializableInterface
             });
         </script>';
         // phpcs:enable
+    }
+
+    /**
+     * Customize the post messages for the Action Workflows
+     *
+     * @param array $messages
+     *
+     * @return array
+     */
+    public function filterPostUpdatedMessages($messages)
+    {
+        global $post, $current_screen;
+
+        $postType = Module::POST_TYPE_WORKFLOW;
+
+        if ($postType !== $current_screen->post_type) {
+            return $messages;
+        }
+
+        $postTypeObject = get_post_type_object($postType);
+        $singular       = $postTypeObject->labels->singular_name;
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Safe to use in post update message.
+        $postRevision = isset($_GET['revision']) ? (int) $_GET['revision'] : null;
+
+        $messages[$postType][1]  = sprintf(
+            __('%s updated.', 'post-expirator'),
+            $singular
+        );
+        $messages[$postType][4]  = sprintf(
+            __('%s updated.', 'post-expirator'),
+            $singular
+        );
+        $messages[$postType][5] = $postRevision
+        ? sprintf(
+            /* translators: 1: Post type singular label, 2: Revision title */
+            __('%1$s restored to revision from %2$s', 'post-expirator'),
+            $singular,
+            wp_post_revision_title($postRevision, false)
+        )
+        : false;
+        $messages[$postType][6]  = sprintf(
+            __('%s published.', 'post-expirator'),
+            $singular
+        );
+        $messages[$postType][7]  = sprintf(
+            __('%s saved.', 'post-expirator'),
+            $singular
+        );
+        $messages[$postType][8]  = sprintf(
+            __('%s submitted.', 'post-expirator'),
+            $singular
+        );
+        $messages[$postType][9] = sprintf(
+            /* translators: 1: Post type singular label, 2: Scheduled date */
+            __('%1$s scheduled for: <strong>%2$s</strong>.', 'post-expirator'),
+            $singular,
+            date_i18n('M j, Y @ G:i', strtotime($post->post_date))
+        );
+        $messages[$postType][10] = sprintf(
+            __('%s draft updated.', 'post-expirator'),
+            $singular
+        );
+
+        return $messages;
+    }
+
+    /**
+     * Customize the post messages for the Action Workflows bulk action.
+     *
+     * @param array $bulk_messages
+     * @param array $bulk_counts
+     *
+     * @return array
+     */
+    public function filterBulkPostUpdatedMessages($bulk_messages, $bulk_counts)
+    {
+        global $current_screen;
+
+        $postType = Module::POST_TYPE_WORKFLOW;
+
+        if ($postType !== $current_screen->post_type) {
+            return $bulk_messages;
+        }
+
+        $postTypeObject     = get_post_type_object($postType);
+        $singular           = $postTypeObject->labels->singular_name;
+        $plural             = $postTypeObject->labels->name;
+
+        $bulk_messages[$postType]['updated']   = _n(
+            "%s $singular updated.",
+            "%s $plural updated.",
+            $bulk_counts['updated'],
+            'post-expirator'
+        );
+        $bulk_messages[$postType]['locked']    = _n(
+            "%s $singular not updated, someone is editing it.",
+            "%s $plural not updated, someone is editing them.",
+            $bulk_counts['locked'],
+            'post-expirator'
+        );
+        $bulk_messages[$postType]['deleted']   = _n(
+            "%s $singular permanently deleted.",
+            "%s $plural permanently deleted.",
+            $bulk_counts['deleted'],
+            'post-expirator'
+        );
+        $bulk_messages[$postType]['trashed']   = _n(
+            "%s $singular moved to the Trash.",
+            "%s $plural moved to the Trash.",
+            $bulk_counts['trashed'],
+            'post-expirator'
+        );
+        $bulk_messages[$postType]['untrashed'] = _n(
+            "%s $singular restored from the Trash.",
+            "%s $plural restored from the Trash.",
+            $bulk_counts['untrashed'],
+            'post-expirator'
+        );
+
+        return $bulk_messages;
     }
 }

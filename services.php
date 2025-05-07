@@ -74,13 +74,9 @@ use PublishPress\Future\Modules\VersionNotices\Module as ModuleVersionNotices;
 use PublishPress\Future\Modules\WooCommerce\Module as ModuleWooCommerce;
 use PublishPress\Future\Modules\Workflows\DBTableSchemas\WorkflowScheduledStepsSchema;
 use PublishPress\Future\Modules\Workflows\Domain\Caches\PostCache;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHandler;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\WorkflowEngine;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\InputValidators\PostQuery as PostQueryValidator;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\JsonLogicEngine;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHelperInitializer;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHelperRegistry;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\RuntimeVariablesHelpers\DateHelper;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\Cron as CronStep;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\General as GeneralStep;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Processors\Post as PostStep;
@@ -765,7 +761,7 @@ return [
 
     ServicesAbstract::WORKFLOWS_REST_API_MANAGER => static function (ContainerInterface $container) {
         return new RestApiManager(
-            $container->get(ServicesAbstract::SETTINGS)
+            $container->get(ServicesAbstract::HOOKS)
         );
     },
 
@@ -783,7 +779,8 @@ return [
     ServicesAbstract::EXECUTION_CONTEXT_REGISTRY => static function (ContainerInterface $container) {
         return new ExecutionContextRegistry(
             $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::EXECUTION_CONTEXT_PROCESSOR_REGISTRY)
+            $container->get(ServicesAbstract::EXECUTION_CONTEXT_PROCESSOR_REGISTRY),
+            $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
         );
     },
 
@@ -992,7 +989,8 @@ return [
                         $inputValidatorPostQuery,
                         $executionContext,
                         $logger,
-                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD)
                     );
                     break;
 

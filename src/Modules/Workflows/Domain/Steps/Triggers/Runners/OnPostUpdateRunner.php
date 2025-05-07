@@ -118,23 +118,22 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
             return;
         }
 
-        $cachedPosts = $this->postCache->getCachedPosts($postId);
-        $cachedPermalink = $this->postCache->getCachedPermalink($postId);
+        $cache = $this->postCache->getCacheForPostId($postId);
 
-        $postBefore = $cachedPosts['postBefore'] ?? null;
-        $postAfter = $cachedPosts['postAfter'] ?? null;
+        $postBefore = $cache['postBefore'] ?? null;
+        $postAfter = $cache['postAfter'] ?? null;
 
         $this->executionContext->setVariable($stepSlug, [
             'postBefore' => new PostResolver(
                 $postBefore,
                 $this->hooks,
-                $cachedPermalink['postBefore'],
+                $cache['permalinkBefore'],
                 $this->expirablePostModelFactory
             ),
             'postAfter' => new PostResolver(
                 $postAfter,
                 $this->hooks,
-                $cachedPermalink['postAfter'],
+                $cache['permalinkAfter'],
                 $this->expirablePostModelFactory
             ),
             'postId' => new IntegerResolver($postId),
@@ -222,6 +221,12 @@ class OnPostUpdateRunner implements TriggerRunnerInterface
                 $stepSlug,
                 $postId
             )
+        );
+
+        $this->hooks->doAction(
+            HooksAbstract::ACTION_WORKFLOW_TRIGGER_EXECUTED,
+            $this->workflowId,
+            $this->step
         );
 
         $this->stepProcessor->runNextSteps($this->step);

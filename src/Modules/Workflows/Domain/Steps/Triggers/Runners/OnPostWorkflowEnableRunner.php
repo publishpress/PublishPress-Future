@@ -3,7 +3,6 @@
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners;
 
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreventer;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
@@ -13,11 +12,10 @@ use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
 use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepPostRelatedProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowExecutionSafeguardInterface;
 
 class OnPostWorkflowEnableRunner implements TriggerRunnerInterface
 {
-    use InfiniteLoopPreventer;
-
     public const META_KEY_MANUALLY_TRIGGERED = '_pp_workflow_manually_triggered_';
 
     /**
@@ -60,13 +58,19 @@ class OnPostWorkflowEnableRunner implements TriggerRunnerInterface
      */
     private $expirablePostModelFactory;
 
+    /**
+     * @var WorkflowExecutionSafeguardInterface
+     */
+    private $executionSafeguard;
+
     public function __construct(
         HookableInterface $hooks,
         StepPostRelatedProcessorInterface $stepProcessor,
         InputValidatorsInterface $postQueryValidator,
         ExecutionContextInterface $executionContext,
         LoggerInterface $logger,
-        \Closure $expirablePostModelFactory
+        \Closure $expirablePostModelFactory,
+        WorkflowExecutionSafeguardInterface $executionSafeguard
     ) {
         $this->hooks = $hooks;
         $this->stepProcessor = $stepProcessor;
@@ -74,6 +78,7 @@ class OnPostWorkflowEnableRunner implements TriggerRunnerInterface
         $this->executionContext = $executionContext;
         $this->logger = $logger;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+        $this->executionSafeguard = $executionSafeguard;
     }
 
     public static function getNodeTypeName(): string
@@ -93,18 +98,7 @@ class OnPostWorkflowEnableRunner implements TriggerRunnerInterface
     {
         $nodeSlug = $this->stepProcessor->getSlugFromStep($this->step);
 
-        if ($this->isInfiniteLoopDetected($this->workflowId, $this->step, $postId)) {
-            $this->logger->debug(
-                $this->stepProcessor->prepareLogMessage(
-                    'Infinite loop detected for step %s, skipping',
-                    $nodeSlug
-                )
-            );
-
-            return;
-        }
-
-        if ($this->workflowId !== $workflowId) {
+        if ($this->shouldAbortExecution($postId, $nodeSlug, $workflowId)) {
             return;
         }
 
@@ -152,6 +146,33 @@ class OnPostWorkflowEnableRunner implements TriggerRunnerInterface
         );
 
         $this->stepProcessor->triggerCallbackIsRunning();
+
+        $this->hooks->doAction(
+            HooksAbstract::ACTION_WORKFLOW_TRIGGER_EXECUTED,
+            $this->workflowId,
+            $this->step
+        );
+
         $this->stepProcessor->runNextSteps($this->step);
+    }
+
+    private function shouldAbortExecution(int $postId, string $stepSlug, int $workflowId): bool
+    {
+        if ($this->executionSafeguard->detectInfiniteLoop($this->workflowId, $this->step, $postId)) {
+            $this->logger->debug(
+                $this->stepProcessor->prepareLogMessage(
+                    'Infinite loop detected for step %s, skipping',
+                    $stepSlug
+                )
+            );
+
+            return true;
+        }
+
+        if ($this->workflowId !== $workflowId) {
+            return true;
+        }
+
+        return false;
     }
 }

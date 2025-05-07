@@ -15,6 +15,9 @@
 .rsync-filters-pre-build export-ignore
 .vscode export-ignore
 .wordpress-org export-ignore
+.env export-ignore
+.env.example export-ignore
+.cursor export-ignore
 /composer.lock
 /dev-workspace export-ignore
 /cache export-ignore

@@ -44,7 +44,7 @@
     "react-ace": "^13.0.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
-    "react-querybuilder": "^7.7.0",
+    "react-querybuilder": "^8.0.0",
     "react-select": "^5.7.0",
     "reactflow": "^11.10.4",
     "uuid": "^9.0.0",

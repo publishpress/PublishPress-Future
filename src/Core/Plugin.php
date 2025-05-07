@@ -131,7 +131,7 @@ class Plugin implements InitializableInterface
 
     private function initializeHooks()
     {
-        $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_INIT, [$this, 'manageUpgrade'], 99);
+        $this->hooks->addAction(HooksAbstract::ACTION_INIT, [$this, 'manageUpgrade'], 99);
         $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
     }
 

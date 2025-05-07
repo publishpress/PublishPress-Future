@@ -7,17 +7,6 @@ use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\Traits\TimestampCalculator;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayResolver;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\DatetimeResolver;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\EmailResolver;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\FutureActionResolver;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\SiteResolver;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\UserResolver;
-use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncStepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
@@ -355,7 +344,7 @@ class Cron implements AsyncStepProcessorInterface
 
         if (self::WHEN_TO_RUN_NOW === $this->whenToRun) {
             $scheduledActionId = $this->cron->scheduleAsyncAction(
-                HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
+                HooksAbstract::ACTION_SCHEDULED_STEP_EXECUTE,
                 [$actionArgs],
                 false,
                 $this->priority
@@ -370,7 +359,7 @@ class Cron implements AsyncStepProcessorInterface
             // Schedule a single action
             $scheduledActionId = $this->cron->scheduleSingleAction(
                 $this->timestamp,
-                HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
+                HooksAbstract::ACTION_SCHEDULED_STEP_EXECUTE,
                 [$actionArgs],
                 false,
                 $this->priority
@@ -445,7 +434,7 @@ class Cron implements AsyncStepProcessorInterface
             $scheduledActionId = $this->cron->scheduleRecurringActionInSeconds(
                 $this->timestamp,
                 $interval,
-                HooksAbstract::ACTION_ASYNC_EXECUTE_STEP,
+                HooksAbstract::ACTION_SCHEDULED_STEP_EXECUTE,
                 [$actionArgs],
                 false,
                 $this->priority
@@ -469,7 +458,7 @@ class Cron implements AsyncStepProcessorInterface
     private function shouldSkipScheduling(): bool
     {
         if (empty($this->timestamp)) {
-            $this->addDebugLogMessage('Cannot schedule step %s: Timestamp is empty or invalid', $this->stepSlug);
+            $this->addDebugLogMessage('Cannot schedule step %s: Timestamp is empty', $this->stepSlug);
 
             return true;
         }
@@ -547,31 +536,8 @@ class Cron implements AsyncStepProcessorInterface
             'step' => [
                 'nodeId' => $stepId,
             ],
-            'runtimeVariables' => $this->executionContext->getAllVariables(),
+            'runtimeVariables' => $this->executionContext->getCompactedRuntimeVariables(),
         ];
-
-        foreach ($compactedArgs['runtimeVariables'] as $context => &$variables) {
-            if (is_array($variables)) {
-                foreach ($variables as &$variableResolver) {
-                    if (is_object($variableResolver)) {
-                        $diff = null;
-                        // TODO: Each variable resolver should have a method to compact itself and check diff, etc.
-                        if ($variableResolver->getType() === 'post') {
-                            $diff = $this->getPostDifferences(
-                                $variableResolver->getVariable(),
-                                get_post($variableResolver->getValue('ID'))
-                            );
-                        }
-
-                        $variableResolver = $variableResolver->compact();
-
-                        if ($diff) {
-                            $variableResolver['diff'] = $diff;
-                        }
-                    }
-                }
-            }
-        }
 
         return $compactedArgs;
     }
@@ -616,218 +582,17 @@ class Cron implements AsyncStepProcessorInterface
             $step = $compactArguments['step'];
         }
 
-        $expandedArgs = [
-            'step' => $step,
-            'actionId' => $compactArguments['actionId'],
-            'runtimeVariables' => [],
-        ];
-
         // Before v3.4.1 the pluginVersion was not included in the compacted arguments
         $isLegacyCompact = ! isset($compactArguments['pluginVersion']);
 
-        /**
-         * Example of the different types of compacted arguments, LEGACY is the format
-         * before v3.4.1.
-         *
-         * ----------------------------------------
-         * LEGACY compacted arguments:
-         *
-         *   ...
-         *   "contextVariables": {
-         *      "global": {
-         *          "workflow": 1417,
-         *          "user": 1,
-         *          "site": "Future Pro Workflow Dev",
-         *          "trigger": "onPostUpdated_ebtrjpm"
-         *      },
-         *      "onPostUpdated1": {
-         *          "postId": 1402,
-         *          "postBefore": {
-         *              "class": "WP_Post",
-         *              "id": 1402,
-         *              "diff": {
-         *                  "post_title": "Custom Development??",
-         *                  "post_status": "draft",
-         *                  "post_modified": "2024-06-27 15:10:06",
-         *                  "post_modified_gmt": "2024-06-27 18:10:06"
-         *              }
-         *          },
-         *          "postAfter": {
-         *              "class": "WP_Post",
-         *              "id": 1402,
-         *              "diff": []
-         *          }
-         *      }
-         *  }
-         *  ...
-         * ----------------------------------------
-         * NEW compacted arguments:
-         *
-         *  "runtimeVariables": {
-         *    "global": {
-         *        "workflow": {
-         *            "type": "workflow",
-         *            "value": 1417,
-         *            "execution_id": "0000-0129-af10-a001",
-         *            "execution_trace": "onPostUpdated_ebtrjpm, savePost_1402"
-         *        },
-         *        "user": {
-         *            "type": "user",
-         *            "value": 1
-         *        },
-         *        "site": {
-         *            "type": "site",
-         *            "value": "Future Pro Workflow Dev"
-         *        },
-         *        "trigger": {
-         *            "type": "node",
-         *            "value": {
-         *                "id": "onPostUpdated_ebtrjpm",
-         *                "name": "trigger\/core.post-updated",
-         *                "label": "Post is updated",
-         *                "activation_timestamp": "2024-06-27 18:19:24"
-         *            }
-         *        }
-         *    },
-         *    "onPostUpdated1": {
-         *        "postId": {
-         *            "type": "integer",
-         *            "value": 1402
-         *        },
-         *        "postBefore": {
-         *            "type": "post",
-         *            "value": 1402,
-         *            "diff": {
-         *                "post_title": "Custom Development??",
-         *                "post_status": "draft",
-         *                "post_modified": "2024-06-27 15:16:56",
-         *                "post_modified_gmt": "2024-06-27 18:16:56"
-         *            }
-         *        },
-         *        "postAfter": {
-         *            "type": "post",
-         *            "value": 1402
-         *        }
-         *    }
-         *}
-         */
-
-        foreach ($compactArguments['runtimeVariables'] as $context => $variables) {
-            foreach ($variables as $variableName => $value) {
-                $type = 'unknown';
-
-                if ($isLegacyCompact) {
-                    if ($variableName === 'workflow') {
-                        $type = 'workflow';
-                    } elseif ($variableName === 'user') {
-                        $type = 'user';
-                    } elseif ($variableName === 'site') {
-                        $type = 'site';
-                    } elseif ($variableName === 'trigger') {
-                        $type = 'node';
-                    } elseif (is_array($value)) {
-                        $type = 'array';
-
-                        if (isset($value['class'])) {
-                            if ($value['class'] === 'WP_Post') {
-                                $type = 'post';
-                            } elseif ($value['class'] === 'WP_User') {
-                                $type = 'user';
-                            }
-                        }
-                    } elseif (is_numeric($value)) {
-                        $type = 'integer';
-                    } elseif (is_string($value)) {
-                        $type = 'string';
-                    }
-                } else {
-                    $type = $value['type'] ?? 'unknown';
-                }
-
-                // FIXME: This should be moved to a variable resolver factory
-                $resolversMap = [
-                    'array' => ArrayResolver::class,
-                    'boolean' => BooleanResolver::class,
-                    'datetime' => DatetimeResolver::class,
-                    'email' => EmailResolver::class,
-                    'integer' => IntegerResolver::class,
-                    'node' => NodeResolver::class,
-                    'post' => PostResolver::class,
-                    'site' => SiteResolver::class,
-                    'user' => UserResolver::class,
-                    'workflow' => WorkflowResolver::class,
-                    'future_action' => FutureActionResolver::class,
-                ];
-
-                if (! $isLegacyCompact) {
-                    $resolverArgument = $value['value'] ?? null;
-                } else {
-                    $resolverArgument = $value;
-                }
-
-                switch ($type) {
-                    case 'post':
-                        if ($isLegacyCompact) {
-                            $postId = (int)$value['id'];
-                        } else {
-                            $postId = (int)$value['value'];
-                        }
-
-                        $resolverArgument = get_post($postId);
-
-                        break;
-                    case 'user':
-                        if ($isLegacyCompact) {
-                            $userId = (int)$value;
-                        } else {
-                            $userId = (int)$value['value'];
-                        }
-
-                        $resolverArgument = get_user_by('id', $userId);
-                        break;
-                    case 'workflow':
-                        if ($isLegacyCompact) {
-                            $workflowId = (int)$value;
-                        } else {
-                            $workflowId = (int)$value['value'];
-                        }
-
-                        $workflowModel = new WorkflowModel();
-                        $workflowModel->load($workflowId);
-                        $resolverArgument = [
-                            'id' => $workflowModel->getId(),
-                            'title' => $workflowModel->getTitle(),
-                            'description' => $workflowModel->getDescription(),
-                            'modified_at' => $workflowModel->getModifiedAt(),
-                            'execution_id' => $value['execution_id'] ?? '',
-                            'execution_trace' => $value['execution_trace'] ?? '',
-                        ];
-                        break;
-                }
-
-                if (isset($resolversMap[$type])) {
-                    $resolverClass = $resolversMap[$type];
-
-                    // TODO: Replace this with a factory
-                    if ($type === 'site') {
-                        $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass();
-                    } elseif ($type === 'post') {
-                        $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass(
-                            $resolverArgument,
-                            $this->hooks,
-                            '',
-                            $this->expirablePostModelFactory
-                        );
-                    } else {
-                        $expandedArgs['runtimeVariables'][$context][$variableName] = new $resolverClass(
-                            $resolverArgument
-                        );
-                    }
-                } else {
-                    $expandedArgs['runtimeVariables'][$context][$variableName] = $value;
-                }
-            }
-        }
+        $expandedArgs = [
+            'step' => $step,
+            'actionId' => $compactArguments['actionId'],
+            'runtimeVariables' => $this->executionContext->expandRuntimeVariables(
+                $compactArguments['runtimeVariables'],
+                $isLegacyCompact
+            ),
+        ];
 
         return $expandedArgs;
     }

@@ -3,7 +3,48 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.5.0] - 3 Apr, 2025
+## [4.6.0] - 7 May, 2025
+
+### Added
+
+- Added notification center icon to the admin topbar for in-site notifications - PRO feature (Issue #1290).
+- Added SendInSiteNotification step for in-site notifications - PRO (Issue #1290).
+- Added Scrollbar to Workflow Editor left sidebar (Issue #1281).
+
+### Changed
+
+- Change Action Workflows Editor Modals "X" to "OK" and move the button to the bottom (Issue #1182).
+- Move Metabox, Future Actions Column and Editor "Future Actions" fields from Display to New "Admin" tab (Issue #1215).
+- Move Export and Import to first tabs in Settings (Issue #1213).
+- Update Workflow Action "Update post" label and description (Issue #1283).
+- Update Workflow Action "Post Name" to "Post Slug" (Issue #1282).
+- Update Action Workflows post action and bulk edit messages (Issue #1219).
+
+### Fixed
+
+- Fixed editor error when editing a reuseable block (Issue #1324).
+- Update ES, FR, and IT translations (Issue #1270).
+- Fixed REST API request detection to workflow engine execution environment identification (Issue #1290).
+- Fixed duplicate FILTER_REGISTER_REST_ROUTES constant (Issue #1290).
+- Fixed workflow editor filter area autocomplete dropdown overlapping content (Issue #1303).
+- Fixed PHP Warning: Trying to access array offset on null when opening new post, (Issue #1311).
+- Fixed DB tables that were not created after fresh install unless we visit the admin (Issue #1319).
+- Fixed support for caching during post insertion and status transition (Issue #1311).
+
+### Removed
+
+- Remove the option to compact scheduled actions data (Issue #1233).
+
+### Developers
+
+- Remove unused InitineLoopPreventer trait from some classes, replacing it with the service "future.free/workflow-execution-safeguard".
+- Refactored workflow hooks replacing ACTION_ASYNC_EXECUTE_STEP with ACTION_SCHEDULED_STEP_EXECUTE for better semantic clarity.
+- Added getId method to UserModel for retrieving user ID;
+- Refactor WorkflowScheduledStepModel to simplify argument handling by removing compression logic and directly decoding uncompressed arguments.
+- Replace methods ``getCachedPermalink` and `getCachedPosts` with a unified method: `getCacheForPostId` on the class `PostCache` and interface `PostCacheInterface`. Retrieves cached post and permalink data, including both postBefore and postAfter states.
+- All triggers now emit the hook `publishpressfuture_workflow_trigger_executed` after execution.
+
+## [4.5.0] - 7 Apr, 2025
 
 
 ### Added
@@ -26,7 +67,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
-- Removed the "Allow duplicate scgeduling" option in the Schedule delay step in the workflow editor. To prevent a duplicated action, specify a custom Unique Action Identified after enabling Advanced settings in the workflow editor.
+- Removed the "Allow duplicate scheduling" option in the Schedule delay step in the workflow editor. To prevent a duplicated action, specify a custom Unique Action Identified after enabling Advanced settings in the workflow editor.
 
 ### Fixed
 
@@ -36,14 +77,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed the action that unschedules completed recurring actions - PRO (Issue #1165).
 - Fixed issue with "On Schedule" trigger that was incorrectly scheduling recurring actions every few seconds instead of respecting the configured interval when repetition was enabled (Issue #1245).
 - Fixed incorrect execution count display in the Scheduled Actions page for repeating workflows that have a limit on number of executions (Issue #1249).
-- Imnproved text on the overdue action message in the posts list, removing red icon (#Issue 1193).
+- Improved text on the overdue action message in the posts list, removing red icon (#Issue 1193).
 - Fixed false positive error on step validation for steps connected to the Query Posts step, saying the variable "....posts" do not exists (Issue #1255).
 - Updated translations for ES, FR and IT languages (Issues #1256, #1225).
 - Fixed default workflows (samples), updating the trigger conditions for the new conditional query builder (Issue #1243).
-- Fixed uncautch exceptions adding error handling to some hook callbacks.
+- Fixed uncaught exceptions adding error handling to some hook callbacks.
 - Fixed fatal error generated on posts lists when an invalid default future action date offset is configured for the post type (Issue #1224).
 - Fixed wrong repetition inverval for the "On schedule" trigger (Issue #1259).
-- Fixed wrong error message on database scheam check when an index is missed (Issue #1236).
+- Fixed wrong error message on database schema check when an index is missed (Issue #1236).
 - Fixed the display of scheduled actions for posts when workflows are manually enabled using the checkbox (Issue #1230).
 - Fixed error message "Schedule step is required for this workflow" on any repeating scheduled step in the Scheduled Actions list (Issue #1229).
 - Fixed step validation error message about the field "Post" containing an invalid variable (Issue #1210).

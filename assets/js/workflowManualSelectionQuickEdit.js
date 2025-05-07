@@ -1186,7 +1186,8 @@ function Fieldset(_ref) {
     postId = _ref.postId,
     apiUrl = _ref.apiUrl,
     nonce = _ref.nonce,
-    onChange = _ref.onChange;
+    onChange = _ref.onChange,
+    wrapper = _ref.wrapper;
   var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useSelect)(function (select) {
       return {
         workflowsWithManualTrigger: select(_store__WEBPACK_IMPORTED_MODULE_2__.store).getWorkflowsWithManualTrigger(),
@@ -1232,7 +1233,17 @@ function Fieldset(_ref) {
       }
     });
   });
-  return /*#__PURE__*/React.createElement(React.Fragment, null, controls.length > 0 && /*#__PURE__*/React.createElement("div", {
+  if (!wrapper) {
+    wrapper = function wrapper(_ref2) {
+      var children = _ref2.children;
+      return children;
+    };
+  }
+  var WrapperElement = wrapper;
+  return /*#__PURE__*/React.createElement(WrapperElement, {
+    workflowsWithManualTrigger: workflowsWithManualTrigger,
+    workflowsEnabledForPost: workflowsEnabledForPost
+  }, controls.length > 0 && /*#__PURE__*/React.createElement("div", {
     id: "post-expirator-".concat(context, "-wrapper")
   }, /*#__PURE__*/React.createElement("input", {
     type: "hidden",
@@ -2118,7 +2129,10 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 /* harmony import */ var _fieldset__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../fieldset */ "./assets/jsx/workflow-manual-selection/fieldset/index.jsx");
-/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./css/style.css */ "./assets/jsx/workflow-manual-selection/quick-edit/css/style.css");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./css/style.css */ "./assets/jsx/workflow-manual-selection/quick-edit/css/style.css");
+
 
 
 
@@ -2169,7 +2183,25 @@ window.inlineEditPost.edit = function (button, id) {
     context: "quick-edit",
     postId: postId,
     apiUrl: apiUrl,
-    nonce: nonce
+    nonce: nonce,
+    wrapper: function wrapper(_ref) {
+      var workflowsWithManualTrigger = _ref.workflowsWithManualTrigger,
+        children = _ref.children;
+      if (workflowsWithManualTrigger.length === 0) {
+        return children;
+      }
+      return /*#__PURE__*/React.createElement("fieldset", {
+        class: "inline-edit-col-left post-expirator-quick-edit-fieldset"
+      }, /*#__PURE__*/React.createElement("div", {
+        class: "future-quick-edit-fieldset"
+      }, /*#__PURE__*/React.createElement("div", {
+        class: "title"
+      }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Action Workflows', 'post-expirator')), /*#__PURE__*/React.createElement("div", {
+        class: "inline-edit-col"
+      }, /*#__PURE__*/React.createElement("div", {
+        class: "inline-edit-group"
+      }, children))));
+    }
   });
   root.render(component);
   window.inlineEditPost.revert = function () {

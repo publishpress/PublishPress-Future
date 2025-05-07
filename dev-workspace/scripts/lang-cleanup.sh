@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
-source /project/dev-workspace/scripts/lang-constants.sh
+set -a
+source /project/.env
+set +a
 
 for locale in $LANG_LOCALES
 do
     for scriptHandler in $LANG_SCRIPT_HANDLERS
     do
-        mo_file="./$LANG_DIR/$PLUGIN_NAME-${locale}-${scriptHandler}.mo"
+        mo_file="./$LANG_DIR/$PLUGIN_SLUG-${locale}-${scriptHandler}.mo"
         if [ -f "$mo_file" ]; then
             rm $mo_file
         fi

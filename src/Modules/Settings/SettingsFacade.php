@@ -12,6 +12,7 @@ use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use WP_Role;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -59,6 +60,8 @@ class SettingsFacade
     public const DEFAULT_CUSTOM_DATE = '+1 week';
 
     public const DEFAULT_CUSTOM_DATE_OFFSET = '+1 week';
+
+    public const SETTINGS_DEFAULT_TAB = 'advanced';
 
     /**
      * @param HookableInterface $hooks
@@ -356,7 +359,8 @@ class SettingsFacade
 
     public function getStepScheduleCompressedArgsStatus(): bool
     {
-        return (bool)$this->options->getOption(self::OPTION_STEP_SCHEDULE_COMPRESSED_ARGS, false);
+        // We don't use this feature anymore. But we keep the option for backwards compatibility on existing data.
+        return false;
     }
 
     public function getScheduledWorkflowStepsCleanupStatus(): bool
@@ -591,10 +595,6 @@ class SettingsFacade
         $settings = [
             'defaultDateFormat' => $this->getDefaultDateFormat(),
             'defaultTimeFormat' => $this->getDefaultTimeFormat(),
-            'metaboxTitle' => $this->getMetaboxTitle(),
-            'metaboxCheckboxLabel' => $this->getMetaboxCheckboxLabel(),
-            'columnStyle' => $this->getColumnStyle(),
-            'timeFormatForDatePicker' => $this->getTimeFormatForDatePicker(),
             'showInPostFooter' => $this->getShowInPostFooter(),
             'footerContents' => $this->getFooterContents(),
             'footerStyle' => $this->getFooterStyle(),
@@ -607,14 +607,24 @@ class SettingsFacade
         return $settings;
     }
 
+    public function getAdminSettings(): array
+    {
+        $settings = [
+            'metaboxTitle' => $this->getMetaboxTitle(),
+            'metaboxCheckboxLabel' => $this->getMetaboxCheckboxLabel(),
+            'columnStyle' => $this->getColumnStyle(),
+            'timeFormatForDatePicker' => $this->getTimeFormatForDatePicker()
+        ];
+
+        $settings = $this->hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_ADMIN, $settings);
+
+        return $settings;
+    }
+
     public function setDisplaySettings(array $settings): void
     {
         $this->setDefaultDateFormat($settings['defaultDateFormat'] ?? '');
         $this->setDefaultTimeFormat($settings['defaultTimeFormat'] ?? '');
-        $this->setMetaboxTitle($settings['metaboxTitle'] ?? '');
-        $this->setMetaboxCheckboxLabel($settings['metaboxCheckboxLabel'] ?? '');
-        $this->setColumnStyle($settings['columnStyle'] ?? '');
-        $this->setTimeFormatForDatePicker($settings['timeFormatForDatePicker'] ?? '');
         $this->setShowInPostFooter($settings['showInPostFooter'] ?? false);
         $this->setFooterContents($settings['footerContents'] ?? '');
         $this->setFooterStyle($settings['footerStyle'] ?? '');
@@ -622,6 +632,16 @@ class SettingsFacade
         $this->setShortcodeWrapperClass($settings['shortcodeWrapperClass'] ?? '');
 
         do_action(HooksAbstract::ACTION_SETTINGS_SET_DISPLAY, $settings);
+    }
+
+    public function setAdminSettings(array $settings): void
+    {
+        $this->setMetaboxTitle($settings['metaboxTitle'] ?? '');
+        $this->setMetaboxCheckboxLabel($settings['metaboxCheckboxLabel'] ?? '');
+        $this->setColumnStyle($settings['columnStyle'] ?? '');
+        $this->setTimeFormatForDatePicker($settings['timeFormatForDatePicker'] ?? '');
+
+        do_action(HooksAbstract::ACTION_SETTINGS_SET_ADMIN, $settings);
     }
 
     public function getAdvancedSettings(): array
@@ -670,5 +690,13 @@ class SettingsFacade
     public function getPastDueActionsNotificationAddressesList(): array
     {
         return explode(',', $this->options->getOption('pastDueActionsNotificationList', ''));
+    }
+
+    public function getSettingsDefaultTab()
+    {
+
+        $defaultTab = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_SETTINGS_DEFAULT_TAB, self::SETTINGS_DEFAULT_TAB);
+
+        return $defaultTab;
     }
 }

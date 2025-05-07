@@ -2,12 +2,23 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine;
 
-use PhpParser\Node\Expr\Instanceof_;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\DatetimeResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\EmailResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\FutureActionResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\SiteResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\UserResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextProcessorRegistryInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\VariableResolverInterface;
+use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 
 use function wp_json_encode;
 
@@ -33,12 +44,19 @@ class ExecutionContext implements ExecutionContextInterface
      */
     private $executionTrace = [];
 
+    /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
+
     public function __construct(
         HookableInterface $hooks,
-        ExecutionContextProcessorRegistryInterface $processorRegistry
+        ExecutionContextProcessorRegistryInterface $processorRegistry,
+        \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
         $this->processorRegistry = $processorRegistry;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
     public function setAllVariables(array $runtimeVariables)
@@ -292,5 +310,260 @@ class ExecutionContext implements ExecutionContextInterface
                 $dataSource[$variableName[0]]
             );
         }
+    }
+
+    public function getCompactedRuntimeVariables(): array
+    {
+        $runtimeVariables = $this->getAllVariables();
+
+        foreach ($runtimeVariables as $context => &$variables) {
+            if (is_array($variables)) {
+                foreach ($variables as &$variableResolver) {
+                    if (is_object($variableResolver)) {
+                        $diff = null;
+                        // TODO: Each variable resolver should have a method to compact itself and check diff, etc.
+                        if ($variableResolver->getType() === 'post') {
+                            $diff = $this->getPostDifferences(
+                                $variableResolver->getVariable(),
+                                get_post($variableResolver->getValue('ID'))
+                            );
+                        }
+
+                        $variableResolver = $variableResolver->compact();
+
+                        if ($diff) {
+                            $variableResolver['diff'] = $diff;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $runtimeVariables;
+    }
+
+    private function getPostDifferences($post1, $post2)
+    {
+        $differences = [];
+
+        foreach ($post1 as $key => $value) {
+            if (! isset($post2->$key)) {
+                $differences[$key] = $value;
+            } elseif ($post2->$key !== $value) {
+                $differences[$key] = $value;
+            }
+        }
+
+        return $differences;
+    }
+
+    /**
+     * Example of the different types of compacted arguments, LEGACY is the format
+     * before v3.4.1.
+     *
+     * ----------------------------------------
+     * LEGACY compacted arguments:
+     *
+     *   ...
+     *   "contextVariables": {
+     *      "global": {
+     *          "workflow": 1417,
+     *          "user": 1,
+     *          "site": "Future Pro Workflow Dev",
+     *          "trigger": "onPostUpdated_ebtrjpm"
+     *      },
+     *      "onPostUpdated1": {
+     *          "postId": 1402,
+     *          "postBefore": {
+     *              "class": "WP_Post",
+     *              "id": 1402,
+     *              "diff": {
+     *                  "post_title": "Custom Development??",
+     *                  "post_status": "draft",
+     *                  "post_modified": "2024-06-27 15:10:06",
+     *                  "post_modified_gmt": "2024-06-27 18:10:06"
+     *              }
+     *          },
+     *          "postAfter": {
+     *              "class": "WP_Post",
+     *              "id": 1402,
+     *              "diff": []
+     *          }
+     *      }
+     *  }
+     *  ...
+     * ----------------------------------------
+     * NEW compacted arguments:
+     *
+     *  "runtimeVariables": {
+     *    "global": {
+     *        "workflow": {
+     *            "type": "workflow",
+     *            "value": 1417,
+     *            "execution_id": "0000-0129-af10-a001",
+     *            "execution_trace": "onPostUpdated_ebtrjpm, savePost_1402"
+     *        },
+     *        "user": {
+     *            "type": "user",
+     *            "value": 1
+     *        },
+     *        "site": {
+     *            "type": "site",
+     *            "value": "Future Pro Workflow Dev"
+     *        },
+     *        "trigger": {
+     *            "type": "node",
+     *            "value": {
+     *                "id": "onPostUpdated_ebtrjpm",
+     *                "name": "trigger\/core.post-updated",
+     *                "label": "Post is updated",
+     *                "activation_timestamp": "2024-06-27 18:19:24"
+     *            }
+     *        }
+     *    },
+     *    "onPostUpdated1": {
+     *        "postId": {
+     *            "type": "integer",
+     *            "value": 1402
+     *        },
+     *        "postBefore": {
+     *            "type": "post",
+     *            "value": 1402,
+     *            "diff": {
+     *                "post_title": "Custom Development??",
+     *                "post_status": "draft",
+     *                "post_modified": "2024-06-27 15:16:56",
+     *                "post_modified_gmt": "2024-06-27 18:16:56"
+     *            }
+     *        },
+     *        "postAfter": {
+     *            "type": "post",
+     *            "value": 1402
+     *        }
+     *    }
+     *}
+     */
+    public function expandRuntimeVariables(array $compactedVariables, bool $isLegacyCompact = false): array
+    {
+        $runtimeVariables = [];
+
+        foreach ($compactedVariables as $context => $variables) {
+            foreach ($variables as $variableName => $value) {
+                $type = 'unknown';
+
+                if ($isLegacyCompact) {
+                    if ($variableName === 'workflow') {
+                        $type = 'workflow';
+                    } elseif ($variableName === 'user') {
+                        $type = 'user';
+                    } elseif ($variableName === 'site') {
+                        $type = 'site';
+                    } elseif ($variableName === 'trigger') {
+                        $type = 'node';
+                    } elseif (is_array($value)) {
+                        $type = 'array';
+
+                        if (isset($value['class'])) {
+                            if ($value['class'] === 'WP_Post') {
+                                $type = 'post';
+                            } elseif ($value['class'] === 'WP_User') {
+                                $type = 'user';
+                            }
+                        }
+                    } elseif (is_numeric($value)) {
+                        $type = 'integer';
+                    } elseif (is_string($value)) {
+                        $type = 'string';
+                    }
+                } else {
+                    $type = $value['type'] ?? 'unknown';
+                }
+
+                // FIXME: This should be moved to a variable resolver factory
+                $resolversMap = [
+                    'array' => ArrayResolver::class,
+                    'boolean' => BooleanResolver::class,
+                    'datetime' => DatetimeResolver::class,
+                    'email' => EmailResolver::class,
+                    'integer' => IntegerResolver::class,
+                    'node' => NodeResolver::class,
+                    'post' => PostResolver::class,
+                    'site' => SiteResolver::class,
+                    'user' => UserResolver::class,
+                    'workflow' => WorkflowResolver::class,
+                    'future_action' => FutureActionResolver::class,
+                ];
+
+                if (! $isLegacyCompact) {
+                    $resolverArgument = $value['value'] ?? null;
+                } else {
+                    $resolverArgument = $value;
+                }
+
+                switch ($type) {
+                    case 'post':
+                        if ($isLegacyCompact) {
+                            $postId = (int)$value['id'];
+                        } else {
+                            $postId = (int)$value['value'];
+                        }
+
+                        $resolverArgument = get_post($postId);
+
+                        break;
+                    case 'user':
+                        if ($isLegacyCompact) {
+                            $userId = (int)$value;
+                        } else {
+                            $userId = (int)$value['value'];
+                        }
+
+                        $resolverArgument = get_user_by('id', $userId);
+                        break;
+                    case 'workflow':
+                        if ($isLegacyCompact) {
+                            $workflowId = (int)$value;
+                        } else {
+                            $workflowId = (int)$value['value'];
+                        }
+
+                        $workflowModel = new WorkflowModel();
+                        $workflowModel->load($workflowId);
+                        $resolverArgument = [
+                            'id' => $workflowModel->getId(),
+                            'title' => $workflowModel->getTitle(),
+                            'description' => $workflowModel->getDescription(),
+                            'modified_at' => $workflowModel->getModifiedAt(),
+                            'execution_id' => $value['execution_id'] ?? '',
+                            'execution_trace' => $value['execution_trace'] ?? '',
+                        ];
+                        break;
+                }
+
+                if (isset($resolversMap[$type])) {
+                    $resolverClass = $resolversMap[$type];
+
+                    // TODO: Replace this with a factory
+                    if ($type === 'site') {
+                        $runtimeVariables[$context][$variableName] = new $resolverClass();
+                    } elseif ($type === 'post') {
+                        $runtimeVariables[$context][$variableName] = new $resolverClass(
+                            $resolverArgument,
+                            $this->hooks,
+                            '',
+                            $this->expirablePostModelFactory
+                        );
+                    } else {
+                        $runtimeVariables[$context][$variableName] = new $resolverClass(
+                            $resolverArgument
+                        );
+                    }
+                } else {
+                    $runtimeVariables[$context][$variableName] = $value;
+                }
+            }
+        }
+
+        return $runtimeVariables;
     }
 }

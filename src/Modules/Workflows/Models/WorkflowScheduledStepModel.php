@@ -96,11 +96,6 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
      */
     private $isFinished = null;
 
-    public function __construct()
-    {
-        $this->isCompressed = $this->expectCompressedArguments();
-    }
-
     public function setActionId(int $actionId): void
     {
         $this->actionId = $actionId;
@@ -366,12 +361,7 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
         $this->setRepetitionNumber($row['repetition_number'] ?? 0);
         $this->isFinished = null;
 
-        if ($this->getIsCompressed()) {
-            $args = $this->uncompressAndDecodeArguments($row['compressed_args'] ?? []);
-            $this->setArgs($args);
-        } else {
-            $this->setArgs($this->decodeArguments($row['uncompressed_args'] ?? []));
-        }
+        $this->setArgs($this->decodeArguments($row['uncompressed_args'] ?? []));
     }
 
     private function getTableSchema(): DBTableSchemaInterface
@@ -396,13 +386,10 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
             'is_recurring' => $this->getIsRecurring() ? 1 : 0,
             'post_id' => $this->getPostId(),
             'repetition_number' => $this->getTotalRunCount(),
+            'uncompressed_args' => $this->encodeArguments($this->getArgs()),
+            // We don't store compressed arguments anymore. Keeping this for backwards compatibility.
+            'compressed_args' => null,
         ];
-
-        if ($this->getIsCompressed()) {
-            $row['compressed_args'] = $this->encodeAndCompressArguments($this->getArgs());
-        } else {
-            $row['uncompressed_args'] = $this->encodeArguments($this->getArgs());
-        }
 
         return $row;
     }
@@ -434,26 +421,6 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
         $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
         return $settingsFacade->getStepScheduleCompressedArgsStatus();
-    }
-
-    private function encodeAndCompressArguments(array $args): string
-    {
-        $args = $this->encodeArguments($args);
-
-        if (function_exists('gzcompress')) {
-            $args = gzcompress($args);
-        }
-
-        return $args;
-    }
-
-    private function uncompressAndDecodeArguments(string $args): array
-    {
-        if (function_exists('gzuncompress')) {
-            $args = gzuncompress($args);
-        }
-
-        return $this->decodeArguments($args);
     }
 
     public function incrementTotalRunCount(): void
