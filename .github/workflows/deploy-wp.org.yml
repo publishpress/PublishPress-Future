@@ -17,6 +17,11 @@ jobs:
     uses: ./.github/workflows/code-check.yml
     secrets: inherit
 
+  code-test:
+    name: Test the code
+    uses: ./.github/workflows/code-test.yml
+    secrets: inherit
+
   deploy-wp-org:
     name: Deploy the new tag
     needs: code-check
