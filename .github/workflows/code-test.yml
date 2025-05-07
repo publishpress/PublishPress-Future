@@ -51,6 +51,10 @@ jobs:
         run: |
           composer test:up
 
+      - name: Fix permissions
+        run: |
+          docker exec future_free_env_wp_test chmod -R 777 /var/www/html/wp-content
+
       - name: Run Unit Tests
         run: |
           composer test Unit
