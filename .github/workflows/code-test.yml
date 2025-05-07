@@ -53,8 +53,7 @@ jobs:
 
       - name: Fix permissions
         run: |
-          container_id=$(docker compose -f $GITHUB_WORKSPACE/dev-workspace/docker/compose.yaml ps -q wp_test)
-          docker exec $container_id chmod -R 777 /var/www/html/wp-content
+          docker exec future_free_env_wp_test chmod -R 777 /var/www/html/wp-content
 
       - name: Run Unit Tests
         run: |
