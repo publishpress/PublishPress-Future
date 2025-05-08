@@ -31,7 +31,7 @@ gh_token.txt
 .env
 # VS Code user-specific settings
 .vscode/
-# Keep the workspace file tracked
-!publishpress-future.code-workspace
+
+publishpress-future.code-workspace
 
 .phpactor.json
