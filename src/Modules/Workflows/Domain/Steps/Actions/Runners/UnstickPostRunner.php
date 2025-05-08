@@ -49,30 +49,51 @@ class UnstickPostRunner implements StepRunnerInterface
         $this->stepProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step, $postId) {
+                $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
+
+                $unstickUsingTheModel = true;
+
+                $isQuickEdit = defined('DOING_AJAX')
+                    && DOING_AJAX
+                    && isset($_POST['action'])
+                    && $_POST['action'] === 'inline-save';
+
+                $isClassicEditor = ( ! defined('DOING_AJAX') || ! DOING_AJAX)
+                    && isset($_POST['action'])
+                    && $_POST['action'] === 'editpost';
+
                 /*
-                 * Handle quick-edit saving, otherwise it will override the sticky status at the end of the save
+                 * Handle quick-edit or classic editor saving, otherwise it will override
+                 * the sticky status at the end of the save.
                  *
                  * @see https://github.com/publishpress/PublishPress-Future/issues/1204
                  */
-                if (
-                    defined('DOING_AJAX') && DOING_AJAX &&
-                    isset($_POST['action']) && $_POST['action'] === 'inline-save'
-                ) {
+                if ($isQuickEdit || $isClassicEditor) {
                     $_POST['sticky'] = false;
-                } else {
-                    $postModel = call_user_func($this->expirablePostModelFactory, $postId);
-                    $postModel->unstick();
+
+                    $unstickUsingTheModel = false;
+
+                    $this->logger->debug(
+                        $this->stepProcessor->prepareLogMessage(
+                            'Post %1$s unsticked on %2$s setting sticky status via POST',
+                            $postId,
+                            $nodeSlug
+                        )
+                    );
                 }
 
-                $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
+                if ($unstickUsingTheModel) {
+                    $postModel = call_user_func($this->expirablePostModelFactory, $postId);
+                    $postModel->unstick();
 
-                $this->logger->debug(
-                    $this->stepProcessor->prepareLogMessage(
-                        'Post %1$s unstick on step %2$s',
-                        $postId,
-                        $nodeSlug
-                    )
-                );
+                    $this->logger->debug(
+                        $this->stepProcessor->prepareLogMessage(
+                            'Post %1$s unsticked on step %2$s using the model',
+                            $postId,
+                            $nodeSlug
+                        )
+                    );
+                }
             },
             $postId
         );
