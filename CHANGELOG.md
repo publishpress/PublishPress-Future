@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## UNRELEASED - 4.7
 
+### Changed
+
+- Stick and Unstick Post workflow steps can now be used anywhere in workflows, not just within Schedule branches (Issue #1204).
+
 ### Removed
 
 - Remove site metadata from the execution context on workflows (Issue #1332).

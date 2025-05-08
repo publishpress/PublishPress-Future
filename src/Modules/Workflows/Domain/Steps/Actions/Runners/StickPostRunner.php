@@ -50,8 +50,20 @@ class StickPostRunner implements StepRunnerInterface
         $this->stepProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step, $postId) {
-                $postModel = call_user_func($this->expirablePostModelFactory, $postId);
-                $postModel->stick();
+                /*
+                 * Handle quick-edit saving, otherwise it will override the sticky status at the end of the save
+                 *
+                 * @see https://github.com/publishpress/PublishPress-Future/issues/1204
+                 */
+                if (
+                    defined('DOING_AJAX') && DOING_AJAX &&
+                    isset($_POST['action']) && $_POST['action'] === 'inline-save'
+                ) {
+                    $_POST['sticky'] = true;
+                } else {
+                    $postModel = call_user_func($this->expirablePostModelFactory, $postId);
+                    $postModel->stick();
+                }
 
                 $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
