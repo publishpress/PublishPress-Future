@@ -129,25 +129,6 @@ class Controller implements InitializableInterface
         return $this->settings->getDebugIsEnabled($enabled);
     }
 
-    private function convertPostTypesListIntoOptionsList($list)
-    {
-        $optionsList = [];
-
-        foreach ($list as $postType => $taxonomiesList) {
-            $optionsList[$postType] = [];
-
-            if (empty($taxonomiesList)) {
-                continue;
-            }
-
-            foreach ($taxonomiesList as $taxonomySlug => $taxonomyObject) {
-                $optionsList[$postType][] = ['value' => $taxonomySlug, 'label' => $taxonomyObject->label];
-            }
-        }
-
-        return $optionsList;
-    }
-
     public function onAdminEnqueueScript($screenId)
     {
         try {
@@ -292,33 +273,6 @@ class Controller implements InitializableInterface
         } catch (Throwable $th) {
             $this->logger->error('Error initializing migrations: ' . $th->getMessage());
         }
-    }
-
-    private function convertTermsToIds($taxonomy, $terms)
-    {
-        if (empty($terms)) {
-            return [];
-        }
-
-        $taxonomiesModelFactory = $this->taxonomiesModelFactory;
-        $taxonomiesModel = $taxonomiesModelFactory();
-
-        $terms = explode(',', $terms);
-        $terms = array_map(function ($term) use ($taxonomy, $taxonomiesModel) {
-            $term = \sanitize_text_field($term);
-            $termId = $taxonomiesModel->getTermIdByName($taxonomy, $term);
-
-            if (! $termId) {
-                $termId = $taxonomiesModel->createTermAndReturnId(
-                    $taxonomy,
-                    $term
-                );
-            }
-
-            return $termId;
-        }, $terms);
-
-        return $terms;
     }
 
     public function saveTabAdvanced()
