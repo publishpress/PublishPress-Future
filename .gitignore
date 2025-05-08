@@ -33,3 +33,5 @@ gh_token.txt
 .vscode/
 # Keep the workspace file tracked
 !publishpress-future.code-workspace
+
+.phpactor.json
