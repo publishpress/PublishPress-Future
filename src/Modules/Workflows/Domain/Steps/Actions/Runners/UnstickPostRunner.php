@@ -53,6 +53,7 @@ class UnstickPostRunner implements StepRunnerInterface
 
                 $unstickUsingTheModel = true;
 
+                // phpcs:disable WordPress.Security.NonceVerification.Missing
                 $isQuickEdit = defined('DOING_AJAX')
                     && DOING_AJAX
                     && isset($_POST['action'])
@@ -61,6 +62,7 @@ class UnstickPostRunner implements StepRunnerInterface
                 $isClassicEditor = ( ! defined('DOING_AJAX') || ! DOING_AJAX)
                     && isset($_POST['action'])
                     && $_POST['action'] === 'editpost';
+                // phpcs:enable WordPress.Security.NonceVerification.Missing
 
                 /*
                  * Handle quick-edit or classic editor saving, otherwise it will override
