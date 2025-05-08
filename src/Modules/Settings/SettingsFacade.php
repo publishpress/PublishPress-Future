@@ -699,4 +699,24 @@ class SettingsFacade
 
         return $defaultTab;
     }
+
+    /**
+     * @since 4.7.0
+     *
+     * @return int
+     */
+    public function getPreserveData(): int
+    {
+        return (int)$this->options->getOption('expirationdatePreserveData', 0);
+    }
+
+    /**
+     * @since 4.7.0
+     *
+     * @param int $value
+     */
+    public function setPreserveData(int $value): void
+    {
+        $this->options->updateOption('expirationdatePreserveData', $value);
+    }
 }

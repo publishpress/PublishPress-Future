@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Stick and Unstick Post workflow steps can now be used anywhere in workflows, not just within Schedule branches (Issue #1204).
 
+### Fixed
+
+- Settings Controller processes form submissions on every admin page load (Issue #1310).
+
 ### Removed
 
 - Remove site metadata from the execution context on workflows (Issue #1332).
