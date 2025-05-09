@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Settings Controller processes form submissions on every admin page load (Issue #1310).
+- Fixed validation issue in the workflow editor where selecting "Remove all terms" not removing required error (Issue #1244).
+
 
 ### Removed
 
