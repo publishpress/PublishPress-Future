@@ -1,5 +1,7 @@
 # PublishPress-Future
 
+[![VIP Scans and other code checks](https://github.com/publishpress/PublishPress-Future/actions/workflows/code-check.yml/badge.svg)](https://github.com/publishpress/PublishPress-Future/actions/workflows/code-check.yml) [![Unit and Integration Tests](https://github.com/publishpress/PublishPress-Future/actions/workflows/code-test.yml/badge.svg?branch=develop)](https://github.com/publishpress/PublishPress-Future/actions/workflows/code-test.yml)
+
 ## Installation
 
 :warning: **Warning! This plugin requires to be built before being installed!**
