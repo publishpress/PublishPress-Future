@@ -25,6 +25,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\Unsti
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePost;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePostMeta;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnAdminInit;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCustomAction;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnInit;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnLegacyActionTrigger;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostAuthorChange;
@@ -218,7 +219,8 @@ class StepTypesModel implements StepTypesModelInterface
             OnSchedule::getNodeTypeName() => new OnSchedule(),
             OnPostMetaChange::getNodeTypeName() => new OnPostMetaChange(),
             OnPostAuthorChange::getNodeTypeName() => new OnPostAuthorChange(),
-            OnPostRowAction::getNodeTypeName() => new OnPostRowAction()
+            OnPostRowAction::getNodeTypeName() => new OnPostRowAction(),
+            OnCustomAction::getNodeTypeName() => new OnCustomAction(),
         ];
 
         if ($this->settingsFacade->getExperimentalFeaturesStatus()) {

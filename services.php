@@ -126,6 +126,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\ContextProcessors\DatePr
 use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContextProcessorInitializer;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContextProcessorRegistry;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContextRegistry;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnCustomActionRunner;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\Future\Modules\Workflows\Migrations\V040500OnScheduledStepsSchema;
 
@@ -1034,6 +1035,13 @@ return [
 
                 case OnUserRoleChangeRunner::getNodeTypeName():
                     $stepRunner = new OnUserRoleChangeRunner(
+                        $generalStepProcessor,
+                        $logger
+                    );
+                    break;
+
+                case OnCustomActionRunner::getNodeTypeName():
+                    $stepRunner = new OnCustomActionRunner(
                         $generalStepProcessor,
                         $logger
                     );
