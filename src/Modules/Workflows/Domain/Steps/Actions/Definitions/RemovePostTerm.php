@@ -120,6 +120,10 @@ class RemovePostTerm implements StepTypeInterface
                         "rule" => "required",
                         "field" => "taxonomyTerms.terms",
                         "label" => __("Terms", "post-expirator"),
+                        "condition" => [
+                            "field" => "taxonomyTerms.selectAll",
+                            "value" => "0"
+                        ]
                     ],
                     [
                         "rule" => "validVariable",
