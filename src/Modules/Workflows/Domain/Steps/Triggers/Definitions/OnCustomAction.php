@@ -34,7 +34,7 @@ class OnCustomAction implements StepTypeInterface
 
     public function getDescription(): string
     {
-        return __("This trigger activates upon a custom action.", "post-expirator");
+        return __("This trigger activates upon a custom WordPress action hook. Use it to integrate with other plugins or custom code.", "post-expirator");
     }
 
     public function getIcon(): string
