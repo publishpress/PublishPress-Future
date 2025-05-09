@@ -16,30 +16,104 @@ You can download a built package from [releases page](/releases/) and install it
 
 ## How to build a package?
 
-Please, check our Slab documentation for more information about how to build a package: [How to build a package](https://rambleventures.slab.com/posts/building-plugin-packages-odg3nll2)
+### Requirements
+
+ - Docker
+
+### Building from inside the dev-workspace
+
+To enter the development workspace, run the following command from the root of the repository:
+
+```bash
+dev-workspace/run
+```
+
+From inside the dev-workspace you can run the build or any other composer script. Check `composer help` for a list of available commands.
+
+```bash
+composer update
+composer build
+```
+
+### Building JS scripts
+
+```bash
+composer build:js
+```
+
+### Building Language files
+
+```bash
+composer build:lang
+```
+
+### Building without entering the dev-workspace
+
+```bash
+dev-workspace/run composer build
+```
 
 ## Testing
 
-### Create a symlink for the plugin folder in the test environment
+### Requirements
 
-Always use the full path for the source folder.
+ - Docker
+ - PHP
+ - Composer
+
+Tests will run inside docker containers, but all the commands below should be executed outside the dev-workspace.
+
+### Starting the test containers
+
+Before running any test you need to start the test container:
 
 ```bash
-ln -s /Users/andersonmartins/Projects/git/publishpress/publishpress-future/ ./tests/_wordpress/wp-content/plugins/post-expirator
+composer test:up
 ```
 
-### Start the dev server
+For stopping, you can use:
 
 ```bash
-composer tests:dev-start
+composer test:down
+```
+Test files will be cached inside the `dev-workspace/.cache` directory.
+
+### Running all tests
+
+Only Unit and Integration tests are healthy for now. You might find other types of tests but they need refactoring.
+
+```bash
+composer test:all
 ```
 
-### Run the tests
+### Running Unit tests
 
 ```bash
-composer tests:run
-composer tests:integration
-composer tests:e2e
+composer test Unit
+```
+
+### Running Integration tests
+
+```bash
+composer test Integration
+```
+
+You also can run specific test file:
+
+```bash
+composer test tests/Unit/Framework/HooksTest.php
+```
+
+And for running only a specific test:
+
+```bash
+composer test tests/Unit/Framework/HooksTest.php:testAddAction
+```
+
+You can run any codeception command by executing:
+
+```bash
+composer codecept <commands>
 ```
 
 ## License
