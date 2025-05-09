@@ -60,6 +60,8 @@ abstract class HooksAbstract
 
     public const FILTER_MIGRATIONS = 'publishpressfuture_migrations';
 
+    public const FILTER_REMOVABLE_QUERY_ARGS = 'removable_query_args';
+
     /**
      * @deprecated 4.1.0 use ACTION_ADMIN_ENQUEUE_SCRIPTS instead
      */

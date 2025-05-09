@@ -74,7 +74,7 @@ class WorkflowsList implements InitializableInterface
 
         $this->hooks->addFilter(
             HooksAbstract::FILTER_POST_ROW_ACTIONS,
-            [$this, "renderStatusAction"],
+            [$this, "renderWorkflowAction"],
             10,
             2
         );
@@ -120,6 +120,21 @@ class WorkflowsList implements InitializableInterface
             [$this, "filterBulkPostUpdatedMessages"],
             10,
             2
+        );
+
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_ADMIN_INIT,
+            [$this, "copyWorkflow"]
+        );
+
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_ADMIN_NOTICES,
+            [$this, 'showWorkflowCopyNotice']
+        );
+
+        $this->hooks->addFilter(
+            CoreHooksAbstract::FILTER_REMOVABLE_QUERY_ARGS,
+            [$this, 'addRemovableQueryArgs']
         );
     }
 
@@ -331,7 +346,7 @@ class WorkflowsList implements InitializableInterface
         exit;
     }
 
-    public function renderStatusAction($actions, $post)
+    public function renderWorkflowAction($actions, $post)
     {
         if (Module::POST_TYPE_WORKFLOW !== $post->post_type) {
             return $actions;
@@ -364,6 +379,7 @@ class WorkflowsList implements InitializableInterface
         }
 
         $actions = [
+            // Add status action
             $statusData['action'] => sprintf(
                 '<a href="%s" class="pp-future-workflow-%s-inline" title="%s">%s</a>',
                 esc_url(
@@ -383,9 +399,160 @@ class WorkflowsList implements InitializableInterface
                 $statusData['text'],
                 $statusData['title']
             ),
+            // Add copy action
+            'copy' => sprintf(
+                '<a href="%s" class="pp-future-workflow-copy-inline" title="%s">%s</a>',
+                esc_url(
+                    wp_nonce_url(
+                        add_query_arg(
+                            [
+                                'pp_action' => 'copy_workflow',
+                                'workflow_id' => $post->ID
+                            ],
+                            admin_url('edit.php?post_type=' . Module::POST_TYPE_WORKFLOW)
+                        ),
+                        'copy_workflow_' . $post->ID
+                    )
+                ),
+                __('Copy this workflow', 'post-expirator'),
+                __('Copy', 'post-expirator')
+            ),
         ] + $actions;
 
         return $actions;
+    }
+
+    public function copyWorkflow()
+    {
+
+        $postType = Module::POST_TYPE_WORKFLOW;
+
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        if (!isset($_GET['post_type']) || $_GET['post_type'] !== $postType) {
+            return;
+        }
+
+        if (!isset($_GET['pp_action']) || 'copy_workflow' !== $_GET['pp_action']) {
+            return;
+        }
+
+        if (!isset($_GET['workflow_id']) || !isset($_GET['_wpnonce'])) {
+            return;
+        }
+
+        if (!wp_verify_nonce(sanitize_key($_GET['_wpnonce']), 'copy_workflow_' . (int) $_GET['workflow_id'])) {
+            return;
+        }
+
+        $redirect_url = admin_url('edit.php?post_type=' . $postType);
+
+        try {
+            $sourceWorkflowId = (int) $_GET['workflow_id'];
+            // load source workflow
+            $sourceWorkflowModel = new WorkflowModel();
+            if (!$sourceWorkflowModel->load($sourceWorkflowId)) {
+                $redirect_url = add_query_arg(
+                    [
+                        'pp_workflow_notice' => 'source_not_found',
+                        'pp_workflow_notice_type' => 'error'
+                    ],
+                    $redirect_url
+                );
+                wp_safe_redirect(
+                    esc_url_raw($redirect_url)
+                );
+                exit;
+            }
+
+            // clone source workflow
+            $newWorkflowModel = $sourceWorkflowModel->createCopy();
+            if (!$newWorkflowModel || !is_object($newWorkflowModel)) {
+                $redirect_url = add_query_arg(
+                    [
+                        'pp_workflow_notice' => 'create_failed',
+                        'pp_workflow_notice_type' => 'error'
+                    ],
+                    $redirect_url
+                );
+                wp_safe_redirect(esc_url_raw($redirect_url));
+                exit;
+            }
+
+            // Redirect to the workflows list on succesfull clone
+            $redirect_url = add_query_arg(
+                [
+                    'pp_workflow_notice' => 'copy_success',
+                    'pp_workflow_notice_type' => 'success'
+                ],
+                $redirect_url
+            );
+            wp_safe_redirect(
+                esc_url_raw($redirect_url)
+            );
+            exit;
+        } catch (Throwable $th) {
+            $redirect_url = add_query_arg(
+                [
+                    'pp_workflow_notice' => 'generic_error',
+                    'pp_workflow_notice_type' => 'error'
+                ],
+                $redirect_url
+            );
+            wp_safe_redirect(
+                esc_url_raw($redirect_url)
+            );
+            exit;
+        }
+    }
+
+    public function addRemovableQueryArgs($args)
+    {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        if (!isset($_GET['post_type']) || $_GET['post_type'] !== Module::POST_TYPE_WORKFLOW) {
+            return $args;
+        }
+
+        $args[] = 'pp_workflow_notice';
+        $args[] = 'pp_workflow_notice_type';
+        return $args;
+    }
+
+    public function showWorkflowCopyNotice()
+    {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        if (!isset($_GET['post_type']) || $_GET['post_type'] !== Module::POST_TYPE_WORKFLOW) {
+            return;
+        }
+
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        if (!isset($_GET['pp_workflow_notice']) || !isset($_GET['pp_workflow_notice_type'])) {
+            return;
+        }
+
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $notice = sanitize_key($_GET['pp_workflow_notice']);
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $type = sanitize_key($_GET['pp_workflow_notice_type']);
+
+        $messages = [
+            'error' => [
+                'source_not_found'  => __('Source workflow not found.', 'post-expirator'),
+                'create_failed'     => __('Failed to create new workflow.', 'post-expirator'),
+                'generic_error'     => __('An error occurred while copying the workflow.', 'post-expirator')
+            ],
+            'success' => [
+                'copy_success'      => __('Workflow copied successfully.', 'post-expirator')
+            ]
+        ];
+
+        if (isset($messages[$type][$notice])) {
+            $class = $type === 'success' ? 'notice-success' : 'notice-error';
+            echo sprintf(
+                '<div class="notice %s is-dismissible"><p>%s</p></div>',
+                esc_attr($class),
+                esc_html($messages[$type][$notice])
+            );
+        }
     }
 
     public function addWorkflowStatusToTitle($title, $id = null)
