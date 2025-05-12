@@ -466,7 +466,7 @@ class WorkflowModel implements WorkflowModelInterface
         return $id;
     }
 
-    public function createCopy(): WorkflowModel
+    public function createCopy(): WorkflowModelInterface
     {
         // Create a new workflow
         $newWorkflow = new WorkflowModel();
