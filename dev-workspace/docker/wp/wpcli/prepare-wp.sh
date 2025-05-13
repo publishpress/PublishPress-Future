@@ -39,15 +39,27 @@ show_header "Installing WP Mail SMTP"
 wp plugin install wp-mail-smtp --activate
 
 # Install Spatie Ray as must-use plugin
-show_header "Installing Spatie Ray"
+show_header "Installing Spatie Ray as must-use plugin"
+echo "Cleaning up previous Spatie Ray installation..."
 rm -rf /var/www/html/wp-content/mu-plugins/spatie-ray
 rm -rf /var/www/html/ray.php
 rm -rf /var/www/html/wp-content/mu-plugins/ray-loader.php
-wp plugin install spatie-ray
+
+echo "Installing Spatie Ray plugin..."
+wp plugin install spatie-ray --quiet
+
+echo "Setting up as must-use plugin..."
+mkdir -p /var/www/html/wp-content/mu-plugins
 mv /var/www/html/wp-content/plugins/spatie-ray /var/www/html/wp-content/mu-plugins/spatie-ray
+
+echo "Copying configuration files..."
 cp /config/ray-loader.php /var/www/html/wp-content/mu-plugins/ray-loader.php
 cp /config/ray.php /var/www/html/ray.php
-# sed -i 's|/* That's all, stop editing! Happy publishing. */|define( 'WP_ENVIRONMENT_TYPE', 'local' );\n\n/* That's all, stop editing! Happy publishing. */|' /var/www/html/wp-config.php
+
+echo "Configuring environment type in wp-config.php..."
+wp config set WP_ENVIRONMENT_TYPE "local"
+
+echo -e "\e[32mSpatie Ray successfully installed as must-use plugin\e[0m"
 
 # Activate Future Free
 show_header "Activating Future Free"

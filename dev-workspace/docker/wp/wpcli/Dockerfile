@@ -16,5 +16,5 @@ WORKDIR /var/www/html
 
 # Copy the ray loader file to /config
 
-COPY --chown=www-data:www-data load-mu-plugins.php /config/ray-loader.php
+COPY --chown=www-data:www-data load-spatie-ray.php /config/ray-loader.php
 COPY --chown=www-data:www-data ./ray.php /config/ray.php
