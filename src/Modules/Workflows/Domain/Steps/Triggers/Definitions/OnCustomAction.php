@@ -59,7 +59,27 @@ class OnCustomAction implements StepTypeInterface
 
     public function getSettingsSchema(): array
     {
-        return [];
+        return [
+            [
+                "label" => __("Hook", "post-expirator"),
+                "description" => __(
+                    "Specify the hook that will trigger this action.",
+                    "post-expirator"
+                ),
+                "fields" => [
+                    [
+                        "name" => "hook",
+                        "type" => "text",
+                        "label" => __("Hook", "post-expirator"),
+                        "description" => __(
+                            "The hook that will trigger this action.",
+                            "post-expirator"
+                        ),
+                        "default" => "",
+                    ],
+                ]
+            ]
+        ];
     }
 
     public function getValidationSchema(): array
