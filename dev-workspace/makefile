@@ -8,12 +8,23 @@ help:
 
 .PHONY: build push update push-terminal push-wp
 
+build-%:
+	docker compose -f docker/compose.yaml --env-file ../.env build $*
+
+build-wp:
+	$(MAKE) build-wp_dev
+
+build-wpcli:
+	$(MAKE) build-wp_dev_cli
+
 build:
-	docker compose -f docker/compose.yaml --env-file ../.env build
+	$(MAKE) build-wp
+	$(MAKE) build-wpcli
 
 push:
 	$(MAKE) push-terminal "$$@"
 	$(MAKE) push-wp "$$@"
+	$(MAKE) push-wpcli "$$@"
 
 push-terminal:
 	source ../.env && \
