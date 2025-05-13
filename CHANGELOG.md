@@ -8,10 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Added a "Copy" button to workflows (Issue #1183).
+- Added a "Cancel Scheduled Actions" button to workflows lists (Issue #1326).
 
 ### Changed
 
 - Stick and Unstick Post workflow steps can now be used anywhere in workflows, not just within Schedule branches (Issue #1204).
+- Stop automatic cancelation of scheduled actions when a workflow is disabled in support of manual button, (Issue #1326).
 
 ### Fixed
 
