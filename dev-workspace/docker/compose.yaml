@@ -73,8 +73,11 @@ services:
         healthcheck:
             test: ["CMD", "test", "-f", "/var/www/html/wp-config.php"]
             retries: 3
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
     wp_test_cli:
-        image: wordpress:cli-php8.4
+        build: ./wp/wpcli
+        image: ${WPCLI_IMAGE_NAME}
         profiles: ["test"]
         container_name: ${CONTAINER_NAME}_env_wp_test_cli
         environment:
@@ -104,6 +107,8 @@ services:
             - mailhog
         working_dir: /var/www/html
         command: ["/bin/sh", "-c", "sh /tmp/prepare-wp.sh http://localhost:8011 future-free-wp_test"]
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
     ##############################################################################
     # Development
     ##############################################################################
@@ -157,7 +162,8 @@ services:
         extra_hosts:
             - "host.docker.internal:host-gateway"
     wp_dev_cli:
-        image: wordpress:cli-php8.4
+        build: ./wp/wpcli
+        image: ${WPCLI_IMAGE_NAME}
         profiles: ["dev"]
         container_name: ${CONTAINER_NAME}_env_wp_dev_cli
         environment:
@@ -186,6 +192,8 @@ services:
             - mailhog
         working_dir: /var/www/html
         command: ["/bin/sh", "-c", "sh /tmp/prepare-wp.sh http://localhost:8012 future-free-wp_dev"]
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
 
     ##############################################################################
     # Mailhog

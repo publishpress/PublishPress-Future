@@ -9,7 +9,7 @@ help:
 .PHONY: build push update push-terminal push-wp
 
 build:
-	bash ./scripts/services-build-images.sh "$$@"
+	docker compose -f docker/compose.yaml --env-file ../.env build
 
 push:
 	$(MAKE) push-terminal "$$@"
@@ -24,6 +24,11 @@ push-wp:
 	source ../.env && \
 	export WP_IMAGE_NAME="$${WP_IMAGE_NAME}" && \
 	bash ./scripts/build-push-image.sh "$${WP_IMAGE_NAME}" ./docker/wp/wordpress "$$@"
+
+push-wpcli:
+	source ../.env && \
+	export WPCLI_IMAGE_NAME="$${WPCLI_IMAGE_NAME}" && \
+	bash ./scripts/build-push-image.sh "$${WPCLI_IMAGE_NAME}" ./docker/wp/wpcli "$$@"
 
 update:
 	bash ./scripts/services-pull-images.sh "$$@"
