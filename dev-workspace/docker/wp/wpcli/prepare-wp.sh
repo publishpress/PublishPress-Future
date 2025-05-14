@@ -58,6 +58,10 @@ cp /config/ray.php /var/www/html/ray.php
 
 echo "Configuring environment type in wp-config.php..."
 wp config set WP_ENVIRONMENT_TYPE "local"
+wp config set WP_DEBUG true
+wp config set WP_DEBUG_LOG true
+wp config set WP_DEBUG_DISPLAY false
+wp config set SCRIPT_DEBUG true
 
 echo -e "\e[32mSpatie Ray successfully installed as must-use plugin\e[0m"
 
