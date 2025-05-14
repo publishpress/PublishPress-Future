@@ -39,7 +39,7 @@ class OnCustomAction implements StepTypeInterface
 
     public function getIcon(): string
     {
-        return "website";
+        return "action";
     }
 
     public function getFrecency(): int
@@ -61,7 +61,7 @@ class OnCustomAction implements StepTypeInterface
     {
         return [
             [
-                "label" => __("Hook", "post-expirator"),
+                "label" => __("Action", "post-expirator"),
                 "description" => __(
                     "Specify the hook that will trigger this action.",
                     "post-expirator"
