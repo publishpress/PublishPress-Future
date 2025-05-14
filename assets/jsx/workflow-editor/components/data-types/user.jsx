@@ -51,6 +51,7 @@ export function UserData() {
                 type: "meta",
                 label: "Metadata",
                 description: "The metadata of the user.",
+                table: "_usermeta",
             },
         ],
     };

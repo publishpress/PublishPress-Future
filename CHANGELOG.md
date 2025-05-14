@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Stick and Unstick Post workflow steps can now be used anywhere in workflows, not just within Schedule branches (Issue #1204).
+- Clarify the "Metadata" description by including table name for each metadata (Issue #1247).
 
 ### Fixed
 

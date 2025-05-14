@@ -1,5 +1,6 @@
 import { useState, useCallback } from "@wordpress/element";
 import { ColumnItem } from "./column-item";
+import { __, sprintf } from "@wordpress/i18n";
 
 const RenderColumns = ({
     currentItemPath,
@@ -18,14 +19,22 @@ const RenderColumns = ({
     let currentItem = currentItems[selectedItemIndex];
 
     const addMetaKeyInputChildren = useCallback((item) => {
+
+        let metaDescription = sprintf(
+            /* translators: %s is the database table name */
+            __('Type the %s key and click on the button to insert it.', 'post-expirator'),
+            item.table || 'meta'
+        );
+
         return {
             ...item,
             children: [
                 {
                     name: item.name,
-                    label: 'Metadata key',
-                    description: 'Type the meta key and click on the button to insert it.',
-                    type: 'meta-key-input'
+                    label: __('Metadata key', 'post-expirator'),
+                    description: metaDescription,
+                    type: 'meta-key-input',
+                    table: item.table,
                 }
             ]
         }

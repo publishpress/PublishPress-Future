@@ -81,6 +81,7 @@ export function PostData() {
                 type: "meta",
                 label: "Metadata",
                 description: "The metadata of the post.",
+                table: "_postmeta",
             },
             {
                 name: "future",

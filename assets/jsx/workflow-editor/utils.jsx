@@ -317,6 +317,7 @@ export function getStepScopedVariables(node) {
             description: variable?.description,
             nodeSlug: node.data.slug,
             priority: variable?.priority || DEFAULT_VARIABLE_PRIORITY,
+            table: variable?.table
         };
     });
 
@@ -357,6 +358,7 @@ function formatVariableStructure(variable) {
         description: variable?.description,
         nodeSlug: variable?.nodeSlug,
         priority: variable?.priority || DEFAULT_VARIABLE_PRIORITY,
+        table: variable?.table
     };
 }
 
@@ -378,6 +380,7 @@ function getVariableProperties(variable) {
             nodeSlug: variable?.nodeSlug,
             children: [],
             priority: property?.priority || DEFAULT_VARIABLE_PRIORITY,
+            table: property?.table
         });
 
         if (dataType.primitiveType === 'object') {
