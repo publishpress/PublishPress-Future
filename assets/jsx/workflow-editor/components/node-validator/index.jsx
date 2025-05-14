@@ -413,6 +413,44 @@ export function NodeValidator({})
                                         break;
                                     }
                                 }
+                            } else if (type === 'nameValuePairList') {
+                                if (! settingValue) {
+                                    return;
+                                }
+
+                                const property = ruleData.field;
+
+                                if (! settingValue[property]) {
+                                    return;
+                                }
+
+                                if (! Array.isArray(settingValue[property])) {
+                                    addNodeError(
+                                        node.id,
+                                        `${fieldName}-nameValuePairList`,
+                                        sprintf(__('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel)
+                                    );
+                                }
+
+                                settingValue[property].forEach((item, i) => {
+                                    if (item?.name === '') {
+                                        addNodeError(
+                                            node.id,
+                                            `${fieldName}-nameValuePairList`,
+                                            sprintf(__('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel),
+                                            sprintf(__('The name of the pair is required on item %d.', 'post-expirator'), i + 1)
+                                        );
+                                    }
+
+                                    if (item?.value === '') {
+                                        addNodeError(
+                                            node.id,
+                                            `${fieldName}-nameValuePairList`,
+                                            sprintf(__('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel),
+                                            sprintf(__('The value of the pair is required on item %d.', 'post-expirator'), i + 1)
+                                        );
+                                    }
+                                });
                             }
 
                             break;

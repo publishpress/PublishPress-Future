@@ -77,6 +77,16 @@ class OnCustomAction implements StepTypeInterface
                         ),
                         "default" => "",
                     ],
+                    [
+                        "name" => "args",
+                        "type" => "actionArgs",
+                        "label" => __("Action arguments", "post-expirator"),
+                        "description" => __(
+                            "The arguments to pass to the action. These arguments will be available as variables in subsequent workflow steps.",
+                            "post-expirator"
+                        ),
+                        "default" => [],
+                    ],
                 ]
             ]
         ];
@@ -89,6 +99,16 @@ class OnCustomAction implements StepTypeInterface
                 "rules" => [
                     [
                         "rule" => "hasOutgoingConnection",
+                    ],
+                ]
+            ],
+            "settings" => [
+                "rules" => [
+                    [
+                        "rule" => "dataType",
+                        "type" => "nameValuePairList",
+                        "field" => "args",
+                        "label" => __("Action arguments", "post-expirator"),
                     ],
                 ]
             ]

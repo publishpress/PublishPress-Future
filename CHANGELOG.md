@@ -5,6 +5,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## UNRELEASED - 4.7
 
+### Added
+
+- Add new workflow trigger "On custom action" that allows workflows to be triggered by custom WordPress action hooks, enabling integration with other plugins and custom code (Issue #1222).
+- Added diagnostic check for Spatie Ray debugging tool in the Diagnostics and Tools settings tab, clarifying debugging capabilities.
+
 ### Changed
 
 - Stick and Unstick Post workflow steps can now be used anywhere in workflows, not just within Schedule branches (Issue #1204).

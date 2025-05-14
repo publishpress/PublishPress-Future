@@ -21,6 +21,7 @@ import UserQuery from "../data-fields/user-query";
 import PostFilter from "../data-fields/post-filter";
 import PostSearchQuery from "../data-fields/post-search-query";
 import ConditionalDateOffset from "../data-fields/conditional-date-offset";
+import ActionArgs from "../data-fields/action-args";
 
 export const MappedField = (props) => {
     switch (props.type) {
@@ -111,6 +112,10 @@ export const MappedField = (props) => {
         case "conditionalDateOffset":
             return (
                 <ConditionalDateOffset {...props} />
+            );
+        case "actionArgs":
+            return (
+                <ActionArgs {...props} />
             );
     }
 

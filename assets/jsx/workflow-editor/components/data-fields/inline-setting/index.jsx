@@ -15,16 +15,21 @@ import SettingPopover from "../../setting-popover";
 export const InlineSetting = ({
     name,
     label,
+    popoverLabel,
     valuePreview,
     onClosePopover,
     children,
-    isLoading
+    isLoading,
+    autoOpen
 }) => {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
     useEffect(() => {
-        setIsPopoverOpen(false);
-    }, []);
+        if (autoOpen) {
+            setIsPopoverOpen(true);
+        }
+
+    }, [autoOpen]);
 
     const closePopover = useCallback(() => {
         setIsPopoverOpen(false);
@@ -33,6 +38,10 @@ export const InlineSetting = ({
             onClosePopover();
         }
     }, [onClosePopover]);
+
+    if (!popoverLabel) {
+        popoverLabel = label;
+    }
 
     return (
         <>
@@ -54,7 +63,7 @@ export const InlineSetting = ({
                 <SettingPopover
                     onClose={closePopover}
                     className={`workflow-editor-inspector-${name}-popover`}
-                    title={label}
+                    title={popoverLabel}
                 >
                     {children}
                 </SettingPopover>

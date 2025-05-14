@@ -5,7 +5,7 @@ import {
 import {
     CheckboxControl
 } from "@wordpress/components";
-import InlineSetting from "./inline-setting";
+import InlineSetting from "../inline-setting";
 
 export const ToggleInlineSetting = ({
     name,
