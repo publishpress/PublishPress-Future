@@ -78,6 +78,18 @@ class OnCustomAction implements StepTypeInterface
                         "default" => "",
                     ],
                     [
+                        "name" => "priority",
+                        "type" => "integer",
+                        "label" => __("Priority", "post-expirator"),
+                        "description" => __(
+                            "The priority of the action hook. Lower values are executed first.",
+                            "post-expirator"
+                        ),
+                        "settings" => [
+                            "placeholder" => 10,
+                        ],
+                    ],
+                    [
                         "name" => "args",
                         "type" => "actionArgs",
                         "label" => __("Action arguments", "post-expirator"),
@@ -104,6 +116,11 @@ class OnCustomAction implements StepTypeInterface
             ],
             "settings" => [
                 "rules" => [
+                    [
+                        "rule" => "required",
+                        "field" => "hook",
+                        "message" => __("The action hook is required.", "post-expirator"),
+                    ],
                     [
                         "rule" => "dataType",
                         "type" => "nameValuePairList",
