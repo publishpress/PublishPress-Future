@@ -7,10 +7,50 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-06T16:31:16+00:00\n"
+"POT-Creation-Date: 2025-05-15T19:58:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
+
+#: components/data-fields/action-args/argument-item.jsx:27
+msgid "Integer"
+msgstr ""
+
+#: components/data-fields/action-args/argument-item.jsx:28
+msgid "String"
+msgstr ""
+
+#: components/data-fields/action-args/argument-item.jsx:29
+msgid "Boolean"
+msgstr ""
+
+#: components/data-fields/action-args/argument-item.jsx:30
+msgid "Object"
+msgstr ""
+
+#: components/data-fields/action-args/argument-item.jsx:31
+msgid "Array"
+msgstr ""
+
+#: components/data-fields/action-args/argument-item.jsx:32
+msgid "Post"
+msgstr ""
+
+#: components/data-fields/action-args/argument-item.jsx:33
+msgid "User"
+msgstr ""
+
+#: components/data-fields/action-args/index.jsx:66
+msgid "Add a new argument"
+msgstr ""
+
+#: components/data-fields/action-args/index.jsx:73
+msgid "Argument #%s"
+msgstr ""
+
+#: components/data-fields/action-args/index.jsx:85
+msgid "No arguments added to the action."
+msgstr ""
 
 #: components/data-fields/conditional-date-offset.jsx:35
 msgid "When to expire"
@@ -212,73 +252,73 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:32
+#: components/data-fields/post-data/index.jsx:28
 #: components/data-fields/post-search-query/components/query-fields.jsx:25
 msgid "Post Date"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:38
+#: components/data-fields/post-data/index.jsx:34
 msgid "Update the post date"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:42
+#: components/data-fields/post-data/index.jsx:38
 #: components/data-fields/post-search-query/components/query-fields.jsx:9
 msgid "Post Title"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:48
+#: components/data-fields/post-data/index.jsx:44
 msgid "Update the post title"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:52
+#: components/data-fields/post-data/index.jsx:48
 msgid "Post Slug"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:58
+#: components/data-fields/post-data/index.jsx:54
 msgid "Update the post slug"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:62
+#: components/data-fields/post-data/index.jsx:58
 #: components/data-fields/post-search-query/components/query-fields.jsx:13
 msgid "Post Content"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:68
+#: components/data-fields/post-data/index.jsx:64
 msgid "Update the post content"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:72
+#: components/data-fields/post-data/index.jsx:68
 #: components/data-fields/post-search-query/components/query-fields.jsx:17
 msgid "Post Excerpt"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:78
+#: components/data-fields/post-data/index.jsx:74
 msgid "Update the post excerpt"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:82
+#: components/data-fields/post-data/index.jsx:78
 msgid "Post Discussion"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:86
+#: components/data-fields/post-data/index.jsx:82
 msgid "Update the post discussion"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:90
+#: components/data-fields/post-data/index.jsx:86
 msgid "Post Password"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:96
+#: components/data-fields/post-data/index.jsx:92
 msgid "Update the post password"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:100
+#: components/data-fields/post-data/index.jsx:96
 #: components/data-fields/post-query/index.jsx:132
 #: components/data-fields/post-search-query/components/query-fields.jsx:21
 msgid "Post Author"
 msgstr ""
 
-#: components/data-fields/post-data/index.jsx:106
+#: components/data-fields/post-data/index.jsx:102
 msgid "Update the post author"
 msgstr ""
 
@@ -700,35 +740,35 @@ msgstr ""
 msgid "Node Type"
 msgstr ""
 
-#: components/node-inspector/index.jsx:99
+#: components/node-inspector/index.jsx:98
 msgid "No element selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:107
+#: components/node-inspector/index.jsx:106
 msgid "Multiple and different elements selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:117
+#: components/node-inspector/index.jsx:116
 msgid "%d steps selected"
 msgstr ""
 
-#: components/node-inspector/index.jsx:120
+#: components/node-inspector/index.jsx:119
 msgid "Multiple steps selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:131
+#: components/node-inspector/index.jsx:130
 msgid "%d connections selected"
 msgstr ""
 
-#: components/node-inspector/index.jsx:134
+#: components/node-inspector/index.jsx:133
 msgid "Multiple connections selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:166
+#: components/node-inspector/index.jsx:165
 msgid "Connection"
 msgstr ""
 
-#: components/node-inspector/index.jsx:167
+#: components/node-inspector/index.jsx:166
 msgid "The connection between nodes in the workflow. Signifies the path along which data or control flow one node to another."
 msgstr ""
 
