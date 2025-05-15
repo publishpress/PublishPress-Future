@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback, render } from '@wordpress/element';
+import { useState, useEffect, useCallback } from '@wordpress/element';
 import { Modal, Button } from '@wordpress/components';
 import { __, sprintf } from '@wordpress/i18n';
+import { createRoot } from 'react-dom/client';
 import './style.css';
 
 const CancelActionsConfirmation = () => {
@@ -32,7 +33,7 @@ const CancelActionsConfirmation = () => {
         };
     }, [handleCancelActionsClick]);
 
-    if (!isOpen) {
+    if (! isOpen) {
         return null;
     }
 
@@ -75,13 +76,11 @@ const CancelActionsConfirmation = () => {
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    // Create container and render
+    // Create container
     const modalContainer = document.createElement('div');
     modalContainer.id = 'pp-future-cancel-actions-container';
     document.body.appendChild(modalContainer);
-
-    render(
-        <CancelActionsConfirmation />,
-        modalContainer
-    );
+    // Render the container
+    const root = createRoot(modalContainer);
+    root.render(<CancelActionsConfirmation />);
 });

@@ -287,7 +287,7 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         }
 
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
-        $count = $wpdb->get_var(
+        $queryCount = $wpdb->get_var(
             $wpdb->prepare(
                 "SELECT COUNT(*)
                 FROM %i AS wss
@@ -300,6 +300,8 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
             )
         );
 
-        return (int)$count > 0;
+        $count = (int) $queryCount;
+
+        return $count > 0;
     }
 }

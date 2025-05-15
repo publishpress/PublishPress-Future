@@ -202,6 +202,14 @@ class WorkflowsList implements InitializableInterface
             [],
             PUBLISHPRESS_FUTURE_VERSION
         );
+
+        wp_enqueue_script(
+            'pp-future-workflows-list-cancel-actions',
+            Plugin::getAssetUrl('js/workflowsListCancelAction.js'),
+            ['wp-element', 'wp-components', 'wp-i18n'],
+            PUBLISHPRESS_FUTURE_VERSION,
+            true
+        );
     }
 
     public function addCustomColumns($columns)
@@ -455,7 +463,6 @@ class WorkflowsList implements InitializableInterface
 
     public function copyWorkflow()
     {
-
         $postType = Module::POST_TYPE_WORKFLOW;
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -538,7 +545,6 @@ class WorkflowsList implements InitializableInterface
 
     public function handleCancelScheduledActions()
     {
-
         $postType = Module::POST_TYPE_WORKFLOW;
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -559,7 +565,12 @@ class WorkflowsList implements InitializableInterface
                 return;
             }
 
-            if (!wp_verify_nonce(sanitize_key($_GET['_wpnonce']), 'cancel_workflow_scheduled_actions_' . (int) $_GET['workflow_id'])) {
+            if (
+                !wp_verify_nonce(
+                    sanitize_key($_GET['_wpnonce']),
+                    'cancel_workflow_scheduled_actions_' . (int) $_GET['workflow_id']
+                )
+            ) {
                 return;
             }
 
@@ -667,7 +678,7 @@ class WorkflowsList implements InitializableInterface
                 'source_not_found'  => __('Source workflow not found.', 'post-expirator'),
                 'create_failed'     => __('Failed to create new workflow.', 'post-expirator'),
                 'generic_error'     => __('An error occurred while copying the workflow.', 'post-expirator'),
-                // Cancel  cheduled workflow error
+                // Cancel  scheduled workflow error
                 'scheduled_action_cancelling_status_error'  =>  __('Cannot cancel scheduled actions for an active workflow.', 'post-expirator'),
                 'scheduled_action_cancelling_error'         =>  __('Error cancelling scheduled actions.', 'post-expirator'),
                 'scheduled_action_cancelling_empty'         =>  __('This workflow doesn\'t have any scheduled action.', 'post-expirator')
