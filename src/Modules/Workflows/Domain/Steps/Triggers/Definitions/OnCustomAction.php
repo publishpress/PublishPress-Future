@@ -134,11 +134,6 @@ class OnCustomAction implements StepTypeInterface
 
     public function getStepScopedVariablesSchema(): array
     {
-        return [];
-    }
-
-    public function getOutputSchema(): array
-    {
         return [
             [
                 "name" => "args",
@@ -147,6 +142,11 @@ class OnCustomAction implements StepTypeInterface
                 "description" => __("The arguments to pass to the action.", "post-expirator"),
             ],
         ];
+    }
+
+    public function getOutputSchema(): array
+    {
+        return $this->getStepScopedVariablesSchema();
     }
 
     public function getCSSClass(): string
