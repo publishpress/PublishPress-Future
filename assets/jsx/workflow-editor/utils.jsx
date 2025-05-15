@@ -130,83 +130,14 @@ export function nodeHasInput(node) {
 }
 
 export function nodeHasOutput(node) {
-    const nodeType = getNodeType(node);
-
-    return nodeType?.outputSchema?.length > 0;
+    return getNodeOutputSchema(node).length > 0;
 }
 
-export function getNodeInputs(node) {
+export function getNodeOutputSchema(node) {
     const nodeType = getNodeType(node);
-    const incomers = getNodeIncomers(node);
-    const nodeHasIncomers = incomers?.length > 0;
+    const outputSchema = nodeType?.outputSchema || [];
 
-    const getDataTypeByName = select(workflowStore).getDataTypeByName;
-
-    if (!nodeHasIncomers) {
-        return [];
-    }
-
-    let nodeInputs = [];
-
-    incomers.forEach((incomer) => {
-        if (!nodeType?.outputSchema?.length) {
-            return;
-        }
-
-        nodeType?.outputSchema.forEach((schemaItem) => {
-            const dataType = getDataTypeByName(schemaItem.type);
-
-            // If input, look for the previous node inputs to bypass as this node's input
-            if (schemaItem.type === 'input') {
-                const previousNodeInputs = getNodeInputs(incomer);
-
-                nodeInputs = nodeInputs.concat(previousNodeInputs);
-            } else {
-                nodeInputs.push({
-                    incomerId: incomer.id,
-                    name: schemaItem.name,
-                    type: schemaItem.type,
-                    label: schemaItem.label,
-                    description: schemaItem.description,
-                    dataType: dataType,
-                });
-            }
-        });
-    });
-
-    // Make sure we don't have repeated inputs, #712
-    nodeInputs = nodeInputs.filter((input, index, self) =>
-        index === self.findIndex((t) => (
-            t.name === input.name && t.type === input.type
-        ))
-    );
-
-    return nodeInputs;
-}
-
-export function getNodeInputVariables(node, types = [], addInputPrefix = true) {
-    const nodeInputs = getNodeInputs(node);
-
-    let variables = [];
-
-    if (types.length) {
-        variables = nodeInputs.filter((input) => types.includes(input.type));
-    } else {
-        variables = nodeInputs;
-    }
-
-    variables = variables.map((variable) => {
-        const variableName = addInputPrefix ? 'input.' + variable.name : variable.name;
-
-        return {
-            name: variableName,
-            type: variable.type,
-            label: variable.label,
-            source: VARIABLE_SOURCE_NODE_INPUT,
-        };
-    });
-
-    return variables;
+    return outputSchema;
 }
 
 export function getGlobalVariablesExpanded(globalVariables) {
@@ -235,19 +166,24 @@ export function getGlobalVariablesExpanded(globalVariables) {
 }
 
 export function mapNodeInputs(node) {
-    const getNodeTypeByName = select(editorStore).getNodeTypeByName;
     const previousNodes = getNodeIncomers(node);
 
     const mappedInput = [];
 
     previousNodes.forEach((previousNode) => {
-        const nodeType = getNodeTypeByName(previousNode.data?.name);
-
-        if (!nodeType?.outputSchema?.length) {
+        if (! previousNode) {
             return;
         }
 
-        nodeType.outputSchema.forEach((outputItem) => {
+        const previousNodeOutputSchema = getNodeOutputSchema(previousNode);
+
+        if (! previousNodeOutputSchema?.length) {
+            return;
+        }
+
+        const nodeType = getNodeType(previousNode);
+
+        previousNodeOutputSchema.forEach((outputItem) => {
             if (outputItem.type === "input") {
                 // Get the previous node outputs to bypass to this node as input
                 const previousNodeInputs = mapNodeInputs(previousNode);
