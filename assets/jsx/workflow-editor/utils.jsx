@@ -133,9 +133,52 @@ export function nodeHasOutput(node) {
     return getNodeOutputSchema(node).length > 0;
 }
 
+export function isDynamicOutputItem(item) {
+    if (item.type) {
+        return item.type.startsWith('__dynamic__:');
+    }
+
+    return false;
+}
+
 export function getNodeOutputSchema(node) {
     const nodeType = getNodeType(node);
-    const outputSchema = nodeType?.outputSchema || [];
+    let outputSchema = nodeType?.outputSchema || [];
+    let dynamicOutputItems = [];
+
+    // Fill the dynamic output item
+    if (outputSchema.some(isDynamicOutputItem)) {
+        outputSchema = outputSchema.filter((item) => {
+            if (isDynamicOutputItem(item)) {
+                const settingName = item.type.replace('__dynamic__:', '');
+
+                if (node?.data?.settings?.[settingName]) {
+                    node.data.settings[settingName].forEach((subitem) => {
+                        subitem.label = subitem.label || subitem.name.charAt(0).toUpperCase() + subitem.name.slice(1);
+                        subitem.description = subitem.description
+                            || item.description
+                            || __('Dynamic output item', 'post-expiration');
+
+                        if (subitem?.value) {
+                            subitem.type = subitem?.value;
+                            delete subitem.value;
+                        }
+
+                        dynamicOutputItems.push(subitem);
+                    });
+                }
+
+                // Remove the dynamic output item from the output schema
+                return false;
+            }
+
+            return true;
+        });
+    }
+
+    if (dynamicOutputItems.length) {
+        outputSchema = outputSchema.concat(dynamicOutputItems);
+    }
 
     return outputSchema;
 }
@@ -334,6 +377,10 @@ function expandVariableWithChildren(variable) {
     const dataType = getDataTypeByName(variable.type);
 
     variable = formatVariableStructure(variable);
+
+    if (isDynamicOutputItem(variable)) {
+        return variable;
+    }
 
     if (! dataType) {
         console.log('No data type found for variable', variable);

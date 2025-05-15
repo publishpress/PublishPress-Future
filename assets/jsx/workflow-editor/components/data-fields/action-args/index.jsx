@@ -18,32 +18,23 @@ export function ActionArgs({
 }) {
     const [autoOpenItem, setAutoOpenItem] = useState(null);
 
-    const onChangeSetting = ({ settingName, value }) => {
-        const newValue = { ...defaultValue };
-        newValue[settingName] = value;
-
+    const onChangeSetting = ({ value }) => {
         if (onChange) {
-            onChange(name, newValue);
+            onChange(name, value);
         }
     }
 
-    if (!defaultValue) {
-        defaultValue = {
-            args: [],
-        };
-    }
-
-    if (!defaultValue?.args) {
-        defaultValue.args = [];
+    if (!defaultValue || !Array.isArray(defaultValue)) {
+        defaultValue = [];
     }
 
     // If the args are empty or have no value, set the default value
     useEffect(() => {
-        if (defaultValue.args.length === 0) {
+        if (defaultValue.length === 0) {
             return;
         }
 
-        defaultValue.args.forEach((arg) => {
+        defaultValue.forEach((arg) => {
             if (!arg.value) {
                 arg.value = defaultDataType;
             }
@@ -53,16 +44,16 @@ export function ActionArgs({
     const defaultDataType = 'integer';
 
     const onClickAddArg = () => {
-        onChangeSetting({ settingName: 'args', value: [...defaultValue.args, { name: '', value: defaultDataType }] });
-        setAutoOpenItem(defaultValue.args.length);
+        onChangeSetting({ value: [...defaultValue, { name: '', value: defaultDataType }] });
+        setAutoOpenItem(defaultValue.length);
     }
 
     const onClickRemoveArg = (index) => {
-        onChangeSetting({ settingName: 'args', value: defaultValue.args.filter((_, i) => i !== index) });
+        onChangeSetting({ value: defaultValue.filter((_, i) => i !== index) });
     }
 
     const onChangeArg = (index, value) => {
-        onChangeSetting({ settingName: 'args', value: defaultValue.args.map((arg, i) => i === index ? value : arg) });
+        onChangeSetting({ value: defaultValue.map((arg, i) => i === index ? value : arg) });
     }
 
     return (
@@ -74,7 +65,7 @@ export function ActionArgs({
                 <Button onClick={onClickAddArg} iconSize={16} icon={'plus'} variant="tertiary">
                     {__('Add a new argument', 'post-expirator')}
                 </Button>
-                {defaultValue.args.map((arg, index) => (
+                {defaultValue.map((arg, index) => (
                     <div key={`arg-${index}`} className="workflow-editor-panel__row-args">
                         <ArgumentItem
                             name={`args[${index}].name`}
@@ -89,7 +80,7 @@ export function ActionArgs({
                     </div>
                 ))}
 
-                {defaultValue.args.length === 0 && (
+                {defaultValue.length === 0 && (
                     <div className="workflow-editor-panel__row-args-empty">
                         {__('No arguments added to the action.', 'post-expirator')}
                     </div>

@@ -139,7 +139,14 @@ class OnCustomAction implements StepTypeInterface
 
     public function getOutputSchema(): array
     {
-        return [];
+        return [
+            [
+                "name" => "args",
+                "type" => "__dynamic__:args",
+                "label" => __("Action arguments", "post-expirator"),
+                "description" => __("The arguments to pass to the action.", "post-expirator"),
+            ],
+        ];
     }
 
     public function getCSSClass(): string
