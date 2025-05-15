@@ -154,17 +154,18 @@ export function getNodeOutputSchema(node) {
 
                 if (node?.data?.settings?.[settingName]) {
                     node.data.settings[settingName].forEach((subitem) => {
-                        subitem.label = subitem.label || subitem.name.charAt(0).toUpperCase() + subitem.name.slice(1);
-                        subitem.description = subitem.description
+                        const newSubitem = { ...subitem };
+                        newSubitem.label = newSubitem.label || newSubitem.name.charAt(0).toUpperCase() + newSubitem.name.slice(1);
+                        newSubitem.description = newSubitem.description
                             || item.description
                             || __('Dynamic output item', 'post-expiration');
 
-                        if (subitem?.value) {
-                            subitem.type = subitem?.value;
-                            delete subitem.value;
+                        if (newSubitem?.value) {
+                            newSubitem.type = newSubitem?.value;
+                            delete newSubitem.value;
                         }
 
-                        dynamicOutputItems.push(subitem);
+                        dynamicOutputItems.push(newSubitem);
                     });
                 }
 
