@@ -115,25 +115,28 @@ export function nodeHasOutgoers(node) {
     return nodeHasOutgoers;
 }
 
-export function nodeHasInput(node) {
-    const nodeType = select(editorStore).getNodeTypeByName(node?.data?.name);
+export function getNodeType(node) {
+    return select(editorStore).getNodeTypeByName(node?.data?.name);
+}
 
+export function nodeHasInput(node) {
     const incomers = getNodeIncomers(node);
     const nodeHasIncomers = incomers?.length > 0;
-    const nodeHasInput = nodeHasIncomers && incomers.filter((incomer) => nodeType?.outputSchema?.length > 0)?.length > 0;
 
-    return nodeHasInput;
+    return nodeHasIncomers
+        && incomers.filter(
+            (incomer) => nodeHasOutput(incomer)
+        )?.length > 0;
 }
 
 export function nodeHasOutput(node) {
-    const nodeType = select(editorStore).getNodeTypeByName(node?.data?.name);
-    const nodeHasOutput = nodeType?.outputSchema?.length > 0;
+    const nodeType = getNodeType(node);
 
-    return nodeHasOutput;
+    return nodeType?.outputSchema?.length > 0;
 }
 
 export function getNodeInputs(node) {
-    const nodeType = select(editorStore).getNodeTypeByName(node?.data?.name);
+    const nodeType = getNodeType(node);
     const incomers = getNodeIncomers(node);
     const nodeHasIncomers = incomers?.length > 0;
 
