@@ -44,7 +44,7 @@ export function ActionArgs({
     const defaultDataType = 'integer';
 
     const onClickAddArg = () => {
-        onChangeSetting({ value: [...defaultValue, { name: '', value: defaultDataType }] });
+        onChangeSetting({ value: [...defaultValue, { name: '', value: defaultDataType, type: defaultDataType }] });
         setAutoOpenItem(defaultValue.length);
     }
 
@@ -53,7 +53,8 @@ export function ActionArgs({
     }
 
     const onChangeArg = (index, value) => {
-        onChangeSetting({ value: defaultValue.map((arg, i) => i === index ? value : arg) });
+        const newArgs = defaultValue.map((arg, i) => i === index ? value : arg);
+        onChangeSetting({ value: newArgs, type: newArgs });
     }
 
     return (

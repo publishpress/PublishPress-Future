@@ -20,6 +20,7 @@ export const ArgumentItem = ({
     defaultValue = {
         name: "",
         value: "integer",
+        type: "integer",
         ...defaultValue
     };
 
@@ -35,15 +36,16 @@ export const ArgumentItem = ({
 
     const onChangeName = (value) => {
         value = value.replace(/[^a-zA-Z0-9_]/g, '').trim();
-        onChange({ ...defaultValue, name: value });
+        onChange({ ...defaultValue, name: value, type: value });
     }
 
     const onChangeValue = (value) => {
-        onChange({ ...defaultValue, value });
+        onChange({ ...defaultValue, value: value, type: value });
     }
 
     const getDataTypeLabel = () => {
-        return dataTypeOptions.find(option => option.value === defaultValue.value)?.label;
+        const dataType = defaultValue?.type || defaultValue?.value;
+        return dataTypeOptions.find(option => option.value === dataType)?.label;
     }
 
     return (
@@ -63,7 +65,7 @@ export const ArgumentItem = ({
                     autoFocus={autoOpen}
                 />
                 <SelectControl
-                    value={defaultValue.value}
+                    value={defaultValue?.type || defaultValue?.value}
                     options={dataTypeOptions}
                     onChange={onChangeValue}
                 />
