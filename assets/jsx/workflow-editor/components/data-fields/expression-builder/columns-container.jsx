@@ -23,7 +23,7 @@ const RenderColumns = ({
         let metaDescription = sprintf(
             /* translators: %s is the database table name */
             __('Type the %s key and click on the button to insert it.', 'post-expirator'),
-            item.table || 'meta'
+            item.context?.table || 'meta'
         );
 
         return {
@@ -34,7 +34,7 @@ const RenderColumns = ({
                     label: __('Metadata key', 'post-expirator'),
                     description: metaDescription,
                     type: 'meta-key-input',
-                    table: item.table,
+                    context: item.context,
                 }
             ]
         }

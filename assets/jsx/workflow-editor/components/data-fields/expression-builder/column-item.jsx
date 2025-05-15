@@ -8,7 +8,7 @@ const ColumnItemMeta = ({ item, onClick }) => {
     let metaDescription = sprintf(
         /* translators: %s is the database table name */
         __('Type the %s key and click on the button to insert it.', 'post-expirator'),
-        item.table || 'meta'
+        item.context?.table || 'meta'
     );
 
     const metaItem = {
@@ -16,7 +16,7 @@ const ColumnItemMeta = ({ item, onClick }) => {
         name: item.name + '.' + metaKey,
         label: __('Metadata key', 'post-expirator'),
         description: metaDescription,
-        table: item.table
+        context: item.context
     }
 
     return (
