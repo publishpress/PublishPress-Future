@@ -63,9 +63,6 @@ export function ActionArgs({
                 <label className="workflow-editor-panel__row-args-label">
                     {label}
                 </label>
-                <Button onClick={onClickAddArg} iconSize={16} icon={'plus'} variant="tertiary">
-                    {__('Add a new argument', 'post-expirator')}
-                </Button>
                 {defaultValue.map((arg, index) => (
                     <div key={`arg-${index}`} className="workflow-editor-panel__row-args">
                         <ArgumentItem
@@ -80,6 +77,10 @@ export function ActionArgs({
                         <Button onClick={() => onClickRemoveArg(index)} isSmall={true} iconSize={16} icon={'trash'} />
                     </div>
                 ))}
+
+                <Button onClick={onClickAddArg} iconSize={16} icon={'plus'} variant="tertiary">
+                    {__('Add a new argument', 'post-expirator')}
+                </Button>
 
                 {defaultValue.length === 0 && (
                     <div className="workflow-editor-panel__row-args-empty">
