@@ -60,15 +60,20 @@ export const ArgumentItem = ({
         >
             <>
                 <TextControl
+                    label={__('Argument name', 'post-expirator')}
                     value={defaultValue.name}
                     onChange={onChangeName}
                     autoFocus={autoOpen}
                 />
                 <SelectControl
+                    label={__('Data type', 'post-expirator')}
                     value={defaultValue?.type || defaultValue?.value}
                     options={dataTypeOptions}
                     onChange={onChangeValue}
                 />
+                <p className="description margin-top">
+                    {__('The argument name should only contain letters, numbers and underscores.', 'post-expirator')}
+                </p>
             </>
         </InlineSetting>
     )
