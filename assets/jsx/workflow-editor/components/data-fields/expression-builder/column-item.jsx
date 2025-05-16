@@ -1,15 +1,22 @@
-import { __ } from "@wordpress/i18n";
+import { __, sprintf } from "@wordpress/i18n";
 import { useState } from "@wordpress/element";
 import { TextControl, Button } from "@wordpress/components";
 
 const ColumnItemMeta = ({ item, onClick }) => {
     const [metaKey, setMetaKey] = useState('');
 
+    let metaDescription = sprintf(
+        /* translators: %s is the database table name */
+        __('Type the %s key and click on the button to insert it.', 'post-expirator'),
+        item.context?.table || 'meta'
+    );
+
     const metaItem = {
         id: `{{${item.name}.${metaKey}}}`,
         name: item.name + '.' + metaKey,
-        label: 'Metadata key',
-        description: 'Type the meta key and click on the button to insert it.',
+        label: __('Metadata key', 'post-expirator'),
+        description: metaDescription,
+        context: item.context
     }
 
     return (
