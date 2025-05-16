@@ -13,6 +13,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\Condi
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeactivatePostWorkflow;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeletePost;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeletePostMeta;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DoAction;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\QueryPosts;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\RemovePostTerm;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\ScheduleDelay;
@@ -260,6 +261,7 @@ class StepTypesModel implements StepTypesModelInterface
             QueryPosts::getNodeTypeName() => new QueryPosts(),
             Conditional::getNodeTypeName() => new Conditional(),
             AppendDebugLog::getNodeTypeName() => new AppendDebugLog(),
+            DoAction::getNodeTypeName() => new DoAction(),
         ];
 
         if (function_exists('ray')) {

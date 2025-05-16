@@ -1,40 +1,40 @@
 <?php
 
-namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions;
+namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class OnCustomAction implements StepTypeInterface
+class DoAction implements StepTypeInterface
 {
     public static function getNodeTypeName(): string
     {
-        return "trigger/core.custom-action";
+        return "advanced/do.action";
     }
 
     public function getElementaryType(): string
     {
-        return StepTypesModel::STEP_TYPE_TRIGGER;
+        return StepTypesModel::STEP_TYPE_ADVANCED;
     }
 
     public function getReactFlowNodeType(): string
     {
-        return "trigger";
+        return "generic";
     }
 
     public function getBaseSlug(): string
     {
-        return "onCustomAction";
+        return "doAction";
     }
 
     public function getLabel(): string
     {
-        return __("On custom action", "post-expirator");
+        return __("Do Action", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This trigger activates upon a custom WordPress action hook. Use it to integrate with other plugins or custom code.", "post-expirator");
+        return __("This step executes an action.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -72,22 +72,10 @@ class OnCustomAction implements StepTypeInterface
                         "type" => "text",
                         "label" => __("Hook", "post-expirator"),
                         "description" => __(
-                            "The hook that will trigger this action.",
+                            "The hook that will be executed.",
                             "post-expirator"
                         ),
                         "default" => "",
-                    ],
-                    [
-                        "name" => "priority",
-                        "type" => "integer",
-                        "label" => __("Priority", "post-expirator"),
-                        "description" => __(
-                            "The priority of the action hook. Lower values are executed first.",
-                            "post-expirator"
-                        ),
-                        "settings" => [
-                            "placeholder" => 10,
-                        ],
                     ],
                     [
                         "name" => "args",
@@ -98,6 +86,9 @@ class OnCustomAction implements StepTypeInterface
                             "post-expirator"
                         ),
                         "default" => [],
+                        "settings" => [
+                            "withExpression" => true,
+                        ],
                     ],
                 ]
             ]
@@ -110,7 +101,7 @@ class OnCustomAction implements StepTypeInterface
             "connections" => [
                 "rules" => [
                     [
-                        "rule" => "hasOutgoingConnection",
+                        "rule" => "hasIncomingConnection",
                     ],
                 ]
             ],
@@ -151,13 +142,17 @@ class OnCustomAction implements StepTypeInterface
 
     public function getCSSClass(): string
     {
-        return "react-flow__node-genericTrigger";
+        return "react-flow__node-genericAdvanced";
     }
 
     public function getHandleSchema(): array
     {
         return [
-            "target" => [],
+            "target" => [
+                [
+                    "id" => "input",
+                ]
+            ],
             "source" => [
                 [
                     "id" => "output",

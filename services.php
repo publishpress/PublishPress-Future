@@ -126,6 +126,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\ContextProcessors\DatePr
 use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContextProcessorInitializer;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContextProcessorRegistry;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContextRegistry;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\DoActionRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnCustomActionRunner;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\Future\Modules\Workflows\Migrations\V040500OnScheduledStepsSchema;
@@ -1262,6 +1263,13 @@ return [
                     $stepRunner = new AppendDebugLogRunner(
                         $generalStepProcessor,
                         $executionContext,
+                        $logger
+                    );
+                    break;
+
+                case DoActionRunner::getNodeTypeName():
+                    $stepRunner = new DoActionRunner(
+                        $generalStepProcessor,
                         $logger
                     );
                     break;

@@ -73,6 +73,8 @@ export function ActionArgs({
                             onChange={(value) => onChangeArg(index, value)}
                             autoOpen={autoOpenItem === index}
                             onClosePopover={() => setAutoOpenItem(null)}
+                            withExpression={settings?.withExpression}
+                            variables={variables}
                         />
                         <Button onClick={() => onClickRemoveArg(index)} isSmall={true} iconSize={16} icon={'trash'} />
                     </div>

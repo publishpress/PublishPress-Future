@@ -4,6 +4,7 @@ import {
 } from "@wordpress/element";
 import InlineSetting from "../inline-setting";
 import { TextControl, SelectControl, Button } from "@wordpress/components";
+import ExpressionBuilder from "../expression-builder";
 
 export const ArgumentItem = ({
     name,
@@ -12,10 +13,10 @@ export const ArgumentItem = ({
     defaultValue,
     onChange,
     variables = [],
-    checkboxLabel,
     onClosePopover,
     isLoading,
-    autoOpen
+    autoOpen,
+    withExpression = false
 }) => {
     defaultValue = {
         name: "",
@@ -43,9 +44,25 @@ export const ArgumentItem = ({
         onChange({ ...defaultValue, value: value, type: value });
     }
 
+    const onChangeExpression = (settingName, value) => {
+        onChange({ ...defaultValue, expression: value });
+    }
+
     const getDataTypeLabel = () => {
-        const dataType = defaultValue?.type || defaultValue?.value;
+        const dataType = defaultValue?.type || defaultValue?.value || 'integer';
         return dataTypeOptions.find(option => option.value === dataType)?.label;
+    }
+
+    const getExpressionPreview = () => {
+        return defaultValue?.expression?.expression ? `${defaultValue.expression.expression}` : __('null', 'post-expirator');
+    }
+
+    const getValuePreview = () => {
+        if (defaultValue?.expression?.expression) {
+            return `${defaultValue.name}: ${getExpressionPreview()} (${getDataTypeLabel()})`;
+        }
+
+        return `${defaultValue.name}: (${getDataTypeLabel()})`;
     }
 
     return (
@@ -53,7 +70,7 @@ export const ArgumentItem = ({
             name={name}
             label={label}
             popoverLabel={popoverLabel}
-            valuePreview={`${defaultValue.name}: (${getDataTypeLabel()})`}
+            valuePreview={getValuePreview()}
             onClosePopover={onClosePopover}
             isLoading={isLoading}
             autoOpen={autoOpen}
@@ -71,6 +88,16 @@ export const ArgumentItem = ({
                     options={dataTypeOptions}
                     onChange={onChangeValue}
                 />
+                {withExpression && (
+                    <ExpressionBuilder
+                        name="expression"
+                        label={__('Value', 'post-expirator')}
+                        defaultValue={defaultValue?.expression}
+                        onChange={onChangeExpression}
+                        variables={variables}
+                    />
+                )}
+
                 <p className="description margin-top">
                     {__('The argument name should only contain letters, numbers and underscores.', 'post-expirator')}
                 </p>
