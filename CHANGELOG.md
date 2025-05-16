@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Add new workflow trigger "On custom action" that allows workflows to be triggered by custom WordPress action hooks, enabling integration with other plugins and custom code - PRO feature (Issue #1222).
+- Add new workflow step "Do action" that executes custom action hooks with arguments, enabling integration with other plugins and custom code - PRO feature (Issue #1222).
+- Added diagnostic check for Spatie Ray debugging tool in the Diagnostics and Tools settings tab, clarifying debugging capabilities.
 - Added a "Copy" button to workflows (Issue #1183).
 - Added a "Cancel Scheduled Actions" button to workflows lists (Issue #1326).
 
@@ -20,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Settings Controller processes form submissions on every admin page load (Issue #1310).
 - Fixed validation issue in the workflow editor where selecting "Remove all terms" not removing required error (Issue #1244).
+- Fixed issue where Pro-only workflow triggers were incorrectly executing subsequent workflow steps in the free version of the plugin.
 
 
 ### Removed

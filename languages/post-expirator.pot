@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 4.6.0-beta.1\n"
+"Project-Id-Version: PublishPress Future 4.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-06T16:31:11+00:00\n"
+"POT-Creation-Date: 2025-05-15T19:58:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: post-expirator\n"
@@ -17,7 +17,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: post-expirator.php
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:120
-#: src/Modules/Workflows/Models/StepTypesModel.php:93
+#: src/Modules/Workflows/Models/StepTypesModel.php:94
 msgid "PublishPress Future"
 msgstr ""
 
@@ -80,36 +80,36 @@ msgstr ""
 
 #: legacy/classes/Display.class.php:397
 #: legacy/classes/Display.class.php:451
-#: legacy/classes/Display.class.php:488
+#: legacy/classes/Display.class.php:473
 msgid "Saved Options!"
 msgstr ""
 
 #. translators: %1$s is the plugin name, %2$s is the star rating markup
-#: legacy/classes/Display.class.php:574
+#: legacy/classes/Display.class.php:558
 msgid "If you like %1$s, please leave us a %2$s rating. Thank you!"
 msgstr ""
 
-#: legacy/classes/Display.class.php:589
+#: legacy/classes/Display.class.php:573
 msgid "About PublishPress Future"
 msgstr ""
 
-#: legacy/classes/Display.class.php:591
+#: legacy/classes/Display.class.php:575
 msgid "About"
 msgstr ""
 
-#: legacy/classes/Display.class.php:597
+#: legacy/classes/Display.class.php:581
 msgid "Future Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:599
+#: legacy/classes/Display.class.php:583
 msgid "Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:605
+#: legacy/classes/Display.class.php:589
 msgid "Contact the PublishPress team"
 msgstr ""
 
-#: legacy/classes/Display.class.php:607
+#: legacy/classes/Display.class.php:591
 msgid "Contact"
 msgstr ""
 
@@ -117,17 +117,17 @@ msgstr ""
 msgid "No taxonomies found"
 msgstr ""
 
-#: services.php:140
+#: services.php:141
 #: src/Modules/Settings/SettingsFacade.php:122
 msgid "l F jS, Y"
 msgstr ""
 
-#: services.php:144
+#: services.php:145
 #: src/Modules/Settings/SettingsFacade.php:123
 msgid "g:ia"
 msgstr ""
 
-#: services.php:145
+#: services.php:146
 #: src/Modules/Settings/SettingsFacade.php:124
 msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
 msgstr ""
@@ -218,6 +218,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:415
 #: src/Modules/Expirator/Controllers/QuickEditController.php:343
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:50
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:64
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:153
 msgid "Action"
 msgstr ""
@@ -537,6 +538,7 @@ msgid "Error"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/SettingsController.php:444
+#: src/Modules/Settings/Controllers/Controller.php:238
 msgid "Form Validation Failure: Sorry, your nonce did not verify."
 msgstr ""
 
@@ -879,7 +881,7 @@ msgid "Scheduled date: "
 msgstr ""
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:677
-#: src/Views/menu-diagnostics.php:214
+#: src/Views/menu-diagnostics.php:235
 msgid "Date"
 msgstr ""
 
@@ -924,35 +926,35 @@ msgstr ""
 msgid "No Scheduled Actions."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:211
+#: src/Modules/Settings/Controllers/Controller.php:192
 msgid "Scheduled Workflow Steps Cleanup"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:212
+#: src/Modules/Settings/Controllers/Controller.php:193
 msgid "Automatically remove scheduled workflow steps"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:216
+#: src/Modules/Settings/Controllers/Controller.php:197
 msgid "Automatically remove scheduled workflow steps that have been marked as failed, completed, or cancelled."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:220
+#: src/Modules/Settings/Controllers/Controller.php:201
 msgid "Retain all scheduled workflow steps"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:224
+#: src/Modules/Settings/Controllers/Controller.php:205
 msgid "Retain all scheduled workflow steps indefinitely, including those marked as failed, completed, or cancelled. This may impact database performance over time."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:228
+#: src/Modules/Settings/Controllers/Controller.php:209
 msgid "Retention"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:229
+#: src/Modules/Settings/Controllers/Controller.php:210
 msgid "The duration, in days, for which completed, failed, and canceled scheduled workflow steps will be preserved before automatic removal."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:233
+#: src/Modules/Settings/Controllers/Controller.php:214
 msgid "days"
 msgstr ""
 
@@ -1440,14 +1442,14 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:127
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:106
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:128
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:127
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:131
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:123
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:114
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:114
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:106
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:106
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:118
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:128
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:141
-#: src/Modules/Workflows/Models/StepTypesModel.php:84
+#: src/Modules/Workflows/Models/StepTypesModel.php:85
 msgid "Post"
 msgstr ""
 
@@ -1460,14 +1462,14 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:125
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:147
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:131
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:146
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:150
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:142
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:167
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:166
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:127
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:142
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:133
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:133
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:125
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:125
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:174
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:147
 msgid "Step input"
@@ -1482,14 +1484,14 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:126
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:148
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:132
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:147
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:151
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:143
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:168
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:167
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:128
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:143
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:134
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:134
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:126
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:126
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:175
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:148
 msgid "The input data for this step."
@@ -1515,16 +1517,17 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:147
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:175
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:153
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:168
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:172
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:189
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:200
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:149
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:164
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:155
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:155
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:147
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:147
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:202
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:175
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnAdminInit.php:100
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:164
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnInit.php:100
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnLegacyActionTrigger.php:138
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostAuthorChange.php:144
@@ -2074,11 +2077,6 @@ msgstr ""
 msgid "Choose the post that will be marked as sticky. You can select a post variable or enter a post ID."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:98
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:98
-msgid "Please include a \"Schedule\" step earlier in this branch of the workflow."
-msgstr ""
-
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:32
 msgid "Unstick post"
 msgstr ""
@@ -2233,6 +2231,52 @@ msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnAdminInit.php:37
 msgid "This trigger activates upon the initialization of the admin site."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:32
+msgid "On custom action"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:37
+msgid "This trigger activates upon a custom WordPress action hook. Use it to integrate with other plugins or custom code."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:65
+msgid "Specify the hook that will trigger this action."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:73
+msgid "Hook"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:74
+msgid "The hook that will trigger this action."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:83
+msgid "Priority"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:84
+msgid "The priority of the action hook. Lower values are executed first."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:95
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:128
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:141
+msgid "Action arguments"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:96
+msgid "The arguments to pass to the action. These arguments will be available as variables in subsequent workflow steps."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:122
+msgid "The action hook is required."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:142
+msgid "The arguments to pass to the action."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnInit.php:32
@@ -2654,32 +2698,32 @@ msgstr ""
 msgid "Migrate workflow scheduled steps schema after v4.0.0"
 msgstr ""
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:102
+#: src/Modules/Workflows/Models/StepTypesModel.php:103
 msgid "User"
 msgstr ""
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:111
+#: src/Modules/Workflows/Models/StepTypesModel.php:112
 msgid "Site"
 msgstr ""
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:120
+#: src/Modules/Workflows/Models/StepTypesModel.php:121
 msgid "Flow Control"
 msgstr ""
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:129
+#: src/Modules/Workflows/Models/StepTypesModel.php:130
 msgid "Asynchronous"
 msgstr ""
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:138
+#: src/Modules/Workflows/Models/StepTypesModel.php:139
 #: src/Views/tabs-settings.php:36
 msgid "Debug"
 msgstr ""
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:147
+#: src/Modules/Workflows/Models/StepTypesModel.php:148
 msgid "Data Query"
 msgstr ""
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:156
+#: src/Modules/Workflows/Models/StepTypesModel.php:157
 msgid "Messages"
 msgstr ""
 
@@ -2926,42 +2970,42 @@ msgstr ""
 msgid "Debug log copied to clipboard!"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:52
+#: src/Views/menu-diagnostics.php:53
 msgid "Advanced Diagnostics and Tools"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:56
+#: src/Views/menu-diagnostics.php:57
 msgid "WP-Cron Status Check"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:60
-#: src/Views/menu-diagnostics.php:73
+#: src/Views/menu-diagnostics.php:61
+#: src/Views/menu-diagnostics.php:74
 msgid "Passed"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:63
+#: src/Views/menu-diagnostics.php:64
 msgid "WP Cron Disabled"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:69
+#: src/Views/menu-diagnostics.php:70
 msgid "Database Schema Check"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:77
+#: src/Views/menu-diagnostics.php:78
 msgid "Error found on the database schema:"
 msgid_plural "Errors found on the database schema:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Views/menu-diagnostics.php:108
+#: src/Views/menu-diagnostics.php:109
 msgid "Try to Fix Database"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:117
+#: src/Views/menu-diagnostics.php:118
 msgid "Debug Logging"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:121
+#: src/Views/menu-diagnostics.php:122
 #: src/Views/menu-display.php:139
 #: src/Views/menu-notifications.php:67
 #: src/Views/menu-notifications.php:95
@@ -2969,19 +3013,19 @@ msgstr ""
 msgid "Enabled"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:124
+#: src/Views/menu-diagnostics.php:125
 msgid "Disable Debugging"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:130
+#: src/Views/menu-diagnostics.php:131
 msgid "Purge Debug Log"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:138
+#: src/Views/menu-diagnostics.php:139
 msgid "View Debug Logs"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:141
+#: src/Views/menu-diagnostics.php:142
 #: src/Views/menu-display.php:150
 #: src/Views/menu-notifications.php:75
 #: src/Views/menu-notifications.php:104
@@ -2989,51 +3033,75 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:144
+#: src/Views/menu-diagnostics.php:145
 msgid "Enable Debugging"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:157
-msgid "Migrate Legacy Future Actions"
+#: src/Views/menu-diagnostics.php:154
+msgid "Spatie Ray Debug"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:161
-msgid "Run Migration"
+#: src/Views/menu-diagnostics.php:158
+msgid "Spatie Ray Detected"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:160
+msgid "Spatie Ray Debug is detected. The \"Send to Ray\" workflow step will be available in the workflow editor."
 msgstr ""
 
 #: src/Views/menu-diagnostics.php:164
-msgid "Migrate legacy future actions from WP Cron to the new Action Scheduler. This will run in the background and may take a while."
+msgid "Spatie Ray Not Detected"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:174
-msgid "Restore Legacy Action Arguments"
+#: src/Views/menu-diagnostics.php:166
+msgid "Spatie Ray Debug is not detected. This is not an error, but the \"Send to Ray\" workflow step will not be available in the workflow editor."
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:169
+msgid "Learn more about Spatie Ray"
 msgstr ""
 
 #: src/Views/menu-diagnostics.php:178
+msgid "Migrate Legacy Future Actions"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:182
+msgid "Run Migration"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:185
+msgid "Migrate legacy future actions from WP Cron to the new Action Scheduler. This will run in the background and may take a while."
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:195
+msgid "Restore Legacy Action Arguments"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:199
 msgid "Run Data Restoration"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:181
+#: src/Views/menu-diagnostics.php:202
 msgid "Restore legacy action arguments as Post Meta. This is useful if you have issues with 3rd party plugins that read that data. This will run in the background and may take a while."
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:194
+#: src/Views/menu-diagnostics.php:215
 msgid "Legacy Cron Schedule"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:202
+#: src/Views/menu-diagnostics.php:223
 msgid "The below table will show all currently scheduled cron events for the plugin with the next run time."
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:217
+#: src/Views/menu-diagnostics.php:238
 msgid "Event"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:220
+#: src/Views/menu-diagnostics.php:241
 msgid "Posts and expiration settings"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:275
+#: src/Views/menu-diagnostics.php:296
 msgid "This is a legacy feature and will be removed in a future version."
 msgstr ""
 

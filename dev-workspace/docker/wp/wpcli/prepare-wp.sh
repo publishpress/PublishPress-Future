@@ -38,6 +38,33 @@ wp plugin install classic-editor --activate
 show_header "Installing WP Mail SMTP"
 wp plugin install wp-mail-smtp --activate
 
+# Install Spatie Ray as must-use plugin
+show_header "Installing Spatie Ray as must-use plugin"
+echo "Cleaning up previous Spatie Ray installation..."
+rm -rf /var/www/html/wp-content/mu-plugins/spatie-ray
+rm -rf /var/www/html/ray.php
+rm -rf /var/www/html/wp-content/mu-plugins/ray-loader.php
+
+echo "Installing Spatie Ray plugin..."
+wp plugin install spatie-ray --quiet
+
+echo "Setting up as must-use plugin..."
+mkdir -p /var/www/html/wp-content/mu-plugins
+mv /var/www/html/wp-content/plugins/spatie-ray /var/www/html/wp-content/mu-plugins/spatie-ray
+
+echo "Copying configuration files..."
+cp /config/ray-loader.php /var/www/html/wp-content/mu-plugins/ray-loader.php
+cp /config/ray.php /var/www/html/ray.php
+
+echo "Configuring environment type in wp-config.php..."
+wp config set WP_ENVIRONMENT_TYPE "local"
+wp config set WP_DEBUG true
+wp config set WP_DEBUG_LOG true
+wp config set WP_DEBUG_DISPLAY false
+wp config set SCRIPT_DEBUG true
+
+echo -e "\e[32mSpatie Ray successfully installed as must-use plugin\e[0m"
+
 # Activate Future Free
 show_header "Activating Future Free"
 wp plugin activate post-expirator

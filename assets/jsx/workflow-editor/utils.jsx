@@ -115,95 +115,73 @@ export function nodeHasOutgoers(node) {
     return nodeHasOutgoers;
 }
 
-export function nodeHasInput(node) {
-    const nodeType = select(editorStore).getNodeTypeByName(node?.data?.name);
+export function getNodeType(node) {
+    return select(editorStore).getNodeTypeByName(node?.data?.name);
+}
 
+export function nodeHasInput(node) {
     const incomers = getNodeIncomers(node);
     const nodeHasIncomers = incomers?.length > 0;
-    const nodeHasInput = nodeHasIncomers && incomers.filter((incomer) => nodeType?.outputSchema?.length > 0)?.length > 0;
 
-    return nodeHasInput;
+    return nodeHasIncomers
+        && incomers.filter(
+            (incomer) => nodeHasOutput(incomer)
+        )?.length > 0;
 }
 
 export function nodeHasOutput(node) {
-    const nodeType = select(editorStore).getNodeTypeByName(node?.data?.name);
-    const nodeHasOutput = nodeType?.outputSchema?.length > 0;
-
-    return nodeHasOutput;
+    return getNodeOutputSchema(node).length > 0;
 }
 
-export function getNodeInputs(node) {
-    const nodeType = select(editorStore).getNodeTypeByName(node?.data?.name);
-    const incomers = getNodeIncomers(node);
-    const nodeHasIncomers = incomers?.length > 0;
-
-    const getDataTypeByName = select(workflowStore).getDataTypeByName;
-
-    if (!nodeHasIncomers) {
-        return [];
+export function isDynamicOutputItem(item) {
+    if (item.type) {
+        return item.type.startsWith('__dynamic__:');
     }
 
-    let nodeInputs = [];
+    return false;
+}
 
-    incomers.forEach((incomer) => {
-        if (!nodeType?.outputSchema?.length) {
-            return;
-        }
+export function getNodeOutputSchema(node) {
+    const nodeType = getNodeType(node);
+    let outputSchema = nodeType?.outputSchema || [];
+    let dynamicOutputItems = [];
 
-        nodeType?.outputSchema.forEach((schemaItem) => {
-            const dataType = getDataTypeByName(schemaItem.type);
+    // Fill the dynamic output item
+    if (outputSchema.some(isDynamicOutputItem)) {
+        outputSchema = outputSchema.filter((item) => {
+            if (isDynamicOutputItem(item)) {
+                const settingName = item.type.replace('__dynamic__:', '');
 
-            // If input, look for the previous node inputs to bypass as this node's input
-            if (schemaItem.type === 'input') {
-                const previousNodeInputs = getNodeInputs(incomer);
+                if (node?.data?.settings?.[settingName]) {
+                    node.data.settings[settingName].forEach((subitem) => {
+                        const newSubitem = { ...subitem };
+                        newSubitem.label = newSubitem.label || newSubitem.name.charAt(0).toUpperCase() + newSubitem.name.slice(1);
+                        newSubitem.description = newSubitem.description
+                            || item.description
+                            || __('Dynamic output item', 'post-expiration');
 
-                nodeInputs = nodeInputs.concat(previousNodeInputs);
-            } else {
-                nodeInputs.push({
-                    incomerId: incomer.id,
-                    name: schemaItem.name,
-                    type: schemaItem.type,
-                    label: schemaItem.label,
-                    description: schemaItem.description,
-                    dataType: dataType,
-                });
+                        if (newSubitem?.value) {
+                            newSubitem.type = newSubitem?.value;
+                            delete newSubitem.value;
+                        }
+
+                        dynamicOutputItems.push(newSubitem);
+                    });
+                }
+
+                // Remove the dynamic output item from the output schema
+                return false;
             }
+
+            return true;
         });
-    });
-
-    // Make sure we don't have repeated inputs, #712
-    nodeInputs = nodeInputs.filter((input, index, self) =>
-        index === self.findIndex((t) => (
-            t.name === input.name && t.type === input.type
-        ))
-    );
-
-    return nodeInputs;
-}
-
-export function getNodeInputVariables(node, types = [], addInputPrefix = true) {
-    const nodeInputs = getNodeInputs(node);
-
-    let variables = [];
-
-    if (types.length) {
-        variables = nodeInputs.filter((input) => types.includes(input.type));
-    } else {
-        variables = nodeInputs;
     }
 
-    variables = variables.map((variable) => {
-        const variableName = addInputPrefix ? 'input.' + variable.name : variable.name;
+    if (dynamicOutputItems.length) {
+        outputSchema = outputSchema.concat(dynamicOutputItems);
+    }
 
-        return {
-            name: variableName,
-            type: variable.type,
-            label: variable.label,
-            source: VARIABLE_SOURCE_NODE_INPUT,
-        };
-    });
-
-    return variables;
+    return outputSchema;
 }
 
 export function getGlobalVariablesExpanded(globalVariables) {
@@ -232,19 +210,24 @@ export function getGlobalVariablesExpanded(globalVariables) {
 }
 
 export function mapNodeInputs(node) {
-    const getNodeTypeByName = select(editorStore).getNodeTypeByName;
     const previousNodes = getNodeIncomers(node);
 
     const mappedInput = [];
 
     previousNodes.forEach((previousNode) => {
-        const nodeType = getNodeTypeByName(previousNode.data?.name);
-
-        if (!nodeType?.outputSchema?.length) {
+        if (! previousNode) {
             return;
         }
 
-        nodeType.outputSchema.forEach((outputItem) => {
+        const previousNodeOutputSchema = getNodeOutputSchema(previousNode);
+
+        if (! previousNodeOutputSchema?.length) {
+            return;
+        }
+
+        const nodeType = getNodeType(previousNode);
+
+        previousNodeOutputSchema.forEach((outputItem) => {
             if (outputItem.type === "input") {
                 // Get the previous node outputs to bypass to this node as input
                 const previousNodeInputs = mapNodeInputs(previousNode);
@@ -398,6 +381,10 @@ function expandVariableWithChildren(variable) {
     const dataType = getDataTypeByName(variable.type);
 
     variable = formatVariableStructure(variable);
+
+    if (isDynamicOutputItem(variable)) {
+        return variable;
+    }
 
     if (! dataType) {
         console.log('No data type found for variable', variable);

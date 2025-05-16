@@ -23,6 +23,7 @@ import ExclamationIcon from './icons/exclamation';
 import LockIcon from './icons/lock';
 import ShopIcon from './icons/shop';
 import BracesIcon from './icons/braces';
+import ActionIcon from './icons/action';
 
 export function NodeIcon({
 	icon,
@@ -129,6 +130,11 @@ export function NodeIcon({
 		case 'braces':
 			icon = {
 				src: BracesIcon,
+			};
+			break;
+		case 'action':
+			icon = {
+				src: ActionIcon,
 			};
 			break;
 	}

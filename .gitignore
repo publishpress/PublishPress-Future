@@ -2,7 +2,6 @@ node_modules
 *.log
 /vendor
 /lib/**/.git
-/tests/codeception/_data/plugins/ray-future/vendor
 ./logs
 codeceptjs/output
 .idea
