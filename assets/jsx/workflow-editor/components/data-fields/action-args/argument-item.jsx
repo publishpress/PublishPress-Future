@@ -36,7 +36,7 @@ export const ArgumentItem = ({
 
     const onChangeName = (value) => {
         value = value.replace(/[^a-zA-Z0-9_]/g, '').trim();
-        onChange({ ...defaultValue, name: value, type: value });
+        onChange({ ...defaultValue, name: value });
     }
 
     const onChangeValue = (value) => {
