@@ -78,15 +78,16 @@ export function ActionArgs({
                     </div>
                 ))}
 
-                <Button onClick={onClickAddArg} iconSize={16} icon={'plus'} variant="tertiary">
-                    {__('Add a new argument', 'post-expirator')}
-                </Button>
-
                 {defaultValue.length === 0 && (
                     <div className="workflow-editor-panel__row-args-empty">
                         {__('No arguments added to the action.', 'post-expirator')}
                     </div>
                 )}
+
+                <Button onClick={onClickAddArg} iconSize={16} icon={'plus'} variant="tertiary">
+                    {__('Add a new argument', 'post-expirator')}
+                </Button>
+
 
                 {description && (
                     <DescriptionText text={description} helpUrl={helpUrl} />
