@@ -427,18 +427,10 @@ class WorkflowEngine implements WorkflowEngineInterface
 
         if ($newPost->post_status === 'publish') {
             $this->onWorkflowPublished($workflowId);
-        } else {
-            $this->onWorkflowUnpublished($workflowId);
         }
     }
 
     public function onWorkflowPublished($workflowId)
-    {
-        $scheduledActionsModel = new ScheduledActionsModel();
-        $scheduledActionsModel->cancelWorkflowScheduledActions($workflowId);
-    }
-
-    public function onWorkflowUnpublished($workflowId)
     {
         $scheduledActionsModel = new ScheduledActionsModel();
         $scheduledActionsModel->cancelWorkflowScheduledActions($workflowId);
