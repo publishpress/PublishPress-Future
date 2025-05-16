@@ -33,6 +33,9 @@ export function WorkflowData() {
                 type: "meta",
                 label: "Metadata",
                 description: "The metadata of the workflow.",
+                context: {
+                    table: "_postmeta"
+                },
             },
             {
                 name: "execution_id",

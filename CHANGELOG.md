@@ -10,10 +10,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add new workflow trigger "On custom action" that allows workflows to be triggered by custom WordPress action hooks, enabling integration with other plugins and custom code - PRO feature (Issue #1222).
 - Add new workflow step "Do action" that executes custom action hooks with arguments, enabling integration with other plugins and custom code - PRO feature (Issue #1222).
 - Added diagnostic check for Spatie Ray debugging tool in the Diagnostics and Tools settings tab, clarifying debugging capabilities.
+- Added a "Copy" button to workflows (Issue #1183).
+- Added a "Cancel Scheduled Actions" button to workflows lists (Issue #1326).
 
 ### Changed
 
 - Stick and Unstick Post workflow steps can now be used anywhere in workflows, not just within Schedule branches (Issue #1204).
+- Clarify the "Metadata" description by including table name for each metadata (Issue #1247).
+- Stop automatic cancelation of scheduled actions when a workflow is disabled in support of manual button, (Issue #1326).
 
 ### Fixed
 
