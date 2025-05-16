@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Add new workflow trigger "On custom action" that allows workflows to be triggered by custom WordPress action hooks, enabling integration with other plugins and custom code (Issue #1222).
+- Add new workflow trigger "On custom action" that allows workflows to be triggered by custom WordPress action hooks, enabling integration with other plugins and custom code - PRO feature (Issue #1222).
+- Add new workflow step "Do action" that executes custom action hooks with arguments, enabling integration with other plugins and custom code - PRO feature (Issue #1222).
 - Added diagnostic check for Spatie Ray debugging tool in the Diagnostics and Tools settings tab, clarifying debugging capabilities.
 
 ### Changed
