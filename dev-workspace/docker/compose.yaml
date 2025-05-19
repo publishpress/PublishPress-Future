@@ -63,8 +63,8 @@ services:
           - ../.cache/wp_test:/var/www/html/
           - ../../:/var/www/html/wp-content/plugins/post-expirator
           - ../../tests/Support/Data/plugins/pre-tests:/var/www/html/wp-content/plugins/pre-tests
-          - ./wp/wordpress/conf.d/97-custom.ini:/usr/local/etc/php/conf.d/97-custom.ini
           - ./wp/wordpress/conf.d/98-xdebug.ini:/usr/local/etc/php/conf.d/98-xdebug.ini
+          - ./wp/wordpress/conf.d/99-custom.ini:/usr/local/etc/php/conf.d/99-custom.ini
         depends_on:
             db_test:
                 condition: service_healthy
@@ -92,8 +92,8 @@ services:
             - ./wp/wpcli/prepare-wp.sh:/tmp/prepare-wp.sh
             - ./wp/wpcli/conf.d/my.cnf:/tmp/my.cnf
             - ./wp/wpcli/options.sql:/tmp/options.sql
-            - ./wp/wordpress/conf.d/97-custom.ini:/usr/local/etc/php/conf.d/97-custom.ini
             - ./wp/wordpress/conf.d/98-xdebug.ini:/usr/local/etc/php/conf.d/98-xdebug.ini
+            - ./wp/wordpress/conf.d/99-custom.ini:/usr/local/etc/php/conf.d/99-custom.ini
         depends_on:
             wp_test:
                 condition: service_healthy
@@ -149,8 +149,8 @@ services:
         volumes:
           - ../.cache/wp_dev:/var/www/html/
           - ../../:/var/www/html/wp-content/plugins/post-expirator
-          - ./wp/wordpress/conf.d/97-custom.ini:/usr/local/etc/php/conf.d/97-custom.ini
           - ./wp/wordpress/conf.d/98-xdebug.ini:/usr/local/etc/php/conf.d/98-xdebug.ini
+          - ./wp/wordpress/conf.d/99-custom.ini:/usr/local/etc/php/conf.d/99-custom.ini
         depends_on:
             db_dev:
                 condition: service_healthy
@@ -177,8 +177,8 @@ services:
             - ./wp/wpcli/prepare-wp.sh:/tmp/prepare-wp.sh
             - ./wp/wpcli/conf.d/my.cnf:/tmp/my.cnf
             - ./wp/wpcli/options.sql:/tmp/options.sql
-            - ./wp/wordpress/conf.d/97-custom.ini:/usr/local/etc/php/conf.d/97-custom.ini
             - ./wp/wordpress/conf.d/98-xdebug.ini:/usr/local/etc/php/conf.d/98-xdebug.ini
+            - ./wp/wordpress/conf.d/99-custom.ini:/usr/local/etc/php/conf.d/99-custom.ini
         depends_on:
             wp_dev:
                 condition: service_healthy
