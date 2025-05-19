@@ -7,7 +7,7 @@ services:
     terminal:
         build: ./terminal/
         profiles: ["dev", "term", "test"]
-        container_name: ${CONTAINER_NAME}_term
+        container_name: ${CONTAINER_NAME}_env_term
         image: ${TERMINAL_IMAGE_NAME}
         command: ["zsh"]
         stdin_open: true
