@@ -168,6 +168,7 @@
         ],
         "dev:stop": "bash dev-workspace/scripts/env.sh stop dev",
         "dev:down": "bash dev-workspace/scripts/env.sh down dev",
+        "dev:restart": "bash dev-workspace/scripts/env.sh restart dev",
         "dev:clean": [
             "bash dev-workspace/scripts/env.sh cleanup dev",
             "@dev:clean-cache"
@@ -183,6 +184,7 @@
             "@test:info"
         ],
         "test:down": "bash dev-workspace/scripts/env.sh down test",
+        "test:restart": "bash dev-workspace/scripts/env.sh restart test",
         "test:stop": "bash dev-workspace/scripts/env.sh stop test",
         "test:clean": [
             "bash dev-workspace/scripts/env.sh cleanup test",
@@ -271,11 +273,13 @@
         "test:down": "Stops the test environment removing the containers",
         "test:info": "Gets the test environment information",
         "test:refresh": "Refreshes the test environment",
+        "test:restart": "Restarts the test environment",
         "test:stop": "Stops the test environment",
         "test:up": "Starts the test environment",
         "dev:up": "Starts the development environment and displays info",
         "dev:stop": "Stops the development environment",
         "dev:down": "Stops and removes the development environment containers",
+        "dev:restart": "Restarts the development environment",
         "dev:clean": "Cleans up the development environment and cache",
         "dev:clean-logs": "Cleans up the development environment logs",
         "dev:clean-cache": "Cleans up the development environment cache files",
