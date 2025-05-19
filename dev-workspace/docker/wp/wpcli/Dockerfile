@@ -1,4 +1,4 @@
-FROM wordpress:cli-php8.4
+FROM wordpress:cli-php8.3
 
 USER root
 
@@ -13,8 +13,3 @@ RUN chown -R www-data:www-data /config
 USER www-data
 
 WORKDIR /var/www/html
-
-# Copy the ray loader file to /config
-
-COPY --chown=www-data:www-data load-spatie-ray.php /config/ray-loader.php
-COPY --chown=www-data:www-data ./ray.php /config/ray.php
