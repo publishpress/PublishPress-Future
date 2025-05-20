@@ -29,7 +29,7 @@ class DoAction implements StepTypeInterface
 
     public function getLabel(): string
     {
-        return __("Do Action", "post-expirator");
+        return __("Do action", "post-expirator");
     }
 
     public function getDescription(): string
