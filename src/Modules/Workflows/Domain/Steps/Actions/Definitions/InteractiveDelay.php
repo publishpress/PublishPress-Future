@@ -1,0 +1,206 @@
+<?php
+
+namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions;
+
+use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
+use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
+
+class InteractiveDelay implements StepTypeInterface
+{
+    public static function getNodeTypeName(): string
+    {
+        return "advanced/interactive-delay";
+    }
+
+    public function getElementaryType(): string
+    {
+        return StepTypesModel::STEP_TYPE_ADVANCED;
+    }
+
+    public function getReactFlowNodeType(): string
+    {
+        return "generic";
+    }
+
+    public function getBaseSlug(): string
+    {
+        return "interactiveDelay";
+    }
+
+    public function getLabel(): string
+    {
+        return __("Interactive delay", "post-expirator");
+    }
+
+    public function getDescription(): string
+    {
+        return __("This step delays the execution of the workflow until the user interacts with the step.", "post-expirator");
+    }
+
+    public function getIcon(): string
+    {
+        return "interactive";
+    }
+
+    public function getFrecency(): int
+    {
+        return 1;
+    }
+
+    public function getVersion(): int
+    {
+        return 1;
+    }
+
+    public function getCategory(): string
+    {
+        return "site";
+    }
+
+    public function getSettingsSchema(): array
+    {
+        return [
+            [
+                "label" => __("Interactive options", "post-expirator"),
+                "description" => __("Specify the options for the interactive delay.", "post-expirator"),
+                "fields" => [
+                    [
+                        "name" => "responders",
+                        "type" => "expression",
+                        "label" => __("Responders", "post-expirator"),
+                        "description" => __(
+                            "A comma-separated list of user names, ids, emails or user roles that can interact with this step.",
+                            "post-expirator"
+                        ),
+                        "default" => [
+                            "expression" => "administrator",
+                        ],
+                    ],
+                    [
+                        "name" => "message",
+                        "type" => "expression",
+                        "label" => __("Message", "post-expirator"),
+                        "default" => [
+                            // translators: do not translate {{global.workflow.title}}
+                            "expression" => __("Please select an option to continue the workflow: {{global.workflow.title}}", "post-expirator"),
+                        ],
+                    ],
+                    [
+                        "name" => "options",
+                        "type" => "customOptions",
+                        "label" => __("Options", "post-expirator"),
+                        "description" => __("Specify the options the user can choose from.", "post-expirator"),
+                        "default" => [
+                            "options" => [
+                                [
+                                    "name" => "continue",
+                                    "label" => __("Continue", "post-expirator"),
+                                    "hint" => __("Continue the workflow", "post-expirator"),
+                                ],
+                                [
+                                    "name" => "cancel",
+                                    "label" => __("Cancel", "post-expirator"),
+                                    "hint" => __("Cancel the workflow", "post-expirator"),
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ]
+        ];
+    }
+
+    public function getValidationSchema(): array
+    {
+        return [
+            "connections" => [
+                "rules" => [
+                    [
+                        "rule" => "hasIncomingConnection",
+                    ],
+                ]
+            ],
+            "settings" => [
+                "rules" => [
+                    [
+                        "rule" => "required",
+                        "field" => "responders",
+                        "message" => __("You must specify at least one responder.", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "required",
+                        "field" => "message",
+                        "message" => __("You must specify a message.", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "required",
+                        "field" => "options",
+                        "message" => __("You must specify at least one option.", "post-expirator"),
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    public function getStepScopedVariablesSchema(): array
+    {
+        return [];
+    }
+
+    public function getOutputSchema(): array
+    {
+        return [
+            [
+                "name" => "input",
+                "type" => "input",
+                "label" => __("Step input", "post-expirator"),
+                "description" => __("The input data for this step.", "post-expirator"),
+            ],
+            [
+                "name" => "responders",
+                "type" => "string",
+                "label" => __("Responders", "post-expirator"),
+                "description" => __("The responders to the interactive delay, as a list of user ids.", "post-expirator"),
+            ],
+            [
+                "name" => "option",
+                "type" => "string",
+                "label" => __("Option", "post-expirator"),
+                "description" => __("The option selected by the user.", "post-expirator"),
+            ],
+            [
+                "name" => "expired",
+                "type" => "boolean",
+                "label" => __("Expired", "post-expirator"),
+                "description" => __("Whether the interactive delay has expired.", "post-expirator"),
+            ]
+        ];
+    }
+
+    public function getCSSClass(): string
+    {
+        return "react-flow__node-genericAdvanced";
+    }
+
+    public function getHandleSchema(): array
+    {
+        return [
+            "target" => [
+                [
+                    "id" => "input",
+                ]
+            ],
+            "source" => [
+                [
+                    "id" => "output",
+                    "label" => __("After interaction", "post-expirator"),
+                ],
+            ]
+        ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return true;
+    }
+}
