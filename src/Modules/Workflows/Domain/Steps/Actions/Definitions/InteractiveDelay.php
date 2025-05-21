@@ -168,12 +168,6 @@ class InteractiveDelay implements StepTypeInterface
                 "label" => __("Option", "post-expirator"),
                 "description" => __("The option selected by the user.", "post-expirator"),
             ],
-            [
-                "name" => "expired",
-                "type" => "boolean",
-                "label" => __("Expired", "post-expirator"),
-                "description" => __("Whether the interactive delay has expired.", "post-expirator"),
-            ]
         ];
     }
 
