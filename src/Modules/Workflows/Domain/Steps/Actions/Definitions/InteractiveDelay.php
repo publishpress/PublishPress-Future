@@ -61,8 +61,8 @@ class InteractiveDelay implements StepTypeInterface
     {
         return [
             [
-                "label" => __("Interactive options", "post-expirator"),
-                "description" => __("Specify the options for the interactive delay.", "post-expirator"),
+                "label" => __("Responders", "post-expirator"),
+                "description" => __("Specify the responders for the interactive delay.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "responders",
@@ -76,6 +76,21 @@ class InteractiveDelay implements StepTypeInterface
                             "expression" => "administrator",
                         ],
                     ],
+                ],
+            ],
+            [
+                "label" => __("Message", "post-expirator"),
+                "description" => __("Specify the message to be displayed to the responders.", "post-expirator"),
+                "fields" => [
+                    [
+                        "name" => "subject",
+                        "type" => "expression",
+                        "label" => __("Subject", "post-expirator"),
+                        "default" => [
+                            // translators: do not translate {{global.workflow.title}}
+                            "expression" => __('PublishPress Workflow: {{global.workflow.title}}', 'post-expirator'),
+                        ],
+                    ],
                     [
                         "name" => "message",
                         "type" => "expression",
@@ -85,6 +100,12 @@ class InteractiveDelay implements StepTypeInterface
                             "expression" => __("Please select an option to continue the workflow: {{global.workflow.title}}", "post-expirator"),
                         ],
                     ],
+                ],
+            ],
+            [
+                "label" => __("Options", "post-expirator"),
+                "description" => __("Specify the options the user can choose from.", "post-expirator"),
+                "fields" => [
                     [
                         "name" => "options",
                         "type" => "customOptions",
