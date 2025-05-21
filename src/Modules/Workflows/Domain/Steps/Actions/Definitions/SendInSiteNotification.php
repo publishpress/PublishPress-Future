@@ -201,7 +201,7 @@ class SendInSiteNotification implements StepTypeInterface
                 ],
                 [
                     "id" => "read",
-                    "label" => __("On read", "post-expirator"),
+                    "label" => __("On dismiss", "post-expirator"),
                 ],
             ]
         ];
