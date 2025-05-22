@@ -184,10 +184,10 @@ class InteractiveDelay implements StepTypeInterface
                 "description" => __("The responders to the interactive delay, as a list of user ids.", "post-expirator"),
             ],
             [
-                "name" => "option",
+                "name" => "optionName",
                 "type" => "string",
-                "label" => __("Option", "post-expirator"),
-                "description" => __("The option selected by the user.", "post-expirator"),
+                "label" => __("Option name", "post-expirator"),
+                "description" => __("The name of the option selected by the user.", "post-expirator"),
             ],
         ];
     }
