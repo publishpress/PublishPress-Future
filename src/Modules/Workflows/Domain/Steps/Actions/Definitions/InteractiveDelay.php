@@ -87,7 +87,6 @@ class InteractiveDelay implements StepTypeInterface
                         "type" => "expression",
                         "label" => __("Subject", "post-expirator"),
                         "default" => [
-                            // translators: do not translate {{global.workflow.title}}
                             "expression" => __('PublishPress Workflow: {{global.workflow.title}}', 'post-expirator'),
                         ],
                     ],
@@ -96,7 +95,6 @@ class InteractiveDelay implements StepTypeInterface
                         "type" => "expression",
                         "label" => __("Message", "post-expirator"),
                         "default" => [
-                            // translators: do not translate {{global.workflow.title}}
                             "expression" => __("Please select an option to continue the workflow: {{global.workflow.title}}", "post-expirator"),
                         ],
                     ],
