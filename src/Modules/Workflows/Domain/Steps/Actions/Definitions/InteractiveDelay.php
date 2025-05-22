@@ -110,7 +110,7 @@ class InteractiveDelay implements StepTypeInterface
                         "name" => "options",
                         "type" => "customOptions",
                         "label" => __("Options", "post-expirator"),
-                        "description" => __("Specify the options the user can choose from.", "post-expirator"),
+                        "description" => __("Configure the available response options for users. Each option can have a custom label and hint. A 'Dismiss' option will be automatically added as the final choice.", "post-expirator"),
                         "default" => [
                             "options" => [
                                 [
