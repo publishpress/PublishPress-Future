@@ -296,8 +296,6 @@ class WorkflowEngine implements WorkflowEngineInterface
 
         /**
          * Action triggered when the workflows are initialized.
-         *
-         * @param array $workflowIdsToRun The IDs of the workflows to run.
          */
         $this->hooks->doAction(
             HooksAbstract::ACTION_WORKFLOW_ENGINE_WORKFLOWS_INITIALIZED
