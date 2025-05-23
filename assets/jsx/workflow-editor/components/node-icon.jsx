@@ -24,6 +24,7 @@ import LockIcon from './icons/lock';
 import ShopIcon from './icons/shop';
 import BracesIcon from './icons/braces';
 import ActionIcon from './icons/action';
+import InteractiveIcon from './icons/interactive';
 
 export function NodeIcon({
 	icon,
@@ -135,6 +136,11 @@ export function NodeIcon({
 		case 'action':
 			icon = {
 				src: ActionIcon,
+			};
+			break;
+		case 'interactive':
+			icon = {
+				src: InteractiveIcon,
 			};
 			break;
 	}
