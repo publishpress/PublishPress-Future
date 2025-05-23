@@ -31,6 +31,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Remove site metadata from the execution context on workflows (Issue #1332).
 
+### Developer
+
+- Enhanced workflow runner infinite loop prevention by implementing ExecutionContextInterface and adding execution ID tracking for improved detection accuracy.
+
 ## [4.6.0] - 7 May, 2025
 
 ### Added
