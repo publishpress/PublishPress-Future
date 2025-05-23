@@ -13,6 +13,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add a "Copy" button to workflows (Issue #1183).
 - Add a "Cancel Scheduled Actions" button to workflows lists (Issue #1326).
 - Add Add a new step for interactive delay (Issue #1257).
+- Add new workflow engine action hooks for enhanced extensibility:
+  - `publishpressfuture_workflow_engine_initialize_workflow`: Fires when a workflow is being initialized
+  - `publishpressfuture_workflow_engine_setup_trigger`: Fires when configuring a workflow trigger
+  - `publishpressfuture_workflow_engine_setup_step`: Fires when setting up a workflow step
+  - `publishpressfuture_workflow_engine_execute_scheduled_step`: Fires when executing a scheduled workflow step
+  - `publishpressfuture_workflow_engine_execute_step`: Fires when executing a workflow step
+  - `publishpressfuture_workflow_engine_workflows_initialized`: Fires when all workflows are initialized
+  - `publishpressfuture_workflow_engine_start_engine`: Fires when the workflow engine starts
+  - `publishpressfuture_workflow_engine_run_workflows`: Fires when workflows begin execution
 
 ### Changed
 
