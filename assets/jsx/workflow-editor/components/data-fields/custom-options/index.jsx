@@ -6,6 +6,14 @@ import { useEffect, useState } from "@wordpress/element";
 import OptionItem from "./option-item";
 import "./style.css";
 
+const DEFAULT_OPTIONS = [
+    {
+        name: 'dismiss',
+        label: __('Dismiss', 'post-expirator'),
+        hint: __('Dismiss the notification', 'post-expirator'),
+    },
+];
+
 export function CustomOptions({
     name,
     label,
@@ -24,27 +32,9 @@ export function CustomOptions({
         }
     }
 
-    if (!defaultValue || !Array.isArray(defaultValue)) {
-        defaultValue = [];
+    if (!defaultValue || !Array.isArray(defaultValue) || defaultValue.length === 0) {
+        defaultValue = DEFAULT_OPTIONS;
     }
-
-    // If the options are empty or have no value, set the default value
-    useEffect(() => {
-        if (!defaultValue || !Array.isArray(defaultValue)) {
-            defaultValue = [
-                {
-                    name: 'continue',
-                    label: __('Continue', 'post-expirator'),
-                    hint: __('Continue the workflow', 'post-expirator'),
-                },
-                {
-                    name: 'cancel',
-                    label: __('Cancel', 'post-expirator'),
-                    hint: __('Cancel the workflow', 'post-expirator'),
-                },
-            ];
-        }
-    }, []);
 
     const getDefaultName = () => {
         let index = defaultValue.length + 1;
