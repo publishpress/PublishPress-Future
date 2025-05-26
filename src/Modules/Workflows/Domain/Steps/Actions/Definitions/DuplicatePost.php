@@ -158,7 +158,7 @@ class DuplicatePost implements StepTypeInterface
                 "name" => "newPostIds",
                 "type" => "array",
                 "itemsType" => "integer",
-                "label" => __("Array of duplicated post IDs", "post-expirator"),
+                "label" => __("Duplicated post IDs", "post-expirator"),
                 "description" => __("The IDs of the newly created duplicate posts.", "post-expirator"),
             ],
         ];
@@ -171,7 +171,7 @@ class DuplicatePost implements StepTypeInterface
                 "name" => "newPostIds",
                 "type" => "array",
                 "itemsType" => "integer",
-                "label" => __("Array of duplicated post IDs", "post-expirator"),
+                "label" => __("Duplicated post IDs", "post-expirator"),
                 "description" => __("The IDs of the newly created duplicate posts.", "post-expirator"),
             ],
             [
