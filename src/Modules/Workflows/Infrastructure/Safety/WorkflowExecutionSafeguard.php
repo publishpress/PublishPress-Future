@@ -32,7 +32,7 @@ class WorkflowExecutionSafeguard implements WorkflowExecutionSafeguardInterface
     }
 
     public function detectInfiniteLoop(
-        ?ExecutionContextInterface $executionContext = null,
+        ?ExecutionContextInterface $executionContext,
         array $step,
         string $uniqueId = ''
     ): bool {
