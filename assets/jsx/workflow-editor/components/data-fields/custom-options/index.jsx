@@ -81,6 +81,8 @@ export function CustomOptions({
         onChangeSetting({ value: newOptions });
     }
 
+    const hasOnlyOneOption = defaultValue.length === 1;
+
     return (
         <>
             <VStack className="workflow-editor-panel__row-options-container">
@@ -100,7 +102,9 @@ export function CustomOptions({
                             withExpression={settings?.withExpression}
                             variables={variables}
                         />
-                        <Button onClick={() => onClickRemoveOption(index)} isSmall={true} iconSize={16} icon={'trash'} />
+                        {! hasOnlyOneOption && (
+                            <Button onClick={() => onClickRemoveOption(index)} isSmall={true} iconSize={16} icon={'trash'} />
+                        )}
                     </div>
                 ))}
 
