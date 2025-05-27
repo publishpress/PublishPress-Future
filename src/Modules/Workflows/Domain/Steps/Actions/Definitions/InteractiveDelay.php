@@ -136,18 +136,42 @@ class InteractiveDelay implements StepTypeInterface
                 "rules" => [
                     [
                         "rule" => "required",
-                        "field" => "responders",
-                        "message" => __("You must specify at least one responder.", "post-expirator"),
+                        "field" => "responders.expression",
+                        "label" => __("Responders", "post-expirator"),
                     ],
                     [
                         "rule" => "required",
-                        "field" => "message",
-                        "message" => __("You must specify a message.", "post-expirator"),
+                        "field" => "subject.expression",
+                        "label" => __("Subject", "post-expirator"),
                     ],
                     [
                         "rule" => "required",
+                        "field" => "message.expression",
+                        "label" => __("Message", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "responders.expression",
+                        "label" => __("Responders", "post-expirator"),
+                        "fieldLabel" => __("Responders > Responders", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "subject.expression",
+                        "label" => __("Subject", "post-expirator"),
+                        "fieldLabel" => __("Message > Subject", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "validExpression",
+                        "field" => "message.expression",
+                        "label" => __("Message", "post-expirator"),
+                        "fieldLabel" => __("Message > Message", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "validOptions",
                         "field" => "options",
-                        "message" => __("You must specify at least one option.", "post-expirator"),
+                        "label" => __("Options", "post-expirator"),
+                        "fieldLabel" => __("Options > Options", "post-expirator"),
                     ]
                 ]
             ]

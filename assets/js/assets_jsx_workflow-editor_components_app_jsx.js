@@ -11560,6 +11560,68 @@ function NodeValidator(_ref) {
     }
     return successfulResult;
   }, [nodeSlugs]);
+  var isOptionsValid = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useCallback)(function (options, ruleData) {
+    if (!Array.isArray(options)) {
+      return {
+        isValid: false,
+        error: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(
+        // translators: %s is the field label.
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a list of options.', 'post-expirator'), ruleData === null || ruleData === void 0 ? void 0 : ruleData.fieldLabel)
+      };
+    }
+    var successfulResult = {
+      isValid: true,
+      error: null
+    };
+    var invalidOptions = false;
+    if (options.length === 0) {
+      invalidOptions = true;
+    }
+    var detailsMessage = '';
+    var optionIndex = 0;
+    var optionNames = [];
+    var optionLabels = [];
+    options.forEach(function (option) {
+      var _option$name;
+      optionIndex++;
+      if (!((_option$name = option.name) !== null && _option$name !== void 0 && _option$name.trim())) {
+        invalidOptions = true;
+        detailsMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(
+        // translators: %s is the option name.
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The option "%s" does not have a name.', 'post-expirator'), optionIndex);
+      }
+      if (!option.label.trim()) {
+        invalidOptions = true;
+        detailsMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(
+        // translators: %s is the option name.
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The option "%s" does not have a label.', 'post-expirator'), optionIndex);
+      }
+      if (optionNames.includes(option.name)) {
+        invalidOptions = true;
+        detailsMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(
+        // translators: %s is the option name.
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The option "%s" has a duplicate name.', 'post-expirator'), option.name);
+      }
+      if (optionLabels.includes(option.label)) {
+        invalidOptions = true;
+        detailsMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(
+        // translators: %s is the option label.
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The option "%s" has a duplicate label.', 'post-expirator'), option.label);
+      }
+      optionNames.push(option.name);
+      optionLabels.push(option.label);
+    });
+    if (invalidOptions) {
+      return {
+        isValid: false,
+        error: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(
+        // translators: %s is the field label.
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a valid list of options.', 'post-expirator'), ruleData === null || ruleData === void 0 ? void 0 : ruleData.fieldLabel),
+        details: detailsMessage
+      };
+    }
+    return successfulResult;
+  }, []);
   var validateNodes = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useCallback)(function (nodes, edges, nodeSlugs) {
     nodes.forEach(function (node) {
       var _node$data, _node$data2, _validationSchema$con, _validationSchema$set;
@@ -11711,6 +11773,15 @@ function NodeValidator(_ref) {
               var expressionValidation = isExpressionValid(settingValue, ruleData);
               if (!expressionValidation.isValid) {
                 addNodeError(node.id, "".concat(fieldName, "-validExpression"), expressionValidation.error, expressionValidation.details);
+              }
+              break;
+            case 'validOptions':
+              if (!Array.isArray(settingValue)) {
+                addNodeError(node.id, "".concat(fieldName, "-validOptions"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a list of options.', 'post-expirator'), fieldLabel));
+              }
+              var optionsValidation = isOptionsValid(settingValue, ruleData);
+              if (!optionsValidation.isValid) {
+                addNodeError(node.id, "".concat(fieldName, "-validOptions"), optionsValidation.error, optionsValidation.details);
               }
               break;
           }
