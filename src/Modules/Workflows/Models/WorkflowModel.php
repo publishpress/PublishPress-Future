@@ -587,7 +587,7 @@ class WorkflowModel implements WorkflowModelInterface
         $convertedHandles = [];
 
         foreach ($handles as &$handle) {
-            if (substr($handle['type'], 0, 12) !== '__dynamic__:') {
+            if (! isset($handle['type']) || substr($handle['type'], 0, 12) !== '__dynamic__:') {
                 $convertedHandles[] = $handle;
                 continue;
             }
