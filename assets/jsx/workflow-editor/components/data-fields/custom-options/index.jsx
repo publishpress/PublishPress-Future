@@ -25,6 +25,7 @@ export function CustomOptions({
     description,
     canChangeNameCallback,
     cantChangeNameDescription,
+    onNameChangeCallback,
 }) {
     const [autoOpenItem, setAutoOpenItem] = useState(null);
 
@@ -95,6 +96,7 @@ export function CustomOptions({
                             variables={variables}
                             canChangeName={canChangeNameCallback ? canChangeNameCallback(option) : true}
                             cantChangeNameDescription={cantChangeNameDescription}
+                            onNameChangeCallback={onNameChangeCallback}
                         />
                         {! hasOnlyOneOption && (
                             <Button onClick={() => onClickRemoveOption(index)} isSmall={true} iconSize={16} icon={'trash'} />

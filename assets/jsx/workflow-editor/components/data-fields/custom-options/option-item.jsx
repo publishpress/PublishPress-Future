@@ -15,7 +15,8 @@ export const OptionItem = ({
     autoOpen,
     withExpression = false,
     canChangeName = true,
-    cantChangeNameDescription = ''
+    cantChangeNameDescription = '',
+    onNameChangeCallback,
 }) => {
     defaultValue = {
         name: "",
@@ -27,6 +28,10 @@ export const OptionItem = ({
     const onChangeName = (value) => {
         value = value.replace(/[^a-zA-Z0-9_]/g, '').trim();
         onChange({ ...defaultValue, name: value });
+
+        if (onNameChangeCallback) {
+            onNameChangeCallback(value);
+        }
     }
 
     const onChangeLabel = (value) => {

@@ -15,7 +15,6 @@ import { getNodeHandleSchema } from '../../utils';
 
 export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIcon }) => {
     const {
-        nodeErrors,
         nodeHasErrors,
         isAdvancedSettingsEnabled,
         isSingularElementSelected,
@@ -25,7 +24,6 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
         const selectedElementsCount = select(workflowStore).getSelectedElementsCount();
 
         return {
-            nodeErrors,
             nodeHasErrors: Object.keys(nodeErrors).length > 0,
             isAdvancedSettingsEnabled: true,
             isSingularElementSelected: selectedElementsCount === 1,
@@ -46,6 +44,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
     } = useDispatch(editorStore);
 
     const previousHandlesCountRef = useRef();
+    const previousSourceHandlesRef = useRef();
 
     let nodeType = getNodeTypeByName(data.name);
 
@@ -186,8 +185,24 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
 
                     updateNodeInternals(id);
                 }
-            }, [handlesToDisplay, updateNodeInternals]);
 
+                // Detect if the handles ids have changed
+                if (previousSourceHandlesRef.current) {
+                    const handlesChanged = previousSourceHandlesRef.current.some((prevHandle, index) => {
+                        const currentHandle = handlesToDisplay[index];
+                        return !currentHandle || prevHandle.id !== currentHandle.id;
+                    });
+
+                    if (handlesChanged) {
+                        previousSourceHandlesRef.current = handlesToDisplay;
+
+                        updateNodeInternals(id);
+                    }
+                }
+                if (! previousSourceHandlesRef.current) {
+                    previousSourceHandlesRef.current = handlesToDisplay;
+                }
+            }, [handlesToDisplay, updateNodeInternals]);
 
             sourceHandles = handlesToDisplay.map((handle, index) => {
                 const left = calculateLeftPosition(index, handlesToDisplay.length);

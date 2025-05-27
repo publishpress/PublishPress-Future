@@ -14,7 +14,7 @@ export function InteractiveCustomOptions(props) {
      * @returns {boolean}
      */
     const canChangeNameCallback = (option) => {
-        const connectedSourceHandlesOfSelectedNode = select(workflowStore).getConnectedSourceHandlesOfSelectedNode()
+        const connectedSourceHandlesOfSelectedNode = select(workflowStore).getConnectedSourceHandlesOfSelectedNode();
 
         if (connectedSourceHandlesOfSelectedNode.length === 0) {
             return true;
@@ -27,6 +27,6 @@ export function InteractiveCustomOptions(props) {
 
     return <CustomOptions {...props}
         canChangeNameCallback={canChangeNameCallback}
-        cantChangeNameDescription={__("This option is connected to a source handle and cannot have its name changed.", "post-expirator")}
+        cantChangeNameDescription={__("This option is used to connect to another step and cannot have its name changed until the connection is removed.", "post-expirator")}
     />;
 }

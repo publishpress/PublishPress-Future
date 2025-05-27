@@ -1557,7 +1557,8 @@ function CustomOptions(_ref) {
     helpUrl = _ref.helpUrl,
     description = _ref.description,
     canChangeNameCallback = _ref.canChangeNameCallback,
-    cantChangeNameDescription = _ref.cantChangeNameDescription;
+    cantChangeNameDescription = _ref.cantChangeNameDescription,
+    onNameChangeCallback = _ref.onNameChangeCallback;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
     autoOpenItem = _useState2[0],
@@ -1638,7 +1639,8 @@ function CustomOptions(_ref) {
       withExpression: settings === null || settings === void 0 ? void 0 : settings.withExpression,
       variables: variables,
       canChangeName: canChangeNameCallback ? canChangeNameCallback(option) : true,
-      cantChangeNameDescription: cantChangeNameDescription
+      cantChangeNameDescription: cantChangeNameDescription,
+      onNameChangeCallback: onNameChangeCallback
     }), !hasOnlyOneOption && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
       onClick: function onClick() {
         return onClickRemoveOption(index);
@@ -1707,7 +1709,8 @@ var OptionItem = function OptionItem(_ref) {
     _ref$canChangeName = _ref.canChangeName,
     canChangeName = _ref$canChangeName === void 0 ? true : _ref$canChangeName,
     _ref$cantChangeNameDe = _ref.cantChangeNameDescription,
-    cantChangeNameDescription = _ref$cantChangeNameDe === void 0 ? '' : _ref$cantChangeNameDe;
+    cantChangeNameDescription = _ref$cantChangeNameDe === void 0 ? '' : _ref$cantChangeNameDe,
+    onNameChangeCallback = _ref.onNameChangeCallback;
   defaultValue = _objectSpread({
     name: "",
     label: "",
@@ -1718,6 +1721,9 @@ var OptionItem = function OptionItem(_ref) {
     onChange(_objectSpread(_objectSpread({}, defaultValue), {}, {
       name: value
     }));
+    if (onNameChangeCallback) {
+      onNameChangeCallback(value);
+    }
   };
   var onChangeLabel = function onChangeLabel(value) {
     onChange(_objectSpread(_objectSpread({}, defaultValue), {}, {
@@ -3043,7 +3049,7 @@ function InteractiveCustomOptions(props) {
   };
   return /*#__PURE__*/React.createElement(_custom_options__WEBPACK_IMPORTED_MODULE_2__.CustomOptions, _extends({}, props, {
     canChangeNameCallback: canChangeNameCallback,
-    cantChangeNameDescription: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("This option is connected to a source handle and cannot have its name changed.", "post-expirator")
+    cantChangeNameDescription: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("This option is used to connect to another step and cannot have its name changed until the connection is removed.", "post-expirator")
   }));
 }
 
@@ -10614,14 +10620,12 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
       var nodeErrors = select(_workflow_store__WEBPACK_IMPORTED_MODULE_3__.store).getNodeErrors(id);
       var selectedElementsCount = select(_workflow_store__WEBPACK_IMPORTED_MODULE_3__.store).getSelectedElementsCount();
       return {
-        nodeErrors: nodeErrors,
         nodeHasErrors: Object.keys(nodeErrors).length > 0,
         isAdvancedSettingsEnabled: true,
         isSingularElementSelected: selectedElementsCount === 1,
         getNodeTypeByName: select(_editor_store__WEBPACK_IMPORTED_MODULE_4__.store).getNodeTypeByName
       };
     }),
-    nodeErrors = _useSelect.nodeErrors,
     nodeHasErrors = _useSelect.nodeHasErrors,
     isAdvancedSettingsEnabled = _useSelect.isAdvancedSettingsEnabled,
     isSingularElementSelected = _useSelect.isSingularElementSelected,
@@ -10633,6 +10637,7 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
   var _useDispatch2 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_editor_store__WEBPACK_IMPORTED_MODULE_4__.store),
     openGeneralSidebar = _useDispatch2.openGeneralSidebar;
   var previousHandlesCountRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var previousSourceHandlesRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var nodeType = getNodeTypeByName(data.name);
   if (!nodeType || !nodeType.handleSchema) {
     nodeType = {
@@ -10748,6 +10753,21 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
           });
           document.dispatchEvent(event);
           updateNodeInternals(id);
+        }
+
+        // Detect if the handles ids have changed
+        if (previousSourceHandlesRef.current) {
+          var handlesChanged = previousSourceHandlesRef.current.some(function (prevHandle, index) {
+            var currentHandle = handlesToDisplay[index];
+            return !currentHandle || prevHandle.id !== currentHandle.id;
+          });
+          if (handlesChanged) {
+            previousSourceHandlesRef.current = handlesToDisplay;
+            updateNodeInternals(id);
+          }
+        }
+        if (!previousSourceHandlesRef.current) {
+          previousSourceHandlesRef.current = handlesToDisplay;
         }
       }, [handlesToDisplay, updateNodeInternals]);
       sourceHandles = handlesToDisplay.map(function (handle, index) {
