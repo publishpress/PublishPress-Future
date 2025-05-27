@@ -1558,7 +1558,9 @@ function CustomOptions(_ref) {
     description = _ref.description,
     canChangeNameCallback = _ref.canChangeNameCallback,
     cantChangeNameDescription = _ref.cantChangeNameDescription,
-    onNameChangeCallback = _ref.onNameChangeCallback;
+    onNameChangeCallback = _ref.onNameChangeCallback,
+    _ref$maxOptions = _ref.maxOptions,
+    maxOptions = _ref$maxOptions === void 0 ? 10 : _ref$maxOptions;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
     autoOpenItem = _useState2[0],
@@ -1587,6 +1589,9 @@ function CustomOptions(_ref) {
     };
   };
   var onClickAddOption = function onClickAddOption() {
+    if (defaultValue.length >= maxOptions) {
+      return;
+    }
     var defaultName = getDefaultName();
     var name = defaultName.name;
     var nameIndex = defaultName.index;
@@ -1651,7 +1656,7 @@ function CustomOptions(_ref) {
     }));
   }), defaultValue.length === 0 && /*#__PURE__*/React.createElement("div", {
     className: "workflow-editor-panel__row-options-empty"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('No options added to the action.', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('No options added to the action.', 'post-expirator')), defaultValue.length < maxOptions && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
     onClick: onClickAddOption,
     iconSize: 16,
     icon: 'plus',
@@ -1659,6 +1664,8 @@ function CustomOptions(_ref) {
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Add a new option', 'post-expirator')), description && /*#__PURE__*/React.createElement(_description_text__WEBPACK_IMPORTED_MODULE_2__.DescriptionText, {
     text: description,
     helpUrl: helpUrl
+  }), defaultValue.length >= maxOptions && /*#__PURE__*/React.createElement(_description_text__WEBPACK_IMPORTED_MODULE_2__.DescriptionText, {
+    text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('You have reached the maximum number of options. You can add up to %s options.', 'post-expirator'), maxOptions)
   })));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomOptions);
@@ -3049,7 +3056,8 @@ function InteractiveCustomOptions(props) {
   };
   return /*#__PURE__*/React.createElement(_custom_options__WEBPACK_IMPORTED_MODULE_2__.CustomOptions, _extends({}, props, {
     canChangeNameCallback: canChangeNameCallback,
-    cantChangeNameDescription: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("This option is used to connect to another step and cannot have its name changed until the connection is removed.", "post-expirator")
+    cantChangeNameDescription: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("This option is used to connect to another step and cannot have its name changed until the connection is removed.", "post-expirator"),
+    maxOptions: 6
   }));
 }
 

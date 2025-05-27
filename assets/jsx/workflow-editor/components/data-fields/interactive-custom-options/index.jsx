@@ -28,5 +28,6 @@ export function InteractiveCustomOptions(props) {
     return <CustomOptions {...props}
         canChangeNameCallback={canChangeNameCallback}
         cantChangeNameDescription={__("This option is used to connect to another step and cannot have its name changed until the connection is removed.", "post-expirator")}
+        maxOptions={6}
     />;
 }

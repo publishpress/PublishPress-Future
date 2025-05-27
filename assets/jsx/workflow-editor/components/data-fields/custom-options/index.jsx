@@ -26,6 +26,7 @@ export function CustomOptions({
     canChangeNameCallback,
     cantChangeNameDescription,
     onNameChangeCallback,
+    maxOptions = 10,
 }) {
     const [autoOpenItem, setAutoOpenItem] = useState(null);
 
@@ -55,6 +56,10 @@ export function CustomOptions({
     }
 
     const onClickAddOption = () => {
+        if (defaultValue.length >= maxOptions) {
+            return;
+        }
+
         const defaultName = getDefaultName();
         const name = defaultName.name;
         const nameIndex = defaultName.index;
@@ -110,13 +115,25 @@ export function CustomOptions({
                     </div>
                 )}
 
-                <Button onClick={onClickAddOption} iconSize={16} icon={'plus'} variant="tertiary">
-                    {__('Add a new option', 'post-expirator')}
-                </Button>
-
+                {defaultValue.length < maxOptions && (
+                    <Button onClick={onClickAddOption} iconSize={16} icon={'plus'} variant="tertiary">
+                        {__('Add a new option', 'post-expirator')}
+                    </Button>
+                )}
 
                 {description && (
                     <DescriptionText text={description} helpUrl={helpUrl} />
+                )}
+
+                {defaultValue.length >= maxOptions && (
+                    <DescriptionText
+                        text={
+                            sprintf(
+                                __('You have reached the maximum number of options. You can add up to %s options.', 'post-expirator'),
+                                maxOptions
+                            )
+                        }
+                    />
                 )}
             </VStack>
         </>
