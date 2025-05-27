@@ -2,7 +2,7 @@ import { __, sprintf } from "@wordpress/i18n";
 import { Button } from "@wordpress/components";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 import { DescriptionText } from "../description-text";
-import { useEffect, useState } from "@wordpress/element";
+import { useState } from "@wordpress/element";
 import OptionItem from "./option-item";
 import "./style.css";
 
@@ -23,6 +23,8 @@ export function CustomOptions({
     variables = [],
     helpUrl,
     description,
+    canChangeNameCallback,
+    cantChangeNameDescription,
 }) {
     const [autoOpenItem, setAutoOpenItem] = useState(null);
 
@@ -91,6 +93,8 @@ export function CustomOptions({
                             onClosePopover={() => setAutoOpenItem(null)}
                             withExpression={settings?.withExpression}
                             variables={variables}
+                            canChangeName={canChangeNameCallback ? canChangeNameCallback(option) : true}
+                            cantChangeNameDescription={cantChangeNameDescription}
                         />
                         {! hasOnlyOneOption && (
                             <Button onClick={() => onClickRemoveOption(index)} isSmall={true} iconSize={16} icon={'trash'} />

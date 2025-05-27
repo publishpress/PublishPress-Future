@@ -1541,6 +1541,11 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+var DEFAULT_OPTIONS = [{
+  name: 'dismiss',
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Dismiss', 'post-expirator'),
+  hint: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Dismiss the notification', 'post-expirator')
+}];
 function CustomOptions(_ref) {
   var name = _ref.name,
     label = _ref.label,
@@ -1550,7 +1555,9 @@ function CustomOptions(_ref) {
     _ref$variables = _ref.variables,
     variables = _ref$variables === void 0 ? [] : _ref$variables,
     helpUrl = _ref.helpUrl,
-    description = _ref.description;
+    description = _ref.description,
+    canChangeNameCallback = _ref.canChangeNameCallback,
+    cantChangeNameDescription = _ref.cantChangeNameDescription;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
     autoOpenItem = _useState2[0],
@@ -1561,24 +1568,9 @@ function CustomOptions(_ref) {
       onChange(name, value);
     }
   };
-  if (!defaultValue || !Array.isArray(defaultValue)) {
-    defaultValue = [];
+  if (!defaultValue || !Array.isArray(defaultValue) || defaultValue.length === 0) {
+    defaultValue = DEFAULT_OPTIONS;
   }
-
-  // If the options are empty or have no value, set the default value
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
-    if (!defaultValue || !Array.isArray(defaultValue)) {
-      defaultValue = [{
-        name: 'continue',
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Continue', 'post-expirator'),
-        hint: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Continue the workflow', 'post-expirator')
-      }, {
-        name: 'cancel',
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Cancel', 'post-expirator'),
-        hint: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Cancel the workflow', 'post-expirator')
-      }];
-    }
-  }, []);
   var getDefaultName = function getDefaultName() {
     var index = defaultValue.length + 1;
     var name = "option".concat(index);
@@ -1622,6 +1614,7 @@ function CustomOptions(_ref) {
       value: newOptions
     });
   };
+  var hasOnlyOneOption = defaultValue.length === 1;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalVStack, {
     className: "workflow-editor-panel__row-options-container"
   }, /*#__PURE__*/React.createElement("label", {
@@ -1643,8 +1636,10 @@ function CustomOptions(_ref) {
         return setAutoOpenItem(null);
       },
       withExpression: settings === null || settings === void 0 ? void 0 : settings.withExpression,
-      variables: variables
-    }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+      variables: variables,
+      canChangeName: canChangeNameCallback ? canChangeNameCallback(option) : true,
+      cantChangeNameDescription: cantChangeNameDescription
+    }), !hasOnlyOneOption && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
       onClick: function onClick() {
         return onClickRemoveOption(index);
       },
@@ -1681,19 +1676,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _inline_setting__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../inline-setting */ "./assets/jsx/workflow-editor/components/data-fields/inline-setting/index.jsx");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _expression_builder__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../expression-builder */ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/index.jsx");
+/* harmony import */ var _inline_setting__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../inline-setting */ "./assets/jsx/workflow-editor/components/data-fields/inline-setting/index.jsx");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _expression_builder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../expression-builder */ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/index.jsx");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-
 
 
 
@@ -1711,7 +1703,11 @@ var OptionItem = function OptionItem(_ref) {
     isLoading = _ref.isLoading,
     autoOpen = _ref.autoOpen,
     _ref$withExpression = _ref.withExpression,
-    withExpression = _ref$withExpression === void 0 ? false : _ref$withExpression;
+    withExpression = _ref$withExpression === void 0 ? false : _ref$withExpression,
+    _ref$canChangeName = _ref.canChangeName,
+    canChangeName = _ref$canChangeName === void 0 ? true : _ref$canChangeName,
+    _ref$cantChangeNameDe = _ref.cantChangeNameDescription,
+    cantChangeNameDescription = _ref$cantChangeNameDe === void 0 ? '' : _ref$cantChangeNameDe;
   defaultValue = _objectSpread({
     name: "",
     label: "",
@@ -1749,7 +1745,7 @@ var OptionItem = function OptionItem(_ref) {
     }
     return "".concat(defaultValue.name, ": ").concat(defaultValue.label);
   };
-  return /*#__PURE__*/React.createElement(_inline_setting__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  return /*#__PURE__*/React.createElement(_inline_setting__WEBPACK_IMPORTED_MODULE_1__["default"], {
     name: name,
     label: label,
     popoverLabel: popoverLabel,
@@ -1757,26 +1753,29 @@ var OptionItem = function OptionItem(_ref) {
     onClosePopover: onClosePopover,
     isLoading: isLoading,
     autoOpen: autoOpen
-  }, /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+  }, /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Name', 'post-expirator'),
     value: defaultValue.name,
     onChange: onChangeName,
-    autoFocus: autoOpen
-  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+    autoFocus: autoOpen,
+    readOnly: !canChangeName
+  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Label', 'post-expirator'),
     value: defaultValue.label,
     onChange: onChangeLabel
-  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Hint', 'post-expirator'),
     value: defaultValue.hint,
     onChange: onChangeHint
-  }), withExpression && /*#__PURE__*/React.createElement(_expression_builder__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }), withExpression && /*#__PURE__*/React.createElement(_expression_builder__WEBPACK_IMPORTED_MODULE_3__["default"], {
     name: "expression",
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Value', 'post-expirator'),
     defaultValue: (_defaultValue3 = defaultValue) === null || _defaultValue3 === void 0 ? void 0 : _defaultValue3.expression,
     onChange: onChangeExpression,
     variables: variables
-  }), /*#__PURE__*/React.createElement("p", {
+  }), cantChangeNameDescription && !canChangeName && /*#__PURE__*/React.createElement("p", {
+    className: "description margin-top"
+  }, cantChangeNameDescription), canChangeName && /*#__PURE__*/React.createElement("p", {
     className: "description margin-top"
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('The option name should only contain letters, numbers and underscores.', 'post-expirator'))));
 };
@@ -3000,6 +2999,53 @@ function Integer(_ref) {
   })));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Integer);
+
+/***/ }),
+
+/***/ "./assets/jsx/workflow-editor/components/data-fields/interactive-custom-options/index.jsx":
+/*!************************************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-fields/interactive-custom-options/index.jsx ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   InteractiveCustomOptions: () => (/* binding */ InteractiveCustomOptions)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _workflow_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../workflow-store */ "./assets/jsx/workflow-editor/components/workflow-store/index.jsx");
+/* harmony import */ var _custom_options__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../custom-options */ "./assets/jsx/workflow-editor/components/data-fields/custom-options/index.jsx");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+
+
+
+
+function InteractiveCustomOptions(props) {
+  /**
+   * Check if the option name can be changed.
+   *
+   * If the option is connected to a source handle, it cannot be changed because
+   * it would break the connections in the workflow.
+   *
+   * @param {Object} option
+   * @returns {boolean}
+   */
+  var canChangeNameCallback = function canChangeNameCallback(option) {
+    var connectedSourceHandlesOfSelectedNode = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_workflow_store__WEBPACK_IMPORTED_MODULE_1__.store).getConnectedSourceHandlesOfSelectedNode();
+    if (connectedSourceHandlesOfSelectedNode.length === 0) {
+      return true;
+    }
+    var isOptionConnected = connectedSourceHandlesOfSelectedNode.includes(option.name);
+    return !isOptionConnected;
+  };
+  return /*#__PURE__*/React.createElement(_custom_options__WEBPACK_IMPORTED_MODULE_2__.CustomOptions, _extends({}, props, {
+    canChangeNameCallback: canChangeNameCallback,
+    cantChangeNameDescription: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("This option is connected to a source handle and cannot have its name changed.", "post-expirator")
+  }));
+}
 
 /***/ }),
 
@@ -6983,6 +7029,12 @@ var FlowEditor = function FlowEditor(props) {
       genericEdge: _edge_types__WEBPACK_IMPORTED_MODULE_10__.GenericEdge
     };
   }, []);
+
+  /**
+   * This is used to update the edges that are connected to the node
+   * when the handles count changes. This is required to avoid the
+   * edges "connected" to the node or handle that do not exist anymore.
+   */
   var handleHandlesCountChanged = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useCallback)(function (event) {
     // Update all the edges that are connected to the node.
     var _event$detail = event.detail,
@@ -10118,6 +10170,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_fields_action_args__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../data-fields/action-args */ "./assets/jsx/workflow-editor/components/data-fields/action-args/index.jsx");
 /* harmony import */ var _data_fields_integer__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../data-fields/integer */ "./assets/jsx/workflow-editor/components/data-fields/integer.jsx");
 /* harmony import */ var _data_fields_custom_options__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../data-fields/custom-options */ "./assets/jsx/workflow-editor/components/data-fields/custom-options/index.jsx");
+/* harmony import */ var _data_fields_interactive_custom_options__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../data-fields/interactive-custom-options */ "./assets/jsx/workflow-editor/components/data-fields/interactive-custom-options/index.jsx");
+
 
 
 
@@ -10196,6 +10250,8 @@ var MappedField = function MappedField(props) {
       return /*#__PURE__*/React.createElement(_data_fields_integer__WEBPACK_IMPORTED_MODULE_24__["default"], props);
     case "customOptions":
       return /*#__PURE__*/React.createElement(_data_fields_custom_options__WEBPACK_IMPORTED_MODULE_25__["default"], props);
+    case "interactiveCustomOptions":
+      return /*#__PURE__*/React.createElement(_data_fields_interactive_custom_options__WEBPACK_IMPORTED_MODULE_26__.InteractiveCustomOptions, props);
   }
   return /*#__PURE__*/React.createElement("div", {
     className: "description"
@@ -10514,7 +10570,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   GenericNode: () => (/* binding */ GenericNode),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var reactflow__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! reactflow */ "./node_modules/@reactflow/core/dist/esm/index.mjs");
+/* harmony import */ var reactflow__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! reactflow */ "./node_modules/@reactflow/core/dist/esm/index.mjs");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node-icon */ "./assets/jsx/workflow-editor/components/node-icon.jsx");
@@ -10532,6 +10588,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var json_logic_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! json-logic-js */ "./node_modules/json-logic-js/logic.js");
 /* harmony import */ var json_logic_js__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(json_logic_js__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../constants */ "./assets/jsx/workflow-editor/constants.jsx");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../utils */ "./assets/jsx/workflow-editor/utils.jsx");
+
 
 
 
@@ -10568,7 +10626,7 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
     isAdvancedSettingsEnabled = _useSelect.isAdvancedSettingsEnabled,
     isSingularElementSelected = _useSelect.isSingularElementSelected,
     getNodeTypeByName = _useSelect.getNodeTypeByName;
-  var updateNodeInternals = (0,reactflow__WEBPACK_IMPORTED_MODULE_12__.useUpdateNodeInternals)();
+  var updateNodeInternals = (0,reactflow__WEBPACK_IMPORTED_MODULE_13__.useUpdateNodeInternals)();
   var isPro = (0,_contexts_pro_context__WEBPACK_IMPORTED_MODULE_9__.useIsPro)();
   var _useDispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_workflow_store__WEBPACK_IMPORTED_MODULE_3__.store),
     removeNode = _useDispatch.removeNode;
@@ -10633,7 +10691,8 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
   var handlesToDisplay;
   if (nodeType.handleSchema) {
     if (nodeType.handleSchema.target) {
-      handlesToDisplay = filterHandlesByConditions(nodeType.handleSchema.target, data);
+      var originalTargetHandles = (0,_utils__WEBPACK_IMPORTED_MODULE_12__.getNodeHandleSchema)(nodeType, data, 'target');
+      handlesToDisplay = filterHandlesByConditions(originalTargetHandles, data);
       (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
         if (previousHandlesCountRef.current !== handlesToDisplay.length) {
           previousHandlesCountRef.current = handlesToDisplay.length;
@@ -10642,7 +10701,7 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
               nodeId: id,
               handlesCount: handlesToDisplay.length,
               handles: handlesToDisplay,
-              originalHandles: nodeType.handleSchema.target,
+              originalHandles: originalTargetHandles,
               type: 'target'
             }
           });
@@ -10652,10 +10711,13 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
       }, [handlesToDisplay, updateNodeInternals]);
       targetHandles = handlesToDisplay.map(function (handle, index) {
         var left = calculateLeftPosition(index, handlesToDisplay.length);
-        return /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_12__.Handle, {
+        if (!(handle !== null && handle !== void 0 && handle.id)) {
+          return null;
+        }
+        return /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_13__.Handle, {
           key: handle.id + '_target',
           type: "target",
-          position: reactflow__WEBPACK_IMPORTED_MODULE_12__.Position.Top,
+          position: reactflow__WEBPACK_IMPORTED_MODULE_13__.Position.Top,
           id: handle.id,
           style: {
             left: "".concat(left)
@@ -10670,7 +10732,8 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
   var handleAreas = null;
   if (nodeType.handleSchema) {
     if (nodeType.handleSchema.source) {
-      handlesToDisplay = filterHandlesByConditions(nodeType.handleSchema.source, data);
+      var originalSourceHandles = (0,_utils__WEBPACK_IMPORTED_MODULE_12__.getNodeHandleSchema)(nodeType, data, 'source');
+      handlesToDisplay = filterHandlesByConditions(originalSourceHandles, data);
       (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
         if (previousHandlesCountRef.current !== handlesToDisplay.length) {
           previousHandlesCountRef.current = handlesToDisplay.length;
@@ -10679,7 +10742,7 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
               nodeId: id,
               handlesCount: handlesToDisplay.length,
               handles: handlesToDisplay,
-              originalHandles: nodeType.handleSchema.source,
+              originalHandles: originalSourceHandles,
               type: 'source'
             }
           });
@@ -10689,10 +10752,13 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
       }, [handlesToDisplay, updateNodeInternals]);
       sourceHandles = handlesToDisplay.map(function (handle, index) {
         var left = calculateLeftPosition(index, handlesToDisplay.length);
-        return /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_12__.Handle, {
+        if (!(handle !== null && handle !== void 0 && handle.id)) {
+          return null;
+        }
+        return /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_13__.Handle, {
           key: handle.id + '_source',
           type: "source",
-          position: reactflow__WEBPACK_IMPORTED_MODULE_12__.Position.Bottom,
+          position: reactflow__WEBPACK_IMPORTED_MODULE_13__.Position.Bottom,
           id: handle.id,
           style: {
             left: "".concat(left)
@@ -10702,6 +10768,9 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
         });
       });
       handleAreas = handlesToDisplay.map(function (handle) {
+        if (!(handle !== null && handle !== void 0 && handle.id)) {
+          return null;
+        }
         return /*#__PURE__*/React.createElement("div", {
           key: handle.id + 'handleArea',
           className: 'react-flow__node-handle-name handle-area-source-' + handle.id
@@ -10717,18 +10786,7 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
   } else if (data.elementaryType === 'trigger') {
     topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Trigger', 'post-expirator');
   }
-  var nodeAttributes = [
-    // {
-    //     id: 'id',
-    //     label: __('ID', 'post-expirator'),
-    //     value: id,
-    // },
-    // {
-    //     id: 'slug',
-    //     label: __('Slug', 'post-expirator'),
-    //     value: data.slug,
-    // },
-  ];
+  var nodeAttributes = [];
   var onClickDeleteNode = function onClickDeleteNode() {
     removeNode(id);
   };
@@ -10808,8 +10866,8 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GenericNode);
 function filterHandlesByConditions(handles, data) {
-  return handles.filter(function (handle) {
-    if (handle.conditions) {
+  return handles === null || handles === void 0 ? void 0 : handles.filter(function (handle) {
+    if (handle !== null && handle !== void 0 && handle.conditions) {
       return json_logic_js__WEBPACK_IMPORTED_MODULE_10___default().apply(handle.conditions, data.settings);
     }
     return true;
@@ -15801,6 +15859,7 @@ function addWorkflowIdToUrl(workflowId) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   getBaseSlugCounts: () => (/* binding */ getBaseSlugCounts),
+/* harmony export */   getConnectedSourceHandlesOfSelectedNode: () => (/* binding */ getConnectedSourceHandlesOfSelectedNode),
 /* harmony export */   getDataTypeByName: () => (/* binding */ getDataTypeByName),
 /* harmony export */   getDataTypes: () => (/* binding */ getDataTypes),
 /* harmony export */   getDraggingFromHandle: () => (/* binding */ getDraggingFromHandle),
@@ -15974,6 +16033,34 @@ function getRayDebugShowEmails(state) {
 }
 function getRayDebugShowWordPressErrors(state) {
   return state.rayDebug.showWordPressErrors;
+}
+
+/**
+ * Returns the source handles of the selected node that are connected to other nodes.
+ * If multiple nodes are selected, it returns the handles of the first node.
+ *
+ * @param {Object} state - The state of the workflow.
+ * @returns {Array} The handles of the selected node.
+ */
+function getConnectedSourceHandlesOfSelectedNode(state) {
+  var selectedNodes = getSelectedNodes(state);
+  if (selectedNodes.length === 0) {
+    return [];
+  }
+  var selectedNode = selectedNodes[0];
+  var edges = getEdges(state);
+  var outputEdges = edges.filter(function (edge) {
+    return edge.source === selectedNode;
+  });
+  var sourceHandles = outputEdges.map(function (edge) {
+    return edge.sourceHandle;
+  });
+
+  // Remove duplicates
+  sourceHandles = sourceHandles.filter(function (handle, index, self) {
+    return self.indexOf(handle) === index;
+  });
+  return sourceHandles;
 }
 
 /***/ }),
@@ -16191,6 +16278,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   getGlobalVariablesExpanded: () => (/* binding */ getGlobalVariablesExpanded),
 /* harmony export */   getId: () => (/* binding */ getId),
 /* harmony export */   getNodeById: () => (/* binding */ getNodeById),
+/* harmony export */   getNodeHandleSchema: () => (/* binding */ getNodeHandleSchema),
 /* harmony export */   getNodeIncomers: () => (/* binding */ getNodeIncomers),
 /* harmony export */   getNodeIncomersRecursively: () => (/* binding */ getNodeIncomersRecursively),
 /* harmony export */   getNodeMenuDefaultClassName: () => (/* binding */ getNodeMenuDefaultClassName),
@@ -16775,6 +16863,29 @@ function getVariableLabelByVariableName(targetVariableName, variables) {
     return null;
   }
   return label;
+}
+function getNodeHandleSchema(nodeType, data, type) {
+  var _nodeType$handleSchem;
+  if (!(nodeType !== null && nodeType !== void 0 && (_nodeType$handleSchem = nodeType.handleSchema) !== null && _nodeType$handleSchem !== void 0 && _nodeType$handleSchem[type])) {
+    return [];
+  }
+  return nodeType.handleSchema[type].reduce(function (handleList, handle) {
+    var _data$settings;
+    if (!(handle !== null && handle !== void 0 && handle.type)) {
+      return [].concat(_toConsumableArray(handleList), [handle]);
+    }
+    if (!handle.type.startsWith('__dynamic__:')) {
+      return handleList;
+    }
+    var settingName = handle.type.replace('__dynamic__:', '');
+    var options = data === null || data === void 0 || (_data$settings = data.settings) === null || _data$settings === void 0 ? void 0 : _data$settings[settingName];
+    return [].concat(_toConsumableArray(handleList), _toConsumableArray(options.map(function (option) {
+      return {
+        id: option.name,
+        label: option.label
+      };
+    })));
+  }, []);
 }
 
 /***/ }),

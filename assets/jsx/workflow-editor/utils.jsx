@@ -640,3 +640,30 @@ export function getVariableLabelByVariableName(targetVariableName, variables) {
 
     return label;
 }
+
+export function getNodeHandleSchema(nodeType, data, type) {
+    if (!nodeType?.handleSchema?.[type]) {
+        return [];
+    }
+
+    return nodeType.handleSchema[type].reduce((handleList, handle) => {
+        if (!handle?.type) {
+            return [...handleList, handle];
+        }
+
+        if (!handle.type.startsWith('__dynamic__:')) {
+            return handleList;
+        }
+
+        const settingName = handle.type.replace('__dynamic__:', '');
+        const options = data?.settings?.[settingName];
+
+        return [
+            ...handleList,
+            ...options.map(option => ({
+                id: option.name,
+                label: option.label,
+            }))
+        ];
+    }, []);
+}

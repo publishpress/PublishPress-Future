@@ -106,21 +106,14 @@ class InteractiveDelay implements StepTypeInterface
                 "fields" => [
                     [
                         "name" => "options",
-                        "type" => "customOptions",
+                        "type" => "interactiveCustomOptions",
                         "label" => __("Options", "post-expirator"),
-                        "description" => __("Configure the available response options for users. Each option can have a custom label and hint. A 'Dismiss' option will be automatically added as the final choice.", "post-expirator"),
+                        "description" => __("Configure the available response options for users. Each option can have a custom label and hint.", "post-expirator"),
                         "default" => [
-                            "options" => [
-                                [
-                                    "name" => "continue",
-                                    "label" => __("Continue", "post-expirator"),
-                                    "hint" => __("Continue the workflow", "post-expirator"),
-                                ],
-                                [
-                                    "name" => "cancel",
-                                    "label" => __("Cancel", "post-expirator"),
-                                    "hint" => __("Cancel the workflow", "post-expirator"),
-                                ],
+                            [
+                                "name" => "dismiss",
+                                "label" => __("Dismiss", "post-expirator"),
+                                "hint" => __("Dismiss the notification", "post-expirator"),
                             ],
                         ],
                     ],
@@ -206,6 +199,7 @@ class InteractiveDelay implements StepTypeInterface
             "source" => [
                 [
                     "id" => "output",
+                    "type" => "__dynamic__:options",
                     "label" => __("After interaction", "post-expirator"),
                 ],
             ]

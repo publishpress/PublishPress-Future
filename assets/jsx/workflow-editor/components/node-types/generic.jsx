@@ -11,6 +11,7 @@ import { SIDEBAR_NODE_EDGE } from '../settings-sidebar/constants';
 import { useIsPro } from '../../contexts/pro-context';
 import jsonLogic from "json-logic-js";
 import { CUSTOM_EVENT_HANDLES_COUNT_CHANGED } from '../../constants';
+import { getNodeHandleSchema } from '../../utils';
 
 export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIcon }) => {
     const {
@@ -114,7 +115,8 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
 
     if (nodeType.handleSchema) {
         if (nodeType.handleSchema.target) {
-            handlesToDisplay = filterHandlesByConditions(nodeType.handleSchema.target, data);
+            const originalTargetHandles = getNodeHandleSchema(nodeType, data, 'target');
+            handlesToDisplay = filterHandlesByConditions(originalTargetHandles, data);
 
             useEffect(() => {
                 if (previousHandlesCountRef.current !== handlesToDisplay.length) {
@@ -125,7 +127,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                             nodeId: id,
                             handlesCount: handlesToDisplay.length,
                             handles: handlesToDisplay,
-                            originalHandles: nodeType.handleSchema.target,
+                            originalHandles: originalTargetHandles,
                             type: 'target',
                         },
                     });
@@ -138,6 +140,10 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
 
             targetHandles = handlesToDisplay.map((handle, index) => {
                 const left = calculateLeftPosition(index, handlesToDisplay.length);
+
+                if (! handle?.id) {
+                    return null;
+                }
 
                 return (
                     <Handle
@@ -159,7 +165,8 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
 
     if (nodeType.handleSchema) {
         if (nodeType.handleSchema.source) {
-            handlesToDisplay = filterHandlesByConditions(nodeType.handleSchema.source, data);
+            const originalSourceHandles = getNodeHandleSchema(nodeType, data, 'source');
+            handlesToDisplay = filterHandlesByConditions(originalSourceHandles, data);
 
             useEffect(() => {
                 if (previousHandlesCountRef.current !== handlesToDisplay.length) {
@@ -170,7 +177,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                             nodeId: id,
                             handlesCount: handlesToDisplay.length,
                             handles: handlesToDisplay,
-                            originalHandles: nodeType.handleSchema.source,
+                            originalHandles: originalSourceHandles,
                             type: 'source',
                         },
                     });
@@ -184,6 +191,10 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
 
             sourceHandles = handlesToDisplay.map((handle, index) => {
                 const left = calculateLeftPosition(index, handlesToDisplay.length);
+
+                if (! handle?.id) {
+                    return null;
+                }
 
                 return (
                     <Handle
@@ -199,6 +210,10 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
             });
 
             handleAreas = handlesToDisplay.map((handle) => {
+                if (! handle?.id) {
+                    return null;
+                }
+
                 return (
                     <div
                         key={handle.id + 'handleArea'}
@@ -220,18 +235,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
         topText = __('Trigger', 'post-expirator');
     }
 
-    const nodeAttributes = [
-        // {
-        //     id: 'id',
-        //     label: __('ID', 'post-expirator'),
-        //     value: id,
-        // },
-        // {
-        //     id: 'slug',
-        //     label: __('Slug', 'post-expirator'),
-        //     value: data.slug,
-        // },
-    ];
+    const nodeAttributes = [];
 
     const onClickDeleteNode = () => {
         removeNode(id);
@@ -354,8 +358,8 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
 export default GenericNode;
 
 function filterHandlesByConditions(handles, data) {
-    return handles.filter((handle) => {
-        if (handle.conditions) {
+    return handles?.filter((handle) => {
+        if (handle?.conditions) {
             return jsonLogic.apply(handle.conditions, data.settings);
         }
 

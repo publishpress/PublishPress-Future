@@ -1,9 +1,6 @@
 import { __ } from "@wordpress/i18n";
-import {
-    useMemo
-} from "@wordpress/element";
 import InlineSetting from "../inline-setting";
-import { TextControl, SelectControl, Button } from "@wordpress/components";
+import { TextControl } from "@wordpress/components";
 import ExpressionBuilder from "../expression-builder";
 
 export const OptionItem = ({
@@ -16,7 +13,9 @@ export const OptionItem = ({
     onClosePopover,
     isLoading,
     autoOpen,
-    withExpression = false
+    withExpression = false,
+    canChangeName = true,
+    cantChangeNameDescription = ''
 }) => {
     defaultValue = {
         name: "",
@@ -70,6 +69,7 @@ export const OptionItem = ({
                     value={defaultValue.name}
                     onChange={onChangeName}
                     autoFocus={autoOpen}
+                    readOnly={!canChangeName}
                 />
                 <TextControl
                     label={__('Label', 'post-expirator')}
@@ -91,9 +91,17 @@ export const OptionItem = ({
                     />
                 )}
 
-                <p className="description margin-top">
-                    {__('The option name should only contain letters, numbers and underscores.', 'post-expirator')}
-                </p>
+                {cantChangeNameDescription && !canChangeName && (
+                    <p className="description margin-top">
+                        {cantChangeNameDescription}
+                    </p>
+                )}
+
+                {canChangeName && (
+                    <p className="description margin-top">
+                        {__('The option name should only contain letters, numbers and underscores.', 'post-expirator')}
+                    </p>
+                )}
             </>
         </InlineSetting>
     )
