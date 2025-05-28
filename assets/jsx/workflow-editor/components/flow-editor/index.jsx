@@ -128,6 +128,11 @@ export const FlowEditor = (props) => {
         genericEdge: GenericEdge,
     }), []);
 
+    /**
+     * This is used to update the edges that are connected to the node
+     * when the handles count changes. This is required to avoid the
+     * edges "connected" to the node or handle that do not exist anymore.
+     */
     const handleHandlesCountChanged = useCallback((event) => {
         // Update all the edges that are connected to the node.
         const { nodeId, handles } = event.detail;

@@ -1,4 +1,4 @@
-import { getNodeById as getNodeByIdUtils } from "../../utils";
+import { getNodeById as getNodeByIdUtils, getNodeOutgoers, getNodeOutputSchema, getNodeType } from "../../utils";
 
 export const getPostType = (state) => {
     return state.postType;
@@ -171,4 +171,29 @@ export function getRayDebugShowEmails(state) {
 
 export function getRayDebugShowWordPressErrors(state) {
     return state.rayDebug.showWordPressErrors;
+}
+
+/**
+ * Returns the source handles of the selected node that are connected to other nodes.
+ * If multiple nodes are selected, it returns the handles of the first node.
+ *
+ * @param {Object} state - The state of the workflow.
+ * @returns {Array} The handles of the selected node.
+ */
+export function getConnectedSourceHandlesOfSelectedNode(state) {
+    const selectedNodes = getSelectedNodes(state);
+
+    if (selectedNodes.length === 0) {
+        return [];
+    }
+
+    const selectedNode = selectedNodes[0];
+    const edges = getEdges(state);
+    const outputEdges = edges.filter(edge => edge.source === selectedNode);
+    let sourceHandles = outputEdges.map(edge => edge.sourceHandle);
+
+    // Remove duplicates
+    sourceHandles = sourceHandles.filter((handle, index, self) => self.indexOf(handle) === index);
+
+    return sourceHandles;
 }

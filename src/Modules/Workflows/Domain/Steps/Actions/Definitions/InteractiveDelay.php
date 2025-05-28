@@ -5,29 +5,16 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class SendInSiteNotification implements StepTypeInterface
+class InteractiveDelay implements StepTypeInterface
 {
     public static function getNodeTypeName(): string
     {
-        return "action/core.send-in-site-notification";
-    }
-
-    public static function getDefaultSubject()
-    {
-        return __('PublishPress Workflow: {{global.workflow.title}}', 'post-expirator');
-    }
-
-    public static function getDefaultMessage()
-    {
-        return __(
-            'This is a message sent by PublishPress Workflow: {{global.workflow.title}}.',
-            'post-expirator'
-        );
+        return "advanced/interactive-delay";
     }
 
     public function getElementaryType(): string
     {
-        return StepTypesModel::STEP_TYPE_ACTION;
+        return StepTypesModel::STEP_TYPE_ADVANCED;
     }
 
     public function getReactFlowNodeType(): string
@@ -37,22 +24,22 @@ class SendInSiteNotification implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "sendInSiteNotification";
+        return "interactiveDelay";
     }
 
     public function getLabel(): string
     {
-        return __("Send in-site notification", "post-expirator");
+        return __("Interactive delay", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This step dispatches a message to the in-site notification.", "post-expirator");
+        return __("This step delays the execution of the workflow until the user interacts with the step.", "post-expirator");
     }
 
     public function getIcon(): string
     {
-        return "bell";
+        return "interactive";
     }
 
     public function getFrecency(): int
@@ -67,21 +54,24 @@ class SendInSiteNotification implements StepTypeInterface
 
     public function getCategory(): string
     {
-        return "messages";
+        return "site";
     }
 
     public function getSettingsSchema(): array
     {
         return [
             [
-                "label" => __("Recipient", "post-expirator"),
-                "description" => __("The recipient of the in-site notification.", "post-expirator"),
+                "label" => __("Responders", "post-expirator"),
+                "description" => __("Specify the responders for the interactive delay.", "post-expirator"),
                 "fields" => [
                     [
-                        "name" => "recipient",
+                        "name" => "responders",
                         "type" => "expression",
-                        "label" => __("Recipients", "post-expirator"),
-                        "description" => __("A comma-separated list of user names, ids, emails or user roles to send the message to.", "post-expirator"),
+                        "label" => __("Responders", "post-expirator"),
+                        "description" => __(
+                            "A comma-separated list of user names, ids, emails or user roles that can interact with this step.",
+                            "post-expirator"
+                        ),
                         "default" => [
                             "expression" => "administrator",
                         ],
@@ -90,13 +80,14 @@ class SendInSiteNotification implements StepTypeInterface
             ],
             [
                 "label" => __("Message", "post-expirator"),
+                "description" => __("Specify the message to be displayed to the responders.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "subject",
                         "type" => "expression",
                         "label" => __("Subject", "post-expirator"),
                         "default" => [
-                            "expression" => self::getDefaultSubject(),
+                            "expression" => __('PublishPress Workflow: {{global.workflow.title}}', 'post-expirator'),
                         ],
                     ],
                     [
@@ -104,11 +95,30 @@ class SendInSiteNotification implements StepTypeInterface
                         "type" => "expression",
                         "label" => __("Message", "post-expirator"),
                         "default" => [
-                            "expression" => self::getDefaultMessage(),
+                            "expression" => __("Please select an option to continue the workflow: {{global.workflow.title}}", "post-expirator"),
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ],
+            [
+                "label" => __("Options", "post-expirator"),
+                "description" => __("Specify the options the user can choose from.", "post-expirator"),
+                "fields" => [
+                    [
+                        "name" => "options",
+                        "type" => "interactiveCustomOptions",
+                        "label" => __("Options", "post-expirator"),
+                        "description" => __("Configure the available response options for users. Each option can have a custom label and hint.", "post-expirator"),
+                        "default" => [
+                            [
+                                "name" => "dismiss",
+                                "label" => __("Dismiss", "post-expirator"),
+                                "hint" => __("Dismiss the notification", "post-expirator"),
+                            ],
+                        ],
+                    ],
+                ],
+            ]
         ];
     }
 
@@ -120,14 +130,14 @@ class SendInSiteNotification implements StepTypeInterface
                     [
                         "rule" => "hasIncomingConnection",
                     ],
-                ],
+                ]
             ],
             "settings" => [
                 "rules" => [
                     [
                         "rule" => "required",
-                        "field" => "recipient.expression",
-                        "label" => __("Recipient", "post-expirator"),
+                        "field" => "responders.expression",
+                        "label" => __("Responders", "post-expirator"),
                     ],
                     [
                         "rule" => "required",
@@ -141,9 +151,9 @@ class SendInSiteNotification implements StepTypeInterface
                     ],
                     [
                         "rule" => "validExpression",
-                        "field" => "recipient.expression",
-                        "label" => __("Recipient", "post-expirator"),
-                        "fieldLabel" => __("Recipient > Recipients", "post-expirator"),
+                        "field" => "responders.expression",
+                        "label" => __("Responders", "post-expirator"),
+                        "fieldLabel" => __("Responders > Responders", "post-expirator"),
                     ],
                     [
                         "rule" => "validExpression",
@@ -157,6 +167,12 @@ class SendInSiteNotification implements StepTypeInterface
                         "label" => __("Message", "post-expirator"),
                         "fieldLabel" => __("Message > Message", "post-expirator"),
                     ],
+                    [
+                        "rule" => "validOptions",
+                        "field" => "options",
+                        "label" => __("Options", "post-expirator"),
+                        "fieldLabel" => __("Options > Options", "post-expirator"),
+                    ]
                 ]
             ]
         ];
@@ -177,23 +193,23 @@ class SendInSiteNotification implements StepTypeInterface
                 "description" => __("The input data for this step.", "post-expirator"),
             ],
             [
-                "name" => "readingTime",
-                "type" => "datetime",
-                "label" => __("Reading time", "post-expirator"),
-                "description" => __("The reading time of the admin notification.", "post-expirator"),
+                "name" => "responders",
+                "type" => "string",
+                "label" => __("Responders", "post-expirator"),
+                "description" => __("The responders to the interactive delay, as a list of user ids.", "post-expirator"),
             ],
             [
-                "name" => "readBy",
-                "type" => "user",
-                "label" => __("Read by", "post-expirator"),
-                "description" => __("The user who read the admin notification.", "post-expirator"),
+                "name" => "optionName",
+                "type" => "string",
+                "label" => __("Option name", "post-expirator"),
+                "description" => __("The name of the option selected by the user.", "post-expirator"),
             ],
         ];
     }
 
     public function getCSSClass(): string
     {
-        return "react-flow__node-genericAction";
+        return "react-flow__node-genericAdvanced";
     }
 
     public function getHandleSchema(): array
@@ -207,11 +223,8 @@ class SendInSiteNotification implements StepTypeInterface
             "source" => [
                 [
                     "id" => "output",
-                    "label" => __("Next", "post-expirator"),
-                ],
-                [
-                    "id" => "read",
-                    "label" => __("On dismiss", "post-expirator"),
+                    "type" => "__dynamic__:options",
+                    "label" => __("After interaction", "post-expirator"),
                 ],
             ]
         ];

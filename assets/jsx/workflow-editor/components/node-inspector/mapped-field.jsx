@@ -23,6 +23,8 @@ import PostSearchQuery from "../data-fields/post-search-query";
 import ConditionalDateOffset from "../data-fields/conditional-date-offset";
 import ActionArgs from "../data-fields/action-args";
 import Integer from "../data-fields/integer";
+import CustomOptions from "../data-fields/custom-options";
+import { InteractiveCustomOptions } from "../data-fields/interactive-custom-options";
 
 export const MappedField = (props) => {
     switch (props.type) {
@@ -121,6 +123,14 @@ export const MappedField = (props) => {
         case "integer":
             return (
                 <Integer {...props} />
+            );
+        case "customOptions":
+            return (
+                <CustomOptions {...props} />
+            );
+        case "interactiveCustomOptions":
+            return (
+                <InteractiveCustomOptions {...props} />
             );
     }
 

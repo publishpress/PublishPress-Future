@@ -223,6 +223,92 @@ export function NodeValidator({})
         return successfulResult;
     }, [nodeSlugs]);
 
+    const isOptionsValid = useCallback((options, ruleData) => {
+        if (! Array.isArray(options)) {
+            return {
+                isValid: false,
+                error: sprintf(
+                    // translators: %s is the field label.
+                    __('The field %s must be a list of options.', 'post-expirator'),
+                    ruleData?.fieldLabel
+                ),
+            };
+        }
+
+        const successfulResult = {
+            isValid: true,
+            error: null,
+        };
+
+        let invalidOptions = false;
+
+        if (options.length === 0) {
+            invalidOptions = true;
+        }
+
+        let detailsMessage = '';
+        let optionIndex = 0;
+        const optionNames = [];
+        const optionLabels = [];
+
+        options.forEach((option) => {
+            optionIndex++;
+
+            if (! option.name?.trim()) {
+                invalidOptions = true;
+                detailsMessage = sprintf(
+                    // translators: %s is the option name.
+                    __('The option "%s" does not have a name.', 'post-expirator'),
+                    optionIndex
+                );
+            }
+
+            if (! option.label.trim()) {
+                invalidOptions = true;
+                detailsMessage = sprintf(
+                    // translators: %s is the option name.
+                    __('The option "%s" does not have a label.', 'post-expirator'),
+                    optionIndex
+                );
+            }
+
+            if (optionNames.includes(option.name)) {
+                invalidOptions = true;
+                detailsMessage = sprintf(
+                    // translators: %s is the option name.
+                    __('The option "%s" has a duplicate name.', 'post-expirator'),
+                    option.name
+                );
+            }
+
+            if (optionLabels.includes(option.label)) {
+                invalidOptions = true;
+                detailsMessage = sprintf(
+                    // translators: %s is the option label.
+                    __('The option "%s" has a duplicate label.', 'post-expirator'),
+                    option.label
+                );
+            }
+
+            optionNames.push(option.name);
+            optionLabels.push(option.label);
+        });
+
+        if (invalidOptions) {
+            return {
+                isValid: false,
+                error: sprintf(
+                    // translators: %s is the field label.
+                    __('The field %s must be a valid list of options.', 'post-expirator'),
+                    ruleData?.fieldLabel
+                ),
+                details: detailsMessage,
+            };
+        }
+
+        return successfulResult;
+    }, []);
+
     const validateNodes = useCallback((nodes, edges, nodeSlugs) => {
         nodes.forEach((node) => {
             const nodeType = getNodeTypeByName(node.data?.name);
@@ -478,6 +564,24 @@ export function NodeValidator({})
                                     expressionValidation.details
                                 );
                             }
+                            break;
+
+                        case 'validOptions':
+                            if (! Array.isArray(settingValue)) {
+                                addNodeError(node.id, `${fieldName}-validOptions`, sprintf(__('The field %s must be a list of options.', 'post-expirator'), fieldLabel));
+                            }
+
+                            const optionsValidation = isOptionsValid(settingValue, ruleData);
+
+                            if (!optionsValidation.isValid) {
+                                addNodeError(
+                                    node.id,
+                                    `${fieldName}-validOptions`,
+                                    optionsValidation.error,
+                                    optionsValidation.details
+                                );
+                            }
+
                             break;
                     }
                 });

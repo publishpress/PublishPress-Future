@@ -1504,6 +1504,298 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./assets/jsx/workflow-editor/components/data-fields/custom-options/index.jsx":
+/*!************************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-fields/custom-options/index.jsx ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CustomOptions: () => (/* binding */ CustomOptions),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _description_text__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../description-text */ "./assets/jsx/workflow-editor/components/data-fields/description-text.jsx");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _option_item__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./option-item */ "./assets/jsx/workflow-editor/components/data-fields/custom-options/option-item.jsx");
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.css */ "./assets/jsx/workflow-editor/components/data-fields/custom-options/style.css");
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+
+
+
+
+
+var DEFAULT_OPTIONS = [{
+  name: 'dismiss',
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Dismiss', 'post-expirator'),
+  hint: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Dismiss the notification', 'post-expirator')
+}];
+function CustomOptions(_ref) {
+  var name = _ref.name,
+    label = _ref.label,
+    defaultValue = _ref.defaultValue,
+    onChange = _ref.onChange,
+    settings = _ref.settings,
+    _ref$variables = _ref.variables,
+    variables = _ref$variables === void 0 ? [] : _ref$variables,
+    helpUrl = _ref.helpUrl,
+    description = _ref.description,
+    canChangeNameCallback = _ref.canChangeNameCallback,
+    cantChangeNameDescription = _ref.cantChangeNameDescription,
+    onNameChangeCallback = _ref.onNameChangeCallback,
+    _ref$maxOptions = _ref.maxOptions,
+    maxOptions = _ref$maxOptions === void 0 ? 10 : _ref$maxOptions;
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
+    _useState2 = _slicedToArray(_useState, 2),
+    autoOpenItem = _useState2[0],
+    setAutoOpenItem = _useState2[1];
+  var onChangeSetting = function onChangeSetting(_ref2) {
+    var value = _ref2.value;
+    if (onChange) {
+      onChange(name, value);
+    }
+  };
+  if (!defaultValue || !Array.isArray(defaultValue) || defaultValue.length === 0) {
+    defaultValue = DEFAULT_OPTIONS;
+  }
+  var getDefaultName = function getDefaultName() {
+    var index = defaultValue.length + 1;
+    var name = "option".concat(index);
+    while (defaultValue.some(function (option) {
+      return option.name === name;
+    })) {
+      index++;
+      name = "option".concat(index);
+    }
+    return {
+      name: name,
+      index: index
+    };
+  };
+  var onClickAddOption = function onClickAddOption() {
+    if (defaultValue.length >= maxOptions) {
+      return;
+    }
+    var defaultName = getDefaultName();
+    var name = defaultName.name;
+    var nameIndex = defaultName.index;
+    var defaultLabel = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Option %s', 'post-expirator'), nameIndex);
+    onChangeSetting({
+      value: [].concat(_toConsumableArray(defaultValue), [{
+        name: name,
+        label: defaultLabel,
+        hint: ''
+      }])
+    });
+    setAutoOpenItem(defaultValue.length);
+  };
+  var onClickRemoveOption = function onClickRemoveOption(index) {
+    onChangeSetting({
+      value: defaultValue.filter(function (_, i) {
+        return i !== index;
+      })
+    });
+  };
+  var onChangeOption = function onChangeOption(index, value) {
+    var newOptions = defaultValue.map(function (option, i) {
+      return i === index ? value : option;
+    });
+    onChangeSetting({
+      value: newOptions
+    });
+  };
+  var hasOnlyOneOption = defaultValue.length === 1;
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalVStack, {
+    className: "workflow-editor-panel__row-options-container"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "workflow-editor-panel__row-options-label"
+  }, label), defaultValue.map(function (option, index) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: "option-".concat(index),
+      className: "workflow-editor-panel__row-options"
+    }, /*#__PURE__*/React.createElement(_option_item__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      name: "options[".concat(index, "].name"),
+      label: "#".concat(index + 1),
+      popoverLabel: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Option #%s', 'post-expirator'), index + 1),
+      defaultValue: option,
+      onChange: function onChange(value) {
+        return onChangeOption(index, value);
+      },
+      autoOpen: autoOpenItem === index,
+      onClosePopover: function onClosePopover() {
+        return setAutoOpenItem(null);
+      },
+      withExpression: settings === null || settings === void 0 ? void 0 : settings.withExpression,
+      variables: variables,
+      canChangeName: canChangeNameCallback ? canChangeNameCallback(option) : true,
+      cantChangeNameDescription: cantChangeNameDescription,
+      onNameChangeCallback: onNameChangeCallback
+    }), !hasOnlyOneOption && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+      onClick: function onClick() {
+        return onClickRemoveOption(index);
+      },
+      isSmall: true,
+      iconSize: 16,
+      icon: 'trash'
+    }));
+  }), defaultValue.length === 0 && /*#__PURE__*/React.createElement("div", {
+    className: "workflow-editor-panel__row-options-empty"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('No options added to the action.', 'post-expirator')), defaultValue.length < maxOptions && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+    onClick: onClickAddOption,
+    iconSize: 16,
+    icon: 'plus',
+    variant: "tertiary"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Add a new option', 'post-expirator')), description && /*#__PURE__*/React.createElement(_description_text__WEBPACK_IMPORTED_MODULE_2__.DescriptionText, {
+    text: description,
+    helpUrl: helpUrl
+  }), defaultValue.length >= maxOptions && /*#__PURE__*/React.createElement(_description_text__WEBPACK_IMPORTED_MODULE_2__.DescriptionText, {
+    text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('You have reached the maximum number of options. You can add up to %s options.', 'post-expirator'), maxOptions)
+  })));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomOptions);
+
+/***/ }),
+
+/***/ "./assets/jsx/workflow-editor/components/data-fields/custom-options/option-item.jsx":
+/*!******************************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-fields/custom-options/option-item.jsx ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   OptionItem: () => (/* binding */ OptionItem),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _inline_setting__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../inline-setting */ "./assets/jsx/workflow-editor/components/data-fields/inline-setting/index.jsx");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _expression_builder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../expression-builder */ "./assets/jsx/workflow-editor/components/data-fields/expression-builder/index.jsx");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+
+var OptionItem = function OptionItem(_ref) {
+  var _defaultValue3;
+  var name = _ref.name,
+    label = _ref.label,
+    popoverLabel = _ref.popoverLabel,
+    defaultValue = _ref.defaultValue,
+    onChange = _ref.onChange,
+    _ref$variables = _ref.variables,
+    variables = _ref$variables === void 0 ? [] : _ref$variables,
+    onClosePopover = _ref.onClosePopover,
+    isLoading = _ref.isLoading,
+    autoOpen = _ref.autoOpen,
+    _ref$withExpression = _ref.withExpression,
+    withExpression = _ref$withExpression === void 0 ? false : _ref$withExpression,
+    _ref$canChangeName = _ref.canChangeName,
+    canChangeName = _ref$canChangeName === void 0 ? true : _ref$canChangeName,
+    _ref$cantChangeNameDe = _ref.cantChangeNameDescription,
+    cantChangeNameDescription = _ref$cantChangeNameDe === void 0 ? '' : _ref$cantChangeNameDe,
+    onNameChangeCallback = _ref.onNameChangeCallback;
+  defaultValue = _objectSpread({
+    name: "",
+    label: "",
+    hint: ""
+  }, defaultValue);
+  var onChangeName = function onChangeName(value) {
+    value = value.replace(/[^a-zA-Z0-9_]/g, '').trim();
+    onChange(_objectSpread(_objectSpread({}, defaultValue), {}, {
+      name: value
+    }));
+    if (onNameChangeCallback) {
+      onNameChangeCallback(value);
+    }
+  };
+  var onChangeLabel = function onChangeLabel(value) {
+    onChange(_objectSpread(_objectSpread({}, defaultValue), {}, {
+      label: value
+    }));
+  };
+  var onChangeHint = function onChangeHint(value) {
+    onChange(_objectSpread(_objectSpread({}, defaultValue), {}, {
+      hint: value
+    }));
+  };
+  var onChangeExpression = function onChangeExpression(settingName, value) {
+    onChange(_objectSpread(_objectSpread({}, defaultValue), {}, {
+      expression: value
+    }));
+  };
+  var getExpressionPreview = function getExpressionPreview() {
+    var _defaultValue;
+    return (_defaultValue = defaultValue) !== null && _defaultValue !== void 0 && (_defaultValue = _defaultValue.expression) !== null && _defaultValue !== void 0 && _defaultValue.expression ? "".concat(defaultValue.expression.expression) : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('null', 'post-expirator');
+  };
+  var getValuePreview = function getValuePreview() {
+    var _defaultValue2;
+    if ((_defaultValue2 = defaultValue) !== null && _defaultValue2 !== void 0 && (_defaultValue2 = _defaultValue2.expression) !== null && _defaultValue2 !== void 0 && _defaultValue2.expression) {
+      return "".concat(defaultValue.name, ": ").concat(getExpressionPreview());
+    }
+    return "".concat(defaultValue.name, ": ").concat(defaultValue.label);
+  };
+  return /*#__PURE__*/React.createElement(_inline_setting__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    name: name,
+    label: label,
+    popoverLabel: popoverLabel,
+    valuePreview: getValuePreview(),
+    onClosePopover: onClosePopover,
+    isLoading: isLoading,
+    autoOpen: autoOpen
+  }, /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Name', 'post-expirator'),
+    value: defaultValue.name,
+    onChange: onChangeName,
+    autoFocus: autoOpen,
+    readOnly: !canChangeName
+  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Label', 'post-expirator'),
+    value: defaultValue.label,
+    onChange: onChangeLabel
+  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Hint', 'post-expirator'),
+    value: defaultValue.hint,
+    onChange: onChangeHint
+  }), withExpression && /*#__PURE__*/React.createElement(_expression_builder__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    name: "expression",
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Value', 'post-expirator'),
+    defaultValue: (_defaultValue3 = defaultValue) === null || _defaultValue3 === void 0 ? void 0 : _defaultValue3.expression,
+    onChange: onChangeExpression,
+    variables: variables
+  }), cantChangeNameDescription && !canChangeName && /*#__PURE__*/React.createElement("p", {
+    className: "description margin-top"
+  }, cantChangeNameDescription), canChangeName && /*#__PURE__*/React.createElement("p", {
+    className: "description margin-top"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('The option name should only contain letters, numbers and underscores.', 'post-expirator'))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OptionItem);
+
+/***/ }),
+
 /***/ "./assets/jsx/workflow-editor/components/data-fields/date-offset/index.jsx":
 /*!*********************************************************************************!*\
   !*** ./assets/jsx/workflow-editor/components/data-fields/date-offset/index.jsx ***!
@@ -2720,6 +3012,54 @@ function Integer(_ref) {
   })));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Integer);
+
+/***/ }),
+
+/***/ "./assets/jsx/workflow-editor/components/data-fields/interactive-custom-options/index.jsx":
+/*!************************************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-fields/interactive-custom-options/index.jsx ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   InteractiveCustomOptions: () => (/* binding */ InteractiveCustomOptions)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _workflow_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../workflow-store */ "./assets/jsx/workflow-editor/components/workflow-store/index.jsx");
+/* harmony import */ var _custom_options__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../custom-options */ "./assets/jsx/workflow-editor/components/data-fields/custom-options/index.jsx");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+
+
+
+
+function InteractiveCustomOptions(props) {
+  /**
+   * Check if the option name can be changed.
+   *
+   * If the option is connected to a source handle, it cannot be changed because
+   * it would break the connections in the workflow.
+   *
+   * @param {Object} option
+   * @returns {boolean}
+   */
+  var canChangeNameCallback = function canChangeNameCallback(option) {
+    var connectedSourceHandlesOfSelectedNode = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(_workflow_store__WEBPACK_IMPORTED_MODULE_1__.store).getConnectedSourceHandlesOfSelectedNode();
+    if (connectedSourceHandlesOfSelectedNode.length === 0) {
+      return true;
+    }
+    var isOptionConnected = connectedSourceHandlesOfSelectedNode.includes(option.name);
+    return !isOptionConnected;
+  };
+  return /*#__PURE__*/React.createElement(_custom_options__WEBPACK_IMPORTED_MODULE_2__.CustomOptions, _extends({}, props, {
+    canChangeNameCallback: canChangeNameCallback,
+    cantChangeNameDescription: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("This option is used to connect to another step and cannot have its name changed until the connection is removed.", "post-expirator"),
+    maxOptions: 5
+  }));
+}
 
 /***/ }),
 
@@ -6703,6 +7043,12 @@ var FlowEditor = function FlowEditor(props) {
       genericEdge: _edge_types__WEBPACK_IMPORTED_MODULE_10__.GenericEdge
     };
   }, []);
+
+  /**
+   * This is used to update the edges that are connected to the node
+   * when the handles count changes. This is required to avoid the
+   * edges "connected" to the node or handle that do not exist anymore.
+   */
   var handleHandlesCountChanged = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useCallback)(function (event) {
     // Update all the edges that are connected to the node.
     var _event$detail = event.detail,
@@ -7382,6 +7728,42 @@ function ExclamationIcon(_ref) {
     xmlns: "http://www.w3.org/2000/svg"
   }, /*#__PURE__*/React.createElement("path", {
     d: "M176 432c0 44.112-35.888 80-80 80s-80-35.888-80-80 35.888-80 80-80 80 35.888 80 80zM25.26 25.199l13.6 272C39.499 309.972 50.041 320 62.83 320h66.34c12.789 0 23.331-10.028 23.97-22.801l13.6-272C167.425 11.49 156.496 0 142.77 0H49.23C35.504 0 24.575 11.49 25.26 25.199z"
+  })));
+}
+
+/***/ }),
+
+/***/ "./assets/jsx/workflow-editor/components/icons/interactive.jsx":
+/*!*********************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/icons/interactive.jsx ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ InteractiveIcon)
+/* harmony export */ });
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base */ "./assets/jsx/workflow-editor/components/icons/base.jsx");
+
+
+/**
+ * Icon RiQuestionnaireLine from 'react-icons/ri'.
+ */
+function InteractiveIcon(_ref) {
+  var _ref$size = _ref.size,
+    size = _ref$size === void 0 ? 24 : _ref$size;
+  return /*#__PURE__*/React.createElement(_base__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    size: size
+  }, /*#__PURE__*/React.createElement("svg", {
+    stroke: "currentColor",
+    fill: "currentColor",
+    strokeWidth: "0",
+    viewBox: "0 0 24 24",
+    height: "100%",
+    width: "100%",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M5.76282 17H20V5H4V18.3851L5.76282 17ZM6.45455 19L2 22.5V4C2 3.44772 2.44772 3 3 3H21C21.5523 3 22 3.44772 22 4V18C22 18.5523 21.5523 19 21 19H6.45455ZM11 14H13V16H11V14ZM8.56731 8.81346C8.88637 7.20919 10.302 6 12 6C13.933 6 15.5 7.567 15.5 9.5C15.5 11.433 13.933 13 12 13H11V11H12C12.8284 11 13.5 10.3284 13.5 9.5C13.5 8.67157 12.8284 8 12 8C11.2723 8 10.6656 8.51823 10.5288 9.20577L8.56731 8.81346Z"
   })));
 }
 
@@ -9411,7 +9793,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/block-default.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/block-default.js");
 /* harmony import */ var _icons_woo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./icons/woo */ "./assets/jsx/workflow-editor/components/icons/woo.jsx");
 /* harmony import */ var _icons_user__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icons/user */ "./assets/jsx/workflow-editor/components/icons/user.jsx");
 /* harmony import */ var _icons_bug__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./icons/bug */ "./assets/jsx/workflow-editor/components/icons/bug.jsx");
@@ -9428,6 +9810,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icons_shop__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./icons/shop */ "./assets/jsx/workflow-editor/components/icons/shop.jsx");
 /* harmony import */ var _icons_braces__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./icons/braces */ "./assets/jsx/workflow-editor/components/icons/braces.jsx");
 /* harmony import */ var _icons_action__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./icons/action */ "./assets/jsx/workflow-editor/components/icons/action.jsx");
+/* harmony import */ var _icons_interactive__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./icons/interactive */ "./assets/jsx/workflow-editor/components/icons/interactive.jsx");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -9442,6 +9825,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -9476,7 +9860,7 @@ function NodeIcon(_ref) {
   switch (iconSrc) {
     case 'block-default':
       icon = {
-        src: _wordpress_icons__WEBPACK_IMPORTED_MODULE_18__["default"]
+        src: _wordpress_icons__WEBPACK_IMPORTED_MODULE_19__["default"]
       };
       break;
     case 'document':
@@ -9573,6 +9957,11 @@ function NodeIcon(_ref) {
     case 'action':
       icon = {
         src: _icons_action__WEBPACK_IMPORTED_MODULE_17__["default"]
+      };
+      break;
+    case 'interactive':
+      icon = {
+        src: _icons_interactive__WEBPACK_IMPORTED_MODULE_18__["default"]
       };
       break;
   }
@@ -9794,6 +10183,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_fields_conditional_date_offset__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../data-fields/conditional-date-offset */ "./assets/jsx/workflow-editor/components/data-fields/conditional-date-offset.jsx");
 /* harmony import */ var _data_fields_action_args__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../data-fields/action-args */ "./assets/jsx/workflow-editor/components/data-fields/action-args/index.jsx");
 /* harmony import */ var _data_fields_integer__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../data-fields/integer */ "./assets/jsx/workflow-editor/components/data-fields/integer.jsx");
+/* harmony import */ var _data_fields_custom_options__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../data-fields/custom-options */ "./assets/jsx/workflow-editor/components/data-fields/custom-options/index.jsx");
+/* harmony import */ var _data_fields_interactive_custom_options__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../data-fields/interactive-custom-options */ "./assets/jsx/workflow-editor/components/data-fields/interactive-custom-options/index.jsx");
+
+
 
 
 
@@ -9869,6 +10262,10 @@ var MappedField = function MappedField(props) {
       return /*#__PURE__*/React.createElement(_data_fields_action_args__WEBPACK_IMPORTED_MODULE_23__["default"], props);
     case "integer":
       return /*#__PURE__*/React.createElement(_data_fields_integer__WEBPACK_IMPORTED_MODULE_24__["default"], props);
+    case "customOptions":
+      return /*#__PURE__*/React.createElement(_data_fields_custom_options__WEBPACK_IMPORTED_MODULE_25__["default"], props);
+    case "interactiveCustomOptions":
+      return /*#__PURE__*/React.createElement(_data_fields_interactive_custom_options__WEBPACK_IMPORTED_MODULE_26__.InteractiveCustomOptions, props);
   }
   return /*#__PURE__*/React.createElement("div", {
     className: "description"
@@ -10187,7 +10584,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   GenericNode: () => (/* binding */ GenericNode),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var reactflow__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! reactflow */ "./node_modules/@reactflow/core/dist/esm/index.mjs");
+/* harmony import */ var reactflow__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! reactflow */ "./node_modules/@reactflow/core/dist/esm/index.mjs");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node-icon */ "./assets/jsx/workflow-editor/components/node-icon.jsx");
@@ -10205,6 +10602,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var json_logic_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! json-logic-js */ "./node_modules/json-logic-js/logic.js");
 /* harmony import */ var json_logic_js__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(json_logic_js__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../constants */ "./assets/jsx/workflow-editor/constants.jsx");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../utils */ "./assets/jsx/workflow-editor/utils.jsx");
+
 
 
 
@@ -10229,25 +10628,24 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
       var nodeErrors = select(_workflow_store__WEBPACK_IMPORTED_MODULE_3__.store).getNodeErrors(id);
       var selectedElementsCount = select(_workflow_store__WEBPACK_IMPORTED_MODULE_3__.store).getSelectedElementsCount();
       return {
-        nodeErrors: nodeErrors,
         nodeHasErrors: Object.keys(nodeErrors).length > 0,
         isAdvancedSettingsEnabled: true,
         isSingularElementSelected: selectedElementsCount === 1,
         getNodeTypeByName: select(_editor_store__WEBPACK_IMPORTED_MODULE_4__.store).getNodeTypeByName
       };
     }),
-    nodeErrors = _useSelect.nodeErrors,
     nodeHasErrors = _useSelect.nodeHasErrors,
     isAdvancedSettingsEnabled = _useSelect.isAdvancedSettingsEnabled,
     isSingularElementSelected = _useSelect.isSingularElementSelected,
     getNodeTypeByName = _useSelect.getNodeTypeByName;
-  var updateNodeInternals = (0,reactflow__WEBPACK_IMPORTED_MODULE_12__.useUpdateNodeInternals)();
+  var updateNodeInternals = (0,reactflow__WEBPACK_IMPORTED_MODULE_13__.useUpdateNodeInternals)();
   var isPro = (0,_contexts_pro_context__WEBPACK_IMPORTED_MODULE_9__.useIsPro)();
   var _useDispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_workflow_store__WEBPACK_IMPORTED_MODULE_3__.store),
     removeNode = _useDispatch.removeNode;
   var _useDispatch2 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_editor_store__WEBPACK_IMPORTED_MODULE_4__.store),
     openGeneralSidebar = _useDispatch2.openGeneralSidebar;
   var previousHandlesCountRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var previousSourceHandlesRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var nodeType = getNodeTypeByName(data.name);
   if (!nodeType || !nodeType.handleSchema) {
     nodeType = {
@@ -10306,7 +10704,8 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
   var handlesToDisplay;
   if (nodeType.handleSchema) {
     if (nodeType.handleSchema.target) {
-      handlesToDisplay = filterHandlesByConditions(nodeType.handleSchema.target, data);
+      var originalTargetHandles = (0,_utils__WEBPACK_IMPORTED_MODULE_12__.getNodeHandleSchema)(nodeType, data, 'target');
+      handlesToDisplay = filterHandlesByConditions(originalTargetHandles, data);
       (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
         if (previousHandlesCountRef.current !== handlesToDisplay.length) {
           previousHandlesCountRef.current = handlesToDisplay.length;
@@ -10315,7 +10714,7 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
               nodeId: id,
               handlesCount: handlesToDisplay.length,
               handles: handlesToDisplay,
-              originalHandles: nodeType.handleSchema.target,
+              originalHandles: originalTargetHandles,
               type: 'target'
             }
           });
@@ -10325,10 +10724,13 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
       }, [handlesToDisplay, updateNodeInternals]);
       targetHandles = handlesToDisplay.map(function (handle, index) {
         var left = calculateLeftPosition(index, handlesToDisplay.length);
-        return /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_12__.Handle, {
+        if (!(handle !== null && handle !== void 0 && handle.id)) {
+          return null;
+        }
+        return /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_13__.Handle, {
           key: handle.id + '_target',
           type: "target",
-          position: reactflow__WEBPACK_IMPORTED_MODULE_12__.Position.Top,
+          position: reactflow__WEBPACK_IMPORTED_MODULE_13__.Position.Top,
           id: handle.id,
           style: {
             left: "".concat(left)
@@ -10343,7 +10745,8 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
   var handleAreas = null;
   if (nodeType.handleSchema) {
     if (nodeType.handleSchema.source) {
-      handlesToDisplay = filterHandlesByConditions(nodeType.handleSchema.source, data);
+      var originalSourceHandles = (0,_utils__WEBPACK_IMPORTED_MODULE_12__.getNodeHandleSchema)(nodeType, data, 'source');
+      handlesToDisplay = filterHandlesByConditions(originalSourceHandles, data);
       (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
         if (previousHandlesCountRef.current !== handlesToDisplay.length) {
           previousHandlesCountRef.current = handlesToDisplay.length;
@@ -10352,20 +10755,38 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
               nodeId: id,
               handlesCount: handlesToDisplay.length,
               handles: handlesToDisplay,
-              originalHandles: nodeType.handleSchema.source,
+              originalHandles: originalSourceHandles,
               type: 'source'
             }
           });
           document.dispatchEvent(event);
           updateNodeInternals(id);
         }
+
+        // Detect if the handles ids have changed
+        if (previousSourceHandlesRef.current) {
+          var handlesChanged = previousSourceHandlesRef.current.some(function (prevHandle, index) {
+            var currentHandle = handlesToDisplay[index];
+            return !currentHandle || prevHandle.id !== currentHandle.id;
+          });
+          if (handlesChanged) {
+            previousSourceHandlesRef.current = handlesToDisplay;
+            updateNodeInternals(id);
+          }
+        }
+        if (!previousSourceHandlesRef.current) {
+          previousSourceHandlesRef.current = handlesToDisplay;
+        }
       }, [handlesToDisplay, updateNodeInternals]);
       sourceHandles = handlesToDisplay.map(function (handle, index) {
         var left = calculateLeftPosition(index, handlesToDisplay.length);
-        return /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_12__.Handle, {
+        if (!(handle !== null && handle !== void 0 && handle.id)) {
+          return null;
+        }
+        return /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_13__.Handle, {
           key: handle.id + '_source',
           type: "source",
-          position: reactflow__WEBPACK_IMPORTED_MODULE_12__.Position.Bottom,
+          position: reactflow__WEBPACK_IMPORTED_MODULE_13__.Position.Bottom,
           id: handle.id,
           style: {
             left: "".concat(left)
@@ -10375,6 +10796,9 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
         });
       });
       handleAreas = handlesToDisplay.map(function (handle) {
+        if (!(handle !== null && handle !== void 0 && handle.id)) {
+          return null;
+        }
         return /*#__PURE__*/React.createElement("div", {
           key: handle.id + 'handleArea',
           className: 'react-flow__node-handle-name handle-area-source-' + handle.id
@@ -10390,18 +10814,7 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
   } else if (data.elementaryType === 'trigger') {
     topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Trigger', 'post-expirator');
   }
-  var nodeAttributes = [
-    // {
-    //     id: 'id',
-    //     label: __('ID', 'post-expirator'),
-    //     value: id,
-    // },
-    // {
-    //     id: 'slug',
-    //     label: __('Slug', 'post-expirator'),
-    //     value: data.slug,
-    // },
-  ];
+  var nodeAttributes = [];
   var onClickDeleteNode = function onClickDeleteNode() {
     removeNode(id);
   };
@@ -10481,8 +10894,8 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GenericNode);
 function filterHandlesByConditions(handles, data) {
-  return handles.filter(function (handle) {
-    if (handle.conditions) {
+  return handles === null || handles === void 0 ? void 0 : handles.filter(function (handle) {
+    if (handle !== null && handle !== void 0 && handle.conditions) {
       return json_logic_js__WEBPACK_IMPORTED_MODULE_10___default().apply(handle.conditions, data.settings);
     }
     return true;
@@ -11147,6 +11560,68 @@ function NodeValidator(_ref) {
     }
     return successfulResult;
   }, [nodeSlugs]);
+  var isOptionsValid = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useCallback)(function (options, ruleData) {
+    if (!Array.isArray(options)) {
+      return {
+        isValid: false,
+        error: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(
+        // translators: %s is the field label.
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a list of options.', 'post-expirator'), ruleData === null || ruleData === void 0 ? void 0 : ruleData.fieldLabel)
+      };
+    }
+    var successfulResult = {
+      isValid: true,
+      error: null
+    };
+    var invalidOptions = false;
+    if (options.length === 0) {
+      invalidOptions = true;
+    }
+    var detailsMessage = '';
+    var optionIndex = 0;
+    var optionNames = [];
+    var optionLabels = [];
+    options.forEach(function (option) {
+      var _option$name;
+      optionIndex++;
+      if (!((_option$name = option.name) !== null && _option$name !== void 0 && _option$name.trim())) {
+        invalidOptions = true;
+        detailsMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(
+        // translators: %s is the option name.
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The option "%s" does not have a name.', 'post-expirator'), optionIndex);
+      }
+      if (!option.label.trim()) {
+        invalidOptions = true;
+        detailsMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(
+        // translators: %s is the option name.
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The option "%s" does not have a label.', 'post-expirator'), optionIndex);
+      }
+      if (optionNames.includes(option.name)) {
+        invalidOptions = true;
+        detailsMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(
+        // translators: %s is the option name.
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The option "%s" has a duplicate name.', 'post-expirator'), option.name);
+      }
+      if (optionLabels.includes(option.label)) {
+        invalidOptions = true;
+        detailsMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(
+        // translators: %s is the option label.
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The option "%s" has a duplicate label.', 'post-expirator'), option.label);
+      }
+      optionNames.push(option.name);
+      optionLabels.push(option.label);
+    });
+    if (invalidOptions) {
+      return {
+        isValid: false,
+        error: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(
+        // translators: %s is the field label.
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a valid list of options.', 'post-expirator'), ruleData === null || ruleData === void 0 ? void 0 : ruleData.fieldLabel),
+        details: detailsMessage
+      };
+    }
+    return successfulResult;
+  }, []);
   var validateNodes = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useCallback)(function (nodes, edges, nodeSlugs) {
     nodes.forEach(function (node) {
       var _node$data, _node$data2, _validationSchema$con, _validationSchema$set;
@@ -11298,6 +11773,15 @@ function NodeValidator(_ref) {
               var expressionValidation = isExpressionValid(settingValue, ruleData);
               if (!expressionValidation.isValid) {
                 addNodeError(node.id, "".concat(fieldName, "-validExpression"), expressionValidation.error, expressionValidation.details);
+              }
+              break;
+            case 'validOptions':
+              if (!Array.isArray(settingValue)) {
+                addNodeError(node.id, "".concat(fieldName, "-validOptions"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a list of options.', 'post-expirator'), fieldLabel));
+              }
+              var optionsValidation = isOptionsValid(settingValue, ruleData);
+              if (!optionsValidation.isValid) {
+                addNodeError(node.id, "".concat(fieldName, "-validOptions"), optionsValidation.error, optionsValidation.details);
               }
               break;
           }
@@ -15474,6 +15958,7 @@ function addWorkflowIdToUrl(workflowId) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   getBaseSlugCounts: () => (/* binding */ getBaseSlugCounts),
+/* harmony export */   getConnectedSourceHandlesOfSelectedNode: () => (/* binding */ getConnectedSourceHandlesOfSelectedNode),
 /* harmony export */   getDataTypeByName: () => (/* binding */ getDataTypeByName),
 /* harmony export */   getDataTypes: () => (/* binding */ getDataTypes),
 /* harmony export */   getDraggingFromHandle: () => (/* binding */ getDraggingFromHandle),
@@ -15647,6 +16132,34 @@ function getRayDebugShowEmails(state) {
 }
 function getRayDebugShowWordPressErrors(state) {
   return state.rayDebug.showWordPressErrors;
+}
+
+/**
+ * Returns the source handles of the selected node that are connected to other nodes.
+ * If multiple nodes are selected, it returns the handles of the first node.
+ *
+ * @param {Object} state - The state of the workflow.
+ * @returns {Array} The handles of the selected node.
+ */
+function getConnectedSourceHandlesOfSelectedNode(state) {
+  var selectedNodes = getSelectedNodes(state);
+  if (selectedNodes.length === 0) {
+    return [];
+  }
+  var selectedNode = selectedNodes[0];
+  var edges = getEdges(state);
+  var outputEdges = edges.filter(function (edge) {
+    return edge.source === selectedNode;
+  });
+  var sourceHandles = outputEdges.map(function (edge) {
+    return edge.sourceHandle;
+  });
+
+  // Remove duplicates
+  sourceHandles = sourceHandles.filter(function (handle, index, self) {
+    return self.indexOf(handle) === index;
+  });
+  return sourceHandles;
 }
 
 /***/ }),
@@ -15864,6 +16377,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   getGlobalVariablesExpanded: () => (/* binding */ getGlobalVariablesExpanded),
 /* harmony export */   getId: () => (/* binding */ getId),
 /* harmony export */   getNodeById: () => (/* binding */ getNodeById),
+/* harmony export */   getNodeHandleSchema: () => (/* binding */ getNodeHandleSchema),
 /* harmony export */   getNodeIncomers: () => (/* binding */ getNodeIncomers),
 /* harmony export */   getNodeIncomersRecursively: () => (/* binding */ getNodeIncomersRecursively),
 /* harmony export */   getNodeMenuDefaultClassName: () => (/* binding */ getNodeMenuDefaultClassName),
@@ -16448,6 +16962,29 @@ function getVariableLabelByVariableName(targetVariableName, variables) {
     return null;
   }
   return label;
+}
+function getNodeHandleSchema(nodeType, data, type) {
+  var _nodeType$handleSchem;
+  if (!(nodeType !== null && nodeType !== void 0 && (_nodeType$handleSchem = nodeType.handleSchema) !== null && _nodeType$handleSchem !== void 0 && _nodeType$handleSchem[type])) {
+    return [];
+  }
+  return nodeType.handleSchema[type].reduce(function (handleList, handle) {
+    var _data$settings;
+    if (!(handle !== null && handle !== void 0 && handle.type)) {
+      return [].concat(_toConsumableArray(handleList), [handle]);
+    }
+    if (!handle.type.startsWith('__dynamic__:')) {
+      return handleList;
+    }
+    var settingName = handle.type.replace('__dynamic__:', '');
+    var options = data === null || data === void 0 || (_data$settings = data.settings) === null || _data$settings === void 0 ? void 0 : _data$settings[settingName];
+    return [].concat(_toConsumableArray(handleList), _toConsumableArray(options.map(function (option) {
+      return {
+        id: option.name,
+        label: option.label
+      };
+    })));
+  }, []);
 }
 
 /***/ }),
@@ -17111,7 +17648,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.react-flow__node {
-    max-width: 170px;
+    max-width: 210px;
 }
 
 .react-flow__node-body {
@@ -17516,6 +18053,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.react-flow__node {
     line-height: 100%;
     flex: 1;
     border-left: 1px solid silver;
+    min-width: 36px;
 }
 
 .react-flow__node-handle-name:first-child {
@@ -17602,7 +18140,7 @@ body.workflow-editor.is-free .react-flow__node-handle-name.handle-area-source-tr
 .react-flow__node-top .node-slug {
     color: #0000008a;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/node-types.css"],"names":[],"mappings":"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","sourcesContent":[".react-flow__node {\n    max-width: 170px;\n}\n\n.react-flow__node-body {\n    border-radius: 8px;\n    color: #171717;\n    font-size: 10px;\n    min-width: 140px;\n    box-sizing: border-box;\n    border: 1px solid transparent;\n    cursor: pointer;\n}\n\n.react-flow__node-inner-body {\n    padding: 6px;\n    box-sizing: border-box;\n}\n\n.react-flow__node-header {\n    text-align: center;\n    width: 100%;\n    position: relative;\n    text-align: left;\n}\n\n.react-flow__node-header .react-flow__node-label {\n    margin-left: 22px;\n    margin-right: 5px;\n}\n\n.react-flow__node-header .dashicon {\n    margin-right: 4px;\n    position: absolute;\n    left: 2px;\n    top: 2px;\n}\n\n.react-flow__node-header .node-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 2px;\n}\n\n.react-flow__node-description {\n    font-size: 8px;\n    line-height: 10px;\n    color: #0000008a;\n    margin-top: 0px;\n    margin-left: 16px;\n    padding: 0px 6px;\n    border-radius: 6px;\n    overflow-wrap: break-word;\n    max-width: 140px;\n    margin-bottom: 6px;\n}\n\n.react-flow__node-inner-body.with-description {\n    padding-bottom: 4px;\n}\n\n.react-flow__node-slug {\n    font-size: 8px;\n    display: inline-block;\n    height: 6px;\n    line-height: 6px;\n    padding: 2px;\n    position: absolute;\n    top: 45px;\n    left: 27px;\n}\n\n.react-flow__handle {\n    width: 8px !important;\n    height: 8px !important;\n    box-sizing: border-box;\n}\n\n.react-flow__handle.react-flow__handle-bottom {\n    bottom: -4px !important;\n}\n\n.react-flow__handle.react-flow__handle-top {\n    top: -4px !important;\n}\n\n.react-flow__node-top {\n    font-size: 8px;\n    padding: 0 8px;\n    border-top-left-radius: 8px;\n    border-top-right-radius: 8px;\n    border-bottom: 1px solid silver;\n    position: relative;\n    padding-left: 18px;\n}\n\n.react-flow__node-top .publishpress-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 8px;\n}\n\n.react-flow__node-inserter-popover .components-popover__content {\n    width: 350px;\n}\n\n.react-flow__node-inserter-popover {\n    display: flex;\n    flex-direction: column;\n    position: relative;\n}\n\n.react-flow__node-inserter-popover-content {\n    height: 100%;\n    overflow-y: auto;\n    height: 340px;\n}\n\n.react-flow__node-inserter-popover-close {\n    cursor: pointer;\n    background-color: #000;\n    color: #fff;\n    display: block;\n    width: 100%;\n    padding: 6px;\n    height: 44px;\n}\n\n/* DEFAULT STYLE FOR NODES */\n\n.react-flow__node-genericNode,\n.react-flow__node-genericTrigger,\n.react-flow__node-unknownNode,\n.react-flow__node-genericAction,\n.react-flow__node-genericAdvanced,\n.react-flow__node-queryAction,\n.react-flow__node-debugAction,\n.react-flow__handle {\n    border-width: 1px;\n    border-style: solid;\n}\n\n.react-flow__node-inner-body {\n    border-bottom-width: 1px;\n    border-bottom-style: solid;\n}\n\n/* GENERIC NODE */\n\n.react-flow__node-genericNode {\n    background-color: #b2b2c9;\n    border-color: #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__handle {\n    background-color: #fff;\n    border-color: #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-top {\n    border-color: #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-inner-body {\n    border-bottom-color: #b2b2c9;\n}\n\n/* TRIGGER */\n\n.react-flow__node-genericTrigger {\n    background-color: #dce5df;\n    border-color: #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__handle {\n    background-color: #fff;\n    border-color: #B594B6;\n}\n\n.react-flow__node-genericTrigger  .react-flow__node-slug {\n    color: #939895;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-top {\n    border-color: #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-slug {\n    color: #808882;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-inner-body {\n    border-bottom-color: #b9c0bb;\n}\n\n/* GENERIC ACTION */\n\n.react-flow__node-unknownNode {\n    background-color: #afafaf;\n    border-color: #bbbbbb;\n}\n\n.react-flow__node-genericAction {\n    background-color: #89bae4;\n    border-color: #7199bc;\n}\n\n.react-flow__node-unknownNode .react-flow__handle,\n.react-flow__node-genericAction .react-flow__handle {\n    background-color: #fff;\n    border-color: #7199bc;\n}\n\n.react-flow__node-unknownNode .react-flow__node-slug,\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #8a62be;\n}\n\n.react-flow__node-unknownNode .react-flow__node-top,\n.react-flow__node-genericAction .react-flow__node-top {\n    border-color: #7199bc;\n}\n\n.react-flow__node-unknownNode .react-flow__node-slug,\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #526e87;\n}\n\n.react-flow__node-genericAction .react-flow__node-inner-body {\n    border-bottom-color: #7199bc;\n}\n\n/* GENERIC ADVANCED */\n\n.react-flow__node-genericAdvanced {\n    background-color: #f8ddad;\n    border-color: #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__handle {\n    background-color: #fff;\n    border-color: #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #b19f80;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-top {\n    border-color: #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #908065;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-inner-body {\n    border-bottom-color: #d3bc94;\n}\n\n/* QUERY ACTION */\n\n.react-flow__node-queryAction {\n    background-color: #d8b6f2;\n    border-color: #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__handle {\n    background-color: #fff;\n    border-color: #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: #9079a1;\n}\n\n.react-flow__node-queryAction .react-flow__node-top {\n    border-color: #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: rgb(110, 110, 125);\n}\n\n.react-flow__node-queryAction .react-flow__node-inner-body {\n    border-bottom-color: #b891c2;\n}\n\n/* DEBUG ACTION */\n\n.react-flow__node-debugAction {\n    background-color: #f0aec6;\n    border-color: #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__handle {\n    background-color: #fff;\n    border-color: #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__node-slug {\n    color: #916877;\n}\n\n.react-flow__node-debugAction .react-flow__node-top {\n    border-color: #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__node-inner-body {\n    border-bottom-color: #cf96ab;\n}\n\n/* PLACEHOLDER FOR EMPTY FLOW */\n.react-flow__node-triggerPlaceholderNode {\n    background-color: #fff;\n    border: 1px dashed #d2d2d2;\n    cursor: pointer;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    display: flex;\n    align-items: center;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon {\n    color: #fff;\n    background-color: #d2d2d2;\n    padding: 2px;\n    display: inline-block;\n    width: 12px;\n    height: 12px;\n    box-sizing: border-box;\n    position: relative;\n    border-radius: 1px;\n    margin-right: 6px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon svg {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    width: 12px;\n    height: 12px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .react-flow__node-label {\n    color: #d2d2d2\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    padding-left: 0;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover {\n    border: 1px dashed #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .icon {\n    background-color: #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .react-flow__node-label {\n    color: #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-inner-body {\n    border-bottom: none;\n}\n\n/* SELECTED NODES */\n.react-flow__node.selected {\n    background-color: transparent;\n}\n\n.react-flow__node.selected .react-flow__node-body {\n    border: 1px dashed #555;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n/* HANDLE AREA */\n\n.react-flow__node-handle-area {\n    font-size: 6px;\n    background-color: #fff;\n    border-bottom-left-radius: 8px;\n    border-bottom-right-radius: 8px;\n    display: flex;\n    flex-direction: row;\n}\n\n.react-flow__node-handle-name {\n    padding: 4px 2px 6px 2px;\n    text-align: center;\n    line-height: 100%;\n    flex: 1;\n    border-left: 1px solid silver;\n}\n\n.react-flow__node-handle-name:first-child {\n    border-left: 0;\n}\n\n/* Node Content */\n.react-flow__node-content {\n    font-size: 6px;\n    margin-top: 6px;\n}\n\n.react-flow__node-content table {\n    border-spacing: 0;\n    width: 100%;\n}\n\n.react-flow__node-content table th {\n    text-align: left;\n}\n\n.react-flow__node-content table th,\n.react-flow__node-content table td {\n    padding: 0 6px;\n    font-size: 6px;\n    border: 1px solid rgba(0, 0, 0, 0.1);\n}\n\n/* Node Markers */\n.react-flow__node-marker-wrapper {\n    position: absolute;\n    top: -17px;\n    right: 0;\n    display: flex;\n    flex-direction: row;\n    gap: 2px;\n    justify-content: right;\n}\n\n.react-flow__node-error,\n.react-flow__node-pro-badge {\n    display: flex;\n    border-radius: 100%;\n    width: 14px;\n    height: 14px;\n    box-sizing: border-box;\n    justify-content: center;\n    vertical-align: middle;\n}\n\n.react-flow__node-pro-badge {\n    background-color: #ffb200;\n    color: #000;\n}\n\n.react-flow__node-pro-badge .node-icon {\n    margin-top: -2px;\n}\n\n.react-flow__node-error {\n    background-color: #d90f0f;\n    color: #fff;\n    font-size: 10px;\n    text-align: center;\n    line-height: 12px;\n    font-family: monospace;\n    font-weight: 900;\n    padding-left: 0px;\n}\n\n.react-flow__node-error .node-icon {\n    margin-top: 2px;\n}\n\nbody.workflow-editor.is-free .react-flow__node-handle-name {\n    color: #838383;\n}\n\nbody.workflow-editor.is-free .react-flow__node-handle-name.handle-area-source-output,\nbody.workflow-editor.is-free .react-flow__node-handle-name.handle-area-source-true {\n    color: #000;\n}\n\n.react-flow__node-top .node-slug {\n    color: #0000008a;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/node-types.css"],"names":[],"mappings":"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","sourcesContent":[".react-flow__node {\n    max-width: 210px;\n}\n\n.react-flow__node-body {\n    border-radius: 8px;\n    color: #171717;\n    font-size: 10px;\n    min-width: 140px;\n    box-sizing: border-box;\n    border: 1px solid transparent;\n    cursor: pointer;\n}\n\n.react-flow__node-inner-body {\n    padding: 6px;\n    box-sizing: border-box;\n}\n\n.react-flow__node-header {\n    text-align: center;\n    width: 100%;\n    position: relative;\n    text-align: left;\n}\n\n.react-flow__node-header .react-flow__node-label {\n    margin-left: 22px;\n    margin-right: 5px;\n}\n\n.react-flow__node-header .dashicon {\n    margin-right: 4px;\n    position: absolute;\n    left: 2px;\n    top: 2px;\n}\n\n.react-flow__node-header .node-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 2px;\n}\n\n.react-flow__node-description {\n    font-size: 8px;\n    line-height: 10px;\n    color: #0000008a;\n    margin-top: 0px;\n    margin-left: 16px;\n    padding: 0px 6px;\n    border-radius: 6px;\n    overflow-wrap: break-word;\n    max-width: 140px;\n    margin-bottom: 6px;\n}\n\n.react-flow__node-inner-body.with-description {\n    padding-bottom: 4px;\n}\n\n.react-flow__node-slug {\n    font-size: 8px;\n    display: inline-block;\n    height: 6px;\n    line-height: 6px;\n    padding: 2px;\n    position: absolute;\n    top: 45px;\n    left: 27px;\n}\n\n.react-flow__handle {\n    width: 8px !important;\n    height: 8px !important;\n    box-sizing: border-box;\n}\n\n.react-flow__handle.react-flow__handle-bottom {\n    bottom: -4px !important;\n}\n\n.react-flow__handle.react-flow__handle-top {\n    top: -4px !important;\n}\n\n.react-flow__node-top {\n    font-size: 8px;\n    padding: 0 8px;\n    border-top-left-radius: 8px;\n    border-top-right-radius: 8px;\n    border-bottom: 1px solid silver;\n    position: relative;\n    padding-left: 18px;\n}\n\n.react-flow__node-top .publishpress-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 8px;\n}\n\n.react-flow__node-inserter-popover .components-popover__content {\n    width: 350px;\n}\n\n.react-flow__node-inserter-popover {\n    display: flex;\n    flex-direction: column;\n    position: relative;\n}\n\n.react-flow__node-inserter-popover-content {\n    height: 100%;\n    overflow-y: auto;\n    height: 340px;\n}\n\n.react-flow__node-inserter-popover-close {\n    cursor: pointer;\n    background-color: #000;\n    color: #fff;\n    display: block;\n    width: 100%;\n    padding: 6px;\n    height: 44px;\n}\n\n/* DEFAULT STYLE FOR NODES */\n\n.react-flow__node-genericNode,\n.react-flow__node-genericTrigger,\n.react-flow__node-unknownNode,\n.react-flow__node-genericAction,\n.react-flow__node-genericAdvanced,\n.react-flow__node-queryAction,\n.react-flow__node-debugAction,\n.react-flow__handle {\n    border-width: 1px;\n    border-style: solid;\n}\n\n.react-flow__node-inner-body {\n    border-bottom-width: 1px;\n    border-bottom-style: solid;\n}\n\n/* GENERIC NODE */\n\n.react-flow__node-genericNode {\n    background-color: #b2b2c9;\n    border-color: #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__handle {\n    background-color: #fff;\n    border-color: #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-top {\n    border-color: #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-inner-body {\n    border-bottom-color: #b2b2c9;\n}\n\n/* TRIGGER */\n\n.react-flow__node-genericTrigger {\n    background-color: #dce5df;\n    border-color: #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__handle {\n    background-color: #fff;\n    border-color: #B594B6;\n}\n\n.react-flow__node-genericTrigger  .react-flow__node-slug {\n    color: #939895;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-top {\n    border-color: #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-slug {\n    color: #808882;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-inner-body {\n    border-bottom-color: #b9c0bb;\n}\n\n/* GENERIC ACTION */\n\n.react-flow__node-unknownNode {\n    background-color: #afafaf;\n    border-color: #bbbbbb;\n}\n\n.react-flow__node-genericAction {\n    background-color: #89bae4;\n    border-color: #7199bc;\n}\n\n.react-flow__node-unknownNode .react-flow__handle,\n.react-flow__node-genericAction .react-flow__handle {\n    background-color: #fff;\n    border-color: #7199bc;\n}\n\n.react-flow__node-unknownNode .react-flow__node-slug,\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #8a62be;\n}\n\n.react-flow__node-unknownNode .react-flow__node-top,\n.react-flow__node-genericAction .react-flow__node-top {\n    border-color: #7199bc;\n}\n\n.react-flow__node-unknownNode .react-flow__node-slug,\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #526e87;\n}\n\n.react-flow__node-genericAction .react-flow__node-inner-body {\n    border-bottom-color: #7199bc;\n}\n\n/* GENERIC ADVANCED */\n\n.react-flow__node-genericAdvanced {\n    background-color: #f8ddad;\n    border-color: #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__handle {\n    background-color: #fff;\n    border-color: #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #b19f80;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-top {\n    border-color: #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #908065;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-inner-body {\n    border-bottom-color: #d3bc94;\n}\n\n/* QUERY ACTION */\n\n.react-flow__node-queryAction {\n    background-color: #d8b6f2;\n    border-color: #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__handle {\n    background-color: #fff;\n    border-color: #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: #9079a1;\n}\n\n.react-flow__node-queryAction .react-flow__node-top {\n    border-color: #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: rgb(110, 110, 125);\n}\n\n.react-flow__node-queryAction .react-flow__node-inner-body {\n    border-bottom-color: #b891c2;\n}\n\n/* DEBUG ACTION */\n\n.react-flow__node-debugAction {\n    background-color: #f0aec6;\n    border-color: #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__handle {\n    background-color: #fff;\n    border-color: #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__node-slug {\n    color: #916877;\n}\n\n.react-flow__node-debugAction .react-flow__node-top {\n    border-color: #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__node-inner-body {\n    border-bottom-color: #cf96ab;\n}\n\n/* PLACEHOLDER FOR EMPTY FLOW */\n.react-flow__node-triggerPlaceholderNode {\n    background-color: #fff;\n    border: 1px dashed #d2d2d2;\n    cursor: pointer;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    display: flex;\n    align-items: center;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon {\n    color: #fff;\n    background-color: #d2d2d2;\n    padding: 2px;\n    display: inline-block;\n    width: 12px;\n    height: 12px;\n    box-sizing: border-box;\n    position: relative;\n    border-radius: 1px;\n    margin-right: 6px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon svg {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    width: 12px;\n    height: 12px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .react-flow__node-label {\n    color: #d2d2d2\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    padding-left: 0;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover {\n    border: 1px dashed #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .icon {\n    background-color: #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .react-flow__node-label {\n    color: #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-inner-body {\n    border-bottom: none;\n}\n\n/* SELECTED NODES */\n.react-flow__node.selected {\n    background-color: transparent;\n}\n\n.react-flow__node.selected .react-flow__node-body {\n    border: 1px dashed #555;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n/* HANDLE AREA */\n\n.react-flow__node-handle-area {\n    font-size: 6px;\n    background-color: #fff;\n    border-bottom-left-radius: 8px;\n    border-bottom-right-radius: 8px;\n    display: flex;\n    flex-direction: row;\n}\n\n.react-flow__node-handle-name {\n    padding: 4px 2px 6px 2px;\n    text-align: center;\n    line-height: 100%;\n    flex: 1;\n    border-left: 1px solid silver;\n    min-width: 36px;\n}\n\n.react-flow__node-handle-name:first-child {\n    border-left: 0;\n}\n\n/* Node Content */\n.react-flow__node-content {\n    font-size: 6px;\n    margin-top: 6px;\n}\n\n.react-flow__node-content table {\n    border-spacing: 0;\n    width: 100%;\n}\n\n.react-flow__node-content table th {\n    text-align: left;\n}\n\n.react-flow__node-content table th,\n.react-flow__node-content table td {\n    padding: 0 6px;\n    font-size: 6px;\n    border: 1px solid rgba(0, 0, 0, 0.1);\n}\n\n/* Node Markers */\n.react-flow__node-marker-wrapper {\n    position: absolute;\n    top: -17px;\n    right: 0;\n    display: flex;\n    flex-direction: row;\n    gap: 2px;\n    justify-content: right;\n}\n\n.react-flow__node-error,\n.react-flow__node-pro-badge {\n    display: flex;\n    border-radius: 100%;\n    width: 14px;\n    height: 14px;\n    box-sizing: border-box;\n    justify-content: center;\n    vertical-align: middle;\n}\n\n.react-flow__node-pro-badge {\n    background-color: #ffb200;\n    color: #000;\n}\n\n.react-flow__node-pro-badge .node-icon {\n    margin-top: -2px;\n}\n\n.react-flow__node-error {\n    background-color: #d90f0f;\n    color: #fff;\n    font-size: 10px;\n    text-align: center;\n    line-height: 12px;\n    font-family: monospace;\n    font-weight: 900;\n    padding-left: 0px;\n}\n\n.react-flow__node-error .node-icon {\n    margin-top: 2px;\n}\n\nbody.workflow-editor.is-free .react-flow__node-handle-name {\n    color: #838383;\n}\n\nbody.workflow-editor.is-free .react-flow__node-handle-name.handle-area-source-output,\nbody.workflow-editor.is-free .react-flow__node-handle-name.handle-area-source-true {\n    color: #000;\n}\n\n.react-flow__node-top .node-slug {\n    color: #0000008a;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -17917,6 +18455,61 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.conditional-editor-modal .expression-
     margin-top: 7px;
 }
 `, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/conditional/styles/index.css"],"names":[],"mappings":"AAAA;IACI,sBAAsB;IACtB,4BAA4B;AAChC;;AAEA;IACI,sBAAsB;IACtB,uBAAuB;AAC3B;;AAEA;IACI,uBAAuB;IACvB,gBAAgB;IAChB,eAAe;AACnB","sourcesContent":[".conditional-editor-modal .expression-builder-button {\n    width: 34px !important;\n    padding-top: 10px !important;\n}\n\n.conditional-editor-modal-remove-element {\n    width: 40px !important;\n    height: 40px !important;\n}\n\n.conditional-editor-modal-operator-selector {\n    height: 41px !important;\n    min-height: 40px;\n    margin-top: 7px;\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./assets/jsx/workflow-editor/components/data-fields/custom-options/style.css":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./assets/jsx/workflow-editor/components/data-fields/custom-options/style.css ***!
+  \********************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.workflow-editor-panel__row-options-container {
+    gap: 0 !important;
+}
+
+.workflow-editor-panel__row-options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+.workflow-editor-panel__row-options .workflow-editor-panel__row-label {
+    width: 8px;
+}
+
+.workflow-editor-panel__row-options-empty {
+    padding: 8px;
+}
+
+.workflow-editor-panel__row-options-label {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 10px;
+    padding: 0px;
+}
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/custom-options/style.css"],"names":[],"mappings":"AAAA;IACI,iBAAiB;AACrB;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,mBAAmB;IACnB,8BAA8B;IAC9B,YAAY;AAChB;;AAEA;IACI,UAAU;AACd;;AAEA;IACI,YAAY;AAChB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,gBAAgB;IAChB,yBAAyB;IACzB,cAAc;IACd,mBAAmB;IACnB,YAAY;AAChB","sourcesContent":[".workflow-editor-panel__row-options-container {\n    gap: 0 !important;\n}\n\n.workflow-editor-panel__row-options {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: space-between;\n    padding: 8px;\n}\n\n.workflow-editor-panel__row-options .workflow-editor-panel__row-label {\n    width: 8px;\n}\n\n.workflow-editor-panel__row-options-empty {\n    padding: 8px;\n}\n\n.workflow-editor-panel__row-options-label {\n    font-size: 11px;\n    font-weight: 500;\n    line-height: 1.4;\n    text-transform: uppercase;\n    display: block;\n    margin-bottom: 10px;\n    padding: 0px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -18448,6 +19041,58 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_index_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_index_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_index_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./assets/jsx/workflow-editor/components/data-fields/custom-options/style.css":
+/*!************************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-fields/custom-options/style.css ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../../../../node_modules/css-loader/dist/cjs.js!../../../../../../node_modules/postcss-loader/dist/cjs.js!./style.css */ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./assets/jsx/workflow-editor/components/data-fields/custom-options/style.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
