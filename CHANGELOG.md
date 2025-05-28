@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added diagnostic check for Spatie Ray debugging tool in the Diagnostics and Tools settings tab, clarifying debugging capabilities.
 - Added a "Copy" button to workflows (Issue #1183).
 - Added a "Cancel Scheduled Actions" button to workflows lists (Issue #1326).
+- Add new  "Duplicate Post" workflow action - PRO feature (Issue #1170).
 
 ### Changed
 
@@ -29,6 +30,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 
 - Remove site metadata from the execution context on workflows (Issue #1332).
+
+### Developer
+
+- Enhanced workflow runner infinite loop prevention by implementing ExecutionContextInterface and adding execution ID tracking for improved detection accuracy.
 
 ## [4.6.0] - 7 May, 2025
 

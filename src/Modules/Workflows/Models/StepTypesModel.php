@@ -25,6 +25,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\Stick
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UnstickPost;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePost;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePostMeta;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DuplicatePost;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnAdminInit;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCustomAction;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnInit;
@@ -249,6 +250,7 @@ class StepTypesModel implements StepTypesModelInterface
             UpdatePostMeta::getNodeTypeName() => new UpdatePostMeta(),
             UpdatePost::getNodeTypeName() => new UpdatePost(),
             SendInSiteNotification::getNodeTypeName() => new SendInSiteNotification(),
+            DuplicatePost::getNodeTypeName() => new DuplicatePost(),
         ];
 
         return $nodesInstances;
