@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## UNRELEASED - 4.7
+## UNRELEASED - 4.7.0
 
 ### Added
 
@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add diagnostic check for Spatie Ray debugging tool in the Diagnostics and Tools settings tab, clarifying debugging capabilities.
 - Add a "Copy" button to workflows (Issue #1183).
 - Add a "Cancel Scheduled Actions" button to workflows lists (Issue #1326).
-- Add Add a new step for interactive delay (Issue #1257).
+- Add a new step for interactive delay that allows workflows to pause and wait for user interaction - PRO feature (Issue #1257).
 - Add new workflow engine action hooks for enhanced extensibility:
   - `publishpressfuture_workflow_engine_initialize_workflow`: Fires when a workflow is being initialized
   - `publishpressfuture_workflow_engine_setup_trigger`: Fires when configuring a workflow trigger
@@ -22,23 +22,34 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `publishpressfuture_workflow_engine_workflows_initialized`: Fires when all workflows are initialized
   - `publishpressfuture_workflow_engine_start_engine`: Fires when the workflow engine starts
   - `publishpressfuture_workflow_engine_run_workflows`: Fires when workflows begin execution
+- Add Trigger action `publishpressfuture_workflow_engine_execute_event_driven_step` when an event-driven step starts running - PRO feature.
 
 ### Changed
 
 - Stick and Unstick Post workflow steps can now be used anywhere in workflows, not just within Schedule branches (Issue #1204).
 - Clarify the "Metadata" description by including table name for each metadata (Issue #1247).
 - Stop automatic cancelation of scheduled actions when a workflow is disabled in support of manual button, (Issue #1326).
+- Upgrade woocommerce/action-scheduler from 3.7.0 to 3.9.2, fixing PHP 8.4 compatibility.
 
 ### Fixed
 
 - Settings Controller processes form submissions on every admin page load (Issue #1310).
 - Fixed validation issue in the workflow editor where selecting "Remove all terms" not removing required error (Issue #1244).
 - Fixed issue where Pro-only workflow triggers were incorrectly executing subsequent workflow steps in the free version of the plugin.
-
+- Fixed PHP compatibility by replacing arrow functions with anonymous functions for PHP 7.3 support.
+- Fixed PHP Warning: Trying to access array offset on null when opening new post, (Issue #1311).
 
 ### Removed
 
 - Remove site metadata from the execution context on workflows (Issue #1332).
+
+### Developers
+
+- Remove unused InitineLoopPreventer trait from some classes, replacing it with the service "future.free/workflow-execution-safeguard".
+- Add `convertDynamicHandlesToStatic` method to WorkflowModel for improved handle management in workflow processing.
+- Enhanced workflow editor components with new InteractiveCustomOptions component for better option management.
+- Update workflow editor CSS to increase max-width for react-flow nodes from 170px to 210px for better layout flexibility.
+- Implement options validation in NodeValidator component to ensure workflow step configuration integrity.
 
 ## [4.6.0] - 7 May, 2025
 
