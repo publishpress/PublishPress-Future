@@ -9,15 +9,15 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-15T19:58:36+00:00\n"
+"POT-Creation-Date: 2025-05-28T16:45:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: post-expirator\n"
 
 #. Plugin Name of the plugin
 #: post-expirator.php
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:120
-#: src/Modules/Workflows/Models/StepTypesModel.php:94
+#: src/Modules/Workflows/Models/StepTypesModel.php:97
 msgid "PublishPress Future"
 msgstr ""
 
@@ -86,6 +86,7 @@ msgstr ""
 
 #. translators: %1$s is the plugin name, %2$s is the star rating markup
 #: legacy/classes/Display.class.php:558
+#, php-format
 msgid "If you like %1$s, please leave us a %2$s rating. Thank you!"
 msgstr ""
 
@@ -117,17 +118,17 @@ msgstr ""
 msgid "No taxonomies found"
 msgstr ""
 
-#: services.php:141
+#: services.php:143
 #: src/Modules/Settings/SettingsFacade.php:122
 msgid "l F jS, Y"
 msgstr ""
 
-#: services.php:145
+#: services.php:147
 #: src/Modules/Settings/SettingsFacade.php:123
 msgid "g:ia"
 msgstr ""
 
-#: services.php:146
+#: services.php:148
 #: src/Modules/Settings/SettingsFacade.php:124
 msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
 msgstr ""
@@ -135,6 +136,7 @@ msgstr ""
 #: src/Framework/Logger/DBTableSchemas/DebugLogSchema.php:76
 #: src/Modules/Expirator/DBTableSchemas/ActionArgsSchema.php:84
 #: src/Modules/Workflows/DBTableSchemas/WorkflowScheduledStepsSchema.php:93
+#, php-format
 msgid "The table %s does not exist."
 msgstr ""
 
@@ -218,6 +220,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:415
 #: src/Modules/Expirator/Controllers/QuickEditController.php:343
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:50
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DoAction.php:64
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:64
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:153
 msgid "Action"
@@ -258,6 +261,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/BulkEditController.php:225
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:427
 #: src/Modules/Expirator/Controllers/QuickEditController.php:352
+#, php-format
 msgid "No %s found."
 msgstr ""
 
@@ -273,6 +277,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/BulkEditController.php:239
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:435
 #: src/Modules/Expirator/Controllers/QuickEditController.php:357
+#, php-format
 msgid "New %s"
 msgstr ""
 
@@ -281,6 +286,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/BulkEditController.php:241
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:437
 #: src/Modules/Expirator/Controllers/QuickEditController.php:359
+#, php-format
 msgid "%s to remove"
 msgstr ""
 
@@ -289,6 +295,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/BulkEditController.php:243
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:439
 #: src/Modules/Expirator/Controllers/QuickEditController.php:361
+#, php-format
 msgid "%s to add"
 msgstr ""
 
@@ -297,6 +304,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/BulkEditController.php:246
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:442
 #: src/Modules/Expirator/Controllers/QuickEditController.php:363
+#, php-format
 msgid "Search for %s"
 msgstr ""
 
@@ -327,6 +335,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:450
 #: src/Modules/Expirator/Controllers/QuickEditController.php:369
 #: src/Modules/Expirator/Controllers/SettingsController.php:297
+#, php-format
 msgid "Please select one or more %s"
 msgstr ""
 
@@ -410,7 +419,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:141
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:323
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:47
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:455
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:768
 msgid "Scheduled Actions"
 msgstr ""
 
@@ -431,6 +440,7 @@ msgid "Unknown post"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:307
+#, php-format
 msgid "Executed action for: %s (ID: %d)"
 msgstr ""
 
@@ -441,6 +451,7 @@ msgstr ""
 #. translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
 #: src/Modules/Expirator/Controllers/SettingsController.php:251
 #: src/Views/menu-general.php:41
+#, php-format
 msgid "Set the offset to use for the default action date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, use only terms in English."
 msgstr ""
 
@@ -562,6 +573,7 @@ msgstr ""
 #: src/Modules/Expirator/ExpirationActions/PostStatusToDraft.php:60
 #: src/Modules/Expirator/ExpirationActions/PostStatusToPrivate.php:60
 #: src/Modules/Expirator/ExpirationActions/PostStatusToTrash.php:60
+#, php-format
 msgid "Status has been successfully changed from \"%1$s\" to \"%2$s\"."
 msgstr ""
 
@@ -571,11 +583,13 @@ msgstr ""
 
 #. translators: %s: post type singular label
 #: src/Modules/Expirator/ExpirationActions/DeletePost.php:47
+#, php-format
 msgid "%s was not deleted."
 msgstr ""
 
 #. translators: %s: post type singular label
 #: src/Modules/Expirator/ExpirationActions/DeletePost.php:54
+#, php-format
 msgid "%s has been successfully deleted."
 msgstr ""
 
@@ -585,57 +599,68 @@ msgstr ""
 
 #. translators: %s is the post type singular label
 #: src/Modules/Expirator/ExpirationActions/PostCategoryAdd.php:65
+#, php-format
 msgid "No terms were added to the %s."
 msgstr ""
 
 #. translators: %1$s is the taxonomy label, %2$s is the post type singular label, %3$s is the list of terms added, %4$s is the list of terms on the post
 #: src/Modules/Expirator/ExpirationActions/PostCategoryAdd.php:77
+#, php-format
 msgid "The following terms (%1$s) were added to the %2$s: \"%3$s\". The full list of terms on the post is: %4$s."
 msgstr ""
 
 #. translators: %s is the taxonomy name (plural)
 #: src/Modules/Expirator/ExpirationActions/PostCategoryAdd.php:120
+#, php-format
 msgid "Add extra %s"
 msgstr ""
 
 #. translators: %s is the post type singular label
 #: src/Modules/Expirator/ExpirationActions/PostCategoryRemove.php:56
 #: src/Modules/Expirator/ExpirationActions/PostCategoryRemoveAll.php:56
+#, php-format
 msgid "No terms were removed from the %s."
 msgstr ""
 
 #. translators: %1$s is the taxonomy name, %2$s is the post type singular label, %3$s is the removed terms list, %4$s is the updated terms list
 #: src/Modules/Expirator/ExpirationActions/PostCategoryRemove.php:67
+#, php-format
 msgid "The following terms (%1$s) were removed from the %2$s: %3$s. The new list of terms on the post is: %4$s."
 msgstr ""
 
 #. translators: %s is the taxonomy name (plural)
 #: src/Modules/Expirator/ExpirationActions/PostCategoryRemove.php:112
+#, php-format
 msgid "Remove selected %s"
 msgstr ""
 
 #. translators: %1$s is the taxonomy name, %2$s is the post type singular label, %3$s is the list of term names
 #: src/Modules/Expirator/ExpirationActions/PostCategoryRemoveAll.php:67
+#, php-format
 msgid "The following terms (%1$s) were removed from the %2$s: %3$s."
 msgstr ""
 
 #. translators: %s is the taxonomy name (plural)
 #: src/Modules/Expirator/ExpirationActions/PostCategoryRemoveAll.php:106
+#, php-format
 msgid "Remove all %s"
 msgstr ""
 
 #. translators: %s is the post type singular label
 #: src/Modules/Expirator/ExpirationActions/PostCategorySet.php:58
+#, php-format
 msgid "No terms were changed on the %s."
 msgstr ""
 
 #. translators: 1: taxonomy name, 2: post type singular label, 3: updated terms, 4: original terms
 #: src/Modules/Expirator/ExpirationActions/PostCategorySet.php:69
+#, php-format
 msgid "The following terms (%1$s) were set to the %2$s: \"%3$s\". The old list of terms on the post was: %4$s."
 msgstr ""
 
 #. translators: %s is the taxonomy name (plural)
 #: src/Modules/Expirator/ExpirationActions/PostCategorySet.php:109
+#, php-format
 msgid "Replace all %s"
 msgstr ""
 
@@ -643,17 +668,20 @@ msgstr ""
 #: src/Modules/Expirator/ExpirationActions/PostStatusToDraft.php:90
 #: src/Modules/Expirator/ExpirationActions/PostStatusToPrivate.php:90
 #: src/Modules/Expirator/ExpirationActions/PostStatusToTrash.php:90
+#, php-format
 msgid "Change status to %s"
 msgstr ""
 
 #. translators: %s: post type singular label
 #: src/Modules/Expirator/ExpirationActions/StickPost.php:46
 #: src/Modules/Expirator/ExpirationActions/UnstickPost.php:46
+#, php-format
 msgid "%s didn't change."
 msgstr ""
 
 #. translators: %s: post type singular label
 #: src/Modules/Expirator/ExpirationActions/StickPost.php:53
+#, php-format
 msgid "%s has been added to stickies list."
 msgstr ""
 
@@ -663,6 +691,7 @@ msgstr ""
 
 #. translators: %s: post type singular label
 #: src/Modules/Expirator/ExpirationActions/UnstickPost.php:53
+#, php-format
 msgid "%s has been removed from stickies list."
 msgstr ""
 
@@ -700,26 +729,30 @@ msgstr ""
 
 #. translators: %1$s: post title placeholder, %2$s: notification text, %3$s: action date placeholder, %4$s: post link placeholder
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:632
+#, php-format
 msgid "%1$s. %2$s on %3$s. The post link is %4$s"
 msgstr ""
 
 #. translators: %s is the post title
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:650
+#, php-format
 msgid "Future Action Complete \"%s\""
 msgstr ""
 
 #. translators: 1: is the blog name, 2: the email subject
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:654
+#, php-format
 msgid "[%1$s] %2$s"
 msgstr ""
 
 #. translators: %s is the date/time offset and %s is the post type.
 #: src/Modules/Expirator/Models/PostTypeDefaultDataModel.php:156
+#, php-format
 msgid "Invalid date/time offset \"%s\" for post type \"%s\". Please ensure you use only English terms for the date/time offset, such as \"3 months\" or \"1 week\"."
 msgstr ""
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:53
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:188
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:217
 msgid "Status"
 msgstr ""
 
@@ -757,6 +790,7 @@ msgstr ""
 
 #. translators: %s: amount of time
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:83
+#, php-format
 msgid "%s year"
 msgid_plural "%s years"
 msgstr[0] ""
@@ -764,6 +798,7 @@ msgstr[1] ""
 
 #. translators: %s: amount of time
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:88
+#, php-format
 msgid "%s month"
 msgid_plural "%s months"
 msgstr[0] ""
@@ -771,6 +806,7 @@ msgstr[1] ""
 
 #. translators: %s: amount of time
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:93
+#, php-format
 msgid "%s week"
 msgid_plural "%s weeks"
 msgstr[0] ""
@@ -778,6 +814,7 @@ msgstr[1] ""
 
 #. translators: %s: amount of time
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:98
+#, php-format
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] ""
@@ -785,6 +822,7 @@ msgstr[1] ""
 
 #. translators: %s: amount of time
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:103
+#, php-format
 msgid "%s hour"
 msgid_plural "%s hours"
 msgstr[0] ""
@@ -792,6 +830,7 @@ msgstr[1] ""
 
 #. translators: %s: amount of time
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:108
+#, php-format
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
@@ -799,6 +838,7 @@ msgstr[1] ""
 
 #. translators: %s: amount of time
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:113
+#, php-format
 msgid "%s second"
 msgid_plural "%s seconds"
 msgstr[0] ""
@@ -847,16 +887,19 @@ msgstr ""
 
 #. translators: %1$s: post type label, %2$d: post ID, %3$s: post link tag start, %4$s: post title, %5$s: post link tag end
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:488
+#, php-format
 msgid "%1$s: [%2$d] %3$s%4$s%5$s"
 msgstr ""
 
 #. translators: %s is the new status
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:523
+#, php-format
 msgid "New Status: %s"
 msgstr ""
 
 #. translators: %s is the list of terms
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:531
+#, php-format
 msgid "Terms: %s"
 msgstr ""
 
@@ -887,11 +930,16 @@ msgstr ""
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:678
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:70
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:82
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:96
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:150
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:167
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:100
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:148
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:92
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:105
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:147
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:140
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:157
 msgid "Message"
 msgstr ""
 
@@ -901,11 +949,13 @@ msgstr ""
 
 #. translators: %s is the date interval in human readable format in the past
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:729
+#, php-format
 msgid " (%s ago)"
 msgstr ""
 
 #. translators: %s is the date interval in human readable format in the present or future
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:735
+#, php-format
 msgid " (%s)"
 msgstr ""
 
@@ -915,6 +965,7 @@ msgstr ""
 
 #. translators: %s: time interval
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:809
+#, php-format
 msgid "Every %s"
 msgstr ""
 
@@ -960,6 +1011,7 @@ msgstr ""
 
 #. translators: %1$s and %2$s are placeholders for the link to by the Pro version
 #: src/Modules/VersionNotices/Module.php:95
+#, php-format
 msgid "You're using PublishPress Future Free. The Pro version has more features and support. %1$sUpgrade to Pro%2$s"
 msgstr ""
 
@@ -974,7 +1026,7 @@ msgstr ""
 
 #: src/Modules/Workflows/Controllers/ManualPostTrigger.php:427
 #: src/Modules/Workflows/Controllers/PostType.php:48
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:159
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:180
 msgid "Action Workflows"
 msgstr ""
 
@@ -984,6 +1036,7 @@ msgstr ""
 
 #. translators: %s is the admin URL to the scheduled actions page
 #: src/Modules/Workflows/Controllers/PastDueActions.php:148
+#, php-format
 msgid ""
 "You have past-due scheduled actions in PublishPress Future.\n"
 "\n"
@@ -1132,10 +1185,12 @@ msgid "Cleanup orphan workflow scheduled step arguments"
 msgstr ""
 
 #: src/Modules/Workflows/Controllers/ScheduledActions.php:217
+#, php-format
 msgid "Clean up completed scheduled steps older than %d days"
 msgstr ""
 
 #: src/Modules/Workflows/Controllers/ScheduledActions.php:256
+#, php-format
 msgid "Successfully executed action: %s"
 msgstr ""
 
@@ -1144,6 +1199,7 @@ msgid "Executed workflow scheduled step"
 msgstr ""
 
 #: src/Modules/Workflows/Controllers/ScheduledActions.php:270
+#, php-format
 msgid "Cleaned up completed scheduled steps older than %d days"
 msgstr ""
 
@@ -1191,16 +1247,19 @@ msgstr ""
 
 #. translators: %1$s is the recurrence, %2$s is the date
 #: src/Modules/Workflows/Controllers/ScheduledActions.php:508
+#, php-format
 msgid "%1$s until %2$s"
 msgstr ""
 
 #. translators: %1$s is the recurrence, %2$d is the repeat times
 #: src/Modules/Workflows/Controllers/ScheduledActions.php:518
+#, php-format
 msgid "%1$s for %2$d times"
 msgstr ""
 
 #. translators: %1$s is the executed times, %2$d is the total repeat times
 #: src/Modules/Workflows/Controllers/ScheduledActions.php:528
+#, php-format
 msgid "[%1$s/%2$d]"
 msgstr ""
 
@@ -1276,58 +1335,113 @@ msgstr ""
 msgid "If you have any questions or need help, click the help button in the top right corner to access the support resources."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:190
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:219
 msgid "Triggers"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:217
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:354
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:355
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:246
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:383
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:384
 msgid "Deactivate"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:217
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:348
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:349
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:246
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:377
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:378
 msgid "Activate"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:259
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:288
 msgid "—"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:428
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:434
+msgid "Cancel all actions scheduled for this workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:436
+msgid "Cancel Scheduled Actions"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:455
+msgid "Copy this workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:456
+msgid "Copy"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:678
+msgid "Source workflow not found."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:679
+msgid "Failed to create new workflow."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:680
+msgid "An error occurred while copying the workflow."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:682
+msgid "Cannot cancel scheduled actions for an active workflow."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:683
+msgid "Error cancelling scheduled actions."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:684
+msgid "This workflow doesn't have any scheduled action."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:688
+msgid "Workflow copied successfully."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:690
+msgid "Scheduled actions have been cancelled successfully."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:741
 msgid "Action Workflow Editor"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:495
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:499
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:808
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:812
+#, php-format
 msgid "%s updated."
 msgstr ""
 
 #. translators: 1: Post type singular label, 2: Revision title
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:505
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:818
+#, php-format
 msgid "%1$s restored to revision from %2$s"
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:511
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:824
+#, php-format
 msgid "%s published."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:515
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:828
+#, php-format
 msgid "%s saved."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:519
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:832
+#, php-format
 msgid "%s submitted."
 msgstr ""
 
 #. translators: 1: Post type singular label, 2: Scheduled date
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:524
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:837
+#, php-format
 msgid "%1$s scheduled for: <strong>%2$s</strong>."
 msgstr ""
 
-#: src/Modules/Workflows/Controllers/WorkflowsList.php:529
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:842
+#, php-format
 msgid "%s draft updated."
 msgstr ""
 
@@ -1375,6 +1489,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ChangePostStatus.php:64
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:64
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:64
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:64
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:64
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:64
@@ -1442,6 +1557,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:127
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:106
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:128
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:146
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:131
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:123
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:106
@@ -1449,7 +1565,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:118
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:128
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostMetaChange.php:141
-#: src/Modules/Workflows/Models/StepTypesModel.php:85
+#: src/Modules/Workflows/Models/StepTypesModel.php:88
 msgid "Post"
 msgstr ""
 
@@ -1461,11 +1577,13 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:146
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:125
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:147
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:180
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:192
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:131
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:150
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:142
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:167
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:166
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:176
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:127
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:142
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:125
@@ -1483,11 +1601,13 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:147
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:126
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:148
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:181
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:193
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:132
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:151
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:143
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:168
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:167
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:177
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:128
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:143
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:126
@@ -1516,10 +1636,12 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:168
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:147
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:175
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DoAction.php:159
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:202
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:153
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:172
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:189
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:200
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:210
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:149
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:164
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:147
@@ -1761,6 +1883,239 @@ msgstr ""
 msgid "Specify the meta value to delete from the post. If empty, all meta with the same key will be deleted."
 msgstr ""
 
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DoAction.php:32
+msgid "Do action"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DoAction.php:37
+msgid "This step executes an action."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DoAction.php:65
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:65
+msgid "Specify the hook that will trigger this action."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DoAction.php:73
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:73
+msgid "Hook"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DoAction.php:74
+msgid "The hook that will be executed."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DoAction.php:83
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DoAction.php:119
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DoAction.php:137
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:95
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:128
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:146
+msgid "Action arguments"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DoAction.php:84
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:96
+msgid "The arguments to pass to the action. These arguments will be available as variables in subsequent workflow steps."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DoAction.php:113
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:122
+msgid "The action hook is required."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DoAction.php:138
+#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:147
+msgid "The arguments to pass to the action."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:32
+msgid "Duplicate post"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:37
+msgid "This step duplicates one or more posts."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:65
+msgid "Select which post will be duplicated."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:70
+msgid "Post to Duplicate"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:71
+msgid "Choose the post that will be duplicated."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:85
+msgid "Duplication Options"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:86
+msgid "Configure how the post should be duplicated."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:91
+msgid "New post status"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:92
+msgid "The status for the duplicated post."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:97
+msgid "Title prefix"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:98
+msgid "Text to add before the original title. Leave empty for no prefix."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:99
+msgid "Copy of "
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:104
+msgid "Copy Post Meta"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:105
+msgid "If enabled, all post meta will be copied to the new post."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:111
+msgid "Copy Post Taxonomies"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:112
+msgid "If enabled, all post taxonomies will be copied to the new post."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:118
+msgid "Copy Featured Image"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:119
+msgid "If enabled, the featured image will be copied to the new post."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:161
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:174
+msgid "Duplicated post IDs"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:162
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:175
+msgid "The IDs of the newly created duplicate posts."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:32
+msgid "Interactive delay"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:37
+msgid "This step delays the execution of the workflow until the user interacts with the step."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:70
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:140
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:155
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:198
+msgid "Responders"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:65
+msgid "Specify the responders for the interactive delay."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:71
+msgid "A comma-separated list of user names, ids, emails or user roles that can interact with this step."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:83
+msgid "Specify the message to be displayed to the responders."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:88
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:145
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:161
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:92
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:142
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:97
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:135
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:151
+msgid "Subject"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:90
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:17
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:17
+msgid "PublishPress Workflow: {{global.workflow.title}}"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:98
+msgid "Please select an option to continue the workflow: {{global.workflow.title}}"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:104
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:110
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:173
+msgid "Options"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:105
+msgid "Specify the options the user can choose from."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:111
+msgid "Configure the available response options for users. Each option can have a custom label and hint."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:115
+msgid "Dismiss"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:116
+msgid "Dismiss the notification"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:156
+msgid "Responders > Responders"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:162
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:152
+msgid "Message > Subject"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:168
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:158
+msgid "Message > Message"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:174
+msgid "Options > Options"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:199
+msgid "The responders to the interactive delay, as a list of user ids."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:204
+msgid "Option name"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:205
+msgid "The name of the option selected by the user."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:227
+msgid "After interaction"
+msgstr ""
+
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:32
 msgid "Query posts"
 msgstr ""
@@ -1898,11 +2253,6 @@ msgstr ""
 msgid "After all repetitions"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:17
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:17
-msgid "PublishPress Workflow: {{global.workflow.title}}"
-msgstr ""
-
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:22
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:22
 msgid "This is a message sent by PublishPress Workflow: {{global.workflow.title}}."
@@ -1930,7 +2280,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:136
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:77
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:130
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:135
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:145
 msgid "Recipient"
 msgstr ""
 
@@ -1938,25 +2288,15 @@ msgstr ""
 msgid "A comma-separated list of email addresses to send the message to."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:92
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:142
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:97
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:141
-msgid "Subject"
-msgstr ""
-
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:137
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:136
 msgid "Email Message > Recipient"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:143
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:142
 msgid "Email Message > Subject"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:149
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:148
 msgid "Email Message > Message"
 msgstr ""
 
@@ -1980,24 +2320,28 @@ msgstr ""
 msgid "A comma-separated list of user names, ids, emails or user roles to send the message to."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:172
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:146
+msgid "Recipient > Recipients"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:182
 msgid "Reading time"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:173
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:183
 msgid "The reading time of the admin notification."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:178
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:188
 msgid "Read by"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:179
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:189
 msgid "The user who read the admin notification."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:204
-msgid "On read"
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:214
+msgid "On dismiss"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:32
@@ -2241,14 +2585,6 @@ msgstr ""
 msgid "This trigger activates upon a custom WordPress action hook. Use it to integrate with other plugins or custom code."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:65
-msgid "Specify the hook that will trigger this action."
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:73
-msgid "Hook"
-msgstr ""
-
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:74
 msgid "The hook that will trigger this action."
 msgstr ""
@@ -2259,24 +2595,6 @@ msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:84
 msgid "The priority of the action hook. Lower values are executed first."
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:95
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:128
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:141
-msgid "Action arguments"
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:96
-msgid "The arguments to pass to the action. These arguments will be available as variables in subsequent workflow steps."
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:122
-msgid "The action hook is required."
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnCustomAction.php:142
-msgid "The arguments to pass to the action."
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnInit.php:32
@@ -2698,33 +3016,38 @@ msgstr ""
 msgid "Migrate workflow scheduled steps schema after v4.0.0"
 msgstr ""
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:103
+#: src/Modules/Workflows/Models/StepTypesModel.php:106
 msgid "User"
 msgstr ""
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:112
+#: src/Modules/Workflows/Models/StepTypesModel.php:115
 msgid "Site"
 msgstr ""
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:121
+#: src/Modules/Workflows/Models/StepTypesModel.php:124
 msgid "Flow Control"
 msgstr ""
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:130
+#: src/Modules/Workflows/Models/StepTypesModel.php:133
 msgid "Asynchronous"
 msgstr ""
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:139
+#: src/Modules/Workflows/Models/StepTypesModel.php:142
 #: src/Views/tabs-settings.php:36
 msgid "Debug"
 msgstr ""
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:148
+#: src/Modules/Workflows/Models/StepTypesModel.php:151
 msgid "Data Query"
 msgstr ""
 
-#: src/Modules/Workflows/Models/StepTypesModel.php:157
+#: src/Modules/Workflows/Models/StepTypesModel.php:160
 msgid "Messages"
+msgstr ""
+
+#: src/Modules/Workflows/Models/WorkflowModel.php:476
+#, php-format
+msgid "%s #2"
 msgstr ""
 
 #: src/Modules/Workflows/Rest/RestApiV1.php:52
@@ -2817,6 +3140,7 @@ msgstr ""
 
 #. translators: %1$s opens a span tag, %2$s is the action name, %3$s ends a span tag, %4$s is the a span tag, %5$s is the a span tag, %6$s is the a span tag
 #: src/Views/expire-column.php:77
+#, php-format
 msgid "%1$s%2$s%3$s on %5$s%4$s%6$s"
 msgstr ""
 
@@ -2950,11 +3274,13 @@ msgstr ""
 
 #. translators: %s is the number of results in the debug log. %s is the size of the log in the most appropriate unit.
 #: src/Views/menu-debug-log.php:82
+#, php-format
 msgid "Showing the latest %d of %d results. The approximate size of the log is %s."
 msgstr ""
 
 #. translators: %s is the size of the log in the most appropriate unit.
 #: src/Views/menu-debug-log.php:90
+#, php-format
 msgid "Showing all %d results. The approximate size of the log is %s."
 msgstr ""
 
@@ -3115,6 +3441,7 @@ msgstr ""
 
 #. translators: %s is a link to the PHP date function documentation
 #: src/Views/menu-display.php:64
+#, php-format
 msgid "The default format to use when displaying the action date within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
 msgstr ""
 
@@ -3129,6 +3456,7 @@ msgstr ""
 
 #. translators: %s is a link to the PHP date function documentation
 #: src/Views/menu-display.php:102
+#, php-format
 msgid "The default format to use when displaying the action time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
 msgstr ""
 
@@ -3174,6 +3502,7 @@ msgstr ""
 
 #. translators: %s is a code tag that wraps the shortcode
 #: src/Views/menu-display.php:249
+#, php-format
 msgid "Use the %s[futureaction]%s shortcode to show when the future action will occur. You can add this shortcode anywhere in your post content."
 msgstr ""
 
@@ -3199,26 +3528,31 @@ msgstr ""
 
 #. translators: %s is the shortcode code wrapped in code tags
 #: src/Views/menu-display.php:308
+#, php-format
 msgid "The following attributes are available for the %s shortcode:"
 msgstr ""
 
 #. translators: %s is a code tag that wraps the shortcode attribute name
 #: src/Views/menu-display.php:315
+#, php-format
 msgid "%s - Available options:"
 msgstr ""
 
 #. translators: %s is a code tag that wraps the shortcode attribute value
 #: src/Views/menu-display.php:321
+#, php-format
 msgid "%s - Displays complete date/time.  Default value."
 msgstr ""
 
 #. translators: %s is a code tag that wraps the shortcode attribute value
 #: src/Views/menu-display.php:327
+#, php-format
 msgid "%s - Displays date only"
 msgstr ""
 
 #. translators: %s is a code tag that wraps the shortcode attribute value
 #: src/Views/menu-display.php:333
+#, php-format
 msgid "%s - Displays time only"
 msgstr ""
 
@@ -3226,6 +3560,7 @@ msgstr ""
 #. translators: %s is a code tag that wraps the shortcode attribute timeformat
 #: src/Views/menu-display.php:345
 #: src/Views/menu-display.php:353
+#, php-format
 msgid "%s - Format set here will override the value set on the settings page"
 msgstr ""
 

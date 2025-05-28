@@ -7,49 +7,72 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-15T19:58:41+00:00\n"
+"POT-Creation-Date: 2025-05-28T16:46:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: post-expirator\n"
 
-#: components/data-fields/action-args/argument-item.jsx:27
+#: components/data-fields/action-args/argument-item.jsx:29
 msgid "Integer"
 msgstr ""
 
-#: components/data-fields/action-args/argument-item.jsx:28
+#: components/data-fields/action-args/argument-item.jsx:30
 msgid "String"
 msgstr ""
 
-#: components/data-fields/action-args/argument-item.jsx:29
+#: components/data-fields/action-args/argument-item.jsx:31
 msgid "Boolean"
 msgstr ""
 
-#: components/data-fields/action-args/argument-item.jsx:30
+#: components/data-fields/action-args/argument-item.jsx:32
 msgid "Object"
 msgstr ""
 
-#: components/data-fields/action-args/argument-item.jsx:31
+#: components/data-fields/action-args/argument-item.jsx:33
 msgid "Array"
 msgstr ""
 
-#: components/data-fields/action-args/argument-item.jsx:32
+#: components/data-fields/action-args/argument-item.jsx:34
 msgid "Post"
 msgstr ""
 
-#: components/data-fields/action-args/argument-item.jsx:33
+#: components/data-fields/action-args/argument-item.jsx:35
 msgid "User"
 msgstr ""
 
-#: components/data-fields/action-args/index.jsx:66
-msgid "Add a new argument"
+#: components/data-fields/action-args/argument-item.jsx:57
+#: components/data-fields/custom-options/option-item.jsx:50
+msgid "null"
 msgstr ""
 
-#: components/data-fields/action-args/index.jsx:73
+#: components/data-fields/action-args/argument-item.jsx:80
+msgid "Argument name"
+msgstr ""
+
+#: components/data-fields/action-args/argument-item.jsx:86
+msgid "Data type"
+msgstr ""
+
+#: components/data-fields/action-args/argument-item.jsx:94
+#: components/data-fields/custom-options/option-item.jsx:92
+msgid "Value"
+msgstr ""
+
+#: components/data-fields/action-args/argument-item.jsx:102
+msgid "The argument name should only contain letters, numbers and underscores."
+msgstr ""
+
+#: components/data-fields/action-args/index.jsx:71
+#, js-format
 msgid "Argument #%s"
 msgstr ""
 
 #: components/data-fields/action-args/index.jsx:85
 msgid "No arguments added to the action."
+msgstr ""
+
+#: components/data-fields/action-args/index.jsx:90
+msgid "Add a new argument"
 msgstr ""
 
 #: components/data-fields/conditional-date-offset.jsx:35
@@ -82,6 +105,53 @@ msgstr ""
 
 #: components/data-fields/conditional/components/not-toggle.jsx:30
 msgid "Not"
+msgstr ""
+
+#: components/data-fields/custom-options/index.jsx:12
+msgid "Dismiss"
+msgstr ""
+
+#: components/data-fields/custom-options/index.jsx:13
+msgid "Dismiss the notification"
+msgstr ""
+
+#: components/data-fields/custom-options/index.jsx:67
+#, js-format
+msgid "Option %s"
+msgstr ""
+
+#: components/data-fields/custom-options/index.jsx:95
+#, js-format
+msgid "Option #%s"
+msgstr ""
+
+#: components/data-fields/custom-options/index.jsx:114
+msgid "No options added to the action."
+msgstr ""
+
+#: components/data-fields/custom-options/index.jsx:120
+msgid "Add a new option"
+msgstr ""
+
+#: components/data-fields/custom-options/index.jsx:132
+#, js-format
+msgid "You have reached the maximum number of options. You can add up to %s options."
+msgstr ""
+
+#: components/data-fields/custom-options/option-item.jsx:73
+msgid "Name"
+msgstr ""
+
+#: components/data-fields/custom-options/option-item.jsx:80
+msgid "Label"
+msgstr ""
+
+#: components/data-fields/custom-options/option-item.jsx:85
+msgid "Hint"
+msgstr ""
+
+#: components/data-fields/custom-options/option-item.jsx:107
+msgid "The option name should only contain letters, numbers and underscores."
 msgstr ""
 
 #: components/data-fields/date-offset/index.jsx:61
@@ -153,6 +223,7 @@ msgid "Click for more information"
 msgstr ""
 
 #: components/data-fields/date-offset/index.jsx:197
+#, js-format
 msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
 msgstr ""
 
@@ -212,7 +283,19 @@ msgstr ""
 msgid "Post Type"
 msgstr ""
 
-#: components/data-fields/expression-builder/column-item.jsx:24
+#. translators: %s is the database table name
+#: components/data-fields/expression-builder/column-item.jsx:10
+#: components/data-fields/expression-builder/columns-container.jsx:25
+#, js-format
+msgid "Type the %s key and click on the button to insert it."
+msgstr ""
+
+#: components/data-fields/expression-builder/column-item.jsx:17
+#: components/data-fields/expression-builder/columns-container.jsx:34
+msgid "Metadata key"
+msgstr ""
+
+#: components/data-fields/expression-builder/column-item.jsx:31
 msgid "Insert"
 msgstr ""
 
@@ -246,6 +329,10 @@ msgstr ""
 
 #: components/data-fields/help-link.jsx:5
 msgid "Learn more"
+msgstr ""
+
+#: components/data-fields/interactive-custom-options/index.jsx:30
+msgid "This option is used to connect to another step and cannot have its name changed until the connection is removed."
 msgstr ""
 
 #: components/data-fields/modal-footer.jsx:11
@@ -528,11 +615,11 @@ msgstr ""
 msgid "User ID"
 msgstr ""
 
-#: components/flow-editor/index.jsx:437
+#: components/flow-editor/index.jsx:442
 msgid "Applying auto layout."
 msgstr ""
 
-#: components/flow-editor/index.jsx:462
+#: components/flow-editor/index.jsx:467
 msgid "Auto layout applied."
 msgstr ""
 
@@ -555,7 +642,7 @@ msgid "Pro"
 msgstr ""
 
 #: components/inspector-card/index.jsx:132
-#: components/node-types/generic.jsx:300
+#: components/node-types/generic.jsx:319
 #: components/secondary-sidebar/node-card.jsx:29
 msgid "Currently this step is being skipped. Upgrade to Pro to unlock this feature."
 msgstr ""
@@ -749,6 +836,7 @@ msgid "Multiple and different elements selected."
 msgstr ""
 
 #: components/node-inspector/index.jsx:116
+#, js-format
 msgid "%d steps selected"
 msgstr ""
 
@@ -757,6 +845,7 @@ msgid "Multiple steps selected."
 msgstr ""
 
 #: components/node-inspector/index.jsx:130
+#, js-format
 msgid "%d connections selected"
 msgstr ""
 
@@ -825,6 +914,7 @@ msgid "No description"
 msgstr ""
 
 #: components/node-types/generic.jsx:57
+#, js-format
 msgid "Unknown node: %s"
 msgstr ""
 
@@ -832,34 +922,34 @@ msgstr ""
 msgid "This is a placeholder node for a node that does not exist."
 msgstr ""
 
-#: components/node-types/generic.jsx:214
+#: components/node-types/generic.jsx:244
 msgid "Step"
 msgstr ""
 
-#: components/node-types/generic.jsx:216
+#: components/node-types/generic.jsx:246
 msgid "Action"
 msgstr ""
 
 #. translators: Patterns tab title in the block inserter.
-#: components/node-types/generic.jsx:218
+#: components/node-types/generic.jsx:248
 #: components/secondary-sidebar/tabs.jsx:30
 msgid "Advanced"
 msgstr ""
 
-#: components/node-types/generic.jsx:220
+#: components/node-types/generic.jsx:250
 msgid "Trigger"
 msgstr ""
 
-#: components/node-types/generic.jsx:267
+#: components/node-types/generic.jsx:286
 msgid "Step actions"
 msgstr ""
 
-#: components/node-types/generic.jsx:273
+#: components/node-types/generic.jsx:292
 #: components/workflow-delete-button/index.jsx:39
 msgid "Delete"
 msgstr ""
 
-#: components/node-types/generic.jsx:308
+#: components/node-types/generic.jsx:327
 msgid "This node has errors"
 msgstr ""
 
@@ -907,6 +997,7 @@ msgstr ""
 
 #. translators: %d: number of results.
 #: components/secondary-sidebar/inserter-search-results.jsx:101
+#, js-format
 msgid "%d result found."
 msgid_plural "%d results found."
 msgstr[0] ""
@@ -928,6 +1019,7 @@ msgstr ""
 
 #. translators: %d: Number of blocks.
 #: components/secondary-sidebar/node-draggable-chip.jsx:27
+#, js-format
 msgid "%d block"
 msgid_plural "%d blocks"
 msgstr[0] ""
