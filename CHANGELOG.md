@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `publishpressfuture_workflow_engine_start_engine`: Fires when the workflow engine starts
   - `publishpressfuture_workflow_engine_run_workflows`: Fires when workflows begin execution
 - Add Trigger action `publishpressfuture_workflow_engine_execute_event_driven_step` when an event-driven step starts running - PRO feature.
+- Add new  "Duplicate Post" workflow action - PRO feature (Issue #1170).
 
 ### Changed
 
@@ -50,6 +51,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Enhanced workflow editor components with new InteractiveCustomOptions component for better option management.
 - Update workflow editor CSS to increase max-width for react-flow nodes from 170px to 210px for better layout flexibility.
 - Implement options validation in NodeValidator component to ensure workflow step configuration integrity.
+- Enhanced workflow runner infinite loop prevention by implementing ExecutionContextInterface and adding execution ID tracking for improved detection accuracy.
 
 ## [4.6.0] - 7 May, 2025
 
