@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed issue where Pro-only workflow triggers were incorrectly executing subsequent workflow steps in the free version of the plugin.
 - Fixed PHP compatibility by replacing arrow functions with anonymous functions for PHP 7.3 support.
 - Fixed PHP Warning: Trying to access array offset on null when opening new post, (Issue #1311).
+- Update pt-BR translations - PRO (Issue #1339).
 
 ### Removed
 
