@@ -5,11 +5,11 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class InteractiveDelay implements StepTypeInterface
+class UserInteraction implements StepTypeInterface
 {
     public static function getNodeTypeName(): string
     {
-        return "advanced/interactive-delay";
+        return "advanced/user-interaction";
     }
 
     public function getElementaryType(): string
@@ -24,12 +24,12 @@ class InteractiveDelay implements StepTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "interactiveDelay";
+        return "userInteraction";
     }
 
     public function getLabel(): string
     {
-        return __("Interactive delay", "post-expirator");
+        return __("User interaction", "post-expirator");
     }
 
     public function getDescription(): string
@@ -111,9 +111,14 @@ class InteractiveDelay implements StepTypeInterface
                         "description" => __("Configure the available response options for users. Each option can have a custom label and hint.", "post-expirator"),
                         "default" => [
                             [
+                                "name" => "approve",
+                                "label" => __("Approve", "post-expirator"),
+                                "hint" => __("Approve the workflow", "post-expirator"),
+                            ],
+                            [
                                 "name" => "dismiss",
-                                "label" => __("Dismiss", "post-expirator"),
-                                "hint" => __("Dismiss the notification", "post-expirator"),
+                                "label" => __("Deny", "post-expirator"),
+                                "hint" => __("Deny the workflow", "post-expirator"),
                             ],
                         ],
                     ],

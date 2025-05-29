@@ -4,10 +4,10 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\StepRunnerInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\InteractiveDelay;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UserInteraction;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 
-class InteractiveDelayRunner implements StepRunnerInterface
+class UserInteractionRunner implements StepRunnerInterface
 {
     /**
      * @var StepProcessorInterface
@@ -29,7 +29,7 @@ class InteractiveDelayRunner implements StepRunnerInterface
 
     public static function getNodeTypeName(): string
     {
-        return InteractiveDelay::getNodeTypeName();
+        return UserInteraction::getNodeTypeName();
     }
 
     public function setup(array $step): void

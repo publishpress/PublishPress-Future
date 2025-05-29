@@ -127,7 +127,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContextProcesso
 use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContextProcessorRegistry;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\ExecutionContextRegistry;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\DoActionRunner;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\InteractiveDelayRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\UserInteractionRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnCustomActionRunner;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\Future\Modules\Workflows\Migrations\V040500OnScheduledStepsSchema;
@@ -1275,8 +1275,8 @@ return [
                     );
                     break;
 
-                case InteractiveDelayRunner::getNodeTypeName():
-                    $stepRunner = new InteractiveDelayRunner(
+                case UserInteractionRunner::getNodeTypeName():
+                    $stepRunner = new UserInteractionRunner(
                         $generalStepProcessor,
                         $logger
                     );
