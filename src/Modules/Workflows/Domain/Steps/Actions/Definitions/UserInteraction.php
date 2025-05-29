@@ -34,7 +34,7 @@ class UserInteraction implements StepTypeInterface
 
     public function getDescription(): string
     {
-        return __("This step delays the execution of the workflow until the user interacts with the step.", "post-expirator");
+        return __("This step requires user action before the workflow can proceed. The actions are done via the in-site notification area.", "post-expirator");
     }
 
     public function getIcon(): string
