@@ -1754,9 +1754,9 @@ var OptionItem = function OptionItem(_ref) {
   var getValuePreview = function getValuePreview() {
     var _defaultValue2;
     if ((_defaultValue2 = defaultValue) !== null && _defaultValue2 !== void 0 && (_defaultValue2 = _defaultValue2.expression) !== null && _defaultValue2 !== void 0 && _defaultValue2.expression) {
-      return "".concat(defaultValue.name, ": ").concat(getExpressionPreview());
+      return getExpressionPreview();
     }
-    return "".concat(defaultValue.name, ": ").concat(defaultValue.label);
+    return defaultValue.label;
   };
   return /*#__PURE__*/React.createElement(_inline_setting__WEBPACK_IMPORTED_MODULE_1__["default"], {
     name: name,
