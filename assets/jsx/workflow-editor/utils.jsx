@@ -668,6 +668,7 @@ export function getNodeHandleSchema(nodeType, data, type) {
     }, []);
 }
 
+// Todo: Should we move all similar functions to the workflow store?
 export function getNodeSourceHandleNamesByNodeId(nodeId) {
     const nodes = select(workflowStore).getNodes();
 
