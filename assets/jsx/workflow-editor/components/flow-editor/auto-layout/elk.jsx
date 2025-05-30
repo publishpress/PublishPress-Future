@@ -1,5 +1,8 @@
 import ELK from "elkjs";
 import { AUTO_LAYOUT_DIRECTION_RIGHT } from "./constants";
+import { store as editorStore } from "../../editor-store";
+import { select } from "@wordpress/data";
+import { getNodeSourceHandleNamesByNodeId } from "../../../utils";
 
 export const useLayoutedElements = ({
     nodes,
@@ -43,19 +46,26 @@ export const useLayoutedElements = ({
                 // Sort grouping by source node
                 let edgesList = edges.sort((edgeA, edgeB) => edgeA.source.localeCompare(edgeB.source));
 
-                // Sort conditional split edges to avoid crossing the connections
+                // Add a order property to the edges based on the source handle name
+                edgesList = edgesList.map((edge) => {
+                    const sourceHandleNames = getNodeSourceHandleNamesByNodeId(edge.source);
+                    const orderInSourceHandleNames = sourceHandleNames.indexOf(edge.sourceHandle);
+
+                    return {
+                        ...edge,
+                        order: orderInSourceHandleNames,
+                    };
+                });
+
+                // Sort edges based on the order property to avoid crossing the connections
                 edgesList = edgesList.sort((edgeA, edgeB) => {
-                    if (edgeA.sourceHandle === 'false' && edgeB.sourceHandle === 'true') {
-                        return 1;
-                    }
-                    if (edgeA.sourceHandle === 'true' && edgeB.sourceHandle === 'false') {
-                        return -1;
-                    }
-                    return 0;
+                    return edgeA.order - edgeB.order;
                 });
 
                 return edgesList;
             };
+
+            console.log(getEdgeList(edges));
 
             const graph = {
                 id: 'root',
