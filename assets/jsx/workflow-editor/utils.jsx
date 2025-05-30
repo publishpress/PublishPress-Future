@@ -667,3 +667,13 @@ export function getNodeHandleSchema(nodeType, data, type) {
         ];
     }, []);
 }
+
+export function getNodeSourceHandleNamesByNodeId(nodeId) {
+    const nodes = select(workflowStore).getNodes();
+
+    const node = nodes.find((node) => node.id === nodeId);
+    const nodeType = select(editorStore).getNodeTypeByName(node.data.name);
+    const sourceHandles = getNodeHandleSchema(nodeType, node.data, 'source');
+
+    return sourceHandles.map((handle) => handle.id);
+}

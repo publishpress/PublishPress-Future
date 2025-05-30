@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed PHP compatibility by replacing arrow functions with anonymous functions for PHP 7.3 support.
 - Fixed PHP Warning: Trying to access array offset on null when opening new post, (Issue #1311).
 - Update pt-BR translations - PRO (Issue #1339).
+- Enhanced workflow auto-layout algorithm to prevent connection line crossings by implementing source handle-based ordering instead of creation order, improving visual clarity and readability of complex workflows.
 
 ### Removed
 
