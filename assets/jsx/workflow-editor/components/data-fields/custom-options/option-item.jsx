@@ -52,10 +52,10 @@ export const OptionItem = ({
 
     const getValuePreview = () => {
         if (defaultValue?.expression?.expression) {
-            return `${defaultValue.name}: ${getExpressionPreview()}`;
+            return getExpressionPreview();
         }
 
-        return `${defaultValue.name}: ${defaultValue.label}`;
+        return defaultValue.label;
     }
 
     return (

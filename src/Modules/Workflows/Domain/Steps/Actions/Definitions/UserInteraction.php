@@ -67,7 +67,6 @@ class UserInteraction implements StepTypeInterface
                     [
                         "name" => "responders",
                         "type" => "expression",
-                        "label" => __("Responders", "post-expirator"),
                         "description" => __(
                             "A comma-separated list of user names, ids, emails or user roles that can interact with this step.",
                             "post-expirator"
@@ -107,8 +106,6 @@ class UserInteraction implements StepTypeInterface
                     [
                         "name" => "options",
                         "type" => "interactiveCustomOptions",
-                        "label" => __("Options", "post-expirator"),
-                        "description" => __("Configure the available response options for users. Each option can have a custom label and hint.", "post-expirator"),
                         "default" => [
                             [
                                 "name" => "approve",
