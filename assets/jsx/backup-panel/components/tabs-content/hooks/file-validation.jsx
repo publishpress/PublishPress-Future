@@ -1,4 +1,4 @@
-import { __ } from '@wordpress/i18n';
+import { __ } from '@publishpress/i18n';
 
 export const useFileValidation = () => {
     const validateFile = async ({ file, onError, onSuccess }) => {
