@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bundle name="PublishPress Future">
+  <domain name="post-expirator">
+    <project name="PublishPress Future" slug="post-expirator">
+      <target>
+        <directory>languages</directory>
+      </target>
+      <template>
+        <file>languages/post-expirator.pot</file>
+      </template>
+    </project>
+
+    <project name="PublishPress Future (Backup Panel)" slug="post-expirator-future_backup_panel">
+      <target>
+        <directory>languages</directory>
+      </target>
+      <template>
+        <file>languages/post-expirator-future_backup_panel.pot</file>
+      </template>
+    </project>
+
+    <project name="PublishPress Future (Workflow Editor Script)" slug="post-expirator-future_workflow_editor_script">
+      <target>
+        <directory>languages</directory>
+      </target>
+      <template>
+        <file>languages/post-expirator-future_workflow_editor_script.pot</file>
+      </template>
+    </project>
+  </domain>
+
+  <exclude>
+    <directory>vendor</directory>
+    <directory>lib</directory>
+  </exclude>
+</bundle>
