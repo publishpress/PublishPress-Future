@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-28T16:45:59+00:00\n"
+"POT-Creation-Date: 2025-06-02T19:02:14+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: post-expirator\n"
@@ -930,16 +930,16 @@ msgstr ""
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:678
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:70
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:82
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:96
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:150
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:167
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:100
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:148
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:92
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:105
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:140
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:157
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:81
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:95
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:152
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:169
 msgid "Message"
 msgstr ""
 
@@ -1578,7 +1578,6 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:125
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:147
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:180
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:192
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:131
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:150
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:142
@@ -1590,6 +1589,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:125
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:174
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:147
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:194
 msgid "Step input"
 msgstr ""
 
@@ -1602,7 +1602,6 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePost.php:126
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeletePostMeta.php:148
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DuplicatePost.php:181
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:193
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:132
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:151
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:143
@@ -1614,6 +1613,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:126
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:175
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:148
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:195
 msgid "The input data for this step."
 msgstr ""
 
@@ -2011,111 +2011,6 @@ msgstr ""
 msgid "The IDs of the newly created duplicate posts."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:32
-msgid "Interactive delay"
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:37
-msgid "This step delays the execution of the workflow until the user interacts with the step."
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:64
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:70
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:140
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:155
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:198
-msgid "Responders"
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:65
-msgid "Specify the responders for the interactive delay."
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:71
-msgid "A comma-separated list of user names, ids, emails or user roles that can interact with this step."
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:83
-msgid "Specify the message to be displayed to the responders."
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:88
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:145
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:161
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:92
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:142
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:97
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:135
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:151
-msgid "Subject"
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:90
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:17
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:17
-msgid "PublishPress Workflow: {{global.workflow.title}}"
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:98
-msgid "Please select an option to continue the workflow: {{global.workflow.title}}"
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:104
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:110
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:173
-msgid "Options"
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:105
-msgid "Specify the options the user can choose from."
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:111
-msgid "Configure the available response options for users. Each option can have a custom label and hint."
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:115
-msgid "Dismiss"
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:116
-msgid "Dismiss the notification"
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:156
-msgid "Responders > Responders"
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:162
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:152
-msgid "Message > Subject"
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:168
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:158
-msgid "Message > Message"
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:174
-msgid "Options > Options"
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:199
-msgid "The responders to the interactive delay, as a list of user ids."
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:204
-msgid "Option name"
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:205
-msgid "The name of the option selected by the user."
-msgstr ""
-
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/InteractiveDelay.php:227
-msgid "After interaction"
-msgstr ""
-
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:32
 msgid "Query posts"
 msgstr ""
@@ -2253,6 +2148,12 @@ msgstr ""
 msgid "After all repetitions"
 msgstr ""
 
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:17
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:17
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:89
+msgid "PublishPress Workflow: {{global.workflow.title}}"
+msgstr ""
+
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:22
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:22
 msgid "This is a message sent by PublishPress Workflow: {{global.workflow.title}}."
@@ -2286,6 +2187,17 @@ msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:84
 msgid "A comma-separated list of email addresses to send the message to."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:92
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:142
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:97
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:135
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:151
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:87
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:147
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:163
+msgid "Subject"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:137
@@ -2322,6 +2234,16 @@ msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:146
 msgid "Recipient > Recipients"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:152
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:164
+msgid "Message > Subject"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:158
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:170
+msgid "Message > Message"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:182
@@ -2567,6 +2489,86 @@ msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:154
 msgid "The ID of the meta updated for the post."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:32
+msgid "User interaction"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:37
+msgid "This step requires user action before the workflow can proceed. The actions are done via the in-site notification area."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:64
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:142
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:157
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:200
+msgid "Responders"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:65
+msgid "Specify the responders for the interactive delay."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:70
+msgid "A comma-separated list of user names, ids, emails or user roles that can interact with this step."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:82
+msgid "Specify the message to be displayed to the responders."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:97
+msgid "Please select an option to continue the workflow: {{global.workflow.title}}"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:103
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:175
+msgid "Options"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:104
+msgid "Specify the options the user can choose from."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:112
+msgid "Approve"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:113
+msgid "Approve the workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:117
+msgid "Deny"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:118
+msgid "Deny the workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:158
+msgid "Responders > Responders"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:176
+msgid "Options > Options"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:201
+msgid "The responders to the interactive delay, as a list of user ids."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:206
+msgid "Option name"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:207
+msgid "The name of the option selected by the user."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:229
+msgid "After interaction"
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnAdminInit.php:32
