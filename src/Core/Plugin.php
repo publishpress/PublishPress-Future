@@ -133,7 +133,11 @@ class Plugin implements InitializableInterface
     {
         $this->hooks->addAction(HooksAbstract::ACTION_INIT, [$this, 'manageUpgrade'], 99);
         $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
-        $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS, [$this, 'initializeI18nForScripts']);
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS,
+            [$this, 'initializeI18nForScripts'],
+            5
+        );
     }
 
     private function initializeNotices()
@@ -340,7 +344,7 @@ class Plugin implements InitializableInterface
 
     public function initializeI18nForScripts()
     {
-        wp_register_script(
+        wp_enqueue_script(
             'publishpress-i18n',
             self::getScriptUrl('i18n'),
             [
