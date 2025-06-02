@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `publishpressfuture_workflow_engine_run_workflows`: Fires when workflows begin execution
 - Add Trigger action `publishpressfuture_workflow_engine_execute_event_driven_step` when an event-driven step starts running - PRO feature.
 - Add new  "Duplicate Post" workflow action - PRO feature (Issue #1170).
+- Added loco.xml file (Issue #1352).
 
 ### Changed
 
