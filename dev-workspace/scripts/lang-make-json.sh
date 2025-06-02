@@ -8,9 +8,9 @@ for locale in $LANG_LOCALES
 do
     for scriptHandler in $LANG_SCRIPT_HANDLERS
     do
-        po_file="./$LANG_DIR/$PLUGIN_SLUG-${locale}-${scriptHandler}.po"
+        po_file="./$LANG_DIR/$PLUGIN_SLUG-${scriptHandler}-${locale}.po"
         if [ -f "$po_file" ]; then
-            npx po2json "$po_file" > "./$LANG_DIR/$PLUGIN_SLUG-${locale}-${scriptHandler}.json"
+            npx po2json "$po_file" > "./$LANG_DIR/$PLUGIN_SLUG-${scriptHandler}-${locale}.json"
         fi
     done
 done

@@ -13,7 +13,7 @@ do
         handler="${scriptHandlers[1]}"
         source_path="./assets/jsx/${package}"
         pot_file="./$LANG_DIR/${PLUGIN_SLUG}-$handler.pot"
-        po_file="./$LANG_DIR/$PLUGIN_SLUG-${locale}-$handler.po"
+        po_file="./$LANG_DIR/$PLUGIN_SLUG-$handler-${locale}.po"
 
         wp i18n make-pot $source_path $pot_file --domain=$LANG_DOMAIN  --allow-root
 
