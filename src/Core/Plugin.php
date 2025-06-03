@@ -354,7 +354,7 @@ class Plugin implements InitializableInterface
             true
         );
 
-        $json = $this->getLanguageJson();
+        $json = $this->getLocalizedTranslations();
 
         wp_localize_script(
             'publishpress-i18n',
@@ -365,7 +365,7 @@ class Plugin implements InitializableInterface
         );
     }
 
-    private function getLanguageJson()
+    private function getLocalizedTranslations()
     {
         $currentLocale = get_locale();
         $jsonPath = $this->basePath . '/languages/post-expirator-' . $currentLocale . '.json';
