@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Clarify the "Metadata" description by including table name for each metadata (Issue #1247).
 - Stop automatic cancelation of scheduled actions when a workflow is disabled in support of manual button, (Issue #1326).
 - Upgrade woocommerce/action-scheduler from 3.7.0 to 3.9.2, fixing PHP 8.4 compatibility.
+- Consolidated JavaScript translations into the main .pot file and corresponding .po files, streamlining the translation workflow.
 
 ### Fixed
 
@@ -54,6 +55,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Update workflow editor CSS to increase max-width for react-flow nodes from 170px to 210px for better layout flexibility.
 - Implement options validation in NodeValidator component to ensure workflow step configuration integrity.
 - Enhanced workflow runner infinite loop prevention by implementing ExecutionContextInterface and adding execution ID tracking for improved detection accuracy.
+- Implemented a unified i18n system for JavaScript translations that consolidates all script-specific translations into the main .pot files, streamlining the translation workflow.
 
 ## [4.6.0] - 7 May, 2025
 
