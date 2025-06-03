@@ -1486,7 +1486,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, `#publishpress-future-classic-editor .components-checkbox-control__label {
     max-width: 100%;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-manual-selection/classic-editor/css/style.css"],"names":[],"mappings":"AAAA;IACI,eAAe;AACnB","sourcesContent":["#publishpress-future-classic-editor .components-checkbox-control__label {\n    max-width: 100%;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-manual-selection/classic-editor/css/style.css"],"names":[],"mappings":"AAAA;IACI,eAAe;AACnB","sourcesContent":["#publishpress-future-classic-editor .components-checkbox-control__label {\r\n    max-width: 100%;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

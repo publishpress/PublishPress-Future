@@ -1486,7 +1486,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, `#publishpress-future-block-editor .components-checkbox-control__label {
     max-width: 100%;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-manual-selection/block-editor/css/style.css"],"names":[],"mappings":"AAAA;IACI,eAAe;AACnB","sourcesContent":["#publishpress-future-block-editor .components-checkbox-control__label {\n    max-width: 100%;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-manual-selection/block-editor/css/style.css"],"names":[],"mappings":"AAAA;IACI,eAAe;AACnB","sourcesContent":["#publishpress-future-block-editor .components-checkbox-control__label {\r\n    max-width: 100%;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1941,6 +1941,16 @@ module.exports = React;
 
 /***/ }),
 
+/***/ "@publishpress/i18n":
+/*!************************************!*\
+  !*** external "publishpress.i18n" ***!
+  \************************************/
+/***/ ((module) => {
+
+module.exports = publishpress.i18n;
+
+/***/ }),
+
 /***/ "@wordpress/components":
 /*!********************************!*\
   !*** external "wp.components" ***!
@@ -2095,8 +2105,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./assets/jsx/workflow-manual-selection/store/index.jsx");
 /* harmony import */ var _fieldset__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../fieldset */ "./assets/jsx/workflow-manual-selection/fieldset/index.jsx");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _publishpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @publishpress/i18n */ "@publishpress/i18n");
+/* harmony import */ var _publishpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_publishpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "react");
@@ -2140,7 +2150,7 @@ function BlockEditorWorkflowManualTrigger() {
   var postId = window.futureWorkflowManualSelection.postId;
   return /*#__PURE__*/React.createElement(PluginDocumentSettingPanel, {
     name: 'publishpress-future-workflow-manual-trigger',
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Action Workflows', 'post-expirator'),
+    title: (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Action Workflows', 'post-expirator'),
     initialOpen: true,
     className: 'future-workflow-manual-trigger'
   }, /*#__PURE__*/React.createElement(_fieldset__WEBPACK_IMPORTED_MODULE_2__.Fieldset, {

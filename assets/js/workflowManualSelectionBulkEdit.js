@@ -1176,8 +1176,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/api-fetch */ "./node_modules/@wordpress/api-fetch/build-module/index.js");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _publishpress_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @publishpress/i18n */ "@publishpress/i18n");
+/* harmony import */ var _publishpress_i18n__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_publishpress_i18n__WEBPACK_IMPORTED_MODULE_5__);
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
@@ -1253,10 +1253,10 @@ function Fieldset(_ref) {
     });
   }, [workflowsWithManualTrigger, selectedWorkflows]);
   var strategyOptions = [{
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('— No Change —', 'post-expirator'),
+    label: (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('— No Change —', 'post-expirator'),
     value: 'no-change'
   }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Change manually enabled workflows', 'post-expirator'),
+    label: (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Change manually enabled workflows', 'post-expirator'),
     value: 'change'
   }];
   return /*#__PURE__*/React.createElement(React.Fragment, null, controls.length > 0 && /*#__PURE__*/React.createElement("div", {
@@ -1266,7 +1266,7 @@ function Fieldset(_ref) {
     name: "future_workflow_view",
     value: context
   }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Action Workflows', 'post-expirator'),
+    label: (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Action Workflows', 'post-expirator'),
     name: "future_workflow_manual_strategy",
     value: strategy,
     options: strategyOptions,
@@ -1578,7 +1578,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `#publishpress-future-bulk-edit-manual-
     max-width: 100% !important;
     line-height: 12px;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-manual-selection/bulk-edit/css/style.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;IAChB,aAAa;IACb,sBAAsB;IACtB,mBAAmB;AACvB;;AAEA;IACI,qBAAqB;IACrB,0BAA0B;IAC1B,iBAAiB;AACrB","sourcesContent":["#publishpress-future-bulk-edit-manual-trigger {\n    max-width: 340px;\n    padding: 14px;\n    border: 1px solid #ddd;\n    margin-bottom: 20px;\n}\n\n#publishpress-future-bulk-edit-manual-trigger label {\n    display: inline-block;\n    max-width: 100% !important;\n    line-height: 12px;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-manual-selection/bulk-edit/css/style.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;IAChB,aAAa;IACb,sBAAsB;IACtB,mBAAmB;AACvB;;AAEA;IACI,qBAAqB;IACrB,0BAA0B;IAC1B,iBAAiB;AACrB","sourcesContent":["#publishpress-future-bulk-edit-manual-trigger {\r\n    max-width: 340px;\r\n    padding: 14px;\r\n    border: 1px solid #ddd;\r\n    margin-bottom: 20px;\r\n}\r\n\r\n#publishpress-future-bulk-edit-manual-trigger label {\r\n    display: inline-block;\r\n    max-width: 100% !important;\r\n    line-height: 12px;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2062,6 +2062,16 @@ module.exports = styleTagTransform;
 /***/ ((module) => {
 
 module.exports = ReactDOM;
+
+/***/ }),
+
+/***/ "@publishpress/i18n":
+/*!************************************!*\
+  !*** external "publishpress.i18n" ***!
+  \************************************/
+/***/ ((module) => {
+
+module.exports = publishpress.i18n;
 
 /***/ }),
 

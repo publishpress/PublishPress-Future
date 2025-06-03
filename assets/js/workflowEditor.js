@@ -114,6 +114,16 @@ module.exports = ReactDOM;
 
 /***/ }),
 
+/***/ "@publishpress/i18n":
+/*!************************************!*\
+  !*** external "publishpress.i18n" ***!
+  \************************************/
+/***/ ((module) => {
+
+module.exports = publishpress.i18n;
+
+/***/ }),
+
 /***/ "@wordpress/components":
 /*!********************************!*\
   !*** external "wp.components" ***!
