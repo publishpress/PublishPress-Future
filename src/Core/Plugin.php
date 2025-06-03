@@ -374,6 +374,7 @@ class Plugin implements InitializableInterface
             return [];
         }
 
+        // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
         $json = file_get_contents($jsonPath);
         return json_decode($json, true);
     }
