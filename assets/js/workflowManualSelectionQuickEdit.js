@@ -1500,7 +1500,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `#publishpress-future-quick-edit {
 #post-expirator-quick-edit-wrapper .components-checkbox-control__label {
     line-height: 12px;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-manual-selection/quick-edit/css/style.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;IAChB,aAAa;IACb,sBAAsB;IACtB,mBAAmB;AACvB;;;AAGA;IACI,qBAAqB;IACrB,eAAe;IACf,iBAAiB;AACrB;;AAEA;IACI,iBAAiB;AACrB","sourcesContent":["#publishpress-future-quick-edit {\r\n    max-width: 340px;\r\n    padding: 14px;\r\n    border: 1px solid #ddd;\r\n    margin-bottom: 20px;\r\n}\r\n\r\n\r\n#publishpress-future-quick-edit label {\r\n    display: inline-block;\r\n    max-width: 100%;\r\n    line-height: 12px;\r\n}\r\n\r\n#post-expirator-quick-edit-wrapper .components-checkbox-control__label {\r\n    line-height: 12px;\r\n}\r\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-manual-selection/quick-edit/css/style.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;IAChB,aAAa;IACb,sBAAsB;IACtB,mBAAmB;AACvB;;;AAGA;IACI,qBAAqB;IACrB,eAAe;IACf,iBAAiB;AACrB;;AAEA;IACI,iBAAiB;AACrB","sourcesContent":["#publishpress-future-quick-edit {\n    max-width: 340px;\n    padding: 14px;\n    border: 1px solid #ddd;\n    margin-bottom: 20px;\n}\n\n\n#publishpress-future-quick-edit label {\n    display: inline-block;\n    max-width: 100%;\n    line-height: 12px;\n}\n\n#post-expirator-quick-edit-wrapper .components-checkbox-control__label {\n    line-height: 12px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
