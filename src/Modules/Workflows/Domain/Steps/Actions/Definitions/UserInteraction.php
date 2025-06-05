@@ -97,6 +97,32 @@ class UserInteraction implements StepTypeInterface
                             "expression" => __("Please select an option to continue the workflow: {{global.workflow.title}}", "post-expirator"),
                         ],
                     ],
+                    [
+                        "name" => "notification_type",
+                        "type" => "list",
+                        "label" => __("Notification type", "post-expirator"),
+                        "settings" => [
+                            "options" => [
+                                [
+                                    "value" => "info",
+                                    "label" => __("Info", "post-expirator"),
+                                ],
+                                [
+                                    "value" => "success",
+                                    "label" => __("Success", "post-expirator"),
+                                ],
+                                [
+                                    "value" => "warning",
+                                    "label" => __("Warning", "post-expirator"),
+                                ],
+                                [
+                                    "value" => "error",
+                                    "label" => __("Error", "post-expirator"),
+                                ],
+                            ],
+                        ],
+                        "defaultValue" => "info",
+                    ]
                 ],
             ],
             [
