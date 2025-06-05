@@ -3143,8 +3143,12 @@ function List(_ref) {
     label = _ref.label,
     defaultValue = _ref.defaultValue,
     onChange = _ref.onChange,
-    settingsSchema = _ref.settingsSchema;
-  var options = settingsSchema[0]['fields'][2]['options'];
+    settings = _ref.settings;
+  var options = settings['options'];
+  if (!options) {
+    console.log('No options found for list', name);
+    return null;
+  }
   options = options.map(function (option) {
     return {
       id: option.value,
