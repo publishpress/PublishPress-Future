@@ -53,11 +53,6 @@ class SiteResolver implements VariableResolverInterface
                 $value = $this->getAdminEmail();
                 $this->siteDataCache[$propertyName] = $value;
                 return $value;
-
-            case 'meta':
-                $value = new SiteMetaResolver($this->getSiteId());
-                $this->siteDataCache[$propertyName] = $value;
-                return $value;
         }
 
         return '';

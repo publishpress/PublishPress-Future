@@ -38,8 +38,6 @@ class OnAdminInitRunner implements TriggerRunnerInterface
         $this->stepProcessor->executeSafelyWithErrorHandling(
             $step,
             function ($step) {
-                $this->stepProcessor->setup($step, '__return_true');
-
                 $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
                 $this->logger->debug(

@@ -1,5 +1,5 @@
 .react-flow__node {
-    max-width: 170px;
+    max-width: 210px;
 }
 
 .react-flow__node-body {
@@ -404,6 +404,7 @@
     line-height: 100%;
     flex: 1;
     border-left: 1px solid silver;
+    min-width: 36px;
 }
 
 .react-flow__node-handle-name:first-child {

@@ -4,6 +4,7 @@ namespace PublishPress\Future\Modules\Workflows\Infrastructure\Safety;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
+use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowExecutionSafeguardInterface;
 use PublishPress\Future\Modules\Workflows\TransientsAbstract;
 
@@ -19,19 +20,47 @@ class WorkflowExecutionSafeguard implements WorkflowExecutionSafeguardInterface
      */
     private array $runningNodes = [];
 
+    /**
+     * @var array
+     */
+    private static array $triggerExecutionCache = [];
+
     public function __construct(
         HookableInterface $hooks
     ) {
         $this->hooks = $hooks;
     }
 
-    public function detectInfiniteLoop(int $workflowId, array $step, string $uniqueId = ''): bool
-    {
+    public function detectInfiniteLoop(
+        ?ExecutionContextInterface $executionContext,
+        array $step,
+        string $uniqueId = ''
+    ): bool {
         $stepId = $step['node']['id'];
+        $workflowId = $executionContext->getVariable('global.workflow.id');
         $executionKey = sprintf('%s-%s-%s', $workflowId, $stepId, $uniqueId);
 
         $infiniteLoopDetected = in_array($executionKey, $this->runningNodes);
         $this->runningNodes[] = $executionKey;
+
+        /**
+         * Prevents infinite loops by tracking workflow executions that modify posts,
+         * ensuring the same workflow doesn't re-trigger for the same or duplicated posts
+         * within a single execution cycle
+         */
+        if (! is_null($executionContext) && ! $infiniteLoopDetected) {
+            $triggerExecutionCacheKey = $this->generateUniqueExecutionIdentifier([
+                $executionContext->getVariable('global.engine_execution_id'),
+                $executionContext->getVariable('global.workflow.execution_id'),
+                $executionContext->getVariable('global.trigger.id'),
+            ]);
+
+            if (array_key_exists($triggerExecutionCacheKey, self::$triggerExecutionCache)) {
+                return true;
+            }
+
+            self::$triggerExecutionCache[$triggerExecutionCacheKey] = time();
+        }
 
         return $infiniteLoopDetected;
     }

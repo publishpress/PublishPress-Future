@@ -54,6 +54,8 @@ interface WorkflowModelInterface
 
     public function createNew($reuseAutoDraft = true): int;
 
+    public function createCopy(): WorkflowModelInterface;
+
     public function getTriggerNodes(): array;
 
     public function getEdges(): array;

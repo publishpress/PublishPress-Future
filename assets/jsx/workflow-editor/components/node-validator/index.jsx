@@ -2,7 +2,7 @@ import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useEffect, useMemo, useCallback } from "@wordpress/element";
-import { __, sprintf } from "@wordpress/i18n";
+import { __, sprintf } from "@publishpress/i18n";
 import { nodeHasIncomers, nodeHasOutgoers, getNodeIncomersRecursively } from "../../utils";
 import isEmail from "validator/lib/isEmail";
 import isInt from "validator/lib/isInt";
@@ -223,6 +223,92 @@ export function NodeValidator({})
         return successfulResult;
     }, [nodeSlugs]);
 
+    const isOptionsValid = useCallback((options, ruleData) => {
+        if (! Array.isArray(options)) {
+            return {
+                isValid: false,
+                error: sprintf(
+                    // translators: %s is the field label.
+                    __('The field %s must be a list of options.', 'post-expirator'),
+                    ruleData?.fieldLabel
+                ),
+            };
+        }
+
+        const successfulResult = {
+            isValid: true,
+            error: null,
+        };
+
+        let invalidOptions = false;
+
+        if (options.length === 0) {
+            invalidOptions = true;
+        }
+
+        let detailsMessage = '';
+        let optionIndex = 0;
+        const optionNames = [];
+        const optionLabels = [];
+
+        options.forEach((option) => {
+            optionIndex++;
+
+            if (! option.name?.trim()) {
+                invalidOptions = true;
+                detailsMessage = sprintf(
+                    // translators: %s is the option name.
+                    __('The option "%s" does not have a name.', 'post-expirator'),
+                    optionIndex
+                );
+            }
+
+            if (! option.label.trim()) {
+                invalidOptions = true;
+                detailsMessage = sprintf(
+                    // translators: %s is the option name.
+                    __('The option "%s" does not have a label.', 'post-expirator'),
+                    optionIndex
+                );
+            }
+
+            if (optionNames.includes(option.name)) {
+                invalidOptions = true;
+                detailsMessage = sprintf(
+                    // translators: %s is the option name.
+                    __('The option "%s" has a duplicate name.', 'post-expirator'),
+                    option.name
+                );
+            }
+
+            if (optionLabels.includes(option.label)) {
+                invalidOptions = true;
+                detailsMessage = sprintf(
+                    // translators: %s is the option label.
+                    __('The option "%s" has a duplicate label.', 'post-expirator'),
+                    option.label
+                );
+            }
+
+            optionNames.push(option.name);
+            optionLabels.push(option.label);
+        });
+
+        if (invalidOptions) {
+            return {
+                isValid: false,
+                error: sprintf(
+                    // translators: %s is the field label.
+                    __('The field %s must be a valid list of options.', 'post-expirator'),
+                    ruleData?.fieldLabel
+                ),
+                details: detailsMessage,
+            };
+        }
+
+        return successfulResult;
+    }, []);
+
     const validateNodes = useCallback((nodes, edges, nodeSlugs) => {
         nodes.forEach((node) => {
             const nodeType = getNodeTypeByName(node.data?.name);
@@ -413,6 +499,44 @@ export function NodeValidator({})
                                         break;
                                     }
                                 }
+                            } else if (type === 'nameValuePairList') {
+                                if (! settingValue) {
+                                    return;
+                                }
+
+                                const property = ruleData.field;
+
+                                if (! settingValue[property]) {
+                                    return;
+                                }
+
+                                if (! Array.isArray(settingValue[property])) {
+                                    addNodeError(
+                                        node.id,
+                                        `${fieldName}-nameValuePairList`,
+                                        sprintf(__('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel)
+                                    );
+                                }
+
+                                settingValue[property].forEach((item, i) => {
+                                    if (item?.name === '') {
+                                        addNodeError(
+                                            node.id,
+                                            `${fieldName}-nameValuePairList`,
+                                            sprintf(__('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel),
+                                            sprintf(__('The name of the pair is required on item %d.', 'post-expirator'), i + 1)
+                                        );
+                                    }
+
+                                    if (item?.value === '') {
+                                        addNodeError(
+                                            node.id,
+                                            `${fieldName}-nameValuePairList`,
+                                            sprintf(__('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel),
+                                            sprintf(__('The value of the pair is required on item %d.', 'post-expirator'), i + 1)
+                                        );
+                                    }
+                                });
                             }
 
                             break;
@@ -440,6 +564,24 @@ export function NodeValidator({})
                                     expressionValidation.details
                                 );
                             }
+                            break;
+
+                        case 'validOptions':
+                            if (! Array.isArray(settingValue)) {
+                                addNodeError(node.id, `${fieldName}-validOptions`, sprintf(__('The field %s must be a list of options.', 'post-expirator'), fieldLabel));
+                            }
+
+                            const optionsValidation = isOptionsValid(settingValue, ruleData);
+
+                            if (!optionsValidation.isValid) {
+                                addNodeError(
+                                    node.id,
+                                    `${fieldName}-validOptions`,
+                                    optionsValidation.error,
+                                    optionsValidation.details
+                                );
+                            }
+
                             break;
                     }
                 });

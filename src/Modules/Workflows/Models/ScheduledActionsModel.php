@@ -274,4 +274,34 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
             )
         );
     }
+
+    public function workflowHasScheduledActions(int $workflowId): bool
+    {
+        global $wpdb;
+
+        $container = Container::getInstance();
+        $tableSchema = $container->get(ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA);
+
+        if (!$tableSchema->isTableExistent()) {
+            return false;
+        }
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $queryCount = $wpdb->get_var(
+            $wpdb->prepare(
+                "SELECT COUNT(*)
+                FROM %i AS wss
+                INNER JOIN %i AS asa ON wss.action_id = asa.action_id
+                WHERE wss.workflow_id = %d AND asa.status = 'pending' AND asa.group_id = %d",
+                $tableSchema->getTableName(),
+                $wpdb->prefix . 'actionscheduler_actions',
+                $workflowId,
+                $this->getGroupID()
+            )
+        );
+
+        $count = (int) $queryCount;
+
+        return $count > 0;
+    }
 }

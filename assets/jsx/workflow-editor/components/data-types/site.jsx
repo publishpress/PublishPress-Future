@@ -40,12 +40,6 @@ export function SiteData() {
                 label: "Admin Email",
                 description: "The email address of the site administrator.",
             },
-            {
-                name: "meta",
-                type: "meta",
-                label: "Metadata",
-                description: "The metadata of the site.",
-            },
         ],
     };
 }

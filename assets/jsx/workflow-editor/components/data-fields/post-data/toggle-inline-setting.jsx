@@ -1,11 +1,11 @@
-import { __ } from "@wordpress/i18n";
+import { __ } from "@publishpress/i18n";
 import {
     useCallback
 } from "@wordpress/element";
 import {
     CheckboxControl
 } from "@wordpress/components";
-import InlineSetting from "./inline-setting";
+import InlineSetting from "../inline-setting";
 
 export const ToggleInlineSetting = ({
     name,

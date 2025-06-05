@@ -92,14 +92,6 @@ class StickPost implements StepTypeInterface
                     [
                         "rule" => "hasIncomingConnection",
                     ],
-                    [
-                        "rule" => "hasIncomerOfName",
-                        "name" => "advanced/core.schedule",
-                        "message" => __(
-                            "Please include a \"Schedule\" step earlier in this branch of the workflow.",
-                            "post-expirator"
-                        ),
-                    ],
                 ],
             ],
             "settings" => [

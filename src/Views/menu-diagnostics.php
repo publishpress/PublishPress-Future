@@ -41,6 +41,7 @@ $schemaHealthErrors = [
     $workflowScheduledStepsSchema->getTableName() => $workflowScheduledStepsSchema->getErrors(),
 ];
 
+$rayDebugIsInstalled = function_exists('ray');
 ?>
 
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
@@ -146,6 +147,26 @@ $schemaHealthErrors = [
                                 'post-expirator'
                             ) . '" />'; ?>
                         <?php endif; ?>
+                    </td>
+                </tr>
+                <tr id="diagnostics-ray-check">
+                    <th scope="row"><?php
+                        esc_html_e('Spatie Ray Debug', 'post-expirator'); ?></th>
+                    <td>
+                        <?php if ($rayDebugIsInstalled) : ?>
+                            <i class="dashicons dashicons-yes pe-status pe-status-enabled"></i> <span><?php
+                                esc_html_e('Spatie Ray Detected', 'post-expirator'); ?></span>
+                            <p class="description">
+                                <?php esc_html_e('Spatie Ray Debug is detected. The "Send to Ray" workflow step will be available in the workflow editor.', 'post-expirator'); ?>
+                            </p>
+                        <?php else : ?>
+                            <i class="dashicons dashicons-no-alt pe-status pe-status-disabled"></i> <span><?php
+                                esc_html_e('Spatie Ray Not Detected', 'post-expirator'); ?></span>
+                            <p class="description">
+                                <?php esc_html_e('Spatie Ray Debug is not detected. This is not an error, but the "Send to Ray" workflow step will not be available in the workflow editor.', 'post-expirator'); ?>
+                            </p>
+                        <?php endif; ?>
+                        <a href="https://spatie.be/products/ray" target="_blank"><?php esc_html_e('Learn more about Spatie Ray', 'post-expirator'); ?></a>
                     </td>
                 </tr>
                 <?php $hooks->doAction(HooksAbstract::ACTION_AFTER_DEBUG_LOG_SETTING); ?>

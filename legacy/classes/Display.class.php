@@ -467,27 +467,11 @@ class PostExpirator_Display
      */
     private function menu_advanced()
     {
-        if (isset($_POST['expirationdateSave']) && ! empty($_POST['expirationdateSave'])) {
-            if (
-                ! isset($_POST['_postExpiratorMenuAdvanced_nonce']) || ! wp_verify_nonce(
-                    sanitize_key($_POST['_postExpiratorMenuAdvanced_nonce']),
-                    'postexpirator_menu_advanced'
-                )
-            ) {
-                print 'Form Validation Failure: Sorry, your nonce did not verify.';
-                exit;
-            } else {
-                if (! isset($_POST['expired-preserve-data-deactivating'])) {
-                    throw new \Exception('The expired preserve data deactivating option is not set.');
-                }
-
-                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-                update_option('expirationdatePreserveData', (int)$_POST['expired-preserve-data-deactivating']);
-
-                echo "<div id='message' class='updated fade'><p>";
-                esc_html_e('Saved Options!', 'post-expirator');
-                echo '</p></div>';
-            }
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        if (isset($_GET['settings-updated']) && $_GET['settings-updated'] === 'true') {
+            echo "<div id='message' class='updated fade'><p>";
+            esc_html_e('Saved Options!', 'post-expirator');
+            echo '</p></div>';
         }
 
         $params = [

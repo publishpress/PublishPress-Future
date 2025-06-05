@@ -5,7 +5,7 @@ Feature: Settings - Admin menu
   Scenario: Administrator can see the admin menu "Future"
     Given the user "john" exists with role "administrator"
       And I am logged in as "john"
-      And only the plugins "ray-future, post-expirator, pre-tests" are active
+      And only the plugins "post-expirator, pre-tests" are active
     When I am on the admin home page
     Then I see the admin menu Future on the sidebar
 

@@ -145,7 +145,13 @@ class OnPostSaveRunner implements TriggerRunnerInterface
             return true;
         }
 
-        if ($this->executionSafeguard->detectInfiniteLoop($this->workflowId, $this->step, $postId)) {
+        if (
+            $this->executionSafeguard->detectInfiniteLoop(
+                $this->executionContext,
+                $this->step,
+                $postId
+            )
+        ) {
             $this->logger->debug(
                 $this->stepProcessor->prepareLogMessage(
                     'Infinite loop detected for step %s, skipping',
