@@ -1,7 +1,12 @@
 import { ListInput } from "./list-input";
 
-export function List({ name, label, defaultValue, onChange, settingsSchema }) {
-    let options = settingsSchema[0]['fields'][2]['options'];
+export function List({ name, label, defaultValue, onChange, settings }) {
+    let options = settings['options'];
+
+    if (!options) {
+        console.log('No options found for list', name);
+        return null;
+    }
 
     options = options.map((option) => {
         return {
