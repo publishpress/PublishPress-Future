@@ -108,8 +108,8 @@ class SendInSiteNotification implements StepTypeInterface
                         ],
                     ],
                     [
-                        "name" => "notification_type",
-                        "type" => "list",
+                        "name" => "notificationType",
+                        "type" => "select",
                         "label" => __("Notification type", "post-expirator"),
                         "settings" => [
                             "options" => [
@@ -131,7 +131,7 @@ class SendInSiteNotification implements StepTypeInterface
                                 ],
                             ],
                         ],
-                        "defaultValue" => "info",
+                        "default" => "info",
                     ]
                 ]
             ],

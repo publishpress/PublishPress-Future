@@ -4993,6 +4993,45 @@ function Schedule(_ref) {
 
 /***/ }),
 
+/***/ "./assets/jsx/workflow-editor/components/data-fields/select.jsx":
+/*!**********************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-fields/select.jsx ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Select: () => (/* binding */ Select),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
+
+function Select(_ref) {
+  var name = _ref.name,
+    label = _ref.label,
+    defaultValue = _ref.defaultValue,
+    _onChange = _ref.onChange,
+    settings = _ref.settings;
+  var options = settings['options'];
+  if (!options) {
+    console.log('No options found for list', name);
+    return null;
+  }
+  console.log(defaultValue);
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
+    label: label,
+    options: options,
+    value: defaultValue,
+    onChange: function onChange(value) {
+      return _onChange(name, value);
+    }
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Select);
+
+/***/ }),
+
 /***/ "./assets/jsx/workflow-editor/components/data-fields/taxonomy-terms.jsx":
 /*!******************************************************************************!*\
   !*** ./assets/jsx/workflow-editor/components/data-fields/taxonomy-terms.jsx ***!
@@ -10189,6 +10228,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_fields_integer__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../data-fields/integer */ "./assets/jsx/workflow-editor/components/data-fields/integer.jsx");
 /* harmony import */ var _data_fields_custom_options__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../data-fields/custom-options */ "./assets/jsx/workflow-editor/components/data-fields/custom-options/index.jsx");
 /* harmony import */ var _data_fields_interactive_custom_options__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../data-fields/interactive-custom-options */ "./assets/jsx/workflow-editor/components/data-fields/interactive-custom-options/index.jsx");
+/* harmony import */ var _data_fields_select__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../data-fields/select */ "./assets/jsx/workflow-editor/components/data-fields/select.jsx");
+
 
 
 
@@ -10270,6 +10311,8 @@ var MappedField = function MappedField(props) {
       return /*#__PURE__*/React.createElement(_data_fields_custom_options__WEBPACK_IMPORTED_MODULE_25__["default"], props);
     case "interactiveCustomOptions":
       return /*#__PURE__*/React.createElement(_data_fields_interactive_custom_options__WEBPACK_IMPORTED_MODULE_26__.InteractiveCustomOptions, props);
+    case "select":
+      return /*#__PURE__*/React.createElement(_data_fields_select__WEBPACK_IMPORTED_MODULE_27__["default"], props);
   }
   return /*#__PURE__*/React.createElement("div", {
     className: "description"

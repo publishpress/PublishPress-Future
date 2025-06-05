@@ -98,8 +98,8 @@ class UserInteraction implements StepTypeInterface
                         ],
                     ],
                     [
-                        "name" => "notification_type",
-                        "type" => "list",
+                        "name" => "notificationType",
+                        "type" => "select",
                         "label" => __("Notification type", "post-expirator"),
                         "settings" => [
                             "options" => [
@@ -121,7 +121,7 @@ class UserInteraction implements StepTypeInterface
                                 ],
                             ],
                         ],
-                        "defaultValue" => "info",
+                        "default" => "info",
                     ]
                 ],
             ],
