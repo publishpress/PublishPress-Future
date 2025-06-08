@@ -25,6 +25,7 @@ import ActionArgs from "../data-fields/action-args";
 import Integer from "../data-fields/integer";
 import CustomOptions from "../data-fields/custom-options";
 import { InteractiveCustomOptions } from "../data-fields/interactive-custom-options";
+import Select from "../data-fields/select";
 
 export const MappedField = (props) => {
     switch (props.type) {
@@ -131,6 +132,10 @@ export const MappedField = (props) => {
         case "interactiveCustomOptions":
             return (
                 <InteractiveCustomOptions {...props} />
+            );
+        case "select":
+            return (
+                <Select {...props} />
             );
     }
 

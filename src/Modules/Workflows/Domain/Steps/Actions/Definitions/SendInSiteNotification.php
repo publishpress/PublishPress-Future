@@ -106,6 +106,32 @@ class SendInSiteNotification implements StepTypeInterface
                         "default" => [
                             "expression" => self::getDefaultMessage(),
                         ],
+                    ],
+                    [
+                        "name" => "notificationType",
+                        "type" => "select",
+                        "label" => __("Notification type", "post-expirator"),
+                        "settings" => [
+                            "options" => [
+                                [
+                                    "value" => "info",
+                                    "label" => __("Info", "post-expirator"),
+                                ],
+                                [
+                                    "value" => "success",
+                                    "label" => __("Success", "post-expirator"),
+                                ],
+                                [
+                                    "value" => "warning",
+                                    "label" => __("Warning", "post-expirator"),
+                                ],
+                                [
+                                    "value" => "error",
+                                    "label" => __("Error", "post-expirator"),
+                                ],
+                            ],
+                        ],
+                        "default" => "info",
                     ]
                 ]
             ],
