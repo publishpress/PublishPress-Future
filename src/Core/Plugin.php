@@ -170,6 +170,9 @@ class Plugin implements InitializableInterface
 
         SettingsFacade::setDefaultSettings();
 
+        // Flush rewrite rules after activation
+        flush_rewrite_rules();
+
         // Set flag to redirect to the settings page after activation
         set_transient(PluginsListController::TRANSIENT_REDIRECT_AFTER_ACTIVATION, true, 60);
     }
@@ -177,6 +180,9 @@ class Plugin implements InitializableInterface
     public static function onDeactivate()
     {
         do_action(HooksAbstract::ACTION_DEACTIVATE_PLUGIN);
+
+        // Flush rewrite rules after deactivation
+        flush_rewrite_rules();
     }
 
     public function manageUpgrade()
