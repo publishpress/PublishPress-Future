@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## UNRELEASED - 4.7.0
+## [4.7.0] - 10 June, 2025
 
 ### Added
 
@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `publishpressfuture_workflow_engine_run_workflows`: Fires when workflows begin execution
 - Add Trigger action `publishpressfuture_workflow_engine_execute_event_driven_step` when an event-driven step starts running - PRO feature.
 - Add new  "Duplicate Post" workflow action - PRO feature (Issue #1170).
+- Add a loco.xml file to support translation of the free version from within the Pro plugin using Loco Translate - PRO (Issue #1352).
+- Add a way to sort / filter / search the in-site notifications - PRO feature (Issue #1367).
 
 ### Changed
 

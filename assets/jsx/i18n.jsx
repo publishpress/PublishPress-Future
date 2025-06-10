@@ -9,26 +9,46 @@ import {
     _nx_noop as wpNxNoop,
 } from '@wordpress/i18n';
 
-export const __ = (text, domain) => {
-    const data = window.publishpressI18nConfig.data;
-    const dataDomain = data?.domain || null;
 
-    if (dataDomain === null) {
-        return wp__(text, domain);
+const data = (() => {
+    const free = window.publishpressI18nConfig?.data || {};
+    const pro = window.publishpressI18nProConfig?.data || {};
+
+    const merged = {};
+
+    const domains = new Set([
+        ...Object.keys(free.locale_data || {}),
+        ...Object.keys(pro.locale_data || {}),
+    ]);
+
+    domains.forEach((domain) => {
+        merged[domain] = {
+            ...((free.locale_data || {})[domain] || {}),
+            ...((pro.locale_data || {})[domain] || {}),
+        };
+    });
+
+    return {
+        locale_data: merged
+    };
+})();
+
+
+export const __ = (text, domain = null) => {
+
+    if (domain && data.locale_data?.[domain]?.[text]) {
+        return data.locale_data[domain][text][0];
     }
 
-    const localeData = data?.locale_data?.[dataDomain] || null;
-
-    if (localeData === null) {
-        return wp__(text, domain);
-    }
-
-    if (localeData?.[text]) {
-        return localeData[text][0];
+    for (const key in data.locale_data) {
+        if (data.locale_data[key]?.[text]) {
+            return data.locale_data[key][text][0];
+        }
     }
 
     return wp__(text, domain);
 };
+
 
 export const sprintf = (text, ...args) => {
     return wpSprintf(text, ...args);
@@ -38,34 +58,34 @@ export const isRTL = () => {
     return wpIsRTL();
 };
 
-export const _n = (single, plural, number, domain) => {
+export const _n = (single, plural, number, domain = null) => {
     single = __(single, domain);
     plural = __(plural, domain);
 
     return wpN(single, plural, number, domain);
 };
 
-export const _x = (text, context, domain) => {
+export const _x = (text, context, domain = null) => {
     text = __(text, domain);
 
     return wpX(text, context, domain);
 };
 
-export const _nx = (single, plural, number, context, domain) => {
+export const _nx = (single, plural, number, context, domain = null) => {
     single = __(single, domain);
     plural = __(plural, domain);
 
     return wpNx(single, plural, number, context, domain);
 };
 
-export const _n_noop = (single, plural, domain) => {
+export const _n_noop = (single, plural, domain = null) => {
     single = __(single, domain);
     plural = __(plural, domain);
 
     return wpNNoop(single, plural, domain);
 };
 
-export const _nx_noop = (single, plural, context, domain) => {
+export const _nx_noop = (single, plural, context, domain = null) => {
     single = __(single, domain);
     plural = __(plural, domain);
 

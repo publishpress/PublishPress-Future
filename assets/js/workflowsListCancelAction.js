@@ -24,7 +24,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, `.pp-future-cancel-actions-buttons {
     display: flex;
     justify-content: space-between;
-}`, "",{"version":3,"sources":["webpack://./assets/jsx/workflows-list/cancel-action/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,8BAA8B;AAClC","sourcesContent":[".pp-future-cancel-actions-buttons {\n    display: flex;\n    justify-content: space-between;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./assets/jsx/workflows-list/cancel-action/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,8BAA8B;AAClC","sourcesContent":[".pp-future-cancel-actions-buttons {\r\n    display: flex;\r\n    justify-content: space-between;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -511,6 +511,16 @@ module.exports = ReactDOM;
 
 /***/ }),
 
+/***/ "@publishpress/i18n":
+/*!************************************!*\
+  !*** external "publishpress.i18n" ***!
+  \************************************/
+/***/ ((module) => {
+
+module.exports = publishpress.i18n;
+
+/***/ }),
+
 /***/ "@wordpress/components":
 /*!********************************!*\
   !*** external "wp.components" ***!
@@ -528,16 +538,6 @@ module.exports = wp.components;
 /***/ ((module) => {
 
 module.exports = wp.element;
-
-/***/ }),
-
-/***/ "@wordpress/i18n":
-/*!**************************!*\
-  !*** external "wp.i18n" ***!
-  \**************************/
-/***/ ((module) => {
-
-module.exports = wp.i18n;
 
 /***/ })
 
@@ -625,8 +625,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _publishpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @publishpress/i18n */ "@publishpress/i18n");
+/* harmony import */ var _publishpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_publishpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.css */ "./assets/jsx/workflows-list/cancel-action/style.css");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -680,7 +680,7 @@ var CancelActionsConfirmation = function CancelActionsConfirmation() {
     window.location.href = actionData.link;
   };
   return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Modal, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Cancel Scheduled Actions', 'post-expirator'),
+    title: (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Cancel Scheduled Actions', 'post-expirator'),
     onRequestClose: function onRequestClose() {
       return setIsOpen(false);
     },
@@ -688,20 +688,20 @@ var CancelActionsConfirmation = function CancelActionsConfirmation() {
     style: {
       maxWidth: '400px'
     }
-  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.sprintf)(
+  }, /*#__PURE__*/React.createElement("p", null, (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_2__.sprintf)(
   // translators: %s: Workflow title
-  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Are you sure you want to cancel all scheduled actions for the "%s" workflow?', 'post-expirator'), actionData.title)), /*#__PURE__*/React.createElement("div", {
+  (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Are you sure you want to cancel all scheduled actions for the "%s" workflow?', 'post-expirator'), actionData.title)), /*#__PURE__*/React.createElement("div", {
     className: "pp-future-cancel-actions-buttons"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
     variant: "secondary",
     isDestructive: true,
     onClick: handleConfirm
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Cancel Actions', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+  }, (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Cancel Actions', 'post-expirator')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
     variant: "secondary",
     onClick: function onClick() {
       return setIsOpen(false);
     }
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('No', 'post-expirator'))));
+  }, (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('No', 'post-expirator'))));
 };
 
 // Initialize when DOM is ready

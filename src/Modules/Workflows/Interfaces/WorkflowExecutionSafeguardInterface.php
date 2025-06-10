@@ -7,7 +7,7 @@ interface WorkflowExecutionSafeguardInterface
     public function detectInfiniteLoop(
         ?ExecutionContextInterface $executionContext,
         array $step,
-        string $uniqueId = '',
+        string $uniqueId = ''
     ): bool;
 
     public function preventDuplicateExecution(string $uniqueId): bool;

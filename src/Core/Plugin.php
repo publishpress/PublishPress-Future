@@ -170,6 +170,9 @@ class Plugin implements InitializableInterface
 
         SettingsFacade::setDefaultSettings();
 
+        // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules -- Needed during plugin activation for rewrite rules
+        flush_rewrite_rules();
+
         // Set flag to redirect to the settings page after activation
         set_transient(PluginsListController::TRANSIENT_REDIRECT_AFTER_ACTIVATION, true, 60);
     }
@@ -177,6 +180,9 @@ class Plugin implements InitializableInterface
     public static function onDeactivate()
     {
         do_action(HooksAbstract::ACTION_DEACTIVATE_PLUGIN);
+
+        // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules -- Needed during plugin deactivation for rewrite rules
+        flush_rewrite_rules();
     }
 
     public function manageUpgrade()
