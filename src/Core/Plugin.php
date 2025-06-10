@@ -170,7 +170,7 @@ class Plugin implements InitializableInterface
 
         SettingsFacade::setDefaultSettings();
 
-        // Flush rewrite rules after activation
+        // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules -- Needed during plugin activation for rewrite rules
         flush_rewrite_rules();
 
         // Set flag to redirect to the settings page after activation
@@ -181,7 +181,7 @@ class Plugin implements InitializableInterface
     {
         do_action(HooksAbstract::ACTION_DEACTIVATE_PLUGIN);
 
-        // Flush rewrite rules after deactivation
+        // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules -- Needed during plugin deactivation for rewrite rules
         flush_rewrite_rules();
     }
 
