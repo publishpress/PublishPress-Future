@@ -3,7 +3,7 @@ import {
     Button,
     __experimentalHStack as HStack,
 } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
+import { __ } from '@publishpress/i18n';
 
 
 export const TabPreview = ({ content, onCancel }) => {

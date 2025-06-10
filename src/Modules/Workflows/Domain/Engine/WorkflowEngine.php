@@ -155,11 +155,31 @@ class WorkflowEngine implements WorkflowEngineInterface
 
         $this->engineExecutionId = $this->generateUniqueId();
 
+        /**
+         * Action triggered when the engine starts.
+         *
+         * @param string $engineExecutionId The ID of the engine execution.
+         */
+        $this->hooks->doAction(
+            HooksAbstract::ACTION_WORKFLOW_ENGINE_START_ENGINE,
+            $this->engineExecutionId
+        );
+
         $this->logger->debug(self::LOG_PREFIX . ' Engine started and listening for events');
     }
 
     public function runWorkflows(array $workflowIdsToRun = [])
     {
+        /**
+         * Action triggered when the workflows are running.
+         *
+         * @param array $workflowIdsToRun The IDs of the workflows to run.
+         */
+        $this->hooks->doAction(
+            HooksAbstract::ACTION_WORKFLOW_ENGINE_RUN_WORKFLOWS,
+            $workflowIdsToRun
+        );
+
         $this->logger->debug(self::LOG_PREFIX . ' Running workflows');
 
         if (empty($workflowIdsToRun)) {
@@ -177,6 +197,16 @@ class WorkflowEngine implements WorkflowEngineInterface
             /** @var WorkflowModelInterface $workflow */
             $workflow = new WorkflowModel();
             $workflow->load($workflowId);
+
+            /**
+             * Action triggered when the workflow is initialized.
+             *
+             * @param int $workflowId The ID of the workflow to initialize.
+             */
+            $this->hooks->doAction(
+                HooksAbstract::ACTION_WORKFLOW_ENGINE_INITIALIZE_WORKFLOW,
+                $workflowId
+            );
 
             $this->logger->debug(
                 sprintf(
@@ -238,6 +268,19 @@ class WorkflowEngine implements WorkflowEngineInterface
                         $triggerStep['data']['slug']
                     )
                 );
+
+                /**
+                 * Action triggered when the trigger is initialized.
+                 *
+                 * @param int $workflowId The ID of the workflow.
+                 * @param string $triggerId The ID of the trigger.
+                 */
+                $this->hooks->doAction(
+                    HooksAbstract::ACTION_WORKFLOW_ENGINE_SETUP_TRIGGER,
+                    $workflowId,
+                    $triggerId
+                );
+
                 $triggerRunner->setup($workflowId, $routineTree[$triggerId]);
             }
 
@@ -250,6 +293,13 @@ class WorkflowEngine implements WorkflowEngineInterface
         }
 
         $this->logger->debug(self::LOG_PREFIX . ' All workflows initialized');
+
+        /**
+         * Action triggered when the workflows are initialized.
+         */
+        $this->hooks->doAction(
+            HooksAbstract::ACTION_WORKFLOW_ENGINE_WORKFLOWS_INITIALIZED
+        );
     }
 
     public function prepareExecutionContextForWorkflow(
@@ -342,6 +392,16 @@ class WorkflowEngine implements WorkflowEngineInterface
             )
         );
 
+        /**
+         * Action triggered when the step is initialized.
+         *
+         * @param array $step The step.
+         */
+        $this->hooks->doAction(
+            HooksAbstract::ACTION_WORKFLOW_ENGINE_SETUP_STEP,
+            $step,
+        );
+
         $stepRunner->setup($step);
     }
 
@@ -355,6 +415,16 @@ class WorkflowEngine implements WorkflowEngineInterface
             }
 
             $originalArgs = $args;
+
+            /**
+             * Action triggered when the scheduled step is executed.
+             *
+             * @param array $args The args of the scheduled step.
+             */
+            $this->hooks->doAction(
+                HooksAbstract::ACTION_WORKFLOW_ENGINE_EXECUTE_SCHEDULED_STEP,
+                $args
+            );
 
             if (ScheduledActionModel::argsAreOnNewFormat($args)) {
                 // New format, when the args are saved in the wp_ppfuture_workflow_scheduled_steps table.
@@ -427,18 +497,10 @@ class WorkflowEngine implements WorkflowEngineInterface
 
         if ($newPost->post_status === 'publish') {
             $this->onWorkflowPublished($workflowId);
-        } else {
-            $this->onWorkflowUnpublished($workflowId);
         }
     }
 
     public function onWorkflowPublished($workflowId)
-    {
-        $scheduledActionsModel = new ScheduledActionsModel();
-        $scheduledActionsModel->cancelWorkflowScheduledActions($workflowId);
-    }
-
-    public function onWorkflowUnpublished($workflowId)
     {
         $scheduledActionsModel = new ScheduledActionsModel();
         $scheduledActionsModel->cancelWorkflowScheduledActions($workflowId);

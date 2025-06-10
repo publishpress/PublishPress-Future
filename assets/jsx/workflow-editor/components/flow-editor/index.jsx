@@ -36,7 +36,7 @@ import { TriggerPlaceholder } from "../node-types/trigger-placeholder";
 import { createNewNode, getId } from "../../utils";
 import NodePlaceholder from "../node-types/node-placeholder";
 import AutoLayout from "./auto-layout";
-import { __ } from "@wordpress/i18n";
+import { __ } from "@publishpress/i18n";
 import { getNodeVariablesTree, filterVariablesTreeByDataType, getNodeById } from "../../utils";
 import { CUSTOM_EVENT_HANDLES_COUNT_CHANGED } from "../../constants";
 
@@ -128,6 +128,11 @@ export const FlowEditor = (props) => {
         genericEdge: GenericEdge,
     }), []);
 
+    /**
+     * This is used to update the edges that are connected to the node
+     * when the handles count changes. This is required to avoid the
+     * edges "connected" to the node or handle that do not exist anymore.
+     */
     const handleHandlesCountChanged = useCallback((event) => {
         // Update all the edges that are connected to the node.
         const { nodeId, handles } = event.detail;

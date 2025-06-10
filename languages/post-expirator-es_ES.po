@@ -6,7 +6,7 @@ msgstr ""
 "WordPress Posts - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "POT-Creation-Date: 2025-04-02T17:30:05+00:00\n"
-"PO-Revision-Date: 2025-04-08 18:25+0200\n"
+"PO-Revision-Date: 2025-06-02 21:30-0300\n"
 "Last-Translator: Anderson Grüdtner Martins <anderson@publishpress.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -164,10 +164,15 @@ msgstr "Desplazamiento de fecha y hora vacío."
 msgid "Invalid date time offset"
 msgstr "Desplazamiento de fecha y hora no válido"
 
+#: components/backup-panel.jsx:10 components/tabs-content/export.jsx:73
+#: components/tabs-content/export.jsx:101
 #: src/Modules/Backup/Controllers/BackupAdminPage.php:150
 msgid "Export"
 msgstr "Exportar"
 
+#: components/backup-panel.jsx:14
+#: components/tabs-content/components/tabs/tab-import.jsx:106
+#: components/tabs-content/import.jsx:127
 #: src/Modules/Backup/Controllers/BackupAdminPage.php:156
 msgid "Import"
 msgstr "Importar"
@@ -198,6 +203,7 @@ msgstr "No tienes permisos suficientes para acceder a esta página."
 msgid "Invalid nonce."
 msgstr "Nonce no válido."
 
+#: components/data-fields/taxonomy-terms.jsx:60
 #: src/Modules/Expirator/Controllers/BlockEditorController.php:120
 #: src/Modules/Expirator/Controllers/BulkEditController.php:157
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:362
@@ -232,6 +238,7 @@ msgstr "Activar caducidad de la entrada"
 msgid "Categories"
 msgstr "Categorìas"
 
+#: components/node-types/generic.jsx:158
 #: src/Modules/Expirator/Controllers/BlockEditorController.php:172
 #: src/Modules/Expirator/Controllers/BulkEditController.php:213
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:415
@@ -403,12 +410,14 @@ msgstr "Quitar acción de las entradas"
 msgid "Category"
 msgstr "Categorìa"
 
+#. translators: button label text should, if possible, be under 16 characters.
 #: src/Modules/Expirator/Controllers/PluginsListController.php:46
 #: src/Modules/Expirator/Controllers/SettingsController.php:131
 #: src/Modules/Expirator/Controllers/SettingsController.php:132
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:67
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:67
 #: src/Views/tabs-settings.php:44
+#: components/settings-sidebar/settings-sidebar.jsx:54
 msgid "Settings"
 msgstr "Ajustes"
 
@@ -568,23 +577,21 @@ msgstr "Guardar los cambios"
 msgid "Wait for the validation..."
 msgstr "Espera la validación…"
 
+#: components/data-fields/date-offset/index.jsx:168
 #: src/Modules/Expirator/Controllers/SettingsController.php:297
 #: src/Modules/Expirator/Controllers/SettingsController.php:341
 msgid "Date Preview"
 msgstr "Vista previa de la fecha"
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:298
-#: src/Modules/Expirator/Controllers/SettingsController.php:342
-msgid "Current Date"
-msgstr "Fecha actual"
-
 #: src/Modules/Expirator/Controllers/SettingsController.php:299
 #: src/Modules/Expirator/Controllers/SettingsController.php:343
+#: components/data-fields/date-offset/index.jsx:170
 msgid "Computed Date"
 msgstr "Fecha calculada"
 
 #: src/Modules/Expirator/Controllers/SettingsController.php:300
 #: src/Modules/Expirator/Controllers/SettingsController.php:344
+#: components/data-fields/debug-levels.jsx:11
 msgid "Error"
 msgstr "Error"
 
@@ -636,6 +643,8 @@ msgid "%s has been successfully deleted."
 msgstr "%s ha sido borrado correctamente."
 
 #: src/Modules/Expirator/ExpirationActions/DeletePost.php:76
+#: components/node-types/generic.jsx:215
+#: components/workflow-delete-button/index.jsx:39
 msgid "Delete"
 msgstr "Borrar"
 
@@ -825,6 +834,7 @@ msgstr "Ejecutar"
 msgid "Process the action now"
 msgstr "Ejecuta la acción ahora"
 
+#: components/tabs-content/export.jsx:105
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:68
 msgid "Cancel"
 msgstr "Cancelar"
@@ -995,8 +1005,9 @@ msgid "Every %s"
 msgstr "Cada %s"
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:814
+#: components/data-fields/recurrence.jsx:15
 msgid "Non-repeating"
-msgstr "No-repetir"
+msgstr "No repetitiva"
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:824
 msgid "No Scheduled Actions."
@@ -1059,7 +1070,7 @@ msgstr ""
 "características y soporte. %1$sActualizar a Pro%2$s"
 
 #: src/Modules/VersionNotices/Module.php:137
-#: src/Views/ad-banner-right-sidebar.php:39
+#: src/Views/ad-banner-right-sidebar.php:39 components/layout/header.jsx:160
 msgid "Upgrade to Pro"
 msgstr "Actualizar a Pro"
 
@@ -1067,6 +1078,8 @@ msgstr "Actualizar a Pro"
 msgid "Workflow Manual Trigger"
 msgstr "Disparador del flujo de trabajo"
 
+#: components/tabs-content/components/tabs/tab-import.jsx:68
+#: components/tabs-content/export.jsx:79
 #: src/Modules/Workflows/Controllers/ManualPostTrigger.php:427
 #: src/Modules/Workflows/Controllers/PostType.php:48
 #: src/Modules/Workflows/Controllers/WorkflowsList.php:148
@@ -1163,6 +1176,7 @@ msgid "Action Workflows list"
 msgstr "Lista de los flujos de trabajos de acción"
 
 #: src/Modules/Workflows/Controllers/PostType.php:66
+#: components/workflow-store/actions.jsx:185
 msgid "Workflow published."
 msgstr "Flujo de trabajo publicado."
 
@@ -1281,7 +1295,7 @@ msgstr "Paso:"
 #: src/Modules/Workflows/Controllers/ScheduledActions.php:410
 #: src/Modules/Workflows/Controllers/ScheduledActions.php:445
 msgid "Trigger: "
-msgstr "Disparador:"
+msgstr "Disparador: "
 
 #: src/Modules/Workflows/Controllers/ScheduledActions.php:438
 msgid "Post:"
@@ -1311,6 +1325,7 @@ msgid "[%1$s/%2$d]"
 msgstr "[%1$s/%2$d]"
 
 #: src/Modules/Workflows/Controllers/WorkflowEditor.php:263
+#: components/welcome-guide/index.jsx:21
 msgid "Welcome to the workflow editor"
 msgstr "Bienvenido al editor de flujos de trabajo"
 
@@ -1414,7 +1429,9 @@ msgstr ""
 "Si tienes alguna duda o necesitas ayuda, haz clic en el botón de ayuda de la "
 "esquina superior derecha para acceder a los recursos de soporte."
 
+#. translators: Blocks tab title in the block inserter.
 #: src/Modules/Workflows/Controllers/WorkflowsList.php:193
+#: components/secondary-sidebar/tabs.jsx:20
 msgid "Triggers"
 msgstr "Disparadores"
 
@@ -1688,6 +1705,8 @@ msgstr "Los términos que se añadirán a las entradas."
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:122
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:91
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:118
+#: components/data-fields/taxonomy-terms.jsx:80
+#: components/data-fields/taxonomy-terms.jsx:94
 msgid "Terms"
 msgstr "Términos"
 
@@ -1711,6 +1730,7 @@ msgid "The message to be sent to the debug log."
 msgstr "El mensaje que se enviará al registro de depuración."
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/AppendDebugLog.php:75
+#: components/data-fields/debug-levels.jsx:28
 msgid "Level"
 msgstr "Nivel"
 
@@ -1983,6 +2003,7 @@ msgid "When to run"
 msgstr "Cuándo ejecutar"
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:98
+#, fuzzy
 msgid "Unique ID Expression"
 msgstr "Expresión de ID único"
 
@@ -2475,7 +2496,8 @@ msgstr "La entrada se ha guardado con las nuevas propriedades."
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostStatusChange.php:121
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostUpdate.php:121
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:133
-#| msgid "Post Data"
+#: components/data-fields/post-query/index.jsx:105
+#: components/data-fields/post-search-query/components/query-fields.jsx:5
 msgid "Post ID"
 msgstr "ID de la entrada"
 
@@ -2846,7 +2868,7 @@ msgid "Asynchronous"
 msgstr "Asíncrona"
 
 #: src/Modules/Workflows/Models/StepTypesModel.php:137
-#: src/Views/tabs-settings.php:33
+#: src/Views/tabs-settings.php:33 components/data-fields/debug-levels.jsx:7
 msgid "Debug"
 msgstr "Depurar"
 
@@ -3547,443 +3569,1249 @@ msgstr ""
 "Introduce una lista de correos electrónicos separados por comas a los que te "
 "gustaría avisar cuando se detecten acciones vencidas."
 
+#: components/tabs-content/export.jsx:24 components/tabs-content/import.jsx:104
 #: src/Views/tabs-future-actions.php:20
 msgid "Post Types"
 msgstr "Tipos de contenido"
 
+#: components/tabs-content/export.jsx:28 components/tabs-content/import.jsx:108
 #: src/Views/tabs-future-actions.php:25
 msgid "General"
 msgstr "General"
 
+#: components/tabs-content/export.jsx:32 components/tabs-content/import.jsx:112
 #: src/Views/tabs-future-actions.php:30
 msgid "Notifications"
 msgstr "Avisos"
 
+#: components/tabs-content/export.jsx:36 components/tabs-content/import.jsx:116
 #: src/Views/tabs-future-actions.php:35
 msgid "Display"
 msgstr "Visualización"
-
-#: src/Views/tabs-settings.php:20
-msgid "Advanced"
-msgstr "Avanzado"
 
 #: src/Views/tabs-settings.php:25
 msgid "Diagnostics and Tools"
 msgstr "Diagnóstico y herramientas"
 
-#~| msgid "Query posts"
-#~ msgid "Queried post"
-#~ msgstr "Entrada consultada"
-
-#~| msgid "Post is published"
-#~ msgid "Post Before Publish"
-#~ msgstr "Entrada antes de la publicación"
-
-#~| msgid "Post is published"
-#~ msgid "Post After Publish"
-#~ msgstr "Entrada después de la publicación"
-
-#~| msgid "The post that triggered this action."
-#~ msgid "The post where the action was triggered."
-#~ msgstr "La entrada donde se ha desencadenado la acción."
-
-#~ msgid "Export / Import"
-#~ msgstr "Exportar/Importar"
-
-#~ msgid "Action Settings"
-#~ msgstr "Ajustes de las acciones"
-
-#~ msgid "Auto-enable"
-#~ msgstr "Activación automática"
-
-#~ msgid "Enabled for all new posts"
-#~ msgstr "Activado para todas las nuevas entradas"
-
-#~ msgid "The current branch on this step: 'true' or 'false'."
-#~ msgstr "La rama actual en este paso: «verdadero» o «falso»."
-
-#~ msgid "The post that was saved triggering the action."
-#~ msgstr "La entrada que se guardó y que disparó la acción."
-
-#~ msgid "Select the post types that will trigger this action."
-#~ msgstr "Selecciona el tipo de contenido que activará esta acción."
-
-#~ msgid "Enter one or more post IDs. Leave empty to include all posts."
-#~ msgstr ""
-#~ "Introduce uno o más IDs de entrada. Déjalo vacío para incluir todas las "
-#~ "entradas."
-
-#~ msgid ""
-#~ "If selected, only posts with these statuses will trigger this action."
-#~ msgstr ""
-#~ "Si se selecciona, solo las entradas con estos estados activarán esta "
-#~ "acción."
-
-#~ msgid "Design custom workflows with multiple actions"
-#~ msgstr "Diseña flujo de trabajo con acciones múltiples"
-
-#~ msgid "Schedule actions based on the post's publishing date"
-#~ msgstr ""
-#~ "Programa la fecha de la acción en función de la fecha de publicación de "
-#~ "la entrada"
-
-#~ msgid "Move posts to custom statuses"
-#~ msgstr "Mover entradas a estados personalizados"
-
-#~ msgid "Enjoy fast and professional support"
-#~ msgstr "Disfruta de un soporte rápido y profesional"
-
-#~ msgid ""
-#~ "Select the variable that contains the post to update. It can be a post "
-#~ "instance or the post ID."
-#~ msgstr ""
-#~ "Selecciona la variable que contiene la entrada a actualizar. Puede ser "
-#~ "una instancia de entrada o el ID de la entrada."
-
-#~ msgid "Log - Add"
-#~ msgstr "Registro - añadir"
-
-#~ msgid "Ray - Debug"
-#~ msgstr "Depuración Ray"
-
-#~ msgid "Step not found in workflow."
-#~ msgstr "Paso no encontrado en el flujo de trabajo."
-
-#~ msgid "Preview"
-#~ msgstr "Vista previa"
-
-#~ msgid "No screenshot"
-#~ msgstr "Sin captura de pantalla"
-
-#~ msgid "Whether the meta is a single value or an array."
-#~ msgstr "Si el meta es un valor único o un array."
-
-#~ msgid "The Stick Post action must be part of a Schedule flow"
-#~ msgstr ""
-#~ "La acción «Fijar entrada» debe formar parte de un flujo de programación."
-
-#~ msgid "Conditional Split"
-#~ msgstr "División condicional"
-
-#~ msgid "This step allows you to create a conditional branch."
-#~ msgstr "Este paso te permite crear una rama condicional."
-
-#~ msgid ""
-#~ "This step enables actions to be scheduled. You can choose when to run the "
-#~ "next step."
-#~ msgstr ""
-#~ "Este paso permite programar acciones. Puedes elegir cuándo ejecutar el "
-#~ "siguiente paso."
-
-#~ msgid "This trigger activates upon a cron schedule, allowing recurrency."
-#~ msgstr ""
-#~ "Este disparador se activa según una programación cron, lo que permite la "
-#~ "recurrencia."
-
-#~ msgid "Screenshot"
-#~ msgstr "Captura de pantalla"
-
-#~ msgid "Displays only the icon and date/time."
-#~ msgstr "Muestra solo el icono y la fecha/hora."
-
-#~ msgid "This will wrap the shortcode output in the selected HTML tag."
-#~ msgstr ""
-#~ "Esto envolverá la salida del shortcode en la etiqueta HTML seleccionada."
-
-#~ msgid "This will add the selected class to the wrapper tag."
-#~ msgstr "Esto añadirá la clase seleccionada a la etiqueta de envoltura."
-
-#~ msgid "Valid %s attributes:"
-#~ msgstr "Atributos válidos de %s:"
-
-#~ msgid ""
-#~ "%1$stype%2$s - valid options are %1$sfull%2$s (default), %1$sdate%2$s, "
-#~ "%1$stime%2$s"
-#~ msgstr ""
-#~ "%1$stype%2$s  - Las opciones válidas son %1$sfull%2$s (por defecto), "
-#~ "%1$sdate%2$s y %1$stime%2$s"
-
-#~ msgid "Workflow Screenshot"
-#~ msgstr "Captura de pantalla del flujo de trabajo"
-
-#~ msgid "Enable and take screenshots"
-#~ msgstr "Activar y tomar capturas de pantalla"
-
-#~ msgid ""
-#~ "Enable the feature and take a screenshot of the workflow when saving."
-#~ msgstr ""
-#~ "Activa la característica y tomes capturas de pantalla al guardar flujos "
-#~ "de trabajo."
-
-#~ msgid "Disable and do not take screenshots"
-#~ msgstr "Desactivar y no tomar capturas de pantalla"
-
-#~ msgid ""
-#~ "Disable the feature and do not take screenshots when saving workflows."
-#~ msgstr ""
-#~ "Desactiva la característica y no tomes capturas de pantalla al guardar "
-#~ "flujos de trabajo."
-
-#~ msgid "Custom Email Address"
-#~ msgstr "Dirección de correo electrónico personalizada"
-
-#~ msgid "Data"
-#~ msgstr "Datos"
-
-#~ msgid ""
-#~ "PublishPress Future Pro allows you to create custom workflows to update "
-#~ "your content. Your workflows can have multiple actions, schedules, "
-#~ "emails, and more."
-#~ msgstr ""
-#~ "PublishPress Future Pro te permite crear flujos de trabajo personalizados "
-#~ "para actualizar tus contenidos. Tus flujos de trabajo pueden tener "
-#~ "múltiples acciones, programaciones, correos electrónicos y mucho más."
-
-#~ msgid "Trigger not found: %s"
-#~ msgstr "Disparador no encontrado: %s"
-
-#~ msgid "Timestamp"
-#~ msgstr "Marca temporal"
-
-#~ msgid ""
-#~ "Set the offset to use for the default action date and time. For "
-#~ "information on formatting, see %1$s\n"
-#~ "                                    . For example, you could enter %2$s+1 "
-#~ "month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext "
-#~ "Thursday%3$s. Please, use only terms in English."
-#~ msgstr ""
-#~ "Establece el desplazamiento que se utilizará para la fecha y hora de la "
-#~ "acción por defecto. Para obtener información sobre el formato, consulta "
-#~ "%1$s\n"
-#~ "                                    . Por ejemplo, puedes introducir "
-#~ "%2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext "
-#~ "Thursday%3$s. Por favor, introduce solo términos en inglés."
-
-#~| msgid "Future Actions"
-#~ msgid "No Future Actions."
-#~ msgstr "Ninguna acción Future"
-
-#~ msgid "Pending"
-#~ msgstr "Pendiente"
-
-#~ msgid "Select the taxonomy to be used for \"category\" based expiration."
-#~ msgstr ""
-#~ "Seleccione la taxonomía que se utilizará para la caducidad basada en "
-#~ "\"categorías\"."
-
-#~ msgid "Taxonomy (Hierarchical)"
-#~ msgstr "Taxonomía (jerárquico)"
-
-#~ msgid ""
-#~ "Select the hierarchical taxonomy and terms to be used for taxonomy based "
-#~ "expiration."
-#~ msgstr ""
-#~ "Selecciona la taxonomía jerárquica y los términos que se utilizarán para "
-#~ "la caducidad basada en la taxonomía."
-
-#~ msgid "Remove PublishPress ads and branding"
-#~ msgstr "Eliminar los anuncios y la marca de PublishPress"
-
-#~ msgid ""
-#~ "\"Detailed\" will display all information in the Future Action column. "
-#~ "\"Simplified\" will display only the icon and date/time."
-#~ msgstr ""
-#~ "«Detallado» mostrará toda la información de la columna «Acción Future». "
-#~ "«Simplificado» mostrará sólo el icono y la fecha/hora."
-
-#~ msgid ""
-#~ "\n"
-#~ "                                    No cron events found for the plugin "
-#~ "using WP Cron."
-#~ msgstr ""
-#~ "\n"
-#~ "                                    No se han encontrado eventos cron "
-#~ "para el plugin usando WP Cron."
-
-#~ msgid "Block Editor Support"
-#~ msgstr "Compatibilidad del editor de bloques"
-
-#~ msgid "Show Gutenberg style box"
-#~ msgstr "Mostrar el estilo de caja de Gutenberg"
-
-#~ msgid "Show Classic Editor style box"
-#~ msgstr "Mostrar el estilo de caja del editor clásico"
-
-#~ msgid ""
-#~ "Toggle between native support for the Block Editor or the backward "
-#~ "compatible Classic Editor style metabox."
-#~ msgstr ""
-#~ "Alternar el estilo de la caja meta entre la compatibilidad nativa para el "
-#~ "editor de bloques o la compatibilidad anterior con el editor clásico."
-
-#~ msgid "Select whether the PublishPress Future is enabled for all new posts."
-#~ msgstr ""
-#~ "Selecciona si PublishPress Future está activado para todas las nuevas "
-#~ "entradas."
-
-#~ msgid "Day"
-#~ msgstr "Día"
-
-#~ msgid "Year"
-#~ msgstr "Año"
-
-#~ msgid "Hour"
-#~ msgstr "Hora"
-
-#~ msgid "The published date/time will be used as the expiration value"
-#~ msgstr "La fecha/hora de publicación se usará como valor de caducidad"
-
-#~ msgid ""
-#~ "More than 1 hierarchical taxonomy detected.  You must assign a default "
-#~ "taxonomy on the settings screen."
-#~ msgstr ""
-#~ "Detectadas más de 1 taxonomía jerarquizada. Debes asignar una taxonomía "
-#~ "por defecto en la pantalla de los ajustes."
-
-#~ msgid "Action Arguments table not found"
-#~ msgstr "Tabla de argumentos de acción no encontrada"
-
-#~ msgid "This action will can not run correctly."
-#~ msgstr "Esta acción no podrá ejecutarse correctamente."
-
-#~ msgid ""
-#~ "Allows you to add an expiration date (minute) to posts which you can "
-#~ "configure to either delete the post, change it to a draft, or update the "
-#~ "post categories at expiration time."
-#~ msgstr ""
-#~ "Te permite añadir una fecha de caducidad (minutos) a las entradas que "
-#~ "puedes configurar para eliminar la publicación, cambiarla a borrador o "
-#~ "actualizar las categorías de la entrada en el momento de la caducidad."
-
-#~ msgid "Draft"
-#~ msgstr "Borrador"
-
-#~ msgid "Trash"
-#~ msgstr "Papelera"
-
-#~ msgid "Private"
-#~ msgstr "Privado"
-
-#~ msgid "Taxonomy: Replace"
-#~ msgstr "Taxonomía: Reemplazar"
-
-#~ msgid "Taxonomy: Add"
-#~ msgstr "Taxonomía: Añadir"
-
-#~ msgid "Taxonomy: Remove"
-#~ msgstr "Taxonomía: Quitar"
-
-#~ msgid "Expiration Taxonomies"
-#~ msgstr "Taxonomías de caducidad"
-
-#~ msgid ""
-#~ "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been "
-#~ "successfully set."
-#~ msgstr ""
-#~ "%1$s (%2$s) ha caducado a las %3$s. El estado de la entrada «%4$s» ha "
-#~ "sido establecido con éxito."
-
-#~ msgid ""
-#~ "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been "
-#~ "successfully removed."
-#~ msgstr ""
-#~ "%1$s (%2$s) ha caducado a las %3$s. El estado de la entrada «%4$s» ha "
-#~ "sido quitado con éxito."
-
-#~ msgid ""
-#~ "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" have now been set to "
-#~ "\"%5$s\"."
-#~ msgstr ""
-#~ "%1$s (%2$s) ha caducado a las %3$s. La entrada «%4$s» se ha cambiado a "
-#~ "«%5$s»."
-
-#~ msgid ""
-#~ "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now "
-#~ "been added: \"%5$s\". The full list of categories on the post are: "
-#~ "\"%6$s\"."
-#~ msgstr ""
-#~ "%1$s (%2$s) ha caducado a las %3$s. La siguiente entrada «%4$s» ha sido "
-#~ "añadida: «%5$s». La lista completa de categorías de la entrada es: «%6$s»."
-
-#~ msgid ""
-#~ "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now "
-#~ "been removed: \"%5$s\". The full list of categories on the post are: "
-#~ "\"%6$s\"."
-#~ msgstr ""
-#~ "%1$s (%2$s) ha caducado a las %3$s. La siguiente entrada «%4$s» ha sido "
-#~ "eliminada: «%5$s». La lista completa de categorías de la entrada es: "
-#~ "«%6$s»."
-
-#~ msgid "You're not allowed to set posts to expire"
-#~ msgstr "No está permitido que los mensajes caduquen"
-
-#~ msgid "Forbidden"
-#~ msgstr "Prohibido"
-
-#~ msgid "Change expiry date if enabled on posts"
-#~ msgstr "Cambiar la fecha de caducidad si está activado en las publicaciones"
-
-#~ msgid "Change on posts"
-#~ msgstr "Cambiar en las entradas"
-
-#~ msgid "Add expiry date if not enabled on posts"
-#~ msgstr "Añadir la fecha de caducidad si no está activada en las entradas"
-
-#~ msgid "Change & Add"
-#~ msgstr "Cambiar y añadir"
-
-#~ msgid "Type"
-#~ msgstr "Tipo"
-
-#~ msgid "Never"
-#~ msgstr "Nunca"
-
-#~ msgid "Default Expiration Values"
-#~ msgstr "Valores de caducidad por defecto"
-
-#~ msgid "None"
-#~ msgstr "Ninguna"
-
-#~ msgid "Custom"
-#~ msgstr "Personalizada"
-
-#~ msgid "Publish Time"
-#~ msgstr "Hora de publicación"
-
-#~ msgid ""
-#~ "Set the default expiration date to be used when creating a new post of "
-#~ "this type."
-#~ msgstr ""
-#~ "Establece la fecha de caducidad por defecto a usar al crear una nueva "
-#~ "entrada de este tipo."
-
-#~ msgid "No cron events found for the plugin."
-#~ msgstr "No se han encontrado eventos cron para el plugin."
-
-#~ msgid "Arguments / Schedule"
-#~ msgstr "Argumentos / Cronograma"
-
-#~ msgid "Single Event"
-#~ msgstr "Evento Individual"
-
-#~ msgid "This post will expire on"
-#~ msgstr "Esta entrada caducará el"
-
-#~ msgid ""
-#~ "The PublishPress Future plugin sets a custom meta value, and then "
-#~ "optionally allows you to select if you want the post changed to a draft "
-#~ "status or deleted when it expires."
-#~ msgstr ""
-#~ "El plugin PublishPress Future establece un valor meta personalizado y, "
-#~ "opcionalmente, te permite seleccionar si quieres que la entrada pase a "
-#~ "estado borrador o se elimine cuando caduque."
-
-#~ msgid "Post/Page Publish Time"
-#~ msgstr "Hora de publicación de la entrada/página"
-
-#~ msgid ""
-#~ "Set the default expiration date to be used when creating new posts and "
-#~ "pages. Defaults to custom."
-#~ msgstr ""
-#~ "Ajusta la fecha de caducidad por defecto que se utilizará al crear nuevas "
-#~ "entradas y páginas. El valor por defecto es personalizada."
+#: components/file-dropzone/index.jsx:22
+msgid "Drop a .json file here"
+msgstr "Suelta aquí un archivo .json"
+
+#: components/file-dropzone/index.jsx:23
+msgid "or"
+msgstr "o"
+
+#: components/file-dropzone/index.jsx:30
+msgid "Select a .json file"
+msgstr "Seleccionar un archivo .json"
+
+#: components/file-dropzone/index.jsx:35 components/tabs-content/import.jsx:160
+msgid "Selected file"
+msgstr "Archivo seleccionado"
+
+#: components/file-dropzone/index.jsx:36 components/tabs-content/import.jsx:161
+msgid "File size"
+msgstr "Tamaño del archivo"
+
+#: components/json-preview.jsx:15 components/loading-message/index.jsx:7
+#: components/node-dev-info-panel/index.jsx:18
+msgid "Loading..."
+msgstr "Cargando…"
+
+#: components/selectable-list/index.jsx:22
+msgid "Select all"
+msgstr "Seleccionar todo"
+
+#: components/selectable-list/index.jsx:23
+msgid "Unselect all"
+msgstr "Deseleccionar todo"
+
+#: components/tabs-content/components/settings-list.jsx:24
+msgid "No items found."
+msgstr "No se han encontrado elementos."
+
+#: components/tabs-content/components/settings-list.jsx:30
+msgid "Loading items, please wait..."
+msgstr "Cargando elementos, por favor espera..."
+
+#: components/tabs-content/components/tabs/tab-import.jsx:62
+msgid "Select the content you want to import."
+msgstr "Selecciona el contenido que deseas importar."
+
+#: components/tabs-content/components/tabs/tab-import.jsx:83
+#: components/tabs-content/export.jsx:90
+msgid "Action Settings"
+msgstr "Ajustes de las acciones"
+
+#: components/tabs-content/components/tabs/tab-import.jsx:96
+msgid "No workflows or settings found in the file."
+msgstr "No se han encontrado flujos de trabajo o ajustes en el archivo."
+
+#: components/tabs-content/components/tabs/tab-import.jsx:110
+#: components/tabs-content/components/tabs/tab-preview.jsx:14
+msgid "Cancel and select a different file"
+msgstr "Cancelar y seleccionar un archivo diferente"
+
+#. translators: Patterns tab title in the block inserter.
+#: src/Views/tabs-settings.php:20 components/tabs-content/export.jsx:40
+#: components/tabs-content/import.jsx:120 components/node-types/generic.jsx:160
+#: components/secondary-sidebar/tabs.jsx:30
+msgid "Advanced"
+msgstr "Avanzado"
+
+#: components/tabs-content/export.jsx:55
+msgid "Settings exported successfully."
+msgstr "Los ajustes han sido exportados correctamente."
+
+#: components/tabs-content/export.jsx:56
+msgid "Failed to export settings."
+msgstr "Ha fallado la exportación de los ajustes."
+
+#: components/tabs-content/export.jsx:74
+msgid ""
+"Export the plugin settings and workflows to a .json file. This file can be "
+"imported later to restore the data or migrate to another site."
+msgstr ""
+"Exporta los ajustes del plugin y los flujos de trabajo a un archivo .json. "
+"Este archivo se puede importar más tarde para restaurar los datos o migrar a "
+"otro sitio."
+
+#: components/tabs-content/export.jsx:101
+msgid "Exporting..."
+msgstr "Exportando…"
+
+#: components/tabs-content/hooks/export.jsx:76
+msgid "Download"
+msgstr "Descargar"
+
+#: components/tabs-content/hooks/file-validation.jsx:8
+msgid "Invalid file type. Please upload a .json file."
+msgstr "Tipo de archivo no valido. Por favor, sube un archivo .json."
+
+#: components/tabs-content/hooks/settings-import.jsx:34
+msgid "Settings imported successfully."
+msgstr "Los ajustes han sido importados correctamente."
+
+#: components/tabs-content/hooks/settings-import.jsx:50
+msgid "Failed to import settings."
+msgstr "Ha fallado la importación de los ajustes."
+
+#: components/tabs-content/import.jsx:128
+msgid "Import the plugin settings or workflows from a .json file."
+msgstr ""
+"Importa los ajustes del plugin o de los flujos de trabajo de un "
+"archivo .json."
+
+#: components/tabs-content/import.jsx:169
+msgid "Select Content to Import"
+msgstr "Selecciona el contenido a importar"
+
+#: components/tabs-content/import.jsx:174
+msgid "Raw Data Preview"
+msgstr "Vista previa de datos en bruto"
+
+#: components/data-fields/conditional/components/conditional-hoc.jsx:41
+msgid "Add Group"
+msgstr "Añadir un grupo"
+
+#: components/data-fields/conditional/components/conditional-hoc.jsx:42
+msgid "Add Rule"
+msgstr "Añadir regla"
+
+#: components/data-fields/conditional/components/conditional-hoc.jsx:55
+msgid "Condition"
+msgstr "Condición"
+
+#: components/data-fields/conditional/components/conditional-hoc.jsx:56
+msgid ""
+"Create rules that will continue the workflow only if certain conditions are "
+"met."
+msgstr ""
+"Crea reglas que continuarán el flujo de trabajo solo si se cumplen "
+"determinadas condiciones."
+
+#: components/data-fields/conditional/components/conditional-hoc.jsx:57
+msgid "Edit condition"
+msgstr "Editar condición"
+
+#: components/data-fields/conditional/components/conditional-hoc.jsx:58
+msgid ""
+"Conditional logic is a Pro feature. Upgrade to create advanced conditions "
+"for your workflows."
+msgstr ""
+"La lógica condicional es una característica Actualiza para crear condiciones "
+"avanzadas para tus flujos de trabajo."
+
+#: components/data-fields/conditional/components/not-toggle.jsx:30
+msgid "Not"
+msgstr "Not"
+
+#: components/data-fields/date-offset/index.jsx:61
+msgid "Selected in the calendar"
+msgstr "Seleccionado en el calendario"
+
+#: components/data-fields/date-offset/index.jsx:62
+#: components/data-fields/post-data/post-date.jsx:59
+msgid "When the trigger is activated"
+msgstr "Cuando el disparador está activado"
+
+#: components/data-fields/date-offset/index.jsx:63
+#: components/data-fields/post-data/post-date.jsx:63
+msgid "When the step is activated"
+msgstr "Cuando el paso está activado"
+
+#: components/data-fields/date-offset/index.jsx:64
+#: components/data-fields/date-offset/index.jsx:139
+#: components/data-fields/post-data/post-date.jsx:72
+msgid "Custom date source"
+msgstr "Fuente de la fecha personalizada"
+
+#: components/data-fields/date-offset/index.jsx:80
+msgid "As soon as possible"
+msgstr "Lo antes posible"
+
+#: components/data-fields/date-offset/index.jsx:81
+msgid "On a specific date"
+msgstr "En una fecha determinada"
+
+#: components/data-fields/date-offset/index.jsx:82
+msgid "Relative to a specific date"
+msgstr "En relación con una fecha específica"
+
+#: components/data-fields/date-offset/index.jsx:86
+msgid "Unchanged"
+msgstr "Sin cambio"
+
+#: components/data-fields/date-offset/index.jsx:119
+msgid "Date source"
+msgstr "Fuente de la fecha"
+
+#: components/data-fields/date-offset/index.jsx:147
+msgid ""
+"Click the button to choose a custom date source from variables that can "
+"provide a date."
+msgstr ""
+"Haz clic en el botón para elegir una fuente de fecha personalizada entre las "
+"variables que pueden proporcionar una fecha."
+
+#: components/data-fields/date-offset/index.jsx:159
+msgid "Offset"
+msgstr "Desfase"
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:298
+#: src/Modules/Expirator/Controllers/SettingsController.php:342
+#: components/data-fields/date-offset/index.jsx:169
+msgid "Current Date"
+msgstr "Fecha actual"
+
+#: components/data-fields/date-offset/index.jsx:181
+msgid "Error: "
+msgstr "Error: "
+
+#: components/data-fields/date-offset/index.jsx:188
+msgid "Click for more information"
+msgstr "Haz clic para más información"
+
+#: components/data-fields/date-offset/index.jsx:197
+msgid ""
+"For more information on formatting, see the %sPHP strtotime function%s. For "
+"example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 "
+"seconds%s or %snext Thursday%s. Please use only phrases in English."
+msgstr ""
+"Para más información sobre el formato, consulta la función %sPHP "
+"strtotime%s. Por ejemplo, puedes introducir %s+1 mes%s o %s+1 semana 2 días "
+"4 horas 2 segundos%s o %spróximo jueves%s. Por favor, utilice sólo frases en "
+"inglés."
+
+#: components/data-fields/debug-data.jsx:39
+msgid "All received input"
+msgstr "Todas las entradas recibidas"
+
+#: components/data-fields/debug-data.jsx:43
+msgid "Custom data"
+msgstr "Datos personalizados"
+
+#: components/data-fields/debug-data.jsx:64
+msgid "Select the data to output"
+msgstr "Seleccionar los datos de salida"
+
+#: components/data-fields/debug-levels.jsx:8
+msgid "Info"
+msgstr "Información"
+
+#: components/data-fields/debug-levels.jsx:9
+msgid "Notice"
+msgstr "Aviso"
+
+#: components/data-fields/debug-levels.jsx:10
+msgid "Warning"
+msgstr "Advertencia"
+
+#: components/data-fields/debug-levels.jsx:12
+msgid "Critical"
+msgstr "Crítico"
+
+#: components/data-fields/debug-levels.jsx:13
+msgid "Alert"
+msgstr "Alerta"
+
+#: components/data-fields/expression-builder/autocompleters/post-statuses.jsx:10
+#: components/data-fields/post-query/index.jsx:117
+#: components/data-fields/post-search-query/components/query-fields.jsx:29
+msgid "Post Status"
+msgstr "Estado de la entrada"
+
+#: components/data-fields/expression-builder/autocompleters/post-types.jsx:10
+#: components/data-fields/post-query/index.jsx:50
+#: components/data-fields/post-search-query/components/query-fields.jsx:33
+msgid "Post Type"
+msgstr "Tipo de entrada"
+
+#: components/data-fields/expression-builder/column-item.jsx:24
+msgid "Insert"
+msgstr "Insertar"
+
+#: components/data-fields/expression-builder/index.jsx:135
+msgid "Edit"
+msgstr "Editar"
+
+#: components/data-fields/expression-builder/index.jsx:178
+msgid "Select a variable from the list below."
+msgstr "Selecciona una variable de la siguiente lista."
+
+#: components/data-fields/expression-builder/index.jsx:182
+msgid "Type your expression here or use the variables below."
+msgstr "Escribe aquí tu expresión o utiliza las variables de abajo."
+
+#: components/data-fields/expression-builder/index.jsx:209
+msgid "Variables"
+msgstr "Variables"
+
+#: components/data-fields/expression-builder/index.jsx:212
+msgid "Double-click on a variable to select it."
+msgstr "Haz doble clic en una variable para seleccionarla."
+
+#: components/data-fields/expression-builder/index.jsx:216
+msgid "Double-click on any variable to add it to your expression."
+msgstr "Haz doble clic en cualquier variable para añadirla a tu expresión."
+
+#: components/data-fields/expression-builder/index.jsx:228
+msgid "Hover over a variable to see its description."
+msgstr "Pasa el cursor por encima de una variable para ver su descripción."
+
+#: components/data-fields/help-link.jsx:5
+msgid "Learn more"
+msgstr "Leer más"
+
+#: components/data-fields/post-data/index.jsx:32
+#: components/data-fields/post-search-query/components/query-fields.jsx:25
+msgid "Post Date"
+msgstr "Fecha de la entrada"
+
+#: components/data-fields/post-data/index.jsx:38
+msgid "Update the post date"
+msgstr "Actualizar la fecha de la entrada"
+
+#: components/data-fields/post-data/index.jsx:42
+#: components/data-fields/post-search-query/components/query-fields.jsx:9
+msgid "Post Title"
+msgstr "Título de la entrada"
+
+#: components/data-fields/post-data/index.jsx:48
+msgid "Update the post title"
+msgstr "Actualizar el título de la entrada"
+
+#: components/data-fields/post-data/index.jsx:52
+msgid "Post Name"
+msgstr "Nombre de la entrada"
+
+#: components/data-fields/post-data/index.jsx:58
+msgid "Update the post name"
+msgstr "Actualizar nombre de la entrada"
+
+#: components/data-fields/post-data/index.jsx:62
+#: components/data-fields/post-search-query/components/query-fields.jsx:13
+msgid "Post Content"
+msgstr "Contenido de la entrada"
+
+#: components/data-fields/post-data/index.jsx:68
+msgid "Update the post content"
+msgstr "Actualizar el contenido de la entrada"
+
+#: components/data-fields/post-data/index.jsx:72
+#: components/data-fields/post-search-query/components/query-fields.jsx:17
+msgid "Post Excerpt"
+msgstr "Extracto de la entrada"
+
+#: components/data-fields/post-data/index.jsx:78
+msgid "Update the post excerpt"
+msgstr "Actualizar el extracto de la entrada"
+
+#: components/data-fields/post-data/index.jsx:82
+#| msgid "Post selection"
+msgid "Post Discussion"
+msgstr "Discusión de la entrada"
+
+#: components/data-fields/post-data/index.jsx:86
+msgid "Update the post discussion"
+msgstr "Actualizar la discusión de la entrada"
+
+#: components/data-fields/post-data/index.jsx:90
+msgid "Post Password"
+msgstr "Contraseña de la entrada"
+
+#: components/data-fields/post-data/index.jsx:96
+msgid "Update the post password"
+msgstr "Actualizar la contraseña de la entrada"
+
+#: components/data-fields/post-data/index.jsx:100
+#: components/data-fields/post-query/index.jsx:132
+#: components/data-fields/post-search-query/components/query-fields.jsx:21
+msgid "Post Author"
+msgstr "Autor de la entrada"
+
+#: components/data-fields/post-data/index.jsx:106
+msgid "Update the post author"
+msgstr "Actualizar el autor de la entrada"
+
+#: components/data-fields/post-data/post-author.jsx:62
+msgid "Unable to load the list of authors. Please try again."
+msgstr ""
+"No se ha podido cargar la lista de autores. Por favor, inténtalo de nuevo."
+
+#: components/data-fields/post-data/post-author.jsx:80
+#: components/data-fields/post-data/post-date.jsx:84
+#: components/data-fields/post-data/post-discussion.jsx:32
+#: components/data-fields/post-data/post-text.jsx:27
+msgid "Do not update"
+msgstr "No actualizar"
+
+#: components/data-fields/post-data/post-author.jsx:102
+msgid "Author"
+msgstr "Autor"
+
+#: components/data-fields/post-data/post-discussion.jsx:36
+msgid "Comments only"
+msgstr "Solo comentarios"
+
+#: components/data-fields/post-data/post-discussion.jsx:37
+#: components/data-fields/post-data/post-discussion.jsx:56
+msgid "Closed"
+msgstr "Cerrado"
+
+#: components/data-fields/post-data/post-discussion.jsx:38
+msgid "Pings only"
+msgstr "Solo pings"
+
+#: components/data-fields/post-data/post-discussion.jsx:39
+#: components/data-fields/post-data/post-discussion.jsx:51
+msgid "Open"
+msgstr "Abrir"
+
+#: components/data-fields/post-data/post-discussion.jsx:46
+msgid "Changed..."
+msgstr "Cambiado…"
+
+#: components/data-fields/post-data/post-discussion.jsx:53
+msgid "Visitors can add new comments and replies."
+msgstr "Los visitantes pueden añadir nuevos comentarios y respuestas."
+
+#: components/data-fields/post-data/post-discussion.jsx:58
+msgid ""
+"Visitors can not add new comments or replies. Existing comments remain "
+"visible."
+msgstr ""
+"Los visitantes no pueden añadir nuevos comentarios y respuestas. Los "
+"comentarios existentes quedan visible."
+
+#: components/data-fields/post-data/post-discussion.jsx:97
+msgid "Enable pinbacks & trackbacks"
+msgstr "Activar pinbacks & trackbacks"
+
+#: components/data-fields/post-data/post-discussion.jsx:104
+msgid "Learn more about pinbacks & trackbacks"
+msgstr "Leer más sobre pinbacks & trackbacks"
+
+#: components/data-fields/post-data/post-text.jsx:31
+msgid "Clear content"
+msgstr "Vaciar el contenido"
+
+#: components/data-fields/post-filter/components/post-filter.jsx:83
+msgid "Post Filter"
+msgstr "Filtro de la entrada"
+
+#: components/data-fields/post-filter/components/post-filter.jsx:84
+msgid "Create filters to query specific posts based on conditions."
+msgstr ""
+"Crea filtros para consultar entradas específicas en función de las "
+"condiciones."
+
+#: components/data-fields/post-filter/components/post-filter.jsx:85
+msgid "Edit filters"
+msgstr "Editar filtros"
+
+#: components/data-fields/post-query/index.jsx:78
+msgid "Post selection"
+msgstr "Selección de entradas"
+
+#: components/data-fields/post-query/index.jsx:81
+msgid "Post received as input"
+msgstr "Entrada recibida como entrada"
+
+#: components/data-fields/post-query/index.jsx:82
+#: components/data-fields/user-query.jsx:61
+msgid "Custom query"
+msgstr "Consulta personalizada"
+
+#: components/data-fields/post-query/index.jsx:145
+msgid "Post Terms"
+msgstr "Términos de entrada"
+
+#: components/data-fields/post-query/index.jsx:160
+#: components/data-fields/user-query.jsx:95
+msgid "Separate multiple values with commas or Enter key."
+msgstr "Separar los valores múltiples con comas o la tecla «Intro»."
+
+#: components/data-fields/post-query/index.jsx:166
+#: components/data-fields/user-query.jsx:101
+msgid "* Required field"
+msgstr "* Campo obligatorio"
+
+#: components/data-fields/post-search-query/components/post-search-query.jsx:84
+msgid "Post Search Query"
+msgstr "Consulta de búsqueda de entrada"
+
+#: components/data-fields/post-search-query/components/post-search-query.jsx:85
+msgid "Create a search query to filter posts based on conditions."
+msgstr ""
+"Crear una consulta de búsqueda para filtrar las entradas en función de las "
+"condiciones."
+
+#: components/data-fields/post-search-query/components/post-search-query.jsx:86
+msgid "Edit query"
+msgstr "Editar consulta"
+
+#: components/data-fields/post-search-query/components/query-fields.jsx:37
+msgid "Post Parent"
+msgstr "Superior de la entrada"
+
+#: components/data-fields/post-status.jsx:40
+msgid "New Status"
+msgstr "Nuevo estado"
+
+#: components/data-fields/ray-color.jsx:13
+msgid "No color"
+msgstr "Sin color"
+
+#: components/data-fields/ray-color.jsx:14
+msgid "Green"
+msgstr "Verde"
+
+#: components/data-fields/ray-color.jsx:15
+msgid "Orange"
+msgstr "Naranja"
+
+#: components/data-fields/ray-color.jsx:16
+msgid "Red"
+msgstr "Rojo"
+
+#: components/data-fields/ray-color.jsx:17
+msgid "Blue"
+msgstr "Azul"
+
+#: components/data-fields/ray-color.jsx:18
+msgid "Purple"
+msgstr "Púrpura"
+
+#: components/data-fields/ray-color.jsx:19
+msgid "Gray"
+msgstr "Gris"
+
+#: components/data-fields/recurrence.jsx:16
+msgid "Custom interval in seconds"
+msgstr "Intervalo personalizado en segundos"
+
+#: components/data-fields/schedule.jsx:131
+msgid "Repeating Action"
+msgstr "Acción de repetición"
+
+#: components/data-fields/schedule.jsx:135
+msgid ""
+"Choose how often this task should repeat. Select 'Non-repeating' for a one-"
+"time action or set an interval for automatic recurrence."
+msgstr ""
+"Elige con qué frecuencia debe repetirse esta tarea. Selecciona «No repetir» "
+"para una acción única o establece un intervalo para la repetición automática."
+
+#: components/data-fields/schedule.jsx:151
+msgid "Allow duplicate scheduled tasks"
+msgstr "Permitir la duplicación de tareas programadas"
+
+#: components/data-fields/schedule.jsx:161
+msgid "Allows scheduling tasks even if a similar task exists."
+msgstr "Permite la programación de tareas incluso si existe una tarea similar."
+
+#: components/data-fields/schedule.jsx:168
+msgid "Unique Task Identifier"
+msgstr "Identificador único de tarea"
+
+#: components/data-fields/schedule.jsx:174
+msgid "Define a unique ID to detect and prevent duplicate tasks."
+msgstr "Define un ID único para detectar y evitar tareas duplicadas."
+
+#: components/data-fields/taxonomy-terms.jsx:69
+msgid "Select the terms"
+msgstr "Selecciona los términos"
+
+#: components/data-fields/taxonomy-terms.jsx:73
+msgid "Specific terms"
+msgstr "Términos específicos"
+
+#: components/data-fields/user-query.jsx:44
+msgid "User Role"
+msgstr "Perfil de usuario"
+
+#: components/data-fields/user-query.jsx:57
+msgid "User selection"
+msgstr "Selección de usuario"
+
+#: components/data-fields/user-query.jsx:60
+msgid "User received as input"
+msgstr "Usuario recibido como entrada"
+
+#: components/data-fields/user-query.jsx:84
+msgid "User ID"
+msgstr "ID de usuario"
+
+#: components/flow-editor/index.jsx:408
+msgid "Applying auto layout."
+msgstr "Aplicación del diseño automático."
+
+#: components/flow-editor/index.jsx:433
+msgid "Auto layout applied."
+msgstr "Diseño automático aplicado."
+
+#: components/fullscreen-mode-close.jsx:43
+msgid "Back"
+msgstr "Volver"
+
+#: components/inspector-card/index.jsx:51
+msgid "Add a description to this step..."
+msgstr "Añade una descripción a este paso…"
+
+#: components/inspector-card/index.jsx:68
+#: components/inspector-card/index.jsx:78
+msgid "Edit description"
+msgstr "Editar descripción"
+
+#: components/inspector-card/index.jsx:116
+#: components/secondary-sidebar/node-card.jsx:16
+msgid "Pro"
+msgstr "Pro"
+
+#: components/inspector-card/index.jsx:132
+#: components/node-types/generic.jsx:242
+#: components/secondary-sidebar/node-card.jsx:29
+msgid ""
+"Currently this step is being skipped. Upgrade to Pro to unlock this feature."
+msgstr ""
+"Actualmente este paso está omitido. Actualiza a Pro para desbloquear esta "
+"característica."
+
+#: components/layout/header.jsx:129
+msgid "Add"
+msgstr "Añadir"
+
+#: components/layout/header.jsx:129
+msgid "Close"
+msgstr "Cerrar"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/layout/header.jsx:140 components/layout/header.jsx:145
+msgid "Auto Layout"
+msgstr "Diseño automático"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/layout/header.jsx:157
+msgid "Upgrade to Pro and unlock more features"
+msgstr "Actualiza a Pro y desbloquea más características"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/left-toolbar/redo.jsx:31
+msgid "Redo"
+msgstr "Rehacer"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/left-toolbar/undo.jsx:31
+msgid "Undo"
+msgstr "Deshacer"
+
+#: components/loading-message/index.jsx:12
+msgid "Wait, we are loading the workflow..."
+msgstr "Espera, estamos cargando el flujo de trabajo…"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/more-menu/menu-dropdown.jsx:11
+msgid "Options"
+msgstr "Opciones"
+
+#: components/more-menu/menu-feature-toggle.jsx:32
+msgid "Feature deactivated"
+msgstr "Feature desactivado"
+
+#: components/more-menu/menu-feature-toggle.jsx:34
+msgid "Feature activated"
+msgstr "Feature activado"
+
+#: components/more-menu/menu-items-view.jsx:23
+msgctxt "noun"
+msgid "View"
+msgstr "Vista"
+
+#: components/more-menu/menu-items-view.jsx:27
+msgid "Fullscreen mode"
+msgstr "Modo a pantalla completa"
+
+#: components/more-menu/menu-items-view.jsx:28
+msgid "Work without distraction"
+msgstr "Trabajar sin distracciones"
+
+#: components/more-menu/menu-items-view.jsx:29
+msgid "Fullscreen mode activated"
+msgstr "Modo a pantalla completa activado"
+
+#: components/more-menu/menu-items-view.jsx:30
+msgid "Fullscreen mode deactivated"
+msgstr "Modo a pantalla completa desactivado"
+
+#: components/more-menu/menu-items-view.jsx:36
+msgid "Advanced Settings"
+msgstr "Ajustes avanzados"
+
+#: components/more-menu/menu-items-view.jsx:37
+msgid "Display advanced settings for the workflow, triggers and steps"
+msgstr ""
+"Mostrar los ajustes avanzados del flujo de trabajo, los activadores y los "
+"pasos"
+
+#: components/more-menu/menu-items-view.jsx:38
+msgid "Advanced settings mode activated"
+msgstr "Modo \"Ajustes avanzados\" activado"
+
+#: components/more-menu/menu-items-view.jsx:39
+msgid "Advanced settings mode deactivated"
+msgstr "Modo \"Ajustes avanzados\" desactivado"
+
+#: components/more-menu/menu-items-view.jsx:45
+msgid "Display a mini map"
+msgstr "Mostrar un minimapa"
+
+#: components/more-menu/menu-items-view.jsx:46
+msgid "Display a mini map in the bottom of the editor, triggers and steps"
+msgstr ""
+"Mostrar un minimapa Mostrar un minimapa abajo del editor, disparadores y "
+"pasos"
+
+#: components/more-menu/menu-items-view.jsx:47
+#: components/more-menu/menu-items-view.jsx:55
+msgid "Mini map activated"
+msgstr "Minimapa activado"
+
+#: components/more-menu/menu-items-view.jsx:48
+#: components/more-menu/menu-items-view.jsx:56
+msgid "Mini map deactivated"
+msgstr "Minimapa desactivado"
+
+#: components/more-menu/menu-items-view.jsx:53
+msgid "Display the controls panel"
+msgstr "Mostrar el panel de control"
+
+#: components/more-menu/menu-items-view.jsx:54
+msgid ""
+"Display the controls panel with buttons to zoon in, zoom out, fit the view "
+"and lock the viewport"
+msgstr ""
+"Mostrar el panel de control con los botones de ampliar, reducir, ajustar la "
+"vista y bloquear el área visible"
+
+#: components/more-menu/menu-items-view.jsx:59
+msgid "Tools"
+msgstr "Herramientas"
+
+#: components/more-menu/menu-items-view.jsx:63
+msgid "Developer mode"
+msgstr "Modo desarrollador"
+
+#: components/more-menu/menu-items-view.jsx:64
+msgid "Work in developer mode"
+msgstr "Trabajar en modo desarrollador"
+
+#: components/more-menu/menu-items-view.jsx:65
+msgid "Developer mode activated"
+msgstr "Modo desarrollador activado"
+
+#: components/more-menu/menu-items-view.jsx:66
+msgid "Developer mode deactivated"
+msgstr "Modo desarrollador desactivado"
+
+#: components/more-menu/menu-items-view.jsx:72
+msgid "Welcome guide"
+msgstr "Guía de bienvenida"
+
+#: components/more-menu/menu-items-view.jsx:73
+msgid "Display the welcome guide"
+msgstr "Mostrar la guía de bienvenida"
+
+#: components/more-menu/menu-items-view.jsx:74
+msgid "Welcome guide activated"
+msgstr "Guía de bienvenida activada"
+
+#: components/more-menu/menu-items-view.jsx:75
+msgid "Welcome guide deactivated"
+msgstr "Guía de bienvenida desactivada"
+
+#: components/more-menu/menu-items-view.jsx:83
+msgid "Help"
+msgstr "Ayuda"
+
+#: components/node-dev-info-panel/index.jsx:23
+msgid "Developer Info"
+msgstr "Información para desarrolladores"
+
+#: components/node-dev-info-panel/index.jsx:31
+#: components/node-inspector/node-inspector-card.jsx:18
+#: components/node-types/generic.jsx:103
+msgid "Node"
+msgstr "Nodo"
+
+#: components/node-dev-info-panel/index.jsx:41
+#| msgid "Node"
+msgid "Node Data"
+msgstr "Datos del nodo"
+
+#: components/node-dev-info-panel/index.jsx:51
+msgid "Node Settings"
+msgstr "Ajustes del nodo"
+
+#: components/node-dev-info-panel/index.jsx:65
+msgid "Node Type"
+msgstr "Tipo de nodo"
+
+#: components/node-inspector/index.jsx:99
+msgid "No element selected."
+msgstr "No hay elementos seleccionados."
+
+#: components/node-inspector/index.jsx:107
+msgid "Multiple and different elements selected."
+msgstr "Múltiples y diferentes elementos seleccionados."
+
+#: components/node-inspector/index.jsx:117
+msgid "%d steps selected"
+msgstr "%d pasos seleccionados"
+
+#: components/node-inspector/index.jsx:120
+msgid "Multiple steps selected."
+msgstr "Múltiples pasos seleccionados."
+
+#: components/node-inspector/index.jsx:131
+msgid "%d connections selected"
+msgstr "%d conexiones seleccionadas"
+
+#: components/node-inspector/index.jsx:134
+msgid "Multiple connections selected."
+msgstr "Múltiples conexiones seleccionadas"
+
+#: components/node-inspector/index.jsx:166
+msgid "Connection"
+msgstr "Conexión"
+
+#: components/node-inspector/index.jsx:167
+msgid ""
+"The connection between nodes in the workflow. Signifies the path along which "
+"data or control flow one node to another."
+msgstr ""
+"La conexión entre los nodos del flujo de trabajo. Indica la ruta por la que "
+"los datos o el control fluyen de un nodo a otro."
+
+#: components/node-inspector/node-data-flow-panel.jsx:83
+msgid "Step Data Flow"
+msgstr "Flujo de datos por paso"
+
+#: components/node-inspector/node-data-flow-panel.jsx:85
+msgid "Inputs"
+msgstr "Entradas"
+
+#: components/node-inspector/node-data-flow-panel.jsx:89
+msgid "This step receives the following input from previous step:"
+msgstr "Este paso recibe la siguiente entrada del paso anterior:"
+
+#: components/node-inspector/node-data-flow-panel.jsx:100
+msgid "This step does not receive any input from previous step."
+msgstr "Este paso no recibe ninguna entrada del paso anterior."
+
+#: components/node-inspector/node-data-flow-panel.jsx:105
+msgid "Outputs"
+msgstr "Entradas"
+
+#: components/node-inspector/node-data-flow-panel.jsx:109
+msgid "This step outputs the following data:"
+msgstr "Este paso muestra los siguientes datos:"
+
+#: components/node-inspector/node-data-flow-panel.jsx:120
+msgid "This step does not output any data."
+msgstr "Este paso no genera ningún dato."
+
+#: components/node-inspector/node-data-flow-panel.jsx:125
+#| msgid "Step Details"
+msgid "Step Scoped Variables"
+msgstr "Paso variables de ámbito"
+
+#: components/node-inspector/node-data-flow-panel.jsx:129
+msgid "This step receives the following step scoped variables:"
+msgstr "Este paso recibe el siguiente paso de variables de ámbito:"
+
+#: components/node-inspector/node-data-flow-panel.jsx:140
+msgid "This step does not have any step scoped variables."
+msgstr "Este paso no tiene ningún paso de variables de ámbito"
+
+#: components/node-inspector/node-data-flow-panel.jsx:145
+msgid "Global Variables"
+msgstr "Variables globales"
+
+#: components/node-inspector/node-data-flow-panel.jsx:149
+msgid "No global variables are declared"
+msgstr "No hay variable globales declaradas"
+
+#: components/node-inspector/node-inspector-card.jsx:19
+msgid "No description"
+msgstr "Sin descripción"
+
+#: components/node-types/generic.jsx:51
+msgid "Unknown node: %s"
+msgstr "Nodo desconocido: %s"
+
+#: components/node-types/generic.jsx:52
+msgid "This is a placeholder node for a node that does not exist."
+msgstr "Este es un nodo marcador de posición para un nodo que no existe."
+
+#: components/node-types/generic.jsx:156
+msgid "Step"
+msgstr "Paso"
+
+#: components/node-types/generic.jsx:162
+msgid "Trigger"
+msgstr "Disparador"
+
+#: components/node-types/generic.jsx:209
+msgid "Step actions"
+msgstr "Acciones del paso"
+
+#: components/node-types/generic.jsx:250
+msgid "This node has errors"
+msgstr "Este nodo tiene errores"
+
+#: components/node-types/node-placeholder.jsx:31
+msgid "Add a step"
+msgstr "Añadir un paso"
+
+#: components/node-types/node-placeholder.jsx:33
+msgid "Search for actions"
+msgstr "Búsqueda de acciones"
+
+#: components/node-types/placeholder.jsx:168
+msgid "Search for steps"
+msgstr "Búsqueda de pasos"
+
+#: components/node-types/placeholder.jsx:194
+#: components/node-types/trigger-placeholder.jsx:13
+#: components/secondary-sidebar/menu.jsx:201
+msgid "Search for triggers and steps"
+msgstr "Búsqueda de disparadores y pasos"
+
+#: components/node-types/trigger-placeholder.jsx:11
+msgid "Click to add a trigger"
+msgstr "Haz clic para añadir un disparador"
+
+#: components/node-validation-panel/index.jsx:19
+msgid "Validation"
+msgstr "Validación"
+
+#: components/node-validation-panel/index.jsx:49
+msgid "All checks have passed for this step."
+msgstr "Todas las comprobaciones se han superado para este paso."
+
+#: components/pro-feature-button/index.jsx:26
+msgid "Upgrade to Pro to unlock this feature."
+msgstr "Actualiza a Pro para desbloquear esta característica."
+
+#: components/secondary-sidebar/inserter-listbox/group.jsx:14
+msgid "Use left and right arrow keys to move through steps"
+msgstr "Usa las flechas izquierda y derecha para moverte entre los bloques"
+
+#: components/secondary-sidebar/inserter-no-results.jsx:14
+msgid "No results found."
+msgstr "No se han encontrado resultados."
+
+#. translators: %d: number of results.
+#: components/secondary-sidebar/inserter-search-results.jsx:101
+msgid "%d result found."
+msgid_plural "%d results found."
+msgstr[0] "%d resultado encontrado."
+msgstr[1] "%d resultados encontrados."
+
+#: components/secondary-sidebar/inserter-search-results.jsx:116
+#: components/secondary-sidebar/inserter-search-results.jsx:123
+msgid "Nodes"
+msgstr "Nodos"
+
+#: components/secondary-sidebar/menu.jsx:73
+#: components/secondary-sidebar/menu.jsx:110
+msgid "A tip for using the workflow editor"
+msgstr "Un consejo para utilizar el editor de flujos de trabajo"
+
+#: components/secondary-sidebar/node-card.jsx:31
+msgid "Drag this node to preview its options in your workflow."
+msgstr ""
+"Arrastra este nodo para previsualizar sus opciones en tu flujo de trabajo."
+
+#. translators: %d: Number of blocks.
+#: components/secondary-sidebar/node-draggable-chip.jsx:27
+msgid "%d block"
+msgid_plural "%d blocks"
+msgstr[0] "%d bloque"
+msgstr[1] "%d bloques"
+
+#: components/secondary-sidebar/nodes-tab.jsx:80
+#: components/secondary-sidebar/nodes-tab.jsx:85
+msgctxt "nodes"
+msgid "Most used"
+msgstr "Más utilizados"
+
+#. translators: Patterns tab title in the block inserter.
+#: components/secondary-sidebar/tabs.jsx:25
+msgid "Actions"
+msgstr "Acciones"
+
+#: components/secondary-sidebar/tips.jsx:10
+msgid ""
+"Select multiple steps by pressing <kbd>cmd</kbd> and clicking on each step "
+"in the workflow."
+msgstr ""
+"Selecciona varios pasos manteniendo pulsado <kbd>cmd o ctrl</kbd> y haciendo "
+"clic en cada paso del flujo de trabajo."
+
+#: components/secondary-sidebar/tips.jsx:16
+msgid ""
+"Drag steps from the inserter and drop them directly into your workflow for "
+"easy customization."
+msgstr ""
+"Arrastra los pasos desde el insertador y suéltalos directamente en tu flujo "
+"de trabajo para personalizarlos fácilmente."
+
+#: components/secondary-sidebar/tips.jsx:17
+msgid ""
+"Simply double-click any step to bring up the settings sidebar for quick "
+"adjustments."
+msgstr ""
+"Simplemente haz doble clic en cualquier paso para abrir la barra lateral de "
+"ajustes y realizar ajustes rápidos."
+
+#: components/secondary-sidebar/tips.jsx:18
+msgid ""
+"Double-click the workflow pane to increase the zoom level for a closer look."
+msgstr ""
+"Haz doble clic en el panel de flujo de trabajo para aumentar el nivel de "
+"zoom y verlo más de cerca."
+
+#: components/secondary-sidebar/tips.jsx:20
+msgid ""
+"Hold down the <kbd>shift</kbd> key and double-click the workflow pane to "
+"decrease the zoom level."
+msgstr ""
+"Mantén pulsada la tecla <kbd>mayús</kbd> y haz doble clic en el panel de "
+"flujo de trabajo para reducir el nivel de zoom."
+
+#: components/secondary-sidebar/tips.jsx:26
+msgid ""
+"Easily add new steps by clicking on a step's handle and dragging it. Drop it "
+"in the workflow pane to see a floating inserter where you can type and "
+"search for the step you need."
+msgstr ""
+"Añade fácilmente nuevos pasos haciendo clic en el asa de un paso y "
+"arrastrándolo. Suéltalo en el panel de flujo de trabajo para ver un "
+"insertador flotante donde puedes escribir y buscar el paso que necesitas."
+
+#: components/settings-sidebar/plugin-sidebar.jsx:39
+msgid "(no name)"
+msgstr "(sin nombre)"
+
+#. translators: Default label for the Workflow sidebar tab, not selected.
+#: components/settings-sidebar/settings-header.jsx:23
+msgctxt "noun"
+msgid "Workflow"
+msgstr "Flujo de trabajo"
+
+#: components/settings-sidebar/settings-header.jsx:37
+msgid "Element"
+msgstr "Elemento"
+
+#: components/settings-sidebar/settings-sidebar.jsx:50
+msgid "Close settings"
+msgstr "Cerrar ajustes"
+
+#: components/welcome-guide/index.jsx:22
+msgid "Get started"
+msgstr "Primeros pasos"
+
+#: components/workflow-debug-ray-panel/index.jsx:50
+msgid "Ray Debug"
+msgstr "Depuración Ray"
+
+#: components/workflow-debug-ray-panel/index.jsx:55
+msgid ""
+"Enable or disable the different types of debug information that is shown in "
+"Ray when this workflow is activated."
+msgstr ""
+"Activa o desactiva los diferentes tipos de información de depuración que se "
+"muestran en Ray cuando este flujo de trabajo está activado."
+
+#: components/workflow-debug-ray-panel/index.jsx:59
+msgid "Show Queries"
+msgstr "Mostrar las consultas"
+
+#: components/workflow-debug-ray-panel/index.jsx:66
+msgid "Show Emails"
+msgstr "Mostrar los correos electrónicos"
+
+#: components/workflow-debug-ray-panel/index.jsx:73
+msgid "Show WordPress Errors"
+msgstr "Mostrar los errores de WordPress"
+
+#: components/workflow-debug-ray-panel/index.jsx:80
+msgid "Show current running step"
+msgstr "Mostrar el paso actual en ejecución"
+
+#: components/workflow-delete-button/index.jsx:24
+msgid "Are you sure you want to delete this workflow?"
+msgstr "¿Estás seguro de querer borrar este flujo de trabajo?"
+
+#: components/workflow-delete-button/index.jsx:39
+msgid "Move to trash"
+msgstr "Mover a la papelera"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/workflow-publish-button/index.jsx:79
+msgid "Publish"
+msgstr "Publicar"
+
+#: components/workflow-publish-button/index.jsx:79
+msgid "Update"
+msgstr "Actualizar"
+
+#: components/workflow-publish-button/index.jsx:90
+msgid "Autosaving..."
+msgstr "Guardando automáticamente…"
+
+#: components/workflow-publish-button/index.jsx:90
+msgid "Updating..."
+msgstr "Actualizando…"
+
+#: components/workflow-publish-button/index.jsx:92
+msgid "Updated"
+msgstr "Actualizado"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/workflow-save-draft-button/index.jsx:82
+msgid "Save draft"
+msgstr "Guardar borrador"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/workflow-save-draft-button/index.jsx:85
+msgid "Save"
+msgstr "Guardar"
+
+#: components/workflow-save-draft-button/index.jsx:94
+msgid "Autosaving"
+msgstr "Guardando automáticamente"
+
+#: components/workflow-save-draft-button/index.jsx:94
+msgid "Saving"
+msgstr "Guardando"
+
+#: components/workflow-save-draft-button/index.jsx:96
+msgid "Saved"
+msgstr "Guardado"
+
+#: components/workflow-store/actions.jsx:30
+msgid "Unable to create a new workflow. Please try again."
+msgstr ""
+"No se ha podido crear un nuevo flujo de trabajo. Por favor, inténtalo de "
+"nuevo."
+
+#: components/workflow-store/actions.jsx:49
+msgid "Unable to load the workflow. Please try again."
+msgstr ""
+"No se ha podido cargar el flujo de trabajo. Por favor, inténtalo de nuevo."
+
+#: components/workflow-store/actions.jsx:91
+msgid "Workflow saved as draft."
+msgstr "Flujo de trabajo guardado como borrador."
+
+#: components/workflow-store/actions.jsx:99
+#: components/workflow-store/actions.jsx:149
+msgid "Unable to save workflow. Please, try again."
+msgstr ""
+"No se ha podido guardar el flujo de trabajo. Por favor, inténtalo de nuevo."
+
+#: components/workflow-store/actions.jsx:141
+msgid "Workflow saved."
+msgstr "Flujo de trabajo guardado."
+
+#: components/workflow-store/actions.jsx:193
+msgid "Unable to publish the workflow. Please, try again."
+msgstr ""
+"No se ha podido publicar el flujo de trabajo. Por favor, inténtalo de nuevo."
+
+#: components/workflow-store/actions.jsx:229
+msgid "Workflow switched to draft."
+msgstr "Flujo de trabajo cambiado a borrador."
+
+#: components/workflow-store/actions.jsx:237
+msgid "Unable to switch workflow to draft. Please, try again."
+msgstr ""
+"No se ha podido cambiar el flujo de trabajo a borrador. Por favor, inténtalo "
+"de nuevo."
+
+#: components/workflow-store/actions.jsx:327
+msgid "Workflow deleted. Redirecting..."
+msgstr "Flujo de trabajo eliminado. Redirigiendo…"
+
+#: components/workflow-store/actions.jsx:338
+msgid "Unable to delete the workflow. Please, try again."
+msgstr ""
+"No se ha podido borrar el flujo de trabajo. Por favor, inténtalo de nuevo."
+
+#: components/workflow-summary/index.jsx:42
+msgid "Summary"
+msgstr "Resumen"
+
+#: components/workflow-summary/index.jsx:48
+msgid "Title"
+msgstr "Título"
+
+#: components/workflow-summary/index.jsx:57
+msgid "Description"
+msgstr "Descripción"
+
+#: components/workflow-switch-to-draft-button/index.jsx:33
+msgid "Are you sure you want to unpublish this workflow?"
+msgstr ""
+"¿Estás seguro de querer anular la publicación de este flujo de trabajo?"
+
+#: components/workflow-switch-to-draft-button/index.jsx:52
+msgid "Draft"
+msgstr "Borrador"
+
+#: components/workflow-switch-to-draft-button/index.jsx:52
+msgid "Switch to draft"
+msgstr "Cambiar a borrador"

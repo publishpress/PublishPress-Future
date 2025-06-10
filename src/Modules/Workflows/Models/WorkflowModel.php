@@ -466,6 +466,32 @@ class WorkflowModel implements WorkflowModelInterface
         return $id;
     }
 
+    public function createCopy(): WorkflowModelInterface
+    {
+        // Create a new workflow
+        $newWorkflow = new WorkflowModel();
+        $newWorkflow->createNew(false);
+
+        // Copy properties  of current workflow to new workflow
+        $newWorkflow->setTitle(sprintf(__('%s #2', 'post-expirator'), $this->getTitle()));
+        $newWorkflow->setDescription($this->getDescription());
+        $newWorkflow->setFlow($this->getFlow());
+
+        // Set status to draft
+        $newWorkflow->setStatus(self::STATUS_DISABLED);
+
+        // Copy debug settings of current workflow to new workflow
+        $newWorkflow->setDebugRayShowQueries($this->isDebugRayShowQueriesEnabled());
+        $newWorkflow->setDebugRayShowEmails($this->isDebugRayShowEmailsEnabled());
+        $newWorkflow->setDebugRayShowWordPressErrors($this->isDebugRayShowWordPressErrorsEnabled());
+        $newWorkflow->setDebugRayShowCurrentRunningStep($this->isDebugRayShowCurrentRunningStepEnabled());
+
+        // Save the new workflow
+        $newWorkflow->save();
+
+        return $newWorkflow;
+    }
+
     private function getImageDimensionsBySize($size)
     {
         $sizes = [
@@ -556,6 +582,32 @@ class WorkflowModel implements WorkflowModelInterface
         return $routineTree;
     }
 
+    private function convertDynamicHandlesToStatic(array $handles, array $node): array
+    {
+        $convertedHandles = [];
+
+        foreach ($handles as &$handle) {
+            if (! isset($handle['type']) || substr($handle['type'], 0, 12) !== '__dynamic__:') {
+                $convertedHandles[] = $handle;
+                continue;
+            }
+
+            // Get the option data
+            $settingName = substr($handle['type'], 12);
+
+            $optionData = $node['data']['settings'][$settingName] ?? [];
+
+            foreach ($optionData as $option) {
+                $convertedHandles[] = [
+                    'id' => $option['name'],
+                    'label' => $option['label'],
+                ];
+            }
+        }
+
+        return $convertedHandles;
+    }
+
     private function getRoutineNodesTree($edges, $nodes, $sourceNodeId, $stepTypes, $edgeId = null)
     {
         $node = $nodes[$sourceNodeId];
@@ -585,6 +637,9 @@ class WorkflowModel implements WorkflowModelInterface
         }
 
         $tree['next'] = [];
+
+        // Convert dynamic handles to static handles based on the node settings
+        $handleSchema['source'] = $this->convertDynamicHandlesToStatic($handleSchema['source'] ?? [], $node);
 
         foreach ($handleSchema['source'] as $handle) {
             foreach ($edges as $edge) {

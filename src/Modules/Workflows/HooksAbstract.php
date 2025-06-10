@@ -203,4 +203,44 @@ abstract class HooksAbstract
      * @since 4.6.0
      */
     public const ACTION_WORKFLOW_TRIGGER_EXECUTED = 'publishpressfuture_workflow_trigger_executed';
+
+    /**
+     * @since 4.7.0
+     */
+    public const ACTION_WORKFLOW_ENGINE_INITIALIZE_WORKFLOW = 'publishpressfuture_workflow_engine_initialize_workflow';
+
+    /**
+     * @since 4.7.0
+     */
+    public const ACTION_WORKFLOW_ENGINE_SETUP_TRIGGER = 'publishpressfuture_workflow_engine_setup_trigger';
+
+    /**
+     * @since 4.7.0
+     */
+    public const ACTION_WORKFLOW_ENGINE_SETUP_STEP = 'publishpressfuture_workflow_engine_setup_step';
+
+    /**
+     * @since 4.7.0
+     */
+    public const ACTION_WORKFLOW_ENGINE_EXECUTE_SCHEDULED_STEP = 'publishpressfuture_workflow_engine_execute_scheduled_step';
+
+    /**
+     * @since 4.7.0
+     */
+    public const ACTION_WORKFLOW_ENGINE_EXECUTE_STEP = 'publishpressfuture_workflow_engine_execute_step';
+
+    /**
+     * @since 4.7.0
+     */
+    public const ACTION_WORKFLOW_ENGINE_WORKFLOWS_INITIALIZED = 'publishpressfuture_workflow_engine_workflows_initialized';
+
+    /**
+     * @since 4.7.0
+     */
+    public const ACTION_WORKFLOW_ENGINE_START_ENGINE = 'publishpressfuture_workflow_engine_start_engine';
+
+    /**
+     * @since 4.7.0
+     */
+    public const ACTION_WORKFLOW_ENGINE_RUN_WORKFLOWS = 'publishpressfuture_workflow_engine_run_workflows';
 }

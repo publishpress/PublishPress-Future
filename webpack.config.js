@@ -6,6 +6,7 @@ module.exports = {
     mode: NODE_ENV,
     devtool: NODE_ENV === 'development' ? 'source-map' : false,
     entry: {
+        i18n: "./assets/jsx/i18n.jsx",
         settingsPostTypes: "./assets/jsx/settings-post-types.jsx",
         settingsGeneral: "./assets/jsx/settings-general.jsx",
         blockEditor: "./assets/jsx/block-editor.jsx",
@@ -20,7 +21,8 @@ module.exports = {
         workflowManualSelectionBlockEditor: "./assets/jsx/workflow-manual-selection/block-editor/index.jsx",
         workflowManualSelectionBulkEdit: "./assets/jsx/workflow-manual-selection/bulk-edit/index.jsx",
         futureActions: "./assets/jsx/future-actions.jsx",
-        backupPanel: "./assets/jsx/backup-panel/index.jsx"
+        backupPanel: "./assets/jsx/backup-panel/index.jsx",
+        workflowsListCancelAction: "./assets/jsx/workflows-list/cancel-action/index.jsx"
     },
     output: {
         path: path.join(__dirname, "assets", "js"),
@@ -63,6 +65,7 @@ module.exports = {
         "@wordpress/hooks": "wp.hooks",
         "@wordpress/url": "wp.url",
         "@wordpress/i18n": "wp.i18n",
-        'wp': 'wp'
+        'wp': 'wp',
+        '@publishpress/i18n': 'publishpress.i18n'
     },
 };

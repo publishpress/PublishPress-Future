@@ -4,7 +4,11 @@ namespace PublishPress\Future\Modules\Workflows\Interfaces;
 
 interface WorkflowExecutionSafeguardInterface
 {
-    public function detectInfiniteLoop(int $workflowId, array $step, string $uniqueId = ''): bool;
+    public function detectInfiniteLoop(
+        ?ExecutionContextInterface $executionContext,
+        array $step,
+        string $uniqueId = ''
+    ): bool;
 
     public function preventDuplicateExecution(string $uniqueId): bool;
 

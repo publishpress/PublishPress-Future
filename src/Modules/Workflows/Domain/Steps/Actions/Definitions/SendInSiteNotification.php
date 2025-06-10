@@ -106,6 +106,32 @@ class SendInSiteNotification implements StepTypeInterface
                         "default" => [
                             "expression" => self::getDefaultMessage(),
                         ],
+                    ],
+                    [
+                        "name" => "notificationType",
+                        "type" => "select",
+                        "label" => __("Notification type", "post-expirator"),
+                        "settings" => [
+                            "options" => [
+                                [
+                                    "value" => "info",
+                                    "label" => __("Info", "post-expirator"),
+                                ],
+                                [
+                                    "value" => "success",
+                                    "label" => __("Success", "post-expirator"),
+                                ],
+                                [
+                                    "value" => "warning",
+                                    "label" => __("Warning", "post-expirator"),
+                                ],
+                                [
+                                    "value" => "error",
+                                    "label" => __("Error", "post-expirator"),
+                                ],
+                            ],
+                        ],
+                        "default" => "info",
                     ]
                 ]
             ],
@@ -130,22 +156,32 @@ class SendInSiteNotification implements StepTypeInterface
                         "label" => __("Recipient", "post-expirator"),
                     ],
                     [
+                        "rule" => "required",
+                        "field" => "subject.expression",
+                        "label" => __("Subject", "post-expirator"),
+                    ],
+                    [
+                        "rule" => "required",
+                        "field" => "message.expression",
+                        "label" => __("Message", "post-expirator"),
+                    ],
+                    [
                         "rule" => "validExpression",
                         "field" => "recipient.expression",
                         "label" => __("Recipient", "post-expirator"),
-                        "fieldLabel" => __("Email Message > Recipient", "post-expirator"),
+                        "fieldLabel" => __("Recipient > Recipients", "post-expirator"),
                     ],
                     [
                         "rule" => "validExpression",
                         "field" => "subject.expression",
                         "label" => __("Subject", "post-expirator"),
-                        "fieldLabel" => __("Email Message > Subject", "post-expirator"),
+                        "fieldLabel" => __("Message > Subject", "post-expirator"),
                     ],
                     [
                         "rule" => "validExpression",
                         "field" => "message.expression",
                         "label" => __("Message", "post-expirator"),
-                        "fieldLabel" => __("Email Message > Message", "post-expirator"),
+                        "fieldLabel" => __("Message > Message", "post-expirator"),
                     ],
                 ]
             ]
@@ -201,7 +237,7 @@ class SendInSiteNotification implements StepTypeInterface
                 ],
                 [
                     "id" => "read",
-                    "label" => __("On read", "post-expirator"),
+                    "label" => __("On dismiss", "post-expirator"),
                 ],
             ]
         ];

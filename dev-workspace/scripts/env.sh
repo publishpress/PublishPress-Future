@@ -145,3 +145,7 @@ if [[ $1 == "info" ]]; then
   service_info
 fi
 
+if [[ $1 == "restart" ]]; then
+  service_stop
+  service_up
+fi

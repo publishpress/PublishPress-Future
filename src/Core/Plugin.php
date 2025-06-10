@@ -133,6 +133,11 @@ class Plugin implements InitializableInterface
     {
         $this->hooks->addAction(HooksAbstract::ACTION_INIT, [$this, 'manageUpgrade'], 99);
         $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS,
+            [$this, 'initializeI18nForScripts'],
+            5
+        );
     }
 
     private function initializeNotices()
@@ -165,6 +170,9 @@ class Plugin implements InitializableInterface
 
         SettingsFacade::setDefaultSettings();
 
+        // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules -- Needed during plugin activation for rewrite rules
+        flush_rewrite_rules();
+
         // Set flag to redirect to the settings page after activation
         set_transient(PluginsListController::TRANSIENT_REDIRECT_AFTER_ACTIVATION, true, 60);
     }
@@ -172,6 +180,9 @@ class Plugin implements InitializableInterface
     public static function onDeactivate()
     {
         do_action(HooksAbstract::ACTION_DEACTIVATE_PLUGIN);
+
+        // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules -- Needed during plugin deactivation for rewrite rules
+        flush_rewrite_rules();
     }
 
     public function manageUpgrade()
@@ -335,5 +346,42 @@ class Plugin implements InitializableInterface
         $baseUrl = $container->get(ServicesAbstract::BASE_URL);
 
         return $baseUrl . 'assets/' . $asset;
+    }
+
+    public function initializeI18nForScripts()
+    {
+        wp_enqueue_script(
+            'publishpress-i18n',
+            self::getScriptUrl('i18n'),
+            [
+                'wp-i18n',
+            ],
+            PUBLISHPRESS_FUTURE_VERSION,
+            true
+        );
+
+        $json = $this->getLocalizedTranslations();
+
+        wp_localize_script(
+            'publishpress-i18n',
+            'publishpressI18nConfig',
+            [
+                'data' => $json,
+            ]
+        );
+    }
+
+    private function getLocalizedTranslations()
+    {
+        $currentLocale = get_locale();
+        $jsonPath = $this->basePath . '/languages/post-expirator-' . $currentLocale . '.json';
+
+        if (! file_exists($jsonPath)) {
+            return [];
+        }
+
+        // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+        $json = file_get_contents($jsonPath);
+        return json_decode($json, true);
     }
 }

@@ -33,4 +33,9 @@ interface ScheduledActionsModelInterface
      * @since 4.3.2
      */
     public function cancelByWorkflowAndPostId(int $workflowId, int $postId): void;
+
+    /**
+     * @since 4.7.0
+     */
+    public function workflowHasScheduledActions(int $workflowId): bool;
 }

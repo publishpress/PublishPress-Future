@@ -13,6 +13,8 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\Condi
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeactivatePostWorkflow;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeletePost;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeletePostMeta;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DoAction;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UserInteraction;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\QueryPosts;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\RemovePostTerm;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\ScheduleDelay;
@@ -24,7 +26,9 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\Stick
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UnstickPost;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePost;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePostMeta;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DuplicatePost;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnAdminInit;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCustomAction;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnInit;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnLegacyActionTrigger;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostAuthorChange;
@@ -218,7 +222,8 @@ class StepTypesModel implements StepTypesModelInterface
             OnSchedule::getNodeTypeName() => new OnSchedule(),
             OnPostMetaChange::getNodeTypeName() => new OnPostMetaChange(),
             OnPostAuthorChange::getNodeTypeName() => new OnPostAuthorChange(),
-            OnPostRowAction::getNodeTypeName() => new OnPostRowAction()
+            OnPostRowAction::getNodeTypeName() => new OnPostRowAction(),
+            OnCustomAction::getNodeTypeName() => new OnCustomAction(),
         ];
 
         if ($this->settingsFacade->getExperimentalFeaturesStatus()) {
@@ -246,6 +251,7 @@ class StepTypesModel implements StepTypesModelInterface
             UpdatePostMeta::getNodeTypeName() => new UpdatePostMeta(),
             UpdatePost::getNodeTypeName() => new UpdatePost(),
             SendInSiteNotification::getNodeTypeName() => new SendInSiteNotification(),
+            DuplicatePost::getNodeTypeName() => new DuplicatePost(),
         ];
 
         return $nodesInstances;
@@ -258,6 +264,8 @@ class StepTypesModel implements StepTypesModelInterface
             QueryPosts::getNodeTypeName() => new QueryPosts(),
             Conditional::getNodeTypeName() => new Conditional(),
             AppendDebugLog::getNodeTypeName() => new AppendDebugLog(),
+            DoAction::getNodeTypeName() => new DoAction(),
+            UserInteraction::getNodeTypeName() => new UserInteraction(),
         ];
 
         if (function_exists('ray')) {

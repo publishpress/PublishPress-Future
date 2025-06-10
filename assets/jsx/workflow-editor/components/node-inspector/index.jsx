@@ -1,14 +1,14 @@
 import { useSelect } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
-import { __ } from "@wordpress/i18n";
-import { sprintf } from "@wordpress/i18n";
+import { __ } from "@publishpress/i18n";
+import { sprintf } from "@publishpress/i18n";
 import { useRef } from "@wordpress/element";
 import NodeInspectorCard from "./node-inspector-card";
 import InspectorCard from "../inspector-card";
 import InspectorWarning from "../inspector-warning";
 import NodeSettingsPanel from "./node-settings-panel";
-import { mapNodeInputs, nodeHasOutput } from "../../utils";
+import { getNodeOutputSchema, mapNodeInputs } from "../../utils";
 import { FEATURE_DEVELOPER_MODE } from "../../constants";
 import NodeValidationPanel from "../node-validation-panel";
 import NodeDataFlowPanel from "./node-data-flow-panel";
@@ -72,10 +72,9 @@ export const NodeInspector = () => {
     const nodeHasSettings = nodeType?.settingsSchema?.length > 0;
 
     const stepScopedVariables = getExpandedStepScopedVariables(selectedNode);
-
     const mappedNodeInputSchema = mapNodeInputs(selectedNode);
+    const nodeOutputSchema = getNodeOutputSchema(selectedNode);
 
-    const nodeOutputSchema = nodeType?.outputSchema || [];
     let mappedNodeOutputSchema = [];
     if (nodeOutputSchema.length > 0) {
         nodeOutputSchema.forEach((schemaItem) => {

@@ -1,5 +1,5 @@
 import PostQuery from "../data-fields/post-query";
-import { __, sprintf } from "@wordpress/i18n";
+import { __, sprintf } from "@publishpress/i18n";
 import Schedule from "../data-fields/schedule";
 import DebugData from "../data-fields/debug-data";
 import RayColor from "../data-fields/ray-color";
@@ -21,6 +21,11 @@ import UserQuery from "../data-fields/user-query";
 import PostFilter from "../data-fields/post-filter";
 import PostSearchQuery from "../data-fields/post-search-query";
 import ConditionalDateOffset from "../data-fields/conditional-date-offset";
+import ActionArgs from "../data-fields/action-args";
+import Integer from "../data-fields/integer";
+import CustomOptions from "../data-fields/custom-options";
+import { InteractiveCustomOptions } from "../data-fields/interactive-custom-options";
+import Select from "../data-fields/select";
 
 export const MappedField = (props) => {
     switch (props.type) {
@@ -111,6 +116,26 @@ export const MappedField = (props) => {
         case "conditionalDateOffset":
             return (
                 <ConditionalDateOffset {...props} />
+            );
+        case "actionArgs":
+            return (
+                <ActionArgs {...props} />
+            );
+        case "integer":
+            return (
+                <Integer {...props} />
+            );
+        case "customOptions":
+            return (
+                <CustomOptions {...props} />
+            );
+        case "interactiveCustomOptions":
+            return (
+                <InteractiveCustomOptions {...props} />
+            );
+        case "select":
+            return (
+                <Select {...props} />
             );
     }
 
