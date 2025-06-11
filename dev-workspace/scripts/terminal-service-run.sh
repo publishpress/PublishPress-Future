@@ -19,14 +19,28 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     exit 0
 fi
 
+HAS_NO_COMMAND=true
+for arg in "$@"; do
+    if [ "$arg" = "--new" ] || [ "$arg" = "-n" ]; then
+        HAS_NO_COMMAND=false
+        break
+    fi
+done
+
 if [ "$1" = "--new" ] || [ "$1" = "-n" ]; then
-    echo "Running new container"
+    if [ "$HAS_NO_COMMAND" = false ]; then
+        echo "Running new container"
+    fi
     run_terminal_service "${@:2}"
 elif [ -z "$RUNNING_CONTAINER" ]; then
-    echo "Running new container"
+    if [ "$HAS_NO_COMMAND" = false ]; then
+        echo "Running new container"
+    fi
     run_terminal_service "$@"
 else
-    echo "Running existing container"
+    if [ "$HAS_NO_COMMAND" = false ]; then
+        echo "Running existing container"
+    fi
     if [ $# -eq 0 ]; then
         docker exec -it $RUNNING_CONTAINER zsh
     else
