@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 4.7.0\n"
+"Project-Id-Version: PublishPress Future 4.7.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-04T05:54:12+00:00\n"
+"POT-Creation-Date: 2025-06-11T13:03:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: post-expirator\n"
@@ -186,7 +186,7 @@ msgstr ""
 msgid "Invalid nonce."
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:120
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:121
 #: src/Modules/Expirator/Controllers/BulkEditController.php:157
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:362
 #: src/Modules/Expirator/Controllers/QuickEditController.php:287
@@ -195,7 +195,7 @@ msgstr ""
 msgid "Taxonomy"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:149
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:150
 #: src/Modules/Expirator/Controllers/BulkEditController.php:188
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:137
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:391
@@ -208,7 +208,7 @@ msgstr ""
 msgid "Future Actions"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:150
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:151
 #: src/Modules/Expirator/Controllers/BulkEditController.php:189
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:392
 #: src/Modules/Expirator/Controllers/QuickEditController.php:319
@@ -216,13 +216,13 @@ msgstr ""
 msgid "Enable Future Action"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:169
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:170
 #: src/Modules/Expirator/Controllers/BulkEditController.php:210
 #: src/Modules/Expirator/Controllers/QuickEditController.php:340
 msgid "Categories"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:172
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:173
 #: src/Modules/Expirator/Controllers/BulkEditController.php:213
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:415
 #: src/Modules/Expirator/Controllers/QuickEditController.php:343
@@ -234,21 +234,21 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:173
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:174
 #: src/Modules/Expirator/Controllers/BulkEditController.php:216
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:418
 #: src/Modules/Expirator/Controllers/QuickEditController.php:346
 msgid "Loading"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:174
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:175
 #: src/Modules/Expirator/Controllers/BulkEditController.php:214
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:416
 #: src/Modules/Expirator/Controllers/QuickEditController.php:344
 msgid "Show Calendar"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:175
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:176
 #: src/Modules/Expirator/Controllers/BulkEditController.php:215
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:417
 #: src/Modules/Expirator/Controllers/QuickEditController.php:345
@@ -257,7 +257,7 @@ msgstr ""
 
 #. translators: the text between {} is the link to the settings page.
 #. translators: the text between {{}} is the link to the settings page.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:177
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:178
 #: src/Modules/Expirator/Controllers/BulkEditController.php:218
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:420
 #: src/Modules/Expirator/Controllers/QuickEditController.php:348
@@ -265,7 +265,7 @@ msgid "Timezone is controlled by the {WordPress Settings}."
 msgstr ""
 
 #. translators: %s is the name of the taxonomy in plural form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:184
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:185
 #: src/Modules/Expirator/Controllers/BulkEditController.php:225
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:427
 #: src/Modules/Expirator/Controllers/QuickEditController.php:352
@@ -273,7 +273,7 @@ msgstr ""
 msgid "No %s found."
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:187
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:188
 #: src/Modules/Expirator/Controllers/BulkEditController.php:229
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:430
 #: src/Modules/Expirator/Controllers/QuickEditController.php:355
@@ -281,7 +281,7 @@ msgid "You must assign a taxonomy to this post type to use this feature."
 msgstr ""
 
 #. translators: %s is the name of the taxonomy in plural form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:192
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:193
 #: src/Modules/Expirator/Controllers/BulkEditController.php:239
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:435
 #: src/Modules/Expirator/Controllers/QuickEditController.php:357
@@ -290,7 +290,7 @@ msgid "New %s"
 msgstr ""
 
 #. translators: %s is the name of the taxonomy in plural form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:194
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:195
 #: src/Modules/Expirator/Controllers/BulkEditController.php:241
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:437
 #: src/Modules/Expirator/Controllers/QuickEditController.php:359
@@ -299,7 +299,7 @@ msgid "%s to remove"
 msgstr ""
 
 #. translators: %s is the name of the taxonomy in plural form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:196
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:197
 #: src/Modules/Expirator/Controllers/BulkEditController.php:243
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:439
 #: src/Modules/Expirator/Controllers/QuickEditController.php:361
@@ -308,7 +308,7 @@ msgid "%s to add"
 msgstr ""
 
 #. translators: %s is the name of the taxonomy in singular form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:199
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:200
 #: src/Modules/Expirator/Controllers/BulkEditController.php:246
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:442
 #: src/Modules/Expirator/Controllers/QuickEditController.php:363
@@ -316,21 +316,21 @@ msgstr ""
 msgid "Search for %s"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:202
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:203
 #: src/Modules/Expirator/Controllers/BulkEditController.php:249
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:445
 #: src/Modules/Expirator/Controllers/QuickEditController.php:364
 msgid "Select an action"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:203
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:204
 #: src/Modules/Expirator/Controllers/BulkEditController.php:250
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:446
 #: src/Modules/Expirator/Controllers/QuickEditController.php:365
 msgid "Select a date"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:204
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:205
 #: src/Modules/Expirator/Controllers/BulkEditController.php:251
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:447
 #: src/Modules/Expirator/Controllers/QuickEditController.php:366
@@ -338,7 +338,7 @@ msgid "Date cannot be in the past"
 msgstr ""
 
 #. translators: %s is the name of the taxonomy in singular form.
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:207
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:208
 #: src/Modules/Expirator/Controllers/BulkEditController.php:254
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:450
 #: src/Modules/Expirator/Controllers/QuickEditController.php:369
@@ -347,7 +347,7 @@ msgstr ""
 msgid "Please select one or more %s"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BlockEditorController.php:210
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:211
 #: src/Modules/Expirator/Controllers/BulkEditController.php:257
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:453
 #: src/Modules/Expirator/Controllers/QuickEditController.php:372
@@ -559,6 +559,8 @@ msgstr ""
 
 #: src/Modules/Expirator/Controllers/SettingsController.php:301
 #: src/Modules/Expirator/Controllers/SettingsController.php:345
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:130
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:120
 #: assets/jsx/workflow-editor/components/data-fields/debug-levels.jsx:11
 msgid "Error"
 msgstr ""
@@ -952,12 +954,12 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:148
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:92
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:105
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:140
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:157
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:166
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:183
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:81
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:95
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:152
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:169
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:178
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:195
 msgid "Message"
 msgstr ""
 
@@ -1614,14 +1616,14 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:150
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:142
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:167
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:176
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:202
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:127
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:142
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:125
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:125
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:174
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:147
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:194
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:220
 msgid "Step input"
 msgstr ""
 
@@ -1638,14 +1640,14 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:151
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/ScheduleDelay.php:143
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:168
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:177
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:203
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:128
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:143
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:126
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UnstickPost.php:126
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePost.php:175
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UpdatePostMeta.php:148
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:195
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:221
 msgid "The input data for this step."
 msgstr ""
 
@@ -1673,7 +1675,7 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/QueryPosts.php:153
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/RemovePostTerm.php:172
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:189
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:210
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:236
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendRay.php:149
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SetPostTerm.php:164
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/StickPost.php:147
@@ -2215,8 +2217,8 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:130
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:136
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:77
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:130
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:145
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:156
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:171
 msgid "Recipient"
 msgstr ""
 
@@ -2227,11 +2229,11 @@ msgstr ""
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:92
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendEmail.php:142
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:97
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:135
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:151
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:161
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:177
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:87
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:147
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:163
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:173
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:189
 msgid "Subject"
 msgstr ""
 
@@ -2267,37 +2269,59 @@ msgstr ""
 msgid "A comma-separated list of user names, ids, emails or user roles to send the message to."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:146
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:113
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:103
+msgid "Notification type"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:118
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:108
+#: assets/jsx/workflow-editor/components/data-fields/debug-levels.jsx:8
+msgid "Info"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:122
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:112
+msgid "Success"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:126
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:116
+#: assets/jsx/workflow-editor/components/data-fields/debug-levels.jsx:10
+msgid "Warning"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:172
 msgid "Recipient > Recipients"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:152
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:164
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:178
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:190
 msgid "Message > Subject"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:158
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:170
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:184
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:196
 msgid "Message > Message"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:182
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:208
 msgid "Reading time"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:183
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:209
 msgid "The reading time of the admin notification."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:188
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:214
 msgid "Read by"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:189
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:215
 msgid "The user who read the admin notification."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:214
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:240
 msgid "On dismiss"
 msgstr ""
 
@@ -2536,9 +2560,9 @@ msgid "This step requires user action before the workflow can proceed. The actio
 msgstr ""
 
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:64
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:142
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:157
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:200
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:168
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:183
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:226
 msgid "Responders"
 msgstr ""
 
@@ -2559,53 +2583,53 @@ msgid "Please select an option to continue the workflow: {{global.workflow.title
 msgstr ""
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:103
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:175
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:129
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:201
 #: assets/jsx/workflow-editor/components/more-menu/menu-dropdown.jsx:11
 msgid "Options"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:104
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:130
 msgid "Specify the options the user can choose from."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:112
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:138
 msgid "Approve"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:113
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:139
 msgid "Approve the workflow"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:117
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:143
 msgid "Deny"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:118
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:144
 msgid "Deny the workflow"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:158
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:184
 msgid "Responders > Responders"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:176
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:202
 msgid "Options > Options"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:201
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:227
 msgid "The responders to the interactive delay, as a list of user ids."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:206
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:232
 msgid "Option name"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:207
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:233
 msgid "The name of the option selected by the user."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:229
+#: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:255
 msgid "After interaction"
 msgstr ""
 
@@ -4049,16 +4073,8 @@ msgstr ""
 msgid "Select the data to output"
 msgstr ""
 
-#: assets/jsx/workflow-editor/components/data-fields/debug-levels.jsx:8
-msgid "Info"
-msgstr ""
-
 #: assets/jsx/workflow-editor/components/data-fields/debug-levels.jsx:9
 msgid "Notice"
-msgstr ""
-
-#: assets/jsx/workflow-editor/components/data-fields/debug-levels.jsx:10
-msgid "Warning"
 msgstr ""
 
 #: assets/jsx/workflow-editor/components/data-fields/debug-levels.jsx:12
