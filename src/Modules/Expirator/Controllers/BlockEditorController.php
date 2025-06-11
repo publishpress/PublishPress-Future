@@ -99,6 +99,7 @@ class BlockEditorController implements InitializableInterface
                     'inline-edit-post',
                     'wp-html-entities',
                     'wp-plugins',
+                    'publishpress-i18n',
                 ],
                 PUBLISHPRESS_FUTURE_VERSION,
                 true
