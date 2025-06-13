@@ -86,7 +86,10 @@ class DeactivatePostWorkflow implements StepTypeInterface
                         "name" => "workflow",
                         "type" => "manualWorkflowInput",
                         "default" => [
-                            "variable" => "global.workflow",
+                            "variable" => [
+                                "rule" => "first",
+                                "dataType" => "workflow",
+                            ]
                         ],
                         "label" => __("Workflow to Deactivate", "post-expirator"),
                         "description" => __(
