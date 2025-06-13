@@ -29,7 +29,7 @@ class OnPostWorkflowEnable implements StepTypeInterface
 
     public function getLabel(): string
     {
-        return __("Manually enabled via checkbox", "post-expirator");
+        return __("Manually run via checkbox", "post-expirator");
     }
 
     public function getDescription(): string

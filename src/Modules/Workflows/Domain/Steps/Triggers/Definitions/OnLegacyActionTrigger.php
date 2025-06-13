@@ -51,7 +51,7 @@ class OnLegacyActionTrigger implements StepTypeInterface
 
     public function getLabel(): string
     {
-        return __("Manually enabled via Future Actions box", "post-expirator");
+        return __("Manually run via Future Actions box", "post-expirator");
     }
 
     public function getDescription(): string
