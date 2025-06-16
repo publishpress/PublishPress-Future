@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.8.0]- UNRELEASED
+
+### Changed
+
+- Improve consistency on the name of manually enabled triggers (Issue #1366).
+
 ## [4.7.1]- 11 June, 2025
 
 ### Fixed
