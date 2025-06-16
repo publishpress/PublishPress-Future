@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Improve consistency on the name of manually enabled triggers (Issue #1366).
+-
 
 ## [4.7.1]- 11 June, 2025
 
