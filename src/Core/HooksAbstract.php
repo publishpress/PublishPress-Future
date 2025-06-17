@@ -58,6 +58,8 @@ abstract class HooksAbstract
 
     public const FILTER_PLUGIN_ACTION_LINKS = 'plugin_action_links';
 
+    public const FILTER_PLUGIN_ROW_META = 'plugin_row_meta';
+
     public const FILTER_MIGRATIONS = 'publishpressfuture_migrations';
 
     public const FILTER_REMOVABLE_QUERY_ARGS = 'removable_query_args';
