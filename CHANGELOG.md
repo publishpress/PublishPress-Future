@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.8.0]- UNRELEASED
 
+### Added
+
+- Add Key links on Plugins screen (Issue #1360).
+
 ### Changed
 
 - Changed the default value of "Workflow" field in the "Deactivate workflow for post" action to automatically select the first available workflow option (Issue #958).
