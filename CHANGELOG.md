@@ -8,11 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Add Key links on Plugins screen (Issue #1360).
+- Add new checkbox to hide specific fields in Metadata Mapping instead of the full metabox - PRO feature (Issue #1058).
 
 ### Changed
 
 - Changed the default value of "Workflow" field in the "Deactivate workflow for post" action to automatically select the first available workflow option (Issue #958).
 - Improve consistency on the name of manually enabled triggers (Issue #1366).
+- Conflict between the future action metabox and custom metadata when it comes from 3rd party plugins - PRO feature (Issue #1058).
 
 ## [4.7.1]- 11 June, 2025
 

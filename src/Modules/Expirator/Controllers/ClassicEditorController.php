@@ -391,6 +391,8 @@ class ClassicEditorController implements InitializableInterface
             $metaboxTitle = $settingsFacade->getMetaboxTitle() ?? __('Future Actions', 'post-expirator');
             $metaboxCheckboxLabel = $settingsFacade->getMetaboxCheckboxLabel() ?? __('Enable Future Action', 'post-expirator');
 
+            $hiddenFields = (array) $this->hooks->applyFilters(HooksAbstract::FILTER_HIDDEN_METABOX_FIELDS, [], $postType);
+
             wp_localize_script(
                 'publishpress-future-classic-editor',
                 'publishpressFutureClassicEditorConfig',
@@ -408,6 +410,7 @@ class ClassicEditorController implements InitializableInterface
                     'postType' => $currentScreen->post_type,
                     'isNewPost' => $isNewPostPage,
                     'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
+                    'hiddenFields' => $hiddenFields,
                     'strings' => [
                         'category' => __('Category', 'post-expirator'),
                         'panelTitle' => $metaboxTitle,

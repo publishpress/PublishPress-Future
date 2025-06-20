@@ -118,6 +118,8 @@ abstract class HooksAbstract
 
     public const FILTER_HIDE_METABOX = 'publishpressfuture_hide_metabox';
 
+    public const FILTER_HIDDEN_METABOX_FIELDS = 'publishpressfuture_hidden_metabox_fields';
+
     public const FILTER_EXPIRATION_NEW_STATUS = 'publishpressfuture_expiration_new_status';
 
     public const FILTER_EXPIRATION_STATUSES = 'publishpressfuture_expiration_statuses';
