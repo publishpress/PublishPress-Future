@@ -61,7 +61,7 @@ class OnPostAuthorChange implements StepTypeInterface
     {
         return [
             [
-                "label" => __("Conditions", "post-expirator"),
+                "label" => __("Post Filter", "post-expirator"),
                 "description" => __(
                     "Specify the criteria for posts that will trigger this action.",
                     "post-expirator"
