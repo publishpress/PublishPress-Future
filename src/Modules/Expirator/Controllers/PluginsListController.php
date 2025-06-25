@@ -62,7 +62,7 @@ class PluginsListController implements InitializableInterface
         $this_plugin = basename(PUBLISHPRESS_FUTURE_BASE_PATH) . '/post-expirator.php';
 
         if ($file === $this_plugin) {
-            $links[] = '<a href="https://publishpress.com/links/future-sidebar" target="_blank">' . __('Upgrade to Pro', 'post-expirator') . '</a>';
+            $links[] = '<a class="pp-version-notice-upgrade-menu-item" href="https://publishpress.com/links/future-sidebar" target="_blank">' . __('Upgrade to Pro', 'post-expirator') . '</a>';
         }
 
         return $links;
