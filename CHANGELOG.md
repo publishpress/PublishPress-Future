@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Changed the default value of "Workflow" field in the "Deactivate workflow for post" action to automatically select the first available workflow option (Issue #958).
 - Improve consistency on the name of manually enabled triggers (Issue #1366).
+- Update the field description Text on User intraction step (Issue #1384).
 
 ## [4.7.1]- 11 June, 2025
 
