@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Improve consistency on the name of manually enabled triggers (Issue #1366).
 - Update the field description Text on User interaction step (Issue #1384).
 - Consistency with "Filters" name (Issue #1296).
+- Workflow name consistency, update "Custom action" to "Do custom action" (Issue #1385).
 
 ### Fixed
 
