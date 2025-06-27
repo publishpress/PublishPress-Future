@@ -92,12 +92,10 @@ class ClassicEditorController implements InitializableInterface
                 $id = $post->ID;
             } elseif (isset($post->post_id)) {
                 $id = $post->post_id;
+            } elseif (method_exists($post, 'get_id')) {
+                $id = $post->get_id();
             } elseif (isset($post->id)) {
                 $id = $post->id;
-            } else {
-                if (method_exists($post, 'get_id')) {
-                    $id = $post->get_id();
-                }
             }
 
             if (! is_null($id)) {
