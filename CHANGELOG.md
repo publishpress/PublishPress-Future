@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fixed WooCommerce Order Notice: Function ID was called incorrectly. Order properties should not be accessed directly (Issue #1388).
+- Plugin's text domain is loaded too early (Issue #1350).
 
 ## [4.7.1]- 11 June, 2025
 
