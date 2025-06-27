@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Update the field description Text on User interaction step (Issue #1384).
 - Consistency with "Filters" name (Issue #1296).
 
+### Fixed
+
+- Fixed WooCommerce Order Notice: Function ID was called incorrectly. Order properties should not be accessed directly (Issue #1388).
+
 ## [4.7.1]- 11 June, 2025
 
 ### Fixed
