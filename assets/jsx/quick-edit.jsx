@@ -17,7 +17,8 @@ const {
     taxonomyName,
     nonce,
     statusesSelectOptions,
-    hideCalendarByDefault
+    hideCalendarByDefault,
+    hiddenFields
 } = window.publishpressFutureQuickEditConfig;
 
 const storeName = 'publishpress-future/future-action-quick-edit';
@@ -123,6 +124,7 @@ inlineEditPost.edit = function (button, id) {
             taxonomyName={taxonomyName}
             nonce={nonce}
             hideCalendarByDefault={hideCalendarByDefault}
+            hiddenFields={hiddenFields}
         />
     );
 

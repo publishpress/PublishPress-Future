@@ -926,6 +926,7 @@ var FutureActionPanelBulkEdit = function FutureActionPanelBulkEdit(props) {
     startOfWeek: props.startOfWeek,
     storeName: props.storeName,
     hideCalendarByDefault: props.hideCalendarByDefault,
+    hiddenFields: props.hiddenFields,
     showTitle: false,
     strings: props.strings
   }), /*#__PURE__*/React.createElement("input", {
@@ -1139,6 +1140,7 @@ var FutureActionPanelQuickEdit = function FutureActionPanelQuickEdit(props) {
     strings: props.strings,
     onDataIsValid: onDataIsValid,
     hideCalendarByDefault: props.hideCalendarByDefault,
+    hiddenFields: props.hiddenFields,
     showTitle: true,
     onDataIsInvalid: onDataIsInvalid
   }), /*#__PURE__*/React.createElement("input", {
@@ -3472,7 +3474,8 @@ var _window$publishpressF = window.publishpressFutureBulkEditConfig,
   taxonomyName = _window$publishpressF.taxonomyName,
   nonce = _window$publishpressF.nonce,
   statusesSelectOptions = _window$publishpressF.statusesSelectOptions,
-  hideCalendarByDefault = _window$publishpressF.hideCalendarByDefault;
+  hideCalendarByDefault = _window$publishpressF.hideCalendarByDefault,
+  hiddenFields = _window$publishpressF.hiddenFields;
 var storeName = 'publishpress-future/future-action-bulk-edit';
 var delayToUnmountAfterSaving = 1000;
 
@@ -3532,7 +3535,8 @@ inlineEditPost.setBulk = function (id) {
     strings: strings,
     taxonomyName: taxonomyName,
     nonce: nonce,
-    hideCalendarByDefault: hideCalendarByDefault
+    hideCalendarByDefault: hideCalendarByDefault,
+    hiddenFields: hiddenFields
   });
   root.render(component);
   inlineEditPost.revert = function () {
