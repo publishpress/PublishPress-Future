@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Improve consistency on the name of manually enabled triggers (Issue #1366).
 - Conflict between the future action metabox and custom metadata when it comes from 3rd party plugins - PRO feature (Issue #1058).
 
+### Developers
+
+- Remove HooksAbstract::FILTER_ACTION_META_KEY filter application from PostModel addMeta, updateMeta and deleteMeta
+
 ## [4.7.1]- 11 June, 2025
 
 ### Fixed
