@@ -69,7 +69,8 @@ class ClassicEditorController implements InitializableInterface
 
         $this->hooks->addAction(
             CoreHooksAbstract::ACTION_SAVE_POST,
-            [$this, 'processMetaboxUpdate']
+            [$this, 'processMetaboxUpdate'],
+            20
         );
 
         $this->hooks->addAction(
