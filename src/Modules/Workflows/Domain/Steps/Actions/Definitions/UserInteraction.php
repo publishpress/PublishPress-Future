@@ -62,7 +62,7 @@ class UserInteraction implements StepTypeInterface
         return [
             [
                 "label" => __("Responders", "post-expirator"),
-                "description" => __("Specify the responders for the interactive delay.", "post-expirator"),
+                "description" => __("Choose which users will see notifications from this action.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "responders",

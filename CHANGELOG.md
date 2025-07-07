@@ -14,7 +14,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Changed the default value of "Workflow" field in the "Deactivate workflow for post" action to automatically select the first available workflow option (Issue #958).
 - Improve consistency on the name of manually enabled triggers (Issue #1366).
-- Conflict between the future action metabox and custom metadata when it comes from 3rd party plugins - PRO feature (Issue #1058).
+- Update the field description Text on User interaction step (Issue #1384).
+- Consistency with "Filters" name (Issue #1296).
+- Workflow name consistency, update "Custom action" to "Do custom action" (Issue #1385).
+
+### Fixed
+
+- Fixed WooCommerce Order Notice: Function ID was called incorrectly. Order properties should not be accessed directly (Issue #1388).
+- Plugin's text domain is loaded too early (Issue #1350).
 
 ### Developers
 
