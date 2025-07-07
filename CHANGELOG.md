@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Developers
 
-- Remove HooksAbstract::FILTER_ACTION_META_KEY filter application from PostModel addMeta, updateMeta and deleteMeta
+- Remove HooksAbstract::FILTER_ACTION_META_KEY filter application from PostModel
 
 ## [4.7.1]- 11 June, 2025
 
