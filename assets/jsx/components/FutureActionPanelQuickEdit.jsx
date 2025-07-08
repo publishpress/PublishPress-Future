@@ -50,6 +50,7 @@ export const FutureActionPanelQuickEdit = (props) => {
                 strings={props.strings}
                 onDataIsValid={onDataIsValid}
                 hideCalendarByDefault={props.hideCalendarByDefault}
+                hiddenFields={props.hiddenFields}
                 showTitle={true}
                 onDataIsInvalid={onDataIsInvalid} />
 

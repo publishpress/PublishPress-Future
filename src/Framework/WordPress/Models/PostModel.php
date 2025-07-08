@@ -130,12 +130,6 @@ class PostModel
      */
     public function addMeta($metaKey, $metaValue = null, $unique = true)
     {
-        $metaKey = $this->hooks->applyFilters(
-            HooksAbstract::FILTER_ACTION_META_KEY,
-            $metaKey,
-            $this->getPostId()
-        );
-
         return add_post_meta($this->getPostId(), $metaKey, $metaValue, $unique);
     }
 
@@ -153,12 +147,6 @@ class PostModel
         $postId = $this->getPostId();
 
         foreach ($metaKey as $key => $value) {
-            $key = $this->hooks->applyFilters(
-                HooksAbstract::FILTER_ACTION_META_KEY,
-                $key,
-                $postId
-            );
-
             \update_post_meta(
                 $postId,
                 \sanitize_key($key),
@@ -181,12 +169,6 @@ class PostModel
         $postId = $this->getPostId();
 
         foreach ($metaKey as $key) {
-            $key = $this->hooks->applyFilters(
-                HooksAbstract::FILTER_ACTION_META_KEY,
-                $key,
-                $postId
-            );
-
             \delete_post_meta(
                 $postId,
                 \sanitize_key($key),
@@ -199,24 +181,12 @@ class PostModel
     {
         $postId = $this->getPostId();
 
-        $metaKey = $this->hooks->applyFilters(
-            HooksAbstract::FILTER_ACTION_META_KEY,
-            $metaKey,
-            $postId
-        );
-
         return get_post_meta($postId, $metaKey, $single);
     }
 
     public function metadataExists($metaKey)
     {
         $postId = $this->getPostId();
-
-        $metaKey = $this->hooks->applyFilters(
-            HooksAbstract::FILTER_ACTION_META_KEY,
-            $metaKey,
-            $postId
-        );
 
         return metadata_exists('post', $postId, $metaKey);
     }

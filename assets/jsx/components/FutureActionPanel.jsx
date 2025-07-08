@@ -46,6 +46,8 @@ export const FutureActionPanel = (props) => {
         };
     });
 
+    const hiddenFields = props.hiddenFields || {};
+
     const [validationError, setValidationError] = useState('');
 
     const {
@@ -375,19 +377,21 @@ export const FutureActionPanel = (props) => {
 
                 {enabled && (
                     <Fragment>
-                        <PanelRow className={contentPanelClass + ' future-action-full-width'}>
-                            <SelectControl
-                                label={props.strings.action}
-                                value={action}
-                                options={actionsSelectOptions}
-                                onChange={handleActionChange}
-                                className="future-action-select-action"
-                            />
-                        </PanelRow>
+                        {!hiddenFields['_expiration-date-type'] && (
+                            <PanelRow className={contentPanelClass + ' future-action-full-width'}>
+                                <SelectControl
+                                    label={props.strings.action}
+                                    value={action}
+                                    options={actionsSelectOptions}
+                                    onChange={handleActionChange}
+                                    className="future-action-select-action"
+                                />
+                            </PanelRow>
+                        )}
 
                         <FutureActionPanelAfterActionField.Slot fillProps={{ storeName: props.storeName }} />
 
-                        {action === 'change-status' &&
+                        {!hiddenFields['_expiration-date-post-status'] && action === 'change-status' &&
                             <PanelRow className="new-status">
                                 <SelectControl
                                     label={props.strings.newStatus}
@@ -400,7 +404,7 @@ export const FutureActionPanel = (props) => {
                         }
 
                         {
-                            displayTaxonomyField && (
+                            !hiddenFields['_expiration-date-taxonomy'] && displayTaxonomyField && (
                                 isFetchingTerms && (
                                     <PanelRow>
                                         <BaseControl label={taxonomyName}>
@@ -451,25 +455,29 @@ export const FutureActionPanel = (props) => {
                             )
                         }
 
-                        <PanelRow className={datePanelClass}>
-                            <ToggleCalendarDatePicker
-                                currentDate={date}
-                                onChangeDate={handleDateChange}
-                                onToggleCalendar={() => setCalendarIsVisible(!calendarIsVisible)}
-                                is12Hour={!is24hour}
-                                startOfWeek={props.startOfWeek}
-                                isExpanded={calendarIsVisible}
-                                strings={props.strings}
-                            />
-                        </PanelRow>
+                        {!hiddenFields['_expiration-date'] && (
+                            <>
+                                <PanelRow className={datePanelClass}>
+                                    <ToggleCalendarDatePicker
+                                        currentDate={date}
+                                        onChangeDate={handleDateChange}
+                                        onToggleCalendar={() => setCalendarIsVisible(!calendarIsVisible)}
+                                        is12Hour={!is24hour}
+                                        startOfWeek={props.startOfWeek}
+                                        isExpanded={calendarIsVisible}
+                                        strings={props.strings}
+                                    />
+                                </PanelRow>
 
-                        <PanelRow>
-                            <div className="future-action-help-text">
-                                <hr />
+                                <PanelRow>
+                                    <div className="future-action-help-text">
+                                        <hr />
 
-                                <span className="dashicons dashicons-info"></span> {HelpText}
-                            </div>
-                        </PanelRow>
+                                        <span className="dashicons dashicons-info"></span> {HelpText}
+                                    </div>
+                                </PanelRow>
+                            </>
+                        )}
 
                         {!hasValidData && (
                             <PanelRow>

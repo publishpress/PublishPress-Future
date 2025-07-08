@@ -18,7 +18,8 @@ const {
     taxonomyName,
     nonce,
     statusesSelectOptions,
-    hideCalendarByDefault
+    hideCalendarByDefault,
+    hiddenFields
 } = window.publishpressFutureBulkEditConfig;
 
 const storeName = 'publishpress-future/future-action-bulk-edit';
@@ -89,6 +90,7 @@ inlineEditPost.setBulk = function (id) {
             taxonomyName={taxonomyName}
             nonce={nonce}
             hideCalendarByDefault={hideCalendarByDefault}
+            hiddenFields={hiddenFields}
         />
     );
 
