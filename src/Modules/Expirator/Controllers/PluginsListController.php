@@ -42,6 +42,22 @@ class PluginsListController implements InitializableInterface
 
     public function addPluginActionLinks($links, $file)
     {
+        $this_plugin = basename(PUBLISHPRESS_FUTURE_BASE_PATH) . '/post-expirator.php';
+
+        if ($file === $this_plugin) {
+            $upgrade_link = ['<a href="https://publishpress.com/links/future-sidebar"
+            target="_blank" style="font-weight: bold;">
+            ' . __('Upgrade to Pro', 'post-expirator') . '
+            </a>'];
+
+            $links = array_merge($upgrade_link, $links);
+        }
+
+        return $links;
+    }
+
+    public function addPluginRowMetaLinks($links, $file)
+    {
         $validPlugins = [];
         $validPlugins[] = basename(PUBLISHPRESS_FUTURE_BASE_PATH) . '/post-expirator.php';
 
@@ -52,17 +68,6 @@ class PluginsListController implements InitializableInterface
         if (in_array($file, $validPlugins)) {
             $links[] = '<a href="' . admin_url('edit.php?post_type=ppfuture_workflow') . '">' . __('Action Workflows', 'post-expirator') . '</a>';
             $links[] = '<a href="' . admin_url('admin.php?page=publishpress-future-settings') . '">' . __('Settings', 'post-expirator') . '</a>';
-        }
-
-        return $links;
-    }
-
-    public function addPluginRowMetaLinks($links, $file)
-    {
-        $this_plugin = basename(PUBLISHPRESS_FUTURE_BASE_PATH) . '/post-expirator.php';
-
-        if ($file === $this_plugin) {
-            $links[] = '<a class="pp-version-notice-upgrade-menu-item" href="https://publishpress.com/links/future-sidebar" target="_blank">' . __('Upgrade to Pro', 'post-expirator') . '</a>';
         }
 
         return $links;

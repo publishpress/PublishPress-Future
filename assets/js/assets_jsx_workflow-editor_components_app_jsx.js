@@ -943,7 +943,7 @@ var withConditional = function withConditional(_ref) {
     _ref$modalDescription = _ref.modalDescription,
     modalDescription = _ref$modalDescription === void 0 ? (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Create rules that will continue the workflow only if certain conditions are met.', 'post-expirator') : _ref$modalDescription,
     _ref$buttonText = _ref.buttonText,
-    buttonText = _ref$buttonText === void 0 ? (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Edit condition', 'post-expirator') : _ref$buttonText,
+    buttonText = _ref$buttonText === void 0 ? (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Edit rules', 'post-expirator') : _ref$buttonText,
     _ref$proFeatureMessag = _ref.proFeatureMessage,
     proFeatureMessage = _ref$proFeatureMessag === void 0 ? (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Conditional logic is a Pro feature. Upgrade to create advanced conditions for your workflows.', 'post-expirator') : _ref$proFeatureMessag,
     _ref$onQueryChange = _ref.onQueryChange,
@@ -4088,8 +4088,8 @@ var PostFilter = function PostFilter(props) {
     FieldComponent: _post_field_selector__WEBPACK_IMPORTED_MODULE_2__.PostFieldSelector,
     ValueComponent: _post_value_selector__WEBPACK_IMPORTED_MODULE_3__.PostValueSelector,
     modalTitle: (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Post Filter', 'post-expirator'),
-    modalDescription: (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Create filters to query specific posts based on conditions.', 'post-expirator'),
-    buttonText: (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Edit filters', 'post-expirator'),
+    modalDescription: (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Create filters to query specific posts based on rules.', 'post-expirator'),
+    buttonText: (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Edit rules', 'post-expirator'),
     defaultField: ''
   })(props);
 };

@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.8.0]- UNRELEASED
+## [4.8.0]- 09 July, 2025
 
 ### Added
 
@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fixed WooCommerce Order Notice: Function ID was called incorrectly. Order properties should not be accessed directly (Issue #1388).
 - Plugin's text domain is loaded too early (Issue #1350).
+- Pro license is not activating - PRO (Issue #1397).
 
 ### Developers
 
