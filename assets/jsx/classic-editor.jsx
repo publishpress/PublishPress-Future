@@ -16,7 +16,8 @@ const {
     postTypeDefaultConfig,
     defaultDate,
     statusesSelectOptions,
-    hideCalendarByDefault
+    hideCalendarByDefault,
+    hiddenFields
 } = window.publishpressFutureClassicEditorConfig;
 
 if (! isGutenbergEnabled()) {
@@ -52,6 +53,7 @@ if (! isGutenbergEnabled()) {
                 strings={strings}
                 taxonomyName={taxonomyName}
                 hideCalendarByDefault={hideCalendarByDefault}
+                hiddenFields={hiddenFields}
             />
         );
 

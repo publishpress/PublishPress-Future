@@ -310,6 +310,7 @@ var FutureActionPanel = function FutureActionPanel(props) {
     calendarIsVisible = _useSelect.calendarIsVisible,
     hasValidData = _useSelect.hasValidData,
     newStatus = _useSelect.newStatus;
+  var hiddenFields = props.hiddenFields || {};
   var _useState = useState(''),
     _useState2 = _slicedToArray(_useState, 2),
     validationError = _useState2[0],
@@ -595,7 +596,7 @@ var FutureActionPanel = function FutureActionPanel(props) {
     checked: enabled || false,
     onChange: handleEnabledChange,
     className: "future-action-enable-checkbox"
-  })), enabled && /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(PanelRow, {
+  })), enabled && /*#__PURE__*/React.createElement(Fragment, null, !hiddenFields['_expiration-date-type'] && /*#__PURE__*/React.createElement(PanelRow, {
     className: contentPanelClass + ' future-action-full-width'
   }, /*#__PURE__*/React.createElement(SelectControl, {
     label: props.strings.action,
@@ -607,7 +608,7 @@ var FutureActionPanel = function FutureActionPanel(props) {
     fillProps: {
       storeName: props.storeName
     }
-  }), action === 'change-status' && /*#__PURE__*/React.createElement(PanelRow, {
+  }), !hiddenFields['_expiration-date-post-status'] && action === 'change-status' && /*#__PURE__*/React.createElement(PanelRow, {
     className: "new-status"
   }, /*#__PURE__*/React.createElement(SelectControl, {
     label: props.strings.newStatus,
@@ -615,7 +616,7 @@ var FutureActionPanel = function FutureActionPanel(props) {
     value: newStatus,
     onChange: handleNewStatusChange,
     className: "future-action-select-new-status"
-  })), displayTaxonomyField && (isFetchingTerms && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(BaseControl, {
+  })), !hiddenFields['_expiration-date-taxonomy'] && displayTaxonomyField && (isFetchingTerms && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(BaseControl, {
     label: taxonomyName
   }, "".concat(props.strings.loading, " (").concat(taxonomyName, ")"), /*#__PURE__*/React.createElement(Spinner, null))) || !taxonomy && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(BaseControl, {
     label: taxonomyName,
@@ -640,7 +641,7 @@ var FutureActionPanel = function FutureActionPanel(props) {
     onFocus: forceIgnoreAutoSubmitOnEnter,
     __experimentalExpandOnFocus: true,
     __experimentalAutoSelectFirstMatch: true
-  })))), /*#__PURE__*/React.createElement(PanelRow, {
+  })))), !hiddenFields['_expiration-date'] && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(PanelRow, {
     className: datePanelClass
   }, /*#__PURE__*/React.createElement(_ToggleCalendarDatePicker__WEBPACK_IMPORTED_MODULE_1__.ToggleCalendarDatePicker, {
     currentDate: date,
@@ -656,7 +657,7 @@ var FutureActionPanel = function FutureActionPanel(props) {
     className: "future-action-help-text"
   }, /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("span", {
     className: "dashicons dashicons-info"
-  }), " ", HelpText)), !hasValidData && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(BaseControl, {
+  }), " ", HelpText))), !hasValidData && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(BaseControl, {
     className: "notice notice-error"
   }, /*#__PURE__*/React.createElement("div", null, validationError))))), /*#__PURE__*/React.createElement(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_2__.PluginArea, {
     scope: "publishpress-future"
@@ -800,6 +801,7 @@ var FutureActionPanelBlockEditor = function FutureActionPanelBlockEditor(props) 
     strings: props.strings,
     onDataIsValid: onDataIsValid,
     hideCalendarByDefault: props.hideCalendarByDefault,
+    hiddenFields: props.hiddenFields,
     showTitle: false,
     onDataIsInvalid: onDataIsInvalid
   })));
@@ -924,6 +926,7 @@ var FutureActionPanelBulkEdit = function FutureActionPanelBulkEdit(props) {
     startOfWeek: props.startOfWeek,
     storeName: props.storeName,
     hideCalendarByDefault: props.hideCalendarByDefault,
+    hiddenFields: props.hiddenFields,
     showTitle: false,
     strings: props.strings
   }), /*#__PURE__*/React.createElement("input", {
@@ -1053,6 +1056,7 @@ var FutureActionPanelClassicEditor = function FutureActionPanelClassicEditor(pro
     strings: props.strings,
     onDataIsValid: onDataIsValid,
     hideCalendarByDefault: props.hideCalendarByDefault,
+    hiddenFields: props.hiddenFields,
     showTitle: false,
     onDataIsInvalid: onDataIsInvalid
   }));
@@ -1136,6 +1140,7 @@ var FutureActionPanelQuickEdit = function FutureActionPanelQuickEdit(props) {
     strings: props.strings,
     onDataIsValid: onDataIsValid,
     hideCalendarByDefault: props.hideCalendarByDefault,
+    hiddenFields: props.hiddenFields,
     showTitle: true,
     onDataIsInvalid: onDataIsInvalid
   }), /*#__PURE__*/React.createElement("input", {

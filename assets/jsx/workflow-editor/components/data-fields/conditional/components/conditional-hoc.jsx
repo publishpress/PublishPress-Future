@@ -55,7 +55,7 @@ export const withConditional = ({
     ValueComponent,
     modalTitle = __('Condition', 'post-expirator'),
     modalDescription = __('Create rules that will continue the workflow only if certain conditions are met.', 'post-expirator'),
-    buttonText = __('Edit condition', 'post-expirator'),
+    buttonText = __('Edit rules', 'post-expirator'),
     proFeatureMessage = __('Conditional logic is a Pro feature. Upgrade to create advanced conditions for your workflows.', 'post-expirator'),
     onQueryChange = null,
     isProFeature = false,

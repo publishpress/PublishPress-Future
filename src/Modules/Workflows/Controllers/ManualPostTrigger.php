@@ -401,9 +401,40 @@ class ManualPostTrigger implements InitializableInterface
         }
     }
 
+    private function getPost($post)
+    {
+        // Some 3rd party plugins send the post as an object of a different class.
+        // Try to fallback to the WP_Post class looking for the ID.
+        if ((! $post instanceof WP_Post) && is_object($post)) {
+            $id = null;
+
+            if (isset($post->ID)) {
+                $id = $post->ID;
+            } elseif (isset($post->post_id)) {
+                $id = $post->post_id;
+            } elseif (method_exists($post, 'get_id')) {
+                $id = $post->get_id();
+            } elseif (isset($post->id)) {
+                $id = $post->id;
+            }
+
+            if (! is_null($id)) {
+                $post = get_post($id);
+            }
+        }
+
+        if (! $post instanceof WP_Post) {
+            return false;
+        }
+
+        return $post;
+    }
+
     public function registerClassicEditorMetabox($postType, $post = null)
     {
         try {
+            $post = $this->getPost($post);
+
             if (!is_object($post) || is_null($post->ID)) {
                 throw new \Exception('Post is null or ID is not set, cannot load workflows.');
                 return;

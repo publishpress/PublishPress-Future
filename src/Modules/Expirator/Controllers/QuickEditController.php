@@ -318,6 +318,8 @@ class QuickEditController implements InitializableInterface
             $metaboxTitle = $this->settingsFacade->getMetaboxTitle() ?? __('Future Actions', 'post-expirator');
             $metaboxCheckboxLabel = $this->settingsFacade->getMetaboxCheckboxLabel() ?? __('Enable Future Action', 'post-expirator');
 
+            $hiddenFields = (array) $this->hooks->applyFilters(HooksAbstract::FILTER_HIDDEN_METABOX_FIELDS, [], $postType);
+
             wp_localize_script(
                 'postexpirator-quick-edit',
                 'publishpressFutureQuickEditConfig',
@@ -336,6 +338,7 @@ class QuickEditController implements InitializableInterface
                     'isNewPost' => false,
                     'nonce' => $nonce,
                     'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
+                    'hiddenFields' => $hiddenFields,
                     'strings' => [
                         'category' => __('Categories', 'post-expirator'),
                         'panelTitle' => $metaboxTitle,

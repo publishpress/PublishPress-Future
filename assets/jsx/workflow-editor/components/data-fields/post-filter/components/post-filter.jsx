@@ -81,8 +81,8 @@ const PostFilter = (props) => {
         FieldComponent: PostFieldSelector,
         ValueComponent: PostValueSelector,
         modalTitle: __('Post Filter', 'post-expirator'),
-        modalDescription: __('Create filters to query specific posts based on conditions.', 'post-expirator'),
-        buttonText: __('Edit filters', 'post-expirator'),
+        modalDescription: __('Create filters to query specific posts based on rules.', 'post-expirator'),
+        buttonText: __('Edit rules', 'post-expirator'),
         defaultField: '',
     })(props);
 };

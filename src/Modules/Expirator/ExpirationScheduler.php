@@ -102,7 +102,23 @@ class ExpirationScheduler implements SchedulerInterface
      */
     public function schedule($postId, $timestamp, $opts)
     {
-        $timestamp = $this->convertLocalTimeToUtc($timestamp);
+
+        $factory = $this->actionArgsModelFactory;
+
+        $postModelFactory = $this->postModelFactory;
+        $postModel = $postModelFactory($postId);
+
+        $opts['date'] = $timestamp;
+        $opts['category'] = isset($opts['category']) ? $opts['category'] : [];
+        $opts['categoryTaxonomy'] = isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '';
+        $opts['actionLabel'] = $this->expirationActionsModel->getLabelForAction($opts['expireType'], $postModel->getPostType());
+        $opts['postTitle'] = $postModel->getTitle();
+        $opts['postType'] = $postModel->getPostType();
+        $opts['postLink'] = $postModel->getPermalink();
+        $opts['postTypeLabel'] = $postModel->getPostTypeSingularLabel();
+
+        $opts = $this->hooks->applyFilters(HooksAbstract::FILTER_PREPARE_POST_EXPIRATION_OPTS, $opts, $postId);
+        $timestamp = $this->convertLocalTimeToUtc($opts['date']);
 
         $this->hooks->doAction(HooksAbstract::ACTION_LEGACY_SCHEDULE, $postId, $timestamp, $opts);
 
@@ -133,23 +149,8 @@ class ExpirationScheduler implements SchedulerInterface
             return;
         }
 
-        $factory = $this->actionArgsModelFactory;
-
-        $postModelFactory = $this->postModelFactory;
-        $postModel = $postModelFactory($postId);
-
         unset($opts['enabled']);
         unset($opts['id']);
-        $opts['date'] = $timestamp;
-        $opts['category'] = isset($opts['category']) ? $opts['category'] : [];
-        $opts['categoryTaxonomy'] = isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '';
-        $opts['actionLabel'] = $this->expirationActionsModel->getLabelForAction($opts['expireType'], $postModel->getPostType());
-        $opts['postTitle'] = $postModel->getTitle();
-        $opts['postType'] = $postModel->getPostType();
-        $opts['postLink'] = $postModel->getPermalink();
-        $opts['postTypeLabel'] = $postModel->getPostTypeSingularLabel();
-
-        $opts = $this->hooks->applyFilters(HooksAbstract::FILTER_PREPARE_POST_EXPIRATION_OPTS, $opts, $postId);
 
         /**
          * @var ActionArgsModelInterface $actionArgsModel

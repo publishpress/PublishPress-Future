@@ -89,6 +89,7 @@ export const FutureActionPanelBlockEditor = (props) => {
                     strings={props.strings}
                     onDataIsValid={onDataIsValid}
                     hideCalendarByDefault={props.hideCalendarByDefault}
+                    hiddenFields={props.hiddenFields}
                     showTitle={false}
                     onDataIsInvalid={onDataIsInvalid} />
             </div>

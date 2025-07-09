@@ -14,7 +14,8 @@ const {
     postTypeDefaultConfig,
     defaultDate,
     statusesSelectOptions,
-    hideCalendarByDefault
+    hideCalendarByDefault,
+    hiddenFields
 } = window.publishpressFutureBlockEditorConfig;
 
 const storeName = 'publishpress-future/future-action';
@@ -50,6 +51,7 @@ const BlockEditorFutureActionPlugin = () => {
             taxonomyName={taxonomyName}
             postTypeDefaultConfig={postTypeDefaultConfig}
             hideCalendarByDefault={hideCalendarByDefault}
+            hiddenFields={hiddenFields}
         />
     );
 }

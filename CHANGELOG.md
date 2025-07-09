@@ -3,6 +3,32 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.8.0]- 09 July, 2025
+
+### Added
+
+- Add Key links on Plugins screen (Issue #1360).
+- Add new checkbox to hide specific fields in Metadata Mapping instead of the full metabox - PRO feature (Issue #1058).
+
+### Changed
+
+- Changed the default value of "Workflow" field in the "Deactivate workflow for post" action to automatically select the first available workflow option (Issue #958).
+- Improve consistency on the name of manually enabled triggers (Issue #1366).
+- Conflict between the future action metabox and custom metadata when it comes from 3rd party plugins - PRO feature (Issue #1058).
+- Update the field description Text on User interaction step (Issue #1384).
+- Consistency with "Filters" name (Issue #1296).
+- Workflow name consistency, update "Custom action" to "Do custom action" (Issue #1385).
+
+### Fixed
+
+- Fixed WooCommerce Order Notice: Function ID was called incorrectly. Order properties should not be accessed directly (Issue #1388).
+- Plugin's text domain is loaded too early (Issue #1350).
+- Pro license is not activating - PRO (Issue #1397).
+
+### Developers
+
+- Remove HooksAbstract::FILTER_ACTION_META_KEY filter application from PostModel
+
 ## [4.7.1]- 11 June, 2025
 
 ### Fixed

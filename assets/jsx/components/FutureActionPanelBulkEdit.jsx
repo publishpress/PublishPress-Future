@@ -88,6 +88,7 @@ export const FutureActionPanelBulkEdit = (props) => {
                     startOfWeek={props.startOfWeek}
                     storeName={props.storeName}
                     hideCalendarByDefault={props.hideCalendarByDefault}
+                    hiddenFields={props.hiddenFields}
                     showTitle={false}
                     strings={props.strings} />
             )}

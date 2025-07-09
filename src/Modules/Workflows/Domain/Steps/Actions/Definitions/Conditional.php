@@ -61,7 +61,7 @@ class Conditional implements StepTypeInterface
     {
         return [
             [
-                "label" => __("Conditions", "post-expirator"),
+                "label" => __("Condition", "post-expirator"),
                 "description" => __(
                     "", // phpcs:ignore Generic.Files.LineLength.TooLong
                     "post-expirator"

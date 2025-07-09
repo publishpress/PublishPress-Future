@@ -29,7 +29,7 @@ class OnPostWorkflowEnable implements StepTypeInterface
 
     public function getLabel(): string
     {
-        return __("Manually enabled via checkbox", "post-expirator");
+        return __("Manually run via checkbox", "post-expirator");
     }
 
     public function getDescription(): string
@@ -79,7 +79,7 @@ class OnPostWorkflowEnable implements StepTypeInterface
                 ]
             ],
             [
-                "label" => __("Conditions", "post-expirator"),
+                "label" => __("Post Filter", "post-expirator"),
                 "description" => __(
                     "Specify the criteria for posts that will trigger this action.",
                     "post-expirator"
