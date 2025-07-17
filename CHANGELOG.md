@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.8.1]- [UNRELEASED]
+
+### Fixed
+
+- Conflict in WordPress 6.8.2 breaking post editor, (Issue #1404).
+
 ## [4.8.0]- 09 July, 2025
 
 ### Added

@@ -27,14 +27,12 @@ export const FutureActionPanelBlockEditor = (props) => {
             'enabled': store.getEnabled()
         }
 
-        if (newAttribute.enabled) {
-            newAttribute['action'] = store.getAction();
-            newAttribute['newStatus'] = store.getNewStatus();
-            newAttribute['date'] = store.getDate();
-            newAttribute['terms'] = store.getTerms();
-            newAttribute['taxonomy'] = store.getTaxonomy();
-            newAttribute['extraData'] = store.getExtraData();
-        }
+        newAttribute['action'] = store.getAction();
+        newAttribute['newStatus'] = store.getNewStatus();
+        newAttribute['date'] = store.getDate();
+        newAttribute['terms'] = store.getTerms();
+        newAttribute['taxonomy'] = store.getTaxonomy();
+        newAttribute['extraData'] = store.getExtraData();
 
         editPostAttribute(newAttribute);
     }
