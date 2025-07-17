@@ -116,6 +116,11 @@ class ExpirationScheduler implements SchedulerInterface
         $opts['postType'] = $postModel->getPostType();
         $opts['postLink'] = $postModel->getPermalink();
         $opts['postTypeLabel'] = $postModel->getPostTypeSingularLabel();
+        $opts['extraData'] = isset($opts['extraData']) ? $opts['extraData'] : $postModel->getExtraData();
+
+        if (isset($opts['extraData']['extraData'])) {
+            $opts['extraData'] = $opts['extraData']['extraData'];
+        }
 
         $opts = $this->hooks->applyFilters(HooksAbstract::FILTER_PREPARE_POST_EXPIRATION_OPTS, $opts, $postId);
         $timestamp = $this->convertLocalTimeToUtc($opts['date']);

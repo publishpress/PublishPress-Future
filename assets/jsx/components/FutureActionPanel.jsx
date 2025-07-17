@@ -46,6 +46,16 @@ export const FutureActionPanel = (props) => {
         };
     });
 
+    const extraData = useSelect((select) => {
+        return select(props.storeName).getExtraData();
+    }, [props.storeName]);
+
+    useEffect(() => {
+        if (props.context === 'block-editor' && props.onChangeData) {
+            props.onChangeData('extraData', extraData);
+        }
+    }, [extraData, props.context, props.onChangeData]);
+
     const hiddenFields = props.hiddenFields || {};
 
     const [validationError, setValidationError] = useState('');
