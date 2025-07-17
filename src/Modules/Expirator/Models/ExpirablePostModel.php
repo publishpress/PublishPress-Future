@@ -160,6 +160,13 @@ class ExpirablePostModel extends PostModel
 
     public function getExpirationDataAsArray()
     {
+        $extraData = $this->getExtraData();
+        if (is_array($extraData) && isset($extraData['extraData'])) {
+            $extraData = $extraData['extraData'];
+        }
+        if (! is_array($extraData) || ! isset($extraData['workflowId'])) {
+            $extraData = [];
+        }
         $data = [
             'expireType' => $this->getExpirationType(),
             'newStatus' => $this->getExpirationNewStatus(),
@@ -167,7 +174,7 @@ class ExpirablePostModel extends PostModel
             'categoryTaxonomy' => $this->getExpirationTaxonomy(),
             'enabled' => $this->isExpirationEnabled(),
             'date' => $this->getExpirationDateAsUnixTime(),
-            'extraData' => [],
+            'extraData' => $extraData,
         ];
 
         $data = $this->hooks->applyFilters(
@@ -953,11 +960,15 @@ class ExpirablePostModel extends PostModel
             return $args;
         }
 
-        if (! isset($args[$key])) {
-            return null;
+        if (isset($args['extraData'][$key])) {
+            return $args['extraData'][$key];
         }
 
-        return $args[$key];
+        if (isset($args[$key])) {
+            return $args[$key];
+        }
+
+        return null;
     }
 
     private function removeLegacyMetadataHash()

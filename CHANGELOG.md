@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- "Manually run via Future Actions box" not working in Gutenberg Editor, (Issue #1405).
 - Conflict in WordPress 6.8.2 breaking post editor, (Issue #1404).
 - PHP message: PUBLISHPRESS FUTURE - Error registering classic editor metabox: Post is null or ID is not set, cannot load workflows" while reading response header from upstream, (Issue #1407).
 

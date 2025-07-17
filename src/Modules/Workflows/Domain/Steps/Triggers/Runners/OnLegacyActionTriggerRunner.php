@@ -79,7 +79,7 @@ class OnLegacyActionTriggerRunner implements TriggerRunnerInterface
     public function triggerCallback($postId, $post, $args = [])
     {
         // Check if it came from the correct workflow
-        if (! isset($args['workflowId']) || $this->workflowId !== $args['workflowId']) {
+        if (! isset($args['workflowId']) || (int) $this->workflowId !== (int) $args['workflowId']) {
             return false;
         }
 
