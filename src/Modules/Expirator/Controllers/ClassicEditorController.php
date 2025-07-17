@@ -87,7 +87,7 @@ class ClassicEditorController implements InitializableInterface
 
         // Some 3rd party plugins send the post as an object of a different class.
         // Try to fallback to the WP_Post class looking for the ID.
-        if ((! $post instanceof WP_Post) && is_object($post)) {
+        if ((! is_a($post, 'WP_Post')) && is_object($post)) {
             $id = null;
             if (isset($post->ID)) {
                 $id = $post->ID;
@@ -104,7 +104,7 @@ class ClassicEditorController implements InitializableInterface
             }
         }
 
-        if (! $post instanceof WP_Post) {
+        if (! is_a($post, 'WP_Post')) {
             return false;
         }
 
