@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 4.7.1\n"
+"Project-Id-Version: PublishPress Future 4.8.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-08T14:15:59+00:00\n"
+"POT-Creation-Date: 2025-07-17T03:59:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: post-expirator\n"
@@ -397,7 +397,14 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/PluginsListController.php:53
+#: src/Modules/Expirator/Controllers/PluginsListController.php:50
+#: src/Modules/VersionNotices/Module.php:137
+#: src/Views/ad-banner-right-sidebar.php:39
+#: assets/jsx/workflow-editor/components/layout/header.jsx:160
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/PluginsListController.php:69
 #: src/Modules/Workflows/Controllers/ManualPostTrigger.php:458
 #: src/Modules/Workflows/Controllers/PostType.php:48
 #: src/Modules/Workflows/Controllers/WorkflowsList.php:180
@@ -410,7 +417,7 @@ msgid "Action Workflows"
 msgstr ""
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: src/Modules/Expirator/Controllers/PluginsListController.php:54
+#: src/Modules/Expirator/Controllers/PluginsListController.php:70
 #: src/Modules/Expirator/Controllers/SettingsController.php:131
 #: src/Modules/Expirator/Controllers/SettingsController.php:132
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:67
@@ -418,13 +425,6 @@ msgstr ""
 #: src/Views/tabs-settings.php:47
 #: assets/jsx/workflow-editor/components/settings-sidebar/settings-sidebar.jsx:54
 msgid "Settings"
-msgstr ""
-
-#: src/Modules/Expirator/Controllers/PluginsListController.php:65
-#: src/Modules/VersionNotices/Module.php:137
-#: src/Views/ad-banner-right-sidebar.php:39
-#: assets/jsx/workflow-editor/components/layout/header.jsx:160
-msgid "Upgrade to Pro"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/PostListController.php:89
@@ -753,32 +753,32 @@ msgstr ""
 msgid "Restore post meta data after v3.0.1"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:477
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:484
 msgid "Email is disabled."
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:481
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:488
 msgid "Email sent."
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:481
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:488
 msgid "Email not sent."
 msgstr ""
 
 #. translators: %1$s: post title placeholder, %2$s: notification text, %3$s: action date placeholder, %4$s: post link placeholder
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:632
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:639
 #, php-format
 msgid "%1$s. %2$s on %3$s. The post link is %4$s"
 msgstr ""
 
 #. translators: %s is the post title
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:650
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:657
 #, php-format
 msgid "Future Action Complete \"%s\""
 msgstr ""
 
 #. translators: 1: is the blog name, 2: the email subject
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:654
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:661
 #, php-format
 msgid "[%1$s] %2$s"
 msgstr ""
@@ -1499,15 +1499,15 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/LegacyAction/TriggerWorkflow.php:58
+#: src/Modules/Workflows/Domain/LegacyAction/TriggerWorkflow.php:62
 msgid "The workflow was not triggered."
 msgstr ""
 
-#: src/Modules/Workflows/Domain/LegacyAction/TriggerWorkflow.php:63
+#: src/Modules/Workflows/Domain/LegacyAction/TriggerWorkflow.php:67
 msgid "The workflow was triggered by the legacy action"
 msgstr ""
 
-#: src/Modules/Workflows/Domain/LegacyAction/TriggerWorkflow.php:76
+#: src/Modules/Workflows/Domain/LegacyAction/TriggerWorkflow.php:80
 msgid "Trigger workflow"
 msgstr ""
 

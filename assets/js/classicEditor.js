@@ -310,6 +310,14 @@ var FutureActionPanel = function FutureActionPanel(props) {
     calendarIsVisible = _useSelect.calendarIsVisible,
     hasValidData = _useSelect.hasValidData,
     newStatus = _useSelect.newStatus;
+  var extraData = useSelect(function (select) {
+    return select(props.storeName).getExtraData();
+  }, [props.storeName]);
+  useEffect(function () {
+    if (props.context === 'block-editor' && props.onChangeData) {
+      props.onChangeData('extraData', extraData);
+    }
+  }, [extraData, props.context, props.onChangeData]);
   var hiddenFields = props.hiddenFields || {};
   var _useState = useState(''),
     _useState2 = _slicedToArray(_useState, 2),
@@ -743,14 +751,12 @@ var FutureActionPanelBlockEditor = function FutureActionPanelBlockEditor(props) 
     var newAttribute = {
       'enabled': store.getEnabled()
     };
-    if (newAttribute.enabled) {
-      newAttribute['action'] = store.getAction();
-      newAttribute['newStatus'] = store.getNewStatus();
-      newAttribute['date'] = store.getDate();
-      newAttribute['terms'] = store.getTerms();
-      newAttribute['taxonomy'] = store.getTaxonomy();
-      newAttribute['extraData'] = store.getExtraData();
-    }
+    newAttribute['action'] = store.getAction();
+    newAttribute['newStatus'] = store.getNewStatus();
+    newAttribute['date'] = store.getDate();
+    newAttribute['terms'] = store.getTerms();
+    newAttribute['taxonomy'] = store.getTaxonomy();
+    newAttribute['extraData'] = store.getExtraData();
     editPostAttribute(newAttribute);
   };
   var rawData = select('core/editor').getEditedPostAttribute('publishpress_future_action');

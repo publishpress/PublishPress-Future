@@ -3,6 +3,15 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.8.1]- 17 July, 2025
+
+### Fixed
+
+- "Manually run via Future Actions box" not working in Gutenberg Editor, (Issue #1405).
+- Conflict in WordPress 6.8.2 breaking post editor, (Issue #1404).
+- PHP message: PUBLISHPRESS FUTURE - Error registering classic editor metabox: Post is null or ID is not set, cannot load workflows" while reading response header from upstream, (Issue #1407).
+- Update pt-BR translations - PRO (Issue #1402).
+
 ## [4.8.0]- 09 July, 2025
 
 ### Added

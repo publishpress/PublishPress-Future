@@ -275,6 +275,13 @@ class RestAPIController implements InitializableInterface
                             $newStatus = $postModel->getExpirationNewStatus();
                             $terms = $postModel->getExpirationCategoryIDs();
                             $taxonomy = $postModel->getExpirationTaxonomy();
+                            $extraData = $postModel->getExtraData();
+                            if (is_array($extraData) && isset($extraData['extraData'])) {
+                                $extraData = $extraData['extraData'];
+                            }
+                            if (! is_array($extraData) || ! isset($extraData['workflowId'])) {
+                                $extraData = [];
+                            }
 
                             if (empty($date)) {
                                 $defaultDataModelFactory = Container::getInstance()->get(
@@ -298,6 +305,7 @@ class RestAPIController implements InitializableInterface
                                 'newStatus' => $newStatus,
                                 'terms' => $terms,
                                 'taxonomy' => $taxonomy,
+                                'extraData' => $extraData,
                             ];
                         } catch (Exception $e) {
                             $this->logger->error('Error getting future action data: ' . $e->getMessage());
@@ -342,6 +350,10 @@ class RestAPIController implements InitializableInterface
                                     $opts['categoryTaxonomy'],
                                     $opts['category']
                                 );
+
+                                if (isset($value['extraData']) && is_array($value['extraData']) && !empty($value['extraData'])) {
+                                    $opts['extraData'] = $value['extraData'];
+                                }
 
                                 $this->hooks->doAction(
                                     HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
@@ -469,6 +481,11 @@ class RestAPIController implements InitializableInterface
                 'category' => array_map('absint', (array)$request->get_param('terms')),
                 'categoryTaxonomy' => sanitize_key($request->get_param('taxonomy'))
             ];
+
+            $extraData = $request->get_param('extraData');
+            if (is_array($extraData) && !empty($extraData)) {
+                $opts['extraData'] = $extraData;
+            }
 
             $this->hooks->doAction(
                 HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
