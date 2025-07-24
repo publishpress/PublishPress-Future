@@ -1476,75 +1476,77 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
       label: props.text.fieldAutoEnableLabel,
       onChange: onChangeAutoEnabled
     })));
-    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
-      label: props.text.fieldTaxonomy,
-      key: 'expirationdate_taxonomy-' + props.postType
-    }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
-      name: 'expirationdate_taxonomy-' + props.postType,
-      options: props.taxonomiesList,
-      selected: postTypeTaxonomy,
-      noItemFoundMessage: props.text.noItemsfound,
-      description: props.text.fieldTaxonomyDescription,
-      data: props.postType,
-      onChange: onChangeTaxonomy
-    })));
-    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
-      label: props.text.fieldHowToExpire,
-      key: 'expirationdate_expiretype-' + props.postType
-    }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
-      name: 'expirationdate_expiretype-' + props.postType,
-      className: 'pe-howtoexpire',
-      options: howToExpireList,
-      description: props.text.fieldHowToExpireDescription,
-      selected: settingHowToExpire,
-      onChange: onChangeHowToExpire
-    }), settingHowToExpire === 'change-status' && /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
-      name: 'expirationdate_newstatus-' + props.postType,
-      options: props.statusesList,
-      selected: newStatus,
-      onChange: setNewStatus
-    }), props.taxonomiesList.length > 0 && ['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1 && /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.TokensControl, {
-      label: props.text.fieldTerm,
-      name: 'expirationdate_terms-' + props.postType,
-      options: termOptionsLabels,
-      value: selectedTerms,
-      isLoading: termsSelectIsLoading,
-      onChange: onChangeTerms,
-      description: props.text.fieldTermDescription,
-      maxSuggestions: 1000,
-      expandOnFocus: true,
-      autoSelectFirstMatch: true
-    })));
-    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
-      label: props.text.fieldDefaultDateTimeOffset,
-      key: 'expired-custom-date-' + props.postType
-    }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.TextControl, {
-      name: 'expired-custom-date-' + props.postType,
-      value: expireOffset,
-      loading: hasPendingValidation,
-      placeholder: props.settings.globalDefaultExpireOffset,
-      description: props.text.fieldDefaultDateTimeOffsetDescription,
-      unescapedDescription: true,
-      onChange: onChangeExpireOffset
-    }), /*#__PURE__*/React.createElement(_DateOffsetPreview__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      offset: offset,
-      label: props.text.datePreview,
-      labelDatePreview: props.text.datePreviewCurrent,
-      labelOffsetPreview: props.text.datePreviewComputed,
-      setValidationErrorCallback: setValidationError,
-      setHasPendingValidationCallback: setHasPendingValidation,
-      setHasValidDataCallback: setHasValidData
-    })));
-    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
-      label: props.text.fieldWhoToNotify,
-      key: 'expirationdate_emailnotification-' + props.postType
-    }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.TextControl, {
-      name: 'expirationdate_emailnotification-' + props.postType,
-      className: "large-text",
-      value: emailNotification,
-      description: props.text.fieldWhoToNotifyDescription,
-      onChange: onChangeEmailNotification
-    })));
+    if (isAutoEnabled) {
+      settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+        label: props.text.fieldTaxonomy,
+        key: 'expirationdate_taxonomy-' + props.postType
+      }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
+        name: 'expirationdate_taxonomy-' + props.postType,
+        options: props.taxonomiesList,
+        selected: postTypeTaxonomy,
+        noItemFoundMessage: props.text.noItemsfound,
+        description: props.text.fieldTaxonomyDescription,
+        data: props.postType,
+        onChange: onChangeTaxonomy
+      })));
+      settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+        label: props.text.fieldHowToExpire,
+        key: 'expirationdate_expiretype-' + props.postType
+      }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
+        name: 'expirationdate_expiretype-' + props.postType,
+        className: 'pe-howtoexpire',
+        options: howToExpireList,
+        description: props.text.fieldHowToExpireDescription,
+        selected: settingHowToExpire,
+        onChange: onChangeHowToExpire
+      }), settingHowToExpire === 'change-status' && /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
+        name: 'expirationdate_newstatus-' + props.postType,
+        options: props.statusesList,
+        selected: newStatus,
+        onChange: setNewStatus
+      }), props.taxonomiesList.length > 0 && ['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1 && /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.TokensControl, {
+        label: props.text.fieldTerm,
+        name: 'expirationdate_terms-' + props.postType,
+        options: termOptionsLabels,
+        value: selectedTerms,
+        isLoading: termsSelectIsLoading,
+        onChange: onChangeTerms,
+        description: props.text.fieldTermDescription,
+        maxSuggestions: 1000,
+        expandOnFocus: true,
+        autoSelectFirstMatch: true
+      })));
+      settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+        label: props.text.fieldDefaultDateTimeOffset,
+        key: 'expired-custom-date-' + props.postType
+      }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.TextControl, {
+        name: 'expired-custom-date-' + props.postType,
+        value: expireOffset,
+        loading: hasPendingValidation,
+        placeholder: props.settings.globalDefaultExpireOffset,
+        description: props.text.fieldDefaultDateTimeOffsetDescription,
+        unescapedDescription: true,
+        onChange: onChangeExpireOffset
+      }), /*#__PURE__*/React.createElement(_DateOffsetPreview__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        offset: offset,
+        label: props.text.datePreview,
+        labelDatePreview: props.text.datePreviewCurrent,
+        labelOffsetPreview: props.text.datePreviewComputed,
+        setValidationErrorCallback: setValidationError,
+        setHasPendingValidationCallback: setHasPendingValidation,
+        setHasValidDataCallback: setHasValidData
+      })));
+      settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+        label: props.text.fieldWhoToNotify,
+        key: 'expirationdate_emailnotification-' + props.postType
+      }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.TextControl, {
+        name: 'expirationdate_emailnotification-' + props.postType,
+        className: "large-text",
+        value: emailNotification,
+        description: props.text.fieldWhoToNotifyDescription,
+        onChange: onChangeEmailNotification
+      })));
+    }
   }
   settingsRows = (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_3__.applyFilters)('expirationdate_settings_posttype', settingsRows, props, isActive, _wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState);
   var fieldSetClassNames = props.isVisible ? 'pe-settings-fieldset' : 'pe-settings-fieldset hidden';

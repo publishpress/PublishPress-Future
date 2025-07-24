@@ -196,93 +196,95 @@ export const PostTypeSettingsPanel = function (props) {
             </SettingRow>
         );
 
-        settingsRows.push(
-            <SettingRow label={props.text.fieldTaxonomy} key={'expirationdate_taxonomy-' + props.postType}>
-                <SelectControl
-                    name={'expirationdate_taxonomy-' + props.postType}
-                    options={props.taxonomiesList}
-                    selected={postTypeTaxonomy}
-                    noItemFoundMessage={props.text.noItemsfound}
-                    description={props.text.fieldTaxonomyDescription}
-                    data={props.postType}
-                    onChange={onChangeTaxonomy}
-                >
-                </SelectControl>
-            </SettingRow>
-        );
-
-        settingsRows.push(
-            <SettingRow label={props.text.fieldHowToExpire} key={'expirationdate_expiretype-' + props.postType}>
-                <SelectControl
-                    name={'expirationdate_expiretype-' + props.postType}
-                    className={'pe-howtoexpire'}
-                    options={howToExpireList}
-                    description={props.text.fieldHowToExpireDescription}
-                    selected={settingHowToExpire}
-                    onChange={onChangeHowToExpire}
-                />
-
-                {settingHowToExpire === 'change-status' &&
+        if (isAutoEnabled) {
+            settingsRows.push(
+                <SettingRow label={props.text.fieldTaxonomy} key={'expirationdate_taxonomy-' + props.postType}>
                     <SelectControl
-                        name={'expirationdate_newstatus-' + props.postType}
-                        options={props.statusesList}
-                        selected={newStatus}
-                        onChange={setNewStatus}
+                        name={'expirationdate_taxonomy-' + props.postType}
+                        options={props.taxonomiesList}
+                        selected={postTypeTaxonomy}
+                        noItemFoundMessage={props.text.noItemsfound}
+                        description={props.text.fieldTaxonomyDescription}
+                        data={props.postType}
+                        onChange={onChangeTaxonomy}
+                    >
+                    </SelectControl>
+                </SettingRow>
+            );
+
+            settingsRows.push(
+                <SettingRow label={props.text.fieldHowToExpire} key={'expirationdate_expiretype-' + props.postType}>
+                    <SelectControl
+                        name={'expirationdate_expiretype-' + props.postType}
+                        className={'pe-howtoexpire'}
+                        options={howToExpireList}
+                        description={props.text.fieldHowToExpireDescription}
+                        selected={settingHowToExpire}
+                        onChange={onChangeHowToExpire}
                     />
-                }
 
-                {(props.taxonomiesList.length > 0 && (['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1)) &&
-                    <TokensControl
-                        label={props.text.fieldTerm}
-                        name={'expirationdate_terms-' + props.postType}
-                        options={termOptionsLabels}
-                        value={selectedTerms}
-                        isLoading={termsSelectIsLoading}
-                        onChange={onChangeTerms}
-                        description={props.text.fieldTermDescription}
-                        maxSuggestions={1000}
-                        expandOnFocus={true}
-                        autoSelectFirstMatch={true}
+                    {settingHowToExpire === 'change-status' &&
+                        <SelectControl
+                            name={'expirationdate_newstatus-' + props.postType}
+                            options={props.statusesList}
+                            selected={newStatus}
+                            onChange={setNewStatus}
+                        />
+                    }
+
+                    {(props.taxonomiesList.length > 0 && (['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1)) &&
+                        <TokensControl
+                            label={props.text.fieldTerm}
+                            name={'expirationdate_terms-' + props.postType}
+                            options={termOptionsLabels}
+                            value={selectedTerms}
+                            isLoading={termsSelectIsLoading}
+                            onChange={onChangeTerms}
+                            description={props.text.fieldTermDescription}
+                            maxSuggestions={1000}
+                            expandOnFocus={true}
+                            autoSelectFirstMatch={true}
+                        />
+                    }
+                </SettingRow>
+            );
+
+            settingsRows.push(
+                <SettingRow label={props.text.fieldDefaultDateTimeOffset} key={'expired-custom-date-' + props.postType}>
+                    <TextControl
+                        name={'expired-custom-date-' + props.postType}
+                        value={expireOffset}
+                        loading={hasPendingValidation}
+                        placeholder={props.settings.globalDefaultExpireOffset}
+                        description={props.text.fieldDefaultDateTimeOffsetDescription}
+                        unescapedDescription={true}
+                        onChange={onChangeExpireOffset}
                     />
-                }
-            </SettingRow>
-        );
 
-        settingsRows.push(
-            <SettingRow label={props.text.fieldDefaultDateTimeOffset} key={'expired-custom-date-' + props.postType}>
-                <TextControl
-                    name={'expired-custom-date-' + props.postType}
-                    value={expireOffset}
-                    loading={hasPendingValidation}
-                    placeholder={props.settings.globalDefaultExpireOffset}
-                    description={props.text.fieldDefaultDateTimeOffsetDescription}
-                    unescapedDescription={true}
-                    onChange={onChangeExpireOffset}
-                />
+                    <DateOffsetPreview
+                        offset={offset}
+                        label={props.text.datePreview}
+                        labelDatePreview={props.text.datePreviewCurrent}
+                        labelOffsetPreview={props.text.datePreviewComputed}
+                        setValidationErrorCallback={setValidationError}
+                        setHasPendingValidationCallback={setHasPendingValidation}
+                        setHasValidDataCallback={setHasValidData}
+                    />
+                </SettingRow>
+            );
 
-                <DateOffsetPreview
-                    offset={offset}
-                    label={props.text.datePreview}
-                    labelDatePreview={props.text.datePreviewCurrent}
-                    labelOffsetPreview={props.text.datePreviewComputed}
-                    setValidationErrorCallback={setValidationError}
-                    setHasPendingValidationCallback={setHasPendingValidation}
-                    setHasValidDataCallback={setHasValidData}
-                />
-            </SettingRow>
-        );
-
-        settingsRows.push(
-            <SettingRow label={props.text.fieldWhoToNotify} key={'expirationdate_emailnotification-' + props.postType}>
-                <TextControl
-                    name={'expirationdate_emailnotification-' + props.postType}
-                    className="large-text"
-                    value={emailNotification}
-                    description={props.text.fieldWhoToNotifyDescription}
-                    onChange={onChangeEmailNotification}
-                />
-            </SettingRow>
-        );
+            settingsRows.push(
+                <SettingRow label={props.text.fieldWhoToNotify} key={'expirationdate_emailnotification-' + props.postType}>
+                    <TextControl
+                        name={'expirationdate_emailnotification-' + props.postType}
+                        className="large-text"
+                        value={emailNotification}
+                        description={props.text.fieldWhoToNotifyDescription}
+                        onChange={onChangeEmailNotification}
+                    />
+                </SettingRow>
+            );
+        }
     }
 
     settingsRows = applyFilters('expirationdate_settings_posttype', settingsRows, props, isActive, useState);
