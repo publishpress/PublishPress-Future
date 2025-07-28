@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.8.2]- [UNRELEASHED]
 
+### Added
+
+- Add updated_post_meta and added_post_meta to core HooksAbstract, #1416
+
 ### Changed
 
 - Hide options for "Automatically create actions" if disabled, (Issue #1398).

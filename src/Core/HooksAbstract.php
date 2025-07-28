@@ -40,6 +40,10 @@ abstract class HooksAbstract
 
     public const ACTION_SAVE_POST = 'save_post';
 
+    public const ACTION_UPDATED_POST_META = 'updated_post_meta';
+
+    public const ACTION_ADDED_POST_META = 'added_post_meta';
+
     public const ACTION_ADD_META_BOXES = 'add_meta_boxes';
 
     public const ACTION_ADMIN_PRINT_SCRIPTS_EDIT = 'admin_print_scripts-edit.php';
