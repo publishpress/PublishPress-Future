@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Add updated_post_meta and added_post_meta to core HooksAbstract, #1416
+- Add updated_post_meta and added_post_meta to core HooksAbstract,  (Issue #1416).
+- Add Pro nudge in Free version for Statuses and Metadata scheduling,  (Issue #1371).
 
 ### Changed
 
