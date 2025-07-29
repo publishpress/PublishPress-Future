@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 4.8.1\n"
+"Project-Id-Version: PublishPress Future 4.8.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-29T09:59:28+00:00\n"
+"POT-Creation-Date: 2025-07-29T15:43:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: post-expirator\n"
@@ -202,7 +202,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/QuickEditController.php:318
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:131
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:132
-#: src/Modules/Expirator/Controllers/SettingsController.php:537
+#: src/Modules/Expirator/Controllers/SettingsController.php:538
 #: src/Views/menu-admin.php:44
 #: src/Views/tabs-future-actions.php:51
 msgid "Future Actions"
@@ -559,25 +559,25 @@ msgid "Wait for the validation..."
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/SettingsController.php:299
-#: src/Modules/Expirator/Controllers/SettingsController.php:350
+#: src/Modules/Expirator/Controllers/SettingsController.php:351
 #: assets/jsx/workflow-editor/components/data-fields/date-offset/index.jsx:168
 msgid "Date Preview"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/SettingsController.php:300
-#: src/Modules/Expirator/Controllers/SettingsController.php:351
+#: src/Modules/Expirator/Controllers/SettingsController.php:352
 #: assets/jsx/workflow-editor/components/data-fields/date-offset/index.jsx:169
 msgid "Current Date"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/SettingsController.php:301
-#: src/Modules/Expirator/Controllers/SettingsController.php:352
+#: src/Modules/Expirator/Controllers/SettingsController.php:353
 #: assets/jsx/workflow-editor/components/data-fields/date-offset/index.jsx:170
 msgid "Computed Date"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/SettingsController.php:302
-#: src/Modules/Expirator/Controllers/SettingsController.php:353
+#: src/Modules/Expirator/Controllers/SettingsController.php:354
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:130
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:120
 #: assets/jsx/workflow-editor/components/data-fields/debug-levels.jsx:11
@@ -589,26 +589,30 @@ msgid "Custom statuses"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/SettingsController.php:304
-msgid "Enable custom statuses for the post type"
+msgid "Enable support for custom statuses"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/SettingsController.php:305
-msgid "Enable Metadata Scheduling"
+msgid "Checking this option will allow you to move posts to a custom status."
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/SettingsController.php:306
-msgid "Enable metadata scheduling for the post type"
+msgid "Metadata scheduling"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/SettingsController.php:307
-msgid "Checking this option will allow you to use the post metadata to control the scheduling of Future actions in your content."
+msgid "Enable metadata scheduling"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/SettingsController.php:308
+msgid "Checking this option will allow you to use post metadata to control the scheduling of actions."
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:309
 msgid "This is a Pro feature. Upgrade to unlock this functionality."
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:452
+#: src/Modules/Expirator/Controllers/SettingsController.php:453
 #: src/Modules/Settings/Controllers/Controller.php:238
 msgid "Form Validation Failure: Sorry, your nonce did not verify."
 msgstr ""
