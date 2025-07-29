@@ -1564,35 +1564,35 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
         description: props.text.fieldWhoToNotifyDescription,
         onChange: onChangeEmailNotification
       })));
-    }
 
-    // Add promotional fields for non-pro users
-    if (!isPro) {
-      // Custom statuses promotional field
-      settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
-        label: props.text.fieldCustomStatuses,
-        key: 'custom-statuses'
-      }, /*#__PURE__*/React.createElement(FieldRow, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
-        type: "checkbox",
-        disabled: true
-      }), props.text.fieldCustomStatusesLabel, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Tooltip, {
-        text: props.text.proFeatureTooltip
-      }, /*#__PURE__*/React.createElement("span", {
-        className: "dashicons dashicons-lock pp-pro-loc-icon"
-      })), /*#__PURE__*/React.createElement(HelpText, null, props.text.fieldCustomStatusesDescription)))));
+      // Add promotional fields for non-pro users
+      if (!isPro) {
+        // Custom statuses promotional field
+        settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+          label: props.text.fieldCustomStatuses,
+          key: 'custom-statuses'
+        }, /*#__PURE__*/React.createElement(FieldRow, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
+          type: "checkbox",
+          disabled: true
+        }), props.text.fieldCustomStatusesLabel, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Tooltip, {
+          text: props.text.proFeatureTooltip
+        }, /*#__PURE__*/React.createElement("span", {
+          className: "dashicons dashicons-lock pp-pro-loc-icon"
+        })), /*#__PURE__*/React.createElement(HelpText, null, props.text.fieldCustomStatusesDescription)))));
 
-      // Metadata scheduling promotional field
-      settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
-        label: props.text.fieldMetadataScheduling,
-        key: 'metadata_mapping'
-      }, /*#__PURE__*/React.createElement(FieldRow, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
-        type: "checkbox",
-        disabled: true
-      }), props.text.fieldMetadataSchedulingLabel, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Tooltip, {
-        text: props.text.proFeatureTooltip
-      }, /*#__PURE__*/React.createElement("span", {
-        className: "dashicons dashicons-lock pp-pro-loc-icon"
-      }))), /*#__PURE__*/React.createElement(HelpText, null, props.text.fieldMetadataSchedulingDescription))));
+        // Metadata scheduling promotional field
+        settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+          label: props.text.fieldMetadataScheduling,
+          key: 'metadata_mapping'
+        }, /*#__PURE__*/React.createElement(FieldRow, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
+          type: "checkbox",
+          disabled: true
+        }), props.text.fieldMetadataSchedulingLabel, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Tooltip, {
+          text: props.text.proFeatureTooltip
+        }, /*#__PURE__*/React.createElement("span", {
+          className: "dashicons dashicons-lock pp-pro-loc-icon"
+        }))), /*#__PURE__*/React.createElement(HelpText, null, props.text.fieldMetadataSchedulingDescription))));
+      }
     }
   }
   settingsRows = (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_3__.applyFilters)('expirationdate_settings_posttype', settingsRows, props, isActive, _wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState);
