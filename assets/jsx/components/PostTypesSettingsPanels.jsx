@@ -13,6 +13,7 @@ import { __ } from "@publishpress/i18n";
 export const PostTypesSettingsPanels = function (props) {
     const [currentTab, setCurrentTab] = useState(Object.keys(props.settings)[0]);
     const [selectedPostType, setSelectedPostType] = useState(null);
+    const isPro = props.isPro;
 
     useEffect(() => {
         // Get post type from URL on component mount
@@ -32,6 +33,7 @@ export const PostTypesSettingsPanels = function (props) {
             <PostTypeSettingsPanel
                 legend={postTypeSettings.label}
                 text={props.text}
+                isPro={isPro}
                 postType={postType}
                 postTypeLabel={postTypeSettings.label}
                 settings={postTypeSettings}

@@ -305,41 +305,41 @@ export const PostTypeSettingsPanel = function (props) {
                     />
                 </SettingRow>
             );
+        }
 
-            // Add promotional fields for non-pro users
-            if (!isPro) {
-                // Custom statuses promotional field
-                settingsRows.push(
-                    <SettingRow label={props.text.fieldCustomStatuses} key={'custom-statuses'}>
-                        <FieldRow>
-                            <div>
-                                <input type="checkbox" disabled />
-                                {props.text.fieldCustomStatusesLabel}
-                                <Tooltip text={props.text.proFeatureTooltip}>
-                                    <span className="dashicons dashicons-lock pp-pro-loc-icon"></span>
-                                </Tooltip>
-                            <HelpText>{props.text.fieldCustomStatusesDescription}</HelpText>
-                            </div>
-                        </FieldRow>
-                    </SettingRow>
-                );
+        // Add promotional fields for non-pro users
+        if (!isPro) {
+            // Custom statuses promotional field
+            settingsRows.push(
+                <SettingRow label={props.text.fieldCustomStatuses} key={'custom-statuses_promo'}>
+                    <FieldRow>
+                        <div>
+                            <input type="checkbox" disabled />
+                            {props.text.fieldCustomStatusesLabel}
+                            <Tooltip text={props.text.proFeatureTooltip}>
+                                <span className="dashicons dashicons-lock pp-pro-loc-icon"></span>
+                            </Tooltip>
+                        <HelpText>{props.text.fieldCustomStatusesDescription}</HelpText>
+                        </div>
+                    </FieldRow>
+                </SettingRow>
+            );
 
-                // Metadata scheduling promotional field
-                settingsRows.push(
-                    <SettingRow label={props.text.fieldMetadataScheduling} key={'metadata_mapping'}>
-                        <FieldRow>
-                            <div>
-                                <input type="checkbox" disabled />
-                                {props.text.fieldMetadataSchedulingLabel}
-                                <Tooltip text={props.text.proFeatureTooltip}>
-                                    <span className="dashicons dashicons-lock pp-pro-loc-icon"></span>
-                                </Tooltip>
-                            </div>
-                            <HelpText>{props.text.fieldMetadataSchedulingDescription}</HelpText>
-                        </FieldRow>
-                    </SettingRow>
-                );
-            }
+            // Metadata scheduling promotional field
+            settingsRows.push(
+                <SettingRow label={props.text.fieldMetadataScheduling} key={'metadata_mapping_promo'}>
+                    <FieldRow>
+                        <div>
+                            <input type="checkbox" disabled />
+                            {props.text.fieldMetadataSchedulingLabel}
+                            <Tooltip text={props.text.proFeatureTooltip}>
+                                <span className="dashicons dashicons-lock pp-pro-loc-icon"></span>
+                            </Tooltip>
+                        </div>
+                        <HelpText>{props.text.fieldMetadataSchedulingDescription}</HelpText>
+                    </FieldRow>
+                </SettingRow>
+            );
         }
     }
 
