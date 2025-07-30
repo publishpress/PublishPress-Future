@@ -22,7 +22,6 @@ const { PanelRow } = wp.components;
 
 export const PostTypeSettingsPanel = function (props) {
     const originalExpireTypeList = props.expireTypeList[props.postType];
-    const isPro = props.isPro;
 
     const [postTypeTaxonomy, setPostTypeTaxonomy] = useState(props.settings.taxonomy);
     const [termOptions, setTermOptions] = useState([]);
@@ -42,6 +41,15 @@ export const PostTypeSettingsPanel = function (props) {
 
     const offset = expireOffset ? expireOffset : props.settings.globalDefaultExpireOffset;
 
+    const isPro = () => {
+        let value = props.isPro;
+        if (typeof value === 'string') {
+            value = value.toLowerCase().trim();
+            return value === '1' || value === 'true';
+        }
+
+        return value === 1 || value === true;
+    };
 
     const HelpText = (props) => {
         return (

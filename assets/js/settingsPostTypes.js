@@ -1295,7 +1295,6 @@ var _wp = wp,
 var PanelRow = wp.components.PanelRow;
 var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
   var originalExpireTypeList = props.expireTypeList[props.postType];
-  var isPro = props.isPro;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(props.settings.taxonomy),
     _useState2 = _slicedToArray(_useState, 2),
     postTypeTaxonomy = _useState2[0],
@@ -1357,6 +1356,14 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     hasPendingValidation = _useState30[0],
     setHasPendingValidation = _useState30[1];
   var offset = expireOffset ? expireOffset : props.settings.globalDefaultExpireOffset;
+  var isPro = function isPro() {
+    var value = props.isPro;
+    if (typeof value === 'string') {
+      value = value.toLowerCase().trim();
+      return value === '1' || value === 'true';
+    }
+    return value === 1 || value === true;
+  };
   var HelpText = function HelpText(props) {
     return /*#__PURE__*/React.createElement("p", {
       className: "description"
