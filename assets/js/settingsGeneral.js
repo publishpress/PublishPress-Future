@@ -1295,7 +1295,6 @@ var _wp = wp,
 var PanelRow = wp.components.PanelRow;
 var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
   var originalExpireTypeList = props.expireTypeList[props.postType];
-  var isPro = props.isPro;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(props.settings.taxonomy),
     _useState2 = _slicedToArray(_useState, 2),
     postTypeTaxonomy = _useState2[0],
@@ -1357,6 +1356,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     hasPendingValidation = _useState30[0],
     setHasPendingValidation = _useState30[1];
   var offset = expireOffset ? expireOffset : props.settings.globalDefaultExpireOffset;
+  var isPro = props.isPro != "" && props.isPro === "1";
   var HelpText = function HelpText(props) {
     return /*#__PURE__*/React.createElement("p", {
       className: "description"
@@ -1565,35 +1565,35 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
         onChange: onChangeEmailNotification
       })));
     }
-  }
 
-  // Add promotional fields for non-pro users
-  if (!isPro) {
-    // Custom statuses promotional field
-    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
-      label: props.text.fieldCustomStatuses,
-      key: 'custom-statuses'
-    }, /*#__PURE__*/React.createElement(FieldRow, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
-      type: "checkbox",
-      disabled: true
-    }), props.text.fieldCustomStatusesLabel, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Tooltip, {
-      text: props.text.proFeatureTooltip
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "dashicons dashicons-lock pp-pro-loc-icon"
-    }))))));
+    // Add promotional fields for non-pro users
+    if (!isPro) {
+      // Custom statuses promotional field
+      settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+        label: props.text.fieldCustomStatuses,
+        key: 'custom-statuses_promo'
+      }, /*#__PURE__*/React.createElement(FieldRow, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
+        type: "checkbox",
+        disabled: true
+      }), props.text.fieldCustomStatusesLabel, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Tooltip, {
+        text: props.text.proFeatureTooltip
+      }, /*#__PURE__*/React.createElement("span", {
+        className: "dashicons dashicons-lock pp-pro-loc-icon"
+      })), /*#__PURE__*/React.createElement(HelpText, null, props.text.fieldCustomStatusesDescription)))));
 
-    // Metadata scheduling promotional field
-    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
-      label: props.text.fieldMetadataScheduling,
-      key: 'metadata_mapping'
-    }, /*#__PURE__*/React.createElement(FieldRow, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
-      type: "checkbox",
-      disabled: true
-    }), props.text.fieldMetadataSchedulingLabel, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Tooltip, {
-      text: props.text.proFeatureTooltip
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "dashicons dashicons-lock pp-pro-loc-icon"
-    }))), /*#__PURE__*/React.createElement(HelpText, null, props.text.fieldMetadataSchedulingDescription))));
+      // Metadata scheduling promotional field
+      settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+        label: props.text.fieldMetadataScheduling,
+        key: 'metadata_mapping_promo'
+      }, /*#__PURE__*/React.createElement(FieldRow, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
+        type: "checkbox",
+        disabled: true
+      }), props.text.fieldMetadataSchedulingLabel, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Tooltip, {
+        text: props.text.proFeatureTooltip
+      }, /*#__PURE__*/React.createElement("span", {
+        className: "dashicons dashicons-lock pp-pro-loc-icon"
+      }))), /*#__PURE__*/React.createElement(HelpText, null, props.text.fieldMetadataSchedulingDescription))));
+    }
   }
   settingsRows = (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_3__.applyFilters)('expirationdate_settings_posttype', settingsRows, props, isActive, _wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState);
   var fieldSetClassNames = props.isVisible ? 'pe-settings-fieldset' : 'pe-settings-fieldset hidden';
@@ -1648,6 +1648,7 @@ var PostTypesSettingsPanels = function PostTypesSettingsPanels(props) {
     _useState4 = _slicedToArray(_useState3, 2),
     selectedPostType = _useState4[0],
     setSelectedPostType = _useState4[1];
+  var isPro = props.isPro;
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     // Get post type from URL on component mount
     var urlParams = new URLSearchParams(window.location.search);
@@ -1665,6 +1666,7 @@ var PostTypesSettingsPanels = function PostTypesSettingsPanels(props) {
     panels.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.PostTypeSettingsPanel, {
       legend: postTypeSettings.label,
       text: props.text,
+      isPro: isPro,
       postType: postType,
       postTypeLabel: postTypeSettings.label,
       settings: postTypeSettings,

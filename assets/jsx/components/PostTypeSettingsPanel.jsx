@@ -22,7 +22,6 @@ const { PanelRow } = wp.components;
 
 export const PostTypeSettingsPanel = function (props) {
     const originalExpireTypeList = props.expireTypeList[props.postType];
-    const isPro = props.isPro;
 
     const [postTypeTaxonomy, setPostTypeTaxonomy] = useState(props.settings.taxonomy);
     const [termOptions, setTermOptions] = useState([]);
@@ -42,6 +41,7 @@ export const PostTypeSettingsPanel = function (props) {
 
     const offset = expireOffset ? expireOffset : props.settings.globalDefaultExpireOffset;
 
+    const isPro = props.isPro != "" && props.isPro === "1";
 
     const HelpText = (props) => {
         return (
@@ -306,40 +306,41 @@ export const PostTypeSettingsPanel = function (props) {
                 </SettingRow>
             );
         }
-    }
 
-    // Add promotional fields for non-pro users
-    if (!isPro) {
-        // Custom statuses promotional field
-        settingsRows.push(
-            <SettingRow label={props.text.fieldCustomStatuses} key={'custom-statuses'}>
-                <FieldRow>
-                    <div>
-                        <input type="checkbox" disabled />
-                        {props.text.fieldCustomStatusesLabel}
-                        <Tooltip text={props.text.proFeatureTooltip}>
-                            <span className="dashicons dashicons-lock pp-pro-loc-icon"></span>
-                        </Tooltip>
-                    </div>
-                </FieldRow>
-            </SettingRow>
-        );
+        // Add promotional fields for non-pro users
+        if (!isPro) {
+            // Custom statuses promotional field
+            settingsRows.push(
+                <SettingRow label={props.text.fieldCustomStatuses} key={'custom-statuses_promo'}>
+                    <FieldRow>
+                        <div>
+                            <input type="checkbox" disabled />
+                            {props.text.fieldCustomStatusesLabel}
+                            <Tooltip text={props.text.proFeatureTooltip}>
+                                <span className="dashicons dashicons-lock pp-pro-loc-icon"></span>
+                            </Tooltip>
+                        <HelpText>{props.text.fieldCustomStatusesDescription}</HelpText>
+                        </div>
+                    </FieldRow>
+                </SettingRow>
+            );
 
-        // Metadata scheduling promotional field
-        settingsRows.push(
-            <SettingRow label={props.text.fieldMetadataScheduling} key={'metadata_mapping'}>
-                <FieldRow>
-                    <div>
-                        <input type="checkbox" disabled />
-                        {props.text.fieldMetadataSchedulingLabel}
-                        <Tooltip text={props.text.proFeatureTooltip}>
-                            <span className="dashicons dashicons-lock pp-pro-loc-icon"></span>
-                        </Tooltip>
-                    </div>
-                    <HelpText>{props.text.fieldMetadataSchedulingDescription}</HelpText>
-                </FieldRow>
-            </SettingRow>
-        );
+            // Metadata scheduling promotional field
+            settingsRows.push(
+                <SettingRow label={props.text.fieldMetadataScheduling} key={'metadata_mapping_promo'}>
+                    <FieldRow>
+                        <div>
+                            <input type="checkbox" disabled />
+                            {props.text.fieldMetadataSchedulingLabel}
+                            <Tooltip text={props.text.proFeatureTooltip}>
+                                <span className="dashicons dashicons-lock pp-pro-loc-icon"></span>
+                            </Tooltip>
+                        </div>
+                        <HelpText>{props.text.fieldMetadataSchedulingDescription}</HelpText>
+                    </FieldRow>
+                </SettingRow>
+            );
+        }
     }
 
     settingsRows = applyFilters('expirationdate_settings_posttype', settingsRows, props, isActive, useState);

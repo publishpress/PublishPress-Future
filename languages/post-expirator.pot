@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 4.8.1\n"
+"Project-Id-Version: PublishPress Future 4.8.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-17T03:59:06+00:00\n"
+"POT-Creation-Date: 2025-07-29T15:43:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: post-expirator\n"
@@ -190,7 +190,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/BulkEditController.php:157
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:361
 #: src/Modules/Expirator/Controllers/QuickEditController.php:287
-#: src/Modules/Expirator/Controllers/SettingsController.php:279
+#: src/Modules/Expirator/Controllers/SettingsController.php:280
 #: assets/jsx/workflow-editor/components/data-fields/taxonomy-terms.jsx:60
 msgid "Taxonomy"
 msgstr ""
@@ -202,7 +202,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/QuickEditController.php:318
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:131
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:132
-#: src/Modules/Expirator/Controllers/SettingsController.php:529
+#: src/Modules/Expirator/Controllers/SettingsController.php:538
 #: src/Views/menu-admin.php:44
 #: src/Views/tabs-future-actions.php:51
 msgid "Future Actions"
@@ -342,7 +342,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/BulkEditController.php:257
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:452
 #: src/Modules/Expirator/Controllers/QuickEditController.php:372
-#: src/Modules/Expirator/Controllers/SettingsController.php:297
+#: src/Modules/Expirator/Controllers/SettingsController.php:298
 #, php-format
 msgid "Please select one or more %s"
 msgstr ""
@@ -418,8 +418,8 @@ msgstr ""
 
 #. translators: button label text should, if possible, be under 16 characters.
 #: src/Modules/Expirator/Controllers/PluginsListController.php:70
-#: src/Modules/Expirator/Controllers/SettingsController.php:131
 #: src/Modules/Expirator/Controllers/SettingsController.php:132
+#: src/Modules/Expirator/Controllers/SettingsController.php:133
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/DeactivatePostWorkflow.php:67
 #: src/Modules/Workflows/Domain/Steps/Triggers/Definitions/OnPostWorkflowEnable.php:67
 #: src/Views/tabs-settings.php:47
@@ -479,112 +479,140 @@ msgid "Executed scheduled action"
 msgstr ""
 
 #. translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
-#: src/Modules/Expirator/Controllers/SettingsController.php:251
+#: src/Modules/Expirator/Controllers/SettingsController.php:252
 #: src/Views/menu-general.php:41
 #, php-format
 msgid "Set the offset to use for the default action date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, use only terms in English."
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:261
+#: src/Modules/Expirator/Controllers/SettingsController.php:262
 msgid "Default Values"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:262
+#: src/Modules/Expirator/Controllers/SettingsController.php:263
 msgid "Use the values below to set the default actions/values to be used for each for the corresponding post types.  These values can all be overwritten when creating/editing the post/page."
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:266
+#: src/Modules/Expirator/Controllers/SettingsController.php:267
 msgid "Active"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:267
+#: src/Modules/Expirator/Controllers/SettingsController.php:268
 msgid "Activate the PublishPress Future actions for this post type"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:268
+#: src/Modules/Expirator/Controllers/SettingsController.php:269
 msgid "Default Action"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:269
+#: src/Modules/Expirator/Controllers/SettingsController.php:270
 msgid "Select the default action for the post type."
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:273
+#: src/Modules/Expirator/Controllers/SettingsController.php:274
 #: src/Views/taxonomy-field.php:14
 msgid "Select the taxonomy to be used for actions."
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:277
+#: src/Modules/Expirator/Controllers/SettingsController.php:278
 msgid "Automatically create actions"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:278
+#: src/Modules/Expirator/Controllers/SettingsController.php:279
 msgid "This will automatically create an action for new posts, using the default settings on this screen"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:280
+#: src/Modules/Expirator/Controllers/SettingsController.php:281
 msgid "No taxonomies found for this post type. Taxonomy actions will not be available."
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:281
+#: src/Modules/Expirator/Controllers/SettingsController.php:282
 #: src/Views/menu-notifications.php:116
 #: src/Views/menu-notifications.php:169
 msgid "Who to Notify"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:282
+#: src/Modules/Expirator/Controllers/SettingsController.php:283
 msgid "Enter a comma separated list of emails that you would like to be notified when the action runs."
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:286
+#: src/Modules/Expirator/Controllers/SettingsController.php:287
 #: src/Views/menu-general.php:29
 msgid "Default Date/Time Offset"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:289
+#: src/Modules/Expirator/Controllers/SettingsController.php:290
 #: src/Views/menu-general.php:48
 msgid "PHP strtotime function"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:293
+#: src/Modules/Expirator/Controllers/SettingsController.php:294
 msgid "Default terms:"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:294
+#: src/Modules/Expirator/Controllers/SettingsController.php:295
 msgid "Save changes"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:295
+#: src/Modules/Expirator/Controllers/SettingsController.php:296
 msgid "Wait for the validation..."
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:298
-#: src/Modules/Expirator/Controllers/SettingsController.php:342
+#: src/Modules/Expirator/Controllers/SettingsController.php:299
+#: src/Modules/Expirator/Controllers/SettingsController.php:351
 #: assets/jsx/workflow-editor/components/data-fields/date-offset/index.jsx:168
 msgid "Date Preview"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:299
-#: src/Modules/Expirator/Controllers/SettingsController.php:343
+#: src/Modules/Expirator/Controllers/SettingsController.php:300
+#: src/Modules/Expirator/Controllers/SettingsController.php:352
 #: assets/jsx/workflow-editor/components/data-fields/date-offset/index.jsx:169
 msgid "Current Date"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:300
-#: src/Modules/Expirator/Controllers/SettingsController.php:344
+#: src/Modules/Expirator/Controllers/SettingsController.php:301
+#: src/Modules/Expirator/Controllers/SettingsController.php:353
 #: assets/jsx/workflow-editor/components/data-fields/date-offset/index.jsx:170
 msgid "Computed Date"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:301
-#: src/Modules/Expirator/Controllers/SettingsController.php:345
+#: src/Modules/Expirator/Controllers/SettingsController.php:302
+#: src/Modules/Expirator/Controllers/SettingsController.php:354
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/SendInSiteNotification.php:130
 #: src/Modules/Workflows/Domain/Steps/Actions/Definitions/UserInteraction.php:120
 #: assets/jsx/workflow-editor/components/data-fields/debug-levels.jsx:11
 msgid "Error"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/SettingsController.php:444
+#: src/Modules/Expirator/Controllers/SettingsController.php:303
+msgid "Custom statuses"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:304
+msgid "Enable support for custom statuses"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:305
+msgid "Checking this option will allow you to move posts to a custom status."
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:306
+msgid "Metadata scheduling"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:307
+msgid "Enable metadata scheduling"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:308
+msgid "Checking this option will allow you to use post metadata to control the scheduling of actions."
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:309
+msgid "This is a Pro feature. Upgrade to unlock this functionality."
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/SettingsController.php:453
 #: src/Modules/Settings/Controllers/Controller.php:238
 msgid "Form Validation Failure: Sorry, your nonce did not verify."
 msgstr ""

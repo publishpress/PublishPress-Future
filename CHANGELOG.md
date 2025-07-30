@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.8.2]- [UNRELEASHED]
+## [4.8.2]- 30 July, 2025
 
 ### Added
 
@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Hide options for "Automatically create actions" if disabled, (Issue #1398).
+
+### Fixed
+
+- Mapped meta field for scheduled action not working for post added from the front end, (Issue #1418).
 
 ## [4.8.1]- 17 July, 2025
 
