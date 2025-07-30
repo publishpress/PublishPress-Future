@@ -1356,14 +1356,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     hasPendingValidation = _useState30[0],
     setHasPendingValidation = _useState30[1];
   var offset = expireOffset ? expireOffset : props.settings.globalDefaultExpireOffset;
-  var isPro = function isPro() {
-    var value = props.isPro;
-    if (typeof value === 'string') {
-      value = value.toLowerCase().trim();
-      return value === '1' || value === 'true';
-    }
-    return value === 1 || value === true;
-  };
+  var isPro = props.isPro != "" && props.isPro === "1";
   var HelpText = function HelpText(props) {
     return /*#__PURE__*/React.createElement("p", {
       className: "description"

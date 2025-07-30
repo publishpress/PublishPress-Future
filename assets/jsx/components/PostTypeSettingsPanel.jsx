@@ -41,15 +41,7 @@ export const PostTypeSettingsPanel = function (props) {
 
     const offset = expireOffset ? expireOffset : props.settings.globalDefaultExpireOffset;
 
-    const isPro = () => {
-        let value = props.isPro;
-        if (typeof value === 'string') {
-            value = value.toLowerCase().trim();
-            return value === '1' || value === 'true';
-        }
-
-        return value === 1 || value === true;
-    };
+    const isPro = props.isPro != "" && props.isPro === "1";
 
     const HelpText = (props) => {
         return (
