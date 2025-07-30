@@ -14,6 +14,7 @@ import { useEffect, useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 import { applyFilters } from '@wordpress/hooks';
 import DateOffsetPreview from './DateOffsetPreview';
+import { Tooltip } from "@wordpress/components";
 
 const { apiFetch } = wp;
 
@@ -39,6 +40,26 @@ export const PostTypeSettingsPanel = function (props) {
     const [hasPendingValidation, setHasPendingValidation] = useState(false);
 
     const offset = expireOffset ? expireOffset : props.settings.globalDefaultExpireOffset;
+
+    const isPro = props.isPro != "" && props.isPro === "1";
+
+    const HelpText = (props) => {
+        return (
+            <p className="description">{props.children}</p>
+        );
+    };
+
+    const FieldRow = (props) => {
+        let className = 'publishpress-settings-field-row';
+
+        if (props.className) {
+            className += ' ' + props.className;
+        }
+
+        return (
+            <div className={className}>{props.children}</div>
+        );
+    };
 
     const taxonomyRelatedActions = [
         'category',
@@ -196,93 +217,130 @@ export const PostTypeSettingsPanel = function (props) {
             </SettingRow>
         );
 
-        settingsRows.push(
-            <SettingRow label={props.text.fieldTaxonomy} key={'expirationdate_taxonomy-' + props.postType}>
-                <SelectControl
-                    name={'expirationdate_taxonomy-' + props.postType}
-                    options={props.taxonomiesList}
-                    selected={postTypeTaxonomy}
-                    noItemFoundMessage={props.text.noItemsfound}
-                    description={props.text.fieldTaxonomyDescription}
-                    data={props.postType}
-                    onChange={onChangeTaxonomy}
-                >
-                </SelectControl>
-            </SettingRow>
-        );
-
-        settingsRows.push(
-            <SettingRow label={props.text.fieldHowToExpire} key={'expirationdate_expiretype-' + props.postType}>
-                <SelectControl
-                    name={'expirationdate_expiretype-' + props.postType}
-                    className={'pe-howtoexpire'}
-                    options={howToExpireList}
-                    description={props.text.fieldHowToExpireDescription}
-                    selected={settingHowToExpire}
-                    onChange={onChangeHowToExpire}
-                />
-
-                {settingHowToExpire === 'change-status' &&
+        if (isAutoEnabled) {
+            settingsRows.push(
+                <SettingRow label={props.text.fieldTaxonomy} key={'expirationdate_taxonomy-' + props.postType}>
                     <SelectControl
-                        name={'expirationdate_newstatus-' + props.postType}
-                        options={props.statusesList}
-                        selected={newStatus}
-                        onChange={setNewStatus}
+                        name={'expirationdate_taxonomy-' + props.postType}
+                        options={props.taxonomiesList}
+                        selected={postTypeTaxonomy}
+                        noItemFoundMessage={props.text.noItemsfound}
+                        description={props.text.fieldTaxonomyDescription}
+                        data={props.postType}
+                        onChange={onChangeTaxonomy}
+                    >
+                    </SelectControl>
+                </SettingRow>
+            );
+
+            settingsRows.push(
+                <SettingRow label={props.text.fieldHowToExpire} key={'expirationdate_expiretype-' + props.postType}>
+                    <SelectControl
+                        name={'expirationdate_expiretype-' + props.postType}
+                        className={'pe-howtoexpire'}
+                        options={howToExpireList}
+                        description={props.text.fieldHowToExpireDescription}
+                        selected={settingHowToExpire}
+                        onChange={onChangeHowToExpire}
                     />
-                }
 
-                {(props.taxonomiesList.length > 0 && (['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1)) &&
-                    <TokensControl
-                        label={props.text.fieldTerm}
-                        name={'expirationdate_terms-' + props.postType}
-                        options={termOptionsLabels}
-                        value={selectedTerms}
-                        isLoading={termsSelectIsLoading}
-                        onChange={onChangeTerms}
-                        description={props.text.fieldTermDescription}
-                        maxSuggestions={1000}
-                        expandOnFocus={true}
-                        autoSelectFirstMatch={true}
+                    {settingHowToExpire === 'change-status' &&
+                        <SelectControl
+                            name={'expirationdate_newstatus-' + props.postType}
+                            options={props.statusesList}
+                            selected={newStatus}
+                            onChange={setNewStatus}
+                        />
+                    }
+
+                    {(props.taxonomiesList.length > 0 && (['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1)) &&
+                        <TokensControl
+                            label={props.text.fieldTerm}
+                            name={'expirationdate_terms-' + props.postType}
+                            options={termOptionsLabels}
+                            value={selectedTerms}
+                            isLoading={termsSelectIsLoading}
+                            onChange={onChangeTerms}
+                            description={props.text.fieldTermDescription}
+                            maxSuggestions={1000}
+                            expandOnFocus={true}
+                            autoSelectFirstMatch={true}
+                        />
+                    }
+                </SettingRow>
+            );
+
+            settingsRows.push(
+                <SettingRow label={props.text.fieldDefaultDateTimeOffset} key={'expired-custom-date-' + props.postType}>
+                    <TextControl
+                        name={'expired-custom-date-' + props.postType}
+                        value={expireOffset}
+                        loading={hasPendingValidation}
+                        placeholder={props.settings.globalDefaultExpireOffset}
+                        description={props.text.fieldDefaultDateTimeOffsetDescription}
+                        unescapedDescription={true}
+                        onChange={onChangeExpireOffset}
                     />
-                }
-            </SettingRow>
-        );
 
-        settingsRows.push(
-            <SettingRow label={props.text.fieldDefaultDateTimeOffset} key={'expired-custom-date-' + props.postType}>
-                <TextControl
-                    name={'expired-custom-date-' + props.postType}
-                    value={expireOffset}
-                    loading={hasPendingValidation}
-                    placeholder={props.settings.globalDefaultExpireOffset}
-                    description={props.text.fieldDefaultDateTimeOffsetDescription}
-                    unescapedDescription={true}
-                    onChange={onChangeExpireOffset}
-                />
+                    <DateOffsetPreview
+                        offset={offset}
+                        label={props.text.datePreview}
+                        labelDatePreview={props.text.datePreviewCurrent}
+                        labelOffsetPreview={props.text.datePreviewComputed}
+                        setValidationErrorCallback={setValidationError}
+                        setHasPendingValidationCallback={setHasPendingValidation}
+                        setHasValidDataCallback={setHasValidData}
+                    />
+                </SettingRow>
+            );
 
-                <DateOffsetPreview
-                    offset={offset}
-                    label={props.text.datePreview}
-                    labelDatePreview={props.text.datePreviewCurrent}
-                    labelOffsetPreview={props.text.datePreviewComputed}
-                    setValidationErrorCallback={setValidationError}
-                    setHasPendingValidationCallback={setHasPendingValidation}
-                    setHasValidDataCallback={setHasValidData}
-                />
-            </SettingRow>
-        );
+            settingsRows.push(
+                <SettingRow label={props.text.fieldWhoToNotify} key={'expirationdate_emailnotification-' + props.postType}>
+                    <TextControl
+                        name={'expirationdate_emailnotification-' + props.postType}
+                        className="large-text"
+                        value={emailNotification}
+                        description={props.text.fieldWhoToNotifyDescription}
+                        onChange={onChangeEmailNotification}
+                    />
+                </SettingRow>
+            );
+        }
 
-        settingsRows.push(
-            <SettingRow label={props.text.fieldWhoToNotify} key={'expirationdate_emailnotification-' + props.postType}>
-                <TextControl
-                    name={'expirationdate_emailnotification-' + props.postType}
-                    className="large-text"
-                    value={emailNotification}
-                    description={props.text.fieldWhoToNotifyDescription}
-                    onChange={onChangeEmailNotification}
-                />
-            </SettingRow>
-        );
+        // Add promotional fields for non-pro users
+        if (!isPro) {
+            // Custom statuses promotional field
+            settingsRows.push(
+                <SettingRow label={props.text.fieldCustomStatuses} key={'custom-statuses_promo'}>
+                    <FieldRow>
+                        <div>
+                            <input type="checkbox" disabled />
+                            {props.text.fieldCustomStatusesLabel}
+                            <Tooltip text={props.text.proFeatureTooltip}>
+                                <span className="dashicons dashicons-lock pp-pro-loc-icon"></span>
+                            </Tooltip>
+                        <HelpText>{props.text.fieldCustomStatusesDescription}</HelpText>
+                        </div>
+                    </FieldRow>
+                </SettingRow>
+            );
+
+            // Metadata scheduling promotional field
+            settingsRows.push(
+                <SettingRow label={props.text.fieldMetadataScheduling} key={'metadata_mapping_promo'}>
+                    <FieldRow>
+                        <div>
+                            <input type="checkbox" disabled />
+                            {props.text.fieldMetadataSchedulingLabel}
+                            <Tooltip text={props.text.proFeatureTooltip}>
+                                <span className="dashicons dashicons-lock pp-pro-loc-icon"></span>
+                            </Tooltip>
+                        </div>
+                        <HelpText>{props.text.fieldMetadataSchedulingDescription}</HelpText>
+                    </FieldRow>
+                </SettingRow>
+            );
+        }
     }
 
     settingsRows = applyFilters('expirationdate_settings_posttype', settingsRows, props, isActive, useState);

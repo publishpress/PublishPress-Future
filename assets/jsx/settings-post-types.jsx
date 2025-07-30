@@ -24,6 +24,7 @@ const {
     expireTypeList,
     taxonomiesList,
     text,
+    isPro,
     statusesList
 } = window.publishpressFutureSettingsConfig;
 
@@ -95,6 +96,7 @@ const SettingsFormPanel = (props) => {
                     <PostTypesSettingsPanels
                         settings={settings}
                         text={text}
+                        isPro={isPro}
                         expireTypeList={expireTypeList}
                         taxonomiesList={taxonomiesList}
                         statusesList={statusesList}

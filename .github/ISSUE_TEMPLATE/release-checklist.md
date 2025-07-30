@@ -25,6 +25,7 @@ To release the Free plugin, please check all the checkboxes below.
 - [ ] Create the release branch as `release-<version>` based on the development branch. Use the command: `git checkout -b release-<version> develop`.
 - [ ] Merge any pending hotfixes or feature branches into the release branch using either direct merges or Pull Requests. Ensure all changes are properly reviewed and tested before merging.
 - [ ] Review GitHub's Dependabot alerts and pull requests. Dismiss false positives and fix legitimate security issues.
+- [ ] Run `composer update` to ensure all dependency is updated to the latest version.
 - [ ] Run `composer build:js` to build JS files to production.
 - [ ] Run `composer build:lang` to build translation files and commit the changes. Mention this on the changelog.
 - [ ] Run `composer check` to run check the code and make sure no warnings or errors.

@@ -192,6 +192,17 @@ span.post-expiration-attributes {
     border: 1px solid #655897;
 }
 
+.pp-pro-loc-icon {
+    cursor: pointer;
+    background: #FCB223;
+    color: #000;
+    border-radius: 100%;
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+    margin-left: 5px !important;
+}
+
 #screen-options-wrap label[for^="pp_boxes_banner-hide"],
 #pp_boxes_banner .postbox-header:not(.pp-advert),
 #screen-options-wrap label[for^="ppmacf_banner-hide"],

@@ -13,6 +13,7 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
+use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use Throwable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -299,7 +300,15 @@ class SettingsController implements InitializableInterface
                             'datePreviewCurrent' => __('Current Date', 'post-expirator'),
                             'datePreviewComputed' => __('Computed Date', 'post-expirator'),
                             'error' => __('Error', 'post-expirator'),
+                            'fieldCustomStatuses' => __('Custom statuses', 'post-expirator'),
+                            'fieldCustomStatusesLabel' => __('Enable support for custom statuses', 'post-expirator'),
+                            'fieldCustomStatusesDescription' => __('Checking this option will allow you to move posts to a custom status.', 'post-expirator'),
+                            'fieldMetadataScheduling' => __('Metadata scheduling', 'post-expirator'),
+                            'fieldMetadataSchedulingLabel' => __('Enable metadata scheduling', 'post-expirator'),
+                            'fieldMetadataSchedulingDescription' => __('Checking this option will allow you to use post metadata to control the scheduling of actions.', 'post-expirator'),
+                            'proFeatureTooltip' => __('This is a Pro feature. Upgrade to unlock this functionality.', 'post-expirator'),
                         ],
+                        'isPro' => $this->hooks->applyFilters(WorkflowsHooksAbstract::FILTER_IS_PRO, false),
                         'settings' => $settingsModel->getPostTypesSettings(),
                         'expireTypeList' => $this->actionsModel->getActionsAsOptionsForAllPostTypes(false),
                         'statusesList' => $this->actionsModel->getStatusesAsOptionsForAllPostTypes(),
