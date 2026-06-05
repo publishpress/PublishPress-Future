@@ -1,6 +1,10 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+[UNRELEASED]
+
+- Fixed: Improved workflow compatibility with ACF Extended frontend forms by triggering only when the required metadata has already been processed (Issue #1649).
+
 [4.10.3] - 28 May, 2026
 
 - Fixed: Future Action metabox now correctly appears in the sidebar (Issue #1641).
