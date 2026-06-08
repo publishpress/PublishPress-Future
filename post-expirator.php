@@ -29,17 +29,26 @@ use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\BundledTranslations\BundledTranslations;
 use Throwable;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+if (! defined('ABSPATH')) {
+    exit('Direct access not allowed.');
+}
 
 // If the plugin is already loaded, terminate the plugin execution.
 if (defined('PUBLISHPRESS_FUTURE_LOADED')) {
     return;
 }
 
+const MINIMUM_PHP_VERSION = '7.4';
+const MINIMUM_WP_VERSION = '6.7';
+
 global $wp_version;
 
-// If the PHP or WP version is not compatible, terminate the plugin execution.
-if (version_compare(PHP_VERSION, '7.4', '<') || version_compare($wp_version, '6.7', '<')) {
+// Exit if PHP or WordPress version requirements are not met.
+if (version_compare(PHP_VERSION, MINIMUM_PHP_VERSION, '<')) {
+    return;
+}
+
+if (version_compare($wp_version, MINIMUM_WP_VERSION, '<')) {
     return;
 }
 
