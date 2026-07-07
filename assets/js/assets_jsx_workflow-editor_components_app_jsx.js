@@ -2306,6 +2306,12 @@ var DateOffset = function DateOffset(_ref) {
       value = _ref2.value;
     var newValue = _objectSpread({}, defaultValue);
     newValue[settingName] = value;
+    if (settingName === "dateStrategy" && value === "now") {
+      if (newValue.dateSource === "custom") {
+        newValue.dateSource = "calendar";
+      }
+      delete newValue.customDateSource;
+    }
     if (onChange) {
       onChange(name, newValue);
     }
@@ -12038,8 +12044,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var validator_lib_isInt__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! validator/lib/isInt */ "./node_modules/validator/lib/isInt.js");
 /* harmony import */ var validator_lib_isInt__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(validator_lib_isInt__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/compose */ "./node_modules/@wordpress/compose/build-module/hooks/use-debounce/index.js");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _objectDestructuringEmpty(t) { if (null == t) throw new TypeError("Cannot destructure " + t); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 
 
 
@@ -12053,6 +12059,42 @@ function _objectDestructuringEmpty(t) { if (null == t) throw new TypeError("Cann
 function isVariable(value) {
   var trimmedValue = value.trim();
   return trimmedValue.startsWith('{{') && trimmedValue.endsWith('}}');
+}
+function getNestedSettingValue(nodeSettings, fieldPath) {
+  if (!fieldPath) {
+    return undefined;
+  }
+  var fieldNames = fieldPath.split('.');
+  var value = nodeSettings;
+  for (var i = 0; i < fieldNames.length; i++) {
+    var _value;
+    value = (_value = value) === null || _value === void 0 ? void 0 : _value[fieldNames[i]];
+  }
+  return value;
+}
+function matchesCondition(nodeSettings, condition) {
+  var value = getNestedSettingValue(nodeSettings, condition.field);
+  if (condition.operator === 'in') {
+    return Array.isArray(condition.value) && condition.value.includes(value);
+  }
+  return value == condition.value;
+}
+function matchesRuleConditions(nodeSettings, ruleData) {
+  if (Array.isArray(ruleData === null || ruleData === void 0 ? void 0 : ruleData.conditions)) {
+    return ruleData.conditions.every(function (condition) {
+      return matchesCondition(nodeSettings, condition);
+    });
+  }
+  if (ruleData !== null && ruleData !== void 0 && ruleData.condition) {
+    return matchesCondition(nodeSettings, ruleData.condition);
+  }
+  return true;
+}
+function isEmptySettingValue(value) {
+  return value === '' || value === null || value === undefined || Array.isArray(value) && value.length === 0
+  // If the default value is an object with a rule, that is the default value
+  // and it was not set by the user yet.
+  || _typeof(value) === 'object' && value.rule;
 }
 var DEBOUNCE_TIME = 250;
 function NodeValidator(_ref) {
@@ -12341,35 +12383,15 @@ function NodeValidator(_ref) {
               return field.name === fieldNames[0];
             });
           })) === null || _settingsSchema$find === void 0 ? void 0 : _settingsSchema$find.label);
-          var settingValue = nodeSettings;
-          for (var i = 0; i < fieldNames.length; i++) {
-            var _settingValue;
-            settingValue = (_settingValue = settingValue) === null || _settingValue === void 0 ? void 0 : _settingValue[fieldNames[i]];
-          }
+          var settingValue = getNestedSettingValue(nodeSettings, fieldName);
           switch (rule) {
             case 'required':
-              if (ruleData !== null && ruleData !== void 0 && ruleData.condition) {
-                var conditionField = ruleData.condition.field;
-                var conditionValue = ruleData.condition.value;
-                var conditionSettingValue = nodeSettings;
-                for (var _i = 0; _i < conditionField.split('.').length; _i++) {
-                  var _conditionSettingValu;
-                  conditionSettingValue = (_conditionSettingValu = conditionSettingValue) === null || _conditionSettingValu === void 0 ? void 0 : _conditionSettingValu[conditionField.split('.')[_i]];
-                }
-                if (conditionSettingValue == conditionValue && (!settingValue || settingValue == '')) {
+              if (ruleData !== null && ruleData !== void 0 && ruleData.condition || ruleData !== null && ruleData !== void 0 && ruleData.conditions) {
+                if (matchesRuleConditions(nodeSettings, ruleData) && isEmptySettingValue(settingValue)) {
                   addNodeError(node.id, "".concat(fieldName, "-required-if"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s is required.', 'post-expirator'), fieldLabel));
                 }
-              } else {
-                var isEmpty = function isEmpty(value) {
-                  return value === '' || value === null || value === undefined || Array.isArray(value) && value.length === 0
-                  // If the default value is an object with a rule, that is the default value
-                  // and it was not set by the user yet.
-                  || _typeof(value) === 'object' && value.rule;
-                };
-                if (isEmpty(settingValue)) {
-                  addNodeError(node.id, "".concat(fieldName, "-required"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s is required.', 'post-expirator'), fieldLabel));
-                  break;
-                }
+              } else if (isEmptySettingValue(settingValue)) {
+                addNodeError(node.id, "".concat(fieldName, "-required"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s is required.', 'post-expirator'), fieldLabel));
               }
               break;
             case 'dataType':
@@ -12385,8 +12407,8 @@ function NodeValidator(_ref) {
                 } else if (type === 'emailList') {
                   var emails = settingValue.split(',');
                   var email;
-                  for (var _i2 = 0; _i2 < emails.length; _i2++) {
-                    email = emails[_i2].trim();
+                  for (var i = 0; i < emails.length; i++) {
+                    email = emails[i].trim();
                     if (!validator_lib_isEmail__WEBPACK_IMPORTED_MODULE_6___default()(email) && !isVariable(email)) {
                       addNodeError(node.id, "".concat(fieldName, "-emailList"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a valid email address list separated by commas.', 'post-expirator'), fieldLabel));
                       break;
@@ -12398,8 +12420,8 @@ function NodeValidator(_ref) {
                   }
                 } else if (type === 'integerList') {
                   var integer;
-                  for (var _i3 = 0; _i3 < settingValue.length; _i3++) {
-                    integer = settingValue[_i3].trim();
+                  for (var _i = 0; _i < settingValue.length; _i++) {
+                    integer = settingValue[_i].trim();
                     if (!validator_lib_isInt__WEBPACK_IMPORTED_MODULE_7___default()(integer)) {
                       addNodeError(node.id, "".concat(fieldName, "-integerList"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be an integer list separated by commas.', 'post-expirator'), fieldLabel));
                       break;
@@ -12456,6 +12478,9 @@ function NodeValidator(_ref) {
               }
             case 'hasVariableSyntax':
               {
+                if (!matchesRuleConditions(nodeSettings, ruleData)) {
+                  break;
+                }
                 if (!settingValue || settingValue === '') {
                   break;
                 }
