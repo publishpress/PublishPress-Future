@@ -4,6 +4,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [UNRELEASED]
 
 - Fixed: Improved workflow compatibility with ACF Extended frontend forms by triggering only when the required metadata has already been processed (Issue #1649).
+- Added: Copy workflow to text feature for development, support or debug work.
 
 [4.10.3] - 28 May, 2026
 

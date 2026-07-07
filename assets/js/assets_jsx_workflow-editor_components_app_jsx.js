@@ -10629,13 +10629,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icons_object_group__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../icons/object-group */ "./assets/jsx/workflow-editor/components/icons/object-group.jsx");
 /* harmony import */ var _icons_lines_leaning__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../icons/lines-leaning */ "./assets/jsx/workflow-editor/components/icons/lines-leaning.jsx");
 /* harmony import */ var _node_dev_info_panel__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../node-dev-info-panel */ "./assets/jsx/workflow-editor/components/node-dev-info-panel/index.jsx");
-/* harmony import */ var _scrolled_to_top__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../scrolled-to-top */ "./assets/jsx/workflow-editor/components/scrolled-to-top/index.jsx");
+/* harmony import */ var _node_share_summary__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../node-share-summary */ "./assets/jsx/workflow-editor/components/node-share-summary/index.jsx");
+/* harmony import */ var _scrolled_to_top__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../scrolled-to-top */ "./assets/jsx/workflow-editor/components/scrolled-to-top/index.jsx");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -10714,7 +10716,7 @@ var NodeInspector = function NodeInspector() {
       }
     });
   }
-  (0,_scrolled_to_top__WEBPACK_IMPORTED_MODULE_16__["default"])(sidebarRef, ".interface-interface-skeleton__sidebar");
+  (0,_scrolled_to_top__WEBPACK_IMPORTED_MODULE_17__["default"])(sidebarRef, ".interface-interface-skeleton__sidebar");
   return /*#__PURE__*/React.createElement("div", {
     ref: sidebarRef
   }, selectedElementsCount === 0 && /*#__PURE__*/React.createElement(_inspector_warning__WEBPACK_IMPORTED_MODULE_7__["default"], null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("No element selected.", "post-expirator")), selectedElementsCount > 1 && !onlyNodesSelected && !onlyEdgesSelected && /*#__PURE__*/React.createElement(_inspector_warning__WEBPACK_IMPORTED_MODULE_7__["default"], null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Multiple and different elements selected.", "post-expirator")), onlyNodesSelected && selectedElementsCount > 1 && /*#__PURE__*/React.createElement(_inspector_card__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -10740,6 +10742,9 @@ var NodeInspector = function NodeInspector() {
     outputSchema: mappedNodeOutputSchema,
     stepScopedVariables: stepScopedVariables
   }), /*#__PURE__*/React.createElement(_node_dev_info_panel__WEBPACK_IMPORTED_MODULE_15__["default"], {
+    node: selectedNode,
+    nodeType: nodeType
+  }), /*#__PURE__*/React.createElement(_node_share_summary__WEBPACK_IMPORTED_MODULE_16__["default"], {
     node: selectedNode,
     nodeType: nodeType
   })), /*#__PURE__*/React.createElement("div", {
@@ -11187,6 +11192,115 @@ var NodeSettingsPanel = function NodeSettingsPanel(_ref) {
   return /*#__PURE__*/React.createElement(React.Fragment, null, settingsPanels);
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NodeSettingsPanel);
+
+/***/ },
+
+/***/ "./assets/jsx/workflow-editor/components/node-share-summary/index.jsx"
+/*!****************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/node-share-summary/index.jsx ***!
+  \****************************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NodeShareSummaryPanel: () => (/* binding */ NodeShareSummaryPanel),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _persistent_panel_body__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../persistent-panel-body */ "./assets/jsx/workflow-editor/components/persistent-panel-body/index.jsx");
+/* harmony import */ var _workflow_share_summary_generate_workflow_summary__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../workflow-share-summary/generate-workflow-summary */ "./assets/jsx/workflow-editor/components/workflow-share-summary/generate-workflow-summary.js");
+/* harmony import */ var _utils_copy_text_to_clipboard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/copy-text-to-clipboard */ "./assets/jsx/workflow-editor/utils/copy-text-to-clipboard.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator.return && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, catch: function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+
+
+
+
+
+var NodeShareSummaryPanel = function NodeShareSummaryPanel(_ref) {
+  var _node$data2, _node$data3, _node$data4, _node$data5, _node$data6;
+  var node = _ref.node,
+    nodeType = _ref.nodeType;
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(''),
+    _useState2 = _slicedToArray(_useState, 2),
+    copyFeedback = _useState2[0],
+    setCopyFeedback = _useState2[1];
+  var _useDispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)('core/notices'),
+    createSuccessNotice = _useDispatch.createSuccessNotice,
+    createErrorNotice = _useDispatch.createErrorNotice;
+  var settingsSignature = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useMemo)(function () {
+    var _node$data;
+    return JSON.stringify((node === null || node === void 0 || (_node$data = node.data) === null || _node$data === void 0 ? void 0 : _node$data.settings) || {});
+  }, [node === null || node === void 0 || (_node$data2 = node.data) === null || _node$data2 === void 0 ? void 0 : _node$data2.settings]);
+  var summaryText = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useMemo)(function () {
+    return (0,_workflow_share_summary_generate_workflow_summary__WEBPACK_IMPORTED_MODULE_5__.generateNodeSummaryText)({
+      node: node,
+      nodeType: nodeType
+    });
+  }, [node === null || node === void 0 ? void 0 : node.id, node === null || node === void 0 || (_node$data3 = node.data) === null || _node$data3 === void 0 ? void 0 : _node$data3.label, node === null || node === void 0 || (_node$data4 = node.data) === null || _node$data4 === void 0 ? void 0 : _node$data4.slug, node === null || node === void 0 || (_node$data5 = node.data) === null || _node$data5 === void 0 ? void 0 : _node$data5.name, node === null || node === void 0 || (_node$data6 = node.data) === null || _node$data6 === void 0 ? void 0 : _node$data6.elementaryType, settingsSignature, nodeType]);
+  var onCopySummary = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useCallback)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          _context.prev = 0;
+          _context.next = 3;
+          return (0,_utils_copy_text_to_clipboard__WEBPACK_IMPORTED_MODULE_6__.copyTextToClipboard)(summaryText);
+        case 3:
+          createSuccessNotice((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Step summary copied to clipboard.', 'post-expirator'), {
+            type: 'snackbar',
+            isDismissible: true
+          });
+          setCopyFeedback((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Copied!', 'post-expirator'));
+          _context.next = 11;
+          break;
+        case 7:
+          _context.prev = 7;
+          _context.t0 = _context["catch"](0);
+          createErrorNotice((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Unable to copy step summary. Please copy manually.', 'post-expirator'));
+          setCopyFeedback((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Copy failed', 'post-expirator'));
+        case 11:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee, null, [[0, 7]]);
+  })), [summaryText, createSuccessNotice, createErrorNotice]);
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_persistent_panel_body__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    className: "edit-post-post-status workflow-editor-dev-panel workflow-editor-share-summary-panel",
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Step Summary', 'post-expirator'),
+    initialOpen: true
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, null, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Copy this plain-text summary to share in conversations. It includes the step type and non-default settings.', 'post-expirator'))), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextareaControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Summary', 'post-expirator'),
+    value: summaryText,
+    readOnly: true,
+    rows: 12,
+    className: "workflow-editor-share-summary-textarea",
+    onChange: function onChange() {}
+  })), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
+    variant: "secondary",
+    onClick: onCopySummary,
+    disabled: !summaryText
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Copy to Clipboard', 'post-expirator')), copyFeedback && /*#__PURE__*/React.createElement("span", {
+    className: "workflow-editor-share-summary-copy-feedback"
+  }, copyFeedback))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NodeShareSummaryPanel);
 
 /***/ },
 
@@ -14366,6 +14480,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_inspector__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../node-inspector */ "./assets/jsx/workflow-editor/components/node-inspector/index.jsx");
 /* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
 /* harmony import */ var _workflow_debug_ray_panel__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../workflow-debug-ray-panel */ "./assets/jsx/workflow-editor/components/workflow-debug-ray-panel/index.jsx");
+/* harmony import */ var _workflow_share_summary__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../workflow-share-summary */ "./assets/jsx/workflow-editor/components/workflow-share-summary/index.jsx");
+
 
 
 
@@ -14416,7 +14532,7 @@ var SettingsSidebar = function SettingsSidebar() {
     toggleShortcut: keyboardShortcut,
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_2__["default"],
     isActiveByDefault: SIDEBAR_ACTIVE_BY_DEFAULT
-  }, sidebarName === _constants__WEBPACK_IMPORTED_MODULE_9__.SIDEBAR_WORKFLOW && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_workflow_summary__WEBPACK_IMPORTED_MODULE_10__.WorkflowSummary, null), isDeveloperModeEnabled && isRayDebugInstalled && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_workflow_debug_ray_panel__WEBPACK_IMPORTED_MODULE_13__["default"], null))), sidebarName === _constants__WEBPACK_IMPORTED_MODULE_9__.SIDEBAR_NODE_EDGE && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_node_inspector__WEBPACK_IMPORTED_MODULE_11__.NodeInspector, null)));
+  }, sidebarName === _constants__WEBPACK_IMPORTED_MODULE_9__.SIDEBAR_WORKFLOW && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_workflow_summary__WEBPACK_IMPORTED_MODULE_10__.WorkflowSummary, null), isDeveloperModeEnabled && /*#__PURE__*/React.createElement(_workflow_share_summary__WEBPACK_IMPORTED_MODULE_14__["default"], null), isDeveloperModeEnabled && isRayDebugInstalled && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_workflow_debug_ray_panel__WEBPACK_IMPORTED_MODULE_13__["default"], null))), sidebarName === _constants__WEBPACK_IMPORTED_MODULE_9__.SIDEBAR_NODE_EDGE && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_node_inspector__WEBPACK_IMPORTED_MODULE_11__.NodeInspector, null)));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SettingsSidebar);
 
@@ -15106,6 +15222,818 @@ function WorkflowSaveDraftButton(_ref) {
   }), text);
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (WorkflowSaveDraftButton);
+
+/***/ },
+
+/***/ "./assets/jsx/workflow-editor/components/workflow-share-summary/generate-workflow-summary.js"
+/*!***************************************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/workflow-share-summary/generate-workflow-summary.js ***!
+  \***************************************************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   buildFlowOrder: () => (/* binding */ buildFlowOrder),
+/* harmony export */   generateAsciiDiagram: () => (/* binding */ generateAsciiDiagram),
+/* harmony export */   generateNodeSummaryText: () => (/* binding */ generateNodeSummaryText),
+/* harmony export */   generateWorkflowSummaryText: () => (/* binding */ generateWorkflowSummaryText),
+/* harmony export */   getNodeDisplayLabel: () => (/* binding */ getNodeDisplayLabel),
+/* harmony export */   getNonDefaultSettings: () => (/* binding */ getNonDefaultSettings)
+/* harmony export */ });
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constants */ "./assets/jsx/workflow-editor/constants.jsx");
+
+
+const MAX_VALUE_LENGTH = 100;
+
+/**
+ * Compare two values for equality (shallow for primitives, JSON for objects).
+ *
+ * @param {*} a
+ * @param {*} b
+ * @return {boolean}
+ */
+function valuesEqual(a, b) {
+    if (a === b) {
+        return true;
+    }
+
+    if (a === undefined || a === null) {
+        return b === undefined || b === null || b === '';
+    }
+
+    if (b === undefined || b === null) {
+        return a === '' || a === null || a === undefined;
+    }
+
+    if (typeof a === 'object' || typeof b === 'object') {
+        try {
+            return JSON.stringify(a) === JSON.stringify(b);
+        } catch (error) {
+            return false;
+        }
+    }
+
+    return String(a) === String(b);
+}
+
+/**
+ * Format a setting value for display in the summary.
+ *
+ * @param {*} value
+ * @return {string}
+ */
+function formatSettingValue(value) {
+    if (value === undefined || value === null) {
+        return '';
+    }
+
+    if (typeof value === 'boolean') {
+        return value ? 'true' : 'false';
+    }
+
+    if (typeof value === 'object') {
+        let formatted = JSON.stringify(value);
+
+        if (formatted.length > MAX_VALUE_LENGTH) {
+            formatted = formatted.substring(0, MAX_VALUE_LENGTH - 3) + '...';
+        }
+
+        return formatted;
+    }
+
+    let formatted = String(value);
+
+    if (formatted.length > MAX_VALUE_LENGTH) {
+        formatted = formatted.substring(0, MAX_VALUE_LENGTH - 3) + '...';
+    }
+
+    return formatted;
+}
+
+/**
+ * Get the schema default value for a field.
+ *
+ * @param {Object} field
+ * @return {*}
+ */
+function getFieldDefault(field) {
+    return field.default;
+}
+
+/**
+ * Find a field definition in the settings schema by name.
+ *
+ * @param {Array} settingsSchema
+ * @param {string} fieldName
+ * @return {Object|null}
+ */
+function findFieldInSchema(settingsSchema, fieldName) {
+    if (!settingsSchema || !Array.isArray(settingsSchema)) {
+        return null;
+    }
+
+    for (const panel of settingsSchema) {
+        if (!panel?.fields) {
+            continue;
+        }
+
+        const field = panel.fields.find((item) => item.name === fieldName);
+
+        if (field) {
+            return field;
+        }
+    }
+
+    return null;
+}
+
+/**
+ * Get non-default settings for a node compared to its type schema.
+ *
+ * @param {Object} node
+ * @param {Object} nodeType
+ * @return {Array<{label: string, value: string}>}
+ */
+function getNonDefaultSettings(node, nodeType) {
+    const settings = node?.data?.settings || {};
+    const settingsSchema = nodeType?.settingsSchema || [];
+    const nonDefaults = [];
+    const processedFields = new Set();
+
+    if (Array.isArray(settingsSchema)) {
+        settingsSchema.forEach((panel) => {
+            if (!panel?.fields) {
+                return;
+            }
+
+            panel.fields.forEach((field) => {
+                processedFields.add(field.name);
+
+                const storedValue = settings[field.name];
+                const defaultValue = getFieldDefault(field);
+
+                if (defaultValue === undefined) {
+                    if (storedValue === undefined || storedValue === null || storedValue === '') {
+                        return;
+                    }
+                } else if (valuesEqual(storedValue, defaultValue)) {
+                    return;
+                }
+
+                nonDefaults.push({
+                    label: field.label || field.name,
+                    value: formatSettingValue(storedValue),
+                });
+            });
+        });
+    }
+
+    Object.keys(settings).forEach((fieldName) => {
+        if (processedFields.has(fieldName)) {
+            return;
+        }
+
+        const storedValue = settings[fieldName];
+
+        if (storedValue === undefined || storedValue === null || storedValue === '') {
+            return;
+        }
+
+        const field = findFieldInSchema(settingsSchema, fieldName);
+
+        nonDefaults.push({
+            label: field?.label || fieldName,
+            value: formatSettingValue(storedValue),
+        });
+    });
+
+    return nonDefaults;
+}
+
+/**
+ * Get a display label for a node in diagrams and step lists.
+ *
+ * @param {Object} node
+ * @param {Object} nodeType
+ * @return {string}
+ */
+function getNodeDisplayLabel(node, nodeType) {
+    const typeLabel = nodeType?.label || node?.data?.name || 'Node';
+    const customLabel = node?.data?.label;
+
+    if (customLabel && customLabel !== typeLabel) {
+        return `${typeLabel} (${customLabel})`;
+    }
+
+    return typeLabel;
+}
+
+/**
+ * Get a prefixed diagram label (Trigger:, Action:, etc.).
+ *
+ * @param {Object} node
+ * @param {Object} nodeType
+ * @return {string}
+ */
+function getNodeDiagramLabel(node, nodeType) {
+    const displayLabel = getNodeDisplayLabel(node, nodeType);
+    const elementaryType = node?.data?.elementaryType || nodeType?.elementaryType;
+
+    switch (elementaryType) {
+        case 'trigger':
+            return `Trigger: ${displayLabel}`;
+        case 'action':
+            return `Action: ${displayLabel}`;
+        case 'advanced':
+            return `Advanced: ${displayLabel}`;
+        default:
+            return displayLabel;
+    }
+}
+
+/**
+ * Filter out placeholder nodes from the workflow.
+ *
+ * @param {Array} nodes
+ * @return {Array}
+ */
+function getWorkflowNodes(nodes) {
+    return (nodes || []).filter(
+        (node) => node?.data?.elementaryType !== _constants__WEBPACK_IMPORTED_MODULE_0__.NODE_TYPE_PLACEHOLDER
+            && node?.type !== 'triggerPlaceholder'
+            && node?.type !== 'nodePlaceholder'
+    );
+}
+
+/**
+ * Find trigger nodes in the workflow.
+ *
+ * @param {Array} nodes
+ * @param {Array} edges
+ * @return {Array}
+ */
+function getTriggerNodes(nodes, edges) {
+    const workflowNodes = getWorkflowNodes(nodes);
+
+    const triggers = workflowNodes.filter(
+        (node) => node?.data?.elementaryType === 'trigger' || node?.type === 'trigger'
+    );
+
+    if (triggers.length > 0) {
+        return triggers;
+    }
+
+    const nodesWithNoIncoming = workflowNodes.filter((node) => {
+        return !(edges || []).some((edge) => edge.target === node.id);
+    });
+
+    if (nodesWithNoIncoming.length > 0) {
+        return nodesWithNoIncoming;
+    }
+
+    return workflowNodes.slice(0, 1);
+}
+
+/**
+ * Build an ordered list of node IDs starting from triggers via BFS.
+ *
+ * @param {Array} nodes
+ * @param {Array} edges
+ * @return {Array<string>}
+ */
+function buildFlowOrder(nodes, edges) {
+    const workflowNodes = getWorkflowNodes(nodes);
+    const nodeMap = new Map(workflowNodes.map((node) => [node.id, node]));
+    const triggers = getTriggerNodes(workflowNodes, edges);
+    const ordered = [];
+    const visited = new Set();
+    const queue = [...triggers.map((node) => node.id)];
+
+    while (queue.length > 0) {
+        const nodeId = queue.shift();
+
+        if (visited.has(nodeId) || !nodeMap.has(nodeId)) {
+            continue;
+        }
+
+        visited.add(nodeId);
+        ordered.push(nodeId);
+
+        const outgoingEdges = (edges || [])
+            .filter((edge) => edge.source === nodeId)
+            .sort((a, b) => {
+                const handleA = a.sourceHandle || '';
+                const handleB = b.sourceHandle || '';
+
+                return handleA.localeCompare(handleB);
+            });
+
+        outgoingEdges.forEach((edge) => {
+            if (!visited.has(edge.target)) {
+                queue.push(edge.target);
+            }
+        });
+    }
+
+    workflowNodes.forEach((node) => {
+        if (!visited.has(node.id)) {
+            ordered.push(node.id);
+        }
+    });
+
+    return ordered;
+}
+
+/**
+ * Get the human-readable label for an edge source handle.
+ *
+ * @param {Object} edge
+ * @param {Object} sourceNode
+ * @param {Object} nodeType
+ * @return {string}
+ */
+function getHandleLabel(edge, sourceNode, nodeType) {
+    const handleId = edge.sourceHandle;
+
+    if (!handleId) {
+        return 'Next';
+    }
+
+    const handleSchema = nodeType?.handleSchema?.source || [];
+
+    const staticHandle = handleSchema.find((handle) => handle.id === handleId);
+
+    if (staticHandle?.label) {
+        return staticHandle.label;
+    }
+
+    const dynamicHandles = [];
+
+    handleSchema.forEach((handle) => {
+        if (handle?.type?.startsWith('__dynamic__:')) {
+            const settingName = handle.type.replace('__dynamic__:', '');
+            const options = sourceNode?.data?.settings?.[settingName] || [];
+
+            options.forEach((option) => {
+                dynamicHandles.push(option);
+            });
+        }
+    });
+
+    const dynamicHandle = dynamicHandles.find((handle) => handle.name === handleId || handle.id === handleId);
+
+    if (dynamicHandle?.label) {
+        return dynamicHandle.label;
+    }
+
+    return handleId;
+}
+
+/**
+ * Draw a single ASCII box for a node label.
+ *
+ * @param {string} label
+ * @return {Array<string>}
+ */
+function drawBox(label) {
+    const innerWidth = Math.max(label.length, 19);
+    const horizontalRule = '─'.repeat(innerWidth + 2);
+    const paddedLabel = ` ${label.padEnd(innerWidth)} `;
+
+    return [
+        `┌${horizontalRule}┐`,
+        `│${paddedLabel}│`,
+        `└${horizontalRule}┘`,
+    ];
+}
+
+/**
+ * Draw vertical connector lines between boxes.
+ *
+ * @param {number} indent
+ * @return {Array<string>}
+ */
+function drawConnector(indent = 0) {
+    const prefix = ' '.repeat(indent);
+
+    return [
+        `${prefix}     │`,
+        `${prefix}     v`,
+    ];
+}
+
+/**
+ * Recursively generate ASCII diagram lines for a node subtree.
+ *
+ * @param {string} nodeId
+ * @param {Map} nodeMap
+ * @param {Array} edges
+ * @param {Function} getNodeTypeByName
+ * @param {Set} visitedInPath
+ * @param {Set} globalVisited
+ * @param {number} indent
+ * @return {Array<string>}
+ */
+function generateNodeDiagramLines(nodeId, nodeMap, edges, getNodeTypeByName, visitedInPath, globalVisited, indent = 0) {
+    const node = nodeMap.get(nodeId);
+
+    if (!node) {
+        return [];
+    }
+
+    globalVisited.add(nodeId);
+
+    const prefix = ' '.repeat(indent);
+    const nodeType = getNodeTypeByName(node.data.name) || {};
+    const label = getNodeDiagramLabel(node, nodeType);
+    const lines = drawBox(label).map((line) => prefix + line);
+
+    if (visitedInPath.has(nodeId)) {
+        lines.push(`${prefix}     (cycle detected)`);
+        return lines;
+    }
+
+    const newVisited = new Set(visitedInPath);
+    newVisited.add(nodeId);
+
+    const outgoingEdges = (edges || [])
+        .filter((edge) => edge.source === nodeId)
+        .sort((a, b) => {
+            const handleA = a.sourceHandle || '';
+            const handleB = b.sourceHandle || '';
+
+            return handleA.localeCompare(handleB);
+        });
+
+    if (outgoingEdges.length === 0) {
+        return lines;
+    }
+
+    if (outgoingEdges.length === 1) {
+        lines.push(...drawConnector(indent));
+
+        const childLines = generateNodeDiagramLines(
+            outgoingEdges[0].target,
+            nodeMap,
+            edges,
+            getNodeTypeByName,
+            newVisited,
+            globalVisited,
+            indent
+        );
+
+        lines.push(...childLines);
+
+        return lines;
+    }
+
+    lines.push(`${prefix}     │`);
+
+    outgoingEdges.forEach((edge, index) => {
+        const isLast = index === outgoingEdges.length - 1;
+        const branchPrefix = isLast ? '└─' : '├─';
+        const handleLabel = getHandleLabel(edge, node, nodeType);
+        const targetNode = nodeMap.get(edge.target);
+        const targetType = targetNode ? getNodeTypeByName(targetNode.data.name) || {} : {};
+        const targetLabel = targetNode
+            ? getNodeDiagramLabel(targetNode, targetType)
+            : edge.target;
+
+        lines.push(`${prefix}     ${branchPrefix}[${handleLabel}]──> ${targetLabel}`);
+
+        const childLines = generateNodeDiagramLines(
+            edge.target,
+            nodeMap,
+            edges,
+            getNodeTypeByName,
+            newVisited,
+            globalVisited,
+            indent + 5
+        );
+
+        if (childLines.length > 0) {
+            lines.push(...childLines);
+        }
+    });
+
+    return lines;
+}
+
+/**
+ * Generate an ASCII diagram representing the workflow flow.
+ *
+ * @param {Array} nodes
+ * @param {Array} edges
+ * @param {Function} getNodeTypeByName
+ * @return {string}
+ */
+function generateAsciiDiagram(nodes, edges, getNodeTypeByName) {
+    const workflowNodes = getWorkflowNodes(nodes);
+
+    if (workflowNodes.length === 0) {
+        return '(No workflow steps configured)';
+    }
+
+    const triggers = getTriggerNodes(workflowNodes, edges);
+    const nodeMap = new Map(workflowNodes.map((node) => [node.id, node]));
+    const lines = [];
+    const globalVisited = new Set();
+
+    triggers.forEach((trigger, index) => {
+        if (index > 0) {
+            lines.push('');
+        }
+
+        const diagramLines = generateNodeDiagramLines(
+            trigger.id,
+            nodeMap,
+            edges,
+            getNodeTypeByName,
+            new Set(),
+            globalVisited,
+            0
+        );
+
+        lines.push(...diagramLines);
+    });
+
+    workflowNodes.forEach((node) => {
+        if (globalVisited.has(node.id)) {
+            return;
+        }
+
+        lines.push('');
+        lines.push('(Disconnected step)');
+
+        const diagramLines = generateNodeDiagramLines(
+            node.id,
+            nodeMap,
+            edges,
+            getNodeTypeByName,
+            new Set(),
+            globalVisited,
+            0
+        );
+
+        lines.push(...diagramLines);
+    });
+
+    return lines.join('\n');
+}
+
+/**
+ * Generate the steps and configuration section.
+ *
+ * @param {Array} nodes
+ * @param {Array} edges
+ * @param {Function} getNodeTypeByName
+ * @return {string}
+ */
+function generateStepsSection(nodes, edges, getNodeTypeByName) {
+    const orderedIds = buildFlowOrder(nodes, edges);
+    const nodeMap = new Map(getWorkflowNodes(nodes).map((node) => [node.id, node]));
+    const lines = [];
+
+    if (orderedIds.length === 0) {
+        return '(No steps configured)';
+    }
+
+    orderedIds.forEach((nodeId, index) => {
+        const node = nodeMap.get(nodeId);
+
+        if (!node) {
+            return;
+        }
+
+        const nodeType = getNodeTypeByName(node.data.name) || {};
+        const displayLabel = getNodeDisplayLabel(node, nodeType);
+        const slug = node.data.slug || node.id;
+        const nodeName = node.data.name || 'unknown';
+
+        lines.push(`${index + 1}. ${displayLabel} (${slug}) [${nodeName}]`);
+
+        const nonDefaultSettings = getNonDefaultSettings(node, nodeType);
+
+        if (nonDefaultSettings.length === 0) {
+            lines.push('   (default settings)');
+        } else {
+            nonDefaultSettings.forEach((setting) => {
+                lines.push(`   - ${setting.label}: ${setting.value}`);
+            });
+        }
+    });
+
+    return lines.join('\n');
+}
+
+/**
+ * Generate a plain-text summary for a single workflow step.
+ *
+ * @param {Object} params
+ * @param {Object} params.node
+ * @param {Object} params.nodeType
+ * @return {string}
+ */
+function generateNodeSummaryText({ node, nodeType }) {
+    if (!node) {
+        return '';
+    }
+
+    const resolvedNodeType = nodeType || {};
+    const displayLabel = getNodeDisplayLabel(node, resolvedNodeType);
+    const slug = node.data?.slug || node.id;
+    const nodeName = node.data?.name || 'unknown';
+    const elementaryType = node?.data?.elementaryType || resolvedNodeType?.elementaryType;
+
+    const lines = [
+        `${displayLabel} (${slug}) [${nodeName}]`,
+    ];
+
+    if (elementaryType) {
+        lines.push(`   Type: ${elementaryType}`);
+    }
+
+    const nonDefaultSettings = getNonDefaultSettings(node, resolvedNodeType);
+
+    if (nonDefaultSettings.length === 0) {
+        lines.push('   (default settings)');
+    } else {
+        nonDefaultSettings.forEach((setting) => {
+            lines.push(`   - ${setting.label}: ${setting.value}`);
+        });
+    }
+
+    return lines.join('\n');
+}
+
+/**
+ * Generate the full plain-text workflow summary for sharing.
+ *
+ * @param {Object} params
+ * @param {Object} params.workflow
+ * @param {Function} params.getNodeTypeByName
+ * @return {string}
+ */
+function generateWorkflowSummaryText({ workflow, getNodeTypeByName }) {
+    const title = workflow?.title || '(Untitled workflow)';
+    const description = workflow?.description || '';
+    const status = workflow?.status || 'draft';
+    const nodes = workflow?.flow?.nodes || [];
+    const edges = workflow?.flow?.edges || [];
+    const workflowNodes = getWorkflowNodes(nodes);
+
+    const lines = [
+        `Workflow: ${title}`,
+    ];
+
+    if (description.trim()) {
+        lines.push(`Description: ${description.trim()}`);
+    }
+
+    lines.push(`Status: ${status}`);
+    lines.push('');
+    lines.push('Flow:');
+
+    if (workflowNodes.length === 0) {
+        lines.push('(Empty workflow — add a trigger to get started)');
+    } else {
+        lines.push(generateAsciiDiagram(nodes, edges, getNodeTypeByName));
+    }
+
+    lines.push('');
+    lines.push('Steps & Configuration:');
+    lines.push(generateStepsSection(nodes, edges, getNodeTypeByName));
+
+    return lines.join('\n');
+}
+
+
+/***/ },
+
+/***/ "./assets/jsx/workflow-editor/components/workflow-share-summary/index.jsx"
+/*!********************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/workflow-share-summary/index.jsx ***!
+  \********************************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   WorkflowShareSummaryPanel: () => (/* binding */ WorkflowShareSummaryPanel),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _workflow_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../workflow-store */ "./assets/jsx/workflow-editor/components/workflow-store/index.jsx");
+/* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
+/* harmony import */ var _persistent_panel_body__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../persistent-panel-body */ "./assets/jsx/workflow-editor/components/persistent-panel-body/index.jsx");
+/* harmony import */ var _generate_workflow_summary__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./generate-workflow-summary */ "./assets/jsx/workflow-editor/components/workflow-share-summary/generate-workflow-summary.js");
+/* harmony import */ var _utils_copy_text_to_clipboard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utils/copy-text-to-clipboard */ "./assets/jsx/workflow-editor/utils/copy-text-to-clipboard.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator.return && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, catch: function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+
+
+
+
+
+
+
+var WorkflowShareSummaryPanel = function WorkflowShareSummaryPanel() {
+  var _workflow$flow3, _workflow$flow4;
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(''),
+    _useState2 = _slicedToArray(_useState, 2),
+    copyFeedback = _useState2[0],
+    setCopyFeedback = _useState2[1];
+  var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(function (select) {
+      return {
+        workflow: select(_workflow_store__WEBPACK_IMPORTED_MODULE_4__.store).getWorkflow(),
+        getNodeTypeByName: select(_editor_store__WEBPACK_IMPORTED_MODULE_5__.store).getNodeTypeByName,
+        isLoadingWorkflow: select(_workflow_store__WEBPACK_IMPORTED_MODULE_4__.store).isLoadingWorkflow()
+      };
+    }),
+    workflow = _useSelect.workflow,
+    getNodeTypeByName = _useSelect.getNodeTypeByName,
+    isLoadingWorkflow = _useSelect.isLoadingWorkflow;
+  var _useDispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)('core/notices'),
+    createSuccessNotice = _useDispatch.createSuccessNotice,
+    createErrorNotice = _useDispatch.createErrorNotice;
+  var flowSignature = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useMemo)(function () {
+    var _workflow$flow, _workflow$flow2;
+    var nodes = (workflow === null || workflow === void 0 || (_workflow$flow = workflow.flow) === null || _workflow$flow === void 0 ? void 0 : _workflow$flow.nodes) || [];
+    var edges = (workflow === null || workflow === void 0 || (_workflow$flow2 = workflow.flow) === null || _workflow$flow2 === void 0 ? void 0 : _workflow$flow2.edges) || [];
+    return JSON.stringify({
+      nodes: nodes,
+      edges: edges
+    });
+  }, [workflow === null || workflow === void 0 || (_workflow$flow3 = workflow.flow) === null || _workflow$flow3 === void 0 ? void 0 : _workflow$flow3.nodes, workflow === null || workflow === void 0 || (_workflow$flow4 = workflow.flow) === null || _workflow$flow4 === void 0 ? void 0 : _workflow$flow4.edges]);
+  var summaryText = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useMemo)(function () {
+    return (0,_generate_workflow_summary__WEBPACK_IMPORTED_MODULE_7__.generateWorkflowSummaryText)({
+      workflow: workflow,
+      getNodeTypeByName: getNodeTypeByName
+    });
+  }, [workflow === null || workflow === void 0 ? void 0 : workflow.title, workflow === null || workflow === void 0 ? void 0 : workflow.description, workflow === null || workflow === void 0 ? void 0 : workflow.status, flowSignature, getNodeTypeByName]);
+  var onCopySummary = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useCallback)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          _context.prev = 0;
+          _context.next = 3;
+          return (0,_utils_copy_text_to_clipboard__WEBPACK_IMPORTED_MODULE_8__.copyTextToClipboard)(summaryText);
+        case 3:
+          createSuccessNotice((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Workflow summary copied to clipboard.', 'post-expirator'), {
+            type: 'snackbar',
+            isDismissible: true
+          });
+          setCopyFeedback((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Copied!', 'post-expirator'));
+          _context.next = 11;
+          break;
+        case 7:
+          _context.prev = 7;
+          _context.t0 = _context["catch"](0);
+          createErrorNotice((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Unable to copy workflow summary. Please copy manually.', 'post-expirator'));
+          setCopyFeedback((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Copy failed', 'post-expirator'));
+        case 11:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee, null, [[0, 7]]);
+  })), [summaryText, createSuccessNotice, createErrorNotice]);
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_persistent_panel_body__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    className: "edit-post-post-status workflow-editor-dev-panel workflow-editor-share-summary-panel",
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Workflow Summary', 'post-expirator'),
+    initialOpen: true,
+    disabled: isLoadingWorkflow
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, null, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Copy this plain-text summary to share in conversations. It includes the workflow flow and non-default step settings.', 'post-expirator'))), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextareaControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Summary', 'post-expirator'),
+    value: summaryText,
+    readOnly: true,
+    rows: 18,
+    className: "workflow-editor-share-summary-textarea",
+    onChange: function onChange() {}
+  })), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
+    variant: "secondary",
+    onClick: onCopySummary,
+    disabled: isLoadingWorkflow || !summaryText
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Copy to Clipboard', 'post-expirator')), copyFeedback && /*#__PURE__*/React.createElement("span", {
+    className: "workflow-editor-share-summary-copy-feedback"
+  }, copyFeedback))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (WorkflowShareSummaryPanel);
 
 /***/ },
 
@@ -17807,6 +18735,67 @@ function getNodeSourceHandleNamesByNodeId(nodeId) {
 
 /***/ },
 
+/***/ "./assets/jsx/workflow-editor/utils/copy-text-to-clipboard.js"
+/*!********************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/utils/copy-text-to-clipboard.js ***!
+  \********************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   copyTextToClipboard: () => (/* binding */ copyTextToClipboard)
+/* harmony export */ });
+/**
+ * Copy text using the Clipboard API.
+ *
+ * @param {string} text
+ * @return {Promise<void>}
+ */
+async function copyTextToClipboardWithApi(text) {
+    await navigator.clipboard.writeText(text);
+}
+
+/**
+ * Copy text using the legacy execCommand approach for older browsers.
+ *
+ * @param {string} text
+ * @return {void}
+ */
+function copyTextToClipboardLegacy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'absolute';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    const copied = document.execCommand('copy');
+    document.body.removeChild(textarea);
+
+    if (!copied) {
+        throw new Error('Copy command failed');
+    }
+}
+
+/**
+ * Copy text to the clipboard with a fallback for older browsers.
+ *
+ * @param {string} text
+ * @return {Promise<void>}
+ */
+async function copyTextToClipboard(text) {
+    if (navigator.clipboard?.writeText) {
+        await copyTextToClipboardWithApi(text);
+        return;
+    }
+
+    copyTextToClipboardLegacy(text);
+}
+
+
+/***/ },
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/block-types-list.css"
 /*!***************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/block-types-list.css ***!
@@ -18082,7 +19071,20 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.workflow-editor-dev-info-panel .compo
 .workflow-editor-dev-panel {
     background-color: #fffaf1;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/dev.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;AACpB;;AAEA;IACI,iBAAiB;AACrB;;AAEA;IACI,yBAAyB;AAC7B","sourcesContent":[".workflow-editor-dev-info-panel .components-panel__row {\n    overflow: scroll;\n}\n\n.workflow-editor-dev-info-wrapper {\n    min-width: 1000px;\n}\n\n.workflow-editor-dev-panel {\n    background-color: #fffaf1;\n}\n"],"sourceRoot":""}]);
+
+.workflow-editor-share-summary-textarea textarea {
+    font-family: Menlo, Consolas, Monaco, monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: pre;
+}
+
+.workflow-editor-share-summary-copy-feedback {
+    margin-left: 8px;
+    color: #1e1e1e;
+    font-size: 12px;
+}
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/dev.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;AACpB;;AAEA;IACI,iBAAiB;AACrB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,+CAA+C;IAC/C,eAAe;IACf,gBAAgB;IAChB,gBAAgB;AACpB;;AAEA;IACI,gBAAgB;IAChB,cAAc;IACd,eAAe;AACnB","sourcesContent":[".workflow-editor-dev-info-panel .components-panel__row {\n    overflow: scroll;\n}\n\n.workflow-editor-dev-info-wrapper {\n    min-width: 1000px;\n}\n\n.workflow-editor-dev-panel {\n    background-color: #fffaf1;\n}\n\n.workflow-editor-share-summary-textarea textarea {\n    font-family: Menlo, Consolas, Monaco, monospace;\n    font-size: 12px;\n    line-height: 1.4;\n    white-space: pre;\n}\n\n.workflow-editor-share-summary-copy-feedback {\n    margin-left: 8px;\n    color: #1e1e1e;\n    font-size: 12px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
