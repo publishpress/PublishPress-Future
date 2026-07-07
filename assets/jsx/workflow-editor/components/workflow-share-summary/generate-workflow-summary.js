@@ -1,6 +1,17 @@
 import { NODE_TYPE_PLACEHOLDER } from '../../constants';
 
-const MAX_VALUE_LENGTH = 100;
+const EXPRESSION_FIELD_TYPES = new Set([
+    'expression',
+    'debugData',
+    'askForConfirmation',
+]);
+
+const NATURAL_LANGUAGE_FIELD_TYPES = new Set([
+    'conditional',
+    'postFilter',
+    'postSearchQuery',
+    'conditionalDateOffset',
+]);
 
 /**
  * Compare two values for equality (shallow for primitives, JSON for objects).
@@ -34,12 +45,68 @@ function valuesEqual(a, b) {
 }
 
 /**
+ * Format an action argument entry for display.
+ *
+ * @param {Object} argument
+ * @return {string}
+ */
+function formatActionArgEntry(argument) {
+    const argumentName = argument?.name || '(unnamed)';
+    const dataType = argument?.type || argument?.value || 'integer';
+    const expression = argument?.expression?.expression;
+
+    if (expression) {
+        return `${argumentName}: ${expression} (${dataType})`;
+    }
+
+    return `${argumentName}: (${dataType})`;
+}
+
+/**
+ * Format an object setting value using field-aware rules.
+ *
+ * @param {Object} value
+ * @param {Object|null} field
+ * @return {string}
+ */
+function formatObjectSettingValue(value, field) {
+    const fieldType = field?.type;
+
+    if (NATURAL_LANGUAGE_FIELD_TYPES.has(fieldType) || (typeof value.natural === 'string' && 'json' in value)) {
+        return value.natural || '';
+    }
+
+    if (EXPRESSION_FIELD_TYPES.has(fieldType) || isExpressionObject(value)) {
+        return value.expression || '';
+    }
+
+    return JSON.stringify(value);
+}
+
+/**
+ * Check whether a value is an expression object.
+ *
+ * @param {*} value
+ * @return {boolean}
+ */
+function isExpressionObject(value) {
+    return Boolean(
+        value
+        && typeof value === 'object'
+        && !Array.isArray(value)
+        && typeof value.expression === 'string'
+        && !('json' in value)
+    );
+}
+
+/**
  * Format a setting value for display in the summary.
  *
  * @param {*} value
+ * @param {Object|null} field
  * @return {string}
  */
-function formatSettingValue(value) {
+function formatSettingValue(value, field = null) {
     if (value === undefined || value === null) {
         return '';
     }
@@ -48,23 +115,19 @@ function formatSettingValue(value) {
         return value ? 'true' : 'false';
     }
 
-    if (typeof value === 'object') {
-        let formatted = JSON.stringify(value);
-
-        if (formatted.length > MAX_VALUE_LENGTH) {
-            formatted = formatted.substring(0, MAX_VALUE_LENGTH - 3) + '...';
+    if (Array.isArray(value)) {
+        if (field?.type === 'actionArgs') {
+            return value.map(formatActionArgEntry).join('\n   ');
         }
 
-        return formatted;
+        return value.map((item) => formatSettingValue(item, field)).join(', ');
     }
 
-    let formatted = String(value);
-
-    if (formatted.length > MAX_VALUE_LENGTH) {
-        formatted = formatted.substring(0, MAX_VALUE_LENGTH - 3) + '...';
+    if (typeof value === 'object') {
+        return formatObjectSettingValue(value, field);
     }
 
-    return formatted;
+    return String(value);
 }
 
 /**
@@ -139,7 +202,7 @@ export function getNonDefaultSettings(node, nodeType) {
 
                 nonDefaults.push({
                     label: field.label || field.name,
-                    value: formatSettingValue(storedValue),
+                    value: formatSettingValue(storedValue, field),
                 });
             });
         });
@@ -160,7 +223,7 @@ export function getNonDefaultSettings(node, nodeType) {
 
         nonDefaults.push({
             label: field?.label || fieldName,
-            value: formatSettingValue(storedValue),
+            value: formatSettingValue(storedValue, field),
         });
     });
 
