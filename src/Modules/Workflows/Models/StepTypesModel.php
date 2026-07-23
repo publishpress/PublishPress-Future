@@ -32,6 +32,10 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooSe
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooSetProductStock;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooChangeOrderStatus;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooAddOrderNote;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooCreateCoupon;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooGenerateCoupon;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooCreateProduct;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooCreateOrder;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnAdminInit;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCustomAction;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnTermsAdded;
@@ -284,6 +288,10 @@ class StepTypesModel implements StepTypesModelInterface
             $nodesInstances[WooSetProductStock::getNodeTypeName()] = new WooSetProductStock();
             $nodesInstances[WooChangeOrderStatus::getNodeTypeName()] = new WooChangeOrderStatus();
             $nodesInstances[WooAddOrderNote::getNodeTypeName()] = new WooAddOrderNote();
+            $nodesInstances[WooCreateCoupon::getNodeTypeName()] = new WooCreateCoupon();
+            $nodesInstances[WooGenerateCoupon::getNodeTypeName()] = new WooGenerateCoupon();
+            $nodesInstances[WooCreateProduct::getNodeTypeName()] = new WooCreateProduct();
+            $nodesInstances[WooCreateOrder::getNodeTypeName()] = new WooCreateOrder();
         }
 
         return $nodesInstances;
