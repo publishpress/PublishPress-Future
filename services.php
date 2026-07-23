@@ -105,6 +105,10 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooSetPro
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooSetProductStockRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooChangeOrderStatusRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooAddOrderNoteRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooCreateCouponRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooGenerateCouponRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooCreateProductRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooCreateOrderRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnAdminInitRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnInitRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnLegacyActionTriggerRunner;
@@ -1276,6 +1280,39 @@ return [
 
                 case WooAddOrderNoteRunner::getNodeTypeName():
                     $stepRunner = new WooAddOrderNoteRunner(
+                        $generalStepProcessor,
+                        $executionContext,
+                        $workflowLogger
+                    );
+                    break;
+
+                case WooCreateCouponRunner::getNodeTypeName():
+                    $stepRunner = new WooCreateCouponRunner(
+                        $generalStepProcessor,
+                        $executionContext,
+                        $workflowLogger
+                    );
+                    break;
+
+                case WooGenerateCouponRunner::getNodeTypeName():
+                    $stepRunner = new WooGenerateCouponRunner(
+                        $generalStepProcessor,
+                        $container->get(ServicesAbstract::EMAIL),
+                        $executionContext,
+                        $workflowLogger
+                    );
+                    break;
+
+                case WooCreateProductRunner::getNodeTypeName():
+                    $stepRunner = new WooCreateProductRunner(
+                        $generalStepProcessor,
+                        $executionContext,
+                        $workflowLogger
+                    );
+                    break;
+
+                case WooCreateOrderRunner::getNodeTypeName():
+                    $stepRunner = new WooCreateOrderRunner(
                         $generalStepProcessor,
                         $executionContext,
                         $workflowLogger
