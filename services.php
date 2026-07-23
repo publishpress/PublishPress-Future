@@ -109,6 +109,10 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooCreate
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooGenerateCouponRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooCreateProductRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooCreateOrderRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooCancelSubscriptionRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooChangeSubscriptionStatusRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooAddMembershipRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooRemoveMembershipRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnAdminInitRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnInitRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnLegacyActionTriggerRunner;
@@ -1315,6 +1319,34 @@ return [
                     $stepRunner = new WooCreateOrderRunner(
                         $generalStepProcessor,
                         $executionContext,
+                        $workflowLogger
+                    );
+                    break;
+
+                case WooCancelSubscriptionRunner::getNodeTypeName():
+                    $stepRunner = new WooCancelSubscriptionRunner(
+                        $generalStepProcessor,
+                        $workflowLogger
+                    );
+                    break;
+
+                case WooChangeSubscriptionStatusRunner::getNodeTypeName():
+                    $stepRunner = new WooChangeSubscriptionStatusRunner(
+                        $generalStepProcessor,
+                        $workflowLogger
+                    );
+                    break;
+
+                case WooAddMembershipRunner::getNodeTypeName():
+                    $stepRunner = new WooAddMembershipRunner(
+                        $generalStepProcessor,
+                        $workflowLogger
+                    );
+                    break;
+
+                case WooRemoveMembershipRunner::getNodeTypeName():
+                    $stepRunner = new WooRemoveMembershipRunner(
+                        $generalStepProcessor,
                         $workflowLogger
                     );
                     break;

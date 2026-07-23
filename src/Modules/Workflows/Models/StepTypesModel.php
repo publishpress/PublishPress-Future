@@ -36,6 +36,10 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooCr
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooGenerateCoupon;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooCreateProduct;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooCreateOrder;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooCancelSubscription;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooChangeSubscriptionStatus;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooAddMembership;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\WooRemoveMembership;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnAdminInit;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCustomAction;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnTermsAdded;
@@ -292,6 +296,18 @@ class StepTypesModel implements StepTypesModelInterface
             $nodesInstances[WooGenerateCoupon::getNodeTypeName()] = new WooGenerateCoupon();
             $nodesInstances[WooCreateProduct::getNodeTypeName()] = new WooCreateProduct();
             $nodesInstances[WooCreateOrder::getNodeTypeName()] = new WooCreateOrder();
+
+            // Subscriptions actions (Pro) — only when WooCommerce Subscriptions is active.
+            if (class_exists('WC_Subscriptions')) {
+                $nodesInstances[WooCancelSubscription::getNodeTypeName()] = new WooCancelSubscription();
+                $nodesInstances[WooChangeSubscriptionStatus::getNodeTypeName()] = new WooChangeSubscriptionStatus();
+            }
+
+            // Memberships actions (Pro) — only when WooCommerce Memberships is active.
+            if (function_exists('wc_memberships')) {
+                $nodesInstances[WooAddMembership::getNodeTypeName()] = new WooAddMembership();
+                $nodesInstances[WooRemoveMembership::getNodeTypeName()] = new WooRemoveMembership();
+            }
         }
 
         return $nodesInstances;
