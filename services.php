@@ -103,6 +103,8 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\UpdatePos
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooExpireCouponRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooSetProductSalePriceRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooSetProductStockRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooChangeOrderStatusRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\WooAddOrderNoteRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnAdminInitRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnInitRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnLegacyActionTriggerRunner;
@@ -1258,6 +1260,22 @@ return [
 
                 case WooSetProductStockRunner::getNodeTypeName():
                     $stepRunner = new WooSetProductStockRunner(
+                        $generalStepProcessor,
+                        $executionContext,
+                        $workflowLogger
+                    );
+                    break;
+
+                case WooChangeOrderStatusRunner::getNodeTypeName():
+                    $stepRunner = new WooChangeOrderStatusRunner(
+                        $generalStepProcessor,
+                        $executionContext,
+                        $workflowLogger
+                    );
+                    break;
+
+                case WooAddOrderNoteRunner::getNodeTypeName():
+                    $stepRunner = new WooAddOrderNoteRunner(
                         $generalStepProcessor,
                         $executionContext,
                         $workflowLogger
