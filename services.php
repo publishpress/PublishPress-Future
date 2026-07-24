@@ -128,6 +128,9 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostUp
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostWorkflowEnableRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnScheduleRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnUserRoleChangeRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnWooProductPriceChangedRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnWooProductStockChangedRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnWooOrderStatusChangedRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnTermsAddedRunner;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\Future\Modules\Workflows\Logger\WorkflowLogger;
@@ -1128,6 +1131,38 @@ return [
                     $stepRunner = new OnUserRoleChangeRunner(
                         $generalStepProcessor,
                         $workflowLogger
+                    );
+                    break;
+
+                case OnWooProductPriceChangedRunner::getNodeTypeName():
+                    $stepRunner = new OnWooProductPriceChangedRunner(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $generalStepProcessor,
+                        $workflowLogger,
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD),
+                        $executionContext
+                    );
+                    break;
+
+                case OnWooProductStockChangedRunner::getNodeTypeName():
+                    $stepRunner = new OnWooProductStockChangedRunner(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $generalStepProcessor,
+                        $workflowLogger,
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD),
+                        $executionContext
+                    );
+                    break;
+
+                case OnWooOrderStatusChangedRunner::getNodeTypeName():
+                    $stepRunner = new OnWooOrderStatusChangedRunner(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $generalStepProcessor,
+                        $workflowLogger,
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD),
+                        $executionContext
                     );
                     break;
 
