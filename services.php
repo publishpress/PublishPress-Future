@@ -131,6 +131,9 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnUserRo
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnWooProductPriceChangedRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnWooProductStockChangedRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnWooOrderStatusChangedRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnWooCouponAppliedRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnWooSubscriptionStatusChangedRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnWooMembershipStatusChangedRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnTermsAddedRunner;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\Future\Modules\Workflows\Logger\WorkflowLogger;
@@ -1163,6 +1166,30 @@ return [
                         $workflowLogger,
                         $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD),
                         $executionContext
+                    );
+                    break;
+
+                case OnWooCouponAppliedRunner::getNodeTypeName():
+                    $stepRunner = new OnWooCouponAppliedRunner(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $generalStepProcessor,
+                        $workflowLogger,
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD),
+                        $executionContext
+                    );
+                    break;
+
+                case OnWooSubscriptionStatusChangedRunner::getNodeTypeName():
+                    $stepRunner = new OnWooSubscriptionStatusChangedRunner(
+                        $generalStepProcessor,
+                        $workflowLogger
+                    );
+                    break;
+
+                case OnWooMembershipStatusChangedRunner::getNodeTypeName():
+                    $stepRunner = new OnWooMembershipStatusChangedRunner(
+                        $generalStepProcessor,
+                        $workflowLogger
                     );
                     break;
 

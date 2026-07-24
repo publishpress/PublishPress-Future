@@ -60,6 +60,9 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnUs
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnWooProductPriceChanged;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnWooProductStockChanged;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnWooOrderStatusChanged;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnWooCouponApplied;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnWooSubscriptionStatusChanged;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnWooMembershipStatusChanged;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 
@@ -265,6 +268,19 @@ class StepTypesModel implements StepTypesModelInterface
             $nodesInstances[OnWooProductPriceChanged::getNodeTypeName()] = new OnWooProductPriceChanged();
             $nodesInstances[OnWooProductStockChanged::getNodeTypeName()] = new OnWooProductStockChanged();
             $nodesInstances[OnWooOrderStatusChanged::getNodeTypeName()] = new OnWooOrderStatusChanged();
+            $nodesInstances[OnWooCouponApplied::getNodeTypeName()] = new OnWooCouponApplied();
+
+            // Subscription trigger (Pro) — only when WooCommerce Subscriptions is active.
+            if (class_exists('WC_Subscriptions')) {
+                $nodesInstances[OnWooSubscriptionStatusChanged::getNodeTypeName()] =
+                    new OnWooSubscriptionStatusChanged();
+            }
+
+            // Membership trigger (Pro) — only when WooCommerce Memberships is active.
+            if (function_exists('wc_memberships')) {
+                $nodesInstances[OnWooMembershipStatusChanged::getNodeTypeName()] =
+                    new OnWooMembershipStatusChanged();
+            }
         }
 
         if ($this->settingsFacade->getExperimentalFeaturesStatus()) {
