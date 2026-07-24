@@ -30,6 +30,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\Dupli
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\NcsCartChangeOrderStatus;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\NcsCartCancelSubscription;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\NcsCartDuplicateProduct;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\NcsCartRefundOrder;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnAdminInit;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCustomAction;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnTermsAdded;
@@ -280,6 +281,7 @@ class StepTypesModel implements StepTypesModelInterface
             $nodesInstances[NcsCartChangeOrderStatus::getNodeTypeName()] = new NcsCartChangeOrderStatus();
             $nodesInstances[NcsCartCancelSubscription::getNodeTypeName()] = new NcsCartCancelSubscription();
             $nodesInstances[NcsCartDuplicateProduct::getNodeTypeName()] = new NcsCartDuplicateProduct();
+            $nodesInstances[NcsCartRefundOrder::getNodeTypeName()] = new NcsCartRefundOrder();
         }
 
         return $nodesInstances;

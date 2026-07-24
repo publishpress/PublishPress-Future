@@ -103,6 +103,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\UpdatePos
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\NcsCartChangeOrderStatusRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\NcsCartCancelSubscriptionRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\NcsCartDuplicateProductRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\NcsCartRefundOrderRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnAdminInitRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnInitRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnLegacyActionTriggerRunner;
@@ -1258,6 +1259,14 @@ return [
 
                 case NcsCartDuplicateProductRunner::getNodeTypeName():
                     $stepRunner = new NcsCartDuplicateProductRunner(
+                        $generalStepProcessor,
+                        $executionContext,
+                        $workflowLogger
+                    );
+                    break;
+
+                case NcsCartRefundOrderRunner::getNodeTypeName():
+                    $stepRunner = new NcsCartRefundOrderRunner(
                         $generalStepProcessor,
                         $executionContext,
                         $workflowLogger
