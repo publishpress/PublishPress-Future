@@ -67,6 +67,11 @@ abstract class HooksAbstract
     public const ACTION_WC_ORDER_STATUS_CHANGED = 'woocommerce_order_status_changed';
 
     /**
+     * Fired by WooCommerce when a coupon is applied to the cart.
+     */
+    public const ACTION_WC_APPLIED_COUPON = 'woocommerce_applied_coupon';
+
+    /**
      * @deprecated 4.3.2 Use ACTION_EXECUTE_STEP instead.
      */
     public const ACTION_EXECUTE_NODE = 'publishpressfuture_workflow_execute_node';
