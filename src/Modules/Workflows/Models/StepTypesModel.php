@@ -57,6 +57,9 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPo
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnUserRoleChange;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnWooProductPriceChanged;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnWooProductStockChanged;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnWooOrderStatusChanged;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 
@@ -257,6 +260,12 @@ class StepTypesModel implements StepTypesModelInterface
             OnTermsAdded::getNodeTypeName() => new OnTermsAdded(),
             OnCustomAction::getNodeTypeName() => new OnCustomAction(),
         ];
+
+        if (class_exists('WooCommerce')) {
+            $nodesInstances[OnWooProductPriceChanged::getNodeTypeName()] = new OnWooProductPriceChanged();
+            $nodesInstances[OnWooProductStockChanged::getNodeTypeName()] = new OnWooProductStockChanged();
+            $nodesInstances[OnWooOrderStatusChanged::getNodeTypeName()] = new OnWooOrderStatusChanged();
+        }
 
         if ($this->settingsFacade->getExperimentalFeaturesStatus()) {
             $nodesInstances[OnInit::getNodeTypeName()] = new OnInit();

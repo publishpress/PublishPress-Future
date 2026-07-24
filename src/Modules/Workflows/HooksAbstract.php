@@ -57,6 +57,16 @@ abstract class HooksAbstract
     public const ACTION_TRIGGER_FIRED = 'publishpressfuture_workflow_trigger_fired_';
 
     /**
+     * Fired by WooCommerce when a product's CRUD props change (WC_Product::save()).
+     */
+    public const ACTION_WC_PRODUCT_UPDATED_PROPS = 'woocommerce_product_object_updated_props';
+
+    /**
+     * Fired by WooCommerce when an order's status changes.
+     */
+    public const ACTION_WC_ORDER_STATUS_CHANGED = 'woocommerce_order_status_changed';
+
+    /**
      * @deprecated 4.3.2 Use ACTION_EXECUTE_STEP instead.
      */
     public const ACTION_EXECUTE_NODE = 'publishpressfuture_workflow_execute_node';
