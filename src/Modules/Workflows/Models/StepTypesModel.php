@@ -47,6 +47,9 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPo
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnSchedule;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnUserRoleChange;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCartOrderCreated;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCartOrderRefunded;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCartSubscriptionStatusChanged;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 
@@ -247,6 +250,13 @@ class StepTypesModel implements StepTypesModelInterface
             OnTermsAdded::getNodeTypeName() => new OnTermsAdded(),
             OnCustomAction::getNodeTypeName() => new OnCustomAction(),
         ];
+
+        if (function_exists('sc_setup_order')) {
+            $nodesInstances[OnCartOrderCreated::getNodeTypeName()] = new OnCartOrderCreated();
+            $nodesInstances[OnCartOrderRefunded::getNodeTypeName()] = new OnCartOrderRefunded();
+            $nodesInstances[OnCartSubscriptionStatusChanged::getNodeTypeName()] =
+                new OnCartSubscriptionStatusChanged();
+        }
 
         if ($this->settingsFacade->getExperimentalFeaturesStatus()) {
             $nodesInstances[OnInit::getNodeTypeName()] = new OnInit();
