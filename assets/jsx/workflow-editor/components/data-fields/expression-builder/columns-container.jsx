@@ -1,6 +1,5 @@
 import { useState, useCallback } from "@wordpress/element";
 import { ColumnItem } from "./column-item";
-import { __, sprintf } from "@publishpress/i18n";
 import { processItemWithTypeHandler } from "./type-handlers";
 
 const RenderColumns = ({

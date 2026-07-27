@@ -1,4 +1,3 @@
-import { __ } from "@publishpress/i18n";
 import { VariablesTreeSelect } from "../variables-tree-select";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 

@@ -1,4 +1,3 @@
-import { __ } from "@publishpress/i18n";
 import { ToggleControl } from "@wordpress/components";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 import ExpressionBuilder from "./expression-builder";

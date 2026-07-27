@@ -1,8 +1,8 @@
 import { useSelect } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
-import { __ } from "@publishpress/i18n";
-import { sprintf } from "@publishpress/i18n";
+import { __ } from "@wordpress/i18n";
+import { sprintf } from "@wordpress/i18n";
 import { useRef } from "@wordpress/element";
 import NodeInspectorCard from "./node-inspector-card";
 import InspectorCard from "../inspector-card";
@@ -15,6 +15,7 @@ import NodeDataFlowPanel from "./node-data-flow-panel";
 import ObjectGroupIcon from "../icons/object-group";
 import LinesLeaningIcon from "../icons/lines-leaning";
 import NodeDevInfoPanel from "../node-dev-info-panel";
+import NodeShareSummaryPanel from "../node-share-summary";
 import useScrollToTop from "../scrolled-to-top";
 import { getExpandedStepScopedVariables } from "../../utils";
 
@@ -152,6 +153,7 @@ export const NodeInspector = () => {
                         <>
                             <NodeDataFlowPanel inputSchema={mappedNodeInputSchema} outputSchema={mappedNodeOutputSchema} stepScopedVariables={stepScopedVariables} />
                             <NodeDevInfoPanel node={selectedNode} nodeType={nodeType} />
+                            <NodeShareSummaryPanel node={selectedNode} nodeType={nodeType} />
                         </>
                     )}
 

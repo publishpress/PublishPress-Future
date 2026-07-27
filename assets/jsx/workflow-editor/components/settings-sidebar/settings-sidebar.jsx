@@ -5,7 +5,7 @@ import { store as keyboardShortcutStore } from '@wordpress/keyboard-shortcuts';
 import { SHORTCUT_TOGGLE_SIDEBAR } from '../keyboard-shortcuts/constants';
 import { PluginSidebarEditPost } from './plugin-sidebar';
 import { SettingsHeader } from './settings-header';
-import { __ } from '@publishpress/i18n';
+import { __ } from '@wordpress/i18n';
 import {
     SLOT_SCOPE_WORKFLOW_EDITOR,
     FEATURE_DEVELOPER_MODE
@@ -15,6 +15,7 @@ import { WorkflowSummary } from '../workflow-summary';
 import { NodeInspector } from '../node-inspector';
 import { store as editorStore } from '../editor-store';
 import WorkflowDebugRayPanel from '../workflow-debug-ray-panel';
+import WorkflowShareSummaryPanel from '../workflow-share-summary';
 
 
 const SIDEBAR_ACTIVE_BY_DEFAULT = Platform.select({
@@ -59,6 +60,9 @@ export const SettingsSidebar = () => {
             {sidebarName === SIDEBAR_WORKFLOW && (
                 <>
                     <WorkflowSummary />
+                    {isDeveloperModeEnabled && (
+                        <WorkflowShareSummaryPanel />
+                    )}
                     {isDeveloperModeEnabled && isRayDebugInstalled && (
                         <>
                             <WorkflowDebugRayPanel />

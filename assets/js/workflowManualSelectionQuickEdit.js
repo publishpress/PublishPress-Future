@@ -31,6 +31,7 @@ function Fieldset(_ref) {
     apiUrl = _ref.apiUrl,
     nonce = _ref.nonce,
     workflowNonce = _ref.workflowNonce,
+    actionNonce = _ref.actionNonce,
     onChange = _ref.onChange,
     wrapper = _ref.wrapper;
   var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useSelect)(function (select) {
@@ -95,6 +96,10 @@ function Fieldset(_ref) {
     type: "hidden",
     name: "future_workflow_view",
     value: context
+  }), context === 'quick-edit' && actionNonce && /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: "_future_action_nonce",
+    value: actionNonce
   }), controls));
 }
 
@@ -1680,39 +1685,6 @@ module.exports = function (item) {
 
 /***/ },
 
-/***/ "./node_modules/react-dom/client.js"
-/*!******************************************!*\
-  !*** ./node_modules/react-dom/client.js ***!
-  \******************************************/
-(__unused_webpack_module, exports, __webpack_require__) {
-
-
-
-var m = __webpack_require__(/*! react-dom */ "react-dom");
-if (false) // removed by dead control flow
-{} else {
-  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-  exports.createRoot = function(c, o) {
-    i.usingClientEntryPoint = true;
-    try {
-      return m.createRoot(c, o);
-    } finally {
-      i.usingClientEntryPoint = false;
-    }
-  };
-  exports.hydrateRoot = function(c, h, o) {
-    i.usingClientEntryPoint = true;
-    try {
-      return m.hydrateRoot(c, h, o);
-    } finally {
-      i.usingClientEntryPoint = false;
-    }
-  };
-}
-
-
-/***/ },
-
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js"
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -1980,16 +1952,6 @@ module.exports = styleTagTransform;
 
 /***/ },
 
-/***/ "@publishpress/i18n"
-/*!************************************!*\
-  !*** external "publishpress.i18n" ***!
-  \************************************/
-(module) {
-
-module.exports = publishpress.i18n;
-
-/***/ },
-
 /***/ "@wordpress/components"
 /*!********************************!*\
   !*** external "wp.components" ***!
@@ -2047,16 +2009,6 @@ module.exports = wp.i18n;
 (module) {
 
 module.exports = wp.url;
-
-/***/ },
-
-/***/ "react-dom"
-/*!***************************!*\
-  !*** external "ReactDOM" ***!
-  \***************************/
-(module) {
-
-module.exports = ReactDOM;
 
 /***/ }
 
@@ -2146,10 +2098,11 @@ var __webpack_exports__ = {};
   !*** ./assets/jsx/workflow-manual-selection/quick-edit/index.jsx ***!
   \*******************************************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _fieldset__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../fieldset */ "./assets/jsx/workflow-manual-selection/fieldset/index.jsx");
-/* harmony import */ var _publishpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @publishpress/i18n */ "@publishpress/i18n");
-/* harmony import */ var _publishpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_publishpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./css/style.css */ "./assets/jsx/workflow-manual-selection/quick-edit/css/style.css");
 
 
@@ -2185,7 +2138,7 @@ window.inlineEditPost.edit = function (button, id) {
   if (!container) {
     return;
   }
-  var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot)(container);
+  var root = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createRoot)(container);
   var saveButton = document.querySelector('.inline-edit-save .save');
   if (saveButton) {
     saveButton.onclick = function () {
@@ -2199,12 +2152,14 @@ window.inlineEditPost.edit = function (button, id) {
   var apiUrl = window.futureWorkflowManualSelection.apiUrl;
   var nonce = window.futureWorkflowManualSelection.nonce;
   var workflowNonce = window.futureWorkflowManualSelection.workflowNonce;
+  var actionNonce = window.futureWorkflowManualSelection.actionNonce;
   var component = /*#__PURE__*/React.createElement(_fieldset__WEBPACK_IMPORTED_MODULE_1__.Fieldset, {
     context: "quick-edit",
     postId: postId,
     apiUrl: apiUrl,
     nonce: nonce,
     workflowNonce: workflowNonce,
+    actionNonce: actionNonce,
     wrapper: function wrapper(_ref) {
       var workflowsWithManualTrigger = _ref.workflowsWithManualTrigger,
         children = _ref.children;
@@ -2217,7 +2172,7 @@ window.inlineEditPost.edit = function (button, id) {
         class: "future-quick-edit-fieldset"
       }, /*#__PURE__*/React.createElement("div", {
         class: "title"
-      }, (0,_publishpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Action Workflows', 'post-expirator')), /*#__PURE__*/React.createElement("div", {
+      }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Action Workflows', 'post-expirator')), /*#__PURE__*/React.createElement("div", {
         class: "inline-edit-col"
       }, /*#__PURE__*/React.createElement("div", {
         class: "inline-edit-group"

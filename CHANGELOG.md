@@ -1,6 +1,36 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+[UNRELEASED]
+
+- Fixed: Improved workflow compatibility with ACF Extended frontend forms by triggering only when the required metadata has already been processed (Issue #1649).
+- Added: Copy workflow to text feature for development, support or debug work.
+
+[4.10.3] - 28 May, 2026
+
+- Fixed: Future Action metabox now correctly appears in the sidebar (Issue #1641).
+- Fixed: Improved compatibility with Polylang when post IDs include a language code (Issue #1637).
+- Fixed: Workflows list status change and copy workflow actions no longer throw `createRoot is not defined` in the browser console (Issue #1640).
+- Changed: Admin React entry points now mount via `createRoot` from `@wordpress/element` instead of `react-dom/client`, matching WordPress script dependencies (Issue #1640).
+- Changed: Removed unused `@wordpress/i18n` imports across workflow editor, backup panel, and workflows list components.
+- Changed: Update translation files.
+
+[4.10.2] - 27 May, 2026
+
+- Added: Added new language files for locales: ar, cs_CZ, da_DK, el, en_US, fa_IR, he_IL, or_RO, pl_PL, sv_SE, th, tr_TR, and vi.
+- Changed: Updated existing translations.
+- Fixed: WordPress.org translations now correctly take priority over custom or AI-generated strings, ensuring consistent language display while still merging all available sources.
+- Fixed: Enhanced translations for JavaScript interfaces, particularly in the settings and workflow editor.
+- Fixed: Post metadata is now available in its updated state for Post Update, Save, and Publish triggers (Issue #1626).
+- Fixed: Bulk action "Update Future Actions from Post Metadata" now works correctly for Future Actions.
+- Fixed: Debug log auto-refresh now updates the footer summary (displayed/total counts, sessions, and log size) along with the log content.
+- Security: Escape `[futureaction]` shortcode output when rendered inside an HTML wrapper to prevent stored XSS from unescaped expiration date text.
+- Security: Add permission checks to restrict access to workflow settings.
+- Security: Escape workflow, trigger, step, and post data in scheduled action admin output to prevent stored XSS in Action Scheduler listings.
+- Security: Bulk sync for "Update Future Actions from Post Metadata" now uses WordPress bulk action handling, with per-post "expire" and "edit" capability checks.
+- Security: Require nonce verification when saving manual workflow selections via Quick Edit.
+- Security: Add granular permission checks to workflow manual triggering.
+
 [4.10.1] - 20 April, 2026
 
 - Fixed: Update language strings.

@@ -1,4 +1,3 @@
-import { __ } from "@publishpress/i18n";
 import {
     useState,
     useEffect,

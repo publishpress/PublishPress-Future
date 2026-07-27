@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from '@wordpress/element';
+import { useState, useEffect, useRef, createRoot } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import { createRoot } from 'react-dom/client';
 
 const config = window.publishpressFutureSettingsDebug || {};
 const text = config.text || {};
@@ -41,6 +40,10 @@ function DebugLogAutoRefresh() {
                     textarea.value = text.noResults || 'No results match the current filter.';
                 }
                 textarea.scrollTop = textarea.scrollHeight;
+            }
+            const footerEl = document.getElementById('debug-log-length');
+            if (footerEl && typeof data.footer_message === 'string') {
+                footerEl.textContent = data.footer_message;
             }
             lastRefreshTimeRef.current = Date.now();
             setLastRefreshedSeconds(0);
