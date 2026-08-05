@@ -53,6 +53,7 @@ class WorkflowExecutionSafeguard implements WorkflowExecutionSafeguardInterface
                 $executionContext->getVariable('global.engine_execution_id'),
                 $executionContext->getVariable('global.workflow.execution_id'),
                 $executionContext->getVariable('global.trigger.id'),
+                $uniqueId,
             ]);
 
             if (array_key_exists($triggerExecutionCacheKey, self::$triggerExecutionCache)) {
