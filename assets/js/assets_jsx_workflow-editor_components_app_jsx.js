@@ -2776,9 +2776,9 @@ var ColumnItemVariable = function ColumnItemVariable(_ref2) {
   var item = _ref2.item,
     currentItemPath = _ref2.currentItemPath,
     _onClick2 = _ref2.onClick,
-    setCurrentDescription = _ref2.setCurrentDescription,
-    setCurrentVariableId = _ref2.setCurrentVariableId,
     _onDoubleClick = _ref2.onDoubleClick,
+    onVariableHover = _ref2.onVariableHover,
+    onVariableHoverEnd = _ref2.onVariableHoverEnd,
     _ref2$path = _ref2.path,
     path = _ref2$path === void 0 ? [] : _ref2$path,
     index = _ref2.index,
@@ -2786,10 +2786,6 @@ var ColumnItemVariable = function ColumnItemVariable(_ref2) {
   var hasChildren = item.children && item.children.length > 0;
   var currentColumnIndex = path.length - 1;
   var selectedItemIndex = currentItemPath[currentColumnIndex];
-  var onMouseEnter = function onMouseEnter() {
-    setCurrentDescription("".concat(item.description));
-    setCurrentVariableId(item.id);
-  };
   var stepSlug = item.name.split('.')[0];
   var stepSlugLabel = stepSlug ? "(".concat(stepSlug, ")") : '';
   var showStepSlugLabel = columnIndex === 0 && stepSlug !== 'global';
@@ -2798,9 +2794,14 @@ var ColumnItemVariable = function ColumnItemVariable(_ref2) {
     onClick: function onClick() {
       return _onClick2(path, currentColumnIndex, index);
     },
-    onMouseEnter: onMouseEnter,
     onDoubleClick: function onDoubleClick() {
       return _onDoubleClick(item);
+    },
+    onMouseEnter: function onMouseEnter(e) {
+      return onVariableHover === null || onVariableHover === void 0 ? void 0 : onVariableHover(item, e);
+    },
+    onMouseLeave: function onMouseLeave() {
+      return onVariableHoverEnd === null || onVariableHoverEnd === void 0 ? void 0 : onVariableHoverEnd();
     }
   }, item.label, " ", showStepSlugLabel ? /*#__PURE__*/React.createElement("span", {
     className: "column-item-step-slug"
@@ -2810,9 +2811,9 @@ var ColumnItem = function ColumnItem(_ref3) {
   var item = _ref3.item,
     currentItemPath = _ref3.currentItemPath,
     onClick = _ref3.onClick,
-    setCurrentDescription = _ref3.setCurrentDescription,
-    setCurrentVariableId = _ref3.setCurrentVariableId,
     onDoubleClick = _ref3.onDoubleClick,
+    onVariableHover = _ref3.onVariableHover,
+    onVariableHoverEnd = _ref3.onVariableHoverEnd,
     _ref3$path = _ref3.path,
     path = _ref3$path === void 0 ? [] : _ref3$path,
     index = _ref3.index,
@@ -2827,9 +2828,9 @@ var ColumnItem = function ColumnItem(_ref3) {
     item: item,
     currentItemPath: currentItemPath,
     onClick: onClick,
-    setCurrentDescription: setCurrentDescription,
-    setCurrentVariableId: setCurrentVariableId,
     onDoubleClick: onDoubleClick,
+    onVariableHover: onVariableHover,
+    onVariableHoverEnd: onVariableHoverEnd,
     path: path,
     index: index,
     columnIndex: columnIndex
@@ -2871,16 +2872,18 @@ var RenderColumns = function RenderColumns(_ref) {
   var currentItemPath = _ref.currentItemPath,
     currentItems = _ref.currentItems,
     onClick = _ref.onClick,
-    setCurrentDescription = _ref.setCurrentDescription,
     onDoubleClick = _ref.onDoubleClick,
+    onVariableHover = _ref.onVariableHover,
+    onVariableHoverEnd = _ref.onVariableHoverEnd,
     _ref$path = _ref.path,
     path = _ref$path === void 0 ? [] : _ref$path,
-    setCurrentVariableId = _ref.setCurrentVariableId,
-    columnIndex = _ref.columnIndex;
+    columnIndex = _ref.columnIndex,
+    renderLeafHint = _ref.renderLeafHint;
   if (!currentItems) return null;
   var currentColumnIndex = path.length;
   var selectedItemIndex = currentItemPath[currentColumnIndex];
   var currentItem = (0,_type_handlers__WEBPACK_IMPORTED_MODULE_2__.processItemWithTypeHandler)(currentItems[selectedItemIndex]);
+  var hasChildren = (currentItem === null || currentItem === void 0 ? void 0 : currentItem.children) && currentItem.children.length > 0;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "column",
     key: "column-".concat(path.join('-'))
@@ -2891,28 +2894,32 @@ var RenderColumns = function RenderColumns(_ref) {
       item: item,
       currentItemPath: currentItemPath,
       onClick: onClick,
-      setCurrentDescription: setCurrentDescription,
-      setCurrentVariableId: setCurrentVariableId,
       onDoubleClick: onDoubleClick,
+      onVariableHover: onVariableHover,
+      onVariableHoverEnd: onVariableHoverEnd,
       path: [].concat(_toConsumableArray(path), [index]),
       index: index,
       columnIndex: currentColumnIndex
     });
-  })), selectedItemIndex !== undefined && (currentItem === null || currentItem === void 0 ? void 0 : currentItem.children) && /*#__PURE__*/React.createElement(RenderColumns, {
+  })), selectedItemIndex !== undefined && hasChildren && /*#__PURE__*/React.createElement(RenderColumns, {
     currentItemPath: currentItemPath,
     currentItems: currentItem.children,
     path: [].concat(_toConsumableArray(path), [selectedItemIndex]),
     onClick: onClick,
-    setCurrentDescription: setCurrentDescription,
-    setCurrentVariableId: setCurrentVariableId,
-    onDoubleClick: onDoubleClick
-  }));
+    onDoubleClick: onDoubleClick,
+    onVariableHover: onVariableHover,
+    onVariableHoverEnd: onVariableHoverEnd,
+    renderLeafHint: renderLeafHint
+  }), selectedItemIndex !== undefined && !hasChildren && renderLeafHint && /*#__PURE__*/React.createElement("div", {
+    className: "column column-leaf-hint"
+  }, renderLeafHint(currentItem)));
 };
 var ColumnsContainer = function ColumnsContainer(_ref2) {
   var items = _ref2.items,
-    setCurrentDescription = _ref2.setCurrentDescription,
     onDoubleClick = _ref2.onDoubleClick,
-    setCurrentVariableId = _ref2.setCurrentVariableId;
+    onVariableHover = _ref2.onVariableHover,
+    onVariableHoverEnd = _ref2.onVariableHoverEnd,
+    renderLeafHint = _ref2.renderLeafHint;
   var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     currentItemPath = _useState2[0],
@@ -2936,8 +2943,9 @@ var ColumnsContainer = function ColumnsContainer(_ref2) {
     currentItemPath: currentItemPath,
     onClick: onClick,
     onDoubleClick: onDoubleClick,
-    setCurrentDescription: setCurrentDescription,
-    setCurrentVariableId: setCurrentVariableId
+    onVariableHover: onVariableHover,
+    onVariableHoverEnd: onVariableHoverEnd,
+    renderLeafHint: renderLeafHint
   }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ColumnsContainer);
@@ -3000,60 +3008,74 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-var ExpressionBuilder = function ExpressionBuilder(_ref) {
-  var name = _ref.name,
-    _ref$label = _ref.label,
-    label = _ref$label === void 0 ? '' : _ref$label,
-    defaultValue = _ref.defaultValue,
-    onChange = _ref.onChange,
-    _ref$variables = _ref.variables,
-    variables = _ref$variables === void 0 ? [] : _ref$variables,
-    _ref$propertyName = _ref.propertyName,
-    propertyName = _ref$propertyName === void 0 ? "expression" : _ref$propertyName,
-    _ref$settings = _ref.settings,
-    settings = _ref$settings === void 0 ? {} : _ref$settings,
-    _ref$description = _ref.description,
-    description = _ref$description === void 0 ? '' : _ref$description,
-    _ref$isInline = _ref.isInline,
-    isInline = _ref$isInline === void 0 ? false : _ref$isInline,
-    _ref$readOnlyPreview = _ref.readOnlyPreview,
-    readOnlyPreview = _ref$readOnlyPreview === void 0 ? false : _ref$readOnlyPreview,
-    _ref$singleVariableOn = _ref.singleVariableOnly,
-    singleVariableOnly = _ref$singleVariableOn === void 0 ? false : _ref$singleVariableOn,
-    _ref$wrapOnPreview = _ref.wrapOnPreview,
-    wrapOnPreview = _ref$wrapOnPreview === void 0 ? false : _ref$wrapOnPreview,
-    _ref$wrapOnEditor = _ref.wrapOnEditor,
-    wrapOnEditor = _ref$wrapOnEditor === void 0 ? false : _ref$wrapOnEditor,
-    _ref$oneLinePreview = _ref.oneLinePreview,
-    oneLinePreview = _ref$oneLinePreview === void 0 ? false : _ref$oneLinePreview,
-    _ref$helpUrl = _ref.helpUrl,
-    helpUrl = _ref$helpUrl === void 0 ? '' : _ref$helpUrl,
-    _ref$autoComplete = _ref.autoComplete,
-    autoComplete = _ref$autoComplete === void 0 ? true : _ref$autoComplete,
-    _ref$completers = _ref.completers,
-    completers = _ref$completers === void 0 ? [] : _ref$completers,
-    _ref$buttonText = _ref.buttonText,
-    buttonText = _ref$buttonText === void 0 ? null : _ref$buttonText;
+var HOVER_HINT_DELAY = 700;
+var VariableHoverHint = function VariableHoverHint(_ref) {
+  var hint = _ref.hint;
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.createPortal)( /*#__PURE__*/React.createElement("div", {
+    className: "expression-builder-variable-hover-hint",
+    style: {
+      top: hint.top,
+      left: hint.left
+    }
+  }, /*#__PURE__*/React.createElement("code", null, hint.item.id), hint.item.description ? " ".concat(hint.item.description) : ''), document.body);
+};
+var ExpressionBuilder = function ExpressionBuilder(_ref2) {
+  var name = _ref2.name,
+    _ref2$label = _ref2.label,
+    label = _ref2$label === void 0 ? '' : _ref2$label,
+    defaultValue = _ref2.defaultValue,
+    onChange = _ref2.onChange,
+    _ref2$variables = _ref2.variables,
+    variables = _ref2$variables === void 0 ? [] : _ref2$variables,
+    _ref2$propertyName = _ref2.propertyName,
+    propertyName = _ref2$propertyName === void 0 ? "expression" : _ref2$propertyName,
+    _ref2$settings = _ref2.settings,
+    settings = _ref2$settings === void 0 ? {} : _ref2$settings,
+    _ref2$description = _ref2.description,
+    description = _ref2$description === void 0 ? '' : _ref2$description,
+    _ref2$isInline = _ref2.isInline,
+    isInline = _ref2$isInline === void 0 ? false : _ref2$isInline,
+    _ref2$readOnlyPreview = _ref2.readOnlyPreview,
+    readOnlyPreview = _ref2$readOnlyPreview === void 0 ? false : _ref2$readOnlyPreview,
+    _ref2$singleVariableO = _ref2.singleVariableOnly,
+    singleVariableOnly = _ref2$singleVariableO === void 0 ? false : _ref2$singleVariableO,
+    _ref2$wrapOnPreview = _ref2.wrapOnPreview,
+    wrapOnPreview = _ref2$wrapOnPreview === void 0 ? false : _ref2$wrapOnPreview,
+    _ref2$wrapOnEditor = _ref2.wrapOnEditor,
+    wrapOnEditor = _ref2$wrapOnEditor === void 0 ? false : _ref2$wrapOnEditor,
+    _ref2$oneLinePreview = _ref2.oneLinePreview,
+    oneLinePreview = _ref2$oneLinePreview === void 0 ? false : _ref2$oneLinePreview,
+    _ref2$helpUrl = _ref2.helpUrl,
+    helpUrl = _ref2$helpUrl === void 0 ? '' : _ref2$helpUrl,
+    _ref2$autoComplete = _ref2.autoComplete,
+    autoComplete = _ref2$autoComplete === void 0 ? true : _ref2$autoComplete,
+    _ref2$completers = _ref2.completers,
+    completers = _ref2$completers === void 0 ? [] : _ref2$completers,
+    _ref2$buttonText = _ref2.buttonText,
+    buttonText = _ref2$buttonText === void 0 ? null : _ref2$buttonText;
   var editorFullRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
   var editorSmallRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
-  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(),
+  var hoverHintTimeoutRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
-    currentDescription = _useState2[0],
-    setCurrentDescription = _useState2[1];
-  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(),
+    isOpen = _useState2[0],
+    setIsOpen = _useState2[1];
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(null),
     _useState4 = _slicedToArray(_useState3, 2),
-    currentVariableId = _useState4[0],
-    setCurrentVariableId = _useState4[1];
-  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
-    _useState6 = _slicedToArray(_useState5, 2),
-    isOpen = _useState6[0],
-    setIsOpen = _useState6[1];
+    hoverHint = _useState4[0],
+    setHoverHint = _useState4[1];
+  var clearHoverHintTimeout = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useCallback)(function () {
+    if (hoverHintTimeoutRef.current) {
+      clearTimeout(hoverHintTimeoutRef.current);
+      hoverHintTimeoutRef.current = null;
+    }
+  }, []);
   if (!defaultValue) {
     defaultValue = {};
   }
-  var onChangeSetting = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useCallback)(function (_ref2) {
-    var settingName = _ref2.settingName,
-      value = _ref2.value;
+  var onChangeSetting = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useCallback)(function (_ref3) {
+    var settingName = _ref3.settingName,
+      value = _ref3.value;
     var newValue = _objectSpread({}, defaultValue);
     newValue[settingName] = value;
     if (onChange) {
@@ -3075,8 +3097,27 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
     }
   }, [defaultValue]);
   var onClose = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useCallback)(function () {
+    clearHoverHintTimeout();
     setIsOpen(false);
-  }, [setIsOpen]);
+    setHoverHint(null);
+  }, [clearHoverHintTimeout, setIsOpen]);
+  var onVariableHover = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useCallback)(function (item, event) {
+    clearHoverHintTimeout();
+    var rect = event.currentTarget.getBoundingClientRect();
+    var hint = {
+      item: item,
+      top: rect.top,
+      left: rect.right + 8
+    };
+    hoverHintTimeoutRef.current = setTimeout(function () {
+      setHoverHint(hint);
+      hoverHintTimeoutRef.current = null;
+    }, HOVER_HINT_DELAY);
+  }, [clearHoverHintTimeout]);
+  var onVariableHoverEnd = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useCallback)(function () {
+    clearHoverHintTimeout();
+    setHoverHint(null);
+  }, [clearHoverHintTimeout]);
   var onDoubleClick = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useCallback)(function (item) {
     if (editorFullRef.current) {
       var editor = editorFullRef.current.editor;
@@ -3092,9 +3133,24 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
       }
     }
   }, [editorFullRef, singleVariableOnly]);
+  var renderLeafHint = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useCallback)(function (item) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "column-leaf-hint-content"
+    }, /*#__PURE__*/React.createElement("p", null, singleVariableOnly ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Click Select to use this variable.", "post-expirator") : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("The variable will be inserted at the current cursor position.", "post-expirator")), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
+      variant: "secondary",
+      onClick: function onClick() {
+        return onDoubleClick(item);
+      }
+    }, singleVariableOnly ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Select", "post-expirator") : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Insert", "post-expirator")));
+  }, [singleVariableOnly, onDoubleClick]);
   var editorProps = {
     $blockScrolling: true
   };
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
+    return function () {
+      return clearHoverHintTimeout();
+    };
+  }, [clearHoverHintTimeout]);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
     if (wrapOnPreview && editorSmallRef.current) {
       editorSmallRef.current.editor.setOption("indentedSoftWrap", false);
@@ -3203,20 +3259,17 @@ var ExpressionBuilder = function ExpressionBuilder(_ref) {
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalHeading, {
     level: 2,
     className: "components-truncate components-text components-heading block-editor-inspector-popover-header__heading"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Variables", "post-expirator")), singleVariableOnly && /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Double-click on a variable to select it.", "post-expirator")), !singleVariableOnly && /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Double-click on any variable to add it to your expression.", "post-expirator")), currentDescription && /*#__PURE__*/React.createElement("p", {
-    className: "description margin-top"
-  }, /*#__PURE__*/React.createElement("code", {
-    className: "expression-builder-variable-name"
-  }, currentVariableId), " ", currentDescription), !currentDescription && /*#__PURE__*/React.createElement("p", {
-    className: "description margin-top"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Hover over a variable to see its description.", "post-expirator")), /*#__PURE__*/React.createElement(_columns_container__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Variables", "post-expirator")), singleVariableOnly && /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Double-click on a variable to select it.", "post-expirator")), !singleVariableOnly && /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Double-click on any variable to insert it into your expression.", "post-expirator")), /*#__PURE__*/React.createElement(_columns_container__WEBPACK_IMPORTED_MODULE_4__["default"], {
     items: variables,
-    setCurrentDescription: setCurrentDescription,
-    setCurrentVariableId: setCurrentVariableId,
-    onDoubleClick: onDoubleClick
+    onDoubleClick: onDoubleClick,
+    onVariableHover: onVariableHover,
+    onVariableHoverEnd: onVariableHoverEnd,
+    renderLeafHint: renderLeafHint
   }))), /*#__PURE__*/React.createElement(_modal_footer__WEBPACK_IMPORTED_MODULE_11__.ModalFooter, {
     onClose: onClose
-  })));
+  })), hoverHint && isOpen && /*#__PURE__*/React.createElement(VariableHoverHint, {
+    hint: hoverHint
+  }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ExpressionBuilder);
 
@@ -20551,8 +20604,45 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.columns-container {
     text-wrap: auto;
 }
 
-.expression-builder-variable-name {
-    margin-left: 5px;
+.column-leaf-hint {
+    min-width: 202px;
+    overflow-y: auto;
+    white-space: normal;
+}
+
+.column-leaf-hint-content {
+    padding: 10px;
+    max-width: 202px;
+    white-space: normal;
+}
+
+.column-leaf-hint-content p {
+    text-wrap: auto;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.expression-builder-variable-hover-hint {
+    position: fixed;
+    z-index: 999999999;
+    max-width: 280px;
+    white-space: normal;
+    padding: 8px 12px;
+    background: #1e1e1e;
+    color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    font-size: 12px;
+    line-height: 1.4;
+    pointer-events: none;
+}
+
+.expression-builder-variable-hover-hint code {
+    font-family: Menlo, Consolas, monaco, monospace;
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1px 4px;
+    border-radius: 2px;
 }
 
 .expression-builder-inline {
@@ -20619,13 +20709,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.columns-container {
     margin-top: 10px !important;
 }
 
-.expression-builder-modal-variables .description code {
-    color: #00458b;
-    margin-left: 0;
-    padding: 5px;
-    font-size: 12px;
-}
-
 .expression-builder .expression-builder-small-heading {
     font-size: 11px;
     font-weight: 500;
@@ -20647,7 +20730,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.columns-container {
 .expression-builder-modal-variables .column-item-step-slug {
     color: #a3a3a3;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/expression-builder/style.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,mBAAmB;IACnB,sBAAsB;IACtB,gBAAgB;IAChB,mBAAmB;IACnB,iBAAiB;IACjB,kBAAkB;IAClB,kBAAkB;AACtB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,gBAAgB;IAChB,cAAc;IACd,4BAA4B;IAC5B,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,iBAAiB;IACjB,yBAAyB;IACzB,sBAAsB;IACtB,qBAAqB;IACrB,mBAAmB;AACvB;;AAEA;IACI,YAAY;IACZ,qBAAqB;IACrB,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,2BAA2B;IAC3B,WAAW;AACf;;AAEA;IACI,mFAAmF;IACnF,uDAAuD;IACvD,YAAY;AAChB;;AAEA;IACI,mFAAmF;IACnF,uDAAuD;AAC3D;;AAEA;IACI,uDAAuD;AAC3D;;AAEA;IACI,mFAAmF;IACnF,uDAAuD;IACvD,YAAY;AAChB;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;IACnB,sBAAsB;AAC1B;;AAEA;IACI,sBAAsB;IACtB,mBAAmB;AACvB;;AAEA;IACI,kBAAkB;IAClB,eAAe;IACf,mBAAmB;AACvB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;IAClB,WAAW;AACf;;AAEA;IACI,kBAAkB;IAClB,MAAM;IACN,QAAQ;IACR,YAAY;IACZ,sBAAsB;IACtB,eAAe;IACf,qBAAqB;IACrB,gBAAgB;IAChB,oBAAoB;IACpB,iBAAiB;IACjB,kBAAkB;AACtB;;AAEA;IACI,aAAa;IACb,gBAAgB;AACpB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,aAAa;IACb,8CAA8C;IAC9C,eAAe;IACf,WAAW;IACX,yBAAyB;AAC7B;;AAEA;IACI,cAAc;IACd,WAAW;IACX,wBAAwB;IACxB,0BAA0B;IAC1B,2BAA2B;IAC3B,uBAAuB;IACvB,sBAAsB;IACtB,YAAY;AAChB;;AAEA;IACI,cAAc;IACd,WAAW;IACX,2BAA2B;IAC3B,oBAAoB;IACpB,sBAAsB;IACtB,uBAAuB;IACvB,cAAc;IACd,iBAAiB;IACjB,iBAAiB;IACjB,kBAAkB;AACtB;;AAEA;IACI,mBAAmB;IACnB,WAAW;AACf;;AAEA;IACI,uBAAuB;IACvB,wBAAwB;IACxB,2BAA2B;AAC/B;;AAEA;IACI,oCAAoC;AACxC;;AAEA;IACI,QAAQ;AACZ;;AAEA;IACI,iBAAiB;AACrB;;AAEA;IACI,2BAA2B;AAC/B;;AAEA;IACI,2BAA2B;IAC3B,2BAA2B;AAC/B;;AAEA;IACI,cAAc;IACd,cAAc;IACd,YAAY;IACZ,eAAe;AACnB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,gBAAgB;IAChB,yBAAyB;IACzB,sBAAsB;IACtB,cAAc;IACd,gBAAgB;IAChB,mBAAmB;IACnB,eAAe;IACf,UAAU;IACV,gBAAgB;IAChB,uBAAuB;IACvB,mBAAmB;IACnB,sBAAsB;IACtB,mBAAmB;AACvB;;AAEA;IACI,cAAc;AAClB","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n    max-height: 212px;\n    overflow-y: hidden;\n    overflow-x: scroll;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n    overflow-y: scroll;\n    max-height: 212px;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 2px 6px;\n    position: relative;\n    user-select: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    padding-right: 20px;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.column-item:hover {\n    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));\n    color: var(--wp-components-color-accent-inverted, #fff);\n    opacity: 0.4;\n}\n\n.selected {\n    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));\n    color: var(--wp-components-color-accent-inverted, #fff);\n}\n\n.column-item.has-children.selected::after {\n    color: var(--wp-components-color-accent-inverted, #fff);\n}\n\n.column-item.selected:hover {\n    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));\n    color: var(--wp-components-color-accent-inverted, #fff);\n    opacity: 0.8;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n    margin-top: 5px;\n    padding-bottom: 5px;\n}\n\n.components-modal__screen-overlay {\n    z-index: 999999998;\n}\n\n.expression-builder {\n    position: relative;\n    width: 100%;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 0;\n    right: 0;\n    height: 24px;\n    width: auto !important;\n    min-width: 24px;\n    display: inline-block;\n    padding-top: 4px;\n    padding-bottom: 23px;\n    padding-left: 8px;\n    padding-right: 8px;\n}\n\n.column-item-form {\n    padding: 10px;\n    max-width: 202px;\n}\n\n.column-item-form p {\n    text-wrap: auto;\n}\n\n.expression-builder-variable-name {\n    margin-left: 5px;\n}\n\n.expression-builder-inline {\n    display: grid;\n    grid-template-columns: minmax(220px, 1fr) auto;\n    column-gap: 6px;\n    width: 100%;\n    padding-top: 0 !important;\n}\n\n.expression-builder-inline .ace_editor {\n    grid-column: 1;\n    grid-row: 1;\n    margin-top: 0 !important;\n    margin-right: 0 !important;\n    margin-bottom: 0 !important;\n    height: 40px !important;\n    width: 100% !important;\n    min-width: 0;\n}\n\n.expression-builder-inline > .expression-builder-button {\n    grid-column: 2;\n    grid-row: 1;\n    position: static !important;\n    top: auto !important;\n    right: auto !important;\n    height: 40px !important;\n    padding-top: 0;\n    padding-bottom: 0;\n    padding-left: 8px;\n    padding-right: 8px;\n}\n\n.expression-builder-inline .description {\n    grid-column: 1 / -1;\n    grid-row: 2;\n}\n\n.ace_editor.settings-panel {\n    width: 246px !important;\n    height: 180px !important;\n    margin-top: 10px !important;\n}\n\n.ace_editor.read-only-editor {\n    background-color: #f3f3f3 !important;\n}\n\n.ace_content {\n    top: 5px;\n}\n\n#expression-builder-full .ace_content {\n    top: 0 !important;\n}\n\n.expression-builder .description {\n    margin-top: 10px !important;\n}\n\n.expression-builder-modal .description:last-of-type {\n    min-height: 40px !important;\n    margin-top: 10px !important;\n}\n\n.expression-builder-modal-variables .description code {\n    color: #00458b;\n    margin-left: 0;\n    padding: 5px;\n    font-size: 12px;\n}\n\n.expression-builder .expression-builder-small-heading {\n    font-size: 11px;\n    font-weight: 500;\n    line-height: 1.4;\n    text-transform: uppercase;\n    box-sizing: border-box;\n    display: block;\n    padding-top: 0px;\n    padding-bottom: 0px;\n    max-width: 100%;\n    z-index: 1;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    color: rgb(30, 30, 30);\n    margin-bottom: 15px;\n}\n\n.expression-builder-modal-variables .column-item-step-slug {\n    color: #a3a3a3;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/components/data-fields/expression-builder/style.css"],"names":[],"mappings":"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","sourcesContent":[".columns-container {\n    display: flex;\n    flex-direction: row;\n    border: 1px solid #ccc;\n    overflow-x: auto;\n    white-space: nowrap;\n    max-height: 212px;\n    overflow-y: hidden;\n    overflow-x: scroll;\n}\n\n.column {\n    display: flex;\n    flex-direction: column;\n    min-width: 150px;\n    flex: 0 0 auto;\n    border-right: 1px solid #ccc;\n    overflow-y: scroll;\n    max-height: 212px;\n}\n\n.column-item {\n    cursor: pointer;\n    padding: 2px 6px;\n    position: relative;\n    user-select: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    padding-right: 20px;\n}\n\n.column-item.has-children::after {\n    content: '▶';\n    display: inline-block;\n    position: absolute;\n    right: 4px;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #ccc;\n}\n\n.column-item:hover {\n    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));\n    color: var(--wp-components-color-accent-inverted, #fff);\n    opacity: 0.4;\n}\n\n.selected {\n    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));\n    color: var(--wp-components-color-accent-inverted, #fff);\n}\n\n.column-item.has-children.selected::after {\n    color: var(--wp-components-color-accent-inverted, #fff);\n}\n\n.column-item.selected:hover {\n    background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));\n    color: var(--wp-components-color-accent-inverted, #fff);\n    opacity: 0.8;\n}\n\n#expression-editor-full {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n    margin-top: 10px;\n}\n\n#expression-editor-preview {\n    margin-bottom: 10px;\n    border: 1px solid #ccc;\n}\n\n.ace_editor {\n    border: 1px solid #ccc;\n    margin-bottom: 10px;\n}\n\n.ace_editor.ace_autocomplete {\n    z-index: 999999999;\n    margin-top: 5px;\n    padding-bottom: 5px;\n}\n\n.components-modal__screen-overlay {\n    z-index: 999999998;\n}\n\n.expression-builder {\n    position: relative;\n    width: 100%;\n}\n\n.expression-builder .expression-builder-button {\n    position: absolute;\n    top: 0;\n    right: 0;\n    height: 24px;\n    width: auto !important;\n    min-width: 24px;\n    display: inline-block;\n    padding-top: 4px;\n    padding-bottom: 23px;\n    padding-left: 8px;\n    padding-right: 8px;\n}\n\n.column-item-form {\n    padding: 10px;\n    max-width: 202px;\n}\n\n.column-item-form p {\n    text-wrap: auto;\n}\n\n.column-leaf-hint {\n    min-width: 202px;\n    overflow-y: auto;\n    white-space: normal;\n}\n\n.column-leaf-hint-content {\n    padding: 10px;\n    max-width: 202px;\n    white-space: normal;\n}\n\n.column-leaf-hint-content p {\n    text-wrap: auto;\n    margin-top: 0;\n    margin-bottom: 10px;\n}\n\n.expression-builder-variable-hover-hint {\n    position: fixed;\n    z-index: 999999999;\n    max-width: 280px;\n    white-space: normal;\n    padding: 8px 12px;\n    background: #1e1e1e;\n    color: #fff;\n    border-radius: 2px;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);\n    font-size: 12px;\n    line-height: 1.4;\n    pointer-events: none;\n}\n\n.expression-builder-variable-hover-hint code {\n    font-family: Menlo, Consolas, monaco, monospace;\n    font-size: 11px;\n    background: rgba(255, 255, 255, 0.1);\n    padding: 1px 4px;\n    border-radius: 2px;\n}\n\n.expression-builder-inline {\n    display: grid;\n    grid-template-columns: minmax(220px, 1fr) auto;\n    column-gap: 6px;\n    width: 100%;\n    padding-top: 0 !important;\n}\n\n.expression-builder-inline .ace_editor {\n    grid-column: 1;\n    grid-row: 1;\n    margin-top: 0 !important;\n    margin-right: 0 !important;\n    margin-bottom: 0 !important;\n    height: 40px !important;\n    width: 100% !important;\n    min-width: 0;\n}\n\n.expression-builder-inline > .expression-builder-button {\n    grid-column: 2;\n    grid-row: 1;\n    position: static !important;\n    top: auto !important;\n    right: auto !important;\n    height: 40px !important;\n    padding-top: 0;\n    padding-bottom: 0;\n    padding-left: 8px;\n    padding-right: 8px;\n}\n\n.expression-builder-inline .description {\n    grid-column: 1 / -1;\n    grid-row: 2;\n}\n\n.ace_editor.settings-panel {\n    width: 246px !important;\n    height: 180px !important;\n    margin-top: 10px !important;\n}\n\n.ace_editor.read-only-editor {\n    background-color: #f3f3f3 !important;\n}\n\n.ace_content {\n    top: 5px;\n}\n\n#expression-builder-full .ace_content {\n    top: 0 !important;\n}\n\n.expression-builder .description {\n    margin-top: 10px !important;\n}\n\n.expression-builder-modal .description:last-of-type {\n    min-height: 40px !important;\n    margin-top: 10px !important;\n}\n\n.expression-builder .expression-builder-small-heading {\n    font-size: 11px;\n    font-weight: 500;\n    line-height: 1.4;\n    text-transform: uppercase;\n    box-sizing: border-box;\n    display: block;\n    padding-top: 0px;\n    padding-bottom: 0px;\n    max-width: 100%;\n    z-index: 1;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    color: rgb(30, 30, 30);\n    margin-bottom: 15px;\n}\n\n.expression-builder-modal-variables .column-item-step-slug {\n    color: #a3a3a3;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
