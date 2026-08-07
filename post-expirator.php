@@ -9,7 +9,7 @@
  * Author URI: http://publishpress.com
  * Text Domain: post-expirator
  * Domain Path: /languages
- * Requires at least: 6.7
+ * Requires at least: 6.8
  * Requires PHP: 7.4
  *
  *
@@ -39,7 +39,7 @@ if (defined('PUBLISHPRESS_FUTURE_LOADED')) {
 }
 
 const MINIMUM_PHP_VERSION = '7.4';
-const MINIMUM_WP_VERSION = '6.7';
+const MINIMUM_WP_VERSION = '6.8';
 
 global $wp_version;
 
