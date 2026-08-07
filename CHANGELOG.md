@@ -3,6 +3,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [UNRELEASED]
 
+- Changed: Upgrade woocommerce/action-scheduler from 3.9.3 to 4.1.0 (Issue #1655).
+- Changed: Raise minimum WordPress version to 6.8 (required by Action Scheduler 4.0+).
+- Changed: Action Scheduler 4.0+ breaking changes — unique actions now consider args when determining uniqueness; failed actions are purged after 3 months by default.
+
 - Fixed: Improved workflow compatibility with ACF Extended frontend forms by triggering only when the required metadata has already been processed (Issue #1649).
 - Fixed: Fatal error on Scheduled Actions screen when Action Scheduler 4.1 is loaded (Issue #1684).
 - Added: Copy workflow to text feature for development, support or debug work.
