@@ -398,7 +398,16 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         && $row['args']['workflow'] === 'expire';
     }
 
-    public function column_hook(array $row)
+    /**
+     * Renders the hook column for the scheduled actions table.
+     *
+     * We're not type casting the row to an array because it's generating a conflict with
+     * ActionScheduler_ListTable::column_hook() in Action Scheduler 4.1+, which declares an untyped $row parameter.
+     *
+     * @param array $row Action array.
+     * @return string
+     */
+    public function column_hook($row)
     {
         $columnHtml = '<span title="' . esc_attr($row['hook']) . '">';
 
