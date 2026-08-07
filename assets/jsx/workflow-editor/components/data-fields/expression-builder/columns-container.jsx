@@ -19,6 +19,7 @@ const RenderColumns = ({
     const selectedItemIndex = currentItemPath[currentColumnIndex];
     let currentItem = processItemWithTypeHandler(currentItems[selectedItemIndex]);
     const hasChildren = currentItem?.children && currentItem.children.length > 0;
+    const isFormItem = currentItem?.type === 'meta-key-input';
 
     return (
         <>
@@ -54,7 +55,7 @@ const RenderColumns = ({
                 />
             )}
 
-            {selectedItemIndex !== undefined && !hasChildren && renderLeafHint && (
+            {selectedItemIndex !== undefined && currentItem && !hasChildren && !isFormItem && renderLeafHint && (
                 <div className="column column-leaf-hint">
                     {renderLeafHint(currentItem)}
                 </div>

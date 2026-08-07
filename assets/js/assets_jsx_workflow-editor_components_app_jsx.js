@@ -2938,6 +2938,7 @@ var RenderColumns = function RenderColumns(_ref) {
   var selectedItemIndex = currentItemPath[currentColumnIndex];
   var currentItem = (0,_type_handlers__WEBPACK_IMPORTED_MODULE_2__.processItemWithTypeHandler)(currentItems[selectedItemIndex]);
   var hasChildren = (currentItem === null || currentItem === void 0 ? void 0 : currentItem.children) && currentItem.children.length > 0;
+  var isFormItem = (currentItem === null || currentItem === void 0 ? void 0 : currentItem.type) === 'meta-key-input';
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "column",
     key: "column-".concat(path.join('-'))
@@ -2964,7 +2965,7 @@ var RenderColumns = function RenderColumns(_ref) {
     onVariableHover: onVariableHover,
     onVariableHoverEnd: onVariableHoverEnd,
     renderLeafHint: renderLeafHint
-  }), selectedItemIndex !== undefined && !hasChildren && renderLeafHint && /*#__PURE__*/React.createElement("div", {
+  }), selectedItemIndex !== undefined && currentItem && !hasChildren && !isFormItem && renderLeafHint && /*#__PURE__*/React.createElement("div", {
     className: "column column-leaf-hint"
   }, renderLeafHint(currentItem)));
 };
