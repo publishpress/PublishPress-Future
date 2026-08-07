@@ -167,6 +167,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   compact: () => (/* binding */ compact),
 /* harmony export */   debugLogFactory: () => (/* binding */ debugLogFactory),
+/* harmony export */   futureActionAttributesEqual: () => (/* binding */ futureActionAttributesEqual),
 /* harmony export */   getActionSettingsFromColumnData: () => (/* binding */ getActionSettingsFromColumnData),
 /* harmony export */   getElementByName: () => (/* binding */ getElementByName),
 /* harmony export */   getFieldByName: () => (/* binding */ getFieldByName),
@@ -175,8 +176,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   getFieldValueByNameAsBool: () => (/* binding */ getFieldValueByNameAsBool),
 /* harmony export */   isGutenbergEnabled: () => (/* binding */ isGutenbergEnabled),
 /* harmony export */   isNumber: () => (/* binding */ isNumber),
+/* harmony export */   normalizeFutureActionExtraData: () => (/* binding */ normalizeFutureActionExtraData),
 /* harmony export */   stripTags: () => (/* binding */ stripTags)
 /* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var compact = function compact(array) {
   if (!array) {
@@ -268,6 +276,52 @@ function stripTags(string) {
   div.textContent = string;
   return div.innerHTML;
 }
+var normalizeTerms = function normalizeTerms(terms) {
+  if (!Array.isArray(terms)) {
+    return [];
+  }
+  return _toConsumableArray(terms).map(function (term) {
+    return Number(term);
+  }).sort(function (a, b) {
+    return a - b;
+  });
+};
+var normalizeFutureActionExtraData = function normalizeFutureActionExtraData(extraData) {
+  if (extraData === null || extraData === undefined || Array.isArray(extraData) && extraData.length === 0) {
+    return {};
+  }
+  if (_typeof(extraData) === 'object' && !Array.isArray(extraData) && Object.keys(extraData).length === 0) {
+    return {};
+  }
+  return extraData;
+};
+var normalizeFutureActionAttribute = function normalizeFutureActionAttribute(attribute) {
+  if (!attribute || _typeof(attribute) !== 'object') {
+    return {
+      enabled: false,
+      action: '',
+      newStatus: '',
+      date: '',
+      terms: [],
+      taxonomy: '',
+      extraData: {}
+    };
+  }
+  return {
+    enabled: Boolean(attribute.enabled),
+    action: attribute.action || '',
+    newStatus: attribute.newStatus || '',
+    date: attribute.date || '',
+    terms: normalizeTerms(attribute.terms),
+    taxonomy: attribute.taxonomy || '',
+    extraData: normalizeFutureActionExtraData(attribute.extraData)
+  };
+};
+var futureActionAttributesEqual = function futureActionAttributesEqual(proposed, current) {
+  var normalizedProposed = normalizeFutureActionAttribute(proposed);
+  var normalizedCurrent = normalizeFutureActionAttribute(current);
+  return JSON.stringify(normalizedProposed) === JSON.stringify(normalizedCurrent);
+};
 
 /***/ },
 
