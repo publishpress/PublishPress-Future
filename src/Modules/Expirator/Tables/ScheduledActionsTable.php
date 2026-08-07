@@ -401,14 +401,16 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
     /**
      * Renders the hook column for the scheduled actions table.
      *
-     * We're not type casting the row to an array because it's generating a conflict with
-     * ActionScheduler_ListTable::column_hook() in Action Scheduler 4.1+, which declares an untyped $row parameter.
+     * We keep the parameter untyped to match ActionScheduler_ListTable::column_hook() in
+     * Action Scheduler 4.1+, and cast to array inside the method.
      *
      * @param array $row Action array.
      * @return string
      */
     public function column_hook($row)
     {
+        $row = (array) $row;
+
         $columnHtml = '<span title="' . esc_attr($row['hook']) . '">';
 
         if ($this->rowIsAWorkflow($row)) {
