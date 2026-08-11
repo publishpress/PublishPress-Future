@@ -8123,10 +8123,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/wordpress.js");
-/* harmony import */ var _workflow_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./workflow-store */ "./assets/jsx/workflow-editor/components/workflow-store/index.jsx");
-/* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants */ "./assets/jsx/workflow-editor/constants.jsx");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/chevron-left.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/chevron-right.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/wordpress.js");
+/* harmony import */ var _workflow_store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./workflow-store */ "./assets/jsx/workflow-editor/components/workflow-store/index.jsx");
+/* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../constants */ "./assets/jsx/workflow-editor/constants.jsx");
 
 
 
@@ -8135,12 +8137,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var backButtonLabel = window.futureWorkflowEditor.backButtonLabel;
+function isWP71BackButton() {
+  var _window$futureWorkflo;
+  if ((_window$futureWorkflo = window.futureWorkflowEditor) !== null && _window$futureWorkflo !== void 0 && _window$futureWorkflo.isWP71OrLater) {
+    return true;
+  }
+  var bodyClass = document.body.className;
+
+  // branch-7-1, branch-7-2, version-7-1, etc. — NOT branch-7 alone (that's 7.0.x)
+  return /\bbranch-7-([1-9]|\d{2,})\b/.test(bodyClass) || /\bversion-7-([1-9]|\d{2,})\b/.test(bodyClass);
+}
 function FullscreenModeClose(_ref) {
   var showTooltip = _ref.showTooltip;
   var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useSelect)(function (select) {
-      var _select = select(_workflow_store__WEBPACK_IMPORTED_MODULE_5__.store),
+      var _select = select(_workflow_store__WEBPACK_IMPORTED_MODULE_7__.store),
         getPostType = _select.getPostType;
-      var _select2 = select(_editor_store__WEBPACK_IMPORTED_MODULE_6__.store),
+      var _select2 = select(_editor_store__WEBPACK_IMPORTED_MODULE_8__.store),
         isFeatureActive = _select2.isFeatureActive;
       return {
         isActive: isFeatureActive('fullscreenMode'),
@@ -8152,19 +8165,32 @@ function FullscreenModeClose(_ref) {
   if (!isActive || !postType) {
     return null;
   }
+  var backHref = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_3__.addQueryArgs)('edit.php', {
+    post_type: _constants__WEBPACK_IMPORTED_MODULE_9__.POST_TYPE
+  });
+  if (isWP71BackButton()) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "editor-header__back-button"
+    }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+      href: backHref,
+      label: backButtonLabel,
+      showTooltip: showTooltip !== null && showTooltip !== void 0 ? showTooltip : true,
+      tooltipPosition: "bottom",
+      icon: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.isRTL)() ? _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["default"] : _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__["default"],
+      size: "compact"
+    }));
+  }
   var buttonIcon = /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Icon, {
     size: "36px",
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__["default"]
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__["default"]
   });
   return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__unstableMotion.div, {
     whileHover: "expand",
     className: "editor-header__back-button"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
     className: "edit-post-fullscreen-mode-close",
-    href: (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_3__.addQueryArgs)('edit.php', {
-      post_type: _constants__WEBPACK_IMPORTED_MODULE_7__.POST_TYPE
-    }),
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Back', 'post-expirator'),
+    href: backHref,
+    label: backButtonLabel,
     showTooltip: showTooltip
   }, buttonIcon));
 }
@@ -19067,11 +19093,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.components-button svg {
-    height: 100%;
-}
-
-#wpfooter {
+___CSS_LOADER_EXPORT___.push([module.id, `#wpfooter {
     display: none !important;
 }
 
@@ -19205,7 +19227,37 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.components-button svg {
 .editor-inserter-sidebar *, .editor-inserter-sidebar :after, .editor-inserter-sidebar :before {
     box-sizing: inherit;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/custom.css"],"names":[],"mappings":"AAAA;IACI,YAAY;AAChB;;AAEA;IACI,wBAAwB;AAC5B;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,sBAAsB;IACtB,uBAAuB;AAC3B;;AAEA;;;;;;;;;;;;IAYI,6BAA6B;AACjC;;AAEA;;GAEG;;AAEH;IACI,eAAe;IACf,WAAW;IACX,mBAAmB;AACvB;;AAEA;IACI,eAAe;IACf,WAAW;IACX,YAAY;IACZ,aAAa;IACb,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,WAAW;AACf;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,iBAAiB;IACjB,2BAA2B;IAC3B,uBAAuB;AAC3B;;AAEA;IACI,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,mBAAmB;IACnB,cAAc;AAClB;;AAEA;IACI,6BAA6B;AACjC;;AAEA;IACI,eAAe;IACf,WAAW;IACX,mBAAmB;AACvB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,gBAAgB;IAChB,yBAAyB;IACzB,qBAAqB;IACrB,wBAAwB;IACxB,YAAY;AAChB;AACA;IACI,SAAS;IACT,YAAY;IACZ,8DAA8D;AAClE;;AAEA;IACI,gBAAgB;IAChB,iBAAiB;AACrB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,YAAY;AAChB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,SAAS;IACT,YAAY;IACZ,kBAAkB;IAClB,kBAAkB;AACtB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,gBAAgB;IAChB,iBAAiB;IACjB,sBAAsB;AAC1B;;AAEA;IACI,2CAA2C;IAC3C,wBAAwB;AAC5B;;AAEA;IACI,mBAAmB;AACvB","sourcesContent":[".components-button svg {\n    height: 100%;\n}\n\n#wpfooter {\n    display: none !important;\n}\n\n.react-flow {\n    width: 100% !important;\n}\n\n.components-menu-items__item-icon.has-icon-right {\n    width: 24px !important;\n    height: 24px !important;\n}\n\n.react-flow__node-default.selectable.selected,\n.react-flow__node-default.selectable:focus,\n.react-flow__node-default.selectable:focus-visible,\n.react-flow__node-input.selectable.selected,\n.react-flow__node-input.selectable:focus,\n.react-flow__node-input.selectable:focus-visible,\n.react-flow__node-output.selectable.selected,\n.react-flow__node-output.selectable:focus,\n.react-flow__node-output.selectable:focus-visible,\n.react-flow__node-group.selectable.selected,\n.react-flow__node-group.selectable:focus,\n.react-flow__node-group.selectable:focus-visible {\n    box-shadow: 0 0 0 2px #1a192b;\n}\n\n/* .react-flow {\n    background-color: #e1e1e1 !important;\n} */\n\n.settings-field-description {\n    font-size: 12px;\n    color: #666;\n    margin-bottom: 15px;\n}\n\n.settings-field-help-popover {\n    font-size: 12px;\n    color: #666;\n    width: 320px;\n    padding: 16px;\n    position: relative;\n    padding-top: 50px;\n}\n\n.settings-field-help-popover button {\n    position: absolute;\n    top: 10px;\n    right: 10px;\n}\n\n.workflow-editor-inspector-card__handles-schema {\n    display: flex;\n    flex-direction: column;\n    flex-wrap: nowrap;\n    justify-content: flex-start;\n    align-items: flex-start;\n}\n\n.workflow-editor-inspector-card__handles-schema code {\n    padding: 3px 6px;\n    border-radius: 4px;\n    font-size: 12px;\n    background: #ebebeb;\n    color: #696969;\n}\n\n.workflow-editor-inspector-card__handles-schema h3 {\n    margin-bottom: 4px !important;\n}\n\n.workflow-editor-global-variables-description {\n    font-size: 12px;\n    color: #666;\n    margin-bottom: 15px;\n}\n\n.workflow-editor-global-variables-label {\n    font-size: 11px;\n    font-weight: 500;\n    line-height: 1.4;\n    text-transform: uppercase;\n    display: inline-block;\n    margin-bottom: calc(8px);\n    padding: 0px;\n}\n.workflow-editor-global-var-list {\n    margin: 0;\n    padding: 5px;\n    border: 1px solid var(--wp-components-color-gray-600, #949494);\n}\n\n.workflow-editor-global-var-list ul {\n    list-style: disc;\n    margin-left: 30px;\n}\n\n.workflow-editor-global-var-list ul li {\n    margin-bottom: 0;\n}\n\n.edit-post-editor__inserter-panel-content {\n    height: 100%;\n}\n\n.block-editor-inserter__content {\n    display: flex;\n    flex-direction: column;\n    gap: 16px;\n    height: 100%;\n    overflow-y: hidden;\n    position: relative;\n}\n\n.block-editor-inserter__panel-content {\n    overflow-y: auto;\n}\n\n.interface-interface-skeleton__footer {\n    min-height: 25px;\n    padding: 3px 20px;\n    box-sizing: border-box;\n}\n\n.interface-interface-skeleton__secondary-sidebar {\n    box-shadow: 1px 1px 0 0 rgba(0, 0, 0, .133);\n    outline: 1px solid #0000;\n}\n\n.editor-inserter-sidebar *, .editor-inserter-sidebar :after, .editor-inserter-sidebar :before {\n    box-sizing: inherit;\n}\n"],"sourceRoot":""}]);
+
+#future-workflow-editor .editor-header__back-button {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    width: auto;
+    min-width: 0;
+}
+
+#future-workflow-editor .editor-header__back-button .components-button.is-compact.has-icon {
+    width: 32px;
+    min-width: 32px;
+    justify-content: center;
+}
+
+#future-workflow-editor.show-icon-labels .editor-header__back-button .components-button.has-icon,
+#future-workflow-editor .show-icon-labels .editor-header__back-button .components-button.has-icon {
+    width: 32px;
+    min-width: 32px;
+}
+
+#future-workflow-editor.show-icon-labels .editor-header__back-button .components-button.has-icon svg,
+#future-workflow-editor .show-icon-labels .editor-header__back-button .components-button.has-icon svg {
+    display: block;
+}
+
+#future-workflow-editor.show-icon-labels .editor-header__back-button .components-button.has-icon::after,
+#future-workflow-editor .show-icon-labels .editor-header__back-button .components-button.has-icon::after {
+    content: none;
+}
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/custom.css"],"names":[],"mappings":"AAAA;IACI,wBAAwB;AAC5B;;AAEA;IACI,sBAAsB;AAC1B;;AAEA;IACI,sBAAsB;IACtB,uBAAuB;AAC3B;;AAEA;;;;;;;;;;;;IAYI,6BAA6B;AACjC;;AAEA;;GAEG;;AAEH;IACI,eAAe;IACf,WAAW;IACX,mBAAmB;AACvB;;AAEA;IACI,eAAe;IACf,WAAW;IACX,YAAY;IACZ,aAAa;IACb,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,WAAW;AACf;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,iBAAiB;IACjB,2BAA2B;IAC3B,uBAAuB;AAC3B;;AAEA;IACI,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,mBAAmB;IACnB,cAAc;AAClB;;AAEA;IACI,6BAA6B;AACjC;;AAEA;IACI,eAAe;IACf,WAAW;IACX,mBAAmB;AACvB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,gBAAgB;IAChB,yBAAyB;IACzB,qBAAqB;IACrB,wBAAwB;IACxB,YAAY;AAChB;AACA;IACI,SAAS;IACT,YAAY;IACZ,8DAA8D;AAClE;;AAEA;IACI,gBAAgB;IAChB,iBAAiB;AACrB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,YAAY;AAChB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,SAAS;IACT,YAAY;IACZ,kBAAkB;IAClB,kBAAkB;AACtB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,gBAAgB;IAChB,iBAAiB;IACjB,sBAAsB;AAC1B;;AAEA;IACI,2CAA2C;IAC3C,wBAAwB;AAC5B;;AAEA;IACI,mBAAmB;AACvB;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,cAAc;IACd,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,WAAW;IACX,eAAe;IACf,uBAAuB;AAC3B;;AAEA;;IAEI,WAAW;IACX,eAAe;AACnB;;AAEA;;IAEI,cAAc;AAClB;;AAEA;;IAEI,aAAa;AACjB","sourcesContent":["#wpfooter {\n    display: none !important;\n}\n\n.react-flow {\n    width: 100% !important;\n}\n\n.components-menu-items__item-icon.has-icon-right {\n    width: 24px !important;\n    height: 24px !important;\n}\n\n.react-flow__node-default.selectable.selected,\n.react-flow__node-default.selectable:focus,\n.react-flow__node-default.selectable:focus-visible,\n.react-flow__node-input.selectable.selected,\n.react-flow__node-input.selectable:focus,\n.react-flow__node-input.selectable:focus-visible,\n.react-flow__node-output.selectable.selected,\n.react-flow__node-output.selectable:focus,\n.react-flow__node-output.selectable:focus-visible,\n.react-flow__node-group.selectable.selected,\n.react-flow__node-group.selectable:focus,\n.react-flow__node-group.selectable:focus-visible {\n    box-shadow: 0 0 0 2px #1a192b;\n}\n\n/* .react-flow {\n    background-color: #e1e1e1 !important;\n} */\n\n.settings-field-description {\n    font-size: 12px;\n    color: #666;\n    margin-bottom: 15px;\n}\n\n.settings-field-help-popover {\n    font-size: 12px;\n    color: #666;\n    width: 320px;\n    padding: 16px;\n    position: relative;\n    padding-top: 50px;\n}\n\n.settings-field-help-popover button {\n    position: absolute;\n    top: 10px;\n    right: 10px;\n}\n\n.workflow-editor-inspector-card__handles-schema {\n    display: flex;\n    flex-direction: column;\n    flex-wrap: nowrap;\n    justify-content: flex-start;\n    align-items: flex-start;\n}\n\n.workflow-editor-inspector-card__handles-schema code {\n    padding: 3px 6px;\n    border-radius: 4px;\n    font-size: 12px;\n    background: #ebebeb;\n    color: #696969;\n}\n\n.workflow-editor-inspector-card__handles-schema h3 {\n    margin-bottom: 4px !important;\n}\n\n.workflow-editor-global-variables-description {\n    font-size: 12px;\n    color: #666;\n    margin-bottom: 15px;\n}\n\n.workflow-editor-global-variables-label {\n    font-size: 11px;\n    font-weight: 500;\n    line-height: 1.4;\n    text-transform: uppercase;\n    display: inline-block;\n    margin-bottom: calc(8px);\n    padding: 0px;\n}\n.workflow-editor-global-var-list {\n    margin: 0;\n    padding: 5px;\n    border: 1px solid var(--wp-components-color-gray-600, #949494);\n}\n\n.workflow-editor-global-var-list ul {\n    list-style: disc;\n    margin-left: 30px;\n}\n\n.workflow-editor-global-var-list ul li {\n    margin-bottom: 0;\n}\n\n.edit-post-editor__inserter-panel-content {\n    height: 100%;\n}\n\n.block-editor-inserter__content {\n    display: flex;\n    flex-direction: column;\n    gap: 16px;\n    height: 100%;\n    overflow-y: hidden;\n    position: relative;\n}\n\n.block-editor-inserter__panel-content {\n    overflow-y: auto;\n}\n\n.interface-interface-skeleton__footer {\n    min-height: 25px;\n    padding: 3px 20px;\n    box-sizing: border-box;\n}\n\n.interface-interface-skeleton__secondary-sidebar {\n    box-shadow: 1px 1px 0 0 rgba(0, 0, 0, .133);\n    outline: 1px solid #0000;\n}\n\n.editor-inserter-sidebar *, .editor-inserter-sidebar :after, .editor-inserter-sidebar :before {\n    box-sizing: inherit;\n}\n\n#future-workflow-editor .editor-header__back-button {\n    display: flex;\n    align-items: center;\n    flex-shrink: 0;\n    width: auto;\n    min-width: 0;\n}\n\n#future-workflow-editor .editor-header__back-button .components-button.is-compact.has-icon {\n    width: 32px;\n    min-width: 32px;\n    justify-content: center;\n}\n\n#future-workflow-editor.show-icon-labels .editor-header__back-button .components-button.has-icon,\n#future-workflow-editor .show-icon-labels .editor-header__back-button .components-button.has-icon {\n    width: 32px;\n    min-width: 32px;\n}\n\n#future-workflow-editor.show-icon-labels .editor-header__back-button .components-button.has-icon svg,\n#future-workflow-editor .show-icon-labels .editor-header__back-button .components-button.has-icon svg {\n    display: block;\n}\n\n#future-workflow-editor.show-icon-labels .editor-header__back-button .components-button.has-icon::after,\n#future-workflow-editor .show-icon-labels .editor-header__back-button .components-button.has-icon::after {\n    content: none;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -20237,14 +20289,19 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.block-editor-block-types-list__item-p
     color: #000;
     padding: 4px 10px !important;
     border-radius: 4px;
+    height: 32px;
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
 }
 
 .edit-post-header-toolbar__buy-pro .publishpress-icon {
     width: 18px !important;
     height: 18px !important;
     margin-right: 4px;
+    vertical-align: middle;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/pro-features.css"],"names":[],"mappings":"AAAA;IACI,yBAAyB;IACzB,WAAW;IACX,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,gBAAgB;IAChB,WAAW;AACf;AACA;;IAEI,yBAAyB;IACzB,WAAW;IACX,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,gBAAgB;AACpB;;AAEA;;IAEI,gBAAgB;AACpB;;AAEA;;IAEI,eAAe;IACf,cAAc;IACd,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,gBAAgB;IAChB,6BAA6B;IAC7B,gBAAgB;AACpB;;AAEA;IACI,yBAAyB;IACzB,WAAW;IACX,4BAA4B;IAC5B,kBAAkB;AACtB;;AAEA;IACI,sBAAsB;IACtB,uBAAuB;IACvB,iBAAiB;AACrB","sourcesContent":[".block-editor-block-types-list__item-pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    padding: 3px 8px;\n    border-radius: 4px;\n    font-size: 10px;\n    font-weight: 600;\n    width: 100%;\n}\n.workflow-editor-inspector-card__pro-badge,\n.block-editor-block-card__pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    padding: 3px 8px;\n    border-radius: 4px;\n    font-size: 10px;\n    font-weight: 600;\n}\n\n.workflow-editor-inspector-card__pro-badge,\n.components-popover__content .block-editor-block-card__pro-badge {\n    margin-left: 8px;\n}\n\n.workflow-editor-inspector-card__pro-instructions,\n.block-editor-block-card__pro-instructions {\n    font-size: 12px;\n    color: #757575;\n    margin-top: 8px;\n    line-height: 1.5;\n    font-style: italic;\n    font-weight: 400;\n    border-top: 1px solid #e0e0e0;\n    padding-top: 8px;\n}\n\n.edit-post-header-toolbar__buy-pro {\n    background-color: #ffb200;\n    color: #000;\n    padding: 4px 10px !important;\n    border-radius: 4px;\n}\n\n.edit-post-header-toolbar__buy-pro .publishpress-icon {\n    width: 18px !important;\n    height: 18px !important;\n    margin-right: 4px;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/pro-features.css"],"names":[],"mappings":"AAAA;IACI,yBAAyB;IACzB,WAAW;IACX,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,gBAAgB;IAChB,WAAW;AACf;AACA;;IAEI,yBAAyB;IACzB,WAAW;IACX,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,gBAAgB;AACpB;;AAEA;;IAEI,gBAAgB;AACpB;;AAEA;;IAEI,eAAe;IACf,cAAc;IACd,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,gBAAgB;IAChB,6BAA6B;IAC7B,gBAAgB;AACpB;;AAEA;IACI,yBAAyB;IACzB,WAAW;IACX,4BAA4B;IAC5B,kBAAkB;IAClB,YAAY;IACZ,gBAAgB;IAChB,oBAAoB;IACpB,mBAAmB;AACvB;;AAEA;IACI,sBAAsB;IACtB,uBAAuB;IACvB,iBAAiB;IACjB,sBAAsB;AAC1B","sourcesContent":[".block-editor-block-types-list__item-pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    padding: 3px 8px;\n    border-radius: 4px;\n    font-size: 10px;\n    font-weight: 600;\n    width: 100%;\n}\n.workflow-editor-inspector-card__pro-badge,\n.block-editor-block-card__pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    padding: 3px 8px;\n    border-radius: 4px;\n    font-size: 10px;\n    font-weight: 600;\n}\n\n.workflow-editor-inspector-card__pro-badge,\n.components-popover__content .block-editor-block-card__pro-badge {\n    margin-left: 8px;\n}\n\n.workflow-editor-inspector-card__pro-instructions,\n.block-editor-block-card__pro-instructions {\n    font-size: 12px;\n    color: #757575;\n    margin-top: 8px;\n    line-height: 1.5;\n    font-style: italic;\n    font-weight: 400;\n    border-top: 1px solid #e0e0e0;\n    padding-top: 8px;\n}\n\n.edit-post-header-toolbar__buy-pro {\n    background-color: #ffb200;\n    color: #000;\n    padding: 4px 10px !important;\n    border-radius: 4px;\n    height: 32px;\n    min-height: 32px;\n    display: inline-flex;\n    align-items: center;\n}\n\n.edit-post-header-toolbar__buy-pro .publishpress-icon {\n    width: 18px !important;\n    height: 18px !important;\n    margin-right: 4px;\n    vertical-align: middle;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
