@@ -24,7 +24,8 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "phpstan/extension-installer": true,
             "automattic/jetpack-autoloader": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "composer/installers": true
         },
         "process-timeout": 0
     },

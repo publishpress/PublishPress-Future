@@ -8,7 +8,7 @@
     <arg name="cache"/>
     <ini name="memory_limit" value="256M"/>
     <arg name="basepath" value="."/>
-    <arg name="parallel" value="20"/>
+    <arg name="parallel" value="8"/>
     <arg value="ps"/>
 
     <file>.</file>

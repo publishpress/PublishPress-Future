@@ -1,6 +1,10 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+[4.10.4] - 11 Aug, 2026
+
+- Fixed: Fatal error on Scheduled Actions screen when Action Scheduler 4.1 is loaded (Issue #1684).
+
 [4.10.3] - 28 May, 2026
 
 - Fixed: Future Action metabox now correctly appears in the sidebar (Issue #1641).

@@ -1,3 +1,4 @@
+- .phpcs-plugin-review.xml
 - /assets/adobe-animate
 - /assets/jsx
 - /builder

@@ -1,7 +1,8 @@
-- /dev-workspace-cache
-- /.distignore
+- .phpcs-plugin-review.xml
 - /.babelrc
 - /.cursor
+- /.deploy-state.json
+- /.distignore
 - /.env
 - /.env.example
 - /.git
@@ -37,5 +38,3 @@
 - /version.txt
 - /webpack.config.js
 - /yarn.lock
-
-- /.deploy-state.json
