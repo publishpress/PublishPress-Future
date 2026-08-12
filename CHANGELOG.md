@@ -1,6 +1,11 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+[4.10.5] - 12 Aug, 2026
+
+- Fixed: Re-release of 4.10.4 for WordPress.org (correct plugin version header, stable tag, and checksums).
+- Fixed: Fatal error on Scheduled Actions screen when Action Scheduler 4.1 is loaded (Issue #1684).
+
 [4.10.4] - 11 Aug, 2026
 
 - Fixed: Fatal error on Scheduled Actions screen when Action Scheduler 4.1 is loaded (Issue #1684).
