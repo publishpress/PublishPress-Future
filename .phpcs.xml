@@ -36,6 +36,8 @@
         <exclude name="WordPress.DB.DirectDatabaseQuery.SchemaChange" />
         <exclude name="WordPress.DB.DirectDatabaseQuery.DirectQuery" />
         <exclude name="PSR1.Files.SideEffects.FoundWithSymbols" />
+        <!-- Temporary: surfaced after vipwpcs 3.1.0; fix WorkflowsModel posts_per_page=-1 then remove. -->
+        <exclude name="WordPressVIPMinimum.Performance.NoPaging.posts_per_page_posts_per_page" />
     </rule>
     <rule ref="WordPress-VIP-Go"/>
     <rule ref="VariableAnalysis"/>
