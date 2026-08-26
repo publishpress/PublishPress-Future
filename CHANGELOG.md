@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fixed: Improved workflow compatibility with ACF Extended frontend forms by triggering only when the required metadata has already been processed (Issue #1649).
 - Fixed: Fatal error on Scheduled Actions screen when Action Scheduler 4.1 is loaded (Issue #1684).
+- Fixed: Republishing an Action Workflow no longer leaves it as Scheduled on sites with a timezone offset.
 - Added: Copy workflow to text feature for development, support or debug work.
 
 [4.10.4] - 11 Aug, 2026
