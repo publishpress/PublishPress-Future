@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed: Activating a Workflow Sets Status to "Scheduled" Instead of "Active" on Sites with a Positive UTC Timezone Offset (Issue #1698).
 - Added: Copy workflow to text feature for development, support or debug work.
 
+[4.10.5] - 12 Aug, 2026
+
+- Fixed: Re-release of 4.10.4 for WordPress.org (correct plugin version header, stable tag, and checksums).
+- Fixed: Fatal error on Scheduled Actions screen when Action Scheduler 4.1 is loaded (Issue #1684).
+
 [4.10.4] - 11 Aug, 2026
 
 - Fixed: Fatal error on Scheduled Actions screen when Action Scheduler 4.1 is loaded (Issue #1684).
