@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "899471265fe0f7f57fbe99b03dce158d",
+    "content-hash": "6f97a6deaffb7406fd937af12342dfdc",
     "packages": [],
     "packages-dev": [
         {
@@ -6017,16 +6017,16 @@
         },
         {
             "name": "publishpress/dev-workspace",
-            "version": "1.8.0",
+            "version": "1.8.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/library-dev-workspace.git",
-                "reference": "9e0fc3552692001d87414f22c27353dacabcde73"
+                "reference": "efd24051cf455acb6fd94c9d6da19e8bce3eb4de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/library-dev-workspace/zipball/9e0fc3552692001d87414f22c27353dacabcde73",
-                "reference": "9e0fc3552692001d87414f22c27353dacabcde73",
+                "url": "https://api.github.com/repos/publishpress/library-dev-workspace/zipball/efd24051cf455acb6fd94c9d6da19e8bce3eb4de",
+                "reference": "efd24051cf455acb6fd94c9d6da19e8bce3eb4de",
                 "shasum": ""
             },
             "require": {
@@ -6083,9 +6083,9 @@
             "description": "Shared Composer scripts for PublishPress plugins",
             "support": {
                 "issues": "https://github.com/publishpress/library-dev-workspace/issues",
-                "source": "https://github.com/publishpress/library-dev-workspace/tree/1.8.0"
+                "source": "https://github.com/publishpress/library-dev-workspace/tree/1.8.6"
             },
-            "time": "2026-08-12T18:14:39+00:00"
+            "time": "2026-08-26T18:43:11+00:00"
         },
         {
             "name": "publishpress/publishpress-phpcs-standards",
