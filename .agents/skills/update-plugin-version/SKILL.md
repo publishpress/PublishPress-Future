@@ -32,6 +32,7 @@ Script touches:
 1. **post-expirator.php** (line ~8) — `* Version: X.Y.Z`
 2. **post-expirator.php** (line ~60) — `define('PUBLISHPRESS_FUTURE_VERSION', 'X.Y.Z');`
 3. **readme.txt** (line ~10) — **stable only** — `Stable tag: X.Y.Z`. Pre-release: NOT written to readme.txt
+4. **package.json** — `version` field when present
 
 ## Example
 

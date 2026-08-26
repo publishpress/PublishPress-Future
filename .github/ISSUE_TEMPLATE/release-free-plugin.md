@@ -101,7 +101,9 @@ Before releasing the Free plugin, ensure every step in this checklist is complet
 - [ ] Open a PR and merge `release-<version>` into `master`
 - [ ] Merge `master` back into `development`
 - [ ] Create the GitHub release using a tag from `master`
-  - This triggers the automatic SVN deployment
+  - Tag the merged `master` commit. Do not move the tag after the deploy workflow has started.
+  - The tag name must match the plugin `Version` header (stable `x.y.z` only).
+  - This triggers the automatic SVN deployment. The workflow fails if the tag is a prerelease, the commit is not on `master`, or the built package version does not match the tag.
 
 ### Post-Release Validation
 
