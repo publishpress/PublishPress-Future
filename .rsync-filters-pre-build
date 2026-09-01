@@ -32,3 +32,5 @@
 - README.md
 - RoboFile.php
 - screenshot-*.png
+- .web
+- .ddev
