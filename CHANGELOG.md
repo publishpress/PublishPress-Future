@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed: Activating a Workflow Sets Status to "Scheduled" Instead of "Active" on Sites with a Positive UTC Timezone Offset (Issue #1698).
 - Added: Copy workflow to text feature for development, support or debug work.
 
+[4.10.7] - 07 Oct, 2026
+
+- Fixed: Fatal error: Cannot redeclare class ComposerAutoloaderInit4e236dcfe4d243372f5b41b5aead30db (Issue #1733).
+
 [4.10.6] - 06 Oct, 2026
 
 - Security: Restrict `[futureaction]` / `[postexpirator]` shortcode wrapper to safe container elements (`p`, `div`, `span`) and escape shortcode output when no wrapper is used, closing incomplete remediation of CVE-2026-5247. Thanks to Civitasmass for the responsible disclosure.
