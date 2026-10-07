@@ -6060,12 +6060,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/library-dev-workspace.git",
-                "reference": "1b9560a401c07a218d6c58a29e74c7723780575e"
+                "reference": "9dc9790aae1339a53831e4796d9b6faf3f2af877"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/library-dev-workspace/zipball/1b9560a401c07a218d6c58a29e74c7723780575e",
-                "reference": "1b9560a401c07a218d6c58a29e74c7723780575e",
+                "url": "https://api.github.com/repos/publishpress/library-dev-workspace/zipball/9dc9790aae1339a53831e4796d9b6faf3f2af877",
+                "reference": "9dc9790aae1339a53831e4796d9b6faf3f2af877",
                 "shasum": ""
             },
             "require": {
@@ -6124,7 +6124,7 @@
                 "issues": "https://github.com/publishpress/library-dev-workspace/issues",
                 "source": "https://github.com/publishpress/library-dev-workspace/tree/anderson/custom-phpcs-standards"
             },
-            "time": "2026-10-07T17:06:07+00:00"
+            "time": "2026-10-07T20:17:38+00:00"
         },
         {
             "name": "publishpress/publishpress-phpcs-standards",
@@ -6132,12 +6132,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/publishpress-phpcs-standards.git",
-                "reference": "836cfb6dac07852a91670feb13dd6b63bc25515f"
+                "reference": "eea5f79be26ad8b8a668c60f8e86a96fc6b744ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/publishpress-phpcs-standards/zipball/836cfb6dac07852a91670feb13dd6b63bc25515f",
-                "reference": "836cfb6dac07852a91670feb13dd6b63bc25515f",
+                "url": "https://api.github.com/repos/publishpress/publishpress-phpcs-standards/zipball/eea5f79be26ad8b8a668c60f8e86a96fc6b744ed",
+                "reference": "eea5f79be26ad8b8a668c60f8e86a96fc6b744ed",
                 "shasum": ""
             },
             "require": {
@@ -6173,7 +6173,7 @@
                 "issues": "https://github.com/publishpress/publishpress-phpcs-standards/issues",
                 "source": "https://github.com/publishpress/publishpress-phpcs-standards/tree/development"
             },
-            "time": "2026-10-07T15:47:35+00:00"
+            "time": "2026-10-07T20:37:47+00:00"
         },
         {
             "name": "publishpress/translations",
