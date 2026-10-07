@@ -90,8 +90,8 @@ class DoAction implements StepTypeInterface
                             "withExpression" => true,
                         ],
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -103,7 +103,7 @@ class DoAction implements StepTypeInterface
                     [
                         "rule" => "hasIncomingConnection",
                     ],
-                ]
+                ],
             ],
             "settings" => [
                 "rules" => [
@@ -118,8 +118,8 @@ class DoAction implements StepTypeInterface
                         "field" => "args",
                         "label" => __("Action arguments", "post-expirator"),
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -151,14 +151,14 @@ class DoAction implements StepTypeInterface
             "target" => [
                 [
                     "id" => "input",
-                ]
+                ],
             ],
             "source" => [
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

@@ -18,7 +18,7 @@ class SiteFacade
         if ($this->isMultisite()) {
             global $current_blog;
 
-            return (int)$current_blog->blog_id;
+            return (int) $current_blog->blog_id;
         }
 
         return 0;

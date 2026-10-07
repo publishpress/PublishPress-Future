@@ -70,8 +70,8 @@ class OnInit implements StepTypeInterface
                     [
                         "rule" => "hasOutgoingConnection",
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -98,8 +98,8 @@ class OnInit implements StepTypeInterface
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

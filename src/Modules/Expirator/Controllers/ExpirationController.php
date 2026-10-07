@@ -104,7 +104,7 @@ class ExpirationController implements InitializableInterface
 
     public function onActionSchedulePostExpiration($postId, $timestamp, $opts)
     {
-        $this->scheduler->schedule((int)$postId, (int)$timestamp, $opts);
+        $this->scheduler->schedule((int) $postId, (int) $timestamp, $opts);
     }
 
     public function onActionUnschedulePostExpiration($postId)

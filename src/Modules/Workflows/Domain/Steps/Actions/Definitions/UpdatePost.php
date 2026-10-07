@@ -76,7 +76,7 @@ class UpdatePost implements StepTypeInterface
                             "variable" => [
                                 "rule" => "first",
                                 "dataType" => "post",
-                            ]
+                            ],
                         ],
                     ],
                 ],
@@ -194,14 +194,14 @@ class UpdatePost implements StepTypeInterface
             "target" => [
                 [
                     "id" => "input",
-                ]
+                ],
             ],
             "source" => [
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

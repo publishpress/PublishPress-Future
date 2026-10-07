@@ -221,7 +221,7 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
             wp_cache_set($cacheKey, $groupId);
         }
 
-        return (int)$groupId;
+        return (int) $groupId;
     }
 
     public function getPastDuePendingActions(): array

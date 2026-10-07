@@ -81,8 +81,8 @@ class QueryPosts implements StepTypeInterface
                             "postStatus" => [],
                         ],
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -96,7 +96,7 @@ class QueryPosts implements StepTypeInterface
                     ],
                     [
                         "rule" => "hasOutgoingConnection",
-                    ]
+                    ],
                 ],
             ],
         ];
@@ -145,14 +145,14 @@ class QueryPosts implements StepTypeInterface
             "target" => [
                 [
                     "id" => "input",
-                ]
+                ],
             ],
             "source" => [
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

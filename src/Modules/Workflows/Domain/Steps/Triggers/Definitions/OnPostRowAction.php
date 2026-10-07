@@ -85,7 +85,7 @@ class OnPostRowAction implements StepTypeInterface
                             "postStatus" => [],
                         ],
                     ],
-                ]
+                ],
             ],
             [
                 "label" => __("Row Action", "post-expirator"),
@@ -120,7 +120,7 @@ class OnPostRowAction implements StepTypeInterface
                         ],
                     ],
                 ],
-            ]
+            ],
         ];
     }
 
@@ -132,8 +132,8 @@ class OnPostRowAction implements StepTypeInterface
                     [
                         "rule" => "hasOutgoingConnection",
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -151,7 +151,7 @@ class OnPostRowAction implements StepTypeInterface
                 "type" => "integer",
                 "label" => __("Post ID", "post-expirator"),
                 "description" => __("The ID of the post that triggered the action.", "post-expirator"),
-            ]
+            ],
         ];
     }
 
@@ -173,8 +173,8 @@ class OnPostRowAction implements StepTypeInterface
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

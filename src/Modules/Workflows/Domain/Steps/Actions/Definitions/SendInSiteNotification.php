@@ -132,8 +132,8 @@ class SendInSiteNotification implements StepTypeInterface
                             ],
                         ],
                         "default" => "info",
-                    ]
-                ]
+                    ],
+                ],
             ],
         ];
     }
@@ -183,8 +183,8 @@ class SendInSiteNotification implements StepTypeInterface
                         "label" => __("Message", "post-expirator"),
                         "fieldLabel" => __("Message > Message", "post-expirator"),
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -228,7 +228,7 @@ class SendInSiteNotification implements StepTypeInterface
             "target" => [
                 [
                     "id" => "input",
-                ]
+                ],
             ],
             "source" => [
                 [
@@ -239,7 +239,7 @@ class SendInSiteNotification implements StepTypeInterface
                     "id" => "read",
                     "label" => __("On dismiss", "post-expirator"),
                 ],
-            ]
+            ],
         ];
     }
 

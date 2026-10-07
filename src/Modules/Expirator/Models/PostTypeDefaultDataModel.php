@@ -147,7 +147,7 @@ class PostTypeDefaultDataModel
         }
 
         $calculatedDate = $this->dateTimeHandler->getCalculatedTimeWithOffset(
-            (int)$baseDate,
+            (int) $baseDate,
             $dateTimeOffset
         );
 
@@ -218,7 +218,7 @@ class PostTypeDefaultDataModel
 
     public function isAutoEnabled(): bool
     {
-        return (bool)$this->getSetting('autoEnable');
+        return (bool) $this->getSetting('autoEnable');
     }
 
     public function getAction(): string
@@ -237,7 +237,7 @@ class PostTypeDefaultDataModel
 
     public function getTaxonomy(): string
     {
-        return (string)$this->getSetting('taxonomy');
+        return (string) $this->getSetting('taxonomy');
     }
 
     public function getTerms(): array

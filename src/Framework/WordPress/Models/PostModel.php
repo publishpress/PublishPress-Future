@@ -56,7 +56,7 @@ class PostModel
         }
 
         if (is_numeric($post)) {
-            $this->postId = (int)$post;
+            $this->postId = (int) $post;
         }
 
         $this->termModelFactory = $termModelFactory;
@@ -246,7 +246,7 @@ class PostModel
 
     public function getPostId(): int
     {
-        return (int)$this->postId;
+        return (int) $this->postId;
     }
 
     public function getTerms($taxonomy = 'post_tag', $args = [])

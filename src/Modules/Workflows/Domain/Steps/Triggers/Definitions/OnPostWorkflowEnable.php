@@ -76,7 +76,7 @@ class OnPostWorkflowEnable implements StepTypeInterface
                             "post-expirator"
                         ),
                     ],
-                ]
+                ],
             ],
             [
                 "label" => __("Post Filter", "post-expirator"),
@@ -100,8 +100,8 @@ class OnPostWorkflowEnable implements StepTypeInterface
                             "postStatus" => [],
                         ],
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -113,8 +113,8 @@ class OnPostWorkflowEnable implements StepTypeInterface
                     [
                         "rule" => "hasOutgoingConnection",
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -132,7 +132,7 @@ class OnPostWorkflowEnable implements StepTypeInterface
                 "type" => "integer",
                 "label" => __("Post ID", "post-expirator"),
                 "description" => __("The ID of the post that was saved.", "post-expirator"),
-            ]
+            ],
         ];
     }
 
@@ -154,8 +154,8 @@ class OnPostWorkflowEnable implements StepTypeInterface
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

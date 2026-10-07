@@ -179,7 +179,7 @@ class BulkEditController implements InitializableInterface
                 'hour' => date('H', $now),
                 'minute' => date('i', $now),
                 'ts' => $calculatedDate,
-                'iso' => $gmDate
+                'iso' => $gmDate,
             ];
         }
 
@@ -259,7 +259,7 @@ class BulkEditController implements InitializableInterface
                         strtolower($taxonomyPluralName)
                     ),
                     'newStatus' => __('New status', 'post-expirator'),
-                ]
+                ],
             ]
         );
     }
@@ -282,7 +282,7 @@ class BulkEditController implements InitializableInterface
 
             $defaults = $settingsFacade->getPostTypeDefaults($postType);
 
-            $taxonomy = isset($defaults['taxonomy']) ? $defaults['taxonomy'] : '';
+            $taxonomy = $defaults['taxonomy'] ?? '';
             $label = '';
 
             // if settings have not been configured and this is the default post type
@@ -295,11 +295,11 @@ class BulkEditController implements InitializableInterface
                 $label = $tax_object ? $tax_object->label : '';
             }
 
-            PostExpirator_Display::getInstance()->render_template('bulk-edit', array(
+            PostExpirator_Display::getInstance()->render_template('bulk-edit', [
                 'post_type' => $postType,
                 'taxonomy' => $taxonomy,
-                'tax_label' => $label
-            ));
+                'tax_label' => $label,
+            ]);
         } catch (Throwable $th) {
             $this->logger->error('Error registering bulk edit custom box: ' . $th->getMessage());
         }
@@ -339,10 +339,10 @@ class BulkEditController implements InitializableInterface
     {
         // phpcs:disable WordPress.Security.NonceVerification.Recommended
         // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-        $expireType = isset($_REQUEST['future_action_bulk_action']) ?
-            $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_action']) : '';
-        $newStatus = isset($_REQUEST['future_action_bulk_new_status']) ?
-            $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_new_status']) : 'draft';
+        $expireType = isset($_REQUEST['future_action_bulk_action'])
+            ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_action']) : '';
+        $newStatus = isset($_REQUEST['future_action_bulk_new_status'])
+            ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_new_status']) : 'draft';
 
         if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
             $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
@@ -362,10 +362,10 @@ class BulkEditController implements InitializableInterface
         $opts = [
             'expireType' => $expireType,
             'newStatus' => $newStatus,
-            'category' => isset($_REQUEST['future_action_bulk_terms']) ?
-                $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_terms']) : '',
-            'categoryTaxonomy' => isset($_REQUEST['future_action_bulk_taxonomy']) ?
-                $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_taxonomy']) : '',
+            'category' => isset($_REQUEST['future_action_bulk_terms'])
+                ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_terms']) : '',
+            'categoryTaxonomy' => isset($_REQUEST['future_action_bulk_taxonomy'])
+                ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_taxonomy']) : '',
         ];
 
         if (! empty($opts['category'])) {
@@ -383,8 +383,8 @@ class BulkEditController implements InitializableInterface
             $opts['category'] = [];
         }
 
-        $date = isset($_REQUEST['future_action_bulk_date']) ?
-            sanitize_text_field($_REQUEST['future_action_bulk_date']) : '0';
+        $date = isset($_REQUEST['future_action_bulk_date'])
+            ? sanitize_text_field($_REQUEST['future_action_bulk_date']) : '0';
         $date = strtotime($date);
 
         $this->hooks->doAction(
@@ -433,7 +433,7 @@ class BulkEditController implements InitializableInterface
         }
 
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.NonceVerification.Recommended
-        $postIds = array_map('intval', (array)$_REQUEST['post']);
+        $postIds = array_map('intval', (array) $_REQUEST['post']);
 
         if (empty($postIds)) {
             return;
@@ -442,7 +442,7 @@ class BulkEditController implements InitializableInterface
         $postModelFactory = $this->expirablePostModelFactory;
 
         foreach ($postIds as $postId) {
-            $postId = (int)$postId;
+            $postId = (int) $postId;
 
             if (! $this->currentUserModel->userCanEditPost($postId)) {
                 continue;

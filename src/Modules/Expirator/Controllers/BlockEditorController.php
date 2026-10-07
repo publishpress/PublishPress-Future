@@ -67,7 +67,7 @@ class BlockEditorController implements InitializableInterface
         $options = $container->get(ServicesAbstract::OPTIONS);
 
         $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($post->post_type);
-        $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $post->post_type);
+        $hideMetabox = (bool) $this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $post->post_type);
         $activeMetaBox = $postTypeDefaultConfig['activeMetaBox'] ?? null;
         $willEnqueueScript = $hideMetabox === false
             && (
@@ -80,7 +80,7 @@ class BlockEditorController implements InitializableInterface
                     ],
                     true
                 )
-                || (in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1']))
+                || (in_array((string) $postTypeDefaultConfig['activeMetaBox'], ['active', '1']))
             );
 
         // if settings are not configured, show the metabox by default only for posts and pages
@@ -142,7 +142,7 @@ class BlockEditorController implements InitializableInterface
                     'hour' => date('H', $now),
                     'minute' => date('i', $now),
                     'ts' => $calculatedDate,
-                    'iso' => $gmDate
+                    'iso' => $gmDate,
                 ];
             }
 
@@ -212,7 +212,7 @@ class BlockEditorController implements InitializableInterface
                             strtolower($taxonomyPluralName)
                         ),
                         'newStatus' => __('New status', 'post-expirator'),
-                    ]
+                    ],
                 ]
             );
         }

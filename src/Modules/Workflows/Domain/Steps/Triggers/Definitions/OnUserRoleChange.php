@@ -88,7 +88,7 @@ class OnUserRoleChange implements StepTypeInterface
                             ],
                         ],
                     ],
-                ]
+                ],
             ],
         ];
     }
@@ -101,8 +101,8 @@ class OnUserRoleChange implements StepTypeInterface
                     [
                         "rule" => "hasOutgoingConnection",
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -133,7 +133,7 @@ class OnUserRoleChange implements StepTypeInterface
                 'type' => 'array',
                 'label' => __("Removed roles", "post-expirator"),
                 'description' => __("The roles that were removed from the user.", "post-expirator"),
-            ]
+            ],
         ];
     }
 
@@ -150,8 +150,8 @@ class OnUserRoleChange implements StepTypeInterface
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

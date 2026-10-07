@@ -149,7 +149,7 @@ class PostExpirator_Display
         $allowed_tabs = ['advanced', 'diagnostics', 'viewdebug' ];
         $allowed_tabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_SETTINGS_TABS, $allowed_tabs);
 
-        $debugIsEnabled = (bool)$this->hooks->applyFilters(SettingsHooksAbstract::FILTER_DEBUG_ENABLED, false);
+        $debugIsEnabled = (bool) $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_DEBUG_ENABLED, false);
         if (! $debugIsEnabled) {
             unset($allowed_tabs['viewdebug']);
 
@@ -202,7 +202,7 @@ class PostExpirator_Display
                 // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 $this->settingsFacade->setDefaultDateFormat(sanitize_text_field(wp_unslash($_POST['expired-default-date-format'])));
                 $this->settingsFacade->setDefaultTimeFormat(sanitize_text_field(wp_unslash($_POST['expired-default-time-format'])));
-                $this->settingsFacade->setShowInPostFooter((bool)$_POST['expired-display-footer']);
+                $this->settingsFacade->setShowInPostFooter((bool) $_POST['expired-display-footer']);
                 $this->settingsFacade->setFooterContents(wp_kses(wp_unslash($_POST['expired-footer-contents']), []));
                 $this->settingsFacade->setFooterStyle(wp_kses(wp_unslash($_POST['expired-footer-style']), []));
                 $this->settingsFacade->setShortcodeWrapper(sanitize_text_field(wp_unslash($_POST['shortcode-wrapper'])));
@@ -442,10 +442,10 @@ class PostExpirator_Display
 
 
             // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-            $this->settingsFacade->setSendEmailNotification((bool)$_POST['expired-email-notification']);
-            $this->settingsFacade->setSendEmailNotificationToAdmins((bool)$_POST['expired-email-notification-admins']);
+            $this->settingsFacade->setSendEmailNotification((bool) $_POST['expired-email-notification']);
+            $this->settingsFacade->setSendEmailNotificationToAdmins((bool) $_POST['expired-email-notification-admins']);
             $this->settingsFacade->setEmailNotificationAddressesList($expiredEmailNotificationList);
-            $this->settingsFacade->setPastDueActionsNotificationStatus((bool)$_POST['past-due-actions-notification']);
+            $this->settingsFacade->setPastDueActionsNotificationStatus((bool) $_POST['past-due-actions-notification']);
             $this->settingsFacade->setPastDueActionsNotificationAddressesList($pastDueActionsNotificationList);
             // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 

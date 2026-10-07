@@ -135,7 +135,7 @@ class PostResolver implements VariableResolverInterface
 
     public function getValueAsString(string $property = ''): string
     {
-        return (string)$this->getValue($property);
+        return (string) $this->getValue($property);
     }
 
     protected function getPermalink($postId)
@@ -227,6 +227,6 @@ class PostResolver implements VariableResolverInterface
 
     public function __toString(): string
     {
-        return (string)$this->post->ID;
+        return (string) $this->post->ID;
     }
 }

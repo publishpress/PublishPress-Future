@@ -99,7 +99,7 @@ class WorkflowsModel implements WorkflowsModelInterface
             'meta_query' => [
                 [
                     'key' => sanitize_key($metaKey),
-                    'value' => (int)$metaValue,
+                    'value' => (int) $metaValue,
                 ],
             ],
         ];
@@ -111,7 +111,7 @@ class WorkflowsModel implements WorkflowsModelInterface
         foreach ($query->posts as $workflow) {
             $workflows[] = [
                 'value' => $workflow->ID,
-                'label' => $workflow->post_title
+                'label' => $workflow->post_title,
             ];
         }
 

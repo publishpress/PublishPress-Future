@@ -38,7 +38,7 @@ class TermsArrayResolver implements VariableResolverInterface
 
     public function getValueAsString(string $property = ''): string
     {
-        return (string)$this->getValue($property);
+        return (string) $this->getValue($property);
     }
 
     public function compact(): array

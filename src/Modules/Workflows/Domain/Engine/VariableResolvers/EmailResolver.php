@@ -23,7 +23,7 @@ class EmailResolver implements VariableResolverInterface
 
     public function getValue(string $propertyName = '')
     {
-        return (string)$this->variable;
+        return (string) $this->variable;
     }
 
     public function getValueAsString(string $property = ''): string
@@ -35,7 +35,7 @@ class EmailResolver implements VariableResolverInterface
     {
         return [
             'type' => $this->getType(),
-            'value' => $this->variable
+            'value' => $this->variable,
         ];
     }
 
@@ -74,6 +74,6 @@ class EmailResolver implements VariableResolverInterface
 
     public function __toString(): string
     {
-        return (string)$this->variable;
+        return (string) $this->variable;
     }
 }

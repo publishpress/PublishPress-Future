@@ -63,7 +63,7 @@ final class Module implements ModuleInterface
         wp_enqueue_style(
             'publishpress-future-woocommerce',
             $this->baseUrl . 'assets/css/woocommerce.css',
-            array(),
+            [],
             $this->pluginVersion,
             false
         );

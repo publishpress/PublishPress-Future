@@ -63,9 +63,9 @@ if ($filterSubmitted) {
  * @var LoggerInterface $logger
  */
 $logger = Container::getInstance()->get(ServicesAbstract::LOGGER);
-$results = $logger->fetchLatest($currentLogCount, (bool)$triggerActivatedOnly);
-$totalLogs = $logger->getTotalLogs((bool)$triggerActivatedOnly);
-$logSizeInBytes = $logger->getLogSizeInBytes((bool)$triggerActivatedOnly);
+$results = $logger->fetchLatest($currentLogCount, (bool) $triggerActivatedOnly);
+$totalLogs = $logger->getTotalLogs((bool) $triggerActivatedOnly);
+$logSizeInBytes = $logger->getLogSizeInBytes((bool) $triggerActivatedOnly);
 $logSizeInBytesTotal = $triggerActivatedOnly ? $logger->getLogSizeInBytes(false) : $logSizeInBytes;
 $totalLogsUnfiltered = $triggerActivatedOnly ? $logger->getTotalLogs(false) : $totalLogs;
 
@@ -84,7 +84,7 @@ echo '<label for="log-count">' . esc_html__('Number of logs to display:', 'post-
 echo '<select id="log-count" name="log_count" onchange="this.form.submit()">';
 foreach ($logCountOptions as $value => $label) {
     $selected = $currentLogCount === $value ? ' selected' : '';
-    echo '<option value="' . esc_attr((string)$value) . '"' . $selected . '>' . esc_html($label) . '</option>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    echo '<option value="' . esc_attr((string) $value) . '"' . $selected . '>' . esc_html($label) . '</option>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 echo '</select>';
 echo '</div>';

@@ -160,7 +160,7 @@ class ContentController implements InitializableInterface
                 $timeformat,
                 $expirationDate,
                 $defaultTimeFormat
-            )
+            ),
         ];
 
         $content .= str_replace(

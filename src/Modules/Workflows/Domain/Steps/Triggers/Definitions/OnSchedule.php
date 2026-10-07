@@ -75,7 +75,7 @@ class OnSchedule implements StepTypeInterface
                                 "global.user.user_registered",
                             ],
                             "hidePreventDuplicateScheduling" => true,
-                        ]
+                        ],
                     ],
                 ],
             ],
@@ -90,8 +90,8 @@ class OnSchedule implements StepTypeInterface
                     [
                         "rule" => "hasOutgoingConnection",
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -152,31 +152,31 @@ class OnSchedule implements StepTypeInterface
                             [
                                 "!=" => [
                                     ["var" => "schedule.recurrence"],
-                                    "single"
-                                ]
+                                    "single",
+                                ],
                             ],
                             [
                                 "!=" => [
                                     ["var" => "schedule.repeatUntil"],
-                                    "forever"
-                                ]
+                                    "forever",
+                                ],
                             ],
                             [
                                 "!=" => [
                                     ["var" => "schedule"],
-                                    null
-                                ]
+                                    null,
+                                ],
                             ],
                             [
                                 "!=" => [
                                     ["var" => "schedule"],
-                                    []
-                                ]
+                                    [],
+                                ],
                             ],
-                        ]
+                        ],
                     ],
                 ],
-            ]
+            ],
         ];
     }
 

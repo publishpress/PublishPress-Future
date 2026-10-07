@@ -169,7 +169,7 @@ class BackupAdminPage implements InitializableInterface
                 'title' => __('Import', 'post-expirator'),
                 'slug'  => 'import',
                 'link'  => admin_url($baseLink . 'import'),
-            ]
+            ],
         ];
 
         $tabs = array_merge($backupTabs, $tabs);

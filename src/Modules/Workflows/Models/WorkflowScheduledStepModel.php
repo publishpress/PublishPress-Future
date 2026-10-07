@@ -352,11 +352,11 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
         $this->setWorkflowId($row['workflow_id']);
         $this->setStepId($row['step_id']);
         $this->setActionUID($row['action_uid']);
-        $this->setIsRecurring((int)$row['is_recurring'] === 1);
+        $this->setIsRecurring((int) $row['is_recurring'] === 1);
         $this->setRepeatUntil($row['repeat_until']);
         $this->setRepeatTimes($row['repeat_times']);
         $this->setRepeatUntilDate($row['repeat_until_date']);
-        $this->setIsCompressed((int)$row['is_compressed'] === 1);
+        $this->setIsCompressed((int) $row['is_compressed'] === 1);
         $this->setPostId($row['post_id'] ?? 0);
         $this->setRepetitionNumber($row['repetition_number'] ?? 0);
         $this->isFinished = null;
@@ -460,7 +460,7 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
     {
         $metaKey = self::META_FINISHED_PREFIX . $actionUIDHash;
 
-        return (bool)get_post_meta($workflowId, $metaKey, true);
+        return (bool) get_post_meta($workflowId, $metaKey, true);
     }
 
     public static function getMetaRunCount(int $workflowId, string $actionUIDHash): int

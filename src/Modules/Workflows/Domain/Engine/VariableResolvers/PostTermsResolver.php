@@ -65,14 +65,14 @@ class PostTermsResolver implements VariableResolverInterface
             return wp_json_encode($value);
         }
 
-        return (string)$value;
+        return (string) $value;
     }
 
     public function compact(): array
     {
         return [
             'type' => $this->getType(),
-            'value' => $this->termsData
+            'value' => $this->termsData,
         ];
     }
 

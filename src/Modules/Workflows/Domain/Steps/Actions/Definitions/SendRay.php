@@ -69,8 +69,8 @@ class SendRay implements StepTypeInterface
                         "type" => "debugData",
                         "label" => __("Data to output", "post-expirator"),
                         "defaultValue" => [
-                            "expression" => "{{input}}"
-                        ]
+                            "expression" => "{{input}}",
+                        ],
                     ],
                     [
                         "name" => "label",
@@ -81,9 +81,9 @@ class SendRay implements StepTypeInterface
                         "name" => "color",
                         "type" => "rayColor",
                         "label" => __("Color", "post-expirator"),
-                    ]
+                    ],
                 ],
-            ]
+            ],
         ];
     }
 
@@ -126,7 +126,7 @@ class SendRay implements StepTypeInterface
                 "type" => "input",
                 "label" => __("Step input", "post-expirator"),
                 "description" => __("The input data for this step.", "post-expirator"),
-            ]
+            ],
         ];
     }
 
@@ -141,14 +141,14 @@ class SendRay implements StepTypeInterface
             "target" => [
                 [
                     "id" => "input",
-                ]
+                ],
             ],
             "source" => [
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

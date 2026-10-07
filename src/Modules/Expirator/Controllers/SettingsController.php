@@ -341,7 +341,7 @@ class SettingsController implements InitializableInterface
                         'wp-element',
                         'wp-hooks',
                         'wp-api-fetch',
-                        'wp-html-entities'
+                        'wp-html-entities',
                     ],
                     PUBLISHPRESS_FUTURE_VERSION,
                     true
@@ -373,7 +373,7 @@ class SettingsController implements InitializableInterface
             'defaults',
             'general',
             'display',
-            'notifications'
+            'notifications',
         ];
 
         $allowedTabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowedTabs);

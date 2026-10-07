@@ -82,8 +82,8 @@ class OnPostAuthorChange implements StepTypeInterface
                             "postStatus" => [],
                         ],
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -95,8 +95,8 @@ class OnPostAuthorChange implements StepTypeInterface
                     [
                         "rule" => "hasOutgoingConnection",
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -125,7 +125,7 @@ class OnPostAuthorChange implements StepTypeInterface
                 "type" => "integer",
                 "label" => __("Post ID", "post-expirator"),
                 "description" => __("The ID of the post that was updated.", "post-expirator"),
-            ]
+            ],
         ];
     }
 
@@ -142,8 +142,8 @@ class OnPostAuthorChange implements StepTypeInterface
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

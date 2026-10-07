@@ -141,7 +141,7 @@ class PostModel implements PostModelInterface
                 $executionContext = $executionContextRegistry->getExecutionContext($workflowExecutionId);
                 $executionContext->setVariable($triggerStep['data']['slug'], [
                     'post' => new PostResolver($postObject, $hooks, '', $expirablePostModelFactory),
-                    'postId' => new IntegerResolver($postId)
+                    'postId' => new IntegerResolver($postId),
                 ]);
 
                 if (! $postQueryValidator->validate(['post' => $postObject, 'node' => $triggerStep])) {

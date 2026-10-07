@@ -100,7 +100,7 @@ class QuickEditController implements InitializableInterface
             $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
             $defaults = $settingsFacade->getPostTypeDefaults($postType);
-            $taxonomy = isset($defaults['taxonomy']) ? $defaults['taxonomy'] : '';
+            $taxonomy = $defaults['taxonomy'] ?? '';
             $label = '';
 
             // if settings have not been configured and this is the default post type
@@ -113,11 +113,11 @@ class QuickEditController implements InitializableInterface
                 $label = $tax_object ? $tax_object->label : '';
             }
 
-            PostExpirator_Display::getInstance()->render_template('quick-edit', array(
+            PostExpirator_Display::getInstance()->render_template('quick-edit', [
                 'post_type' => $postType,
                 'taxonomy' => $taxonomy,
-                'tax_label' => $label
-            ));
+                'tax_label' => $label,
+            ]);
         } catch (Throwable $th) {
             $this->logger->error('Error registering quick edit custom box: ' . $th->getMessage());
         }
@@ -132,7 +132,7 @@ class QuickEditController implements InitializableInterface
             }
 
             // Don't update data if the function is called for saving revision.
-            $posttype = get_post_type((int)$postId);
+            $posttype = get_post_type((int) $postId);
             if ($posttype === 'revision') {
                 return;
             }
@@ -213,11 +213,11 @@ class QuickEditController implements InitializableInterface
 
         $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
 
-        if (! in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1', true])) {
+        if (! in_array((string) $postTypeDefaultConfig['activeMetaBox'], ['active', '1', true])) {
             return false;
         }
 
-        $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
+        $hideMetabox = (bool) $this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
         if ($hideMetabox) {
             return false;
         }
@@ -309,7 +309,7 @@ class QuickEditController implements InitializableInterface
                     'hour' => date('H', $now),
                     'minute' => date('i', $now),
                     'ts' => $calculatedDate,
-                    'iso' => $gmDate
+                    'iso' => $gmDate,
                 ];
             }
 
@@ -374,7 +374,7 @@ class QuickEditController implements InitializableInterface
                             strtolower($taxonomyPluralName)
                         ),
                         'newStatus' => __('New status', 'post-expirator'),
-                    ]
+                    ],
                 ]
             );
         } catch (Throwable $th) {

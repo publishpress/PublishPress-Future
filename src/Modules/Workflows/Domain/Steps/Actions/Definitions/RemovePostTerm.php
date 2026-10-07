@@ -73,7 +73,7 @@ class RemovePostTerm implements StepTypeInterface
                             "variable" => [
                                 "rule" => "first",
                                 "dataType" => "post",
-                            ]
+                            ],
                         ],
                     ],
                 ],
@@ -95,7 +95,7 @@ class RemovePostTerm implements StepTypeInterface
                             "labelOptionToSelectAll" => __("Remove all terms", "post-expirator"),
                         ],
                     ],
-                ]
+                ],
             ],
         ];
     }
@@ -122,8 +122,8 @@ class RemovePostTerm implements StepTypeInterface
                         "label" => __("Terms", "post-expirator"),
                         "condition" => [
                             "field" => "taxonomyTerms.selectAll",
-                            "value" => "0"
-                        ]
+                            "value" => "0",
+                        ],
                     ],
                     [
                         "rule" => "validVariable",
@@ -149,7 +149,7 @@ class RemovePostTerm implements StepTypeInterface
                 "type" => "input",
                 "label" => __("Step input", "post-expirator"),
                 "description" => __("The input data for this step.", "post-expirator"),
-            ]
+            ],
         ];
     }
 
@@ -164,14 +164,14 @@ class RemovePostTerm implements StepTypeInterface
             "target" => [
                 [
                     "id" => "input",
-                ]
+                ],
             ],
             "source" => [
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

@@ -274,9 +274,9 @@ $rayDebugIsInstalled = function_exists('ray');
             echo '<td>';
             foreach ($eventValueKeys as $eventGUID) {
                 if (false === empty($eventValue[$eventGUID]['args'])) {
-                    echo '<div class="pe-event-post" title="' . esc_attr((string)$eventGUID) . '">';
+                    echo '<div class="pe-event-post" title="' . esc_attr((string) $eventGUID) . '">';
                     foreach ($eventValue[$eventGUID]['args'] as $value) {
-                        $eventPost = get_post((int)$value);
+                        $eventPost = get_post((int) $value);
 
                         if (
                             false === empty($eventPost)

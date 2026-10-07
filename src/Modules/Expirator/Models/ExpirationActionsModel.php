@@ -213,6 +213,6 @@ class ExpirationActionsModel
     {
         $actions = $this->getActions($postType);
 
-        return isset($actions[$actionName]) ? $actions[$actionName] : '';
+        return $actions[$actionName] ?? '';
     }
 }

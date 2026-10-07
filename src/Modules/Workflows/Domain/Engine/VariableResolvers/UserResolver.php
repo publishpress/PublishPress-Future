@@ -79,7 +79,7 @@ class UserResolver implements VariableResolverInterface
             $value = implode(', ', $value);
         }
 
-        return (string)$value;
+        return (string) $value;
     }
 
     public function compact(): array

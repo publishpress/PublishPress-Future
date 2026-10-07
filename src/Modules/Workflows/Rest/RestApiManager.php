@@ -33,7 +33,7 @@ class RestApiManager implements RestApiManagerInterface
             new RestApiV1(
                 $this->hooks,
                 $this->workflowSanitization
-            )
+            ),
         ];
 
         /**

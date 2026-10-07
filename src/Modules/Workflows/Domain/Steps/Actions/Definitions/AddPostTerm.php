@@ -76,7 +76,7 @@ class AddPostTerm implements StepTypeInterface
                             "variable" => [
                                 "rule" => "first",
                                 "dataType" => "post",
-                            ]
+                            ],
                         ],
                     ],
                 ],
@@ -91,7 +91,7 @@ class AddPostTerm implements StepTypeInterface
                         "label" => __("Terms", "post-expirator"),
                         "description" => __("The terms that will be added to the posts.", "post-expirator"),
                     ],
-                ]
+                ],
             ],
         ];
     }
@@ -141,7 +141,7 @@ class AddPostTerm implements StepTypeInterface
                 "type" => "input",
                 "label" => __("Step input", "post-expirator"),
                 "description" => __("The input data for this step.", "post-expirator"),
-            ]
+            ],
         ];
     }
 
@@ -156,14 +156,14 @@ class AddPostTerm implements StepTypeInterface
             "target" => [
                 [
                     "id" => "input",
-                ]
+                ],
             ],
             "source" => [
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

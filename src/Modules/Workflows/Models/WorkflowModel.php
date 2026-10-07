@@ -385,7 +385,7 @@ class WorkflowModel implements WorkflowModelInterface
 
     private function getStepVersion(array $node): int
     {
-        return (int)($node['data']['version'] ?? 0);
+        return (int) ($node['data']['version'] ?? 0);
     }
 
     private function getUnstranslatedString(string $string): string

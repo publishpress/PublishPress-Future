@@ -35,7 +35,7 @@ class WorkflowMetaResolver implements VariableResolverInterface
 
     public function getValueAsString(string $name = ''): string
     {
-        return (string)$this->getValue($name);
+        return (string) $this->getValue($name);
     }
 
     public function compact($name = ''): array

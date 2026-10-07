@@ -23,7 +23,7 @@ class BooleanResolver implements VariableResolverInterface
 
     public function getValue(string $propertyName = '')
     {
-        return (bool)$this->variable;
+        return (bool) $this->variable;
     }
 
     public function getValueAsString(string $property = ''): string
@@ -35,7 +35,7 @@ class BooleanResolver implements VariableResolverInterface
     {
         return [
             'type' => $this->getType(),
-            'value' => $this->variable
+            'value' => $this->variable,
         ];
     }
 

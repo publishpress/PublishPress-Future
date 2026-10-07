@@ -31,7 +31,7 @@ class UserModel
         }
 
         if (is_numeric($user)) {
-            $this->userId = (int)$user;
+            $this->userId = (int) $user;
         }
     }
 

@@ -137,7 +137,7 @@ class SendEmailRunner implements StepRunnerInterface
         }
 
         if (! is_array($recipient)) {
-            $recipient = explode(',', (string)$recipient);
+            $recipient = explode(',', (string) $recipient);
         }
 
         $recipient = array_map('trim', $recipient);

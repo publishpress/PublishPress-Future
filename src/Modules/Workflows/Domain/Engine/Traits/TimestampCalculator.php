@@ -40,7 +40,7 @@ trait TimestampCalculator
         }
 
         if (is_numeric($timestamp)) {
-            $timestamp = (int)$timestamp;
+            $timestamp = (int) $timestamp;
         } else {
             $timestamp = strtotime($timestamp);
 
@@ -55,7 +55,7 @@ trait TimestampCalculator
 
         if ($dateStrategy === 'offset') {
             if (! empty($offset)) {
-                $timestamp = strtotime($offset, (int)$timestamp);
+                $timestamp = strtotime($offset, (int) $timestamp);
             }
         }
 

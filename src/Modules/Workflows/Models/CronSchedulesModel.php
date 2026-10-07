@@ -33,7 +33,7 @@ class CronSchedulesModel implements CronSchedulesModelInterface
 
         foreach ($schedules as $key => $schedule) {
             if ($key === $name) {
-                return (int)$schedule['interval'];
+                return (int) $schedule['interval'];
             }
         }
 

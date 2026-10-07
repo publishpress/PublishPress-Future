@@ -39,7 +39,7 @@ class TaxonomiesModel
             $taxonomies = get_object_taxonomies($postType, 'object');
 
             if ($hierarchical) {
-                $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
+                $taxonomies = wp_filter_object_list($taxonomies, ['hierarchical' => true]);
             }
 
             $taxonomiesByPostType[$postType] = $taxonomies;

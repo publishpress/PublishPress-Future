@@ -99,8 +99,8 @@ class OnCustomAction implements StepTypeInterface
                         ),
                         "default" => [],
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -112,7 +112,7 @@ class OnCustomAction implements StepTypeInterface
                     [
                         "rule" => "hasOutgoingConnection",
                     ],
-                ]
+                ],
             ],
             "settings" => [
                 "rules" => [
@@ -127,8 +127,8 @@ class OnCustomAction implements StepTypeInterface
                         "field" => "args",
                         "label" => __("Action arguments", "post-expirator"),
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -162,8 +162,8 @@ class OnCustomAction implements StepTypeInterface
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

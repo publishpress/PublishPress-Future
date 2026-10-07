@@ -96,7 +96,7 @@ class V30000WPCronToActionsScheduler implements MigrationInterface
 
             $expireType = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true);
             $expirationTaxonomy = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true);
-            $expirationCategories = (array)$postModel->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true);
+            $expirationCategories = (array) $postModel->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true);
 
             $args = [
                 'expireType' => $expireType,

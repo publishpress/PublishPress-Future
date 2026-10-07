@@ -47,17 +47,17 @@ class JsonLogicEngine implements JsonLogicEngineInterface
 
     public function operationStartsWith($value, $pattern)
     {
-        return strpos((string)$value, $pattern) === 0;
+        return strpos((string) $value, $pattern) === 0;
     }
 
     public function operationEndsWith($value, $pattern)
     {
-        return substr((string)$value, -strlen($pattern)) === $pattern;
+        return substr((string) $value, -strlen($pattern)) === $pattern;
     }
 
     public function operationContains($value, $pattern)
     {
-        return strpos((string)$value, $pattern) !== false;
+        return strpos((string) $value, $pattern) !== false;
     }
 
     public function operationDoesNotContain($value, $pattern)
@@ -105,7 +105,7 @@ class JsonLogicEngine implements JsonLogicEngineInterface
         $found = false;
 
         foreach ($array as $item) {
-            if ((string)$item === $value) {
+            if ((string) $item === $value) {
                 $found = true;
                 break;
             }

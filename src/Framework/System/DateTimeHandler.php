@@ -56,7 +56,7 @@ class DateTimeHandler implements DateTimeHandlerInterface
             $date->setTimezone($siteTimezone);
         }
 
-        $format = $format ?? $this->getDateTimeFormat();
+        $format ??= $this->getDateTimeFormat();
 
         return $date->format($format);
     }

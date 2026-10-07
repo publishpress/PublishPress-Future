@@ -117,7 +117,7 @@ class RestAPIController implements InitializableInterface
                     'required' => false,
                     'type' => 'array',
                 ],
-            ]
+            ],
         ]);
 
         register_rest_route($apiNamespace, '/post-expiration/(?P<postId>\d+)', [
@@ -176,7 +176,7 @@ class RestAPIController implements InitializableInterface
                     'required' => true,
                     'type' => 'array',
                 ],
-            ]
+            ],
         ]);
 
         register_rest_route($apiNamespace, '/taxonomies/(?P<postType>[a-z\-_0-9A-Z]+)', [
@@ -194,7 +194,7 @@ class RestAPIController implements InitializableInterface
                     'required' => true,
                     'type' => 'string',
                 ],
-            ]
+            ],
         ]);
 
         register_rest_route($apiNamespace, '/terms/(?P<taxonomy>[a-z\-_0-9A-Z]+)', [
@@ -212,7 +212,7 @@ class RestAPIController implements InitializableInterface
                     'required' => true,
                     'type' => 'string',
                 ],
-            ]
+            ],
         ]);
 
         register_rest_route($apiNamespace, '/settings/validate-expire-offset', [
@@ -220,7 +220,7 @@ class RestAPIController implements InitializableInterface
             'callback' => [$this, 'validateTextualDatetime'],
             'permission_callback' => function () {
                 return $this->currentUserModel->userCanExpirePosts();
-            }
+            },
         ]);
     }
 
@@ -327,13 +327,13 @@ class RestAPIController implements InitializableInterface
                     'update_callback' => function ($value, $post) {
                         try {
                             if (
-                                ! $this->currentUserModel->userCanExpirePosts() ||
-                                ! $this->currentUserModel->userCanEditPost($post->ID)
+                                ! $this->currentUserModel->userCanExpirePosts()
+                                || ! $this->currentUserModel->userCanEditPost($post->ID)
                             ) {
                                 return false;
                             }
 
-                            if (isset($value['enabled']) && (bool)$value['enabled']) {
+                            if (isset($value['enabled']) && (bool) $value['enabled']) {
                                 $expireType = sanitize_text_field($value['action']);
                                 $newStatus = sanitize_key($value['newStatus']);
 
@@ -390,7 +390,7 @@ class RestAPIController implements InitializableInterface
                     'schema' => [
                         'description' => 'Future action',
                         'type' => 'object',
-                    ]
+                    ],
                 ]
             );
         }
@@ -488,13 +488,13 @@ class RestAPIController implements InitializableInterface
     {
         $postId = absint($request->get_param('postId'));
 
-        $expirationEnabled = (bool)$request->get_param('enabled');
+        $expirationEnabled = (bool) $request->get_param('enabled');
 
         if ($expirationEnabled) {
             $opts = [
                 'expireType' => sanitize_key($request->get_param('action')),
-                'category' => array_map('absint', (array)$request->get_param('terms')),
-                'categoryTaxonomy' => sanitize_key($request->get_param('taxonomy'))
+                'category' => array_map('absint', (array) $request->get_param('terms')),
+                'categoryTaxonomy' => sanitize_key($request->get_param('taxonomy')),
             ];
 
             $extraData = $request->get_param('extraData');

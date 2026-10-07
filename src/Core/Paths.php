@@ -17,7 +17,7 @@ class Paths
 
     public function __construct($baseDir)
     {
-        $this->baseDir = (string)$baseDir;
+        $this->baseDir = (string) $baseDir;
     }
 
     public function getVendorDirPath()

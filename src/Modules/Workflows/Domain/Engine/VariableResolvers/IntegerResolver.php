@@ -23,7 +23,7 @@ class IntegerResolver implements VariableResolverInterface
 
     public function getValue(string $propertyName = '')
     {
-        return (int)$this->variable;
+        return (int) $this->variable;
     }
 
     public function getValueAsString(string $property = ''): string
@@ -35,7 +35,7 @@ class IntegerResolver implements VariableResolverInterface
     {
         return [
             'type' => $this->getType(),
-            'value' => $this->variable
+            'value' => $this->variable,
         ];
     }
 

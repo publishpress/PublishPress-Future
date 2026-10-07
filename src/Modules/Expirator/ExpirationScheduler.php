@@ -94,7 +94,7 @@ class ExpirationScheduler implements SchedulerInterface
     private function convertLocalTimeToUtc($timestamp): int
     {
         // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-        return (int)get_gmt_from_date(date('Y-m-d H:i:s', $timestamp), 'U');
+        return (int) get_gmt_from_date(date('Y-m-d H:i:s', $timestamp), 'U');
     }
 
     /**
@@ -109,14 +109,14 @@ class ExpirationScheduler implements SchedulerInterface
         $postModel = $postModelFactory($postId);
 
         $opts['date'] = $timestamp;
-        $opts['category'] = isset($opts['category']) ? $opts['category'] : [];
-        $opts['categoryTaxonomy'] = isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '';
+        $opts['category'] ??= [];
+        $opts['categoryTaxonomy'] ??= '';
         $opts['actionLabel'] = $this->expirationActionsModel->getLabelForAction($opts['expireType'], $postModel->getPostType());
         $opts['postTitle'] = $postModel->getTitle();
         $opts['postType'] = $postModel->getPostType();
         $opts['postLink'] = $postModel->getPermalink();
         $opts['postTypeLabel'] = $postModel->getPostTypeSingularLabel();
-        $opts['extraData'] = isset($opts['extraData']) ? $opts['extraData'] : $postModel->getExtraData();
+        $opts['extraData'] ??= $postModel->getExtraData();
 
         if (isset($opts['extraData']['extraData'])) {
             $opts['extraData'] = $opts['extraData']['extraData'];
@@ -134,7 +134,7 @@ class ExpirationScheduler implements SchedulerInterface
             HooksAbstract::ACTION_RUN_WORKFLOW,
             [
                 'postId' => $postId,
-                'workflow' => 'expire'
+                'workflow' => 'expire',
             ]
         );
 
@@ -190,10 +190,10 @@ class ExpirationScheduler implements SchedulerInterface
         $postModelFactory = $this->postModelFactory;
         $postModel = $postModelFactory($postId);
 
-        $type = isset($opts['expireType']) ? $opts['expireType'] : '';
-        $taxonomy = isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '';
-        $terms = isset($opts['category']) ? $opts['category'] : '';
-        $newStatus = isset($opts['newStatus']) ? $opts['newStatus'] : '';
+        $type = $opts['expireType'] ?? '';
+        $taxonomy = $opts['categoryTaxonomy'] ?? '';
+        $terms = $opts['category'] ?? '';
+        $newStatus = $opts['newStatus'] ?? '';
 
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, $timestamp);
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, 'saved');

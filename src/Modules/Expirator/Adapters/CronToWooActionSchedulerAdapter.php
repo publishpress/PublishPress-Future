@@ -61,12 +61,12 @@ class CronToWooActionSchedulerAdapter implements CronInterface
         if (! ActionScheduler::is_initialized(__FUNCTION__)) {
             return 0;
         }
-        $params = array(
+        $params = [
             'hook'    => $action,
             'orderby' => 'date',
             'order'   => 'ASC',
             'group'   => self::SCHEDULED_ACTION_GROUP,
-        );
+        ];
         if (is_array($args)) {
             $params['args'] = $args;
         }

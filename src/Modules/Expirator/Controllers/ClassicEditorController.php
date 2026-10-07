@@ -132,7 +132,7 @@ class ClassicEditorController implements InitializableInterface
             $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
             $defaults = $settingsFacade->getPostTypeDefaults($postType);
-            $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
+            $hideMetabox = (bool) $this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
             $activeMetaBox = $defaults['activeMetaBox'] ?? null;
             $willAddMetabox = $hideMetabox === false
                 && (
@@ -142,7 +142,7 @@ class ClassicEditorController implements InitializableInterface
                     )
                     || (
                         is_array($defaults)
-                        && (in_array((string)$defaults['activeMetaBox'], ['active', '1'], true))
+                        && (in_array((string) $defaults['activeMetaBox'], ['active', '1'], true))
                     )
                 );
 
@@ -177,7 +177,7 @@ class ClassicEditorController implements InitializableInterface
             'action' => $postModel->getExpirationType(),
             'newStatus' => $postModel->getExpirationNewStatus(),
             'terms' => $postModel->getExpirationCategoryIDs(),
-            'taxonomy' => $postModel->getExpirationTaxonomy()
+            'taxonomy' => $postModel->getExpirationTaxonomy(),
         ];
 
         PostExpirator_Display::getInstance()->render_template(
@@ -189,7 +189,7 @@ class ClassicEditorController implements InitializableInterface
                 'newStatus' => $data['newStatus'],
                 'date' => $data['date'],
                 'terms' => $data['terms'],
-                'taxonomy' => $data['taxonomy']
+                'taxonomy' => $data['taxonomy'],
             ]
         );
     }
@@ -203,7 +203,7 @@ class ClassicEditorController implements InitializableInterface
             }
 
             // Don't update data if the function is called for saving revision.
-            $posttype = get_post_type((int)$postId);
+            $posttype = get_post_type((int) $postId);
             if ($posttype === 'revision') {
                 return;
             }
@@ -305,11 +305,11 @@ class ClassicEditorController implements InitializableInterface
             $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
             $activeMetaBox = $postTypeDefaultConfig['activeMetaBox'] ?? null;
 
-            if (! in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1', true])) {
+            if (! in_array((string) $postTypeDefaultConfig['activeMetaBox'], ['active', '1', true])) {
                 return;
             }
 
-            $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
+            $hideMetabox = (bool) $this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
             if ($hideMetabox) {
                 return;
             }
@@ -331,7 +331,7 @@ class ClassicEditorController implements InitializableInterface
                     'wp-element',
                     'inline-edit-post',
                     'wp-html-entities',
-                    'wp-plugins'
+                    'wp-plugins',
                 ],
                 PUBLISHPRESS_FUTURE_VERSION,
                 true
@@ -384,7 +384,7 @@ class ClassicEditorController implements InitializableInterface
                     'hour' => date('H', $now),
                     'minute' => date('i', $now),
                     'ts' => $calculatedDate,
-                    'iso' => $gmDate
+                    'iso' => $gmDate,
                 ];
             }
 
@@ -455,7 +455,7 @@ class ClassicEditorController implements InitializableInterface
                             strtolower($taxonomyPluralName)
                         ),
                         'newStatus' => __('New status', 'post-expirator'),
-                    ]
+                    ],
                 ]
             );
         } catch (Throwable $th) {

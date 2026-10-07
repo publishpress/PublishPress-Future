@@ -33,7 +33,7 @@ class TermModel
         }
 
         if (is_numeric($term)) {
-            $this->termId = (int)$term;
+            $this->termId = (int) $term;
         }
     }
 
@@ -70,7 +70,7 @@ class TermModel
 
     public function getTermID()
     {
-        return (int)$this->termId;
+        return (int) $this->termId;
     }
 
     /**

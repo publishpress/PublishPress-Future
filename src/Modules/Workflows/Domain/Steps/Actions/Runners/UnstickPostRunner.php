@@ -59,7 +59,7 @@ class UnstickPostRunner implements StepRunnerInterface
                     && isset($_POST['action'])
                     && $_POST['action'] === 'inline-save';
 
-                $isClassicEditor = ( ! defined('DOING_AJAX') || ! DOING_AJAX)
+                $isClassicEditor = (! defined('DOING_AJAX') || ! DOING_AJAX)
                     && isset($_POST['action'])
                     && $_POST['action'] === 'editpost';
                 // phpcs:enable WordPress.Security.NonceVerification.Missing

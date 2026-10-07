@@ -11,7 +11,7 @@ class PostAuthorsModel implements PostAuthorsModelInterface
         $authors = get_users([
             'capability' => ['edit_posts'],
             'orderby' => 'display_name',
-            'order' => 'ASC'
+            'order' => 'ASC',
         ]);
 
         return $authors;

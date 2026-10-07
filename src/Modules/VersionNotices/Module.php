@@ -100,29 +100,29 @@ final class Module implements ModuleInterface
                             'screens' => [
                                 [
                                     'base' => 'toplevel_page_publishpress-future',
-                                    'id' => 'toplevel_page_publishpress-future'
+                                    'id' => 'toplevel_page_publishpress-future',
                                 ],
                                 [
                                     'base' => 'future_page_publishpress-future-scheduled-actions',
-                                    'id' => 'future_page_publishpress-future-scheduled-actions'
+                                    'id' => 'future_page_publishpress-future-scheduled-actions',
                                 ],
                                 [
                                     'base' => 'edit',
-                                    'id' => 'edit-ppfuture_workflow'
+                                    'id' => 'edit-ppfuture_workflow',
                                 ],
                                 [
                                     'base' => 'admin_page_publishpress-future-scheduled-actions',
-                                    'id' => 'admin_page_publishpress-future-scheduled-actions'
+                                    'id' => 'admin_page_publishpress-future-scheduled-actions',
                                 ],
                                 [
                                     'base' => 'future_page_future-backup',
-                                    'id' => 'future_page_future-backup'
+                                    'id' => 'future_page_future-backup',
                                 ],
                                 [
                                     'base' => 'future_page_publishpress-future-settings',
-                                    'id' => 'future_page_publishpress-future-settings'
-                                ]
-                            ]
+                                    'id' => 'future_page_publishpress-future-settings',
+                                ],
+                            ],
                         ];
 
                         return $settings;

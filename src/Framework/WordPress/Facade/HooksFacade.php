@@ -54,7 +54,7 @@ class HooksFacade implements HookableInterface
         try {
             $params = array_merge([
                 $filterName,
-                $valueToBeFiltered
+                $valueToBeFiltered,
             ], $args);
 
             return call_user_func_array('apply_filters', $params);

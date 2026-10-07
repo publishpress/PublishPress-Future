@@ -76,7 +76,7 @@ class ChangePostStatus implements StepTypeInterface
                             "variable" => [
                                 "rule" => "first",
                                 "dataType" => "post",
-                            ]
+                            ],
                         ],
                     ],
                 ],
@@ -94,7 +94,7 @@ class ChangePostStatus implements StepTypeInterface
                             "post-expirator"
                         ),
                     ],
-                ]
+                ],
             ],
         ];
     }
@@ -139,7 +139,7 @@ class ChangePostStatus implements StepTypeInterface
                 "type" => "input",
                 "label" => __("Step input", "post-expirator"),
                 "description" => __("The input data for this step.", "post-expirator"),
-            ]
+            ],
         ];
     }
 
@@ -154,14 +154,14 @@ class ChangePostStatus implements StepTypeInterface
             "target" => [
                 [
                     "id" => "input",
-                ]
+                ],
             ],
             "source" => [
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

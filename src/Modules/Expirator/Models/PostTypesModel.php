@@ -49,13 +49,13 @@ class PostTypesModel
      */
     public function getPostTypes(): array
     {
-        $postTypes = get_post_types(array('public' => true));
+        $postTypes = get_post_types(['public' => true]);
         $postTypes = array_merge(
             $postTypes,
             get_post_types(
                 [
                     'public' => false,
-                    'show_ui' => true
+                    'show_ui' => true,
                 ]
             )
         );

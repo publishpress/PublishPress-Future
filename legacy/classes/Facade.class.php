@@ -134,13 +134,13 @@ class PostExpirator_Facade
         $actionArgsModel->loadByPostId($postId);
         $args = $actionArgsModel->getArgs();
 
-        return array(
-            'expireType' => isset($args['expireType']) ? $args['expireType'] : '',
-            'newStatus' => isset($args['newStatus']) ? $args['newStatus'] : 'draft',
-            'category' => isset($args['category']) ? $args['category'] : [],
-            'categoryTaxonomy' => isset($args['categoryTaxonomy']) ? $args['categoryTaxonomy'] : '',
+        return [
+            'expireType' => $args['expireType'] ?? '',
+            'newStatus' => $args['newStatus'] ?? 'draft',
+            'category' => $args['category'] ?? [],
+            'categoryTaxonomy' => $args['categoryTaxonomy'] ?? '',
             'enabled' => true,
-        );
+        ];
     }
 
     /**
@@ -195,14 +195,14 @@ class PostExpirator_Facade
     {
         return array_merge(
             $capabilities,
-            array(
+            [
                 'PublishPress Future' => [
                     ExpiratorCapabilities::EXPIRE_POST,
                     WorkflowCapabilities::EDIT_WORKFLOWS,
                     WorkflowCapabilities::PUBLISH_WORKFLOWS,
                     WorkflowCapabilities::UNPUBLISH_WORKFLOWS,
                 ],
-            )
+            ]
         );
     }
 

@@ -82,7 +82,7 @@ class OnTermsAdded implements StepTypeInterface
                             "postStatus" => [],
                         ],
                     ],
-                ]
+                ],
             ],
             [
                 "label" => __("Terms Filter", "post-expirator"),
@@ -107,8 +107,8 @@ class OnTermsAdded implements StepTypeInterface
                             "terms" => [],
                         ],
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -121,7 +121,7 @@ class OnTermsAdded implements StepTypeInterface
                         "rule" => "required",
                         "field" => "termsQuery.terms",
                         "label" => __("Terms", "post-expirator"),
-                    ]
+                    ],
                 ],
             ],
             "connections" => [
@@ -129,7 +129,7 @@ class OnTermsAdded implements StepTypeInterface
                     [
                         "rule" => "hasOutgoingConnection",
                     ],
-                ]
+                ],
             ],
         ];
     }
@@ -176,8 +176,8 @@ class OnTermsAdded implements StepTypeInterface
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

@@ -172,7 +172,7 @@ class ScheduledActions implements InitializableInterface
 
             $step = $workflowModel->getNodeById($args['step']['nodeId']);
         } else {
-            $step = isset($args['step']) ? $args['step'] : [];
+            $step = $args['step'] ?? [];
         }
 
         return $step;
@@ -197,9 +197,9 @@ class ScheduledActions implements InitializableInterface
                     $stepModel = new WorkflowScheduledStepModel();
                     $stepModel->loadByActionId($row['ID']);
 
-                    $title = $stepModel->getIsRecurring() ?
-                        __('Workflow repeating scheduled step', 'post-expirator') :
-                        __('Workflow scheduled step', 'post-expirator');
+                    $title = $stepModel->getIsRecurring()
+                        ? __('Workflow repeating scheduled step', 'post-expirator')
+                        : __('Workflow scheduled step', 'post-expirator');
 
                     break;
 

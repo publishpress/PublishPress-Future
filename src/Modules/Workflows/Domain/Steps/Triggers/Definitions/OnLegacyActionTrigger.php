@@ -95,8 +95,8 @@ class OnLegacyActionTrigger implements StepTypeInterface
                     [
                         "rule" => "hasOutgoingConnection",
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -119,7 +119,7 @@ class OnLegacyActionTrigger implements StepTypeInterface
                 'type' => 'integer',
                 'label' => __("Action Post ID", "post-expirator"),
                 'description' => __("The ID of the post that triggered the action.", "post-expirator"),
-            ]
+            ],
         ];
     }
 
@@ -136,8 +136,8 @@ class OnLegacyActionTrigger implements StepTypeInterface
                 [
                     "id" => "output",
                     "label" => __("Next", "post-expirator"),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

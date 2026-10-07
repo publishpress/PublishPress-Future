@@ -230,7 +230,7 @@ class Cron implements AsyncStepProcessorInterface
 
             $this->actionUID = $this->getScheduledActionUniqueId($node, $useTimestamp, $this->timestamp);
             $this->actionUIDHash = md5($this->actionUID);
-            $this->priority = (int)($this->nodeSettings['schedule']['priority'] ?? self::DEFAULT_PRIORITY);
+            $this->priority = (int) ($this->nodeSettings['schedule']['priority'] ?? self::DEFAULT_PRIORITY);
             $this->isFinished = WorkflowScheduledStepModel::getMetaIsFinished($this->workflowId, $this->actionUIDHash);
 
             if ($this->shouldSkipScheduling()) {
@@ -313,14 +313,14 @@ class Cron implements AsyncStepProcessorInterface
         $scheduledStepModel->setTotalRunCount(0);
         $scheduledStepModel->setIsRecurring(! $this->isSingleAction);
 
-        $postId = (int)($this->executionContext->getVariable('global.trigger.postId') ?? 0);
+        $postId = (int) ($this->executionContext->getVariable('global.trigger.postId') ?? 0);
         if ($postId) {
             $scheduledStepModel->setPostId($postId);
         }
 
         if (! $this->isSingleAction) {
             $scheduledStepModel->setRepeatUntil($this->nodeSettings['schedule']['repeatUntil'] ?? 'forever');
-            $scheduledStepModel->setRepeatTimes((int)$this->nodeSettings['schedule']['repeatTimes'] ?? 0);
+            $scheduledStepModel->setRepeatTimes((int) $this->nodeSettings['schedule']['repeatTimes'] ?? 0);
             $scheduledStepModel->setRepeatUntilDate($this->nodeSettings['schedule']['repeatUntilDate'] ?? '');
             $scheduledStepModel->setRepetitionNumber(0);
         }
@@ -401,9 +401,9 @@ class Cron implements AsyncStepProcessorInterface
     {
         $actionArgs = $this->getActionArgs();
 
-        $scheduledActionId = $this->isSingleAction ?
-            $this->scheduleSingleAction($actionArgs) :
-            $this->scheduleRecurringAction($actionArgs);
+        $scheduledActionId = $this->isSingleAction
+            ? $this->scheduleSingleAction($actionArgs)
+            : $this->scheduleRecurringAction($actionArgs);
 
         // If the action is scheduled, we need to set the action ID in the scheduled step arguments
         if ($scheduledActionId <= 0) {
@@ -469,7 +469,7 @@ class Cron implements AsyncStepProcessorInterface
 
     private function getCustomRecurrenceInterval(): int
     {
-        $interval = (int)$this->nodeSettings['schedule']['repeatInterval'] ?? 0;
+        $interval = (int) $this->nodeSettings['schedule']['repeatInterval'] ?? 0;
 
         /**
          * @param int $interval
@@ -758,7 +758,7 @@ class Cron implements AsyncStepProcessorInterface
         if ($isRecurrent) {
             // Check if the node has a limit of executions. Default is 'forever'.
             $repeatUntil = $scheduledStepModel->getRepeatUntil();
-            $totalRunCount = (int)$scheduledStepModel->getTotalRunCount();
+            $totalRunCount = (int) $scheduledStepModel->getTotalRunCount();
 
             $expandedArgs['runtimeVariables'][$stepSlug]['repeat_count'] = $totalRunCount + 1;
 
@@ -770,7 +770,7 @@ class Cron implements AsyncStepProcessorInterface
                     $markAsCompletedAfterExecution = true;
                 }
             } elseif ($repeatUntil === 'times') {
-                $runLimit = (int)$scheduledStepModel->getRepeatTimes() ?? self::DEFAULT_REPEAT_UNTIL_TIMES;
+                $runLimit = (int) $scheduledStepModel->getRepeatTimes() ?? self::DEFAULT_REPEAT_UNTIL_TIMES;
 
                 $expandedArgs['runtimeVariables'][$stepSlug]['repeat_limit'] = $runLimit;
 

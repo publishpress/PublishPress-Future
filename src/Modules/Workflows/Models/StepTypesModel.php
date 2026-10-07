@@ -166,7 +166,7 @@ class StepTypesModel implements StepTypesModelInterface
                     "foreground" => self::DEFAULT_ICON_FOREGROUND,
                 ],
 
-            ]
+            ],
         ];
     }
 

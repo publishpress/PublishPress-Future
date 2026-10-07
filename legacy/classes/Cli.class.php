@@ -64,7 +64,7 @@ class PostExpirator_Cli
     public function expirePostCommand($args)
     {
         foreach ($args as $postId) {
-            $postId = (int)$postId;
+            $postId = (int) $postId;
 
             if (empty($postId)) {
                 continue;

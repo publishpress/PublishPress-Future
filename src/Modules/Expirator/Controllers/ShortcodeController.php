@@ -84,10 +84,10 @@ class ShortcodeController implements InitializableInterface
      */
     public function renderShortcode($attrs = [])
     {
-        $postId = $this->getCurrentPostId((array)$attrs);
+        $postId = $this->getCurrentPostId((array) $attrs);
 
         if (!$postId) {
-            $debugIsEnabled = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
+            $debugIsEnabled = (bool) $this->hooks->applyFilters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
 
             if ($debugIsEnabled) {
                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
@@ -114,14 +114,14 @@ class ShortcodeController implements InitializableInterface
         }
 
         $attrs = shortcode_atts(
-            array(
+            [
                 'dateformat' => $this->settingsFacade->getDefaultDateFormat(),
                 'timeformat' => $this->settingsFacade->getDefaultTimeFormat(),
                 'type' => 'full',
                 'tz' => date('T'), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
                 'wrapper' => '',
                 'class' => '',
-            ),
+            ],
             $attrs
         );
 
