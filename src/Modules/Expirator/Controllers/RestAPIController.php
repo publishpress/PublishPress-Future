@@ -363,7 +363,8 @@ class RestAPIController implements InitializableInterface
                                 $taxonomiesModel = $modelFactory();
                                 $opts['category'] = $taxonomiesModel->normalizeTermsCreatingIfNecessary(
                                     $opts['categoryTaxonomy'],
-                                    $opts['category']
+                                    $opts['category'],
+                                    $post->post_type
                                 );
 
                                 if (isset($value['extraData']) && is_array($value['extraData']) && !empty($value['extraData'])) {
