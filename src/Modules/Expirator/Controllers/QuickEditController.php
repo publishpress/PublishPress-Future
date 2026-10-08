@@ -174,6 +174,19 @@ class QuickEditController implements InitializableInterface
                     $newStatus = 'trash';
                 }
 
+                if (! $currentUserModel->userCanScheduleAction((int) $postId, $expireType, $newStatus)) {
+                    $this->logger->debug(
+                        sprintf(
+                            '%1$d  -> ACTION NOT SCHEDULED: user cannot schedule %2$s (status %3$s)',
+                            (int) $postId,
+                            $expireType,
+                            $newStatus
+                        )
+                    );
+
+                    return;
+                }
+
                 $opts = [
                     'expireType' => $expireType,
                     'newStatus' => $newStatus,
@@ -320,6 +333,13 @@ class QuickEditController implements InitializableInterface
 
             $hiddenFields = (array) $this->hooks->applyFilters(HooksAbstract::FILTER_HIDDEN_METABOX_FIELDS, [], $postType);
 
+            $scheduleOptions = $this->currentUserModel->filterScheduleSelectOptions(
+                $actionsModel->getActionsAsOptions($postType),
+                $actionsModel->getStatusesAsOptionsForPostType($postType),
+                (string) $postType,
+                0
+            );
+
             wp_localize_script(
                 'postexpirator-quick-edit',
                 'publishpressFutureQuickEditConfig',
@@ -329,8 +349,8 @@ class QuickEditController implements InitializableInterface
                     'is12Hour' => get_option('time_format') !== 'H:i',
                     'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
                     'startOfWeek' => get_option('start_of_week', 0),
-                    'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
-                    'statusesSelectOptions' => $actionsModel->getStatusesAsOptionsForPostType($postType),
+                    'actionsSelectOptions' => $scheduleOptions['actions'],
+                    'statusesSelectOptions' => $scheduleOptions['statuses'],
                     'isDebugEnabled' => $debug->isEnabled(),
                     'taxonomyName' => $taxonomyPluralName,
                     'taxonomyTerms' => $taxonomyTerms,

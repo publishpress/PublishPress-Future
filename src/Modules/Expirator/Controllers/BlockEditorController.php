@@ -151,6 +151,13 @@ class BlockEditorController implements InitializableInterface
 
             $hiddenFields = (array) $this->hooks->applyFilters(HooksAbstract::FILTER_HIDDEN_METABOX_FIELDS, [], $post->post_type);
 
+            $scheduleOptions = $this->currentUserModel->filterScheduleSelectOptions(
+                $actionsModel->getActionsAsOptions($post->post_type),
+                $actionsModel->getStatusesAsOptionsForPostType($post->post_type),
+                (string) $post->post_type,
+                (int) $post->ID
+            );
+
             wp_localize_script(
                 'postexpirator-block-editor',
                 'publishpressFutureBlockEditorConfig',
@@ -161,8 +168,8 @@ class BlockEditorController implements InitializableInterface
                     'is12Hour' => $options->getOption('time_format') !== 'H:i',
                     'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
                     'startOfWeek' => $options->getOption('start_of_week', 0),
-                    'actionsSelectOptions' => $actionsModel->getActionsAsOptions($post->post_type),
-                    'statusesSelectOptions' => $actionsModel->getStatusesAsOptionsForPostType($post->post_type),
+                    'actionsSelectOptions' => $scheduleOptions['actions'],
+                    'statusesSelectOptions' => $scheduleOptions['statuses'],
                     'isDebugEnabled' => $container->get(ServicesAbstract::DEBUG)->isEnabled(),
                     'taxonomyName' => $taxonomyPluralName,
                     'taxonomyTerms' => $taxonomyTerms,
