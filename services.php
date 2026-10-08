@@ -9,8 +9,6 @@
  * @license     GPLv2 or later
  */
 
-defined("ABSPATH") or die("Direct access not allowed.");
-
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Core\Paths;
@@ -139,6 +137,8 @@ use PublishPress\Future\Modules\Workflows\Migrations\V040500OnScheduledStepsSche
 use PublishPress\Future\Modules\Debug\Migrations\V04905DebugLogRequestId;
 use PublishPress\Future\Modules\Debug\Migrations\V04906DebugLogTimestampMilliseconds;
 use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
+
+defined("ABSPATH") || exit;
 
 return [
     ServicesAbstract::PLUGIN_VERSION => PUBLISHPRESS_FUTURE_VERSION,
