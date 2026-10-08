@@ -421,7 +421,18 @@ class SettingsController implements InitializableInterface
         }
     }
 
-    private function convertTermsToIds($taxonomy, $terms)
+    /**
+     * Converts a comma-separated term list into IDs for one post type.
+     *
+     * @param string $taxonomy Taxonomy name.
+     * @param string $terms    Comma-separated term names.
+     * @param string $postType Post type the taxonomy must belong to.
+     *
+     * @return array<int, int>
+     *
+     * @since 4.10.6
+     */
+    private function convertTermsToIds($taxonomy, $terms, $postType)
     {
         if (empty($terms)) {
             return [];
@@ -431,14 +442,15 @@ class SettingsController implements InitializableInterface
         $taxonomiesModel = $taxonomiesModelFactory();
 
         $terms = explode(',', $terms);
-        $terms = array_map(function ($term) use ($taxonomy, $taxonomiesModel) {
+        $terms = array_map(function ($term) use ($taxonomy, $taxonomiesModel, $postType) {
             $term = \sanitize_text_field($term);
             $termId = $taxonomiesModel->getTermIdByName($taxonomy, $term);
 
             if (! $termId) {
                 $termId = $taxonomiesModel->createTermAndReturnId(
                     $taxonomy,
-                    $term
+                    $term,
+                    $postType
                 );
             }
 
@@ -498,7 +510,11 @@ class SettingsController implements InitializableInterface
                 }
 
                 if (isset($settings['taxonomy']) && isset($settings['terms'])) {
-                    $settings['terms'] = $this->convertTermsToIds($settings['taxonomy'], $settings['terms']);
+                    $settings['terms'] = $this->convertTermsToIds(
+                        $settings['taxonomy'],
+                        $settings['terms'],
+                        $postType
+                    );
                 }
 
                 if (isset($_POST['expirationdate_newstatus-' . $postType])) {

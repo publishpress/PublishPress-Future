@@ -375,7 +375,8 @@ class BulkEditController implements InitializableInterface
 
             $opts['category'] = $taxonomiesModel->normalizeTermsCreatingIfNecessary(
                 $opts['categoryTaxonomy'],
-                explode(',', $opts['category'])
+                explode(',', $opts['category']),
+                $postModel->getPostType()
             );
         }
 
