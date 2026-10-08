@@ -4,6 +4,8 @@ use PublishPress\Future\Modules\Settings\HooksAbstract;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 
+defined('ABSPATH') || exit;
+
 $container = Container::getInstance();
 $hooks = $container->get(ServicesAbstract::HOOKS);
 $settingsFacade = $container->get(ServicesAbstract::SETTINGS);

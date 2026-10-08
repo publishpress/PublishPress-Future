@@ -6,6 +6,8 @@ use PublishPress\Future\Modules\Workflows\Interfaces\VariableResolverInterface;
 
 use function wp_json_encode;
 
+\defined('ABSPATH') || exit;
+
 class UserResolver implements VariableResolverInterface
 {
     /**

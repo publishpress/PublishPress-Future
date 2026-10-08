@@ -5,6 +5,9 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine\Traits;
 /**
  * @deprecated 4.4.0 Use the WorkflowExecutionSafeguardInterface instead
  */
+
+\defined('ABSPATH') || exit;
+
 trait InfiniteLoopPreventer
 {
     /**

@@ -6,6 +6,8 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\VariableResolverInterface;
 
+\defined('ABSPATH') || exit;
+
 class PostResolver implements VariableResolverInterface
 {
     /**

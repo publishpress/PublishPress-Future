@@ -4,6 +4,8 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\VariableResolverInterface;
 
+\defined('ABSPATH') || exit;
+
 class UserMetaResolver implements VariableResolverInterface
 {
     private $userId;

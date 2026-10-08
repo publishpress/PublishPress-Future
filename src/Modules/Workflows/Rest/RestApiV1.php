@@ -14,6 +14,8 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 use PublishPress\Future\Modules\Workflows\CapabilitiesAbstract;
 use PublishPress\Future\Framework\WordPress\Utils\WorkflowSanitizationUtil;
 
+\defined('ABSPATH') || exit;
+
 // TODO: Move this to a controller on the workflows module.
 class RestApiV1 implements RestApiManagerInterface
 {

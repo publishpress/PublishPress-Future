@@ -18,6 +18,8 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowScheduledStepModel;
 use Throwable;
 
+\defined('ABSPATH') || exit;
+
 class Cron implements AsyncStepProcessorInterface
 {
     use TimestampCalculator;

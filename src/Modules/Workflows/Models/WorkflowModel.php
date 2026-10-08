@@ -20,6 +20,8 @@ use WP_Query;
 use function wp_json_encode;
 use function get_post;
 
+\defined('ABSPATH') || exit;
+
 class WorkflowModel implements WorkflowModelInterface
 {
     public const META_KEY_HAS_LEGACY_TRIGGER = '_pp_workflow_has_legacy_trigger';

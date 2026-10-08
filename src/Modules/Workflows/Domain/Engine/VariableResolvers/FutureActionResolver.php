@@ -6,6 +6,8 @@ use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\VariableResolverInterface;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
+\defined('ABSPATH') || exit;
+
 class FutureActionResolver implements VariableResolverInterface
 {
     /**

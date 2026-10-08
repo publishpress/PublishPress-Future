@@ -8,6 +8,8 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\Stick
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
+\defined('ABSPATH') || exit;
+
 class StickPostRunner implements StepRunnerInterface
 {
     /**

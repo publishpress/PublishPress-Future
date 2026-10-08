@@ -4,6 +4,8 @@ namespace PublishPress\Future\Modules\Workflows;
 
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 
+\defined('ABSPATH') || exit;
+
 abstract class HooksAbstract
 {
     public const FILTER_IS_PRO = 'publishpressfuture_is_pro';

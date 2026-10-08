@@ -8,6 +8,8 @@ use PublishPress\Future\Framework\System\DateTimeHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextProcessorInterface;
 use Throwable;
 
+\defined('ABSPATH') || exit;
+
 class DateProcessor implements ExecutionContextProcessorInterface
 {
     private DateTimeHandlerInterface $dateTimeHandler;

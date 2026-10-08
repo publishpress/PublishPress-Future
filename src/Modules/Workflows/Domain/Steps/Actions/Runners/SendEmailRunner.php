@@ -9,6 +9,8 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendE
 use PublishPress\Future\Modules\Workflows\Interfaces\StepProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 
+\defined('ABSPATH') || exit;
+
 class SendEmailRunner implements StepRunnerInterface
 {
     /**

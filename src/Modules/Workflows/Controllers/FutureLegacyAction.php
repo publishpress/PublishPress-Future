@@ -13,6 +13,8 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 use Throwable;
 
+\defined('ABSPATH') || exit;
+
 class FutureLegacyAction implements InitializableInterface
 {
     /**

@@ -19,6 +19,8 @@ use PublishPress\Future\Modules\Workflows\Models\TaxonomiesModel;
 use PublishPress\Future\Modules\Workflows\Models\UserRolesModel;
 use PublishPress\Future\Modules\Workflows\Module;
 
+\defined('ABSPATH') || exit;
+
 class WorkflowEditor implements InitializableInterface
 {
     /**

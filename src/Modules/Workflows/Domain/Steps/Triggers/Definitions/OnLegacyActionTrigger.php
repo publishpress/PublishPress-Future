@@ -9,6 +9,8 @@ use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 
+\defined('ABSPATH') || exit;
+
 class OnLegacyActionTrigger implements StepTypeInterface
 {
     public static function getNodeTypeName(): string

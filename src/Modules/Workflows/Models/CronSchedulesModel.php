@@ -4,6 +4,8 @@ namespace PublishPress\Future\Modules\Workflows\Models;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 
+\defined('ABSPATH') || exit;
+
 class CronSchedulesModel implements CronSchedulesModelInterface
 {
     public function getCronSchedules(): array

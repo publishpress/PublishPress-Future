@@ -5,6 +5,8 @@ namespace PublishPress\Future\Modules\Workflows\Controllers;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 
+\defined('ABSPATH') || exit;
+
 class SampleWorkflows implements InitializableInterface
 {
     public function __construct()

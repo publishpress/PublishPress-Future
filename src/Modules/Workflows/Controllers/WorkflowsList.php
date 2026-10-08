@@ -17,6 +17,8 @@ use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use Throwable;
 
+\defined('ABSPATH') || exit;
+
 class WorkflowsList implements InitializableInterface
 {
     /**

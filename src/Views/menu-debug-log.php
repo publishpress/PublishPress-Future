@@ -6,6 +6,8 @@ use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Debug\DebugLogDisplayHelper;
 use PublishPress\Future\Modules\Settings\HooksAbstract;
 
+defined('ABSPATH') || exit;
+
 $container = Container::getInstance();
 $hooks = $container->get(ServicesAbstract::HOOKS);
 

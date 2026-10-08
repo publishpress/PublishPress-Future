@@ -4,6 +4,8 @@ namespace PublishPress\Future\Modules\Workflows\Models;
 
 use PublishPress\Future\Modules\Workflows\Interfaces\PostAuthorsModelInterface;
 
+\defined('ABSPATH') || exit;
+
 class PostAuthorsModel implements PostAuthorsModelInterface
 {
     public function getAuthors(): array

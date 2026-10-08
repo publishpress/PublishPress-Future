@@ -7,6 +7,8 @@ use PublishPress\Future\Modules\Workflows\Module;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowsModelInterface;
 use WP_Query;
 
+\defined('ABSPATH') || exit;
+
 class WorkflowsModel implements WorkflowsModelInterface
 {
     public const OPTION_SAMPLE_WORKFLOWS_CREATED = 'publishpress_future_workflow_samples_created';

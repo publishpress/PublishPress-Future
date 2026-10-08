@@ -18,6 +18,8 @@ use PublishPress\Future\Modules\Workflows\Models\PostTypesModel;
 use PublishPress\Future\Modules\Workflows\Module;
 use Throwable;
 
+\defined('ABSPATH') || exit;
+
 class ManualPostTrigger implements InitializableInterface
 {
     /**

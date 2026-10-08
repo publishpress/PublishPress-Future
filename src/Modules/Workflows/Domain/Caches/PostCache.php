@@ -8,6 +8,8 @@ use PublishPress\Future\Modules\Workflows\Interfaces\PostCacheInterface;
 
 use function get_permalink;
 
+\defined('ABSPATH') || exit;
+
 class PostCache implements PostCacheInterface
 {
     private array $cache = [];

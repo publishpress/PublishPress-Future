@@ -47,6 +47,8 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnUs
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 
+\defined('ABSPATH') || exit;
+
 class StepTypesModel implements StepTypesModelInterface
 {
     public const STEP_TYPE_ACTION = "action";

@@ -5,6 +5,8 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine;
 use JWadhams\JsonLogic;
 use PublishPress\Future\Modules\Workflows\Interfaces\JsonLogicEngineInterface;
 
+\defined('ABSPATH') || exit;
+
 class JsonLogicEngine implements JsonLogicEngineInterface
 {
     public function __construct()

@@ -24,6 +24,8 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 
 use function wp_json_encode;
 
+\defined('ABSPATH') || exit;
+
 class ExecutionContext implements ExecutionContextInterface
 {
     private const LOG_PREFIX = '[WorkflowExecutionContext#%d]: ';

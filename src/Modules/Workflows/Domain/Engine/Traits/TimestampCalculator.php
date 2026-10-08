@@ -2,6 +2,8 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\Traits;
 
+\defined('ABSPATH') || exit;
+
 trait TimestampCalculator
 {
     protected function calculateTimestamp(

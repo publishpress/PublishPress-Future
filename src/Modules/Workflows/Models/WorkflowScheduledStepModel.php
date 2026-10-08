@@ -8,6 +8,8 @@ use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowScheduledStepModelInterface;
 
+\defined('ABSPATH') || exit;
+
 class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
 {
     public const META_TOTAL_RUN_COUNT_PREFIX = '_pp_workflow_step_run_count_';
