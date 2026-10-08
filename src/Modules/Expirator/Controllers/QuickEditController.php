@@ -369,7 +369,7 @@ class QuickEditController implements InitializableInterface
                         'showCalendar' => __('Show Calendar', 'post-expirator'),
                         'hideCalendar' => __('Hide Calendar', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
-                        // translators: the text between {{}} is the link to the settings page.
+                        // translators: the text between {} is the link to the settings page.
                         'timezoneSettingsHelp' => __('Timezone is controlled by the {WordPress Settings}.', 'post-expirator'),
                         // translators: %s is the name of the taxonomy in plural form.
                         'noTermsFound' => sprintf(

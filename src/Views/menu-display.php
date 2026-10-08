@@ -246,8 +246,8 @@ $shortcodeWrapperClass = $settingsFacade->getShortcodeWrapperClass();
             <p class="description">
                 <?php
                 echo sprintf(
-                    // translators: %s is a code tag that wraps the shortcode
-                    esc_html__('Use the %s[futureaction]%s shortcode to show when the future action will occur. You can add this shortcode anywhere in your post content.', 'post-expirator'),
+                    /* translators: 1: opening code tag, 2: closing code tag. */
+                    esc_html__('Use the %1$s[futureaction]%2$s shortcode to show when the future action will occur. You can add this shortcode anywhere in your post content.', 'post-expirator'),
                     '<code>',
                     '</code>'
                 ); ?>
@@ -343,7 +343,7 @@ $shortcodeWrapperClass = $settingsFacade->getShortcodeWrapperClass();
                             <li>
                                 <p><?php
                                 echo sprintf(
-                                    // translators: %s is a code tag that wraps the shortcode attribute dateformat
+                                    // translators: %s is a code tag that wraps the shortcode attribute name.
                                     esc_html__('%s - Format set here will override the value set on the settings page', 'post-expirator'),
                                     '<code>dateformat</code>'
                                 ); ?></p>
@@ -351,7 +351,7 @@ $shortcodeWrapperClass = $settingsFacade->getShortcodeWrapperClass();
                             <li>
                                 <p><?php
                                 echo sprintf(
-                                    // translators: %s is a code tag that wraps the shortcode attribute timeformat
+                                    // translators: %s is a code tag that wraps the shortcode attribute name.
                                     esc_html__('%s - Format set here will override the value set on the settings page', 'post-expirator'),
                                     '<code>timeformat</code>'
                                 ); ?></p>

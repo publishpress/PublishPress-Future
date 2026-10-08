@@ -475,7 +475,11 @@ class WorkflowModel implements WorkflowModelInterface
         $newWorkflow->createNew(false);
 
         // Copy properties  of current workflow to new workflow
-        $newWorkflow->setTitle(sprintf(__('%s #2', 'post-expirator'), $this->getTitle()));
+        $newWorkflow->setTitle(sprintf(
+            /* translators: %s is the original workflow title. */
+            __('%s #2', 'post-expirator'),
+            $this->getTitle()
+        ));
         $newWorkflow->setDescription($this->getDescription());
         $newWorkflow->setFlow($this->getFlow());
 

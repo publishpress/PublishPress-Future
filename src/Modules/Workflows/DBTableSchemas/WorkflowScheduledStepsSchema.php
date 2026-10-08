@@ -90,6 +90,7 @@ class WorkflowScheduledStepsSchema implements DBTableSchemaInterface
             $this->handler->registerError(
                 self::HEALTH_ERROR_TABLE_DOES_NOT_EXIST,
                 sprintf(
+                    /* translators: %s is the database table name. */
                     __(
                         'The table %s does not exist.',
                         'post-expirator'

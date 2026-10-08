@@ -305,7 +305,8 @@ class ScheduledActionsController implements InitializableInterface
                 $postTitle = $post ? html_entity_decode(get_the_title($post)) : __('Unknown post', 'post-expirator');
 
                 $html = sprintf(
-                    __('Executed action for: %s (ID: %d)', 'post-expirator'),
+                    /* translators: 1: post title, 2: post ID. */
+                    __('Executed action for: %1$s (ID: %2$d)', 'post-expirator'),
                     $postTitle,
                     $postId
                 );

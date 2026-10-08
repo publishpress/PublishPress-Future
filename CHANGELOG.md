@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed: Schedule delay step no longer shows a false "custom date source is required" error (Issue #1658).
 - Fixed: Expression builder no longer shows the insert-at-cursor hint on metadata form fields.
 - Fixed: Workflow execution safeguard no longer treats different triggers as an infinite loop (Issue #1680).
+- Fixed: Translation strings now include translator comments and ordered placeholders.
 
 [4.10.7] - 07 Oct, 2026
 

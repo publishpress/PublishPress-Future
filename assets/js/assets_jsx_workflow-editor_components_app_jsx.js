@@ -633,7 +633,8 @@ function ActionArgs(_ref) {
     }, /*#__PURE__*/React.createElement(_argument_item__WEBPACK_IMPORTED_MODULE_4__["default"], {
       name: "args[".concat(index, "].name"),
       label: "#".concat(index + 1),
-      popoverLabel: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Argument #%s', 'post-expirator'), index + 1),
+      popoverLabel: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)( /* translators: %s is the argument number. */
+      (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Argument #%s', 'post-expirator'), index + 1),
       defaultValue: arg,
       onChange: function onChange(value) {
         return onChangeArg(index, value);
@@ -2011,7 +2012,8 @@ function CustomOptions(_ref) {
     var defaultName = getDefaultName();
     var name = defaultName.name;
     var nameIndex = defaultName.index;
-    var defaultLabel = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Option %s', 'post-expirator'), nameIndex);
+    var defaultLabel = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)( /* translators: %s is the option index. */
+    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Option %s', 'post-expirator'), nameIndex);
     onChangeSetting({
       value: [].concat(_toConsumableArray(defaultValue), [{
         name: name,
@@ -2048,7 +2050,8 @@ function CustomOptions(_ref) {
     }, /*#__PURE__*/React.createElement(_option_item__WEBPACK_IMPORTED_MODULE_4__["default"], {
       name: "options[".concat(index, "].name"),
       label: "#".concat(index + 1),
-      popoverLabel: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Option #%s', 'post-expirator'), index + 1),
+      popoverLabel: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)( /* translators: %s is the option number. */
+      (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Option #%s', 'post-expirator'), index + 1),
       defaultValue: option,
       onChange: function onChange(value) {
         return onChangeOption(index, value);
@@ -2081,7 +2084,8 @@ function CustomOptions(_ref) {
     text: description,
     helpUrl: helpUrl
   }), defaultValue.length >= maxOptions && /*#__PURE__*/React.createElement(_description_text__WEBPACK_IMPORTED_MODULE_2__.DescriptionText, {
-    text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('You have reached the maximum number of options. You can add up to %s options.', 'post-expirator'), maxOptions)
+    text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)( /* translators: %s is the maximum number of options. */
+    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('You have reached the maximum number of options. You can add up to %s options.', 'post-expirator'), maxOptions)
   })));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomOptions);
@@ -2493,7 +2497,8 @@ var DateOffset = function DateOffset(_ref) {
     icon: 'no-alt'
   }), /*#__PURE__*/React.createElement("div", {
     dangerouslySetInnerHTML: {
-      __html: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_utils__WEBPACK_IMPORTED_MODULE_4__.stripTags)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English.", "post-expirator")), "<a href='https://www.php.net/manual/en/function.strtotime.php' target='_blank'>", "</a>", "<code>", "</code>", "<code>", "</code>", "<code>", "</code>")
+      __html: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_utils__WEBPACK_IMPORTED_MODULE_4__.stripTags)( /* translators: 1: opening link tag, 2: closing link tag, 3: opening code tag, 4: closing code tag, 5: opening code tag, 6: closing code tag, 7: opening code tag, 8: closing code tag. */
+      (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("For more information on formatting, see the %1$sPHP strtotime function%2$s. For example, you could enter %3$s+1 month%4$s or %5$s+1 week 2 days 4 hours 2 seconds%6$s or %7$snext Thursday%8$s. Please use only phrases in English.", "post-expirator")), "<a href='https://www.php.net/manual/en/function.strtotime.php' target='_blank'>", "</a>", "<code>", "</code>", "<code>", "</code>", "<code>", "</code>")
     }
   })))))))));
 };
@@ -10854,13 +10859,15 @@ var NodeInspector = function NodeInspector() {
   return /*#__PURE__*/React.createElement("div", {
     ref: sidebarRef
   }, selectedElementsCount === 0 && /*#__PURE__*/React.createElement(_inspector_warning__WEBPACK_IMPORTED_MODULE_7__["default"], null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("No element selected.", "post-expirator")), selectedElementsCount > 1 && !onlyNodesSelected && !onlyEdgesSelected && /*#__PURE__*/React.createElement(_inspector_warning__WEBPACK_IMPORTED_MODULE_7__["default"], null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Multiple and different elements selected.", "post-expirator")), onlyNodesSelected && selectedElementsCount > 1 && /*#__PURE__*/React.createElement(_inspector_card__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("%d steps selected", "post-expirator"), selectedElementsCount),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)( /* translators: %d is the number of selected steps. */
+    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("%d steps selected", "post-expirator"), selectedElementsCount),
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Multiple steps selected.", "post-expirator"),
     icon: /*#__PURE__*/React.createElement(_icons_object_group__WEBPACK_IMPORTED_MODULE_13__["default"], {
       size: 24
     })
   }), onlyEdgesSelected && selectedElementsCount > 1 && /*#__PURE__*/React.createElement(_inspector_card__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("%d connections selected", "post-expirator"), selectedElementsCount),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)( /* translators: %d is the number of selected connections. */
+    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("%d connections selected", "post-expirator"), selectedElementsCount),
     description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Multiple connections selected.", "post-expirator"),
     icon: /*#__PURE__*/React.createElement(_icons_lines_leaning__WEBPACK_IMPORTED_MODULE_14__["default"], {
       size: 24
@@ -11518,7 +11525,8 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.memo)(funct
       "type": "generic",
       "elementaryType": "action",
       "name": data.name,
-      "label": sprintf((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Unknown node: %s', 'post-expirator'), data.name),
+      "label": sprintf( /* translators: %s is the node name. */
+      (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Unknown node: %s', 'post-expirator'), data.name),
       "description": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('This is a placeholder node for a node that does not exist.', 'post-expirator'),
       "baseSlug": "deletePost",
       "initiatlAttributes": [],
@@ -12432,8 +12440,10 @@ function NodeValidator(_ref) {
     }
     return {
       isValid: false,
-      error: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field "%s" contains an invalid variable.', 'post-expirator'), ruleData === null || ruleData === void 0 ? void 0 : ruleData.fieldLabel),
-      details: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The variable "%s" is not available in the current context. Please, check if it is spelled correctly.', 'post-expirator'), invalidVariable)
+      error: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the field label. */
+      (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field "%s" contains an invalid variable.', 'post-expirator'), ruleData === null || ruleData === void 0 ? void 0 : ruleData.fieldLabel),
+      details: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the variable name. */
+      (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The variable "%s" is not available in the current context. Please, check if it is spelled correctly.', 'post-expirator'), invalidVariable)
     };
   }, [globalVariables, _utils__WEBPACK_IMPORTED_MODULE_5__.getNodeVariablesTree, _utils__WEBPACK_IMPORTED_MODULE_5__.filterVariablesTreeByDataType, getNodeTypeByName]);
 
@@ -12636,10 +12646,12 @@ function NodeValidator(_ref) {
             case 'required':
               if (ruleData !== null && ruleData !== void 0 && ruleData.condition || ruleData !== null && ruleData !== void 0 && ruleData.conditions) {
                 if (matchesRuleConditions(nodeSettings, ruleData) && isEmptySettingValue(settingValue)) {
-                  addNodeError(node.id, "".concat(fieldName, "-required-if"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s is required.', 'post-expirator'), fieldLabel));
+                  addNodeError(node.id, "".concat(fieldName, "-required-if"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the field label. */
+                  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s is required.', 'post-expirator'), fieldLabel));
                 }
               } else if (isEmptySettingValue(settingValue)) {
-                addNodeError(node.id, "".concat(fieldName, "-required"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s is required.', 'post-expirator'), fieldLabel));
+                addNodeError(node.id, "".concat(fieldName, "-required"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the field label. */
+                (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s is required.', 'post-expirator'), fieldLabel));
               }
               break;
             case 'dataType':
@@ -12650,7 +12662,8 @@ function NodeValidator(_ref) {
                 }
                 if (type === 'email') {
                   if (!validator_lib_isEmail__WEBPACK_IMPORTED_MODULE_6___default()(settingValue)) {
-                    addNodeError(node.id, "".concat(fieldName, "-email"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a valid email address.', 'post-expirator'), fieldLabel));
+                    addNodeError(node.id, "".concat(fieldName, "-email"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the field label. */
+                    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a valid email address.', 'post-expirator'), fieldLabel));
                   }
                 } else if (type === 'emailList') {
                   var emails = settingValue.split(',');
@@ -12658,20 +12671,23 @@ function NodeValidator(_ref) {
                   for (var i = 0; i < emails.length; i++) {
                     email = emails[i].trim();
                     if (!validator_lib_isEmail__WEBPACK_IMPORTED_MODULE_6___default()(email) && !isVariable(email)) {
-                      addNodeError(node.id, "".concat(fieldName, "-emailList"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a valid email address list separated by commas.', 'post-expirator'), fieldLabel));
+                      addNodeError(node.id, "".concat(fieldName, "-emailList"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the field label. */
+                      (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a valid email address list separated by commas.', 'post-expirator'), fieldLabel));
                       break;
                     }
                   }
                 } else if (type === 'integer') {
                   if (!validator_lib_isInt__WEBPACK_IMPORTED_MODULE_7___default()(settingValue)) {
-                    addNodeError(node.id, "".concat(fieldName, "-integer"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be an integer.', 'post-expirator'), fieldLabel));
+                    addNodeError(node.id, "".concat(fieldName, "-integer"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the field label. */
+                    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be an integer.', 'post-expirator'), fieldLabel));
                   }
                 } else if (type === 'integerList') {
                   var integer;
                   for (var _i = 0; _i < settingValue.length; _i++) {
                     integer = settingValue[_i].trim();
                     if (!validator_lib_isInt__WEBPACK_IMPORTED_MODULE_7___default()(integer)) {
-                      addNodeError(node.id, "".concat(fieldName, "-integerList"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be an integer list separated by commas.', 'post-expirator'), fieldLabel));
+                      addNodeError(node.id, "".concat(fieldName, "-integerList"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the field label. */
+                      (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be an integer list separated by commas.', 'post-expirator'), fieldLabel));
                       break;
                     }
                   }
@@ -12684,14 +12700,19 @@ function NodeValidator(_ref) {
                     return;
                   }
                   if (!Array.isArray(settingValue[property])) {
-                    addNodeError(node.id, "".concat(fieldName, "-nameValuePairList"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel));
+                    addNodeError(node.id, "".concat(fieldName, "-nameValuePairList"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the field label. */
+                    (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel));
                   }
                   settingValue[property].forEach(function (item, i) {
                     if ((item === null || item === void 0 ? void 0 : item.name) === '') {
-                      addNodeError(node.id, "".concat(fieldName, "-nameValuePairList"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The name of the pair is required on item %d.', 'post-expirator'), i + 1));
+                      addNodeError(node.id, "".concat(fieldName, "-nameValuePairList"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the field label. */
+                      (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %d is the item index. */
+                      (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The name of the pair is required on item %d.', 'post-expirator'), i + 1));
                     }
                     if ((item === null || item === void 0 ? void 0 : item.value) === '') {
-                      addNodeError(node.id, "".concat(fieldName, "-nameValuePairList"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The value of the pair is required on item %d.', 'post-expirator'), i + 1));
+                      addNodeError(node.id, "".concat(fieldName, "-nameValuePairList"), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s is the field label. */
+                      (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %d is the item index. */
+                      (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The value of the pair is required on item %d.', 'post-expirator'), i + 1));
                     }
                   });
                 }

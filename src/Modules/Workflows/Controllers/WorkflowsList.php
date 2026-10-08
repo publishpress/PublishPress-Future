@@ -840,10 +840,12 @@ class WorkflowsList implements InitializableInterface
         $postRevision = isset($_GET['revision']) ? (int) $_GET['revision'] : null;
 
         $messages[$postType][1]  = sprintf(
+            /* translators: %s is the post type singular name. */
             __('%s updated.', 'post-expirator'),
             $singular
         );
         $messages[$postType][4]  = sprintf(
+            /* translators: %s is the post type singular name. */
             __('%s updated.', 'post-expirator'),
             $singular
         );
@@ -856,14 +858,17 @@ class WorkflowsList implements InitializableInterface
         )
         : false;
         $messages[$postType][6]  = sprintf(
+            /* translators: %s is the post type singular name. */
             __('%s published.', 'post-expirator'),
             $singular
         );
         $messages[$postType][7]  = sprintf(
+            /* translators: %s is the post type singular name. */
             __('%s saved.', 'post-expirator'),
             $singular
         );
         $messages[$postType][8]  = sprintf(
+            /* translators: %s is the post type singular name. */
             __('%s submitted.', 'post-expirator'),
             $singular
         );
@@ -874,6 +879,7 @@ class WorkflowsList implements InitializableInterface
             date_i18n('M j, Y @ G:i', strtotime($post->post_date))
         );
         $messages[$postType][10] = sprintf(
+            /* translators: %s is the post type singular name. */
             __('%s draft updated.', 'post-expirator'),
             $singular
         );
