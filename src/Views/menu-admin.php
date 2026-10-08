@@ -1,11 +1,11 @@
 <?php
 
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+
 defined('ABSPATH') || exit;
 
 // phpcs:disable Generic.Files.LineLength.TooLong
-
-use PublishPress\Future\Core\DI\Container;
-use PublishPress\Future\Core\DI\ServicesAbstract;
 
 $container = Container::getInstance();
 $settingsFacade = $container->get(ServicesAbstract::SETTINGS);

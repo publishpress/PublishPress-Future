@@ -31,7 +31,7 @@ use Throwable;
 
 use function defined;
 
-\defined('ABSPATH') || exit;
+defined('ABSPATH') || exit;
 
 // If the plugin is already loaded, terminate the plugin execution.
 if (defined('PUBLISHPRESS_FUTURE_LOADED')) {

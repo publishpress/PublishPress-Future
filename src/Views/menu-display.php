@@ -1,11 +1,12 @@
 <?php
-defined('ABSPATH') || exit;
-
-// phpcs:disable Generic.Files.LineLength.TooLong
 
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
+
+defined('ABSPATH') || exit;
+
+// phpcs:disable Generic.Files.LineLength.TooLong
 
 $container = Container::getInstance();
 $hooks = $container->get(ServicesAbstract::HOOKS);
