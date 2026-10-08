@@ -23,6 +23,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed: Workflow execution safeguard no longer treats different triggers as an infinite loop (Issue #1680).
 - Fixed: Settings form handler no longer intercepts other plugins' submissions that use `?tab=license` (Issue #1708).
 
+[4.10.7] - 07 Oct, 2026
+
+- Fixed: Fatal error: Cannot redeclare class ComposerAutoloaderInit4e236dcfe4d243372f5b41b5aead30db (Issue #1733).
+
+[4.10.6] - 06 Oct, 2026
+
+- Security: Restrict `[futureaction]` / `[postexpirator]` shortcode wrapper to safe container elements (`p`, `div`, `span`) and escape shortcode output when no wrapper is used, closing incomplete remediation of CVE-2026-5247. Thanks to Civitasmass for the responsible disclosure.
+- Changed: Upgrade publishpress/pimple-pimple (3.5.0.10 => 3.5.0.11)
+- Changed: Upgrade publishpress/wordpress-reviews (1.2.1 => 1.2.2)
+- Fixed: Update POT file.
+
 [4.10.5] - 12 Aug, 2026
 
 - Fixed: Re-release of 4.10.4 for WordPress.org (correct plugin version header, stable tag, and checksums).

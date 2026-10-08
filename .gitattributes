@@ -11,6 +11,8 @@
 .gitignore export-ignore
 .idea export-ignore
 .php-cs-fixer.cache export-ignore
+.php-cs-fixer.dist.php export-ignore
+.php-cs-fixer.php export-ignore
 .phpcs-php-compatibility.xml export-ignore
 .phpcs.xml export-ignore
 .phplint-cache export-ignore
@@ -43,6 +45,7 @@ jsconfig.json export-ignore
 node_modules export-ignore
 package-lock.json export-ignore
 package.json export-ignore
+phpmd.ruleset.xml export-ignore
 phpstan.neon export-ignore
 psalm.xml export-ignore
 ray-dist.php export-ignore

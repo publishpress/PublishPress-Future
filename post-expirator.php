@@ -104,8 +104,8 @@ try {
             return;
         }
 
-        require_once PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH . '/publishpress/psr-container/lib/autoload.php';
-        require_once PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH . '/publishpress/pimple-pimple/lib/autoload.php';
+        require_once PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH . '/publishpress/psr-container/lib/include.php';
+        require_once PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH . '/publishpress/pimple-pimple/lib/include.php';
 
         $services = require PUBLISHPRESS_FUTURE_BASE_PATH . '/services.php';
         $container = new Container($services);
