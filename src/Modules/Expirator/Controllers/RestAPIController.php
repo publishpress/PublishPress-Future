@@ -278,6 +278,11 @@ class RestAPIController implements InitializableInterface
                 'publishpress_future_action',
                 [
                     'get_callback' => function ($post) {
+                        $postId = isset($post['id']) ? (int) $post['id'] : 0;
+                        if (! $this->currentUserModel->userCanEditPost($postId)) {
+                            return null;
+                        }
+
                         try {
                             $postModelFactory = $this->expirablePostModelFactory;
                             $postModel = $postModelFactory($post['id']);
@@ -390,6 +395,7 @@ class RestAPIController implements InitializableInterface
                     'schema' => [
                         'description' => 'Future action',
                         'type' => 'object',
+                        'context' => ['edit'],
                     ],
                 ]
             );
