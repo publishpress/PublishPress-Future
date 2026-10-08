@@ -1,10 +1,11 @@
 <?php
-defined('ABSPATH') or die('Direct access not allowed.');
-
-// phpcs:disable Generic.Files.LineLength.TooLong
 
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
+
+defined('ABSPATH') || exit;
+
+// phpcs:disable Generic.Files.LineLength.TooLong
 
 $container = Container::getInstance();
 $settingsFacade = $container->get(ServicesAbstract::SETTINGS);

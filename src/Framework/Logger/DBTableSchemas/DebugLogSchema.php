@@ -6,7 +6,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaHandlerInterface;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+\defined('ABSPATH') || exit;
 
 class DebugLogSchema implements DBTableSchemaInterface
 {

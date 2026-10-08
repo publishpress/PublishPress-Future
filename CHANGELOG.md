@@ -3,8 +3,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [UNRELEASED]
 
-[4.11.0] - 23 Sep, 2026
-
+- Security: Require the matching WordPress capability before a Future Action is scheduled. Publishing or making a post private requires `publish_posts`, stick and unstick require `edit_others_posts`, and delete requires `delete_post`. The editor only offers actions the current user is allowed to schedule.
+- Security: Require the taxonomy `edit_terms` capability before Future Action saves create terms, and only allow taxonomies registered for that post type. Users without that capability can still select existing terms.
+- Security: Restrict the `publishpress_future_action` REST field to the edit context and to users who can edit the post, so public wp/v2 responses no longer expose Future Action schedule metadata.
+- Fixed: Settings form handler no longer intercepts other plugins' submissions that use `?tab=license` (Issue #1708).
+- Changed: Upgrade woocommerce/action-scheduler from 3.9.3 to 4.1.0 (Issue #1655).
+- Changed: Raise minimum WordPress version to 6.8 (required by Action Scheduler 4.0+).
+- Changed: Action Scheduler 4.0+ breaking changes — unique actions now consider args when determining uniqueness; failed actions are purged after 3 months by default.
 - Added: Workflow share summaries export human-readable setting values instead of raw JSON.
 - Added: Expression builder shows variable details on hover.
 - Added: Copy workflow to text feature for development, support or debug work.

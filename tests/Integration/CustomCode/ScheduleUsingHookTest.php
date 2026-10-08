@@ -32,23 +32,35 @@ class ScheduleUsingHookTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $timestamp = strtotime('+2 days');
 
-        do_action(
-            HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
-            $postId,
-            $timestamp,
-            $options
-        );
+        $allowExpiredStatus = static function ($statuses) {
+            $statuses['expired'] = 'Expired';
 
-        $container = Container::getInstance();
-        $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-        /** @var \PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel $postModel */
-        $postModel = $factory($postId);
+            return $statuses;
+        };
 
-        $expirationAction = $postModel->getExpirationAction();
+        add_filter(HooksAbstract::FILTER_EXPIRATION_STATUSES, $allowExpiredStatus);
 
-        $this->assertTrue($postModel->isExpirationEnabled());
-        $this->assertIsObject($expirationAction);
-        $this->assertEquals('expired', $postModel->getExpirationNewStatus());
-        $this->assertEquals($timestamp, $postModel->getExpirationDateAsUnixTime());
+        try {
+            do_action(
+                HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
+                $postId,
+                $timestamp,
+                $options
+            );
+
+            $container = Container::getInstance();
+            $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+            /** @var \PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel $postModel */
+            $postModel = $factory($postId);
+
+            $expirationAction = $postModel->getExpirationAction();
+
+            $this->assertTrue($postModel->isExpirationEnabled());
+            $this->assertIsObject($expirationAction);
+            $this->assertEquals('expired', $postModel->getExpirationNewStatus());
+            $this->assertEquals($timestamp, $postModel->getExpirationDateAsUnixTime());
+        } finally {
+            remove_filter(HooksAbstract::FILTER_EXPIRATION_STATUSES, $allowExpiredStatus);
+        }
     }
 }

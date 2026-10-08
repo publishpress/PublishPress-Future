@@ -4,7 +4,7 @@ use PublishPress\Future\Core\DI\Container as DIContainer;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Settings\HooksAbstract;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 // phpcs:disable Generic.Files.LineLength.TooLong
 

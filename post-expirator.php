@@ -29,9 +29,9 @@ use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\BundledTranslations\BundledTranslations;
 use Throwable;
 
-if (! defined('ABSPATH')) {
-    exit('Direct access not allowed.');
-}
+use function defined;
+
+defined('ABSPATH') || exit;
 
 // If the plugin is already loaded, terminate the plugin execution.
 if (defined('PUBLISHPRESS_FUTURE_LOADED')) {

@@ -4,7 +4,7 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 $settingsFacade = Container::getInstance()->get(ServicesAbstract::SETTINGS);
 
@@ -56,20 +56,20 @@ $pluginFacade = PostExpirator_Facade::getInstance();
                 </tr>
                 <tr valign="top">
                     <th scope="row"><label for="expired-hide-calendar-by-default"><?php
-                                                    esc_html_e('Calendar Visibility', 'post-expirator'); ?></label></th>
+                    esc_html_e('Calendar Visibility', 'post-expirator'); ?></label></th>
                     <td>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="expired-hide-calendar-by-default" id="expired-hide-calendar-by-default-false"
                                 value="0" <?php echo $calendarHiddenByDefault ? '' : 'checked="checked"'; ?> /> <label
                                 for="expired-hide-calendar-by-default-false"><?php
-                                                esc_html_e('Remember last state', 'post-expirator'); ?></label>
+                                esc_html_e('Remember last state', 'post-expirator'); ?></label>
                         </div>
                         <p class="description"><?php esc_html_e('Shows or hides the calendar based on the last user interaction.', 'post-expirator'); ?></p>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="expired-hide-calendar-by-default" id="expired-hide-calendar-by-default-true"
                                 value="1" <?php echo $calendarHiddenByDefault ? 'checked="checked"' : ''; ?> /> <label
                                 for="expired-hide-calendar-by-default-true"><?php
-                                            esc_html_e('Always hidden', 'post-expirator'); ?></label>
+                                esc_html_e('Always hidden', 'post-expirator'); ?></label>
                         </div>
                         <p class="description"><?php esc_html_e('The calendar is always hidden by default.', 'post-expirator'); ?></p>
                     </td>
