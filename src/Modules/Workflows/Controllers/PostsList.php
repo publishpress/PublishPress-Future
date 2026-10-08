@@ -12,7 +12,7 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 use PublishPress\Future\Modules\Workflows\Module;
 
-defined('ABSPATH') or die('No direct script access allowed.');
+\defined('ABSPATH') || exit;
 
 class PostsList implements ModuleInterface
 {

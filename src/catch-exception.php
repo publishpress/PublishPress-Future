@@ -11,7 +11,9 @@ namespace PublishPress\Future {
 
     use Throwable;
 
-    defined('ABSPATH') or die('No direct script access allowed.');
+    use function defined;
+
+    defined('ABSPATH') || exit;
 
     if (! function_exists(__NAMESPACE__ . '\\logError')) {
 
