@@ -1,4 +1,5 @@
 <?php
+
 defined('ABSPATH') || exit;
 
 // phpcs:disable Generic.Files.LineLength.TooLong
