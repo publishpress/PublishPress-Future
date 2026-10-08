@@ -9,7 +9,7 @@ defined('ABSPATH') || exit;
 $container = Container::getInstance();
 $hooks = $container->get(ServicesAbstract::HOOKS);
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $current_tab = empty($_GET['tab']) ? 'defaults' : sanitize_title(wp_unslash($_GET['tab']));

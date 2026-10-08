@@ -19,7 +19,7 @@ use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 use PublishPress\Future\Framework\System\DateTimeHandlerInterface;
 use WP_REST_Request;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 class RestAPIController implements InitializableInterface
 {

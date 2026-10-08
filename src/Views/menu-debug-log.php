@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
 $container = Container::getInstance();
 $hooks = $container->get(ServicesAbstract::HOOKS);
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 echo '<h2>' . esc_html__('Debug Log', 'post-expirator') . '</h2>';
 

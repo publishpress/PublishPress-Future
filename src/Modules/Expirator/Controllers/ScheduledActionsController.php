@@ -18,7 +18,7 @@ use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstrac
 use PublishPress\Future\Modules\Workflows\Module;
 use Throwable;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 class ScheduledActionsController implements InitializableInterface
 {

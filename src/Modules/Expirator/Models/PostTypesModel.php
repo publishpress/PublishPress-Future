@@ -10,7 +10,7 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Psr\Container\ContainerInterface;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 class PostTypesModel
 {

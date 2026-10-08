@@ -16,7 +16,7 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 use Throwable;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 class BlockEditorController implements InitializableInterface
 {

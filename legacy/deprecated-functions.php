@@ -4,7 +4,7 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 if (! function_exists('_scheduleExpiratorEvent')) {
     /**

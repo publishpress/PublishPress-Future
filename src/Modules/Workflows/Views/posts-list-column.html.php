@@ -3,7 +3,7 @@
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 $wpDateFormat = get_option('date_format') . ' ' . get_option('time_format');
 

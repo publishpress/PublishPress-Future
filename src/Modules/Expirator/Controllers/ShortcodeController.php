@@ -14,7 +14,7 @@ use PublishPress\Future\Modules\Settings\HooksAbstract;
 use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 class ShortcodeController implements InitializableInterface
 {

@@ -21,7 +21,7 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use Throwable;
 use WP_Post;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 class ClassicEditorController implements InitializableInterface
 {

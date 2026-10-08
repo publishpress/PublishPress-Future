@@ -5,7 +5,7 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract as ExpiratorCapabilities;
 use PublishPress\Future\Modules\Workflows\CapabilitiesAbstract as WorkflowCapabilities;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 /**
  * The class that acts as a facade for the plugin's core functions.

@@ -6,7 +6,7 @@ use PublishPress\Future\Modules\Debug\HooksAbstract;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 // phpcs:disable Generic.Files.LineLength.TooLong
 

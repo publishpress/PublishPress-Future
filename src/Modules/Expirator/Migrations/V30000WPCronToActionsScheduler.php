@@ -13,7 +13,7 @@ use PublishPress\Future\Modules\Expirator\Interfaces\MigrationInterface;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 class V30000WPCronToActionsScheduler implements MigrationInterface
 {

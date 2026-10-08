@@ -19,7 +19,7 @@ use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 use Throwable;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 class PostListController implements InitializableInterface
 {

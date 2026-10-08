@@ -10,7 +10,7 @@ use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 class ActionArgsModel implements ActionArgsModelInterface
 {

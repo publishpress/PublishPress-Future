@@ -20,7 +20,7 @@ use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
 use function tad\WPBrowser\vendorDir;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 class V30001RestorePostMeta implements MigrationInterface
 {

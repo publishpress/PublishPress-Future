@@ -8,7 +8,7 @@ namespace PublishPress\Future\Framework\WordPress\Models;
 
 use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentTermException;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 class TermModel
 {

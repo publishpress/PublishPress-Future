@@ -12,7 +12,7 @@ use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 use PublishPress\Future\Modules\Settings\HooksAbstract;
 use PublishPress\Future\Core\HookableInterface;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 class SettingsPostTypesModel
 {

@@ -22,7 +22,7 @@ use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use Throwable;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 class QuickEditController implements InitializableInterface
 {

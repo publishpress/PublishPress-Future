@@ -9,7 +9,7 @@ namespace PublishPress\Future\Modules\WooCommerce;
 use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\Future\Core\HookableInterface;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 final class Module implements ModuleInterface
 {

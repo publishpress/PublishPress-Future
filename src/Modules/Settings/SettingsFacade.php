@@ -15,7 +15,7 @@ use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use WP_Role;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 /**
  *

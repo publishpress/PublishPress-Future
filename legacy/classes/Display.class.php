@@ -9,7 +9,7 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstrac
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 /**
  * The class that is responsible for all the displays.

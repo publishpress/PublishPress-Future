@@ -2,7 +2,7 @@
 
 namespace PublishPress\Future\Core\DI;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+\defined('ABSPATH') || exit;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.

@@ -10,7 +10,7 @@ $container = Container::getInstance();
 $hooks = $container->get(ServicesAbstract::HOOKS);
 $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 $defaultTab = $settingsFacade->getSettingsDefaultTab();
 
