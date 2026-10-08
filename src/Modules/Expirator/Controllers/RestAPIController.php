@@ -17,6 +17,7 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Settings\Models\TaxonomiesModel;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 use PublishPress\Future\Framework\System\DateTimeHandlerInterface;
+use WP_Error;
 use WP_REST_Request;
 
 \defined('ABSPATH') || exit;
@@ -32,6 +33,11 @@ class RestAPIController implements InitializableInterface
      * @var \Closure
      */
     private $expirablePostModelFactory;
+
+    /**
+     * @var \Closure
+     */
+    private $currentUserModelFactory;
 
     /**
      * @var CurrentUserModel
@@ -67,6 +73,7 @@ class RestAPIController implements InitializableInterface
     ) {
         $this->hooks = $hooksFacade;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+        $this->currentUserModelFactory = $currentUserModelFactory;
         $this->currentUserModel = $currentUserModelFactory();
         $this->logger = $logger;
         $this->dateTimeHandler = $dateTimeHandler;
@@ -331,16 +338,18 @@ class RestAPIController implements InitializableInterface
                     },
                     'update_callback' => function ($value, $post) {
                         try {
+                            $currentUserModel = $this->getRequestCurrentUserModel();
+
                             if (
-                                ! $this->currentUserModel->userCanExpirePosts()
-                                || ! $this->currentUserModel->userCanEditPost($post->ID)
+                                ! $currentUserModel->userCanExpirePosts()
+                                || ! $currentUserModel->userCanEditPost($post->ID)
                             ) {
                                 return false;
                             }
 
                             if (isset($value['enabled']) && (bool) $value['enabled']) {
-                                $expireType = sanitize_text_field($value['action']);
-                                $newStatus = sanitize_key($value['newStatus']);
+                                $expireType = isset($value['action']) ? sanitize_text_field($value['action']) : '';
+                                $newStatus = isset($value['newStatus']) ? sanitize_key($value['newStatus']) : '';
 
                                 if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
                                     $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
@@ -355,6 +364,10 @@ class RestAPIController implements InitializableInterface
                                 if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
                                     $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
                                     $newStatus = 'trash';
+                                }
+
+                                if (! $currentUserModel->userCanScheduleAction((int) $post->ID, $expireType, $newStatus)) {
+                                    return $this->scheduleActionForbiddenError();
                                 }
 
                                 $opts = [
@@ -498,11 +511,26 @@ class RestAPIController implements InitializableInterface
         $expirationEnabled = (bool) $request->get_param('enabled');
 
         if ($expirationEnabled) {
+            $expireType = sanitize_key((string) $request->get_param('action'));
+            $newStatus = '';
+            $newStatusParam = $request->get_param('newStatus');
+            if (is_string($newStatusParam) || is_numeric($newStatusParam)) {
+                $newStatus = sanitize_key((string) $newStatusParam);
+            }
+
+            if (! $this->getRequestCurrentUserModel()->userCanScheduleAction($postId, $expireType, $newStatus)) {
+                return $this->scheduleActionForbiddenError();
+            }
+
             $opts = [
-                'expireType' => sanitize_key($request->get_param('action')),
+                'expireType' => $expireType,
                 'category' => array_map('absint', (array) $request->get_param('terms')),
                 'categoryTaxonomy' => sanitize_key($request->get_param('taxonomy')),
             ];
+
+            if ($newStatus !== '') {
+                $opts['newStatus'] = $newStatus;
+            }
 
             $extraData = $request->get_param('extraData');
             if (is_array($extraData) && !empty($extraData)) {
@@ -520,6 +548,42 @@ class RestAPIController implements InitializableInterface
         }
 
         return rest_ensure_response(true);
+    }
+
+    /**
+     * Current user for this request.
+     *
+     * The constructor model is created on init. Resolving again keeps the
+     * expire-post gate and the action check on the authenticated user.
+     *
+     * @since 4.10.6
+     *
+     * @return CurrentUserModel
+     */
+    private function getRequestCurrentUserModel(): CurrentUserModel
+    {
+        $factory = $this->currentUserModelFactory;
+        $currentUserModel = $factory();
+
+        if ($currentUserModel instanceof CurrentUserModel) {
+            return $currentUserModel;
+        }
+
+        return new CurrentUserModel();
+    }
+
+    /**
+     * @since 4.10.6
+     *
+     * @return WP_Error
+     */
+    private function scheduleActionForbiddenError(): WP_Error
+    {
+        return new WP_Error(
+            'rest_cannot_schedule_action',
+            __('You are not allowed to schedule this action.', 'post-expirator'),
+            ['status' => 403]
+        );
     }
 
     private function sanitizeExtraData($data)

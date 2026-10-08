@@ -370,7 +370,8 @@ return [
             $container->get(ServicesAbstract::DATETIME),
             $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
             $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY),
-            $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL)
+            $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL),
+            $container->get(ServicesAbstract::CURRENT_USER_MODEL_FACTORY)
         );
     },
 

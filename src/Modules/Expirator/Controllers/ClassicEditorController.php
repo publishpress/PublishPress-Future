@@ -18,6 +18,7 @@ use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 use Throwable;
 use WP_Post;
 
@@ -249,6 +250,19 @@ class ClassicEditorController implements InitializableInterface
                 $newStatus = 'trash';
             }
 
+            if (! $this->currentUserModel->userCanScheduleAction((int) $postId, $expireType, $newStatus)) {
+                $this->logger->debug(
+                    sprintf(
+                        '%1$d  -> ACTION NOT SCHEDULED: user cannot schedule %2$s (status %3$s)',
+                        (int) $postId,
+                        $expireType,
+                        $newStatus
+                    )
+                );
+
+                return;
+            }
+
             $opts = [
                 'expireType' => $expireType,
                 'newStatus' => $newStatus,
@@ -394,6 +408,24 @@ class ClassicEditorController implements InitializableInterface
 
             $hiddenFields = (array) $this->hooks->applyFilters(HooksAbstract::FILTER_HIDDEN_METABOX_FIELDS, [], $postType);
 
+            $postId = 0;
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            if (! empty($_GET['post'])) {
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                $postId = absint($_GET['post']);
+            }
+
+            if ($postId === 0 && isset($GLOBALS['post']) && $GLOBALS['post'] instanceof WP_Post) {
+                $postId = (int) $GLOBALS['post']->ID;
+            }
+
+            $scheduleOptions = $this->currentUserModel->filterScheduleSelectOptions(
+                $actionsModel->getActionsAsOptions($postType),
+                $actionsModel->getStatusesAsOptionsForPostType($postType),
+                (string) $postType,
+                $postId
+            );
+
             wp_localize_script(
                 'publishpress-future-classic-editor',
                 'publishpressFutureClassicEditorConfig',
@@ -403,8 +435,8 @@ class ClassicEditorController implements InitializableInterface
                     'is12Hour' => get_option('time_format') !== 'H:i',
                     'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
                     'startOfWeek' => get_option('start_of_week', 0),
-                    'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
-                    'statusesSelectOptions' => $actionsModel->getStatusesAsOptionsForPostType($postType),
+                    'actionsSelectOptions' => $scheduleOptions['actions'],
+                    'statusesSelectOptions' => $scheduleOptions['statuses'],
                     'isDebugEnabled' => $debug->isEnabled(),
                     'taxonomyName' => $taxonomyPluralName,
                     'taxonomyTerms' => $taxonomyTerms,

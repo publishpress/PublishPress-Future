@@ -12,6 +12,7 @@ use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel;
 
@@ -62,6 +63,11 @@ class ExpirationScheduler implements SchedulerInterface
     private $expirationActionsModel;
 
     /**
+     * @var \Closure
+     */
+    private $currentUserModelFactory;
+
+    /**
      * @param HookableInterface $hooksFacade
      * @param CronInterface $cron
      * @param ErrorFacade $errorFacade
@@ -70,6 +76,7 @@ class ExpirationScheduler implements SchedulerInterface
      * @param \Closure $postModelFactory
      * @param \Closure $actionArgsModelFactory
      * @param ExpirationActionsModel $expirationActionsModel
+     * @param \Closure $currentUserModelFactory
      */
     public function __construct(
         $hooksFacade,
@@ -79,7 +86,8 @@ class ExpirationScheduler implements SchedulerInterface
         $datetime,
         $postModelFactory,
         $actionArgsModelFactory,
-        $expirationActionsModel
+        $expirationActionsModel,
+        $currentUserModelFactory
     ) {
         $this->hooks = $hooksFacade;
         $this->cron = $cron;
@@ -89,6 +97,7 @@ class ExpirationScheduler implements SchedulerInterface
         $this->postModelFactory = $postModelFactory;
         $this->actionArgsModelFactory = $actionArgsModelFactory;
         $this->expirationActionsModel = $expirationActionsModel;
+        $this->currentUserModelFactory = $currentUserModelFactory;
     }
 
     private function convertLocalTimeToUtc($timestamp): int
@@ -102,6 +111,38 @@ class ExpirationScheduler implements SchedulerInterface
      */
     public function schedule($postId, $timestamp, $opts)
     {
+        if (! $this->currentRequestSkipsScheduleAuthorization()) {
+            $expireType = '';
+            $newStatus = '';
+
+            if (is_array($opts)) {
+                if (isset($opts['expireType']) && is_string($opts['expireType'])) {
+                    $expireType = $opts['expireType'];
+                }
+                if (isset($opts['newStatus']) && is_string($opts['newStatus'])) {
+                    $newStatus = $opts['newStatus'];
+                }
+            }
+
+            $currentUserModelFactory = $this->currentUserModelFactory;
+            $currentUserModel = $currentUserModelFactory();
+
+            if (
+                ! $currentUserModel instanceof CurrentUserModel
+                || ! $currentUserModel->userCanScheduleAction((int) $postId, $expireType, $newStatus)
+            ) {
+                $this->logger->debug(
+                    sprintf(
+                        '%1$d  -> ACTION NOT SCHEDULED: user cannot schedule %2$s (status %3$s)',
+                        (int) $postId,
+                        $expireType,
+                        $newStatus
+                    )
+                );
+
+                return;
+            }
+        }
 
         $factory = $this->actionArgsModelFactory;
 
@@ -183,6 +224,27 @@ class ExpirationScheduler implements SchedulerInterface
         );
 
         $this->updateLegacyPostMetaUsedBy3rdPartySoftware($postId, $timestamp, $opts);
+    }
+
+    /**
+     * Cron and CLI reschedules run with no logged-in user and skip the cap check.
+     * Every other logged-out request is checked and fails closed.
+     *
+     * @since 4.10.6
+     *
+     * @return bool
+     */
+    private function currentRequestSkipsScheduleAuthorization(): bool
+    {
+        if (is_user_logged_in()) {
+            return false;
+        }
+
+        if (wp_doing_cron()) {
+            return true;
+        }
+
+        return defined('WP_CLI') && WP_CLI;
     }
 
     private function updateLegacyPostMetaUsedBy3rdPartySoftware(int $postId, int $timestamp, array $opts): void
