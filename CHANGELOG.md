@@ -4,6 +4,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [UNRELEASED]
 
 - Security: Restrict `[futureaction]` / `[postexpirator]` shortcode wrapper to safe container elements (`p`, `div`, `span`) and escape shortcode output when no wrapper is used, closing incomplete remediation of CVE-2026-5247. Thanks to Civitasmass for the responsible disclosure.
+- Security: Restrict the publishpress_future_action REST field to the edit context and to users who can edit the post, so public wp/v2 responses no longer expose Future Action schedule metadata.
 
 [4.10.5] - 12 Aug, 2026
 
