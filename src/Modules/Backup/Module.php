@@ -14,7 +14,7 @@ use PublishPress\Future\Modules\Backup\Controllers\BackupRestApi;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Framework\WordPress\Utils\WorkflowSanitizationUtil;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 final class Module implements ModuleInterface
 {

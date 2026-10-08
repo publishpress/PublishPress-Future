@@ -6,7 +6,7 @@
 
 namespace PublishPress\Future\Core\DI;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 abstract class ServicesAbstract
 {

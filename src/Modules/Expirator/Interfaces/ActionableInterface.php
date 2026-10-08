@@ -2,7 +2,7 @@
 
 namespace PublishPress\Future\Modules\Expirator\Interfaces;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 interface ActionableInterface
 {

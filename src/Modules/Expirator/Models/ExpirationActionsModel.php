@@ -22,7 +22,7 @@ use PublishPress\Future\Modules\Expirator\ExpirationActions\UnstickPost;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class ExpirationActionsModel
 {

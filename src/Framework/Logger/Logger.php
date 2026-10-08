@@ -12,7 +12,7 @@ use PublishPress\Future\Framework\WordPress\Facade\DatabaseFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class Logger implements LoggerInterface
 {

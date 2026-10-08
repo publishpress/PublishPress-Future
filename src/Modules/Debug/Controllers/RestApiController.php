@@ -13,7 +13,7 @@ use PublishPress\Future\Modules\Debug\DebugLogDisplayHelper;
 use WP_REST_Request;
 use WP_REST_Response;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class RestApiController implements InitializableInterface
 {

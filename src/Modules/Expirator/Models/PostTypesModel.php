@@ -10,7 +10,7 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Psr\Container\ContainerInterface;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class PostTypesModel
 {

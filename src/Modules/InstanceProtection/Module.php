@@ -11,7 +11,7 @@ use PublishPress\Future\Framework\ModuleInterface;
 use PublishPressInstanceProtection\Config;
 use PublishPressInstanceProtection\InstanceChecker;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 final class Module implements ModuleInterface
 {

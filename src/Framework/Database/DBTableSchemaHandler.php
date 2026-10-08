@@ -14,7 +14,7 @@ namespace PublishPress\Future\Framework\Database;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaHandlerInterface;
 use wpdb;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 // phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared
 

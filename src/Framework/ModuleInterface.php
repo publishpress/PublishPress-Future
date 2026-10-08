@@ -6,7 +6,7 @@
 
 namespace PublishPress\Future\Framework;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 interface ModuleInterface extends InitializableInterface
 {

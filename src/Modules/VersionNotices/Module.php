@@ -12,7 +12,7 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\WordpressVersionNotices\Module\TopNotice\Module as VersionNoticesModule;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 final class Module implements ModuleInterface
 {

@@ -11,7 +11,7 @@
 
 namespace PublishPress\Future\Framework\WordPress\Utils;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 /**
  * Static helpers for detecting whether supported third-party plugins are active.

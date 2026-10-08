@@ -6,7 +6,7 @@
 
 namespace PublishPress\Future\Modules\Expirator;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 abstract class CapabilitiesAbstract
 {

@@ -12,7 +12,7 @@ use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Debug\Controllers\Controller;
 use PublishPress\Future\Modules\Debug\Controllers\RestApiController;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 final class Module implements ModuleInterface
 {

@@ -15,7 +15,7 @@ use WP_Post;
 
 use function wp_update_post;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 
 class PostModel

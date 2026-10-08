@@ -17,7 +17,7 @@ use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use Throwable;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class ExpirationController implements InitializableInterface
 {

@@ -13,7 +13,7 @@ namespace PublishPress\Future {
 
     use function defined;
 
-    defined('ABSPATH') || exit;
+    \defined('ABSPATH') || exit;
 
     if (! function_exists(__NAMESPACE__ . '\\logError')) {
 

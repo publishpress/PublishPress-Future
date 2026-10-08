@@ -6,7 +6,7 @@
 
 namespace PublishPress\Future\Modules\Settings;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 abstract class HooksAbstract
 {

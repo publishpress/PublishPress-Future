@@ -8,7 +8,7 @@ namespace PublishPress\Future\Framework\WordPress\Facade;
 
 use function PublishPress\Future\Framework\WordPress\get_option;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class OptionsFacade
 {

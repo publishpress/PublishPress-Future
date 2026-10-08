@@ -11,7 +11,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class PluginsListController implements InitializableInterface
 {

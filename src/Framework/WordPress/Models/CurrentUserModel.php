@@ -6,7 +6,7 @@
 
 namespace PublishPress\Future\Framework\WordPress\Models;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class CurrentUserModel extends UserModel
 {

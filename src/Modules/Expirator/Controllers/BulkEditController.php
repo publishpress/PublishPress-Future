@@ -21,7 +21,7 @@ use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 use Throwable;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class BulkEditController implements InitializableInterface
 {

@@ -9,7 +9,7 @@ namespace PublishPress\Future\Framework\WordPress\Facade;
 use PublishPress\Future\Core\HookableInterface;
 use Throwable;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class HooksFacade implements HookableInterface
 {

@@ -6,7 +6,7 @@
 
 namespace PublishPress\Future\Framework\WordPress\Facade;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class SanitizationFacade
 {

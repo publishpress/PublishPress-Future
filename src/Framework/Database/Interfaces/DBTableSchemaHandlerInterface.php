@@ -6,7 +6,7 @@
 
 namespace PublishPress\Future\Framework\Database\Interfaces;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 interface DBTableSchemaHandlerInterface
 {

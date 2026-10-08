@@ -8,7 +8,7 @@ namespace PublishPress\Future\Framework;
 
 use Exception;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class BaseException extends Exception
 {

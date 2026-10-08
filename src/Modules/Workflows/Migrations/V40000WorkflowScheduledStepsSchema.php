@@ -8,7 +8,7 @@ use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\MigrationInterface;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class V40000WorkflowScheduledStepsSchema implements MigrationInterface
 {

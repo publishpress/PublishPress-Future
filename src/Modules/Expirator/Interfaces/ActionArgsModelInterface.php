@@ -8,7 +8,7 @@ namespace PublishPress\Future\Modules\Expirator\Interfaces;
 
 use PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 interface ActionArgsModelInterface
 {

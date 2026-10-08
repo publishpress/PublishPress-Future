@@ -8,7 +8,7 @@ namespace PublishPress\Future\Modules\Expirator;
 
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 abstract class HooksAbstract
 {

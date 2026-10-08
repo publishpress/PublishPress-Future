@@ -9,7 +9,7 @@ namespace PublishPress\Future\Modules\WooCommerce;
 use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\Future\Core\HookableInterface;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 final class Module implements ModuleInterface
 {

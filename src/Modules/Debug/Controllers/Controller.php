@@ -14,7 +14,7 @@ use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Debug\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class Controller implements InitializableInterface
 {

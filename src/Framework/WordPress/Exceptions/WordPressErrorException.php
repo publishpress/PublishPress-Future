@@ -8,7 +8,7 @@ namespace PublishPress\Future\Framework\WordPress\Exceptions;
 
 use PublishPress\Future\Framework\BaseException;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class WordPressErrorException extends BaseException
 {

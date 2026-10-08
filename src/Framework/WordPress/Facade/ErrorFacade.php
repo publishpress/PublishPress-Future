@@ -8,7 +8,7 @@ namespace PublishPress\Future\Framework\WordPress\Facade;
 
 use WP_Error;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class ErrorFacade
 {

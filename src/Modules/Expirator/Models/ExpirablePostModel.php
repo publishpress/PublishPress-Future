@@ -17,7 +17,7 @@ use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory;
 use Throwable;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class ExpirablePostModel extends PostModel
 {

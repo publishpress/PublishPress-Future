@@ -6,7 +6,7 @@
 
 namespace PublishPress\Future\Framework\Logger;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 /**
  * Describes log levels.

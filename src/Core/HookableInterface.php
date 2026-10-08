@@ -6,7 +6,7 @@
 
 namespace PublishPress\Future\Core;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 interface HookableInterface
 {

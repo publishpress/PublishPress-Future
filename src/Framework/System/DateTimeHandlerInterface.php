@@ -2,7 +2,7 @@
 
 namespace PublishPress\Future\Framework\System;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 interface DateTimeHandlerInterface
 {

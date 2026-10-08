@@ -21,7 +21,7 @@ use function as_schedule_single_action;
 use function as_unschedule_action;
 use function as_unschedule_all_actions;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class CronToWooActionSchedulerAdapter implements CronInterface
 {

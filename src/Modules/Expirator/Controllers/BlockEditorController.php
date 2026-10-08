@@ -16,7 +16,7 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 use Throwable;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class BlockEditorController implements InitializableInterface
 {

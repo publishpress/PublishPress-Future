@@ -11,7 +11,7 @@ use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\Future\Modules\Settings\Controllers\Controller;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 final class Module implements ModuleInterface
 {

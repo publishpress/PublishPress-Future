@@ -22,7 +22,7 @@ use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory
 use PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 final class Module implements ModuleInterface
 {

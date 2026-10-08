@@ -8,7 +8,7 @@ namespace PublishPress\Future\Modules\Debug;
 
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 /**
  * @deprecated 4.1.0 Use the logger facade instead.

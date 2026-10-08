@@ -18,7 +18,7 @@ use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstrac
 use PublishPress\Future\Modules\Workflows\Module;
 use Throwable;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class ScheduledActionsController implements InitializableInterface
 {

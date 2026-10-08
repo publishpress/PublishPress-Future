@@ -13,7 +13,7 @@ namespace PublishPress\Future\Modules\Debug;
 
 use PostExpirator_Util;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 /**
  * @since 4.10.0

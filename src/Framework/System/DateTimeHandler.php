@@ -6,7 +6,7 @@ use DateTime;
 use DateTimeZone;
 use InvalidArgumentException;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class DateTimeHandler implements DateTimeHandlerInterface
 {

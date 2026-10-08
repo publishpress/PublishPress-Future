@@ -27,7 +27,7 @@ use PublishPress\Future\Modules\Debug\Migrations\V04905DebugLogRequestId;
 use PublishPress\Future\Modules\Debug\Migrations\V04906DebugLogTimestampMilliseconds;
 use Throwable;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class Plugin implements InitializableInterface
 {

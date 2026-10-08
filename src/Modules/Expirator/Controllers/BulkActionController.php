@@ -12,7 +12,7 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class BulkActionController implements InitializableInterface
 {

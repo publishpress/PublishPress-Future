@@ -6,7 +6,7 @@
 
 namespace PublishPress\Future\Modules\Expirator\Models;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class PostTypeModel
 {

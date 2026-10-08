@@ -6,7 +6,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaHandlerInterface;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class ActionArgsSchema implements DBTableSchemaInterface
 {

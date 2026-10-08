@@ -14,7 +14,7 @@ use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class PostTypeDefaultDataModel
 {

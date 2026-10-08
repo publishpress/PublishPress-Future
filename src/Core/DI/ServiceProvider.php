@@ -6,7 +6,7 @@
 
 namespace PublishPress\Future\Core\DI;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 /**
  * @deprecated 3.1.1

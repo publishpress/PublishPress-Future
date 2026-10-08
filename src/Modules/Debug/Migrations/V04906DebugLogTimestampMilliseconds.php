@@ -17,7 +17,7 @@ use PublishPress\Future\Modules\Debug\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Interfaces\MigrationInterface;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 /**
  * Migration to add millisecond precision to the debug log timestamp column.

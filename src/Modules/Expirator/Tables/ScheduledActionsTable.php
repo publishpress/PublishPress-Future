@@ -15,7 +15,7 @@ use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\PostTypeModel;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 class ScheduledActionsTable extends \ActionScheduler_ListTable

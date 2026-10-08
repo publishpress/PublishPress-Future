@@ -17,7 +17,7 @@ use PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel;
 
 use function tad\WPBrowser\vendorDir;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class ExpirationScheduler implements SchedulerInterface
 {

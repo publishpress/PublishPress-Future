@@ -8,7 +8,7 @@ namespace PublishPress\Future\Framework\WordPress\Facade;
 
 use wpdb;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class DatabaseFacade
 {

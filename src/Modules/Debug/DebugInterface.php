@@ -6,7 +6,7 @@
 
 namespace PublishPress\Future\Modules\Debug;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 interface DebugInterface
 {

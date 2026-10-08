@@ -14,7 +14,7 @@ use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class ContentController implements InitializableInterface
 {

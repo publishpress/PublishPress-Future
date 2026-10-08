@@ -15,7 +15,7 @@ use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use Throwable;
 
-defined('ABSPATH') || exit;
+\defined('ABSPATH') || exit;
 
 class Controller implements InitializableInterface
 {
