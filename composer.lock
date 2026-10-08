@@ -6132,12 +6132,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/publishpress-phpcs-standards.git",
-                "reference": "eea5f79be26ad8b8a668c60f8e86a96fc6b744ed"
+                "reference": "3100e8673634400ca04244b9cb6339fa36384f17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/publishpress-phpcs-standards/zipball/eea5f79be26ad8b8a668c60f8e86a96fc6b744ed",
-                "reference": "eea5f79be26ad8b8a668c60f8e86a96fc6b744ed",
+                "url": "https://api.github.com/repos/publishpress/publishpress-phpcs-standards/zipball/3100e8673634400ca04244b9cb6339fa36384f17",
+                "reference": "3100e8673634400ca04244b9cb6339fa36384f17",
                 "shasum": ""
             },
             "require": {
@@ -6173,7 +6173,7 @@
                 "issues": "https://github.com/publishpress/publishpress-phpcs-standards/issues",
                 "source": "https://github.com/publishpress/publishpress-phpcs-standards/tree/development"
             },
-            "time": "2026-10-07T20:37:47+00:00"
+            "time": "2026-10-08T13:52:37+00:00"
         },
         {
             "name": "publishpress/translations",
