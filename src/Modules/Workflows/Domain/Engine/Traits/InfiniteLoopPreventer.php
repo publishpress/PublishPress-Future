@@ -2,7 +2,6 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine\Traits;
 
-
 \defined('ABSPATH') || exit;
 
 /**
