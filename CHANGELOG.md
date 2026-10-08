@@ -3,6 +3,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [UNRELEASED]
 
+- Security: Require the taxonomy `edit_terms` capability before Future Action saves create terms, and only allow taxonomies registered for that post type. Users without that capability can still select existing terms.
 - Security: Restrict the `publishpress_future_action` REST field to the edit context and to users who can edit the post, so public wp/v2 responses no longer expose Future Action schedule metadata.
 - Fixed: Settings form handler no longer intercepts other plugins' submissions that use `?tab=license` (Issue #1708).
 - Changed: Upgrade woocommerce/action-scheduler from 3.9.3 to 4.1.0 (Issue #1655).
