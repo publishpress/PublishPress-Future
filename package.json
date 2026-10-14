@@ -10,6 +10,9 @@
     "wordpress-plugin"
   ],
   "license": "GPL-2.0+",
+  "scripts": {
+    "postinstall": "patch-package"
+  },
   "pot": {
     "languageteam": "PublishPress Future Translate Team",
     "lasttranslator": "PublishPress Future Translate Team"
@@ -72,6 +75,7 @@
     "inquirer-interrupted-prompt": "^2.0.1",
     "micromatch": "^4.0.8",
     "node-ray": "^1.19.4",
+    "patch-package": "^8.0.1",
     "postcss": "^8.5.23",
     "react": "^18.0",
     "react-dom": "^18.0",
@@ -110,6 +114,10 @@
     "postcss": "^8.5.23",
     "svgo": ">=3.3.5 <4",
     "websocket-driver": "0.7.5",
-    "yaml": "1.10.3"
+    "**/@eslint/eslintrc/js-yaml": "4.3.2",
+    "**/cosmiconfig/js-yaml": "4.3.2",
+    "**/eslint/js-yaml": "4.3.2",
+    "**/markdownlint-cli/js-yaml": "4.3.2",
+    "**/cosmiconfig/yaml": "1.10.3"
   }
 }
