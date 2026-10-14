@@ -1,0 +1,264 @@
+{
+    "nodes": [
+        {
+            "id": "n1717542934571",
+            "type": "generic",
+            "position": {
+                "x": 10,
+                "y": 50
+            },
+            "data": {
+                "name": "action/core.post-change-status",
+                "elementaryType": "action",
+                "version": 1,
+                "slug": "changePostStatus1",
+                "settings": {
+                    "newStatus": {
+                        "newStatus": "publish",
+                        "status": "draft"
+                    },
+                    "post": {
+                        "variable": "{{onPostPublish1.postAfter}}"
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 10,
+                "y": 50
+            },
+            "dragging": false,
+            "targetPosition": "top",
+            "sourcePosition": "bottom",
+            "$H": 286,
+            "x": 12,
+            "y": 252
+        },
+        {
+            "id": "n1717542946349",
+            "type": "generic",
+            "position": {
+                "x": 10,
+                "y": -50
+            },
+            "data": {
+                "name": "advanced/core.schedule",
+                "elementaryType": "advanced",
+                "version": 1,
+                "slug": "schedule1",
+                "settings": {
+                    "schedule": {
+                        "whenToRun": "offset",
+                        "dateSource": "event",
+                        "recurrence": "single",
+                        "repeatUntil": "forever",
+                        "repeatInterval": "3600",
+                        "repeatIntervalUnit": "seconds",
+                        "repeatTimes": "5",
+                        "repeatUntilDate": "2024-06-11T23:16:24.422Z",
+                        "unique": true,
+                        "priority": "10",
+                        "specificDate": "2024-06-07T23:16:24.422Z",
+                        "dateOffset": "+15 days",
+                        "customDateSource": "onSavePost1.post.post_date"
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 10,
+                "y": -50
+            },
+            "dragging": false,
+            "targetPosition": "top",
+            "sourcePosition": "bottom",
+            "$H": 288,
+            "x": 12,
+            "y": 132
+        },
+        {
+            "id": "n1717543017933",
+            "type": "generic",
+            "position": {
+                "x": 10,
+                "y": 160
+            },
+            "data": {
+                "name": "action/core.replace-post-terms",
+                "elementaryType": "action",
+                "version": 1,
+                "slug": "replacePostTerms1",
+                "settings": {
+                    "taxonomyTerms": {
+                        "taxonomy": "category",
+                        "terms": []
+                    },
+                    "post": {
+                        "variable": "{{onPostPublish1.postAfter}}"
+                    }
+                }
+            },
+            "width": 151,
+            "height": 67,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 10,
+                "y": 160
+            },
+            "dragging": false
+        },
+        {
+            "id": "n1717543063491",
+            "type": "generic",
+            "position": {
+                "x": 20,
+                "y": 270
+            },
+            "data": {
+                "name": "action/core.send-email",
+                "elementaryType": "action",
+                "version": 1,
+                "slug": "sendEmail1",
+                "settings": {
+                    "recipient": {
+                        "recipient": "global.site.admin_email",
+                        "custom": "",
+                        "expression": "{{global.site.admin_email}}"
+                    },
+                    "message": {
+                        "expression": "This is a message sent by PublishPress Workflow: {{global.workflow.title}}."
+                    },
+                    "subject": {
+                        "expression": "PublishPress Workflow: {{global.workflow.title}}"
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "selected": true,
+            "positionAbsolute": {
+                "x": 20,
+                "y": 270
+            },
+            "dragging": false
+        },
+        {
+            "id": "onPostPublish_1jvoc93r",
+            "type": "trigger",
+            "position": {
+                "x": 10,
+                "y": -150
+            },
+            "data": {
+                "name": "trigger/core.post-published",
+                "elementaryType": "trigger",
+                "version": 1,
+                "slug": "onPostPublish1",
+                "settings": {
+                    "postQuery": {
+                        "postSource": "custom",
+                        "postType": [
+                            "post"
+                        ],
+                        "postId": [],
+                        "postStatus": [],
+                        "json": {
+                            "or": [
+                                {
+                                    "==": [
+                                        {
+                                            "var": "{{onPostPublish1.postBefore.type}}"
+                                        },
+                                        "post"
+                                    ]
+                                }
+                            ]
+                        },
+                        "natural": "{{onPostPublish1.postBefore.type}} is 'post'"
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "positionAbsolute": {
+                "x": 10,
+                "y": -150
+            },
+            "selected": false,
+            "dragging": false
+        }
+    ],
+    "edges": [
+        {
+            "source": "n1717542946349",
+            "sourceHandle": "output",
+            "target": "n1717542934571",
+            "targetHandle": "input",
+            "type": "genericEdge",
+            "id": "n1717542946349-output-n1717542934571-input",
+            "sections": [
+                {
+                    "id": "n1717542946349-output-n1717542934571-input_s0",
+                    "startPoint": {
+                        "x": 87,
+                        "y": 182
+                    },
+                    "endPoint": {
+                        "x": 87,
+                        "y": 252
+                    },
+                    "incomingShape": "n1717542946349",
+                    "outgoingShape": "n1717542934571"
+                }
+            ],
+            "container": "root",
+            "selected": false,
+            "markerEnd": {
+                "type": "arrowclosed"
+            }
+        },
+        {
+            "source": "n1717542934571",
+            "sourceHandle": "output",
+            "target": "n1717543017933",
+            "targetHandle": "input",
+            "type": "genericEdge",
+            "id": "n1717542934571-output-n1717543017933-input",
+            "markerEnd": {
+                "type": "arrowclosed"
+            }
+        },
+        {
+            "source": "n1717543017933",
+            "sourceHandle": "output",
+            "target": "n1717543063491",
+            "targetHandle": "input",
+            "type": "genericEdge",
+            "id": "n1717543017933-output-n1717543063491-input",
+            "markerEnd": {
+                "type": "arrowclosed"
+            }
+        },
+        {
+            "source": "onPostPublish_1jvoc93r",
+            "sourceHandle": "output",
+            "target": "n1717542946349",
+            "targetHandle": "input",
+            "type": "genericEdge",
+            "id": "onPostPublish_1jvoc93r-output-n1717542946349-input",
+            "markerEnd": {
+                "type": "arrowclosed"
+            }
+        }
+    ],
+    "viewport": {
+        "x": 398.46481239499724,
+        "y": 151.99075975359344,
+        "zoom": 0.8717565801754713
+    },
+    "editorVersion": "4.9.0"
+}

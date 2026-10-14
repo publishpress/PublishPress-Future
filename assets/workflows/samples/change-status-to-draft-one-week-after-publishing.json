@@ -1,0 +1,192 @@
+{
+    "nodes": [
+        {
+            "id": "scheduleDelay_1h3jg9go",
+            "type": "generic",
+            "position": {
+                "x": -120,
+                "y": -340
+            },
+            "data": {
+                "name": "advanced/core.schedule",
+                "elementaryType": "advanced",
+                "version": 1,
+                "slug": "scheduleDelay1",
+                "settings": {
+                    "schedule": {
+                        "whenToRun": "offset",
+                        "dateSource": "event",
+                        "recurrence": "single",
+                        "repeatUntil": "forever",
+                        "repeatInterval": "3600",
+                        "repeatIntervalUnit": "seconds",
+                        "repeatTimes": "5",
+                        "repeatUntilDate": "2025-09-09T07:28:28.081Z",
+                        "unique": true,
+                        "priority": "10",
+                        "specificDate": "2025-09-05T07:28:28.081Z",
+                        "dateOffset": "+7 days"
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "positionAbsolute": {
+                "x": -120,
+                "y": -340
+            },
+            "selected": false,
+            "dragging": false
+        },
+        {
+            "id": "movePostToStatus_1h3jndvm",
+            "type": "generic",
+            "position": {
+                "x": -120,
+                "y": -220
+            },
+            "data": {
+                "name": "action/core.post-change-status",
+                "elementaryType": "action",
+                "version": 1,
+                "slug": "movePostToStatus1",
+                "settings": {
+                    "post": {
+                        "variable": "{{onPostPublish1.postAfter}}"
+                    },
+                    "newStatus": {
+                        "newStatus": "publish",
+                        "status": "draft"
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "positionAbsolute": {
+                "x": -120,
+                "y": -220
+            },
+            "selected": false,
+            "dragging": false
+        },
+        {
+            "id": "sendEmail_1h3jq591",
+            "type": "generic",
+            "position": {
+                "x": -120,
+                "y": -110
+            },
+            "data": {
+                "name": "action/core.send-email",
+                "elementaryType": "action",
+                "version": 1,
+                "slug": "sendEmail1",
+                "settings": {
+                    "recipient": {
+                        "expression": "{{global.site.admin_email}}"
+                    },
+                    "subject": {
+                        "expression": "PublishPress Workflow: {{global.workflow.title}}"
+                    },
+                    "message": {
+                        "expression": "This is a message sent by PublishPress Workflow: {{global.workflow.title}}."
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "positionAbsolute": {
+                "x": -120,
+                "y": -110
+            },
+            "selected": true,
+            "dragging": false
+        },
+        {
+            "id": "onPostPublish_1jvolj8p",
+            "type": "trigger",
+            "position": {
+                "x": -120,
+                "y": -440
+            },
+            "data": {
+                "name": "trigger/core.post-published",
+                "elementaryType": "trigger",
+                "version": 1,
+                "slug": "onPostPublish1",
+                "settings": {
+                    "postQuery": {
+                        "postSource": "custom",
+                        "postType": [
+                            "post"
+                        ],
+                        "postId": [],
+                        "postStatus": [],
+                        "json": {
+                            "or": [
+                                {
+                                    "==": [
+                                        {
+                                            "var": "{{onPostPublish1.postBefore.type}}"
+                                        },
+                                        "post"
+                                    ]
+                                }
+                            ]
+                        },
+                        "natural": "{{onPostPublish1.postBefore.type}} is 'post'"
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "positionAbsolute": {
+                "x": -120,
+                "y": -440
+            },
+            "selected": false,
+            "dragging": false
+        }
+    ],
+    "edges": [
+        {
+            "source": "scheduleDelay_1h3jg9go",
+            "sourceHandle": "output",
+            "target": "movePostToStatus_1h3jndvm",
+            "targetHandle": "input",
+            "type": "genericEdge",
+            "id": "scheduleDelay_1h3jg9go-output-movePostToStatus_1h3jndvm-input",
+            "markerEnd": {
+                "type": "arrowclosed"
+            }
+        },
+        {
+            "source": "movePostToStatus_1h3jndvm",
+            "sourceHandle": "output",
+            "target": "sendEmail_1h3jq591",
+            "targetHandle": "input",
+            "type": "genericEdge",
+            "id": "movePostToStatus_1h3jndvm-output-sendEmail_1h3jq591-input",
+            "markerEnd": {
+                "type": "arrowclosed"
+            }
+        },
+        {
+            "source": "onPostPublish_1jvolj8p",
+            "sourceHandle": "output",
+            "target": "scheduleDelay_1h3jg9go",
+            "targetHandle": "input",
+            "type": "genericEdge",
+            "id": "onPostPublish_1jvolj8p-output-scheduleDelay_1h3jg9go-input",
+            "markerEnd": {
+                "type": "arrowclosed"
+            }
+        }
+    ],
+    "viewport": {
+        "x": 525.1554612463704,
+        "y": 493.82642394460555,
+        "zoom": 1.0431092249274065
+    },
+    "editorVersion": "4.9.0"
+}

@@ -1,12 +1,24 @@
 <?php
 
+/**
+ * Creates default sample workflows on first run.
+ *
+ * @package     PublishPress\Future
+ * @author      PublishPress
+ * @copyright   Copyright (c) 2026, PublishPress
+ * @license     GPLv2 or later
+ */
+
 namespace PublishPress\Future\Modules\Workflows\Controllers;
 
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
+use RuntimeException;
 
 class SampleWorkflows implements InitializableInterface
 {
+    private const SAMPLE_FLOWS_DIRECTORY = '/assets/workflows/samples';
+
     public function __construct()
     {
     }
@@ -24,67 +36,161 @@ class SampleWorkflows implements InitializableInterface
             return;
         }
 
-        $workflowsModel->createSampleWorkflows($this->getSamples());
+        $samples = array_map(static function (array $sample): array {
+            return [
+                'title' => $sample['title'],
+                'description' => $sample['description'],
+                'flow' => json_encode(
+                    $sample['flow'],
+                    JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+                ),
+            ];
+        }, $this->getSamples());
+
+        $workflowsModel->createSampleWorkflows($samples);
     }
 
+    /**
+     * @return array<int, array{title: string, description: string, flow: array}>
+     */
     private function getSamples(): array
+    {
+        $samples = [];
+
+        foreach ($this->getSampleDefinitions() as $definition) {
+            $samples[] = [
+                'title' => $definition['title'],
+                'description' => $definition['description'],
+                'flow' => $this->loadSampleFlow($definition['slug']),
+            ];
+        }
+
+        return $samples;
+    }
+
+    /**
+     * @return array<int, array{slug: string, title: string, description: string}>
+     */
+    private function getSampleDefinitions(): array
     {
         return [
             [
+                'slug' => 'notify-post-updated',
                 'title' => __('Notify when a post is updated', 'post-expirator'),
                 'description' => __('Notify the site admin when a post is updated.', 'post-expirator'),
-                'flow' => '{"nodes":[{"id":"n1717543440185","type":"trigger","position":{"x":0,"y":-140},"data":{"name":"trigger\/core.post-updated","elementaryType":"trigger","version":1,"slug":"onPostUpdated1","settings":{"postQuery":{"postSource":"custom","postType":[],"postId":[],"postStatus":[],"json":{"and":[{"==":[{"var":"{{onPostUpdated1.postAfter.type}}"},"post"]}]},"natural":"{{onPostUpdated1.postAfter.type}} is \'post\'"}}},"width":140,"height":68,"selected":true,"positionAbsolute":{"x":0,"y":-140},"dragging":false},{"id":"n1717543448599","type":"generic","position":{"x":0,"y":-20},"data":{"name":"action\/core.send-email","elementaryType":"action","version":1,"slug":"sendEmail1","settings":{"recipient":{"recipient":"global.site.admin_email","custom":""},"subject":"Post updated: {{onPostUpdated1.postBefore.title}}","message":"The post \"{{onPostUpdated1.postBefore.title}} was updated.\n\nThe new title is \"{{onPostUpdated1.postAfter.title}}\"."}},"width":140,"height":68,"selected":false,"positionAbsolute":{"x":0,"y":-20},"dragging":false}],"edges":[{"source":"n1717543440185","sourceHandle":"output","target":"n1717543448599","targetHandle":"input","type":"genericEdge","id":"n1717543440185-output-n1717543448599-input","markerEnd":{"type":"arrowclosed"}}],"viewport":{"x":360,"y":1079.5,"zoom":2},"editorVersion":"4.5.0"}', // phpcs:ignore Generic.Files.LineLength.TooLong
             ],
             [
+                'slug' => 'unpublish-to-draft-after-a-week',
                 'title' => __('Unpublish to Draft after a week', 'post-expirator'),
-                'description' => __('Change the post status to Draft a week after it was published.', 'post-expirator'), // phpcs:ignore Generic.Files.LineLength.TooLong
-                'flow' => '{"nodes":[{"id":"n1717531530334","type":"generic","position":{"x":12,"y":252},"data":{"name":"action/core.post-change-status","elementaryType":"action","version":1,"slug":"changePostStatus1","settings":{"newStatus":{"newStatus":"publish","status":"draft"},"post":{"variable":"{{onPostPublish1.postAfter}}"}}},"width":140,"height":67,"selected":true,"positionAbsolute":{"x":12,"y":252},"dragging":false,"targetPosition":"top","sourcePosition":"bottom","$H":333,"x":12,"y":252},{"id":"n1717531533130","type":"generic","position":{"x":12,"y":132},"data":{"name":"advanced/core.schedule","elementaryType":"advanced","version":1,"slug":"schedule1","settings":{"schedule":{"whenToRun":"offset","dateSource":"event","recurrence":"single","repeatUntil":"forever","repeatInterval":"3600","repeatIntervalUnit":"seconds","repeatTimes":"5","repeatUntilDate":"2024-06-11T20:06:02.100Z","unique":true,"priority":"10","specificDate":"2024-06-07T20:06:02.100Z","dateOffset":"+7 days","customDateSource":"onSavePost1.post.post_date"}}},"width":140,"height":67,"selected":false,"positionAbsolute":{"x":12,"y":132},"dragging":false,"targetPosition":"top","sourcePosition":"bottom","$H":335,"x":12,"y":132},{"id":"n1717531536270","type":"generic","position":{"x":12,"y":372},"data":{"name":"action/core.send-email","elementaryType":"action","version":1,"slug":"sendEmail1","settings":{"recipient":{"recipient":"global.site.admin_email","custom":"","expression":"{{global.site.admin_email}}"},"subject":{"expression":"PublishPress Workflow: {{global.workflow.title}}"},"message":{"expression":"This is a message sent by PublishPress Workflow: {{global.workflow.title}}."}}},"width":140,"height":67,"targetPosition":"top","sourcePosition":"bottom","$H":337,"x":12,"y":372,"selected":false,"dragging":false,"positionAbsolute":{"x":12,"y":372}},{"id":"onPostPublish_1jvo77om","type":"trigger","position":{"x":10,"y":20},"data":{"name":"trigger/core.post-published","elementaryType":"trigger","version":1,"slug":"onPostPublish1","settings":{"postQuery":{"postSource":"custom","postType":["post"],"postId":[],"postStatus":[],"json":{"or":[{"==":[{"var":"{{onPostPublish1.postBefore.type}}"},"post"]}]},"natural":"{{onPostPublish1.postBefore.type}} is \'post\'"}}},"width":140,"height":67,"positionAbsolute":{"x":10,"y":20},"selected":false,"dragging":false}],"edges":[{"source":"n1717531533130","sourceHandle":"output","target":"n1717531530334","targetHandle":"input","type":"genericEdge","id":"n1717531533130-output-n1717531530334-input","markerEnd":{"type":"arrowclosed"}},{"source":"n1717531530334","sourceHandle":"output","target":"n1717531536270","targetHandle":"input","type":"genericEdge","id":"n1717531530334-output-n1717531536270-input","markerEnd":{"type":"arrowclosed"}},{"source":"onPostPublish_1jvo77om","sourceHandle":"output","target":"n1717531533130","targetHandle":"input","type":"genericEdge","id":"onPostPublish_1jvo77om-output-n1717531533130-input","markerEnd":{"type":"arrowclosed"}}],"viewport":{"x":394.6618521665251,"y":13.324129141886175,"zoom":0.9919286321155479},"editorVersion":"4.9.0"}', // phpcs:ignore Generic.Files.LineLength.TooLong
+                'description' => __(
+                    'Change the post status to Draft a week after it was published.',
+                    'post-expirator'
+                ),
             ],
             [
+                'slug' => 'unpublish-and-change-category-after-15-days',
                 'title' => __('Unpublish and change category after 15 days', 'post-expirator'),
-                'description' => __('Move the post to draft and add a category after 15 days.', 'post-expirator'), // phpcs:ignore Generic.Files.LineLength.TooLong
-                'flow' => '{"nodes":[{"id":"n1717542934571","type":"generic","position":{"x":10,"y":50},"data":{"name":"action/core.post-change-status","elementaryType":"action","version":1,"slug":"changePostStatus1","settings":{"newStatus":{"newStatus":"publish","status":"draft"},"post":{"variable":"{{onPostPublish1.postAfter}}"}}},"width":140,"height":67,"selected":false,"positionAbsolute":{"x":10,"y":50},"dragging":false,"targetPosition":"top","sourcePosition":"bottom","$H":286,"x":12,"y":252},{"id":"n1717542946349","type":"generic","position":{"x":10,"y":-50},"data":{"name":"advanced/core.schedule","elementaryType":"advanced","version":1,"slug":"schedule1","settings":{"schedule":{"whenToRun":"offset","dateSource":"event","recurrence":"single","repeatUntil":"forever","repeatInterval":"3600","repeatIntervalUnit":"seconds","repeatTimes":"5","repeatUntilDate":"2024-06-11T23:16:24.422Z","unique":true,"priority":"10","specificDate":"2024-06-07T23:16:24.422Z","dateOffset":"+15 days","customDateSource":"onSavePost1.post.post_date"}}},"width":140,"height":67,"selected":false,"positionAbsolute":{"x":10,"y":-50},"dragging":false,"targetPosition":"top","sourcePosition":"bottom","$H":288,"x":12,"y":132},{"id":"n1717543017933","type":"generic","position":{"x":10,"y":160},"data":{"name":"action/core.replace-post-terms","elementaryType":"action","version":1,"slug":"replacePostTerms1","settings":{"taxonomyTerms":{"taxonomy":"category","terms":[]},"post":{"variable":"{{onPostPublish1.postAfter}}"}}},"width":151,"height":67,"selected":false,"positionAbsolute":{"x":10,"y":160},"dragging":false},{"id":"n1717543063491","type":"generic","position":{"x":20,"y":270},"data":{"name":"action/core.send-email","elementaryType":"action","version":1,"slug":"sendEmail1","settings":{"recipient":{"recipient":"global.site.admin_email","custom":"","expression":"{{global.site.admin_email}}"},"message":{"expression":"This is a message sent by PublishPress Workflow: {{global.workflow.title}}."},"subject":{"expression":"PublishPress Workflow: {{global.workflow.title}}"}}},"width":140,"height":67,"selected":true,"positionAbsolute":{"x":20,"y":270},"dragging":false},{"id":"onPostPublish_1jvoc93r","type":"trigger","position":{"x":10,"y":-150},"data":{"name":"trigger/core.post-published","elementaryType":"trigger","version":1,"slug":"onPostPublish1","settings":{"postQuery":{"postSource":"custom","postType":["post"],"postId":[],"postStatus":[],"json":{"or":[{"==":[{"var":"{{onPostPublish1.postBefore.type}}"},"post"]}]},"natural":"{{onPostPublish1.postBefore.type}} is \'post\'"}}},"width":140,"height":67,"positionAbsolute":{"x":10,"y":-150},"selected":false,"dragging":false}],"edges":[{"source":"n1717542946349","sourceHandle":"output","target":"n1717542934571","targetHandle":"input","type":"genericEdge","id":"n1717542946349-output-n1717542934571-input","sections":[{"id":"n1717542946349-output-n1717542934571-input_s0","startPoint":{"x":87,"y":182},"endPoint":{"x":87,"y":252},"incomingShape":"n1717542946349","outgoingShape":"n1717542934571"}],"container":"root","selected":false,"markerEnd":{"type":"arrowclosed"}},{"source":"n1717542934571","sourceHandle":"output","target":"n1717543017933","targetHandle":"input","type":"genericEdge","id":"n1717542934571-output-n1717543017933-input","markerEnd":{"type":"arrowclosed"}},{"source":"n1717543017933","sourceHandle":"output","target":"n1717543063491","targetHandle":"input","type":"genericEdge","id":"n1717543017933-output-n1717543063491-input","markerEnd":{"type":"arrowclosed"}},{"source":"onPostPublish_1jvoc93r","sourceHandle":"output","target":"n1717542946349","targetHandle":"input","type":"genericEdge","id":"onPostPublish_1jvoc93r-output-n1717542946349-input","markerEnd":{"type":"arrowclosed"}}],"viewport":{"x":398.46481239499724,"y":151.99075975359344,"zoom":0.8717565801754713},"editorVersion":"4.9.0"}', // phpcs:ignore Generic.Files.LineLength.TooLong
+                'description' => __('Move the post to draft and add a category after 15 days.', 'post-expirator'),
             ],
             [
+                'slug' => 'add-extra-categories-one-month-after-publishing',
                 'title' => __('Add extra categories one month after publishing', 'post-expirator'),
-                'description' => __('Sample workflow to add extra categories one month after publishing', 'post-expirator'), // phpcs:ignore Generic.Files.LineLength.TooLong
-                'flow' => '{"nodes":[{"id":"n1717531386494","type":"generic","position":{"x":0,"y":130},"data":{"name":"advanced/core.schedule","elementaryType":"advanced","version":1,"slug":"schedule1","settings":{"schedule":{"whenToRun":"offset","dateSource":"event","recurrence":"single","repeatUntil":"forever","repeatInterval":"3600","repeatIntervalUnit":"seconds","repeatTimes":"5","repeatUntilDate":"2024-06-11T20:03:33.442Z","unique":true,"priority":"10","specificDate":"2024-06-07T20:03:33.442Z","dateOffset":"+30 days","customDateSource":"onSavePost1.post.post_date"}}},"width":140,"height":67,"selected":false,"positionAbsolute":{"x":0,"y":130},"dragging":false,"targetPosition":"top","sourcePosition":"bottom","$H":333,"x":12,"y":132},{"id":"n1717531395486","type":"generic","position":{"x":0,"y":250},"data":{"name":"action/core.add-post-terms","elementaryType":"action","version":1,"slug":"addPostTerms1","settings":{"taxonomyTerms":{"taxonomy":"category","terms":[]},"post":{"variable":"{{onPostPublish1.postAfter}}"}}},"width":145,"height":67,"targetPosition":"top","sourcePosition":"bottom","$H":335,"x":12,"y":252,"selected":false,"positionAbsolute":{"x":0,"y":250},"dragging":false},{"id":"n1717531398637","type":"generic","position":{"x":0,"y":370},"data":{"name":"action/core.send-email","elementaryType":"action","version":1,"slug":"sendEmail1","settings":{"recipient":{"recipient":"global.site.admin_email","custom":"","expression":"{{global.site.admin_email}}"},"message":{"expression":"This is a message sent by PublishPress Workflow: {{global.workflow.title}}."},"subject":{"expression":"PublishPress Workflow: {{global.workflow.title}}"}}},"width":140,"height":67,"targetPosition":"top","sourcePosition":"bottom","$H":337,"x":12,"y":372,"selected":true,"dragging":false,"positionAbsolute":{"x":0,"y":370}},{"id":"onPostPublish_1jvojqtl","type":"trigger","position":{"x":0,"y":10},"data":{"name":"trigger/core.post-published","elementaryType":"trigger","version":1,"slug":"onPostPublish1","settings":{"postQuery":{"postSource":"custom","postType":["post"],"postId":[],"postStatus":[]}}},"width":140,"height":67,"positionAbsolute":{"x":0,"y":10},"selected":false,"dragging":false}],"edges":[{"source":"n1717531386494","sourceHandle":"output","target":"n1717531395486","targetHandle":"input","type":"genericEdge","id":"n1717531386494-output-n1717531395486-input","markerEnd":{"type":"arrowclosed"}},{"source":"n1717531395486","sourceHandle":"output","target":"n1717531398637","targetHandle":"input","type":"genericEdge","id":"n1717531395486-output-n1717531398637-input","markerEnd":{"type":"arrowclosed"}},{"source":"onPostPublish_1jvojqtl","sourceHandle":"output","target":"n1717531386494","targetHandle":"input","type":"genericEdge","id":"onPostPublish_1jvojqtl-output-n1717531386494-input","markerEnd":{"type":"arrowclosed"}}],"viewport":{"x":535.315109133291,"y":11.331108285653755,"zoom":0.9896164441618986},"editorVersion":"4.9.0"}', // phpcs:ignore Generic.Files.LineLength.TooLong
+                'description' => __(
+                    'Sample workflow to add extra categories one month after publishing',
+                    'post-expirator'
+                ),
             ],
             [
+                'slug' => 'change-status-to-draft-one-week-after-publishing',
                 'title' => __('Change status to draft one week after publishing', 'post-expirator'),
-                'description' => __('Sample workflow to change status to draft one week after publishing', 'post-expirator'), // phpcs:ignore Generic.Files.LineLength.TooLong
-                'flow' => '{"nodes":[{"id":"scheduleDelay_1h3jg9go","type":"generic","position":{"x":-120,"y":-340},"data":{"name":"advanced/core.schedule","elementaryType":"advanced","version":1,"slug":"scheduleDelay1","settings":{"schedule":{"whenToRun":"offset","dateSource":"event","recurrence":"single","repeatUntil":"forever","repeatInterval":"3600","repeatIntervalUnit":"seconds","repeatTimes":"5","repeatUntilDate":"2025-09-09T07:28:28.081Z","unique":true,"priority":"10","specificDate":"2025-09-05T07:28:28.081Z","dateOffset":"+7 days"}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-340},"selected":false,"dragging":false},{"id":"movePostToStatus_1h3jndvm","type":"generic","position":{"x":-120,"y":-220},"data":{"name":"action/core.post-change-status","elementaryType":"action","version":1,"slug":"movePostToStatus1","settings":{"post":{"variable":"{{onPostPublish1.postAfter}}"},"newStatus":{"newStatus":"publish","status":"draft"}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-220},"selected":false,"dragging":false},{"id":"sendEmail_1h3jq591","type":"generic","position":{"x":-120,"y":-110},"data":{"name":"action/core.send-email","elementaryType":"action","version":1,"slug":"sendEmail1","settings":{"recipient":{"expression":"{{global.site.admin_email}}"},"subject":{"expression":"PublishPress Workflow: {{global.workflow.title}}"},"message":{"expression":"This is a message sent by PublishPress Workflow: {{global.workflow.title}}."}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-110},"selected":true,"dragging":false},{"id":"onPostPublish_1jvolj8p","type":"trigger","position":{"x":-120,"y":-440},"data":{"name":"trigger/core.post-published","elementaryType":"trigger","version":1,"slug":"onPostPublish1","settings":{"postQuery":{"postSource":"custom","postType":["post"],"postId":[],"postStatus":[],"json":{"or":[{"==":[{"var":"{{onPostPublish1.postBefore.type}}"},"post"]}]},"natural":"{{onPostPublish1.postBefore.type}} is \'post\'"}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-440},"selected":false,"dragging":false}],"edges":[{"source":"scheduleDelay_1h3jg9go","sourceHandle":"output","target":"movePostToStatus_1h3jndvm","targetHandle":"input","type":"genericEdge","id":"scheduleDelay_1h3jg9go-output-movePostToStatus_1h3jndvm-input","markerEnd":{"type":"arrowclosed"}},{"source":"movePostToStatus_1h3jndvm","sourceHandle":"output","target":"sendEmail_1h3jq591","targetHandle":"input","type":"genericEdge","id":"movePostToStatus_1h3jndvm-output-sendEmail_1h3jq591-input","markerEnd":{"type":"arrowclosed"}},{"source":"onPostPublish_1jvolj8p","sourceHandle":"output","target":"scheduleDelay_1h3jg9go","targetHandle":"input","type":"genericEdge","id":"onPostPublish_1jvolj8p-output-scheduleDelay_1h3jg9go-input","markerEnd":{"type":"arrowclosed"}}],"viewport":{"x":525.1554612463704,"y":493.82642394460555,"zoom":1.0431092249274065},"editorVersion":"4.9.0"}', // phpcs:ignore Generic.Files.LineLength.TooLong
+                'description' => __(
+                    'Sample workflow to change status to draft one week after publishing',
+                    'post-expirator'
+                ),
             ],
             [
+                'slug' => 'delete-post-one-week-after-publishing',
                 'title' => __('Delete post one week after publishing', 'post-expirator'),
-                'description' => __('Sample workflow to delete post one week after publishing', 'post-expirator'), // phpcs:ignore Generic.Files.LineLength.TooLong
-                'flow' => '{"nodes":[{"id":"scheduleDelay_1h3jg9go","type":"generic","position":{"x":-120,"y":-340},"data":{"name":"advanced/core.schedule","elementaryType":"advanced","version":1,"slug":"scheduleDelay1","settings":{"schedule":{"whenToRun":"offset","dateSource":"event","recurrence":"single","repeatUntil":"forever","repeatInterval":"3600","repeatIntervalUnit":"seconds","repeatTimes":"5","repeatUntilDate":"2025-09-09T07:28:28.081Z","unique":true,"priority":"10","specificDate":"2025-09-05T07:28:28.081Z","dateOffset":"+7 days"}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-340},"selected":false,"dragging":false},{"id":"sendEmail_1h3jq591","type":"generic","position":{"x":-120,"y":-120},"data":{"name":"action/core.send-email","elementaryType":"action","version":1,"slug":"sendEmail1","settings":{"recipient":{"expression":"{{global.site.admin_email}}"},"subject":{"expression":"PublishPress Workflow: {{global.workflow.title}}"},"message":{"expression":"This is a message sent by PublishPress Workflow: {{global.workflow.title}}."}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-120},"selected":true,"dragging":false},{"id":"deletePost_1h3klhr9","type":"generic","position":{"x":-120,"y":-230},"data":{"name":"action/core.delete-post","elementaryType":"action","version":1,"slug":"deletePost1","settings":{"post":{"variable":"{{onPostPublish1.postAfter}}"}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-230},"selected":false,"dragging":false},{"id":"onPostPublish_1jvonm2h","type":"trigger","position":{"x":-120,"y":-440},"data":{"name":"trigger/core.post-published","elementaryType":"trigger","version":1,"slug":"onPostPublish1","settings":{"postQuery":{"postSource":"custom","postType":["post"],"postId":[],"postStatus":[],"json":{"or":[{"==":[{"var":"{{onPostPublish1.postBefore.type}}"},"post"]}]},"natural":"{{onPostPublish1.postBefore.type}} is \'post\'"}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-440},"selected":false,"dragging":false}],"edges":[{"source":"scheduleDelay_1h3jg9go","sourceHandle":"output","target":"deletePost_1h3klhr9","targetHandle":"input","type":"genericEdge","id":"scheduleDelay_1h3jg9go-output-deletePost_1h3klhr9-input","markerEnd":{"type":"arrowclosed"}},{"source":"deletePost_1h3klhr9","sourceHandle":"output","target":"sendEmail_1h3jq591","targetHandle":"input","type":"genericEdge","id":"deletePost_1h3klhr9-output-sendEmail_1h3jq591-input","markerEnd":{"type":"arrowclosed"}},{"source":"onPostPublish_1jvonm2h","sourceHandle":"output","target":"scheduleDelay_1h3jg9go","targetHandle":"input","type":"genericEdge","id":"onPostPublish_1jvonm2h-output-scheduleDelay_1h3jg9go-input","markerEnd":{"type":"arrowclosed"}}],"viewport":{"x":667.8508339206014,"y":503.9146112285647,"zoom":1.0970166784120272},"editorVersion":"4.9.0"}', // phpcs:ignore Generic.Files.LineLength.TooLong
+                'description' => __(
+                    'Sample workflow to delete post one week after publishing',
+                    'post-expirator'
+                ),
             ],
             [
+                'slug' => 'remove-all-categories-one-week-after-publishing',
                 'title' => __('Remove all categories one week after publishing', 'post-expirator'),
-                'description' => __('Sample workflow to remove all categories one week after publishing', 'post-expirator'), // phpcs:ignore Generic.Files.LineLength.TooLong
-                'flow' => '{"nodes":[{"id":"scheduleDelay_1h3jg9go","type":"generic","position":{"x":-120,"y":-400},"data":{"name":"advanced/core.schedule","elementaryType":"advanced","version":1,"slug":"scheduleDelay1","settings":{"schedule":{"whenToRun":"offset","dateSource":"event","recurrence":"single","repeatUntil":"forever","repeatInterval":"3600","repeatIntervalUnit":"seconds","repeatTimes":"5","repeatUntilDate":"2025-09-09T07:28:28.081Z","unique":true,"priority":"10","specificDate":"2025-09-05T07:28:28.081Z","dateOffset":"+7 days"}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-400},"selected":false,"dragging":false},{"id":"sendEmail_1h3jq591","type":"generic","position":{"x":-110,"y":-170},"data":{"name":"action/core.send-email","elementaryType":"action","version":1,"slug":"sendEmail1","settings":{"recipient":{"expression":"{{global.site.admin_email}}"},"subject":{"expression":"PublishPress Workflow: {{global.workflow.title}}"},"message":{"expression":"This is a message sent by PublishPress Workflow: {{global.workflow.title}}."}}},"width":140,"height":67,"positionAbsolute":{"x":-110,"y":-170},"selected":false,"dragging":false},{"id":"removePostTerm_1h3kt5qk","type":"generic","position":{"x":-120,"y":-280},"data":{"name":"action/core.remove-post-terms","elementaryType":"action","version":1,"slug":"removePostTerm1","settings":{"post":{"variable":"{{onPostPublish1.postAfter}}"},"taxonomyTerms":{"taxonomy":"category","terms":[],"selectAll":"1"}}},"width":149,"height":67,"positionAbsolute":{"x":-120,"y":-280},"selected":false,"dragging":false},{"id":"onPostPublish_1jvnj4jh","type":"trigger","position":{"x":-120,"y":-500},"data":{"name":"trigger/core.post-published","elementaryType":"trigger","version":1,"slug":"onPostPublish1","settings":{"postQuery":{"postSource":"custom","postType":["post"],"postId":[],"postStatus":[],"json":{"or":[{"==":[{"var":"{{onPostPublish1.postBefore.type}}"},"post"]}]},"natural":"{{onPostPublish1.postBefore.type}} is \'post\'"}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-500},"selected":false,"dragging":false}],"edges":[{"source":"scheduleDelay_1h3jg9go","sourceHandle":"output","target":"removePostTerm_1h3kt5qk","targetHandle":"input","type":"genericEdge","id":"scheduleDelay_1h3jg9go-output-removePostTerm_1h3kt5qk-input","markerEnd":{"type":"arrowclosed"}},{"source":"removePostTerm_1h3kt5qk","sourceHandle":"output","target":"sendEmail_1h3jq591","targetHandle":"input","type":"genericEdge","id":"removePostTerm_1h3kt5qk-output-sendEmail_1h3jq591-input","markerEnd":{"type":"arrowclosed"}},{"source":"onPostPublish_1jvnj4jh","sourceHandle":"output","target":"scheduleDelay_1h3jg9go","targetHandle":"input","type":"genericEdge","id":"onPostPublish_1jvnj4jh-output-scheduleDelay_1h3jg9go-input","markerEnd":{"type":"arrowclosed"}}],"viewport":{"x":506.04031503556246,"y":647.7182268868096,"zoom":1.3379275547861116},"editorVersion":"4.9.0"}', // phpcs:ignore Generic.Files.LineLength.TooLong
+                'description' => __(
+                    'Sample workflow to remove all categories one week after publishing',
+                    'post-expirator'
+                ),
             ],
             [
+                'slug' => 'remove-selected-categories-one-week-after-publishing',
                 'title' => __('Remove selected categories one week after publishing', 'post-expirator'),
-                'description' => __('Sample workflow to remove selected categories one week after publishing', 'post-expirator'), // phpcs:ignore Generic.Files.LineLength.TooLong
-                'flow' => '{"nodes":[{"id":"scheduleDelay_1h3jg9go","type":"generic","position":{"x":-130,"y":-340},"data":{"name":"advanced/core.schedule","elementaryType":"advanced","version":1,"slug":"scheduleDelay1","settings":{"schedule":{"whenToRun":"offset","dateSource":"event","recurrence":"single","repeatUntil":"forever","repeatInterval":"3600","repeatIntervalUnit":"seconds","repeatTimes":"5","repeatUntilDate":"2025-09-09T07:28:28.081Z","unique":true,"priority":"10","specificDate":"2025-09-05T07:28:28.081Z","dateOffset":"+7 days"}}},"width":140,"height":67,"positionAbsolute":{"x":-130,"y":-340},"selected":false,"dragging":false},{"id":"sendEmail_1h3jq591","type":"generic","position":{"x":-120,"y":-120},"data":{"name":"action/core.send-email","elementaryType":"action","version":1,"slug":"sendEmail1","settings":{"recipient":{"expression":"{{global.site.admin_email}}"},"subject":{"expression":"PublishPress Workflow: {{global.workflow.title}}"},"message":{"expression":"This is a message sent by PublishPress Workflow: {{global.workflow.title}}."}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-120},"selected":true,"dragging":false},{"id":"removePostTerm_1h3kt5qk","type":"generic","position":{"x":-130,"y":-230},"data":{"name":"action/core.remove-post-terms","elementaryType":"action","version":1,"slug":"removePostTerm1","settings":{"post":{"variable":"{{onPostPublish1.postAfter}}"},"taxonomyTerms":{"taxonomy":"category","terms":[],"selectAll":"0"}}},"width":149,"height":67,"positionAbsolute":{"x":-130,"y":-230},"selected":false,"dragging":false},{"id":"onPostPublish_1jvoph7m","type":"trigger","position":{"x":-130,"y":-450},"data":{"name":"trigger/core.post-published","elementaryType":"trigger","version":1,"slug":"onPostPublish1","settings":{"postQuery":{"postSource":"custom","postType":["post"],"postId":[],"postStatus":[],"json":{"or":[{"==":[{"var":"{{onPostPublish1.postBefore.type}}"},"post"]}]},"natural":"{{onPostPublish1.postBefore.type}} is \'post\'"}}},"width":140,"height":67,"positionAbsolute":{"x":-130,"y":-450},"selected":false,"dragging":false}],"edges":[{"source":"scheduleDelay_1h3jg9go","sourceHandle":"output","target":"removePostTerm_1h3kt5qk","targetHandle":"input","type":"genericEdge","id":"scheduleDelay_1h3jg9go-output-removePostTerm_1h3kt5qk-input","markerEnd":{"type":"arrowclosed"}},{"source":"removePostTerm_1h3kt5qk","sourceHandle":"output","target":"sendEmail_1h3jq591","targetHandle":"input","type":"genericEdge","id":"removePostTerm_1h3kt5qk-output-sendEmail_1h3jq591-input","markerEnd":{"type":"arrowclosed"}},{"source":"onPostPublish_1jvoph7m","sourceHandle":"output","target":"scheduleDelay_1h3jg9go","targetHandle":"input","type":"genericEdge","id":"onPostPublish_1jvoph7m-output-scheduleDelay_1h3jg9go-input","markerEnd":{"type":"arrowclosed"}}],"viewport":{"x":526.4692008243645,"y":502.45008014655366,"zoom":1.069384016487291},"editorVersion":"4.9.0"}', // phpcs:ignore Generic.Files.LineLength.TooLong
+                'description' => __(
+                    'Sample workflow to remove selected categories one week after publishing',
+                    'post-expirator'
+                ),
             ],
             [
+                'slug' => 'replace-all-categories-one-week-after-publishing',
                 'title' => __('Replace all categories one week after publishing', 'post-expirator'),
-                'description' => __('Sample workflow to replace all categories one week after publishing', 'post-expirator'), // phpcs:ignore Generic.Files.LineLength.TooLong
-                'flow' => '{"nodes":[{"id":"scheduleDelay_1h3jg9go","type":"generic","position":{"x":-130,"y":-340},"data":{"name":"advanced/core.schedule","elementaryType":"advanced","version":1,"slug":"scheduleDelay1","settings":{"schedule":{"whenToRun":"offset","dateSource":"event","recurrence":"single","repeatUntil":"forever","repeatInterval":"3600","repeatIntervalUnit":"seconds","repeatTimes":"5","repeatUntilDate":"2025-09-09T07:28:28.081Z","unique":true,"priority":"10","specificDate":"2025-09-05T07:28:28.081Z","dateOffset":"+7 days"}}},"width":140,"height":67,"positionAbsolute":{"x":-130,"y":-340},"selected":false,"dragging":false},{"id":"sendEmail_1h3jq591","type":"generic","position":{"x":-120,"y":-120},"data":{"name":"action/core.send-email","elementaryType":"action","version":1,"slug":"sendEmail1","settings":{"recipient":{"expression":"{{global.site.admin_email}}"},"subject":{"expression":"PublishPress Workflow: {{global.workflow.title}}"},"message":{"expression":"This is a message sent by PublishPress Workflow: {{global.workflow.title}}."}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-120},"selected":false,"dragging":false},{"id":"setPostTerm_1h3l8eks","type":"generic","position":{"x":-130,"y":-220},"data":{"name":"action/core.replace-post-terms","elementaryType":"action","version":1,"slug":"setPostTerm1","settings":{"post":{"variable":"{{onPostPublish1.postAfter}}"},"taxonomyTerms":{"taxonomy":"category","terms":[]}}},"width":151,"height":67,"positionAbsolute":{"x":-130,"y":-220},"selected":false,"dragging":false},{"id":"onPostPublish_1jvo2755","type":"trigger","position":{"x":-130,"y":-450},"data":{"name":"trigger/core.post-published","elementaryType":"trigger","version":1,"slug":"onPostPublish1","settings":{"postQuery":{"postSource":"custom","postType":["post"],"postId":[],"postStatus":[],"json":{"or":[{"==":[{"var":"{{onPostPublish1.postBefore.type}}"},"post"]}]},"natural":"{{onPostPublish1.postBefore.type}} is \'post\'"}}},"width":140,"height":67,"positionAbsolute":{"x":-130,"y":-450},"selected":false,"dragging":false}],"edges":[{"source":"scheduleDelay_1h3jg9go","sourceHandle":"output","target":"setPostTerm_1h3l8eks","targetHandle":"input","type":"genericEdge","id":"scheduleDelay_1h3jg9go-output-setPostTerm_1h3l8eks-input","markerEnd":{"type":"arrowclosed"}},{"source":"setPostTerm_1h3l8eks","sourceHandle":"output","target":"sendEmail_1h3jq591","targetHandle":"input","type":"genericEdge","id":"setPostTerm_1h3l8eks-output-sendEmail_1h3jq591-input","markerEnd":{"type":"arrowclosed"}},{"source":"onPostPublish_1jvo2755","sourceHandle":"output","target":"scheduleDelay_1h3jg9go","targetHandle":"input","type":"genericEdge","id":"onPostPublish_1jvo2755-output-scheduleDelay_1h3jg9go-input","markerEnd":{"type":"arrowclosed"}}],"viewport":{"x":531.2814288985574,"y":502.45008014655366,"zoom":1.069384016487291},"editorVersion":"4.9.0"}', // phpcs:ignore Generic.Files.LineLength.TooLong
+                'description' => __(
+                    'Sample workflow to replace all categories one week after publishing',
+                    'post-expirator'
+                ),
             ],
             [
+                'slug' => 'stick-post-one-week-after-publishing',
                 'title' => __('Stick post one week after publishing', 'post-expirator'),
-                'description' => __('Sample workflow to stick post one week after publishing', 'post-expirator'), // phpcs:ignore Generic.Files.LineLength.TooLong
-                'flow' => '{"nodes":[{"id":"scheduleDelay_1h3jg9go","type":"generic","position":{"x":-140,"y":-340},"data":{"name":"advanced/core.schedule","elementaryType":"advanced","version":1,"slug":"scheduleDelay1","settings":{"schedule":{"whenToRun":"offset","dateSource":"event","recurrence":"single","repeatUntil":"forever","repeatInterval":"3600","repeatIntervalUnit":"seconds","repeatTimes":"5","repeatUntilDate":"2025-09-09T07:28:28.081Z","unique":true,"priority":"10","specificDate":"2025-09-05T07:28:28.081Z","dateOffset":"+7 days"}}},"width":140,"height":67,"positionAbsolute":{"x":-140,"y":-340},"selected":false,"dragging":false},{"id":"sendEmail_1h3jq591","type":"generic","position":{"x":-140,"y":-120},"data":{"name":"action/core.send-email","elementaryType":"action","version":1,"slug":"sendEmail1","settings":{"recipient":{"expression":"{{global.site.admin_email}}"},"subject":{"expression":"PublishPress Workflow: {{global.workflow.title}}"},"message":{"expression":"This is a message sent by PublishPress Workflow: {{global.workflow.title}}."}}},"width":140,"height":67,"positionAbsolute":{"x":-140,"y":-120},"selected":true,"dragging":false},{"id":"stickPost_1h3lg16i","type":"generic","position":{"x":-140,"y":-230},"data":{"name":"action/core.stick-post","elementaryType":"action","version":1,"slug":"stickPost1","settings":{"post":{"variable":"{{onPostPublish1.postAfter}}"}}},"width":140,"height":67,"positionAbsolute":{"x":-140,"y":-230},"selected":false,"dragging":false},{"id":"onPostPublish_1jh83pik","type":"trigger","position":{"x":-140,"y":-440},"data":{"name":"trigger/core.post-published","elementaryType":"trigger","version":1,"slug":"onPostPublish1","settings":{"postQuery":{"postSource":"custom","postType":["post"],"postId":[],"postStatus":[],"json":{"or":[{"==":[{"var":"{{onPostPublish1.postBefore.type}}"},"post"]}]},"natural":"{{onPostPublish1.postBefore.type}} is \'post\'"}}},"width":140,"height":67,"positionAbsolute":{"x":-140,"y":-440},"selected":false,"dragging":false}],"edges":[{"source":"scheduleDelay_1h3jg9go","sourceHandle":"output","target":"stickPost_1h3lg16i","targetHandle":"input","type":"genericEdge","id":"scheduleDelay_1h3jg9go-output-stickPost_1h3lg16i-input","markerEnd":{"type":"arrowclosed"}},{"source":"stickPost_1h3lg16i","sourceHandle":"output","target":"sendEmail_1h3jq591","targetHandle":"input","type":"genericEdge","id":"stickPost_1h3lg16i-output-sendEmail_1h3jq591-input","markerEnd":{"type":"arrowclosed"}},{"source":"onPostPublish_1jh83pik","sourceHandle":"output","target":"scheduleDelay_1h3jg9go","targetHandle":"input","type":"genericEdge","id":"onPostPublish_1jh83pik-output-scheduleDelay_1h3jg9go-input","markerEnd":{"type":"arrowclosed"}}],"viewport":{"x":533.3359173126615,"y":503.9146112285647,"zoom":1.0970166784120272},"editorVersion":"4.9.0"}', // phpcs:ignore Generic.Files.LineLength.TooLong
+                'description' => __(
+                    'Sample workflow to stick post one week after publishing',
+                    'post-expirator'
+                ),
             ],
             [
+                'slug' => 'unstick-post-one-week-after-publishing',
                 'title' => __('Unstick post one week after publishing', 'post-expirator'),
-                'description' => __('Sample workflow to unstick post one week after publishing', 'post-expirator'), // phpcs:ignore Generic.Files.LineLength.TooLong
-                'flow' => '{"nodes":[{"id":"scheduleDelay_1h3jg9go","type":"generic","position":{"x":-120,"y":-340},"data":{"name":"advanced/core.schedule","elementaryType":"advanced","version":1,"slug":"scheduleDelay1","settings":{"schedule":{"whenToRun":"offset","dateSource":"event","recurrence":"single","repeatUntil":"forever","repeatInterval":"3600","repeatIntervalUnit":"seconds","repeatTimes":"5","repeatUntilDate":"2025-09-09T07:28:28.081Z","unique":true,"priority":"10","specificDate":"2025-09-05T07:28:28.081Z","dateOffset":"+7 days"}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-340},"selected":false,"dragging":false},{"id":"sendEmail_1h3jq591","type":"generic","position":{"x":-120,"y":-120},"data":{"name":"action/core.send-email","elementaryType":"action","version":1,"slug":"sendEmail1","settings":{"recipient":{"expression":"{{global.site.admin_email}}"},"subject":{"expression":"PublishPress Workflow: {{global.workflow.title}}"},"message":{"expression":"This is a message sent by PublishPress Workflow: {{global.workflow.title}}."}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-120},"selected":true,"dragging":false},{"id":"unstickPost_1h3lm7ek","type":"generic","position":{"x":-120,"y":-230},"data":{"name":"action/core.unstick-post","elementaryType":"action","version":1,"slug":"unstickPost1","settings":{"post":{"variable":"{{onPostPublish1.postAfter}}"}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-230},"selected":false,"dragging":false},{"id":"onPostPublish_1jvorf41","type":"trigger","position":{"x":-120,"y":-440},"data":{"name":"trigger/core.post-published","elementaryType":"trigger","version":1,"slug":"onPostPublish1","settings":{"postQuery":{"postSource":"custom","postType":["post"],"postId":[],"postStatus":[]}}},"width":140,"height":67,"positionAbsolute":{"x":-120,"y":-440},"selected":false,"dragging":false}],"edges":[{"source":"scheduleDelay_1h3jg9go","sourceHandle":"output","target":"unstickPost_1h3lm7ek","targetHandle":"input","type":"genericEdge","id":"scheduleDelay_1h3jg9go-output-unstickPost_1h3lm7ek-input","markerEnd":{"type":"arrowclosed"}},{"source":"unstickPost_1h3lm7ek","sourceHandle":"output","target":"sendEmail_1h3jq591","targetHandle":"input","type":"genericEdge","id":"unstickPost_1h3lm7ek-output-sendEmail_1h3jq591-input","markerEnd":{"type":"arrowclosed"}},{"source":"onPostPublish_1jvorf41","sourceHandle":"output","target":"scheduleDelay_1h3jg9go","targetHandle":"input","type":"genericEdge","id":"onPostPublish_1jvorf41-output-scheduleDelay_1h3jg9go-input","markerEnd":{"type":"arrowclosed"}}],"viewport":{"x":527.8508339206014,"y":503.9146112285647,"zoom":1.0970166784120272},"editorVersion":"4.9.0"}', // phpcs:ignore Generic.Files.LineLength.TooLong
-            ]
+                'description' => __(
+                    'Sample workflow to unstick post one week after publishing',
+                    'post-expirator'
+                ),
+            ],
         ];
+    }
+
+    /**
+     * @return array
+     */
+    private function loadSampleFlow(string $slug): array
+    {
+        $filePath = $this->getPluginRootPath() . self::SAMPLE_FLOWS_DIRECTORY . '/' . $slug . '.json';
+
+        if (! is_readable($filePath)) {
+            throw new RuntimeException(
+                sprintf('Sample workflow flow file is missing or not readable: %s', $filePath)
+            );
+        }
+
+        $contents = file_get_contents($filePath);
+        if ($contents === false) {
+            throw new RuntimeException(
+                sprintf('Sample workflow flow file could not be read: %s', $filePath)
+            );
+        }
+
+        $decoded = json_decode($contents, true);
+        if (! is_array($decoded)) {
+            throw new RuntimeException(
+                sprintf('Sample workflow flow file contains invalid JSON: %s', $filePath)
+            );
+        }
+
+        return $decoded;
+    }
+
+    private function getPluginRootPath(): string
+    {
+        return dirname(__DIR__, 4);
     }
 }

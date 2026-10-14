@@ -1,0 +1,197 @@
+{
+    "nodes": [
+        {
+            "id": "n1717531386494",
+            "type": "generic",
+            "position": {
+                "x": 0,
+                "y": 130
+            },
+            "data": {
+                "name": "advanced/core.schedule",
+                "elementaryType": "advanced",
+                "version": 1,
+                "slug": "schedule1",
+                "settings": {
+                    "schedule": {
+                        "whenToRun": "offset",
+                        "dateSource": "event",
+                        "recurrence": "single",
+                        "repeatUntil": "forever",
+                        "repeatInterval": "3600",
+                        "repeatIntervalUnit": "seconds",
+                        "repeatTimes": "5",
+                        "repeatUntilDate": "2024-06-11T20:03:33.442Z",
+                        "unique": true,
+                        "priority": "10",
+                        "specificDate": "2024-06-07T20:03:33.442Z",
+                        "dateOffset": "+30 days",
+                        "customDateSource": "onSavePost1.post.post_date"
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 0,
+                "y": 130
+            },
+            "dragging": false,
+            "targetPosition": "top",
+            "sourcePosition": "bottom",
+            "$H": 333,
+            "x": 12,
+            "y": 132
+        },
+        {
+            "id": "n1717531395486",
+            "type": "generic",
+            "position": {
+                "x": 0,
+                "y": 250
+            },
+            "data": {
+                "name": "action/core.add-post-terms",
+                "elementaryType": "action",
+                "version": 1,
+                "slug": "addPostTerms1",
+                "settings": {
+                    "taxonomyTerms": {
+                        "taxonomy": "category",
+                        "terms": []
+                    },
+                    "post": {
+                        "variable": "{{onPostPublish1.postAfter}}"
+                    }
+                }
+            },
+            "width": 145,
+            "height": 67,
+            "targetPosition": "top",
+            "sourcePosition": "bottom",
+            "$H": 335,
+            "x": 12,
+            "y": 252,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 0,
+                "y": 250
+            },
+            "dragging": false
+        },
+        {
+            "id": "n1717531398637",
+            "type": "generic",
+            "position": {
+                "x": 0,
+                "y": 370
+            },
+            "data": {
+                "name": "action/core.send-email",
+                "elementaryType": "action",
+                "version": 1,
+                "slug": "sendEmail1",
+                "settings": {
+                    "recipient": {
+                        "recipient": "global.site.admin_email",
+                        "custom": "",
+                        "expression": "{{global.site.admin_email}}"
+                    },
+                    "message": {
+                        "expression": "This is a message sent by PublishPress Workflow: {{global.workflow.title}}."
+                    },
+                    "subject": {
+                        "expression": "PublishPress Workflow: {{global.workflow.title}}"
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "targetPosition": "top",
+            "sourcePosition": "bottom",
+            "$H": 337,
+            "x": 12,
+            "y": 372,
+            "selected": true,
+            "dragging": false,
+            "positionAbsolute": {
+                "x": 0,
+                "y": 370
+            }
+        },
+        {
+            "id": "onPostPublish_1jvojqtl",
+            "type": "trigger",
+            "position": {
+                "x": 0,
+                "y": 10
+            },
+            "data": {
+                "name": "trigger/core.post-published",
+                "elementaryType": "trigger",
+                "version": 1,
+                "slug": "onPostPublish1",
+                "settings": {
+                    "postQuery": {
+                        "postSource": "custom",
+                        "postType": [
+                            "post"
+                        ],
+                        "postId": [],
+                        "postStatus": []
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "positionAbsolute": {
+                "x": 0,
+                "y": 10
+            },
+            "selected": false,
+            "dragging": false
+        }
+    ],
+    "edges": [
+        {
+            "source": "n1717531386494",
+            "sourceHandle": "output",
+            "target": "n1717531395486",
+            "targetHandle": "input",
+            "type": "genericEdge",
+            "id": "n1717531386494-output-n1717531395486-input",
+            "markerEnd": {
+                "type": "arrowclosed"
+            }
+        },
+        {
+            "source": "n1717531395486",
+            "sourceHandle": "output",
+            "target": "n1717531398637",
+            "targetHandle": "input",
+            "type": "genericEdge",
+            "id": "n1717531395486-output-n1717531398637-input",
+            "markerEnd": {
+                "type": "arrowclosed"
+            }
+        },
+        {
+            "source": "onPostPublish_1jvojqtl",
+            "sourceHandle": "output",
+            "target": "n1717531386494",
+            "targetHandle": "input",
+            "type": "genericEdge",
+            "id": "onPostPublish_1jvojqtl-output-n1717531386494-input",
+            "markerEnd": {
+                "type": "arrowclosed"
+            }
+        }
+    ],
+    "viewport": {
+        "x": 535.315109133291,
+        "y": 11.331108285653755,
+        "zoom": 0.9896164441618986
+    },
+    "editorVersion": "4.9.0"
+}
