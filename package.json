@@ -90,5 +90,26 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-select": "^5.7.0"
+  },
+  "resolutions": {
+    "@babel/plugin-transform-modules-systemjs": "7.29.4",
+    "@babel/runtime": "^7.26.10",
+    "@tootallnate/once": "2.0.1",
+    "**/stylelint-scss/postcss-selector-parser": "7.1.6",
+    "**/stylelint/postcss-selector-parser": "7.1.6",
+    "baseline-browser-mapping": "^2.11.0",
+    "basic-ftp": "5.2.2",
+    "browserslist": "^4.28.7",
+    "colord": "^2.9.4",
+    "flatted": ">=3.4.2 <4",
+    "immutable": "^5.1.5",
+    "lodash": ">=4.18.0",
+    "lodash-es": ">=4.18.0",
+    "node-forge": ">=1.4.0 <2",
+    "picomatch": "2.3.2",
+    "postcss": "^8.5.23",
+    "svgo": ">=3.3.5 <4",
+    "websocket-driver": "0.7.5",
+    "yaml": "1.10.3"
   }
 }
