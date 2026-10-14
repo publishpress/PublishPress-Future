@@ -79,7 +79,7 @@ class SettingsFormSubmissionTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         ];
         $_POST = ['dummy_field' => '1'];
 
-        do_action(HooksAbstract::ACTION_ADMIN_INIT);
+        $this->dispatchAdminInit();
 
         $this->assertSame(0, $licenseSaveCount);
         $this->assertSame(0, $defaultsSaveCount);
@@ -102,7 +102,7 @@ class SettingsFormSubmissionTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         ];
         $_POST = ['dummy_field' => '1'];
 
-        do_action(HooksAbstract::ACTION_ADMIN_INIT);
+        $this->dispatchAdminInit();
 
         $this->assertSame(1, $defaultsSaveCount);
     }
@@ -126,9 +126,18 @@ class SettingsFormSubmissionTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         ];
         $_POST = ['dummy_field' => '1'];
 
-        do_action(HooksAbstract::ACTION_ADMIN_INIT);
+        $this->dispatchAdminInit();
 
         $this->assertSame(1, $licenseSaveCount);
+    }
+
+    private function dispatchAdminInit(): void
+    {
+        // Core registers privacy policy text on admin_init. These tests are not
+        // in wp-admin, so WordPress flags that callback as incorrect usage.
+        $this->setExpectedIncorrectUsage('wp_add_privacy_policy_content');
+
+        do_action(HooksAbstract::ACTION_ADMIN_INIT);
     }
 
     private function addLicenseToAllowedTabs(): void
