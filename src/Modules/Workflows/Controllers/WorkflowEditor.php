@@ -204,11 +204,6 @@ class WorkflowEditor implements InitializableInterface
             "future_workflow_editor_script",
             "futureWorkflowEditor",
             [
-                "isWP65OrLater" => version_compare(
-                    get_bloginfo("version"),
-                    "6.5",
-                    ">="
-                ),
                 "apiUrl" => rest_url("publishpress-future/v1"),
                 "pluginVersion" => PUBLISHPRESS_FUTURE_VERSION,
                 "assetsUrl" => PUBLISHPRESS_FUTURE_ASSETS_URL,

@@ -1,0 +1,52 @@
+.future-workflow-editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    min-height: 60px;
+    width: 100%;
+    padding: 0 12px;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.future-workflow-editor-header__toolbar {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    min-width: 0;
+}
+
+.future-workflow-editor-header__tools {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.future-workflow-editor-header__settings {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 8px;
+}
+
+.future-workflow-editor-header__back {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    margin: 0 12px 0 -12px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 0;
+    background: #1e1e1e;
+    color: #fff;
+}
+
+.future-workflow-editor-header__back:hover,
+.future-workflow-editor-header__back:focus {
+    color: #fff;
+}
+
+.future-workflow-editor-header__inserter-toggle.is-pressed svg {
+    transform: rotate(45deg);
+}

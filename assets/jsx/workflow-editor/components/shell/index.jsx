@@ -14,7 +14,6 @@ import {
     FEATURE_WELCOME_GUIDE
 } from "../../constants";
 import { InserterSidebar } from "../secondary-sidebar/inserter-sidebar";
-import classnames from 'classnames';
 import { SlotFillProvider } from "@wordpress/components";
 import { SettingsSidebar } from "../settings-sidebar/settings-sidebar";
 import WelcomeGuide from "../welcome-guide";
@@ -36,10 +35,6 @@ export function WorkflowEditorLayout() {
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
             isCreatingWorkflow: select(workflowStore).isCreatingWorkflow(),
         }
-    });
-
-    const className = classnames('edit-post-layout editor-editor-interface', {
-        'is-inserter-opened': isInserterOpened,
     });
 
     const isPro = useIsPro();
@@ -76,7 +71,6 @@ export function WorkflowEditorLayout() {
                     {(isLoadingWorkflow || isCreatingWorkflow) && <LoadingMessage />}
 
                     <WorkflowEditorInterface
-                        className={className}
                         secondarySidebar={secondarySidebar}
                     />
                     {isWelcomeGuideActive && (

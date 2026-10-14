@@ -34,14 +34,14 @@
     padding-top: 8px;
 }
 
-.edit-post-header-toolbar__buy-pro {
+.future-workflow-editor-header__upgrade {
     background-color: #ffb200;
     color: #000;
     padding: 4px 10px !important;
     border-radius: 4px;
 }
 
-.edit-post-header-toolbar__buy-pro .publishpress-icon {
+.future-workflow-editor-header__upgrade .publishpress-icon {
     width: 18px !important;
     height: 18px !important;
     margin-right: 4px;
