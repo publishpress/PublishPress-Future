@@ -37,18 +37,12 @@ class SettingsFormSubmissionTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $this->originalGet = $_GET;
         $this->originalPost = $_POST;
-
-        // admin_init in production only runs in wp-admin. Bundled plugins such as
-        // Akismet call wp_add_privacy_policy_content() on that hook, which emits
-        // _doing_it_wrong() unless is_admin() is true.
-        $this->enterWpAdmin();
     }
 
     public function tearDown(): void
     {
         $_GET = $this->originalGet;
         $_POST = $this->originalPost;
-        unset($GLOBALS['current_screen']);
 
         foreach ($this->filterCallbacks as $callback) {
             remove_filter(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $callback);
@@ -85,7 +79,7 @@ class SettingsFormSubmissionTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         ];
         $_POST = ['dummy_field' => '1'];
 
-        do_action(HooksAbstract::ACTION_ADMIN_INIT);
+        $this->dispatchAdminInit();
 
         $this->assertSame(0, $licenseSaveCount);
         $this->assertSame(0, $defaultsSaveCount);
@@ -108,7 +102,7 @@ class SettingsFormSubmissionTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         ];
         $_POST = ['dummy_field' => '1'];
 
-        do_action(HooksAbstract::ACTION_ADMIN_INIT);
+        $this->dispatchAdminInit();
 
         $this->assertSame(1, $defaultsSaveCount);
     }
@@ -132,18 +126,18 @@ class SettingsFormSubmissionTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         ];
         $_POST = ['dummy_field' => '1'];
 
-        do_action(HooksAbstract::ACTION_ADMIN_INIT);
+        $this->dispatchAdminInit();
 
         $this->assertSame(1, $licenseSaveCount);
     }
 
-    private function enterWpAdmin(): void
+    private function dispatchAdminInit(): void
     {
-        if (! class_exists(\WP_Screen::class)) {
-            require_once ABSPATH . 'wp-admin/includes/class-wp-screen.php';
-        }
+        // Core registers privacy policy text on admin_init. These tests are not
+        // in wp-admin, so WordPress flags that callback as incorrect usage.
+        $this->setExpectedIncorrectUsage('wp_add_privacy_policy_content');
 
-        $GLOBALS['current_screen'] = \WP_Screen::get('dashboard');
+        do_action(HooksAbstract::ACTION_ADMIN_INIT);
     }
 
     private function addLicenseToAllowedTabs(): void
