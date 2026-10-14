@@ -3,6 +3,7 @@ import { WorkflowEditorLayout } from "./shell";
 import { useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "./workflow-store";
 import { store as editorStore } from "./editor-store";
+import { bootPreferences } from "./preferences/migrate";
 import {
     PostData,
     BooleanData,
@@ -27,6 +28,9 @@ import {
 } from "./data-types";
 
 const { workflowId, nodeTypeCategories, nodeTypes } = window.futureWorkflowEditor;
+
+// Defaults and legacy migration must exist before the first render.
+bootPreferences();
 
 import "../css/index.css";
 import 'reactflow/dist/style.css';

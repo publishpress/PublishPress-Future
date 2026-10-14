@@ -2,7 +2,7 @@ import {
     useShortcut,
     store as shortcutStore,
 } from "@wordpress/keyboard-shortcuts";
-import { store as editorStore } from "../editor-store";
+import { useToggleFeature } from "../preferences/use-feature";
 import { store as workflowStore } from "../workflow-store";
 import { useEffect } from "@wordpress/element";
 import {
@@ -30,7 +30,7 @@ import { useReactFlow } from "reactflow";
 import { SHORTCUTS_CONFIG } from "./shortcuts";
 export const KeyboardShortcuts = () => {
     const { registerShortcut } = useDispatch(shortcutStore);
-    const { toggleFeature } = useDispatch(editorStore);
+    const toggleFeature = useToggleFeature();
     const { saveAsCurrentStatus } = useDispatch(workflowStore);
     const reactflow = useReactFlow();
 

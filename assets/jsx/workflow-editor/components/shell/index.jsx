@@ -5,6 +5,7 @@ import { useEffect } from "@wordpress/element";
 import { PluginArea } from '@wordpress/plugins';
 import { addBodyClasses, removeBodyClasses } from "../../utils";
 import { store as editorStore } from "../editor-store";
+import { useFeature } from "../preferences/use-feature";
 import { store as workflowStore } from "../workflow-store";
 import { ReactFlowProvider } from "reactflow";
 import { KeyboardShortcuts } from "../keyboard-shortcuts";
@@ -21,17 +22,16 @@ import LoadingMessage from "../loading-message";
 import { useIsPro, ProFeaturesProvider } from "../../contexts/pro-context";
 
 export function WorkflowEditorLayout() {
+    const isFullscreenActive = useFeature(FEATURE_FULLSCREEN_MODE);
+    const isWelcomeGuideActive = useFeature(FEATURE_WELCOME_GUIDE);
+
     const {
-        isFullscreenActive,
         isInserterOpened,
-        isWelcomeGuideActive,
         isLoadingWorkflow,
         isCreatingWorkflow,
     } = useSelect((select) => {
         return {
-            isFullscreenActive: select(editorStore).isFeatureActive(FEATURE_FULLSCREEN_MODE),
             isInserterOpened: select(editorStore).isFeatureActive(FEATURE_INSERTER),
-            isWelcomeGuideActive: select(editorStore).isFeatureActive(FEATURE_WELCOME_GUIDE),
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
             isCreatingWorkflow: select(workflowStore).isCreatingWorkflow(),
         }

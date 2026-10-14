@@ -4,20 +4,13 @@ import { __ } from "@wordpress/i18n";
 import { addQueryArgs } from '@wordpress/url';
 import { wordpress } from '@wordpress/icons';
 import { store as workflowStore } from '../../workflow-store';
-import { store as editorStore } from '../../editor-store';
-import { POST_TYPE } from '../../../constants';
+import { useFeature } from '../../preferences/use-feature';
+import { FEATURE_FULLSCREEN_MODE, POST_TYPE } from '../../../constants';
 
 export function FullscreenModeClose({ showTooltip }) {
-    const { isActive, postType } = useSelect(
-        (select) => {
-            const { getPostType } = select(workflowStore);
-            const { isFeatureActive } = select(editorStore);
-
-            return {
-                isActive: isFeatureActive('fullscreenMode'),
-                postType: getPostType(),
-            };
-        },
+    const isActive = useFeature(FEATURE_FULLSCREEN_MODE);
+    const postType = useSelect(
+        (select) => select(workflowStore).getPostType(),
         []
     );
 

@@ -1,6 +1,8 @@
 import { PanelBody } from "@wordpress/components";
-import { useSelect, useDispatch } from "@wordpress/data";
-import { store as editorStore } from "../editor-store";
+import {
+    usePanelBodyStates,
+    useSetPanelBodyState,
+} from "../preferences/use-feature";
 
 export const PersistentPanelBody = (props) => {
     const newProps = {
@@ -9,19 +11,10 @@ export const PersistentPanelBody = (props) => {
 
     newProps.id = newProps.id ?? newProps.title.toLowerCase().replace(/ /g, '');
 
-    const {
-        panelBodyState,
-    } = useSelect((select) => {
-        const panelBodyState = select(editorStore).getPanelBodyState(newProps.id) ?? true;
+    const panelBodyStates = usePanelBodyStates();
+    const setPanelBodyState = useSetPanelBodyState();
 
-        return {
-            panelBodyState,
-        };
-    });
-
-    const {
-        setPanelBodyState,
-    } = useDispatch(editorStore);
+    const panelBodyState = panelBodyStates[newProps.id] ?? true;
 
     const propOnToggle = newProps.onToggle;
     delete newProps.onToggle;

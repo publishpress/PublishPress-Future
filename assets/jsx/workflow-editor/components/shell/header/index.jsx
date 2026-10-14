@@ -5,6 +5,7 @@ import { __, _x } from '@wordpress/i18n';
 import { useRef, useCallback } from '@wordpress/element';
 import { plus, layout } from '@wordpress/icons';
 import { store as editorStore } from '../../editor-store';
+import { useFeature } from '../../preferences/use-feature';
 import { store as workflowStore } from '../../workflow-store';
 import {
     FEATURE_FULLSCREEN_MODE,
@@ -31,14 +32,14 @@ const preventDefault = (event) => {
 };
 
 export const LayoutHeader = () => {
+    const isFullscreenActive = useFeature(FEATURE_FULLSCREEN_MODE);
+
     const {
-        isFullscreenActive,
         isInserterOpened,
         showIconLabels,
         isLoadingWorkflow,
     } = useSelect((select) => {
         return {
-            isFullscreenActive: select(editorStore).isFeatureActive(FEATURE_FULLSCREEN_MODE),
             isInserterOpened: select(editorStore).isFeatureActive(FEATURE_INSERTER),
             showIconLabels: select(editorStore).isFeatureActive(FEATURE_SHOW_ICON_LABELS),
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),

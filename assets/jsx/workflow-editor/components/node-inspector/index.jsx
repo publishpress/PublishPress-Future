@@ -1,6 +1,7 @@
 import { useSelect } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
+import { useFeature } from "../preferences/use-feature";
 import { __ } from "@wordpress/i18n";
 import { sprintf } from "@wordpress/i18n";
 import { useRef } from "@wordpress/element";
@@ -54,13 +55,7 @@ export const NodeInspector = () => {
         };
     });
 
-    const {
-        isDeveloperModeEnabled,
-    } = useSelect((select) => {
-        return {
-            isDeveloperModeEnabled: select(editorStore).isFeatureActive(FEATURE_DEVELOPER_MODE),
-        };
-    });
+    const isDeveloperModeEnabled = useFeature(FEATURE_DEVELOPER_MODE);
 
     const sidebarRef = useRef(null);
 

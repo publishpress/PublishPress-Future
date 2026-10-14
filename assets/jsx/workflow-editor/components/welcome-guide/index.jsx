@@ -1,7 +1,6 @@
 import { Guide } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { store as editorStore } from "../editor-store";
-import { useDispatch } from "@wordpress/data";
+import { useSetFeature } from "../preferences/use-feature";
 import { FEATURE_WELCOME_GUIDE } from "../../constants";
 
 const getWelcomeGuideImageUrl = (imageName) => {
@@ -9,9 +8,7 @@ const getWelcomeGuideImageUrl = (imageName) => {
 };
 
 export function WelcomeGuide() {
-    const {
-        disableFeature,
-    } = useDispatch(editorStore);
+    const setWelcomeGuideActive = useSetFeature(FEATURE_WELCOME_GUIDE);
 
     const pagesContent = futureWorkflowEditor.welcomeGuidePages;
 
@@ -21,7 +18,7 @@ export function WelcomeGuide() {
             contentLabel={__("Welcome to the workflow editor", 'post-expirator')}
             finishButtonText={__("Get started", 'post-expirator')}
             onFinish={() => {
-                disableFeature(FEATURE_WELCOME_GUIDE);
+                setWelcomeGuideActive(false);
             }}
             pages={
                 pagesContent.map(({ title, content, image }) => ({

@@ -1,6 +1,7 @@
 import { useSelect, useDispatch, select } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
+import { useFeature } from "../preferences/use-feature";
 import ReactFlow, {
     Background,
     Controls,
@@ -43,6 +44,9 @@ import { CUSTOM_EVENT_HANDLES_COUNT_CHANGED } from "../../constants";
 const GRID_SIZE = 10;
 
 export const FlowEditor = (props) => {
+    const isMiniMapFeatureActive = useFeature(FEATURE_MINI_MAP);
+    const isControlsFeatureActive = useFeature(FEATURE_CONTROLS);
+
     const {
         nodes,
         edges,
@@ -51,8 +55,6 @@ export const FlowEditor = (props) => {
         hasActiveSideBar,
         activeComplementaryArea,
         initialViewport,
-        isMiniMapFeatureActive,
-        isControlsFeatureActive,
         isLoadingWorkflow,
         isConnectingNodes,
         getNodeTypeByName,
@@ -72,8 +74,6 @@ export const FlowEditor = (props) => {
                 activeComplementaryArea !== null &&
                 activeComplementaryArea !== "null/undefined",
             initialViewport: select(workflowStore).getInitialViewport(),
-            isMiniMapFeatureActive: select(editorStore).isFeatureActive(FEATURE_MINI_MAP),
-            isControlsFeatureActive: select(editorStore).isFeatureActive(FEATURE_CONTROLS),
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
             isConnectingNodes: select(workflowStore).isConnectingNodes(),
             getNodeTypeByName: select(editorStore).getNodeTypeByName,

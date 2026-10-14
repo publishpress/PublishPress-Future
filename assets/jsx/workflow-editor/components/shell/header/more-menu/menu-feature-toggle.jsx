@@ -1,7 +1,6 @@
 /**
  * WordPress dependencies
  */
-import { useSelect, useDispatch } from '@wordpress/data';
 import { MenuItem } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { check } from '@wordpress/icons';
@@ -10,7 +9,7 @@ import { speak } from '@wordpress/a11y';
 /**
  * Internal dependencies
  */
-import { store as editorStore } from '../../../editor-store';
+import { useFeature, useToggleFeature } from '../../../preferences/use-feature';
 
 export const MoreMenuFeatureToggle = ({
     scope,
@@ -21,12 +20,8 @@ export const MoreMenuFeatureToggle = ({
     shortcut,
     feature,
 }) => {
-    const isActive = useSelect(
-        (select) =>
-            select(editorStore).isFeatureActive(feature),
-        [feature]
-    );
-    const { toggleFeature } = useDispatch(editorStore);
+    const isActive = useFeature(feature);
+    const toggleFeature = useToggleFeature();
     const speakMessage = () => {
         if (isActive) {
             speak(messageDeactivated || __('Feature deactivated', 'post-expirator'));
