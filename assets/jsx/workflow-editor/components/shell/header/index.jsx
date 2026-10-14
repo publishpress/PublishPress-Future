@@ -5,29 +5,29 @@ import { useViewportMatch } from '@wordpress/compose';
 import { __, _x } from '@wordpress/i18n';
 import { useRef, useCallback, lazy } from '@wordpress/element';
 import { plus, layout } from '@wordpress/icons';
-import { store as editorStore } from '../editor-store';
-import { store as workflowStore } from '../workflow-store';
+import { store as editorStore } from '../../editor-store';
+import { store as workflowStore } from '../../workflow-store';
 import {
     FEATURE_FULLSCREEN_MODE,
     FEATURE_SHOW_ICON_LABELS,
     FEATURE_REDUCED_UI,
     FEATURE_INSERTER,
     SLOT_SCOPE_WORKFLOW_EDITOR
-} from '../../constants';
+} from '../../../constants';
 import {
     AUTO_LAYOUT_DIRECTION_DOWN
-} from '../flow-editor/auto-layout/constants';
-import { FullscreenModeClose } from '../fullscreen-mode-close';
-import { MoreMenu } from '../more-menu/menu';
-import { NavigableToolbar } from '../left-toolbar/toolbar';
-import { EditorHistoryUndo } from '../left-toolbar/undo';
-import { EditorHistoryRedo } from '../left-toolbar/redo';
+} from '../../flow-editor/auto-layout/constants';
+import { FullscreenModeClose } from './back-button';
+import { MoreMenu } from './more-menu/menu';
+import { NavigableToolbar } from './toolbar';
+import { EditorHistoryUndo } from './undo';
+import { EditorHistoryRedo } from './redo';
 import { displayShortcut } from '@wordpress/keycodes';
-import { WorkflowSaveDraftButton } from '../workflow-save-draft-button';
-import WorkflowPublishButton from '../workflow-publish-button';
-import { useAutoLayout } from '../flow-editor/auto-layout/hooks';
-import ShopIcon from '../icons/shop';
-import { useIsPro } from '../../contexts/pro-context';
+import { WorkflowSaveDraftButton } from '../../workflow-save-draft-button';
+import WorkflowPublishButton from '../../workflow-publish-button';
+import { useAutoLayout } from '../../flow-editor/auto-layout/hooks';
+import ShopIcon from '../../icons/shop';
+import { useIsPro } from '../../../contexts/pro-context';
 const { isWP65OrLater } = window.futureWorkflowEditor;
 
 const preventDefault = (event) => {

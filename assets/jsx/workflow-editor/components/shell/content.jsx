@@ -1,5 +1,5 @@
 import { FlowEditor } from "../flow-editor";
-import EditorNotices from "../editor-notices";
+import EditorNotices from "./notices";
 
 export const LayoutContent = (props) => {
     return (

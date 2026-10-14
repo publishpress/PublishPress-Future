@@ -1,5 +1,5 @@
 import { useEffect, StrictMode } from "@wordpress/element";
-import { WorkflowEditorLayout } from "./layout/layout";
+import { WorkflowEditorLayout } from "./shell";
 import { useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "./workflow-store";
 import { store as editorStore } from "./editor-store";
