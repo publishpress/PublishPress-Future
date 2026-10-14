@@ -11,8 +11,8 @@ A "Step Type" definition class is used at design time and runtime. It specifies 
 
 ## Defining a Step Type
 
-1. Implement the definition class and register it to the `StepTypesModel` class. This class is used to manage the step types in the plugin.
-2. Implement the runner class and register it to the `services.php` file in the runner factory service.
+1. Implement the definition class and add a `CoreStepRegistry` entry for it. `StepTypesModel` reads that registry for the default trigger, action, and advanced lists.
+2. Implement the runner class and add its runner factory to the same `CoreStepRegistry` entry. Do not register the runner in `services.php`.
 3. Implement additional ReactJS components if needed for the settings in the editor.
 
 ## Node Elementary Types
