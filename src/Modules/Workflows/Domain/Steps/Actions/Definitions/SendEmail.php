@@ -2,10 +2,10 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions;
 
-use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\AbstractStepType;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class SendEmail implements StepTypeInterface
+class SendEmail extends AbstractStepType
 {
     public static function getNodeTypeName(): string
     {
@@ -30,11 +30,6 @@ class SendEmail implements StepTypeInterface
         return StepTypesModel::STEP_TYPE_ACTION;
     }
 
-    public function getReactFlowNodeType(): string
-    {
-        return "generic";
-    }
-
     public function getBaseSlug(): string
     {
         return "sendEmail";
@@ -53,16 +48,6 @@ class SendEmail implements StepTypeInterface
     public function getIcon(): string
     {
         return "email";
-    }
-
-    public function getFrecency(): int
-    {
-        return 1;
-    }
-
-    public function getVersion(): int
-    {
-        return 1;
     }
 
     public function getCategory(): string
@@ -153,11 +138,6 @@ class SendEmail implements StepTypeInterface
         ];
     }
 
-    public function getStepScopedVariablesSchema(): array
-    {
-        return [];
-    }
-
     public function getOutputSchema(): array
     {
         return [
@@ -168,11 +148,6 @@ class SendEmail implements StepTypeInterface
                 "description" => __("The input data for this step.", "post-expirator"),
             ]
         ];
-    }
-
-    public function getCSSClass(): string
-    {
-        return "react-flow__node-genericAction";
     }
 
     public function getHandleSchema(): array
@@ -192,8 +167,4 @@ class SendEmail implements StepTypeInterface
         ];
     }
 
-    public function isProFeature(): bool
-    {
-        return false;
-    }
 }

@@ -2,10 +2,10 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions;
 
-use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\AbstractStepType;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class OnCustomAction implements StepTypeInterface
+class OnCustomAction extends AbstractStepType
 {
     public static function getNodeTypeName(): string
     {
@@ -15,11 +15,6 @@ class OnCustomAction implements StepTypeInterface
     public function getElementaryType(): string
     {
         return StepTypesModel::STEP_TYPE_TRIGGER;
-    }
-
-    public function getReactFlowNodeType(): string
-    {
-        return "trigger";
     }
 
     public function getBaseSlug(): string
@@ -40,16 +35,6 @@ class OnCustomAction implements StepTypeInterface
     public function getIcon(): string
     {
         return "action";
-    }
-
-    public function getFrecency(): int
-    {
-        return 1;
-    }
-
-    public function getVersion(): int
-    {
-        return 1;
     }
 
     public function getCategory(): string
@@ -132,11 +117,6 @@ class OnCustomAction implements StepTypeInterface
         ];
     }
 
-    public function getStepScopedVariablesSchema(): array
-    {
-        return [];
-    }
-
     public function getOutputSchema(): array
     {
         return [
@@ -147,11 +127,6 @@ class OnCustomAction implements StepTypeInterface
                 "description" => __("The arguments to pass to the action.", "post-expirator"),
             ],
         ];
-    }
-
-    public function getCSSClass(): string
-    {
-        return "react-flow__node-genericTrigger";
     }
 
     public function getHandleSchema(): array

@@ -2,10 +2,10 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions;
 
-use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\AbstractStepType;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class UserInteraction implements StepTypeInterface
+class UserInteraction extends AbstractStepType
 {
     public static function getNodeTypeName(): string
     {
@@ -15,11 +15,6 @@ class UserInteraction implements StepTypeInterface
     public function getElementaryType(): string
     {
         return StepTypesModel::STEP_TYPE_ADVANCED;
-    }
-
-    public function getReactFlowNodeType(): string
-    {
-        return "generic";
     }
 
     public function getBaseSlug(): string
@@ -40,16 +35,6 @@ class UserInteraction implements StepTypeInterface
     public function getIcon(): string
     {
         return "interactive";
-    }
-
-    public function getFrecency(): int
-    {
-        return 1;
-    }
-
-    public function getVersion(): int
-    {
-        return 1;
     }
 
     public function getCategory(): string
@@ -206,11 +191,6 @@ class UserInteraction implements StepTypeInterface
         ];
     }
 
-    public function getStepScopedVariablesSchema(): array
-    {
-        return [];
-    }
-
     public function getOutputSchema(): array
     {
         return [
@@ -233,11 +213,6 @@ class UserInteraction implements StepTypeInterface
                 "description" => __("The name of the option selected by the user.", "post-expirator"),
             ],
         ];
-    }
-
-    public function getCSSClass(): string
-    {
-        return "react-flow__node-genericAdvanced";
     }
 
     public function getHandleSchema(): array

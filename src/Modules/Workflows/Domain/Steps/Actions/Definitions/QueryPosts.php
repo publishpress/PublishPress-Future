@@ -2,10 +2,10 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions;
 
-use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\AbstractStepType;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class QueryPosts implements StepTypeInterface
+class QueryPosts extends AbstractStepType
 {
     public static function getNodeTypeName(): string
     {
@@ -15,11 +15,6 @@ class QueryPosts implements StepTypeInterface
     public function getElementaryType(): string
     {
         return StepTypesModel::STEP_TYPE_ADVANCED;
-    }
-
-    public function getReactFlowNodeType(): string
-    {
-        return "generic";
     }
 
     public function getBaseSlug(): string
@@ -43,16 +38,6 @@ class QueryPosts implements StepTypeInterface
     public function getIcon(): string
     {
         return "db-query";
-    }
-
-    public function getFrecency(): int
-    {
-        return 1;
-    }
-
-    public function getVersion(): int
-    {
-        return 1;
     }
 
     public function getCategory(): string

@@ -2,10 +2,10 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions;
 
-use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\AbstractStepType;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class OnPostMetaChange implements StepTypeInterface
+class OnPostMetaChange extends AbstractStepType
 {
     public static function getNodeTypeName(): string
     {
@@ -15,11 +15,6 @@ class OnPostMetaChange implements StepTypeInterface
     public function getElementaryType(): string
     {
         return StepTypesModel::STEP_TYPE_TRIGGER;
-    }
-
-    public function getReactFlowNodeType(): string
-    {
-        return "trigger";
     }
 
     public function getBaseSlug(): string
@@ -35,21 +30,6 @@ class OnPostMetaChange implements StepTypeInterface
     public function getDescription(): string
     {
         return __("This trigger activates when a post meta field is changed.", "post-expirator");
-    }
-
-    public function getIcon(): string
-    {
-        return "media-document";
-    }
-
-    public function getFrecency(): int
-    {
-        return 1;
-    }
-
-    public function getVersion(): int
-    {
-        return 1;
     }
 
     public function getCategory(): string
@@ -178,11 +158,6 @@ class OnPostMetaChange implements StepTypeInterface
                 'description' => __("The meta value before the change.", "post-expirator"),
             ]
         ];
-    }
-
-    public function getCSSClass(): string
-    {
-        return "react-flow__node-genericTrigger";
     }
 
     public function getHandleSchema(): array

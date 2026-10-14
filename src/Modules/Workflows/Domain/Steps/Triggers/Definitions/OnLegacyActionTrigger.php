@@ -5,11 +5,11 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definition
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Domain\LegacyAction\TriggerWorkflow;
-use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\AbstractStepType;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 
-class OnLegacyActionTrigger implements StepTypeInterface
+class OnLegacyActionTrigger extends AbstractStepType
 {
     public static function getNodeTypeName(): string
     {
@@ -39,11 +39,6 @@ class OnLegacyActionTrigger implements StepTypeInterface
         return StepTypesModel::STEP_TYPE_TRIGGER;
     }
 
-    public function getReactFlowNodeType(): string
-    {
-        return "trigger";
-    }
-
     public function getBaseSlug(): string
     {
         return "onLegacyActionTrigger";
@@ -60,21 +55,6 @@ class OnLegacyActionTrigger implements StepTypeInterface
             "This trigger allows users to choose the workflow from the dropdown menu in the Future Actions options.",
             "post-expirator"
         );
-    }
-
-    public function getIcon(): string
-    {
-        return "media-document";
-    }
-
-    public function getFrecency(): int
-    {
-        return 1;
-    }
-
-    public function getVersion(): int
-    {
-        return 1;
     }
 
     public function getCategory(): string
@@ -123,11 +103,6 @@ class OnLegacyActionTrigger implements StepTypeInterface
         ];
     }
 
-    public function getCSSClass(): string
-    {
-        return "react-flow__node-genericTrigger";
-    }
-
     public function getHandleSchema(): array
     {
         return [
@@ -162,8 +137,4 @@ class OnLegacyActionTrigger implements StepTypeInterface
         return $action;
     }
 
-    public function isProFeature(): bool
-    {
-        return false;
-    }
 }
