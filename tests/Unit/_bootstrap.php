@@ -20,6 +20,13 @@ if (! function_exists('absint')) {
     }
 }
 
+if (! function_exists('esc_html')) {
+    function esc_html($text)
+    {
+        return (string) $text;
+    }
+}
+
 if (! function_exists('wp_unslash')) {
     /**
      * @param mixed $value

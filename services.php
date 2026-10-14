@@ -927,14 +927,14 @@ return [
                 return $stepRunner;
             }
 
-            $workflowLogger = call_user_func(
-                $container->get(ServicesAbstract::WORKFLOW_LOGGER_FACTORY),
+            $workflowLogger = $container->build(
+                ServicesAbstract::WORKFLOW_LOGGER_FACTORY,
                 $executionContext
             );
             $settingsModel = $container->get(ServicesAbstract::SETTINGS);
 
-            $generalStepProcessor = call_user_func(
-                $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR_FACTORY),
+            $generalStepProcessor = $container->build(
+                ServicesAbstract::GENERAL_STEP_PROCESSOR_FACTORY,
                 $workflowExecutionId
             );
 
@@ -960,8 +960,8 @@ return [
                     break;
 
                 case OnPostSaveRunner::getNodeTypeName():
-                    $inputValidatorPostQuery = call_user_func(
-                        $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY),
+                    $inputValidatorPostQuery = $container->build(
+                        ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY,
                         $workflowExecutionId
                     );
 
@@ -977,8 +977,8 @@ return [
                     break;
 
                 case OnPostUpdateRunner::getNodeTypeName():
-                    $inputValidatorPostQuery = call_user_func(
-                        $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY),
+                    $inputValidatorPostQuery = $container->build(
+                        ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY,
                         $workflowExecutionId
                     );
 
@@ -995,8 +995,8 @@ return [
                     break;
 
                 case OnPostPublishRunner::getNodeTypeName():
-                    $inputValidatorPostQuery = call_user_func(
-                        $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY),
+                    $inputValidatorPostQuery = $container->build(
+                        ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY,
                         $workflowExecutionId
                     );
 
@@ -1034,10 +1034,10 @@ return [
                     break;
 
                 case OnTermsAddedRunner::getNodeTypeName():
-                    $inputValidatorPostQuery = call_user_func(
-                        $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY),
-                        $workflowExecutionId
-                    );
+                        $inputValidatorPostQuery = $container->build(
+                            ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY,
+                            $workflowExecutionId
+                        );
 
                     $stepRunner = new OnTermsAddedRunner(
                         $container->get(ServicesAbstract::HOOKS),
@@ -1052,14 +1052,14 @@ return [
                     break;
 
                 case OnPostWorkflowEnableRunner::getNodeTypeName():
-                    $postStepProcessor = call_user_func(
-                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR_FACTORY),
+                    $postStepProcessor = $container->build(
+                        ServicesAbstract::POST_STEP_PROCESSOR_FACTORY,
                         $generalStepProcessor,
                         $workflowExecutionId
                     );
 
-                    $inputValidatorPostQuery = call_user_func(
-                        $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY),
+                    $inputValidatorPostQuery = $container->build(
+                        ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY,
                         $workflowExecutionId
                     );
 
@@ -1128,8 +1128,8 @@ return [
 
                     // Actions
                 case DeletePostRunner::getNodeTypeName():
-                    $postStepProcessor = call_user_func(
-                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR_FACTORY),
+                    $postStepProcessor = $container->build(
+                        ServicesAbstract::POST_STEP_PROCESSOR_FACTORY,
                         $generalStepProcessor,
                         $workflowExecutionId
                     );
@@ -1142,8 +1142,8 @@ return [
                     break;
 
                 case StickPostRunner::getNodeTypeName():
-                    $postStepProcessor = call_user_func(
-                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR_FACTORY),
+                    $postStepProcessor = $container->build(
+                        ServicesAbstract::POST_STEP_PROCESSOR_FACTORY,
                         $generalStepProcessor,
                         $workflowExecutionId
                     );
@@ -1156,8 +1156,8 @@ return [
                     break;
 
                 case UnstickPostRunner::getNodeTypeName():
-                    $postStepProcessor = call_user_func(
-                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR_FACTORY),
+                    $postStepProcessor = $container->build(
+                        ServicesAbstract::POST_STEP_PROCESSOR_FACTORY,
                         $generalStepProcessor,
                         $workflowExecutionId
                     );
@@ -1170,8 +1170,8 @@ return [
                     break;
 
                 case AddPostTermRunner::getNodeTypeName():
-                    $postStepProcessor = call_user_func(
-                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR_FACTORY),
+                    $postStepProcessor = $container->build(
+                        ServicesAbstract::POST_STEP_PROCESSOR_FACTORY,
                         $generalStepProcessor,
                         $workflowExecutionId
                     );
@@ -1185,8 +1185,8 @@ return [
                     break;
 
                 case SetPostTermRunner::getNodeTypeName():
-                    $postStepProcessor = call_user_func(
-                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR_FACTORY),
+                    $postStepProcessor = $container->build(
+                        ServicesAbstract::POST_STEP_PROCESSOR_FACTORY,
                         $generalStepProcessor,
                         $workflowExecutionId
                     );
@@ -1200,8 +1200,8 @@ return [
                     break;
 
                 case RemovePostTermRunner::getNodeTypeName():
-                    $postStepProcessor = call_user_func(
-                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR_FACTORY),
+                    $postStepProcessor = $container->build(
+                        ServicesAbstract::POST_STEP_PROCESSOR_FACTORY,
                         $generalStepProcessor,
                         $workflowExecutionId
                     );
@@ -1215,8 +1215,8 @@ return [
                     break;
 
                 case ChangePostStatusRunner::getNodeTypeName():
-                    $postStepProcessor = call_user_func(
-                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR_FACTORY),
+                    $postStepProcessor = $container->build(
+                        ServicesAbstract::POST_STEP_PROCESSOR_FACTORY,
                         $generalStepProcessor,
                         $workflowExecutionId
                     );
@@ -1239,8 +1239,8 @@ return [
                     break;
 
                 case DeactivatePostWorkflowRunner::getNodeTypeName():
-                    $postStepProcessor = call_user_func(
-                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR_FACTORY),
+                    $postStepProcessor = $container->build(
+                        ServicesAbstract::POST_STEP_PROCESSOR_FACTORY,
                         $generalStepProcessor,
                         $workflowExecutionId
                     );
@@ -1253,8 +1253,8 @@ return [
                     break;
 
                 case AddPostMetaRunner::getNodeTypeName():
-                    $postStepProcessor = call_user_func(
-                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR_FACTORY),
+                    $postStepProcessor = $container->build(
+                        ServicesAbstract::POST_STEP_PROCESSOR_FACTORY,
                         $generalStepProcessor,
                         $workflowExecutionId
                     );
@@ -1266,8 +1266,8 @@ return [
                     break;
 
                 case DeletePostMetaRunner::getNodeTypeName():
-                    $postStepProcessor = call_user_func(
-                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR_FACTORY),
+                    $postStepProcessor = $container->build(
+                        ServicesAbstract::POST_STEP_PROCESSOR_FACTORY,
                         $generalStepProcessor,
                         $workflowExecutionId
                     );
@@ -1279,8 +1279,8 @@ return [
                     break;
 
                 case UpdatePostMetaRunner::getNodeTypeName():
-                    $postStepProcessor = call_user_func(
-                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR_FACTORY),
+                    $postStepProcessor = $container->build(
+                        ServicesAbstract::POST_STEP_PROCESSOR_FACTORY,
                         $generalStepProcessor,
                         $workflowExecutionId
                     );
@@ -1292,8 +1292,8 @@ return [
                     break;
 
                 case UpdatePostRunner::getNodeTypeName():
-                    $postStepProcessor = call_user_func(
-                        $container->get(ServicesAbstract::POST_STEP_PROCESSOR_FACTORY),
+                    $postStepProcessor = $container->build(
+                        ServicesAbstract::POST_STEP_PROCESSOR_FACTORY,
                         $generalStepProcessor,
                         $workflowExecutionId
                     );
@@ -1306,8 +1306,8 @@ return [
 
                     // Advanced
                 case ScheduleDelayRunner::getNodeTypeName():
-                    $cronStepProcessor = call_user_func(
-                        $container->get(ServicesAbstract::CRON_STEP_PROCESSOR_FACTORY),
+                    $cronStepProcessor = $container->build(
+                        ServicesAbstract::CRON_STEP_PROCESSOR_FACTORY,
                         $generalStepProcessor,
                         $workflowExecutionId
                     );
@@ -1378,8 +1378,8 @@ return [
             $executionContext = $container->get(ServicesAbstract::EXECUTION_CONTEXT_REGISTRY)
                 ->getExecutionContext($workflowExecutionId);
 
-            $jsonLogicEngine = call_user_func(
-                $container->get(ServicesAbstract::JSON_LOGIC_ENGINE_FACTORY),
+            $jsonLogicEngine = $container->build(
+                ServicesAbstract::JSON_LOGIC_ENGINE_FACTORY,
                 $executionContext
             );
 

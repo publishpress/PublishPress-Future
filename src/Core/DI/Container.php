@@ -97,6 +97,33 @@ class Container implements ContainerInterface
     }
 
     /**
+     * Resolve a factory service and invoke it with the given arguments.
+     *
+     * The outer service closure is resolved once and cached by get(). Each
+     * call invokes that cached factory.
+     *
+     * @since 4.11.0
+     *
+     * @param string $id Identifier of the factory service.
+     * @param mixed ...$args Arguments passed to the factory.
+     *
+     * @return mixed Factory result.
+     *
+     * @throws ServiceNotFoundException When the service id is missing.
+     * @throws NotCallableException When the resolved service is not callable.
+     */
+    public function build(string $id, ...$args)
+    {
+        $factory = $this->get($id);
+
+        if (! is_callable($factory)) {
+            throw new NotCallableException($id);
+        }
+
+        return $factory(...$args);
+    }
+
+    /**
      * Returns true if the container can return an entry for the given identifier.
      * Returns false otherwise.
      *
