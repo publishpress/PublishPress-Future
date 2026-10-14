@@ -37,7 +37,7 @@
     "ace-builds": "^1.36.5",
     "classnames": "^2.5.1",
     "elkjs": "^0.9.2",
-    "express": "^4.21.2",
+    "express": "^4.22.3",
     "html-to-image": "^1.11.11",
     "json-logic-js": "^2.0.5",
     "node-fetch": "^2.7.0",
@@ -118,6 +118,8 @@
     "**/cosmiconfig/js-yaml": "4.3.2",
     "**/eslint/js-yaml": "4.3.2",
     "**/markdownlint-cli/js-yaml": "4.3.2",
-    "**/cosmiconfig/yaml": "1.10.3"
+    "**/cosmiconfig/yaml": "1.10.3",
+    "express": "4.22.3",
+    "**/@wordpress/components/path-to-regexp": "6.3.0"
   }
 }
