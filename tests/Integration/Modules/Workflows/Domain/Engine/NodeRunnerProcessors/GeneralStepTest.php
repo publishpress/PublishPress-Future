@@ -53,8 +53,10 @@ class GeneralStepTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         ]);
 
         $container = Container::getInstance();
-        $processorFactory = $container->get(ServicesAbstract::GENERAL_STEP_PROCESSOR_FACTORY);
-        $processor = call_user_func($processorFactory, self::DEFAULT_WORKFLOW_EXECUTION_ID);
+        $processor = $container->build(
+            ServicesAbstract::GENERAL_STEP_PROCESSOR_FACTORY,
+            self::DEFAULT_WORKFLOW_EXECUTION_ID
+        );
 
         $this->assertEquals(
             '[WorkflowStepsProcessorsGeneral:123]: Setting up step step1',

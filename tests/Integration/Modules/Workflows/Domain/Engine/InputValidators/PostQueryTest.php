@@ -27,8 +27,8 @@ class PostQueryTest extends WPTestCase
     private function createValidator(): PostQuery
     {
         $container = Container::getInstance();
-        $postQueryValidator = call_user_func(
-            $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY),
+        $postQueryValidator = $container->build(
+            ServicesAbstract::INPUT_VALIDATOR_POST_QUERY_FACTORY,
             '000000-000000-000000-000000'
         );
 

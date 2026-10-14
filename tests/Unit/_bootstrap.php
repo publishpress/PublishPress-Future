@@ -20,6 +20,13 @@ if (! function_exists('absint')) {
     }
 }
 
+if (! function_exists('esc_html')) {
+    function esc_html($text)
+    {
+        return (string) $text;
+    }
+}
+
 use PublishPress\Future\Core\Autoloader;
 
 if (! defined('PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH')) {
