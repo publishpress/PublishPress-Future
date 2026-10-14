@@ -4,6 +4,8 @@ namespace PublishPress\Future\Modules\Workflows;
 
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 
+\defined('ABSPATH') || exit;
+
 abstract class HooksAbstract
 {
     public const FILTER_IS_PRO = 'publishpressfuture_is_pro';
@@ -91,14 +93,14 @@ abstract class HooksAbstract
     /**
      * @deprecated 4.3.2 Use ACTION_UNSCHEDULE_RECURRING_STEP_ACTION instead.
      */
-    public const ACTION_UNSCHEDULE_RECURRING_NODE_ACTION =
-        'publishpressfuture_workflow_unschedule_recurring_node_action';
+    public const ACTION_UNSCHEDULE_RECURRING_NODE_ACTION
+        = 'publishpressfuture_workflow_unschedule_recurring_node_action';
 
     /**
      * @since 4.3.2
      */
-    public const ACTION_UNSCHEDULE_RECURRING_STEP_ACTION =
-        'publishpressfuture_workflow_unschedule_recurring_step_action';
+    public const ACTION_UNSCHEDULE_RECURRING_STEP_ACTION
+        = 'publishpressfuture_workflow_unschedule_recurring_step_action';
 
     public const ACTION_LEGACY_ACTION = 'publishpressfuture_legacy_action';
 
@@ -108,14 +110,14 @@ abstract class HooksAbstract
 
     public const ACTION_UPDATE_WORKFLOW_STATUS = 'publishpressfuture_update_workflow_status';
 
-    public const ACTION_MIGRATE_WORKFLOW_SCHEDULED_STEPS_SCHEMA =
-        'publishpressfuture_migrate_workflow_scheduled_steps_schema';
+    public const ACTION_MIGRATE_WORKFLOW_SCHEDULED_STEPS_SCHEMA
+        = 'publishpressfuture_migrate_workflow_scheduled_steps_schema';
 
-    public const ACTION_MIGRATE_V040500_ON_SCHEDULED_STEPS =
-        'publishpressfuture_migrate_post_id_on_scheduled_steps';
+    public const ACTION_MIGRATE_V040500_ON_SCHEDULED_STEPS
+        = 'publishpressfuture_migrate_post_id_on_scheduled_steps';
 
-    public const ACTION_MIGRATE_REPETITION_NUMBER_ON_SCHEDULED_STEPS =
-        'publishpressfuture_migrate_repetition_number_on_scheduled_steps';
+    public const ACTION_MIGRATE_REPETITION_NUMBER_ON_SCHEDULED_STEPS
+        = 'publishpressfuture_migrate_repetition_number_on_scheduled_steps';
 
     public const ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS = 'publishpressfuture_cleanup_orphan_workflow_args';
 
@@ -177,17 +179,17 @@ abstract class HooksAbstract
 
     public const FILTER_IGNORE_SAVE_POST_EVENT = 'publishpressfuture_ignore_save_post_event';
 
-    public const FILTER_ORPHAN_WORKFLOW_ARGS_CLEANUP_INTERVAL =
-        'publishpressfuture_orphan_workflow_args_cleanup_interval';
+    public const FILTER_ORPHAN_WORKFLOW_ARGS_CLEANUP_INTERVAL
+        = 'publishpressfuture_orphan_workflow_args_cleanup_interval';
 
-    public const FILTER_FINISHED_SCHEDULED_STEPS_CLEANUP_INTERVAL =
-        'publishpressfuture_finished_scheduled_steps_cleanup_interval';
+    public const FILTER_FINISHED_SCHEDULED_STEPS_CLEANUP_INTERVAL
+        = 'publishpressfuture_finished_scheduled_steps_cleanup_interval';
 
-    public const FILTER_CRON_SCHEDULE_RUNNER_TRANSIENT_TIMEOUT =
-        'publishpressfuture_cron_schedule_runner_transient_timeout';
+    public const FILTER_CRON_SCHEDULE_RUNNER_TRANSIENT_TIMEOUT
+        = 'publishpressfuture_cron_schedule_runner_transient_timeout';
 
-    public const FILTER_CLEANUP_SCHEDULED_TRANSIENT_TIMEOUT =
-        'publishpressfuture_cleanup_scheduled_transient_timeout';
+    public const FILTER_CLEANUP_SCHEDULED_TRANSIENT_TIMEOUT
+        = 'publishpressfuture_cleanup_scheduled_transient_timeout';
 
     public const FILTER_INTERVAL_IN_SECONDS = 'publishpressfuture_interval_in_seconds';
 
@@ -275,6 +277,16 @@ abstract class HooksAbstract
      * @since 4.10.0
      */
     public const ACTION_ACF_SAVE_POST = 'acf/save_post';
+
+    /**
+     * @since 4.10.0
+     */
+    public const ACTION_ACFE_FORM_SUBMIT_FORM = 'acfe/form/submit_form';
+
+    /**
+     * @since 4.10.0
+     */
+    public const ACTION_ACFE_FORM_SUBMIT_POST = 'acfe/form/submit_post';
 
     /**
      * @since 4.10.0

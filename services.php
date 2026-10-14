@@ -9,8 +9,6 @@
  * @license     GPLv2 or later
  */
 
-defined("ABSPATH") or die("Direct access not allowed.");
-
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Core\Paths;
@@ -139,6 +137,8 @@ use PublishPress\Future\Modules\Workflows\Migrations\V040500OnScheduledStepsSche
 use PublishPress\Future\Modules\Debug\Migrations\V04905DebugLogRequestId;
 use PublishPress\Future\Modules\Debug\Migrations\V04906DebugLogTimestampMilliseconds;
 use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
+
+defined("ABSPATH") || exit;
 
 return [
     ServicesAbstract::PLUGIN_VERSION => PUBLISHPRESS_FUTURE_VERSION,
@@ -370,7 +370,8 @@ return [
             $container->get(ServicesAbstract::DATETIME),
             $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
             $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY),
-            $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL)
+            $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL),
+            $container->get(ServicesAbstract::CURRENT_USER_MODEL_FACTORY)
         );
     },
 
@@ -823,7 +824,7 @@ return [
         return new ExecutionContextProcessorInitializer(
             $container->get(ServicesAbstract::EXECUTION_CONTEXT_PROCESSOR_REGISTRY),
             [
-                $container->get(ServicesAbstract::EXECUTION_CONTEXT_DATE_PROCESSOR)
+                $container->get(ServicesAbstract::EXECUTION_CONTEXT_DATE_PROCESSOR),
             ]
         );
     },
@@ -845,8 +846,8 @@ return [
         );
     },
 
-    ServicesAbstract::GENERAL_STEP_PROCESSOR_FACTORY =>
-    static function (ContainerInterface $container): \Closure {
+    ServicesAbstract::GENERAL_STEP_PROCESSOR_FACTORY
+    => static function (ContainerInterface $container): \Closure {
         return static function (string $workflowExecutionId) use ($container): StepProcessorInterface {
             $executionContext = $container->get(ServicesAbstract::EXECUTION_CONTEXT_REGISTRY)
                 ->getExecutionContext($workflowExecutionId);
@@ -859,8 +860,8 @@ return [
         };
     },
 
-    ServicesAbstract::POST_STEP_PROCESSOR_FACTORY =>
-    static function (ContainerInterface $container): \Closure {
+    ServicesAbstract::POST_STEP_PROCESSOR_FACTORY
+    => static function (ContainerInterface $container): \Closure {
         return static function (
             StepProcessorInterface $generalProcessor,
             string $workflowExecutionId
@@ -877,8 +878,8 @@ return [
         };
     },
 
-    ServicesAbstract::CRON_STEP_PROCESSOR_FACTORY =>
-    static function (ContainerInterface $container): \Closure {
+    ServicesAbstract::CRON_STEP_PROCESSOR_FACTORY
+    => static function (ContainerInterface $container): \Closure {
         return static function (
             StepProcessorInterface $generalProcessor,
             string $workflowExecutionId
@@ -1038,16 +1039,16 @@ return [
                             $workflowExecutionId
                         );
 
-                        $stepRunner = new OnTermsAddedRunner(
-                            $container->get(ServicesAbstract::HOOKS),
-                            $generalStepProcessor,
-                            $inputValidatorPostQuery,
-                            $workflowLogger,
-                            $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
-                            $container->get(ServicesAbstract::POST_CACHE),
-                            $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD),
-                            $executionContext
-                        );
+                    $stepRunner = new OnTermsAddedRunner(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $generalStepProcessor,
+                        $inputValidatorPostQuery,
+                        $workflowLogger,
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(ServicesAbstract::POST_CACHE),
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD),
+                        $executionContext
+                    );
                     break;
 
                 case OnPostWorkflowEnableRunner::getNodeTypeName():
@@ -1125,7 +1126,7 @@ return [
                     );
                     break;
 
-                // Actions
+                    // Actions
                 case DeletePostRunner::getNodeTypeName():
                     $postStepProcessor = $container->build(
                         ServicesAbstract::POST_STEP_PROCESSOR_FACTORY,
@@ -1303,7 +1304,7 @@ return [
                     );
                     break;
 
-                // Advanced
+                    // Advanced
                 case ScheduleDelayRunner::getNodeTypeName():
                     $cronStepProcessor = $container->build(
                         ServicesAbstract::CRON_STEP_PROCESSOR_FACTORY,
@@ -1413,15 +1414,9 @@ return [
         );
     },
     ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD => static function (ContainerInterface $container) {
-        global $workflowExecutionSafeguard;
-
-        if (! isset($workflowExecutionSafeguard)) {
-            $workflowExecutionSafeguard = new WorkflowExecutionSafeguard(
-                $container->get(ServicesAbstract::HOOKS)
-            );
-        }
-
-        return $workflowExecutionSafeguard;
+        return new WorkflowExecutionSafeguard(
+            $container->get(ServicesAbstract::HOOKS)
+        );
     },
 
     ServicesAbstract::WORKFLOW_SANITIZATION_UTIL => static function (ContainerInterface $container) {

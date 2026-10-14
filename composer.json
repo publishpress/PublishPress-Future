@@ -30,13 +30,13 @@
         "process-timeout": 0
     },
     "prefer-stable": true,
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
         "php": ">=7.4",
         "ext-json": "*"
     },
     "require-dev": {
-        "publishpress/dev-workspace": "^1.3"
+        "publishpress/dev-workspace": "dev-anderson/custom-phpcs-standards"
     },
     "extra": {
         "plugin-slug": "post-expirator",

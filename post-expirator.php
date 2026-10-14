@@ -5,11 +5,11 @@
  * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
  * Description: PublishPress Future allows you to schedule automatic changes to posts, pages and other content types.
  * Author: PublishPress
- * Version: 4.10.7
+ * Version: 4.11.0
  * Author URI: http://publishpress.com
  * Text Domain: post-expirator
  * Domain Path: /languages
- * Requires at least: 6.7
+ * Requires at least: 6.8
  * Requires PHP: 7.4
  *
  *
@@ -29,21 +29,30 @@ use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\BundledTranslations\BundledTranslations;
 use Throwable;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+use function defined;
+
+defined('ABSPATH') || exit;
 
 // If the plugin is already loaded, terminate the plugin execution.
 if (defined('PUBLISHPRESS_FUTURE_LOADED')) {
     return;
 }
 
+const MINIMUM_PHP_VERSION = '7.4';
+const MINIMUM_WP_VERSION = '6.8';
+
 global $wp_version;
 
-// If the PHP or WP version is not compatible, terminate the plugin execution.
-if (version_compare(PHP_VERSION, '7.4', '<') || version_compare($wp_version, '6.7', '<')) {
+// Exit if PHP or WordPress version requirements are not met.
+if (version_compare(PHP_VERSION, MINIMUM_PHP_VERSION, '<')) {
     return;
 }
 
-define('PUBLISHPRESS_FUTURE_VERSION', '4.10.7');
+if (version_compare($wp_version, MINIMUM_WP_VERSION, '<')) {
+    return;
+}
+
+define('PUBLISHPRESS_FUTURE_VERSION', '4.11.0');
 define('PUBLISHPRESS_FUTURE_BASE_PATH', __DIR__);
 define('PUBLISHPRESS_FUTURE_SRC_PATH', __DIR__ . '/src');
 define('PUBLISHPRESS_FUTURE_PLUGIN_FILE', __FILE__);

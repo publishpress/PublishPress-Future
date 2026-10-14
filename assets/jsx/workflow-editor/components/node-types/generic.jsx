@@ -54,7 +54,11 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
             "type": "generic",
             "elementaryType": "action",
             "name": data.name,
-            "label": sprintf(__('Unknown node: %s', 'post-expirator'), data.name),
+            "label": sprintf(
+                /* translators: %s is the node name. */
+                __('Unknown node: %s', 'post-expirator'),
+                data.name
+            ),
             "description": __('This is a placeholder node for a node that does not exist.', 'post-expirator'),
             "baseSlug": "deletePost",
             "initiatlAttributes": [],

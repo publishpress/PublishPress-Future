@@ -8,6 +8,8 @@ use PublishPress\Future\Modules\Workflows\Interfaces\ExecutionContextInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowExecutionSafeguardInterface;
 use PublishPress\Future\Modules\Workflows\TransientsAbstract;
 
+\defined('ABSPATH') || exit;
+
 class WorkflowExecutionSafeguard implements WorkflowExecutionSafeguardInterface
 {
     /**
@@ -21,9 +23,11 @@ class WorkflowExecutionSafeguard implements WorkflowExecutionSafeguardInterface
     private array $runningNodes = [];
 
     /**
+     * Per-instance trigger execution cache. Shared across request via DI singleton.
+     *
      * @var array
      */
-    private static array $triggerExecutionCache = [];
+    private array $triggerExecutionCache = [];
 
     public function __construct(
         HookableInterface $hooks
@@ -53,13 +57,14 @@ class WorkflowExecutionSafeguard implements WorkflowExecutionSafeguardInterface
                 $executionContext->getVariable('global.engine_execution_id'),
                 $executionContext->getVariable('global.workflow.execution_id'),
                 $executionContext->getVariable('global.trigger.id'),
+                $uniqueId,
             ]);
 
-            if (array_key_exists($triggerExecutionCacheKey, self::$triggerExecutionCache)) {
+            if (array_key_exists($triggerExecutionCacheKey, $this->triggerExecutionCache)) {
                 return true;
             }
 
-            self::$triggerExecutionCache[$triggerExecutionCacheKey] = time();
+            $this->triggerExecutionCache[$triggerExecutionCacheKey] = time();
         }
 
         return $infiniteLoopDetected;

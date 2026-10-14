@@ -1,5 +1,4 @@
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
+The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [UNRELEASED]
 
@@ -137,7 +136,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed: Add proper permission checks for post expiration data access
 - Fixed: Add input sanitization for workflow node data values
 
-[4.9.2] - 18 Novemeber, 2025
+[4.9.2] - 18 November, 2025
 
 - Added: Add "User Role After Change" criteria to "User role is changed" trigger,  (Issue #1473).
 - Changed: Re-organize Action Workflows quick edit links, (Issue #1479)
@@ -1111,80 +1110,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fixed: bulk edit when expiration is not enabled for the post type, #281
 - Fixed: custom taxonomies support, #50
-
-[2.7.7] - 14 Jul, 2022
-
-- Added: post meta "expiration_log" with expiration log data when post expires
-
-- Fixed: Can't bulk edit posts if hour or minutes are set to 00, #273
-- Fixed: When the post expires to draft we don't trigger the status transition actions, #264
-
-[2.7.6] - 13 Jun, 2022
-
-- Fixed: fatal error on cron if debug is not activated, #265
-
-[2.7.5] - 09 Jun, 2022
-
-- Fixed: undefined array key "hook_suffix" warning, #259
-- Fixed: Double email sending bug confirmed, #204
-
-[2.7.4] - 07 Jun, 2022
-
-- Added: library to protect breaking site when multiple instances of the plugin are activated
-- Changed: order of the debug log, showing now in ASC order
-- Changed: bulk edit date fields required, #256
-
-- Fixed: unlocalized string on the taxonomy field (Thanks to Alex Lion), #255
-- Fixed: default taxonomy selection for Post Types in the settings, #144
-- Fixed: typo in the hook name 'postexpirator_schedule' (Thanks to Nico Mollet), #244
-- Fixed: bulk editing for WordPress v6.0, #251
-- Fixed: the Gutenberg panel for custom post types created on PODS in WordPress v6.0, #250
-
-[2.7.3] - 27 Jan, 2022
-
-- Fixed: the selection of categories when setting a post to expire, #220
-
-[2.7.2] - 25 Jan, 2022
-
-- Added: the event GUID as tooltip to each post in the Current Cron Schedule list on the Diagnostics page, #214
-
-- Added: more clear debug message if the cron event was not scheduled due to an error
-- Developers: the list of cron schedules in the Diagnostics tab adding more post information, #215
-- Changed: the admin notice about the plugin renaming
-
-- Fixed: the Expires column in the posts page correctly identifying the post ID on cron event with multiple IDs, #210
-- Fixed: wrong function used to escape HTML attributes on a settings page
-- Fixed: missed sanitization for some data on admin pages
-- Fixed: some false positives given by PHPCS
-- Fixed: expiration data processing to avoid processing for deactivated posts
-- Fixed: a typo in the diagnostics settings tab
-- Fixed: the checkbox state for posts that are not set to expire, #217
-
-[2.7.1] - 12 Jan, 2022
-
-- Added: visual indicator to the cron event status in the settings page, #155
-- Added: small help text to the Expires column icon to say if the event is scheduled or not
-- Added: additional permission check before loading the settings page
-- Added: CLI command to expire a post, #206
-
-- Removed: the plugin description from the settings page, #194
-- Deprecated: a not used function called `expirationdate_get_blog_url`
-- Fixed: the min required WP to 5.3 due to the requirement of using the function `wp_date`
-
-- Fixed: PHP error while purging the debug log, #135
-- Fixed: composer's autoloader path
-- Fixed: Code cleanup: removed comments and dead code
-- Fixed: the block for direct access to view files
-- Added: check for `is_admin` before checking if the user has permission to see the settings page
-- Fixed: Avoid running sortable column code if not in the admin
-- Fixed: Cross-site scripting (XSS) was possible if a third party allowed HTML or JavaScript into a database setting or language file
-- Fixed: the URL for the View Debug Log admin page, #196
-- Changed: unopened span tag from a form
-- Added: a secondary admin and ajax referer check when saving expiration post data
-- Fixed: the option "Preserve data after deactivating the plugin" that was not saving the setting, #198
-- Fixed: the post expiration function to make sure a post is not expired if the checkbox is not checked on it, #199
-- Fixed: the post expiration meta not being cleaned up after a post expires, #207
-- Fixed: the post expiration checkbox status when post type is set to check it by default
 
 [2.7.7] - 14 Jul, 2022
 

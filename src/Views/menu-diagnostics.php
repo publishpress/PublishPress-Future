@@ -6,7 +6,7 @@ use PublishPress\Future\Modules\Debug\HooksAbstract;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined('ABSPATH') || exit;
 
 // phpcs:disable Generic.Files.LineLength.TooLong
 
@@ -274,9 +274,9 @@ $rayDebugIsInstalled = function_exists('ray');
             echo '<td>';
             foreach ($eventValueKeys as $eventGUID) {
                 if (false === empty($eventValue[$eventGUID]['args'])) {
-                    echo '<div class="pe-event-post" title="' . esc_attr((string)$eventGUID) . '">';
+                    echo '<div class="pe-event-post" title="' . esc_attr((string) $eventGUID) . '">';
                     foreach ($eventValue[$eventGUID]['args'] as $value) {
-                        $eventPost = get_post((int)$value);
+                        $eventPost = get_post((int) $value);
 
                         if (
                             false === empty($eventPost)
