@@ -609,12 +609,9 @@ class CoreStepRegistry
                 return new OnInit();
             },
             static function (array $context) {
-                $container = $context['container'];
-
                 return new OnInitRunner(
                     $context['generalStepProcessor'],
-                    $context['workflowLogger'],
-                    $container->get(ServicesAbstract::WORKFLOW_ENGINE)
+                    $context['workflowLogger']
                 );
             },
             self::GATE_EXPERIMENTAL,
