@@ -318,6 +318,9 @@ export default function App() {
                 {status.ghAccount && <MetaPill label="GitHub" value={status.ghAccount} />}
               </div>
             )}
+            <Button variant="ghost" size="sm" onClick={quitRunner}>
+              Quit runner
+            </Button>
             <ThemeToggle onChange={(theme) => apiPost('/api/ui-prefs', { theme })} />
           </div>
         </div>
@@ -357,9 +360,6 @@ export default function App() {
                   Stop
                 </Button>
               )}
-              <Button variant="ghost" size="sm" disabled={busy} onClick={quitRunner}>
-                Quit runner
-              </Button>
               <Button variant="reset" size="sm" disabled={busy} onClick={() => runAction('reset', [], { yes: true })}>
                 Reset state
               </Button>

@@ -175,7 +175,9 @@ async function handleApi(req, res, cwd) {
 
   if (req.method === 'POST' && path === '/api/shutdown') {
     json(res, 200, { ok: true });
-    requestShutdown();
+    res.on('finish', () => {
+      setImmediate(requestShutdown);
+    });
     return;
   }
 
@@ -286,9 +288,14 @@ export function startServer(options = {}) {
   });
 
   setShutdownHandler(() => {
+    if (typeof server.closeAllConnections === 'function') {
+      server.closeAllConnections();
+    }
     server.close(() => {
       process.exit(0);
     });
+    const fallback = setTimeout(() => process.exit(0), 1000);
+    fallback.unref();
   });
 
   server.listen(PORT, HOST, () => {
