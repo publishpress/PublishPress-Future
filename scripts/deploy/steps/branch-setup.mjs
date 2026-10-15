@@ -3,6 +3,7 @@ export default {
   label: 'Create/checkout release branch',
   phase: 'Pre-flight & Branch Setup',
   type: 'auto',
+  command: (ctx) => `git checkout -b ${ctx.data.branchName} && git push -u origin ${ctx.data.branchName}`,
   run: async (ctx) => {
     // Fetch is best-effort — 15s timeout in case credentials/network hang inside container.
     const fetch = await ctx.execCapture('git fetch origin', { timeout: 15000 });

@@ -3,6 +3,8 @@ export default {
   label: 'Create GitHub release',
   phase: 'Release',
   type: 'confirm',
+  publish: true,
+  command: (ctx) => `gh release create ${ctx.data.version} --target master --generate-notes`,
   message: (ctx) =>
     [
       `Create the GitHub release on master with tag name ${ctx.data.version} (no "v" prefix).`,

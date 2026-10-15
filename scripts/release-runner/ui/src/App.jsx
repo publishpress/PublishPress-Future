@@ -1,5 +1,18 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import * as Dialog from '@radix-ui/react-dialog';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  AlertBanner,
+  Button,
+  ConfirmPublishDialog,
+  EmptyState,
+  LogPanel,
+  MetaPill,
+  PhaseGroup,
+  PhaseProgress,
+  PublishBoundary,
+  StartReleaseDialog,
+  StatusBadge,
+  StepRow,
+} from './components.jsx';
 
 async function apiGet(path) {
   const res = await fetch(path);
@@ -15,82 +28,89 @@ async function apiPost(path, body = {}) {
   return res.json();
 }
 
-function groupByPhase(steps) {
+function isFinished(step) {
+  return step.status === 'done' || step.status === 'skipped';
+}
+
+/** Show step note only when it is not already present in the live log. */
+function distinctStepNote(note, logLines, isCurrent) {
+  if (!note?.trim()) {
+    return null;
+  }
+  const text = note.trim();
+  if (!isCurrent || !logLines?.length) {
+    return text;
+  }
+  const blob = logLines.join('\n');
+  if (blob.includes(text)) {
+    return null;
+  }
+  for (const line of logLines) {
+    const trimmed = line.trim();
+    if (trimmed === text || trimmed === `Error: ${text}` || trimmed.endsWith(text)) {
+      return null;
+    }
+  }
+  return text;
+}
+
+function groupByPhase(steps, currentStepId) {
   const groups = [];
   let current = null;
   for (const step of steps || []) {
     const phase = step.phase || 'Steps';
-    if (!current || current.phase !== phase) {
-      current = { phase, steps: [] };
+    if (!current || current.name !== phase) {
+      current = { name: phase, steps: [] };
       groups.push(current);
     }
     current.steps.push(step);
   }
-  return groups;
+  return groups.map((g, i) => ({
+    key: `${i}-${g.name}`,
+    ...g,
+    total: g.steps.length,
+    done: g.steps.filter(isFinished).length,
+    current: g.steps.some((s) => s.id === currentStepId),
+  }));
 }
 
-function stepProgress(steps) {
-  if (!steps.length) {
-    return { done: 0, total: 0, pct: 0 };
+/** CLI form of the current step's action, shown under the panel. */
+function cliHint(step) {
+  if (step.type === 'confirm') {
+    return `run --confirm ${step.id}`;
   }
-  const done = steps.filter((s) => s.status === 'done' || s.status === 'skipped').length;
-  return { done, total: steps.length, pct: Math.round((done / steps.length) * 100) };
-}
-
-/**
- * @param {string} status
- * @param {boolean} isCurrent
- */
-function ChecklistMarker({ status, isCurrent }) {
-  const key = (status || 'pending').toLowerCase();
-  if (key === 'done') {
-    return <span className="checklist-marker checklist-marker--done" aria-hidden="true">✓</span>;
+  if (step.type === 'manual') {
+    return `complete ${step.id}`;
   }
-  if (key === 'skipped') {
-    return <span className="checklist-marker checklist-marker--skipped" aria-hidden="true">–</span>;
-  }
-  if (key === 'failed') {
-    return <span className="checklist-marker checklist-marker--failed" aria-hidden="true">!</span>;
-  }
-  if (isCurrent) {
-    return <span className="checklist-marker checklist-marker--current" aria-hidden="true" />;
-  }
-  return <span className="checklist-marker checklist-marker--pending" aria-hidden="true" />;
+  return `run --until ${step.id}`;
 }
 
 export default function App() {
   const [status, setStatus] = useState(null);
-  const [log, setLog] = useState('');
+  const [log, setLog] = useState([]);
   const [busy, setBusy] = useState(false);
   const [startOpen, setStartOpen] = useState(false);
-  const [startVersion, setStartVersion] = useState('');
-  const [selectedStepId, setSelectedStepId] = useState(null);
-  const pipelineBusyRef = useRef(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [expandedStepId, setExpandedStepId] = useState(null);
 
   const refresh = useCallback(async () => {
     const data = await apiGet('/api/status');
     setStatus(data);
   }, []);
 
-  const syncDeployLog = useCallback(async () => {
-    const data = await apiGet('/api/log');
-    if (data.log) {
-      setLog(data.log);
-    }
-  }, []);
-
   useEffect(() => {
     refresh();
-    const id = setInterval(refresh, 4000);
+    // Poll faster while a command runs so `running` moves from step to step.
+    const id = setInterval(refresh, busy ? 1000 : 4000);
     return () => clearInterval(id);
-  }, [refresh]);
+  }, [refresh, busy]);
 
   useEffect(() => {
     const es = new EventSource('/api/events');
     es.onmessage = (ev) => {
       try {
         const { line } = JSON.parse(ev.data);
-        setLog((prev) => prev + line);
+        setLog((prev) => [...prev, line.replace(/\x1B\[[0-9;]*[A-Za-z]/g, '').replace(/\n$/, '')]);
       } catch {
         /* ignore */
       }
@@ -101,342 +121,220 @@ export default function App() {
   const release = status?.release;
   const steps = status?.steps || [];
   const currentStepId = status?.currentStepId;
-  const groups = useMemo(() => groupByPhase(steps), [steps]);
-  const progress = useMemo(() => stepProgress(steps), [steps]);
+  const groups = useMemo(() => groupByPhase(steps, currentStepId), [steps, currentStepId]);
   const currentStep = steps.find((s) => s.id === currentStepId);
-  const detailStepId = selectedStepId ?? currentStepId;
-  const detailStep = steps.find((s) => s.id === detailStepId);
-  const isViewingActiveStep = detailStep && currentStepId && detailStep.id === currentStepId;
+  const version = status?.effectiveVersion || release?.version;
+  const firstPublishId = steps.find((s) => s.publish)?.id;
 
   useEffect(() => {
     if (currentStepId) {
-      setSelectedStepId(currentStepId);
+      setExpandedStepId(currentStepId);
     }
   }, [currentStepId]);
 
-  useEffect(() => {
-    if (release && !busy) {
-      syncDeployLog();
-    }
-  }, [release, currentStepId, busy, syncDeployLog]);
-
-  const runPipeline = useCallback(
-    async (args = []) => {
-      if (pipelineBusyRef.current) {
-        return;
-      }
-      pipelineBusyRef.current = true;
-      setLog('');
-      setBusy(true);
-      try {
-        await apiPost('/api/run', { args });
-        await refresh();
-        await syncDeployLog();
-      } finally {
-        setBusy(false);
-        pipelineBusyRef.current = false;
-      }
-    },
-    [refresh, syncDeployLog]
-  );
-
   const runAction = async (sub, args = [], body = {}) => {
-    const clearsLog = ['start', 'complete', 'skip', 'reopen', 'run'].includes(sub);
-    if (clearsLog) {
-      setLog('');
+    if (sub === 'run') {
+      setLog([]);
     }
     setBusy(true);
     try {
-      const res = await apiPost(`/api/${sub}`, { args, ...body });
-      if (res.error) {
-        setLog((prev) => (prev ? `${prev}\n${res.error}\n` : `${res.error}\n`));
-      }
+      await apiPost(`/api/${sub}`, { args, ...body });
       await refresh();
-      await syncDeployLog();
     } finally {
       setBusy(false);
     }
   };
 
-  useEffect(() => {
-    if (!release || busy || pipelineBusyRef.current) {
-      return;
-    }
-    const step = steps.find((s) => s.id === currentStepId);
-    if (!step || step.type !== 'auto' || step.status !== 'pending') {
-      return;
-    }
-    runPipeline([]);
-  }, [release, currentStepId, busy, steps, runPipeline]);
-
-  const activeStepActions = () => {
-    if (!release || !currentStep || !isViewingActiveStep) {
+  const stepActions = (step) => {
+    if (!step || step.id !== currentStepId) {
       return null;
     }
-    if (currentStep.type === 'auto') {
-      if (currentStep.status === 'failed') {
-        return (
-          <button type="button" className="btn btn--primary" disabled={busy} onClick={() => runPipeline([])}>
-            Retry step
-          </button>
-        );
-      }
-      if (busy) {
-        return <p className="detail-panel__running">Running automated steps…</p>;
-      }
-      return <p className="detail-panel__running">Starting automated steps…</p>;
-    }
-    if (currentStep.type === 'confirm') {
+    if (step.status === 'running') {
       return (
-        <button
-          type="button"
-          className="btn btn--primary"
+        <Button variant="primary" size="sm" icon="spinner" disabled>
+          Running…
+        </Button>
+      );
+    }
+    if (step.type === 'auto') {
+      return (
+        <Button variant="primary" size="sm" icon="play" disabled={busy} onClick={() => runAction('run', [])}>
+          {step.status === 'failed' ? 'Run again' : 'Run'}
+        </Button>
+      );
+    }
+    if (step.type === 'confirm' && step.publish) {
+      return (
+        <Button variant="publish" size="sm" icon="lock" disabled={busy} onClick={() => setConfirmOpen(true)}>
+          Publish…
+        </Button>
+      );
+    }
+    if (step.type === 'confirm') {
+      return (
+        <Button
+          variant="primary"
+          size="sm"
+          icon="check"
           disabled={busy}
-          onClick={() => runAction('run', ['--confirm', currentStep.id])}
+          onClick={() => runAction('run', ['--confirm', step.id])}
         >
-          Confirm and continue
-        </button>
+          Confirm
+        </Button>
       );
     }
     return (
-      <div className="btn-group">
-        <button
-          type="button"
-          className="btn btn--primary"
-          disabled={busy}
-          onClick={() => runAction('complete', [currentStep.id])}
-        >
-          Mark done
-        </button>
-        {currentStep.id !== 'github_auth' && (
-          <button type="button" className="btn btn--ghost" disabled={busy} onClick={() => runAction('skip', [currentStep.id])}>
+      <>
+        <Button variant="primary" size="sm" icon="check" disabled={busy} onClick={() => runAction('complete', [step.id])}>
+          Done
+        </Button>
+        {step.id !== 'github_auth' && (
+          <Button variant="ghost" size="sm" disabled={busy} onClick={() => runAction('skip', [step.id])}>
             Skip
-          </button>
+          </Button>
         )}
-      </div>
+      </>
     );
   };
 
   const detectedEdition = status?.detectedEdition ?? 'free';
+  const isRunning = steps.some((s) => s.status === 'running');
 
   return (
-    <div className="app">
-      <header className="site-header">
-        <div className="site-header__top">
-          <div className="site-header__brand">
-            <h1 className="site-header__title">Release Runner</h1>
-            <p className="site-header__subtitle">Local release checklist for this plugin clone</p>
+    <div className="rr-screen">
+      <header className="rr-header">
+        <div className="rr-header__top">
+          <div>
+            <h1 className="rr-header__title">Release Runner</h1>
+            <p className="rr-header__sub">Local release checklist for this plugin clone</p>
           </div>
           {release && (
-            <div className="meta-pills">
-              <span className="meta-pill meta-pill--accent">
-                <span className="meta-pill__label">Version</span>
-                v{status.effectiveVersion || release.version}
-              </span>
-              <span className="meta-pill">
-                <span className="meta-pill__label">Edition</span>
-                {release.edition}
-              </span>
-              {release.urgency !== 'standard' && (
-                <span className="meta-pill">
-                  <span className="meta-pill__label">Urgency</span>
-                  {release.urgency}
-                </span>
-              )}
-              <span className="meta-pill">
-                <span className="meta-pill__label">Branch</span>
-                {release.branchName}
-              </span>
+            <div className="rr-header__pills">
+              <MetaPill label="Version" value={version} tone="accent" mono />
+              <MetaPill label="Edition" value={release.edition} />
+              {release.urgency === 'security' && <MetaPill label="Urgency" value="security" tone="alert" />}
+              <MetaPill label="Branch" value={release.branchName} mono />
               {release.prerelease?.channel && (
-                <span className="meta-pill">
-                  <span className="meta-pill__label">Prerelease</span>
-                  {release.prerelease.channel}.{release.prerelease.n}
-                </span>
+                <MetaPill label="Package" value={`${release.prerelease.channel}.${release.prerelease.n}`} mono />
               )}
-              {status.ghAccount && (
-                <span className="meta-pill">
-                  <span className="meta-pill__label">GitHub</span>
-                  {status.ghAccount}
-                </span>
-              )}
+              {status.ghAccount && <MetaPill label="GitHub" value={status.ghAccount} />}
             </div>
           )}
         </div>
 
-        {release && progress.total > 0 && (
-          <div className="progress-block">
-            <div className="progress-block__row">
-              <span className="progress-block__label">Progress</span>
-              <span className="progress-block__value">
-                {progress.done} / {progress.total} steps
-              </span>
-            </div>
-            <div className="progress-bar" role="progressbar" aria-valuenow={progress.pct} aria-valuemin={0} aria-valuemax={100}>
-              <div className="progress-bar__fill" style={{ width: `${progress.pct}%` }} />
-            </div>
-          </div>
-        )}
+        {release && steps.length > 0 && <PhaseProgress phases={groups} />}
 
         {release?.urgency === 'security' && (
-          <div className="alert-banner alert-banner--security" role="alert">
-            <div className="alert-banner__title">Security release</div>
-            Prioritize essential checks; skip only when you accept the risk.
-          </div>
+          <AlertBanner tone="security" title="Security release">
+            Keep essential checks. Translations may be skipped; do not disclose vulnerability details until it is
+            published.
+          </AlertBanner>
         )}
 
-        <div className="header-toolbar">
-          {!release && (
-            <button type="button" className="btn btn--primary" onClick={() => setStartOpen(true)}>
-              Start release
-            </button>
-          )}
-          {release && (
-            <button type="button" className="btn btn--ghost" disabled={busy} onClick={() => runAction('reset', [], { yes: true })}>
-              Reset state
-            </button>
-          )}
-        </div>
+        {release && (
+          <div className="rr-header__bar">
+            <div className="rr-header__next">
+              {currentStep ? (
+                <>
+                  <StatusBadge status={currentStep.status} />
+                  <span>
+                    Next: <strong>{currentStep.label}</strong>
+                  </span>
+                </>
+              ) : (
+                <span>All steps complete.</span>
+              )}
+            </div>
+            <div className="rr-row">
+              <Button variant="ghost" size="sm" disabled={busy} onClick={() => runAction('reset', [], { yes: true })}>
+                Reset state
+              </Button>
+            </div>
+          </div>
+        )}
       </header>
 
-      {!release && (
-        <section className="empty-state">
-          <h2 className="empty-state__title">No release in progress</h2>
-          <p className="empty-state__copy">
-            Start a versioned release for this working copy. Edition is read from <code>composer.json</code> ({detectedEdition}).
-          </p>
-          <button type="button" className="btn btn--primary" onClick={() => setStartOpen(true)}>
-            Start release
-          </button>
-          <p className="empty-state__hint">
-            Or from the terminal: <code>composer deploy -- start 4.11.0</code>
-          </p>
-        </section>
+      {status && !release && (
+        <EmptyState
+          action={
+            <Button variant="primary" onClick={() => setStartOpen(true)}>
+              Start release
+            </Button>
+          }
+          hint={
+            <>
+              Or from the terminal: <span className="rr-code">composer deploy -- start 4.11.0</span>
+            </>
+          }
+        >
+          Start a versioned release for this working copy. Edition is read from{' '}
+          <span className="rr-code">composer.json</span> ({detectedEdition}).
+        </EmptyState>
       )}
 
       {release && (
-        <div className="release-layout">
-          <nav className="step-sidebar" aria-label="Release steps">
-            {groups.map((group) => (
-              <section key={group.phase} className="phase-block">
-                <h2 className="phase-block__title">{group.phase}</h2>
-                <ul className="step-checklist">
-                  {group.steps.map((step) => {
-                    const isCurrent = step.id === currentStepId;
-                    const isSelected = step.id === detailStepId;
-                    return (
-                      <li key={step.id}>
-                        <button
-                          type="button"
-                          className={`checklist-item${isSelected ? ' checklist-item--selected' : ''}${isCurrent ? ' checklist-item--current' : ''}`}
-                          onClick={() => setSelectedStepId(step.id)}
-                        >
-                          <ChecklistMarker status={step.status} isCurrent={isCurrent && step.status === 'pending'} />
-                          <span className="checklist-item__label">{step.label}</span>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </section>
-            ))}
-          </nav>
-
-          <aside className="detail-panel">
-            {detailStep ? (
-              <>
-                <p className="detail-panel__eyebrow">
-                  {isViewingActiveStep ? 'Current step' : 'Step detail'}
-                  {!isViewingActiveStep && currentStep && (
-                    <button type="button" className="link-btn detail-panel__jump" onClick={() => setSelectedStepId(currentStepId)}>
-                      Go to current
-                    </button>
-                  )}
-                </p>
-                <h2 className="detail-panel__title">{detailStep.label}</h2>
-                <p className="detail-panel__status">
-                  Status: <strong>{detailStep.status}</strong>
-                </p>
-                {detailStep.status === 'failed' && detailStep.note && (
-                  <pre className="detail-panel__message detail-panel__message--error">{detailStep.note}</pre>
-                )}
-                {detailStep.instructions && (
-                  <pre className="detail-panel__instructions">{detailStep.instructions}</pre>
-                )}
-                {detailStep.message && <pre className="detail-panel__message">{detailStep.message}</pre>}
-                {isViewingActiveStep && <div className="detail-panel__actions">{activeStepActions()}</div>}
-                {isViewingActiveStep && (
-                  <p className="detail-panel__reopen">
-                    <button
-                      type="button"
-                      className="link-btn"
-                      disabled={busy}
-                      onClick={() => runAction('reopen', [currentStep.id])}
+        <div className="rr-steps">
+          {groups.map((group) => (
+            <PhaseGroup key={group.key} name={group.name} done={group.done} total={group.total}>
+              {group.steps.map((step) => {
+                const isCurrent = step.id === currentStepId;
+                const hasLogOutput = isCurrent && log.length > 0;
+                return (
+                  <React.Fragment key={step.id}>
+                    {step.id === firstPublishId && <PublishBoundary />}
+                    <StepRow
+                      label={step.label}
+                      type={step.type}
+                      status={step.status}
+                      note={hasLogOutput ? null : distinctStepNote(step.note, log, isCurrent)}
+                      hasLogOutput={hasLogOutput}
+                      current={isCurrent}
+                      open={expandedStepId === step.id}
+                      onOpenChange={(next) => setExpandedStepId(next ? step.id : null)}
+                      actions={stepActions(step)}
+                      busy={busy}
+                      cli={isCurrent ? cliHint(step) : null}
+                      onReopen={isCurrent ? () => runAction('reopen', [step.id]) : null}
+                      log={isCurrent ? <LogPanel lines={log} live={isRunning} /> : null}
                     >
-                      Reopen from here
-                    </button>
-                  </p>
-                )}
-                {isViewingActiveStep ? (
-                  <>
-                    <p className="detail-panel__log-label">Output</p>
-                    <div className={`log-panel${log ? '' : ' log-panel--placeholder'}`}>
-                      {log || 'Waiting for log output…'}
-                    </div>
-                  </>
-                ) : (
-                  <p className="detail-panel__log-hint">Live output is shown on the current step.</p>
-                )}
-              </>
-            ) : (
-              <p className="detail-panel__empty">All steps complete.</p>
-            )}
-          </aside>
+                      {[step.instructions || step.message, step.command && `$ ${step.command}`]
+                        .filter(Boolean)
+                        .join('\n\n') || null}
+                    </StepRow>
+                  </React.Fragment>
+                );
+              })}
+            </PhaseGroup>
+          ))}
         </div>
       )}
 
-      <Dialog.Root open={startOpen} onOpenChange={setStartOpen}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="dialog-overlay" />
-          <Dialog.Content className="dialog-content">
-            <Dialog.Title className="dialog-title">Start release</Dialog.Title>
-            <Dialog.Description className="dialog-description">
-              Creates local runner state only — no git changes until you run steps.
-            </Dialog.Description>
-            <div className="dialog-form">
-              <label className="form-field">
-                <span className="form-field__label">Version</span>
-                <input
-                  className="form-field__input"
-                  value={startVersion}
-                  onChange={(e) => setStartVersion(e.target.value)}
-                  placeholder="4.11.0"
-                  autoComplete="off"
-                />
-              </label>
-              <p className="form-field__static">
-                Edition: <strong>{detectedEdition}</strong> (from composer.json)
-              </p>
-            </div>
-            <div className="btn-group btn-group--end">
-              <Dialog.Close asChild>
-                <button type="button" className="btn btn--ghost">Cancel</button>
-              </Dialog.Close>
-              <button
-                type="button"
-                className="btn btn--primary"
-                disabled={!startVersion.trim() || busy}
-                onClick={async () => {
-                  await runAction('start', [startVersion.trim()]);
-                  setStartOpen(false);
-                  setStartVersion('');
-                }}
-              >
-                Start
-              </button>
-            </div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
+      <StartReleaseDialog
+        open={startOpen}
+        onOpenChange={setStartOpen}
+        edition={detectedEdition}
+        busy={busy}
+        onStart={async ({ version: v, urgency, channel }) => {
+          const args = [v, '--urgency', urgency];
+          if (channel !== 'none') {
+            args.push('--channel', channel);
+          }
+          await runAction('start', args);
+          setStartOpen(false);
+        }}
+      />
+
+      <ConfirmPublishDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        step={currentStep}
+        version={version}
+        busy={busy}
+        onConfirm={async () => {
+          setConfirmOpen(false);
+          await runAction('run', ['--confirm', currentStep.id]);
+        }}
+      />
     </div>
   );
 }

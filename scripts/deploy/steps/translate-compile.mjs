@@ -5,6 +5,7 @@ export default {
   label: 'Compile translation files (MO, JSON, PHP)',
   phase: 'Localization',
   type: 'auto',
+  command: 'composer translate:compile',
   run: async (ctx) => {
     await ctx.exec('composer translate:compile');
     await commitIfDirty(ctx, `Compile translation files for v${ctx.data.version}`);

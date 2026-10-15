@@ -70,14 +70,24 @@ function stripEditionFlags(args) {
   return out;
 }
 
+/** @type {{ cwd: string, at: number, value: string | null } | null} */
+let ghAccountCache = null;
+const GH_ACCOUNT_TTL_MS = 60_000;
+
 /**
  * @param {string} cwd
  */
 async function ghAccount(cwd) {
+  const now = Date.now();
+  if (ghAccountCache && ghAccountCache.cwd === cwd && now - ghAccountCache.at < GH_ACCOUNT_TTL_MS) {
+    return ghAccountCache.value;
+  }
   const ctx = new Context({}, { cwd });
-  const result = await ctx.execCapture('gh auth status 2>&1');
+  const result = await ctx.execCapture('gh auth status 2>&1', { quiet: true });
   const match = result.stdout.match(/Logged in to \S+ account (\S+)/);
-  return match ? match[1] : null;
+  const value = match ? match[1] : null;
+  ghAccountCache = { cwd, at: now, value };
+  return value;
 }
 
 /**

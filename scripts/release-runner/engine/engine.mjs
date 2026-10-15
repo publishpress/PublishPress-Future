@@ -3,6 +3,13 @@ import { runGhAuthLogin } from './pty.mjs';
 import { getPreset } from '../presets/index.mjs';
 import { resolveEffectiveVersion, saveRelease, touchRelease } from '../state/store.mjs';
 
+/** Step id executing right now in this process, for the page's `running` status. */
+let activeStepId = null;
+
+export function getActiveStepId() {
+  return activeStepId;
+}
+
 /**
  * @param {string | ((ctx: Context) => string)} field
  * @param {Context} ctx
@@ -59,6 +66,29 @@ export function cascadeReopen(release, stepId, edition) {
  * @param {Context} ctx
  */
 async function runAutoStep(release, stepDef, ctx) {
+  activeStepId = stepDef.id;
+  ctx.log(`▶ ${stepDef.id}`);
+  try {
+    await runAutoStepInner(stepDef, ctx);
+  } finally {
+    activeStepId = null;
+  }
+}
+
+/**
+ * @param {import('../presets/types.mjs').StepDefinition} stepDef
+ * @param {Context} ctx
+ */
+/**
+ * @param {Context} ctx
+ * @param {Error} err
+ */
+function logStepFailure(ctx, err) {
+  const headline = String(err.message).split('\n\n')[0].split('\n')[0];
+  ctx.log(`Error: ${headline}`);
+}
+
+async function runAutoStepInner(stepDef, ctx) {
   if (stepDef.id === 'github_auth' && typeof stepDef.setup === 'function') {
     const status = await ctx.execCapture('gh auth status 2>&1');
     if (status.code !== 0) {
@@ -137,7 +167,7 @@ async function runEngineInner(release, pipeline, ctx, options) {
       touchRelease(release);
       saveRelease(release, options.cwd);
     } catch (err) {
-      ctx.log(`Error: ${err.message}`);
+      logStepFailure(ctx, err);
       release.steps[confirmOnly] = {
         status: 'failed',
         at: new Date().toISOString(),
@@ -189,7 +219,7 @@ async function runEngineInner(release, pipeline, ctx, options) {
       touchRelease(release);
       saveRelease(release, options.cwd);
     } catch (err) {
-      ctx.log(`Error: ${err.message}`);
+      logStepFailure(ctx, err);
       release.steps[stepDef.id] = {
         status: 'failed',
         at: new Date().toISOString(),
@@ -272,7 +302,7 @@ async function continueAfterStep(release, afterStepId, pipeline, ctx, options) {
       touchRelease(release);
       saveRelease(release, options.cwd);
     } catch (err) {
-      ctx.log(`Error: ${err.message}`);
+      logStepFailure(ctx, err);
       release.steps[stepDef.id] = {
         status: 'failed',
         at: new Date().toISOString(),
@@ -313,6 +343,13 @@ export function getCurrentStepId(release, edition) {
 export function buildStatusPayload(release, edition) {
   const pipeline = getPreset(edition);
   const currentStepId = getCurrentStepId(release, edition);
+  const ctx = new Context({
+    version: resolveEffectiveVersion(release),
+    branchName: release.branchName,
+    edition: release.edition,
+    urgency: release.urgency,
+    prerelease: release.prerelease,
+  });
   return {
     release,
     effectiveVersion: resolveEffectiveVersion(release),
@@ -322,17 +359,32 @@ export function buildStatusPayload(release, edition) {
       label: def.label,
       phase: def.phase || '',
       type: def.type,
-      status: release.steps[def.id]?.status || 'pending',
+      publish: def.publish === true,
+      status: displayStatus(release, def, currentStepId),
       at: release.steps[def.id]?.at,
       note: release.steps[def.id]?.note,
-      instructions:
-        def.type === 'manual'
-          ? resolveField(def.instructions, new Context({ version: resolveEffectiveVersion(release), branchName: release.branchName }))
-          : undefined,
-      message:
-        def.type === 'confirm'
-          ? resolveField(def.message, new Context({ version: resolveEffectiveVersion(release), branchName: release.branchName }))
-          : undefined,
+      command: resolveField(def.command, ctx) || undefined,
+      instructions: def.type === 'manual' ? resolveField(def.instructions, ctx) : undefined,
+      message: def.type === 'confirm' ? resolveField(def.message, ctx) : undefined,
     })),
   };
+}
+
+/**
+ * Persisted status plus two live states for the page: `running` while this process
+ * executes the step, and `waiting` for the manual/confirm gate a bare `run` stops on (exit 10).
+ *
+ * @param {object} release
+ * @param {import('../presets/types.mjs').StepDefinition} def
+ * @param {string|null} currentStepId
+ */
+export function displayStatus(release, def, currentStepId) {
+  const status = release.steps[def.id]?.status || 'pending';
+  if (def.id === activeStepId) {
+    return 'running';
+  }
+  if (status === 'pending' && def.id === currentStepId && (def.type === 'manual' || def.type === 'confirm')) {
+    return 'waiting';
+  }
+  return status;
 }

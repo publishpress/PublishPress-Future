@@ -50,3 +50,47 @@ test('run --confirm passes confirm gate', async () => {
     rmSync(cwd, { recursive: true, force: true });
   }
 });
+
+test('status payload marks the current manual gate as waiting', async () => {
+  const { buildStatusPayload } = await import('../scripts/release-runner/engine/engine.mjs');
+  const release = createReleaseRecord('1.0.0', 'fixture', 'standard', fixturePreset);
+  release.edition = 'fixture';
+  release.steps.auto_ok = { status: 'done', at: new Date().toISOString() };
+  const steps = buildStatusPayload(release, 'fixture').steps;
+  assert.equal(steps.find((s) => s.id === 'manual_gate').status, 'waiting');
+  assert.equal(steps.find((s) => s.id === 'confirm_gate').status, 'pending');
+  assert.equal(release.steps.manual_gate.status, 'pending', 'waiting is never persisted');
+});
+
+test('status payload reports running while an auto step executes', async () => {
+  const { buildStatusPayload, getActiveStepId } = await import('../scripts/release-runner/engine/engine.mjs');
+  const cwd = mkdtempSync(join(tmpdir(), 'rr-engine-'));
+  const original = fixturePreset[0].run;
+  let seen;
+  try {
+    const release = createReleaseRecord('1.0.0', 'fixture', 'standard', fixturePreset);
+    release.edition = 'fixture';
+    saveRelease(release, cwd);
+    fixturePreset[0].run = async () => {
+      seen = buildStatusPayload(release, 'fixture').steps.find((s) => s.id === 'auto_ok').status;
+    };
+    await runEngine(release, { cwd });
+    assert.equal(seen, 'running');
+    assert.equal(getActiveStepId(), null);
+  } finally {
+    fixturePreset[0].run = original;
+    rmSync(cwd, { recursive: true, force: true });
+  }
+});
+
+test('status payload exposes type, publish flag and resolved command', async () => {
+  const { buildStatusPayload } = await import('../scripts/release-runner/engine/engine.mjs');
+  const { getPreset } = await import('../scripts/release-runner/presets/index.mjs');
+  const release = createReleaseRecord('4.11.0', 'free', 'standard', getPreset('free'));
+  const steps = buildStatusPayload(release, 'free').steps;
+  const gh = steps.find((s) => s.id === 'github_release');
+  assert.equal(gh.type, 'confirm');
+  assert.equal(gh.publish, true);
+  assert.equal(gh.command, 'gh release create 4.11.0 --target master --generate-notes');
+  assert.equal(steps.find((s) => s.id === 'merge_hotfixes').publish, false);
+});

@@ -3,6 +3,7 @@ export default {
   label: 'Verify GitHub CLI authentication',
   phase: 'Pre-flight & Branch Setup',
   type: 'auto',
+  command: 'gh auth status',
   critical: true,
   run: async (ctx) => {
     const result = await ctx.execCapture('gh auth status 2>&1');

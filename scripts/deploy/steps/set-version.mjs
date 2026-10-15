@@ -3,6 +3,7 @@ export default {
   label: 'Update version numbers in plugin files',
   phase: 'Version & Documentation',
   type: 'auto',
+  command: (ctx) => `composer set:version ${ctx.data.version}`,
   run: async (ctx) => {
     await ctx.exec(`composer set:version ${ctx.data.version}`);
   },

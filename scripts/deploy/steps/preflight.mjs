@@ -3,6 +3,7 @@ export default {
   label: 'Pre-flight check',
   phase: 'Pre-flight & Branch Setup',
   type: 'auto',
+  command: 'git status --short',
   critical: true,
   run: async (ctx) => {
     if (process.env.RELEASE_RUNNER_ALLOW_DIRTY === '1') {

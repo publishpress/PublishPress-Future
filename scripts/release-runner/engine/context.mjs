@@ -167,8 +167,10 @@ export class Context {
     this._writeLog(chunk);
   }
 
-  async execCapture(cmd, { timeout = 0 } = {}) {
-    this.log(`$ ${cmd}`);
+  async execCapture(cmd, { timeout = 0, quiet = false } = {}) {
+    if (!quiet) {
+      this.log(`$ ${cmd}`);
+    }
     const { exec } = await import('child_process');
     const { promisify } = await import('util');
     const execAsync = promisify(exec);
@@ -177,21 +179,27 @@ export class Context {
         cwd: this.cwd,
         ...(timeout > 0 ? { timeout } : {}),
       });
-      this._appendCapturedOutput(stdout);
-      this._appendCapturedOutput(stderr);
+      if (!quiet) {
+        this._appendCapturedOutput(stdout);
+        this._appendCapturedOutput(stderr);
+      }
       return { stdout, stderr, code: 0 };
     } catch (err) {
       if (err.killed || err.signal) {
         const stderr = `Command timed out after ${timeout}ms`;
-        this._appendCapturedOutput(stderr);
+        if (!quiet) {
+          this._appendCapturedOutput(stderr);
+        }
         return {
           stdout: err.stdout || '',
           stderr,
           code: null,
         };
       }
-      this._appendCapturedOutput(err.stdout || '');
-      this._appendCapturedOutput(err.stderr || err.message);
+      if (!quiet) {
+        this._appendCapturedOutput(err.stdout || '');
+        this._appendCapturedOutput(err.stderr || err.message);
+      }
       return {
         stdout: err.stdout || '',
         stderr: err.stderr || err.message,
