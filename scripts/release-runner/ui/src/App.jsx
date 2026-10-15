@@ -207,12 +207,39 @@ export default function App() {
     setActionError(null);
     setBusy(true);
     try {
-      await apiPost(`/api/${sub}`, { args, ...body });
+      const data = await apiPost(`/api/${sub}`, { args, ...body });
+      await refresh();
+      if (data.stopped) {
+        return;
+      }
+    } catch (err) {
+      setActionError(err.message || 'Request failed');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const isRunning = steps.some((s) => s.status === 'running');
+
+  const stopRun = async () => {
+    setActionError(null);
+    setBusy(true);
+    try {
+      await apiPost('/api/stop');
       await refresh();
     } catch (err) {
       setActionError(err.message || 'Request failed');
     } finally {
       setBusy(false);
+    }
+  };
+
+  const quitRunner = async () => {
+    setActionError(null);
+    try {
+      await apiPost('/api/shutdown');
+    } catch {
+      /* server may exit before the response completes */
     }
   };
 
@@ -269,7 +296,6 @@ export default function App() {
   };
 
   const detectedEdition = status?.detectedEdition ?? 'free';
-  const isRunning = steps.some((s) => s.status === 'running');
 
   return (
     <div className="rr-screen">
@@ -326,7 +352,15 @@ export default function App() {
               )}
             </div>
             <div className="rr-row">
-              <Button variant="ghost" size="sm" disabled={busy} onClick={() => runAction('reset', [], { yes: true })}>
+              {(isRunning || busy) && (
+                <Button variant="danger" size="sm" icon="stop" onClick={stopRun}>
+                  Stop
+                </Button>
+              )}
+              <Button variant="ghost" size="sm" disabled={busy} onClick={quitRunner}>
+                Quit runner
+              </Button>
+              <Button variant="reset" size="sm" disabled={busy} onClick={() => runAction('reset', [], { yes: true })}>
                 Reset state
               </Button>
             </div>

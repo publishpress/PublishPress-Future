@@ -126,6 +126,10 @@ body { margin: 0; font-family: var(--font-sans); font-size: 16px; line-height: 1
 .rr-btn--ghost:hover:not(:disabled) { color: var(--text-primary); border-color: var(--border-subtle); }
 .rr-btn--publish { background: var(--text-primary); border-color: var(--text-primary); color: var(--surface-raised); }
 .rr-btn--publish:hover:not(:disabled) { background: var(--text-secondary); border-color: var(--text-secondary); }
+.rr-btn--danger { background: var(--status-failed-bg); border-color: var(--status-failed-fg); color: var(--status-failed-fg); }
+.rr-btn--danger:hover:not(:disabled) { background: var(--status-failed-fg); border-color: var(--status-failed-fg); color: var(--text-inverse); }
+.rr-btn--reset { background: var(--surface-raised); border-color: var(--pp-amber); color: var(--text-primary); }
+.rr-btn--reset:hover:not(:disabled) { background: var(--status-waiting-bg); border-color: var(--pp-amber); color: var(--status-waiting-fg); }
 .rr-link { font: inherit; font-size: 14px; color: var(--pp-purple); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 .rr-link:hover:not(:disabled) { color: var(--pp-purple-hover); }
 

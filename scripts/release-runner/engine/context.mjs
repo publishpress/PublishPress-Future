@@ -1,6 +1,7 @@
 import { createWriteStream, mkdirSync, writeFileSync } from 'fs';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
+import { isRunStopRequested, registerRunChild, RunStoppedError } from '../run-control.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DEV_WORKSPACE_ROOT = resolve(__dirname, '../../..');
@@ -87,6 +88,7 @@ export class Context {
         cwd: this.cwd,
         stdio: ['inherit', 'pipe', 'pipe'],
       });
+      registerRunChild(child);
       let stdout = '';
       let stderr = '';
       let timedOut = false;
@@ -107,9 +109,13 @@ export class Context {
         stderr += d;
         this._writeLog(d);
       });
-      child.on('close', (code) => {
+      child.on('close', (code, signal) => {
         if (timer) {
           clearTimeout(timer);
+        }
+        if (isRunStopRequested() && (signal === 'SIGTERM' || signal === 'SIGKILL')) {
+          reject(new RunStoppedError());
+          return;
         }
         if (timedOut) {
           const err = new Error(`Command timed out after ${timeout}ms: ${cmd}`);
@@ -140,7 +146,12 @@ export class Context {
         cwd: this.cwd,
         stdio: 'inherit',
       });
-      child.on('close', (code) => {
+      registerRunChild(child);
+      child.on('close', (code, signal) => {
+        if (isRunStopRequested() && (signal === 'SIGTERM' || signal === 'SIGKILL')) {
+          reject(new RunStoppedError());
+          return;
+        }
         if (code === 0) {
           resolvePromise();
         } else {
@@ -185,6 +196,9 @@ export class Context {
       }
       return { stdout, stderr, code: 0 };
     } catch (err) {
+      if (isRunStopRequested()) {
+        throw new RunStoppedError();
+      }
       if (err.killed || err.signal) {
         const stderr = `Command timed out after ${timeout}ms`;
         if (!quiet) {

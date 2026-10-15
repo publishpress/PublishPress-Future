@@ -7,6 +7,7 @@ import {
   syncReleaseSteps,
   touchRelease,
 } from '../state/store.mjs';
+import { isRunStopped, throwIfRunStopRequested } from '../run-control.mjs';
 
 /** Step id executing right now in this process, for the page's `running` status. */
 let activeStepId = null;
@@ -114,6 +115,20 @@ function logStepFailure(ctx, err) {
   ctx.log(`Error: ${headline}`);
 }
 
+/**
+ * @param {object} release
+ * @param {import('../presets/types.mjs').StepDefinition} stepDef
+ * @param {Context} ctx
+ * @param {object} options
+ */
+function handleStoppedStep(release, stepDef, ctx, options) {
+  ctx.log('Stopped by user.');
+  release.steps[stepDef.id] = { status: 'pending' };
+  touchRelease(release);
+  saveRelease(release, options.cwd);
+  return { exitCode: 130, release, error: 'Stopped by user' };
+}
+
 async function runAutoStepInner(stepDef, ctx) {
   if (stepDef.id === 'github_auth' && typeof stepDef.setup === 'function') {
     const status = await ctx.execCapture('gh auth status 2>&1');
@@ -199,6 +214,9 @@ async function runEngineInner(release, pipeline, ctx, options) {
       touchRelease(release);
       saveRelease(release, options.cwd);
     } catch (err) {
+      if (isRunStopped(err)) {
+        return handleStoppedStep(release, def, ctx, options);
+      }
       logStepFailure(ctx, err);
       release.steps[confirmOnly] = {
         status: 'failed',
@@ -213,6 +231,7 @@ async function runEngineInner(release, pipeline, ctx, options) {
   }
 
   for (const stepDef of pipeline) {
+    throwIfRunStopRequested();
     const stepState = release.steps[stepDef.id];
     if (!stepState) {
       continue;
@@ -252,6 +271,9 @@ async function runEngineInner(release, pipeline, ctx, options) {
       touchRelease(release);
       saveRelease(release, options.cwd);
     } catch (err) {
+      if (isRunStopped(err)) {
+        return handleStoppedStep(release, stepDef, ctx, options);
+      }
       logStepFailure(ctx, err);
       release.steps[stepDef.id] = {
         status: 'failed',
@@ -291,6 +313,7 @@ async function runEngineInner(release, pipeline, ctx, options) {
 async function continueAfterStep(release, afterStepId, pipeline, ctx, options) {
   let passed = false;
   for (const stepDef of pipeline) {
+    throwIfRunStopRequested();
     if (!passed) {
       if (stepDef.id === afterStepId) {
         passed = true;
@@ -336,6 +359,9 @@ async function continueAfterStep(release, afterStepId, pipeline, ctx, options) {
       touchRelease(release);
       saveRelease(release, options.cwd);
     } catch (err) {
+      if (isRunStopped(err)) {
+        return handleStoppedStep(release, stepDef, ctx, options);
+      }
       logStepFailure(ctx, err);
       release.steps[stepDef.id] = {
         status: 'failed',

@@ -9,6 +9,13 @@ import { loadUiPrefs, saveUiPrefs } from '../state/ui-prefs.mjs';
 import { Context } from '../engine/context.mjs';
 import { publishLog, subscribe } from './events.mjs';
 import { detectEdition } from '../detect-edition.mjs';
+import {
+  beginRunSession,
+  endRunSession,
+  requestShutdown,
+  requestStopRun,
+  setShutdownHandler,
+} from '../run-control.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const UI_DIST = join(__dirname, '../ui/dist');
@@ -159,6 +166,19 @@ async function handleApi(req, res, cwd) {
     return;
   }
 
+  if (req.method === 'POST' && path === '/api/stop') {
+    requestStopRun();
+    publishLog('Stopped by user.\n');
+    json(res, 200, { ok: true, stopped: true });
+    return;
+  }
+
+  if (req.method === 'POST' && path === '/api/shutdown') {
+    json(res, 200, { ok: true });
+    requestShutdown();
+    return;
+  }
+
   if (req.method !== 'POST' || !path.startsWith('/api/')) {
     json(res, 404, { ok: false, error: 'Not found' });
     return;
@@ -180,6 +200,7 @@ async function handleApi(req, res, cwd) {
     onLog: (line) => publishLog(line),
   };
   const rest = sub === 'start' ? stripEditionFlags(args) : args;
+  beginRunSession();
   try {
     const exitCode = await handler(rest, cwd, flags);
     const release = loadCurrentRelease(cwd);
@@ -192,9 +213,17 @@ async function handleApi(req, res, cwd) {
         }
       }
     }
-    json(res, 200, { ok: exitCode !== 1, exitCode, release, ...(error ? { error } : {}) });
+    json(res, 200, {
+      ok: exitCode === 0 || exitCode === 10 || exitCode === 130,
+      exitCode,
+      release,
+      ...(exitCode === 130 ? { stopped: true, error: "Stopped by user" } : {}),
+      ...(error ? { error } : {}),
+    });
   } catch (err) {
     json(res, 400, { ok: false, error: err.message });
+  } finally {
+    endRunSession();
   }
 }
 
@@ -254,6 +283,12 @@ export function startServer(options = {}) {
     } catch (err) {
       json(res, 500, { ok: false, error: err.message });
     }
+  });
+
+  setShutdownHandler(() => {
+    server.close(() => {
+      process.exit(0);
+    });
   });
 
   server.listen(PORT, HOST, () => {
