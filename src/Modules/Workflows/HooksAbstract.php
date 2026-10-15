@@ -67,6 +67,16 @@ abstract class HooksAbstract
     public const ACTION_PPCART_BEFORE_ORDER_REFUND = 'ppcart_before_order_refund';
 
     /**
+     * Fired by PublishPress Cart when a subscription is created.
+     */
+    public const ACTION_PPCART_SUBSCRIPTION_CREATED = 'ppcart_subscription_created';
+
+    /**
+     * Fired by PublishPress Cart when a checkout is completed.
+     */
+    public const ACTION_PPCART_CHECKOUT_COMPLETE = 'ppcart_checkout_complete';
+
+    /**
      * @deprecated 4.3.2 Use ACTION_EXECUTE_STEP instead.
      */
     public const ACTION_EXECUTE_NODE = 'publishpressfuture_workflow_execute_node';

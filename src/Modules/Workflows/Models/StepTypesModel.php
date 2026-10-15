@@ -30,6 +30,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\Dupli
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\NcsCartChangeOrderStatus;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\NcsCartCancelSubscription;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\NcsCartDuplicateProduct;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\NcsCartPauseResumeSubscription;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnAdminInit;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCustomAction;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnTermsAdded;
@@ -50,6 +51,8 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnUs
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCartOrderCreated;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCartOrderRefunded;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCartSubscriptionStatusChanged;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCartSubscriptionCreated;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCartCheckoutComplete;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 
@@ -256,6 +259,8 @@ class StepTypesModel implements StepTypesModelInterface
             $nodesInstances[OnCartOrderRefunded::getNodeTypeName()] = new OnCartOrderRefunded();
             $nodesInstances[OnCartSubscriptionStatusChanged::getNodeTypeName()] =
                 new OnCartSubscriptionStatusChanged();
+            $nodesInstances[OnCartSubscriptionCreated::getNodeTypeName()] = new OnCartSubscriptionCreated();
+            $nodesInstances[OnCartCheckoutComplete::getNodeTypeName()] = new OnCartCheckoutComplete();
         }
 
         if ($this->settingsFacade->getExperimentalFeaturesStatus()) {
@@ -290,6 +295,7 @@ class StepTypesModel implements StepTypesModelInterface
             $nodesInstances[NcsCartChangeOrderStatus::getNodeTypeName()] = new NcsCartChangeOrderStatus();
             $nodesInstances[NcsCartCancelSubscription::getNodeTypeName()] = new NcsCartCancelSubscription();
             $nodesInstances[NcsCartDuplicateProduct::getNodeTypeName()] = new NcsCartDuplicateProduct();
+            $nodesInstances[NcsCartPauseResumeSubscription::getNodeTypeName()] = new NcsCartPauseResumeSubscription();
         }
 
         return $nodesInstances;
