@@ -1,0 +1,18 @@
+<!-- @dsCard group="Status" height=56 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>MetaPill — preview</title></head>
+<body>
+<div id="root" class="rr-root rr-pad"></div>
+<script>
+  var R = window.RR, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'rr-row' },
+    h(R.MetaPill, { label: 'Version', value: '4.11.0', tone: 'accent', mono: true }),
+    h(R.MetaPill, { label: 'Edition', value: 'free' }),
+    h(R.MetaPill, { label: 'Urgency', value: 'security', tone: 'alert' }),
+    h(R.MetaPill, { label: 'Branch', value: 'release-4.11.0', mono: true }),
+    h(R.MetaPill, { label: 'Package', value: 'rc.2', mono: true }),
+    h(R.MetaPill, { label: 'GitHub', value: 'octo-dev' })));
+</script>
+</body>
+</html>

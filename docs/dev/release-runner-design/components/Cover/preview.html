@@ -1,0 +1,59 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Release Runner</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--surface-page); color:var(--text-primary); font-family:var(--font-sans); overflow:hidden; }
+  .cover { position:relative; width:960px; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:288px; }
+  .brand { fill:var(--pp-purple); }
+  .lav { fill:var(--pp-lavender); }
+  .amber { fill:var(--pp-amber); }
+  .ink { fill:var(--text-primary); }
+  .blk { rx:var(--radius-lg); }
+  .done { fill:var(--surface-raised); }
+  .now { fill:var(--pp-amber); }
+  .todo { fill:var(--pp-indigo); }
+  .rule { stroke:var(--pp-indigo); stroke-width:1; stroke-dasharray:4 4; fill:none; }
+  .words { position:absolute; left:var(--space-xl); bottom:var(--space-xl); max-width:440px; }
+  .name { margin:0; font-size:96px; line-height:.95; font-weight:700; letter-spacing:-.03em; color:var(--text-primary); }
+  .tag { margin:var(--space-md) 0 0 4px; font-size:14px; line-height:20px; color:var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      pp-purple 256×240 slab (the brand, largest) · pp-lavender 104×190 bled off the top · pp-amber 104×72 · text-primary 80×176 bled off the right edge — ≈37% of 960×288
+  arrangement one tall purple slab with satellites; bottoms on one line space-xl above the edge; space-lg gutters
+  pattern     the checklist itself, from "show the step that needs you now": radius-pill step rows at a space-xl pitch on the slab — done in surface-raised, the current one in pp-amber, pending in pp-indigo — split by one dashed publish-boundary rule
+  scales      gutters space-lg (16); pitch space-xl (24); row height space-md (12), rx = half of it; block corners radius-lg (14)
+-->
+<rect class="brand blk" x="0" y="24" width="256" height="240" rx="14"/>
+<rect class="lav blk" x="272" y="-14" width="104" height="190" rx="14"/>
+<rect class="amber blk" x="272" y="192" width="104" height="72" rx="14"/>
+<rect class="ink blk" x="392" y="88" width="104" height="176" rx="14"/>
+
+<circle class="done" cx="30" cy="54" r="6"/><rect class="done" x="44" y="48" width="168" height="12" rx="6"/>
+<circle class="done" cx="30" cy="78" r="6"/><rect class="done" x="44" y="72" width="128" height="12" rx="6"/>
+<circle class="done" cx="30" cy="102" r="6"/><rect class="done" x="44" y="96" width="184" height="12" rx="6"/>
+<circle class="done" cx="30" cy="126" r="6"/><rect class="done" x="44" y="120" width="104" height="12" rx="6"/>
+<circle class="done" cx="30" cy="150" r="6"/><rect class="done" x="44" y="144" width="152" height="12" rx="6"/>
+<line class="rule" x1="24" y1="172" x2="232" y2="172"/>
+<circle class="now" cx="30" cy="198" r="6"/><rect class="now" x="44" y="192" width="176" height="12" rx="6"/>
+<circle class="todo" cx="30" cy="222" r="6"/><rect class="todo" x="44" y="216" width="120" height="12" rx="6"/>
+<circle class="todo" cx="30" cy="246" r="6"/><rect class="todo" x="44" y="240" width="144" height="12" rx="6"/>
+</svg>
+</div>
+<div class="words">
+  <h1 class="name">Release<br>Runner</h1>
+  <p class="tag">Ship PublishPress plugins from your own machine, one gate at a time.</p>
+</div>
+</div>
+</body>
+</html>

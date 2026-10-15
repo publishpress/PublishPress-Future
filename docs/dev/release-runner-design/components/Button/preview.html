@@ -1,0 +1,22 @@
+<!-- @dsCard group="Actions" height=96 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Button — preview</title></head>
+<body>
+<div id="root" class="rr-root rr-pad"></div>
+<script>
+  var R = window.RR, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'rr-stack' },
+    h('div', { className: 'rr-row' },
+      h(R.Button, { variant: 'primary', icon: 'play' }, 'Run until next gate'),
+      h(R.Button, null, 'Build package'),
+      h(R.Button, { variant: 'ghost' }, 'Skip…'),
+      h(R.Button, { variant: 'publish', icon: 'lock' }, 'Publish 4.11.0'),
+      h(R.Button, { variant: 'link' }, 'Reopen from here')),
+    h('div', { className: 'rr-row' },
+      h(R.Button, { variant: 'primary', icon: 'check', size: 'sm' }, 'Mark done'),
+      h(R.Button, { size: 'sm' }, 'Copy command'),
+      h(R.Button, { variant: 'primary', disabled: true }, 'Start'))));
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!-- @dsCard group="Status" height=56 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>StatusBadge — preview</title></head>
+<body>
+<div id="root" class="rr-root rr-pad"></div>
+<script>
+  var R = window.RR, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'rr-row' }, ['pending','running','waiting','done','skipped','failed'].map(function (s) { return h(R.StatusBadge, { key: s, status: s }); })));
+</script>
+</body>
+</html>

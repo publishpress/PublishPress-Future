@@ -1,0 +1,116 @@
+/* Release Runner — generated from tokens.json. Edit tokens.json, then regenerate. */
+:root, [data-theme="light"] {
+  --pp-purple: #655997;
+  --pp-purple-hover: #564a82;
+  --pp-purple-muted: #e9e6f3;
+  --pp-amber: #ffb200;
+  --pp-lavender: #b3a9d9;
+  --pp-indigo: #1d1145;
+  --text-primary: #1c1917;
+  --text-secondary: #57534e;
+  --text-muted: #6b645f;
+  --text-inverse: #fafaf9;
+  --surface-page: #f5f5f4;
+  --surface-raised: #ffffff;
+  --surface-sunken: #eceae8;
+  --surface-overlay: rgba(28, 25, 23, 0.45);
+  --border-subtle: #e7e5e4;
+  --border-default: #d6d3d1;
+  --border-strong: #a8a29e;
+  --border-control: #8c857f;
+  --focus-ring: #655997;
+  --status-pending-bg: #eceae8;
+  --status-pending-fg: #57534e;
+  --status-running-bg: #e9e6f3;
+  --status-running-fg: #4d417f;
+  --status-waiting-bg: #fff4d6;
+  --status-waiting-fg: #7a4a00;
+  --status-done-bg: #ecfdf5;
+  --status-done-fg: #047857;
+  --status-skipped-bg: #eceae8;
+  --status-skipped-fg: #6b645f;
+  --status-failed-bg: #fef2f2;
+  --status-failed-fg: #b91c1c;
+  --alert-security-bg: #fff7ed;
+  --alert-security-border: #fdba74;
+  --alert-security-fg: #9a3412;
+  --log-bg: #1c1917;
+  --log-border: #292524;
+  --log-fg: #e7e5e4;
+  --log-muted: #a8a29e;
+  --log-cmd: #c4b5fd;
+  --log-ok: #6ee7b7;
+  --log-warn: #ffb200;
+  --log-err: #fca5a5;
+  --shadow-sm: 0 1px 2px rgba(28, 25, 23, 0.06);
+  --shadow-md: 0 4px 12px rgba(28, 25, 23, 0.08);
+}
+[data-theme="dark"] {
+  --pp-purple: #b3abe6;
+  --pp-purple-hover: #c8c1ee;
+  --pp-purple-muted: #2a2540;
+  --pp-amber: #ffb200;
+  --pp-lavender: #b3a9d9;
+  --pp-indigo: #1d1145;
+  --text-primary: #f5f5f4;
+  --text-secondary: #d6d3d1;
+  --text-muted: #a8a29e;
+  --text-inverse: #1c1917;
+  --surface-page: #141210;
+  --surface-raised: #1c1917;
+  --surface-sunken: #26221f;
+  --surface-overlay: rgba(0, 0, 0, 0.6);
+  --border-subtle: #2e2a27;
+  --border-default: #44403c;
+  --border-strong: #57534e;
+  --border-control: #78716c;
+  --focus-ring: #b3abe6;
+  --status-pending-bg: #26221f;
+  --status-pending-fg: #d6d3d1;
+  --status-running-bg: #2a2540;
+  --status-running-fg: #c8c1ee;
+  --status-waiting-bg: #2e2410;
+  --status-waiting-fg: #ffc94d;
+  --status-done-bg: #10261f;
+  --status-done-fg: #6ee7b7;
+  --status-skipped-bg: #26221f;
+  --status-skipped-fg: #a8a29e;
+  --status-failed-bg: #34161a;
+  --status-failed-fg: #fca5a5;
+  --alert-security-bg: #2c1a10;
+  --alert-security-border: #9a3412;
+  --alert-security-fg: #fdba74;
+  --log-bg: #0c0a09;
+  --log-border: #292524;
+  --log-fg: #e7e5e4;
+  --log-muted: #a8a29e;
+  --log-cmd: #c4b5fd;
+  --log-ok: #6ee7b7;
+  --log-warn: #ffb200;
+  --log-err: #fca5a5;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+:root {
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+}
+.title { font-family: var(--font-sans); font-size: 20px; line-height: 28px; font-weight: 650; letter-spacing: -0.02em; }
+.panel-title { font-family: var(--font-sans); font-size: 18px; line-height: 24px; font-weight: 650; }
+.body { font-family: var(--font-sans); font-size: 16px; line-height: 24px; font-weight: 400; }
+.row { font-family: var(--font-sans); font-size: 15px; line-height: 22px; font-weight: 400; }
+.small { font-family: var(--font-sans); font-size: 14px; line-height: 22px; font-weight: 400; }
+.eyebrow { font-family: var(--font-sans); font-size: 12px; line-height: 18px; font-weight: 650; letter-spacing: 0.07em; }
+.badge { font-family: var(--font-sans); font-size: 12px; line-height: 18px; font-weight: 650; letter-spacing: 0.04em; }
+.log { font-family: var(--font-mono); font-size: 13px; line-height: 20px; font-weight: 400; }
+.code { font-family: var(--font-mono); font-size: 14px; line-height: 22px; font-weight: 400; }

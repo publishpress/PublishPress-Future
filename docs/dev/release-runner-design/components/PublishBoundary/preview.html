@@ -1,0 +1,15 @@
+<!-- @dsCard group="Checklist" height=160 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>PublishBoundary — preview</title></head>
+<body>
+<div id="root" class="rr-root rr-pad"></div>
+<script>
+  var R = window.RR, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', null,
+    h(R.PhaseGroup, { name: 'Version & Documentation', done: 3, total: 3 }, h(R.StepRow, { label: 'composer check:release', type: 'auto', status: 'done', time: '0:09' })),
+    h(R.PublishBoundary),
+    h(R.PhaseGroup, { name: 'Release', done: 0, total: 4 }, h(R.StepRow, { label: 'Merge release-4.11.0 into master', type: 'confirm', status: 'pending' }))));
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!-- @dsCard group="Screens" height=1400 width=1120 page -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ReleaseScreen — preview</title></head>
+<body>
+<div id="root" class="rr-root"></div>
+<script>
+  var R = window.RR, h = React.createElement;
+  var STEPS = [
+ {"id":"preflight","phase":"Pre-flight & Branch Setup","label":"Preflight checks","type":"auto","status":"done","time":"0:04"},
+ {"id":"github_auth","phase":"Pre-flight & Branch Setup","label":"GitHub CLI authenticated","type":"auto","status":"done","time":"0:01"},
+ {"id":"milestone_check","phase":"Pre-flight & Branch Setup","label":"Milestone 4.11.0 has no open items","type":"auto","status":"done","time":"0:02"},
+ {"id":"branch_setup","phase":"Pre-flight & Branch Setup","label":"Create release-4.11.0 from development","type":"auto","status":"done","time":"0:03"},
+ {"id":"dep_dry_run","phase":"Dependencies","label":"composer update --no-dev --dry-run","type":"auto","status":"done","time":"0:11"},
+ {"id":"dep_review","phase":"Dependencies","label":"Review dependency changes and Dependabot","type":"manual","status":"done"},
+ {"id":"check_quality_php","phase":"Code Quality","label":"PHPStan","type":"auto","status":"done","time":"1:12"},
+ {"id":"check_quality_cs","phase":"Code Quality","label":"Coding standards","type":"auto","status":"done","time":"0:21"},
+ {"id":"test_integration","phase":"Code Quality","label":"Integration tests","type":"auto","status":"skipped","note":"No integration suite changes"},
+ {"id":"build_package","phase":"Build & Team Testing","label":"Build package 4.11.0-rc.2","type":"auto","status":"done","time":"0:48"},
+ {"id":"team_testing","phase":"Build & Team Testing","label":"Team approves the rc build in #testing","type":"manual","status":"done"},
+ {"id":"wait_translator_es_fr_it","phase":"Localization","label":"Wait for ES, FR, IT translation review","type":"manual","status":"done"},
+ {"id":"wait_translator_pt_br","phase":"Localization","label":"Wait for PT-BR translation review","type":"manual","status":"done"},
+ {"id":"set_version","phase":"Version & Documentation","label":"composer set:version 4.11.0","type":"auto","status":"done","time":"0:02"},
+ {"id":"check_release_gate","phase":"Version & Documentation","label":"composer check:release","type":"auto","status":"done","time":"0:09"},
+ {"id":"create_pr","phase":"Release","label":"Open PR release-4.11.0 → master","type":"auto","status":"done","time":"0:05"},
+ {"id":"merge_to_master","phase":"Release","label":"Merge release-4.11.0 into master","type":"confirm","status":"done"},
+ {"id":"merge_to_development","phase":"Release","label":"Merge master back into development","type":"auto","status":"done","time":"0:04"},
+ {"id":"github_release","phase":"Release","label":"Create GitHub release 4.11.0","type":"confirm","status":"waiting","instructions":"Tags the merged master commit and triggers the SVN deploy.\nTag name must match the plugin Version header: 4.11.0 (no \"v\")."},
+ {"id":"post_release","phase":"Post-Release","label":"Deploy workflow finished","type":"manual","status":"pending"},
+ {"id":"check_wporg_gate","phase":"Post-Release","label":"composer check:wporg","type":"auto","status":"pending"},
+ {"id":"milestone_close","phase":"Post-Release","label":"Close milestone 4.11.0","type":"auto","status":"pending"}
+];
+  var LOG = [
+ {"kind":"meta","text":"14:02:11  check_release_gate"},
+ {"kind":"cmd","text":"$ composer check:release"},
+ {"text":"Plugin header ........ 4.11.0"},
+ {"text":"Version constant ..... 4.11.0"},
+ {"text":"Stable tag ........... 4.11.0"},
+ {"text":"CHANGELOG ............ 4.11.0 (2026-10-15)"},
+ {"kind":"ok","text":"✓ release checks passed"},
+ {"kind":"meta","text":"14:02:30  create_pr"},
+ {"kind":"cmd","text":"$ gh pr create --base master --head release-4.11.0"},
+ {"text":"https://github.com/publishpress/publishpress-future/pull/1762"},
+ {"kind":"meta","text":"Stopped at confirm gate: github_release"}
+];
+  ReactDOM.createRoot(document.getElementById('root')).render(h(R.ReleaseScreen, {
+    release: { version: '4.11.0', edition: 'free', branch: 'release-4.11.0', prerelease: 'rc.2', gh: 'octo-dev', urgency: 'standard' },
+    steps: STEPS, currentId: 'github_release', log: LOG }));
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!-- @dsCard group="Checklist" height=440 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>StepRow — preview</title></head>
+<body>
+<div id="root" class="rr-root rr-pad"></div>
+<script>
+  var R = window.RR, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(R.PhaseGroup, { name: 'Code Quality', done: 3, total: 5 },
+    h(R.StepRow, { label: 'PHPStan', type: 'auto', status: 'done', time: '1:12' }),
+    h(R.StepRow, { label: 'Integration tests', type: 'auto', status: 'skipped', note: 'No integration suite changes' }),
+    h(R.StepRow, { label: 'Unit tests', type: 'auto', status: 'failed', current: true, defaultOpen: true,
+      guide: 'Runs composer test Unit. Fix failures on the release branch, then run again.',
+      actions: h(R.Button, { variant: 'primary', size: 'sm', icon: 'play' }, 'Run again'),
+      log: h(R.LogPanel, { lines: [{ kind: 'cmd', text: '$ composer test Unit' }, 'OK, but some tests were skipped', { kind: 'err', text: 'FAILURES! Tests: 214, Failures: 1.' }], maxHeight: 120 }),
+      onReopen: function () {}, cli: 'run --until test_unit' }),
+    h(R.StepRow, { label: 'Coding standards', type: 'auto', status: 'failed', time: '0:21' }, '2 files have PSR-12 violations.'),
+    h(R.StepRow, { label: 'Review dependency changes and Dependabot', type: 'manual', status: 'pending' })));
+</script>
+</body>
+</html>

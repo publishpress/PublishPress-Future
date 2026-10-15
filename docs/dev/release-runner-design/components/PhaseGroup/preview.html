@@ -1,0 +1,15 @@
+<!-- @dsCard group="Checklist" height=170 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>PhaseGroup — preview</title></head>
+<body>
+<div id="root" class="rr-root rr-pad"></div>
+<script>
+  var R = window.RR, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(R.PhaseGroup, { name: 'Localization', done: 1, total: 3 },
+    h(R.StepRow, { label: 'composer translate:pot', type: 'auto', status: 'done', time: '0:06' }),
+    h(R.StepRow, { label: 'Wait for ES, FR, IT translation review', type: 'manual', status: 'waiting', current: true }),
+    h(R.StepRow, { label: 'Wait for PT-BR translation review', type: 'manual', status: 'pending' })));
+</script>
+</body>
+</html>

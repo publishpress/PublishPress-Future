@@ -1,0 +1,15 @@
+<!-- @dsCard group="Status" height=96 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>PhaseProgress — preview</title></head>
+<body>
+<div id="root" class="rr-root rr-pad"></div>
+<script>
+  var R = window.RR, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(R.PhaseProgress, { phases: [
+    { name: 'Pre-flight', done: 5, total: 5 }, { name: 'Dependencies', done: 3, total: 3 }, { name: 'Code Quality', done: 6, total: 6 },
+    { name: 'Build & Team Testing', done: 2, total: 2 }, { name: 'Localization', done: 3, total: 8, current: true },
+    { name: 'Version & Docs', done: 0, total: 3 }, { name: 'Release', done: 0, total: 5 }, { name: 'Post-Release', done: 0, total: 3 } ] }));
+</script>
+</body>
+</html>

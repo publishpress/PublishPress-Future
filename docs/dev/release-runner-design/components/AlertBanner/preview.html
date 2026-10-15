@@ -1,0 +1,15 @@
+<!-- @dsCard group="Feedback" height=220 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>AlertBanner — preview</title></head>
+<body>
+<div id="root" class="rr-root rr-pad"></div>
+<script>
+  var R = window.RR, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'rr-stack' },
+    h(R.AlertBanner, { tone: 'security', title: 'Security release' }, 'Keep essential checks. Do not disclose vulnerability details until it is published.'),
+    h(R.AlertBanner, { tone: 'waiting', title: 'Waiting for GitHub login' }, 'Finish the browser sign-in opened by gh auth login. The page continues on its own.'),
+    h(R.AlertBanner, { tone: 'failed', title: 'check_quality_php failed' }, 'PHPStan reported 3 errors. Fix them on the release branch, then Run again.')));
+</script>
+</body>
+</html>

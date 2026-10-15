@@ -1,0 +1,25 @@
+<!-- @dsCard group="Output" height=300 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>LogPanel — preview</title></head>
+<body>
+<div id="root" class="rr-root rr-pad"></div>
+<script>
+  var R = window.RR, h = React.createElement;
+  var LOG = [
+ {"kind":"meta","text":"14:02:11  check_release_gate"},
+ {"kind":"cmd","text":"$ composer check:release"},
+ {"text":"Plugin header ........ 4.11.0"},
+ {"text":"Version constant ..... 4.11.0"},
+ {"text":"Stable tag ........... 4.11.0"},
+ {"text":"CHANGELOG ............ 4.11.0 (2026-10-15)"},
+ {"kind":"ok","text":"✓ release checks passed"},
+ {"kind":"meta","text":"14:02:30  create_pr"},
+ {"kind":"cmd","text":"$ gh pr create --base master --head release-4.11.0"},
+ {"text":"https://github.com/publishpress/publishpress-future/pull/1762"},
+ {"kind":"meta","text":"Stopped at confirm gate: github_release"}
+];
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'rr-stack' }, h(R.LogPanel, { lines: LOG, live: true, maxHeight: 200 }), h(R.LogPanel, { title: 'Output' })));
+</script>
+</body>
+</html>

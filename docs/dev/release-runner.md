@@ -158,6 +158,8 @@ Presets follow the issue templates, not the old Future-only `custom-deploy` list
 - **Radix:** `Dialog`, `Collapsible` only. Buttons, log, layout: local CSS.
 - **Not:** `@wordpress/components`, MUI, Ant, Chakra.
 
+**Design system:** [release-runner-design/](release-runner-design/README.md) — tokens, components and copy rules for this page. Read it before changing the UI.
+
 ### Edition (UI vs CLI)
 
 The web UI **cannot** choose edition. **Start release** only asks for version; edition is always read from `composer.json` via `detectEdition` (same as CLI when `--edition` is omitted). The start dialog shows the detected edition as read-only text.

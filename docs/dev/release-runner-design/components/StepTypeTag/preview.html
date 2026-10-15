@@ -1,0 +1,12 @@
+<!-- @dsCard group="Status" height=56 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>StepTypeTag — preview</title></head>
+<body>
+<div id="root" class="rr-root rr-pad"></div>
+<script>
+  var R = window.RR, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'rr-row', style: { gap: 20 } }, ['auto','manual','confirm'].map(function (t) { return h(R.StepTypeTag, { key: t, type: t }); })));
+</script>
+</body>
+</html>

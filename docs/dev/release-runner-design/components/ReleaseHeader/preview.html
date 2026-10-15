@@ -1,0 +1,16 @@
+<!-- @dsCard group="Layout" height=260 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ReleaseHeader — preview</title></head>
+<body>
+<div id="root" class="rr-root rr-pad"></div>
+<script>
+  var R = window.RR, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(R.ReleaseHeader, {
+    release: { version: '4.11.0', edition: 'free', branch: 'release-4.11.0', prerelease: 'rc.2', gh: 'octo-dev', urgency: 'security' },
+    phases: [ { name: 'Pre-flight', done: 5, total: 5 }, { name: 'Dependencies', done: 3, total: 3 }, { name: 'Code Quality', done: 6, total: 6 }, { name: 'Localization', done: 2, total: 8, current: true }, { name: 'Release', done: 0, total: 5 }, { name: 'Post-Release', done: 0, total: 3 } ],
+    next: [h(R.StatusBadge, { key: 'b', status: 'waiting' }), h('span', { key: 't' }, 'Next: ', h('strong', null, 'Wait for PT-BR translation review'))],
+    actions: [h(R.Button, { key: 'a', variant: 'ghost', size: 'sm' }, 'Abandon…')] }));
+</script>
+</body>
+</html>
