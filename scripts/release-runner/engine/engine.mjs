@@ -70,11 +70,32 @@ export function cascadeReopen(release, stepId, edition) {
  * @param {import('../presets/types.mjs').StepDefinition} stepDef
  * @param {Context} ctx
  */
+/**
+ * @param {unknown} result
+ * @returns {string | undefined}
+ */
+function noteFromStepRun(result) {
+  if (!result) {
+    return undefined;
+  }
+  if (typeof result === 'string' && result.trim()) {
+    return result.trim();
+  }
+  if (typeof result === 'object' && result !== null && 'note' in result) {
+    const note = result.note;
+    return typeof note === 'string' && note.trim() ? note.trim() : undefined;
+  }
+  return undefined;
+}
+
+/**
+ * @returns {Promise<string | undefined>}
+ */
 async function runAutoStep(release, stepDef, ctx) {
   activeStepId = stepDef.id;
   ctx.log(`▶ ${stepDef.id}`);
   try {
-    await runAutoStepInner(stepDef, ctx);
+    return noteFromStepRun(await runAutoStepInner(stepDef, ctx));
   } finally {
     activeStepId = null;
   }
@@ -166,12 +187,14 @@ async function runEngineInner(release, pipeline, ctx, options) {
       return { exitCode: 0, release };
     }
     try {
+      let runNote;
       if (typeof def.run === 'function') {
-        await runAutoStep(release, def, ctx);
+        runNote = await runAutoStep(release, def, ctx);
       }
       release.steps[confirmOnly] = {
         status: 'done',
         at: new Date().toISOString(),
+        ...(runNote ? { note: runNote } : {}),
       };
       touchRelease(release);
       saveRelease(release, options.cwd);
@@ -220,10 +243,11 @@ async function runEngineInner(release, pipeline, ctx, options) {
     }
 
     try {
-      await runAutoStep(release, stepDef, ctx);
+      const runNote = await runAutoStep(release, stepDef, ctx);
       release.steps[stepDef.id] = {
         status: 'done',
         at: new Date().toISOString(),
+        ...(runNote ? { note: runNote } : {}),
       };
       touchRelease(release);
       saveRelease(release, options.cwd);
@@ -303,10 +327,11 @@ async function continueAfterStep(release, afterStepId, pipeline, ctx, options) {
     }
 
     try {
-      await runAutoStep(release, stepDef, ctx);
+      const runNote = await runAutoStep(release, stepDef, ctx);
       release.steps[stepDef.id] = {
         status: 'done',
         at: new Date().toISOString(),
+        ...(runNote ? { note: runNote } : {}),
       };
       touchRelease(release);
       saveRelease(release, options.cwd);

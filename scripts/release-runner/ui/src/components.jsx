@@ -243,7 +243,12 @@ export function StepRow({
         </div>
         <Collapsible.Content className="rr-step__body">
           {guide && <p className="rr-step__guide">{guide}</p>}
-          {!hasLogOutput && note && <div className="rr-step__note">Note: {note}</div>}
+          {!hasLogOutput && note && (
+            <div className={cx('rr-step__note', key === 'done' && 'rr-step__note--result')}>
+              {key === 'failed' ? 'Note: ' : ''}
+              {note}
+            </div>
+          )}
           {current && log}
           {current && onReopen && (
             <div className="rr-step__foot">
