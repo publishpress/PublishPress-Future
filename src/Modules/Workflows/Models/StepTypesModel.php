@@ -172,7 +172,7 @@ class StepTypesModel implements StepTypesModelInterface
             ]
         ];
 
-        if (function_exists('sc_setup_order')) {
+        if (function_exists('ppcart_setup_order')) {
             $categories[] = [
                 "name" => "publishpress-cart",
                 "label" => __("PublishPress Cart", "post-expirator"),
@@ -276,7 +276,7 @@ class StepTypesModel implements StepTypesModelInterface
             DuplicatePost::getNodeTypeName() => new DuplicatePost(),
         ];
 
-        if (function_exists('sc_setup_order')) {
+        if (function_exists('ppcart_setup_order')) {
             $nodesInstances[NcsCartChangeOrderStatus::getNodeTypeName()] = new NcsCartChangeOrderStatus();
             $nodesInstances[NcsCartCancelSubscription::getNodeTypeName()] = new NcsCartCancelSubscription();
             $nodesInstances[NcsCartDuplicateProduct::getNodeTypeName()] = new NcsCartDuplicateProduct();

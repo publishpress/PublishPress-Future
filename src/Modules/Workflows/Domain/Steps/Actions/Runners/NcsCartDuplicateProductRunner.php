@@ -55,7 +55,7 @@ class NcsCartDuplicateProductRunner implements StepRunnerInterface
             function ($step) {
                 $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
-                if (! class_exists('NCS_Cart_Product_Duplicator')) {
+                if (! class_exists('PPCart_Product_Duplicator')) {
                     $this->logger->debugWithArgs('PublishPress Cart not active, skipping | Slug: %1$s', $nodeSlug);
                     return;
                 }
@@ -71,7 +71,7 @@ class NcsCartDuplicateProductRunner implements StepRunnerInterface
                 }
                 $productId = (int) $productId;
 
-                $newProductId = \NCS_Cart_Product_Duplicator::duplicate($productId);
+                $newProductId = \PPCart_Product_Duplicator::duplicate($productId);
 
                 if (! is_numeric($newProductId) || (int) $newProductId <= 0) {
                     $this->logger->debugWithArgs(
