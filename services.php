@@ -103,6 +103,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\UpdatePos
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\NcsCartChangeOrderStatusRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\NcsCartCancelSubscriptionRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\NcsCartDuplicateProductRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Runners\NcsCartPauseResumeSubscriptionRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnAdminInitRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnInitRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnLegacyActionTriggerRunner;
@@ -121,6 +122,8 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnUserRo
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnCartOrderCreatedRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnCartOrderRefundedRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnCartSubscriptionStatusChangedRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnCartSubscriptionCreatedRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnCartCheckoutCompleteRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnTermsAddedRunner;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\Future\Modules\Workflows\Logger\WorkflowLogger;
@@ -1157,6 +1160,28 @@ return [
                     );
                     break;
 
+                case OnCartSubscriptionCreatedRunner::getNodeTypeName():
+                    $stepRunner = new OnCartSubscriptionCreatedRunner(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $generalStepProcessor,
+                        $workflowLogger,
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD),
+                        $executionContext
+                    );
+                    break;
+
+                case OnCartCheckoutCompleteRunner::getNodeTypeName():
+                    $stepRunner = new OnCartCheckoutCompleteRunner(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $generalStepProcessor,
+                        $workflowLogger,
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD),
+                        $executionContext
+                    );
+                    break;
+
                 case OnCustomActionRunner::getNodeTypeName():
                     $stepRunner = new OnCustomActionRunner(
                         $generalStepProcessor,
@@ -1294,6 +1319,14 @@ return [
 
                 case NcsCartDuplicateProductRunner::getNodeTypeName():
                     $stepRunner = new NcsCartDuplicateProductRunner(
+                        $generalStepProcessor,
+                        $executionContext,
+                        $workflowLogger
+                    );
+                    break;
+
+                case NcsCartPauseResumeSubscriptionRunner::getNodeTypeName():
+                    $stepRunner = new NcsCartPauseResumeSubscriptionRunner(
                         $generalStepProcessor,
                         $executionContext,
                         $workflowLogger
