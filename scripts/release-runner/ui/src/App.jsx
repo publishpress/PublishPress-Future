@@ -90,6 +90,41 @@ function cliHint(step) {
   return `run --until ${step.id}`;
 }
 
+const STEP_LOG_MARK = /^▶ ([a-z0-9_]+)$/;
+
+/** @param {string[]} lines */
+function splitSessionLogByStep(lines) {
+  /** @type {Record<string, string[]>} */
+  const byStep = {};
+  let current = null;
+  for (const raw of lines || []) {
+    const line = String(raw).replace(/\r$/, '');
+    if (!line.trim()) {
+      continue;
+    }
+    const match = line.match(STEP_LOG_MARK);
+    if (match) {
+      current = match[1];
+      if (!byStep[current]) {
+        byStep[current] = [];
+      }
+      byStep[current].push(line);
+      continue;
+    }
+    const key = current ?? '_unassigned';
+    if (!byStep[key]) {
+      byStep[key] = [];
+    }
+    byStep[key].push(line);
+  }
+  return byStep;
+}
+
+/** @param {Record<string, string[]>} byStep @param {string} stepId */
+function linesForStep(byStep, stepId) {
+  return byStep[stepId] ?? [];
+}
+
 export default function App() {
   const [status, setStatus] = useState(null);
   const [log, setLog] = useState([]);
@@ -131,6 +166,33 @@ export default function App() {
   const currentStep = steps.find((s) => s.id === currentStepId);
   const version = status?.effectiveVersion || release?.version;
   const firstPublishId = steps.find((s) => s.publish)?.id;
+  const logByStep = useMemo(() => splitSessionLogByStep(log), [log]);
+
+  useEffect(() => {
+    if (!release?.version) {
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      try {
+        const data = await apiGet('/api/log');
+        if (cancelled || !data.log?.trim()) {
+          return;
+        }
+        const fromFile = data.log
+          .replace(/\x1B\[[0-9;]*[A-Za-z]/g, '')
+          .split('\n')
+          .map((l) => l.replace(/\r$/, ''))
+          .filter((l) => l.trim());
+        setLog((prev) => (prev.length ? prev : fromFile));
+      } catch {
+        /* ignore */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [release?.version]);
 
   useEffect(() => {
     if (currentStepId) {
@@ -139,7 +201,7 @@ export default function App() {
   }, [currentStepId]);
 
   const runAction = async (sub, args = [], body = {}) => {
-    if (sub === 'run') {
+    if (sub === 'start' || sub === 'reset') {
       setLog([]);
     }
     setActionError(null);
@@ -296,9 +358,12 @@ export default function App() {
             <PhaseGroup key={group.key} name={group.name} done={group.done} total={group.total}>
               {group.steps.map((step) => {
                 const isCurrent = step.id === currentStepId;
+                const isExpanded = expandedStepId === step.id;
                 const stepUsesLog = step.type === 'auto';
-                const hasLogOutput = isCurrent && stepUsesLog && log.length > 0;
-                const showLogPanel = isCurrent && stepUsesLog;
+                const stepLines = stepUsesLog ? linesForStep(logByStep, step.id) : [];
+                const hasLogOutput = stepUsesLog && stepLines.length > 0;
+                const showLogPanel =
+                  stepUsesLog && (isCurrent || isExpanded) && (hasLogOutput || (isCurrent && isRunning));
                 return (
                   <React.Fragment key={step.id}>
                     {step.id === firstPublishId && <PublishBoundary />}
@@ -307,7 +372,7 @@ export default function App() {
                       type={step.type}
                       status={step.status}
                       guide={step.instructions || step.message}
-                      note={hasLogOutput ? null : distinctStepNote(step.note, log, isCurrent && stepUsesLog)}
+                      note={hasLogOutput ? null : distinctStepNote(step.note, stepLines, isCurrent && stepUsesLog)}
                       hasLogOutput={hasLogOutput}
                       current={isCurrent}
                       open={expandedStepId === step.id}
@@ -317,7 +382,9 @@ export default function App() {
                       cli={isCurrent ? cliHint(step) : null}
                       onReopen={isCurrent ? () => runAction('reopen', [step.id]) : null}
                       log={
-                        showLogPanel ? <LogPanel lines={log} live={isRunning} /> : null
+                        showLogPanel ? (
+                          <LogPanel lines={isCurrent ? log : stepLines} live={isCurrent && isRunning} />
+                        ) : null
                       }
                     />
                   </React.Fragment>

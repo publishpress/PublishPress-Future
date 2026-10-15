@@ -203,7 +203,7 @@ export function StepRow({
   hasLogOutput,
 }) {
   const key = statusKey(status);
-  const hasBody = Boolean(guide || (!hasLogOutput && note) || (current && log)) || (current && onReopen);
+  const hasBody = Boolean(guide || (!hasLogOutput && note) || log || (current && onReopen));
   const showBadge = current || key === 'failed' || key === 'waiting' || key === 'running';
   const canExpand = hasBody || (current && onReopen);
   return (
@@ -249,7 +249,7 @@ export function StepRow({
               {note}
             </div>
           )}
-          {current && log}
+          {log}
           {current && onReopen && (
             <div className="rr-step__foot">
               <Button variant="link" disabled={busy} onClick={onReopen}>
