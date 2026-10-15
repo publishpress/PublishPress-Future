@@ -54,7 +54,7 @@ class NcsCartRefundOrderRunner implements StepRunnerInterface
             function ($step) {
                 $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
-                if (! function_exists('sc_order_refund')) {
+                if (! function_exists('ppcart_order_refund')) {
                     $this->logger->debugWithArgs('PublishPress Cart not active, skipping | Slug: %1$s', $nodeSlug);
                     return;
                 }
@@ -70,7 +70,7 @@ class NcsCartRefundOrderRunner implements StepRunnerInterface
                 }
                 $orderId = (int) $orderId;
 
-                if (get_post_type($orderId) !== 'sc_order') {
+                if (get_post_type($orderId) !== 'ppcart_order') {
                     $this->logger->debugWithArgs(
                         'Post %1$s is not a Cart order, skipping | Slug: %2$s',
                         $orderId,
@@ -84,7 +84,7 @@ class NcsCartRefundOrderRunner implements StepRunnerInterface
                     $restock = $restock['value'] ?? 'NO';
                 }
 
-                // sc_order_refund() reads $data['restock'] without an isset guard, so it must always be set.
+                // ppcart_order_refund() reads $data['restock'] without an isset guard, so it must always be set.
                 $data = [
                     'id' => $orderId,
                     'restock' => ($restock === 'YES') ? 'YES' : 'NO',
@@ -95,7 +95,7 @@ class NcsCartRefundOrderRunner implements StepRunnerInterface
                     $data['refund_amount'] = (float) $refundAmount;
                 }
 
-                $result = sc_order_refund($data);
+                $result = ppcart_order_refund($data);
 
                 if ($result === 'OK') {
                     $this->logger->debugWithArgs(

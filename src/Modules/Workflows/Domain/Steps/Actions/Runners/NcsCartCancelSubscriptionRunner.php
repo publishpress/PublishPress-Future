@@ -54,7 +54,7 @@ class NcsCartCancelSubscriptionRunner implements StepRunnerInterface
             function ($step) {
                 $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
-                if (! function_exists('sc_do_cancel_subscription')) {
+                if (! function_exists('ppcart_do_cancel_subscription')) {
                     $this->logger->debugWithArgs('PublishPress Cart not active, skipping | Slug: %1$s', $nodeSlug);
                     return;
                 }
@@ -70,7 +70,7 @@ class NcsCartCancelSubscriptionRunner implements StepRunnerInterface
                 }
                 $subscriptionId = (int) $subscriptionId;
 
-                if (get_post_type($subscriptionId) !== 'sc_subscription') {
+                if (get_post_type($subscriptionId) !== 'ppcart_subscription') {
                     $this->logger->debugWithArgs(
                         'Post %1$s is not a Cart subscription, skipping | Slug: %2$s',
                         $subscriptionId,
@@ -85,10 +85,10 @@ class NcsCartCancelSubscriptionRunner implements StepRunnerInterface
                 }
                 $cancelNow = ($when !== 'period_end');
 
-                // sc_do_cancel_subscription($sub, $sub_id, $now, $echo, $options)
-                // A numeric first arg is turned into an NCS_Cart_Subscription internally.
+                // ppcart_do_cancel_subscription($sub, $sub_id, $now, $echo, $options)
+                // A numeric first arg is turned into an PPCart_Subscription internally.
                 // $echo = false so nothing is printed during workflow execution.
-                sc_do_cancel_subscription($subscriptionId, false, $cancelNow, false);
+                ppcart_do_cancel_subscription($subscriptionId, false, $cancelNow, false);
 
                 $this->logger->debugWithArgs(
                     'Cart subscription %1$s cancelled (%2$s) | Slug: %3$s',
