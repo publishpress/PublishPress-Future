@@ -1,0 +1,230 @@
+import { createServer } from 'http';
+import { readFileSync, existsSync, statSync } from 'fs';
+import { join, extname, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { runCli, commands } from '../cli.mjs';
+import { buildStatusPayload } from '../engine/engine.mjs';
+import { loadCurrentRelease } from '../state/store.mjs';
+import { Context } from '../engine/context.mjs';
+import { publishLog, subscribe } from './events.mjs';
+import { detectEdition } from '../detect-edition.mjs';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const UI_DIST = join(__dirname, '../ui/dist');
+const HOST = '127.0.0.1';
+const PORT = Number(process.env.RELEASE_RUNNER_PORT || 9876);
+
+const MIME = {
+  '.html': 'text/html',
+  '.js': 'text/javascript',
+  '.css': 'text/css',
+  '.svg': 'image/svg+xml',
+  '.ico': 'image/x-icon',
+  '.json': 'application/json',
+};
+
+/**
+ * @param {import('http').IncomingMessage} req
+ */
+async function readBody(req) {
+  const chunks = [];
+  for await (const chunk of req) {
+    chunks.push(chunk);
+  }
+  const raw = Buffer.concat(chunks).toString('utf8');
+  if (!raw) {
+    return {};
+  }
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return {};
+  }
+}
+
+/**
+ * @param {import('http').ServerResponse} res
+ * @param {number} code
+ * @param {object} body
+ */
+function json(res, code, body) {
+  res.writeHead(code, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify(body));
+}
+
+/**
+ * Remove --edition and its value so UI/API always auto-detect from composer.json.
+ *
+ * @param {string[]} args
+ * @returns {string[]}
+ */
+function stripEditionFlags(args) {
+  const out = [];
+  for (let i = 0; i < args.length; i += 1) {
+    if (args[i] === '--edition') {
+      i += 1;
+      continue;
+    }
+    out.push(args[i]);
+  }
+  return out;
+}
+
+/**
+ * @param {string} cwd
+ */
+async function ghAccount(cwd) {
+  const ctx = new Context({}, { cwd });
+  const result = await ctx.execCapture('gh auth status 2>&1');
+  const match = result.stdout.match(/Logged in to \S+ account (\S+)/);
+  return match ? match[1] : null;
+}
+
+/**
+ * @param {import('http').IncomingMessage} req
+ * @param {import('http').ServerResponse} res
+ * @param {string} cwd
+ */
+async function handleApi(req, res, cwd) {
+  const url = new URL(req.url || '/', `http://${HOST}`);
+  const path = url.pathname;
+
+  if (req.method === 'GET' && path === '/api/status') {
+    const detectedEdition = detectEdition(cwd);
+    const release = loadCurrentRelease(cwd);
+    if (!release) {
+      json(res, 200, {
+        ok: true,
+        release: null,
+        detectedEdition,
+        ghAccount: await ghAccount(cwd),
+      });
+      return;
+    }
+    const payload = buildStatusPayload(release, release.edition);
+    json(res, 200, {
+      ok: true,
+      ghAccount: await ghAccount(cwd),
+      detectedEdition,
+      ...payload,
+    });
+    return;
+  }
+
+  if (req.method === 'GET' && path === '/api/log') {
+    const logPath = join(cwd, 'dev-workspace-cache/deploy.log');
+    let log = '';
+    if (existsSync(logPath)) {
+      log = readFileSync(logPath, 'utf8');
+    }
+    json(res, 200, { ok: true, log });
+    return;
+  }
+
+  if (req.method === 'GET' && path === '/api/events') {
+    res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      Connection: 'keep-alive',
+    });
+    res.write('\n');
+    const send = (data) => {
+      const lines = data.split('\n').filter(Boolean);
+      for (const line of lines) {
+        res.write(`data: ${JSON.stringify({ line })}\n\n`);
+      }
+    };
+    const unsub = subscribe(send);
+    req.on('close', () => unsub());
+    return;
+  }
+
+  if (req.method !== 'POST' || !path.startsWith('/api/')) {
+    json(res, 404, { ok: false, error: 'Not found' });
+    return;
+  }
+
+  const body = await readBody(req);
+  const args = body.args || [];
+  const sub = path.replace(/^\/api\//, '');
+
+  const handler = commands[sub];
+  if (!handler) {
+    json(res, 404, { ok: false, error: `Unknown API: ${sub}` });
+    return;
+  }
+
+  const flags = {
+    json: false,
+    yes: body.yes === true,
+    onLog: (line) => publishLog(line),
+  };
+  const rest = sub === 'start' ? stripEditionFlags(args) : args;
+  try {
+    const exitCode = await handler(rest, cwd, flags);
+    const release = loadCurrentRelease(cwd);
+    let error;
+    if (release && exitCode === 1) {
+      for (const step of Object.values(release.steps)) {
+        if (step.status === 'failed' && step.note) {
+          error = step.note;
+          break;
+        }
+      }
+    }
+    json(res, 200, { ok: exitCode !== 1, exitCode, release, ...(error ? { error } : {}) });
+  } catch (err) {
+    json(res, 400, { ok: false, error: err.message });
+  }
+}
+
+/**
+ * @param {import('http').IncomingMessage} req
+ * @param {import('http').ServerResponse} res
+ */
+function serveStatic(req, res) {
+  let reqPath = new URL(req.url || '/', `http://${HOST}`).pathname;
+  if (reqPath === '/') {
+    reqPath = '/index.html';
+  }
+  const filePath = join(UI_DIST, reqPath);
+  if (!filePath.startsWith(UI_DIST) || !existsSync(filePath) || statSync(filePath).isDirectory()) {
+    if (existsSync(join(UI_DIST, 'index.html'))) {
+      const html = readFileSync(join(UI_DIST, 'index.html'));
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(html);
+      return;
+    }
+    res.writeHead(404);
+    res.end('UI not built. Run: npm run build:release-ui');
+    return;
+  }
+  const ext = extname(filePath);
+  res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
+  res.end(readFileSync(filePath));
+}
+
+/**
+ * @param {{ cwd?: string }} [options]
+ */
+export function startServer(options = {}) {
+  const cwd = options.cwd || process.cwd();
+  const server = createServer(async (req, res) => {
+    try {
+      if (req.url?.startsWith('/api/')) {
+        await handleApi(req, res, cwd);
+      } else {
+        serveStatic(req, res);
+      }
+    } catch (err) {
+      json(res, 500, { ok: false, error: err.message });
+    }
+  });
+
+  server.listen(PORT, HOST, () => {
+    process.stderr.write(
+      `Release runner UI: http://${HOST}:${PORT}/ (cwd: ${cwd})\n`
+    );
+  });
+  return server;
+}

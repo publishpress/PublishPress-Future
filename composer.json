@@ -45,7 +45,8 @@
         "version-constant": "PUBLISHPRESS_FUTURE_VERSION",
         "plugin-lang-domain": "post-expirator",
         "plugin-github-repo": "publishpress/publishpress-future",
-        "plugin-composer-package": "publishpress/publishpress-future"
+        "plugin-composer-package": "publishpress/publishpress-future",
+        "edition": "free"
     },
     "scripts": {
         "check:all": [
@@ -59,6 +60,10 @@
         "sync:pro": [
             "@pack:dir",
             "rsync -a --delete dist/post-expirator/ ../publishpress-future-pro/lib/vendor/publishpress/publishpress-future/"
+        ],
+        "deploy": [
+            "@not-container",
+            "node scripts/release-runner/index.mjs \"$@\""
         ]
     }
 }
