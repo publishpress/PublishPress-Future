@@ -1,7 +1,12 @@
 import { Context } from './context.mjs';
 import { runGhAuthLogin } from './pty.mjs';
 import { getPreset } from '../presets/index.mjs';
-import { resolveEffectiveVersion, saveRelease, touchRelease } from '../state/store.mjs';
+import {
+  resolveEffectiveVersion,
+  saveRelease,
+  syncReleaseSteps,
+  touchRelease,
+} from '../state/store.mjs';
 
 /** Step id executing right now in this process, for the page's `running` status. */
 let activeStepId = null;
@@ -114,6 +119,10 @@ async function runAutoStepInner(stepDef, ctx) {
  * @returns {Promise<{ exitCode: number, blocked?: string, release: object, error?: string }>}
  */
 export async function runEngine(release, options = {}) {
+  const { changed } = syncReleaseSteps(release);
+  if (changed && options.cwd) {
+    saveRelease(release, options.cwd);
+  }
   const edition = release.edition;
   const pipeline = getPreset(edition);
   const ctx = new Context(

@@ -7,6 +7,7 @@ import {
   writeFileSync,
 } from 'fs';
 import { join, resolve } from 'path';
+import { getPreset } from '../presets/index.mjs';
 
 /**
  * @param {string} [cwd]
@@ -56,14 +57,43 @@ export function loadRelease(version, cwd = process.cwd()) {
 }
 
 /**
- * @param {string} [cwd]
+ * Ensure every pipeline step has state (e.g. steps added after release started).
+ *
+ * @param {object} release
+ * @returns {{ release: object, changed: boolean }}
  */
+export function syncReleaseSteps(release) {
+  if (!release?.edition || !release.steps) {
+    return { release, changed: false };
+  }
+  const pipeline = getPreset(release.edition);
+  let changed = false;
+  for (const def of pipeline) {
+    if (!release.steps[def.id]) {
+      release.steps[def.id] = { status: 'pending' };
+      changed = true;
+    }
+  }
+  if (changed) {
+    touchRelease(release);
+  }
+  return { release, changed };
+}
+
 export function loadCurrentRelease(cwd = process.cwd()) {
   const pointer = loadPointer(cwd);
   if (!pointer?.version) {
     return null;
   }
-  return loadRelease(pointer.version, cwd);
+  const release = loadRelease(pointer.version, cwd);
+  if (!release) {
+    return null;
+  }
+  const synced = syncReleaseSteps(release);
+  if (synced.changed) {
+    saveRelease(synced.release, cwd);
+  }
+  return synced.release;
 }
 
 /**

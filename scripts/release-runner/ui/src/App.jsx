@@ -26,7 +26,11 @@ async function apiPost(path, body = {}) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-  return res.json();
+  const data = await res.json();
+  if (!res.ok || data.ok === false) {
+    throw new Error(data.error || res.statusText || 'Request failed');
+  }
+  return data;
 }
 
 function isFinished(step) {
@@ -93,6 +97,7 @@ export default function App() {
   const [startOpen, setStartOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [expandedStepId, setExpandedStepId] = useState(null);
+  const [actionError, setActionError] = useState(null);
 
   const refresh = useCallback(async () => {
     const data = await apiGet('/api/status');
@@ -137,10 +142,13 @@ export default function App() {
     if (sub === 'run') {
       setLog([]);
     }
+    setActionError(null);
     setBusy(true);
     try {
       await apiPost(`/api/${sub}`, { args, ...body });
       await refresh();
+    } catch (err) {
+      setActionError(err.message || 'Request failed');
     } finally {
       setBusy(false);
     }
@@ -232,6 +240,12 @@ export default function App() {
           <AlertBanner tone="security" title="Security release">
             Keep essential checks. Translations may be skipped; do not disclose vulnerability details until it is
             published.
+          </AlertBanner>
+        )}
+
+        {actionError && (
+          <AlertBanner tone="failed" title="Action failed">
+            {actionError}
           </AlertBanner>
         )}
 

@@ -5,6 +5,7 @@ import {
   loadCurrentRelease,
   saveRelease,
   listReleaseIds,
+  syncReleaseSteps,
   touchRelease,
 } from './state/store.mjs';
 import {
@@ -213,7 +214,11 @@ async function cmdStatus(cwd, flags) {
  * @param {string} cwd
  * @param {string} [note]
  */
-function markStep(release, stepId, status, note) {
+function markStep(release, stepId, status, note, cwd) {
+  const { changed } = syncReleaseSteps(release);
+  if (changed) {
+    saveRelease(release, cwd);
+  }
   if (!release.steps[stepId]) {
     throw new Error(`Unknown step: ${stepId}`);
   }
@@ -244,7 +249,7 @@ async function cmdComplete(rest, cwd, flags) {
   if (!release) {
     throw new Error('No in-progress release');
   }
-  markStep(release, stepId, 'done', note);
+  markStep(release, stepId, 'done', note, cwd);
   const result = await continueRelease(cwd, { onLog: flags.onLog });
   output(formatRunPayload(result), flags.json);
   return exitFromRunResult(result);
@@ -271,7 +276,7 @@ async function cmdSkip(rest, cwd, flags) {
   if (!release) {
     throw new Error('No in-progress release');
   }
-  markStep(release, stepId, 'skipped', note);
+  markStep(release, stepId, 'skipped', note, cwd);
   const result = await continueRelease(cwd, { onLog: flags.onLog });
   output(formatRunPayload(result), flags.json);
   return exitFromRunResult(result);
