@@ -286,6 +286,7 @@ export default function App() {
                       label={step.label}
                       type={step.type}
                       status={step.status}
+                      guide={step.instructions || step.message}
                       note={hasLogOutput ? null : distinctStepNote(step.note, log, isCurrent)}
                       hasLogOutput={hasLogOutput}
                       current={isCurrent}
@@ -296,11 +297,7 @@ export default function App() {
                       cli={isCurrent ? cliHint(step) : null}
                       onReopen={isCurrent ? () => runAction('reopen', [step.id]) : null}
                       log={isCurrent ? <LogPanel lines={log} live={isRunning} /> : null}
-                    >
-                      {[step.instructions || step.message, step.command && `$ ${step.command}`]
-                        .filter(Boolean)
-                        .join('\n\n') || null}
-                    </StepRow>
+                    />
                   </React.Fragment>
                 );
               })}

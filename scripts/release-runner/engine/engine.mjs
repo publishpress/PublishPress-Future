@@ -364,7 +364,16 @@ export function buildStatusPayload(release, edition) {
       at: release.steps[def.id]?.at,
       note: release.steps[def.id]?.note,
       command: resolveField(def.command, ctx) || undefined,
-      instructions: def.type === 'manual' ? resolveField(def.instructions, ctx) : undefined,
+      instructions: (() => {
+        const fromDef = resolveField(def.instructions, ctx);
+        if (fromDef) {
+          return fromDef;
+        }
+        if (def.type === 'confirm' || def.type === 'manual') {
+          return resolveField(def.message, ctx) || undefined;
+        }
+        return undefined;
+      })(),
       message: def.type === 'confirm' ? resolveField(def.message, ctx) : undefined,
     })),
   };

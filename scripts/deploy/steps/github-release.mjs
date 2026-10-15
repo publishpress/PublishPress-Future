@@ -4,6 +4,8 @@ export default {
   phase: 'Release',
   type: 'confirm',
   publish: true,
+  instructions: (ctx) =>
+    `Create the GitHub release on master with tag ${ctx.data.version} (no "v" prefix). Do not move the tag after deploy workflows start.`,
   command: (ctx) => `gh release create ${ctx.data.version} --target master --generate-notes`,
   message: (ctx) =>
     [

@@ -5,7 +5,7 @@ export default {
   type: 'manual',
   command: 'composer test Integration',
   instructions:
-    'Run Integration tests outside this deploy container (browser-capable environment), then continue.\n\n' +
+    'Exercises WordPress integration paths before merge; run outside the deploy container in a browser-capable environment.\n\n' +
     'Suggested command:\n' +
     '  composer test Integration',
 };

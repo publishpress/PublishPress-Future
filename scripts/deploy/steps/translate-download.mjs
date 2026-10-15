@@ -5,6 +5,7 @@ export default {
   label: 'Download updated translations',
   phase: 'Localization',
   type: 'auto',
+  instructions: 'Downloads updated community translations and commits changes when files differ.',
   command: 'composer translate:download',
   run: async (ctx) => {
     await ctx.exec('composer translate:download');

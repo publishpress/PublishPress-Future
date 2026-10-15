@@ -4,5 +4,7 @@ export default {
   phase: 'Release',
   type: 'confirm',
   publish: true,
+  instructions: (ctx) =>
+    `Merge the release PR (${ctx.data.branchName} → master) on GitHub so master contains the release commit.`,
   message: (ctx) => `Merge the release PR (${ctx.data.branchName} → master) on GitHub, then continue.`,
 };

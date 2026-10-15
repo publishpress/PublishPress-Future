@@ -3,5 +3,7 @@ export default {
   label: 'CHANGELOG.md ready',
   phase: 'Version & Documentation',
   type: 'confirm',
+  instructions: (ctx) =>
+    `Ensure CHANGELOG.md has user-facing notes, today's date, and a v${ctx.data.version} heading before continuing.`,
   message: (ctx) => `Update CHANGELOG.md:\n  - Add user-friendly descriptions of all changes\n  - Verify the release date is set to today\n  - Ensure v${ctx.data.version} heading is present\n\nThen continue.`,
 };

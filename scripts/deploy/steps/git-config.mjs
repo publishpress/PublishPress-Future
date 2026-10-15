@@ -3,6 +3,8 @@ export default {
   label: 'Verify git user configuration',
   phase: 'Pre-flight & Branch Setup',
   type: 'auto',
+  instructions:
+    'Ensures git user.name and user.email are configured so release commits show the correct author.',
   critical: true,
 
   setup: async (ctx) => {

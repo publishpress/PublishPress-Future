@@ -190,6 +190,7 @@ export function StepRow({
   status,
   current,
   note,
+  guide,
   open,
   onOpenChange,
   actions,
@@ -198,10 +199,9 @@ export function StepRow({
   cli,
   busy,
   hasLogOutput,
-  children,
 }) {
   const key = statusKey(status);
-  const hasBody = Boolean((!hasLogOutput && (children || note)) || (current && log));
+  const hasBody = Boolean(guide || (!hasLogOutput && note) || (current && log)) || (current && onReopen);
   const showBadge = current || key === 'failed' || key === 'waiting' || key === 'running';
   const canExpand = hasBody || (current && onReopen);
   return (
@@ -233,7 +233,7 @@ export function StepRow({
           {current && actions && <div className="rr-step__actions">{actions}</div>}
         </div>
         <Collapsible.Content className="rr-step__body">
-          {!hasLogOutput && children}
+          {guide && <p className="rr-step__guide">{guide}</p>}
           {!hasLogOutput && note && <div className="rr-step__note">Note: {note}</div>}
           {current && log}
           {current && onReopen && (

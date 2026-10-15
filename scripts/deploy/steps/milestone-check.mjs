@@ -4,5 +4,5 @@ export default {
   phase: 'Pre-Release Preparation',
   type: 'manual',
   instructions: (ctx) =>
-    `Verify the GitHub milestone for v${ctx.data.version} exists and all issues/PRs are closed or deferred before continuing.`,
+    `Open the GitHub milestone for v${ctx.data.version}. Confirm every issue and PR is closed or explicitly deferred—not still open for this release.`,
 };

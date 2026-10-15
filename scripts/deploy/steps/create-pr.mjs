@@ -3,6 +3,7 @@ export default {
   label: 'Create release pull request',
   phase: 'Release',
   type: 'auto',
+  instructions: 'Opens a GitHub pull request from the release branch to master for final review and merge.',
   command: (ctx) => `gh pr create --base master --head ${ctx.data.branchName}`,
   run: async (ctx) => {
     await ctx.exec(

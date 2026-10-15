@@ -3,6 +3,8 @@ export default {
   label: 'Pre-flight check',
   phase: 'Pre-flight & Branch Setup',
   type: 'auto',
+  instructions:
+    'Requires a clean git working tree before the release starts. Commit, stash, or discard local changes first.',
   command: 'git status --short',
   critical: true,
   run: async (ctx) => {

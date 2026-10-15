@@ -5,7 +5,7 @@ export default {
   type: 'manual',
   command: 'composer test Unit',
   instructions:
-    'Run Unit tests outside this deploy container (browser-capable environment), then continue.\n\n' +
+    'Confirms core plugin logic before merge; run outside the deploy container if your setup needs extra services.\n\n' +
     'Suggested command:\n' +
     '  composer test Unit',
 };

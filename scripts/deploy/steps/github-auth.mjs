@@ -3,6 +3,7 @@ export default {
   label: 'Verify GitHub CLI authentication',
   phase: 'Pre-flight & Branch Setup',
   type: 'auto',
+  instructions: 'Confirms GitHub CLI is authenticated as the account that can push branches, open PRs, and create releases.',
   command: 'gh auth status',
   critical: true,
   run: async (ctx) => {
