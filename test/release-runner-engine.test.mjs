@@ -24,12 +24,12 @@ test('run stops on manual gate with exit 10', async () => {
 
 test('reopen build_package bumps prerelease n', async () => {
   const { getPreset } = await import('../scripts/release-runner/presets/index.mjs');
-  const steps = getPreset('free');
-  const release = createReleaseRecord('4.0.0', 'free', 'standard', steps, {
+  const steps = getPreset('plugin-free-stable');
+  const release = createReleaseRecord('4.0.0', 'plugin-free-stable', 'standard', steps, {
     channel: 'beta',
   });
   release.steps.build_package = { status: 'done', at: new Date().toISOString() };
-  cascadeReopen(release, 'build_package', 'free');
+  cascadeReopen(release, 'build_package', 'plugin-free-stable');
   assert.equal(release.prerelease.n, 2);
   assert.equal(release.steps.build_package.status, 'pending');
 });
@@ -86,11 +86,17 @@ test('status payload reports running while an auto step executes', async () => {
 test('status payload exposes type, publish flag and resolved command', async () => {
   const { buildStatusPayload } = await import('../scripts/release-runner/engine/engine.mjs');
   const { getPreset } = await import('../scripts/release-runner/presets/index.mjs');
-  const release = createReleaseRecord('4.11.0', 'free', 'standard', getPreset('free'));
-  const steps = buildStatusPayload(release, 'free').steps;
+  const release = createReleaseRecord('4.11.0', 'plugin-free-stable', 'standard', getPreset('plugin-free-stable'));
+  const steps = buildStatusPayload(release, 'plugin-free-stable').steps;
   const gh = steps.find((s) => s.id === 'github_release');
   assert.equal(gh.type, 'confirm');
   assert.equal(gh.publish, true);
   assert.equal(gh.command, 'gh release create 4.11.0 --target master --generate-notes');
   assert.equal(steps.find((s) => s.id === 'merge_hotfixes').publish, false);
+});
+
+test('getPreset resolves legacy free and pro ids', async () => {
+  const { getPreset } = await import('../scripts/release-runner/presets/index.mjs');
+  assert.equal(getPreset('plugin-free-stable'), getPreset('plugin-free-stable'));
+  assert.equal(getPreset('pro'), getPreset('plugin-pro-stable'));
 });

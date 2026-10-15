@@ -1,4 +1,4 @@
-import { commitIfDirty } from '../utils.mjs';
+import { commitIfDirty } from './utils.mjs';
 
 export default {
   id: 'translate_download',

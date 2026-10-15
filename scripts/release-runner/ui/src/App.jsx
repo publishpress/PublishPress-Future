@@ -295,7 +295,9 @@ export default function App() {
     );
   };
 
-  const detectedEdition = status?.detectedEdition ?? 'free';
+  const runnerPresets = status?.runnerPresets ?? [];
+  const presetMeta = status?.presetMeta ?? {};
+  const defaultPreset = status?.defaultPreset ?? runnerPresets[0] ?? '';
 
   return (
     <div className="rr-screen">
@@ -308,8 +310,17 @@ export default function App() {
           <div className="rr-header__end">
             {release && (
               <div className="rr-header__pills">
-                <MetaPill label="Version" value={version} tone="accent" mono />
-                <MetaPill label="Edition" value={release.edition} />
+                <MetaPill
+                  label="Version"
+                  value={version}
+                  tone="accent"
+                  mono
+                  product={presetMeta[release.edition]?.product}
+                />
+                <MetaPill
+                  label="Preset"
+                  value={presetMeta[release.edition]?.label ?? release.edition}
+                />
                 {release.urgency === 'security' && <MetaPill label="Urgency" value="security" tone="alert" />}
                 <MetaPill label="Branch" value={release.branchName} mono />
                 {release.prerelease?.channel && (
@@ -381,8 +392,9 @@ export default function App() {
             </>
           }
         >
-          Start a versioned release for this working copy. Edition is read from{' '}
-          <span className="rr-code">composer.json</span> ({detectedEdition}).
+          Start a versioned release. Presets come from{' '}
+          <span className="rr-code">composer.json</span> →{' '}
+          <span className="rr-code">extra.release-presets</span>.
         </EmptyState>
       )}
 
@@ -432,12 +444,14 @@ export default function App() {
       <StartReleaseDialog
         open={startOpen}
         onOpenChange={setStartOpen}
-        edition={detectedEdition}
+        runnerPresets={runnerPresets}
+        presetMeta={presetMeta}
+        defaultPreset={defaultPreset}
         busy={busy}
-        onStart={async ({ version: v, urgency, channel }) => {
-          const args = [v, '--urgency', urgency];
-          if (channel !== 'none') {
-            args.push('--channel', channel);
+        onStart={async ({ version: v, urgency, preset, prereleaseChannel }) => {
+          const args = [v, '--urgency', urgency, '--preset', preset];
+          if (prereleaseChannel) {
+            args.push('--prerelease-channel', prereleaseChannel);
           }
           await runAction('start', args);
           setStartOpen(false);

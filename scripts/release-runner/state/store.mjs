@@ -7,7 +7,7 @@ import {
   writeFileSync,
 } from 'fs';
 import { join, resolve } from 'path';
-import { getPreset } from '../presets/index.mjs';
+import { getPreset, normalizeEdition } from '../presets/index.mjs';
 
 /**
  * @param {string} [cwd]
@@ -66,8 +66,13 @@ export function syncReleaseSteps(release) {
   if (!release?.edition || !release.steps) {
     return { release, changed: false };
   }
-  const pipeline = getPreset(release.edition);
   let changed = false;
+  const canonicalEdition = normalizeEdition(release.edition);
+  if (canonicalEdition !== release.edition) {
+    release.edition = canonicalEdition;
+    changed = true;
+  }
+  const pipeline = getPreset(release.edition);
   for (const def of pipeline) {
     if (!release.steps[def.id]) {
       release.steps[def.id] = { status: 'pending' };
@@ -158,10 +163,10 @@ export function buildInitialSteps(stepDefs) {
 
 /**
  * @param {string} version
- * @param {'free'|'pro'} edition
+ * @param {import('../presets/index.mjs').ReleaseEditionId | string} edition
  * @param {'standard'|'security'} urgency
  * @param {import('../presets/types.mjs').StepDefinition[]} stepDefs
- * @param {{ channel?: 'beta'|'rc' } | null} prerelease
+ * @param {{ channel: 'beta'|'rc', n?: number } | null} prerelease
  */
 export function createReleaseRecord(version, edition, urgency, stepDefs, prerelease = null) {
   const branchName = `release-${version.replace(/-(beta|rc)\.\d+$/, '')}`;
@@ -171,7 +176,9 @@ export function createReleaseRecord(version, edition, urgency, stepDefs, prerele
     urgency,
     branchName,
     status: 'in_progress',
-    prerelease: prerelease ? { channel: prerelease.channel, n: 1 } : null,
+    prerelease: prerelease
+      ? { channel: prerelease.channel, n: typeof prerelease.n === 'number' ? prerelease.n : 1 }
+      : null,
     steps: buildInitialSteps(stepDefs),
     startedAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
@@ -212,8 +219,55 @@ export function listReleaseIds(cwd = process.cwd()) {
 }
 
 /**
- * @param {object} release
+ * Highest prerelease build number for a base version and channel in saved release JSON.
+ *
+ * @param {string} cwd
+ * @param {string} baseVersion MAJOR.MINOR.PATCH
+ * @param {'beta'|'rc'} channel
  */
+export function maxPrereleaseNumber(cwd, baseVersion, channel) {
+  const paths = getPaths(cwd);
+  /** @type {string[]} */
+  const files = [];
+  if (existsSync(paths.base)) {
+    for (const name of readdirSync(paths.base)) {
+      if (name.endsWith('.json') && name !== 'current.json') {
+        files.push(join(paths.base, name));
+      }
+    }
+  }
+  if (existsSync(paths.archiveDir)) {
+    for (const name of readdirSync(paths.archiveDir)) {
+      if (name.endsWith('.json')) {
+        files.push(join(paths.archiveDir, name));
+      }
+    }
+  }
+
+  let max = 0;
+  const suffixRe = new RegExp(`^${baseVersion.replace(/\./g, '\\.')}-${channel}\\.(\\d+)$`);
+
+  for (const filePath of files) {
+    try {
+      const data = JSON.parse(readFileSync(filePath, 'utf8'));
+      const base = String(data.version || '').replace(/-(beta|rc)\.\d+$/, '');
+      if (base !== baseVersion) {
+        continue;
+      }
+      if (data.prerelease?.channel === channel && typeof data.prerelease.n === 'number') {
+        max = Math.max(max, data.prerelease.n);
+      }
+      const m = String(data.version || '').match(suffixRe);
+      if (m) {
+        max = Math.max(max, Number(m[1]));
+      }
+    } catch {
+      // ignore corrupt files
+    }
+  }
+  return max;
+}
+
 export function resolveEffectiveVersion(release) {
   if (!release.prerelease?.channel) {
     return release.version.replace(/-(beta|rc)\.\d+$/, '') === release.version

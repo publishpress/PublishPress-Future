@@ -7,7 +7,7 @@ Local release orchestration for PublishPress plugins. Replaces the GitHub issue 
 | Path | Role |
 |------|------|
 | [scripts/release-runner/](../../scripts/release-runner/) | CLI, engine, UI, state |
-| [scripts/deploy/steps/](../../scripts/deploy/steps/) | Step definitions used by presets |
+| [scripts/release-runner/steps/](../../scripts/release-runner/steps/) | Step definitions used by presets |
 | [test/release-runner-*.test.mjs](../../test/) | Node tests |
 
 Later: move into `publishpress/dev-workspace` and drop the duplicate tree here.
@@ -40,7 +40,7 @@ flowchart LR
 
 - **State:** `dev-workspace-cache/releases/` (gitignored). One `current` pointer per plugin working copy.
 - **CI:** not supported in v1. Releases run on developer machines.
-- **Presets:** `free` and `pro`. At `start`, edition comes from `composer.json` → `extra.edition` (`free` or `pro`) when set; otherwise heuristics (package name, `-pro` slug/repo, `lib/composer.json` requiring Future). CLI `--edition` overrides.
+- **Presets:** Listed in `composer.json` → `extra.release-presets` (array of preset ids). Legacy ids `free` / `pro` still resolve in saved state and CLI. If `release-presets` is omitted, a single stable preset is inferred (pro vs free heuristics). CLI `--preset` selects among listed presets; `--edition` is a deprecated alias.
 
 ## State
 
@@ -55,17 +55,18 @@ flowchart LR
 | Field | Type | Notes |
 |-------|------|-------|
 | `version` | string | Semver, e.g. `4.11.0` or `4.11.0-beta.1` |
-| `edition` | `free` \| `pro` | Preset id (from `extra.edition` or `--edition` at start) |
+| `edition` | preset id string | Canonical preset id (e.g. `plugin-free-stable`, `plugin-free-unstable`) |
 
-Set in the plugin root `composer.json`:
+Set available presets in the plugin root `composer.json`:
 
 ```json
 "extra": {
-  "edition": "free"
+  "release-presets": ["plugin-free-stable", "plugin-free-unstable"]
 }
 ```
 
-Pro plugins use `"edition": "pro"`.
+Stable presets (`*-stable`): start version must be `MAJOR.MINOR.PATCH` only. Unstable presets (`*-unstable`): base `x.y.z` only; package suffix from `prerelease` state (`beta` / `rc`).
+
 | `urgency` | `standard` \| `security` | Label only; does not change steps |
 | `branchName` | string | `release-<version>` |
 | `status` | `in_progress` \| `abandoned` \| `complete` | |
@@ -96,7 +97,7 @@ Composer only forwards arguments after `--`.
 | Subcommand | Description |
 |------------|-------------|
 | `status [--json]` | Current release and step states |
-| `start <version> [--edition free\|pro] [--urgency standard\|security] [--channel beta\|rc]` | New release (edition auto-detected when `--edition` omitted) |
+| `start <version> [--preset <id>] [--edition <id>] [--urgency standard\|security] [--prerelease-channel beta\|rc]` | New release (`--preset` required when multiple ids in `extra.release-presets`; unstable presets auto-increment `prerelease.n`) |
 | `resume` | Alias for loading current (no-op if already loaded) |
 | `reset --yes` | Delete state |
 | `new <version> …` | Archive + start |
@@ -141,6 +142,15 @@ If `gh auth status` fails, run `gh auth login --hostname github.com --git-protoc
 
 No repeat-block in the preset. Second package: `reopen` on the build/package step; later steps reset; `prerelease.n` bumps. Channel set at `start` or `reopen`, not inferred.
 
+### Preset ids
+
+| Preset | Purpose |
+|--------|---------|
+| `plugin-free-stable` | Full free release: milestones, WP.org check, post-release verification. |
+| `plugin-pro-stable` | Full pro release: milestones, package-server check, pin free lib. |
+| `plugin-free-unstable` | Beta/rc free: skips milestones, post-release, and WP.org gates. |
+| `plugin-pro-unstable` | Beta/rc pro: skips milestone check/close only. |
+
 ### Preset gaps vs prototype
 
 Presets follow the issue templates, not the old Future-only `custom-deploy` list:
@@ -160,11 +170,11 @@ Presets follow the issue templates, not the old Future-only `custom-deploy` list
 
 **Design system:** [release-runner-design/](release-runner-design/README.md) — tokens, components and copy rules for this page. Read it before changing the UI.
 
-### Edition (UI vs CLI)
+### Presets (UI vs CLI)
 
-The web UI **cannot** choose edition. **Start release** only asks for version; edition is always read from `composer.json` via `detectEdition` (same as CLI when `--edition` is omitted). The start dialog shows the detected edition as read-only text.
+**Start release** lists presets from `GET /api/status` → `runnerPresets` and `presetMeta` (version rules, allowed prerelease channels). The dialog picks a preset; when more than one channel is allowed for that preset, a beta/rc control appears. Version validation follows the preset (`stable` = strict `x.y.z`).
 
-CLI `composer deploy -- start <version> [--edition free|pro]` still accepts `--edition` for agents or overrides when documented below.
+CLI `composer deploy -- start <version> [--preset <id>]` uses the same rules. With a single entry in `extra.release-presets`, `--preset` may be omitted.
 
 ### Layout
 
@@ -199,6 +209,6 @@ The server listens on `http://127.0.0.1:9876/` (override with `RELEASE_RUNNER_PO
 1. This document (spec).
 2. State + CLI (JSON only).
 3. Engine + fixture steps + tests.
-4. Free/pro presets + real commands.
+4. Plugin free/pro stable presets + real commands.
 5. React page + localhost API.
 6. `composer deploy` cutover; remove Clack wizard.

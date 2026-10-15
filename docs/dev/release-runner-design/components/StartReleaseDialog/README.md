@@ -1,6 +1,6 @@
-The Start release form: a version with semver validation, urgency, the first package channel, and the read-only edition.
+The Start release form: version (validated per preset), preset picker from `runnerPresets`, urgency, and optional beta/rc channel when the preset allows more than one.
 
-**Provide:** `edition` (from `detectEdition`), an optional starting `version`, `onStart({ version, urgency, channel })`, and `onCancel`. Rendered in place with a scrim; in the app, put the `rr-dialog` inside Radix `Dialog.Content`, or pass `inline={false}` for the dialog alone.
+**Provide:** `runnerPresets`, `presetMeta`, `defaultPreset` (from `/api/status`), `onStart({ version, urgency, preset, prereleaseChannel })`, and `onCancel`.
 
-- Reject a "v" prefix and short versions as the user types; the hint shows the branch name that will be created.
-- Edition stays read-only, as the spec requires.
+- Stable presets: base `MAJOR.MINOR.PATCH` only.
+- Prerelease presets: same base version; suffix comes from runner state, not the input field.

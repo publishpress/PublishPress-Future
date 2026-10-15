@@ -8,7 +8,8 @@ import { loadCurrentRelease } from '../state/store.mjs';
 import { loadUiPrefs, saveUiPrefs } from '../state/ui-prefs.mjs';
 import { Context } from '../engine/context.mjs';
 import { publishLog, subscribe } from './events.mjs';
-import { detectEdition } from '../detect-edition.mjs';
+import { loadRunnerPresets } from '../detect-edition.mjs';
+import { buildPresetMetaPayload } from '../presets/meta.mjs';
 import {
   beginRunSession,
   endRunSession,
@@ -60,24 +61,6 @@ function json(res, code, body) {
   res.end(JSON.stringify(body));
 }
 
-/**
- * Remove --edition and its value so UI/API always auto-detect from composer.json.
- *
- * @param {string[]} args
- * @returns {string[]}
- */
-function stripEditionFlags(args) {
-  const out = [];
-  for (let i = 0; i < args.length; i += 1) {
-    if (args[i] === '--edition') {
-      i += 1;
-      continue;
-    }
-    out.push(args[i]);
-  }
-  return out;
-}
-
 /** @type {{ cwd: string, at: number, value: string | null } | null} */
 let ghAccountCache = null;
 const GH_ACCOUNT_TTL_MS = 60_000;
@@ -108,13 +91,17 @@ async function handleApi(req, res, cwd) {
   const path = url.pathname;
 
   if (req.method === 'GET' && path === '/api/status') {
-    const detectedEdition = detectEdition(cwd);
+    const runnerPresets = loadRunnerPresets(cwd);
+    const defaultPreset = runnerPresets[0];
+    const presetMeta = buildPresetMetaPayload(runnerPresets);
     const release = loadCurrentRelease(cwd);
     if (!release) {
       json(res, 200, {
         ok: true,
         release: null,
-        detectedEdition,
+        runnerPresets,
+        presetMeta,
+        defaultPreset,
         ghAccount: await ghAccount(cwd),
       });
       return;
@@ -123,7 +110,9 @@ async function handleApi(req, res, cwd) {
     json(res, 200, {
       ok: true,
       ghAccount: await ghAccount(cwd),
-      detectedEdition,
+      runnerPresets,
+      presetMeta,
+      defaultPreset,
       ...payload,
     });
     return;
@@ -201,7 +190,7 @@ async function handleApi(req, res, cwd) {
     yes: body.yes === true,
     onLog: (line) => publishLog(line),
   };
-  const rest = sub === 'start' ? stripEditionFlags(args) : args;
+  const rest = args;
   beginRunSession();
   try {
     const exitCode = await handler(rest, cwd, flags);

@@ -1,7 +1,7 @@
 /**
  * After a step that generates files, commit changes when the tree is dirty.
  *
- * @param {import('./context.mjs').Context} ctx
+ * @param {import('../engine/context.mjs').Context} ctx
  * @param {string} defaultMessage
  */
 export async function commitIfDirty(ctx, defaultMessage) {

@@ -28,7 +28,7 @@ export function resolveField(field, ctx) {
 }
 
 /**
- * @param {'free'|'pro'} edition
+ * @param {import('../presets/index.mjs').ReleaseEditionId | string} edition
  */
 export function getStepPipeline(edition) {
   return getPreset(edition);
@@ -36,7 +36,7 @@ export function getStepPipeline(edition) {
 
 /**
  * @param {object} release
- * @param {'free'|'pro'} edition
+ * @param {import('../presets/index.mjs').ReleaseEditionId | string} edition
  */
 export function orderedStepIds(release, edition) {
   return getPreset(edition).map((s) => s.id);
@@ -45,7 +45,7 @@ export function orderedStepIds(release, edition) {
 /**
  * @param {object} release
  * @param {string} stepId
- * @param {'free'|'pro'} edition
+ * @param {import('../presets/index.mjs').ReleaseEditionId | string} edition
  */
 export function cascadeReopen(release, stepId, edition) {
   const ids = orderedStepIds(release, edition);
@@ -383,7 +383,7 @@ async function continueAfterStep(release, afterStepId, pipeline, ctx, options) {
 
 /**
  * @param {object} release
- * @param {'free'|'pro'} edition
+ * @param {import('../presets/index.mjs').ReleaseEditionId | string} edition
  */
 export function getCurrentStepId(release, edition) {
   const pipeline = getPreset(edition);
@@ -398,7 +398,7 @@ export function getCurrentStepId(release, edition) {
 
 /**
  * @param {object} release
- * @param {'free'|'pro'} edition
+ * @param {import('../presets/index.mjs').ReleaseEditionId | string} edition
  */
 export function buildStatusPayload(release, edition) {
   const pipeline = getPreset(edition);

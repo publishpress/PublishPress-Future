@@ -27,7 +27,7 @@ export declare function PhaseProgress(props: PhaseProgressProps): React.ReactEle
 export interface AlertBannerProps { tone?: 'security' | 'waiting' | 'failed'; title?: string; children?: React.ReactNode }
 export declare function AlertBanner(props: AlertBannerProps): React.ReactElement;
 
-export interface ReleaseInfo { version: string; edition: 'free' | 'pro'; branch: string; prerelease?: string; gh?: string; urgency: 'standard' | 'security' }
+export interface ReleaseInfo { version: string; edition: string; branch: string; prerelease?: string; gh?: string; urgency: 'standard' | 'security' }
 export interface ReleaseHeaderProps { release?: ReleaseInfo; phases?: Phase[]; subtitle?: string; next?: React.ReactNode; actions?: React.ReactNode }
 export declare function ReleaseHeader(props: ReleaseHeaderProps): React.ReactElement;
 
@@ -56,9 +56,11 @@ export interface LogPanelProps { lines?: Array<string | LogLine>; live?: boolean
 export declare function LogPanel(props: LogPanelProps): React.ReactElement;
 
 export interface CurrentStep { phase?: string; label: string; type: StepType; status: StepStatus; instructions?: string; command?: string; message?: string }
+export interface PresetMeta { label: string; versionRule: 'stable' | 'prerelease'; channels?: Array<'beta' | 'rc'> }
 export interface StartReleaseDialogProps {
-  edition: 'free' | 'pro'; version?: string; urgency?: 'standard' | 'security'; channel?: 'beta' | 'rc'; inline?: boolean;
-  onStart?: (v: { version: string; urgency: string; channel: string }) => void; onCancel?: () => void;
+  runnerPresets?: string[]; presetMeta?: Record<string, PresetMeta>; defaultPreset?: string;
+  version?: string; urgency?: 'standard' | 'security'; inline?: boolean;
+  onStart?: (v: { version: string; urgency: string; preset: string; prereleaseChannel: string | null }) => void; onCancel?: () => void;
 }
 export declare function StartReleaseDialog(props: StartReleaseDialogProps): React.ReactElement;
 

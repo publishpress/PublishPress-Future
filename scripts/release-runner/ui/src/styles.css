@@ -155,6 +155,28 @@ body { margin: 0; font-family: var(--font-sans); font-size: 16px; line-height: 1
 .rr-pill--alert { background: var(--alert-security-bg); color: var(--alert-security-fg); }
 .rr-pill--alert .rr-pill__label { color: var(--alert-security-fg); }
 
+.rr-edition-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 18px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+}
+.rr-edition-badge--pro {
+  border-color: var(--pp-purple);
+  color: var(--status-running-fg);
+  background: var(--pp-purple-muted);
+}
+.rr-static--preset { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.rr-seg--preset button { display: inline-flex; align-items: center; gap: 8px; }
+
 /* —— Progress —— */
 .rr-progress__row { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-md); margin-bottom: var(--space-sm); }
 .rr-eyebrow { margin: 0; font-size: 12px; line-height: 18px; font-weight: 650; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); }
@@ -284,8 +306,11 @@ body { margin: 0; font-family: var(--font-sans); font-size: 16px; line-height: 1
 .rr-field__label { font-size: 14px; font-weight: 600; }
 .rr-field__hint { font-size: 13px; color: var(--text-muted); }
 .rr-field__hint--error { color: var(--status-failed-fg); }
-.rr-input { font: inherit; font-size: 16px; padding: 7px 10px; border: 1px solid var(--border-control); border-radius: var(--radius-sm); background: var(--surface-raised); color: var(--text-primary); }
+.rr-input { font: inherit; font-size: 16px; padding: 7px 10px; border: 1px solid var(--border-control); border-radius: var(--radius-sm); background: var(--surface-raised); color: var(--text-primary); width: 100%; box-sizing: border-box; }
 .rr-input--mono { font-family: var(--font-mono); font-size: 15px; }
+.rr-input-wrap { position: relative; display: block; }
+.rr-input-wrap .rr-edition-badge { position: absolute; top: 50%; right: 8px; transform: translateY(-50%); pointer-events: none; }
+.rr-input--with-suffix { padding-right: 3.75rem; }
 .rr-input[aria-invalid="true"] { border-color: var(--status-failed-fg); }
 .rr-static { margin: 0; font-size: 14px; color: var(--text-secondary); padding: var(--space-sm) var(--space-md); background: var(--surface-sunken); border-radius: var(--radius-sm); }
 .rr-static strong { color: var(--text-primary); font-weight: 600; }

@@ -14,12 +14,13 @@ import {
   syncReleaseSteps,
 } from '../scripts/release-runner/state/store.mjs';
 import { fixturePreset } from '../scripts/release-runner/presets/fixture.mjs';
+import { PRESET_PLUGIN_FREE_STABLE, PRESET_PLUGIN_PRO_STABLE } from '../scripts/release-runner/presets/index.mjs';
 import { commands } from '../scripts/release-runner/cli.mjs';
 
 test('start saves current pointer and release file', () => {
   const cwd = mkdtempSync(join(tmpdir(), 'rr-state-'));
   try {
-    const release = createReleaseRecord('1.2.3', 'free', 'standard', fixturePreset);
+    const release = createReleaseRecord('1.2.3', 'plugin-free-stable', 'standard', fixturePreset);
     saveRelease(release, cwd);
     const loaded = loadCurrentRelease(cwd);
     assert.equal(loaded.version, '1.2.3');
@@ -33,7 +34,7 @@ test('start saves current pointer and release file', () => {
 test('reset deletes current release and pointer', () => {
   const cwd = mkdtempSync(join(tmpdir(), 'rr-state-'));
   try {
-    const release = createReleaseRecord('2.0.0', 'free', 'standard', fixturePreset);
+    const release = createReleaseRecord('2.0.0', 'plugin-free-stable', 'standard', fixturePreset);
     saveRelease(release, cwd);
     deleteCurrentRelease(cwd);
     assert.equal(loadCurrentRelease(cwd), null);
@@ -79,10 +80,10 @@ test('syncReleaseSteps is idempotent', () => {
 test('new archives abandoned release', () => {
   const cwd = mkdtempSync(join(tmpdir(), 'rr-state-'));
   try {
-    const first = createReleaseRecord('3.0.0', 'free', 'standard', fixturePreset);
+    const first = createReleaseRecord('3.0.0', 'plugin-free-stable', 'standard', fixturePreset);
     saveRelease(first, cwd);
     archiveRelease(first, cwd);
-    const second = createReleaseRecord('3.1.0', 'pro', 'security', fixturePreset);
+    const second = createReleaseRecord('3.1.0', 'plugin-pro-stable', 'security', fixturePreset);
     saveRelease(second, cwd);
     const ids = listReleaseIds(cwd);
     assert.ok(ids.archived.includes('3.0.0'));
@@ -90,4 +91,13 @@ test('new archives abandoned release', () => {
   } finally {
     rmSync(cwd, { recursive: true, force: true });
   }
+});
+
+
+test('syncReleaseSteps migrates legacy edition ids', () => {
+  const release = createReleaseRecord('1.0.0', 'free', 'standard', fixturePreset);
+  release.edition = 'free';
+  const { release: synced, changed } = syncReleaseSteps(release);
+  assert.equal(changed, true);
+  assert.equal(synced.edition, PRESET_PLUGIN_FREE_STABLE);
 });

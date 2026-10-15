@@ -46,7 +46,10 @@
         "plugin-lang-domain": "post-expirator",
         "plugin-github-repo": "publishpress/publishpress-future",
         "plugin-composer-package": "publishpress/publishpress-future",
-        "edition": "free"
+        "release-presets": [
+            "plugin-free-stable",
+            "plugin-free-unstable"
+        ]
     },
     "scripts": {
         "check:all": [

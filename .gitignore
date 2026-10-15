@@ -43,8 +43,6 @@ translation-audit-report.*
 /scripts/*
 !/scripts/release-runner/
 !/scripts/release-runner/**
-!/scripts/deploy/
-!/scripts/deploy/**
 .web/
 .ddev/
 /.php-cs-fixer.php

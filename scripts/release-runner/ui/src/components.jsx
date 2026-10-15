@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import * as Dialog from '@radix-ui/react-dialog';
 
@@ -111,10 +111,22 @@ export function StepTypeTag({ type }) {
   );
 }
 
-export function MetaPill({ label, value, tone, mono }) {
+export function EditionBadge({ product }) {
+  if (product !== 'free' && product !== 'pro') {
+    return null;
+  }
+  return (
+    <span className={cx('rr-edition-badge', `rr-edition-badge--${product}`)} aria-label={`${product} plugin`}>
+      {product}
+    </span>
+  );
+}
+
+export function MetaPill({ label, value, tone, mono, product }) {
   return (
     <span className={cx('rr-pill', tone && `rr-pill--${tone}`)}>
       <span className="rr-pill__label">{label}</span>
+      {product && <EditionBadge product={product} />}
       <span className={cx('rr-pill__value', mono && 'rr-pill__value--mono')}>{value}</span>
     </span>
   );
@@ -341,7 +353,7 @@ export function LogPanel({ lines, live, maxHeight = 280, placeholder = 'Waiting 
   );
 }
 
-const SEMVER = /^\d+\.\d+\.\d+(-(beta|rc)\.\d+)?$/;
+const BASE_VERSION = /^\d+\.\d+\.\d+$/;
 
 function Segmented({ label, value, options, onChange }) {
   return (
@@ -358,13 +370,54 @@ function Segmented({ label, value, options, onChange }) {
   );
 }
 
-export function StartReleaseDialog({ open, onOpenChange, edition, busy, onStart }) {
+function PresetPicker({ label, value, onChange, presetIds, presetMeta }) {
+  return (
+    <div className="rr-field">
+      <span className="rr-field__label">{label}</span>
+      <div className="rr-seg" role="group" aria-label={label}>
+        {presetIds.map((id) => (
+          <button key={id} type="button" aria-pressed={value === id} onClick={() => onChange(id)}>
+            {presetMeta[id]?.label || id}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function StartReleaseDialog({
+  open,
+  onOpenChange,
+  runnerPresets = [],
+  presetMeta = {},
+  defaultPreset = '',
+  busy,
+  onStart,
+}) {
   const [version, setVersion] = useState('');
   const [urgency, setUrgency] = useState('standard');
-  const [channel, setChannel] = useState('beta');
+  const [preset, setPreset] = useState(defaultPreset);
+  const [prereleaseChannel, setPrereleaseChannel] = useState('beta');
+
+  useEffect(() => {
+    if (defaultPreset) {
+      setPreset(defaultPreset);
+    }
+  }, [defaultPreset, open]);
+
+  const meta = presetMeta[preset] || {};
+  const channels = meta.channels || [];
   const value = version.trim();
-  const valid = SEMVER.test(value);
+  const valid = BASE_VERSION.test(value);
   const invalid = value.length > 0 && !valid;
+  const presetLabel = (id) => presetMeta[id]?.label || id;
+
+  useEffect(() => {
+    if (channels.length > 0 && !channels.includes(prereleaseChannel)) {
+      setPrereleaseChannel(channels[0]);
+    }
+  }, [preset, channels.join(','), prereleaseChannel]);
+
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
@@ -377,7 +430,12 @@ export function StartReleaseDialog({ open, onOpenChange, edition, busy, onStart 
               if (!valid || busy) {
                 return;
               }
-              await onStart({ version: value, urgency, channel });
+              await onStart({
+                version: value,
+                urgency,
+                preset,
+                prereleaseChannel: channels.length > 0 ? prereleaseChannel : null,
+              });
               setVersion('');
             }}
           >
@@ -389,20 +447,47 @@ export function StartReleaseDialog({ open, onOpenChange, edition, busy, onStart 
             </div>
             <label className="rr-field">
               <span className="rr-field__label">Version</span>
-              <input
-                className="rr-input rr-input--mono"
-                value={version}
-                onChange={(e) => setVersion(e.target.value)}
-                placeholder="4.11.0"
-                autoComplete="off"
-                aria-invalid={invalid ? 'true' : undefined}
-              />
+              <div className="rr-input-wrap">
+                <input
+                  className="rr-input rr-input--mono rr-input--with-suffix"
+                  value={version}
+                  onChange={(e) => setVersion(e.target.value)}
+                  placeholder="4.11.0"
+                  autoComplete="off"
+                  aria-invalid={invalid ? 'true' : undefined}
+                />
+                <EditionBadge product={meta.product} />
+              </div>
               <span className={cx('rr-field__hint', invalid && 'rr-field__hint--error')}>
                 {invalid
-                  ? 'Use MAJOR.MINOR.PATCH, e.g. 4.11.0. No "v" prefix.'
+                  ? meta.versionRule === 'prerelease'
+                    ? 'Base MAJOR.MINOR.PATCH only (e.g. 4.11.0). Beta/rc suffix comes from preset.'
+                    : 'Use MAJOR.MINOR.PATCH, e.g. 4.11.0. No "v" prefix or -beta/-rc suffix.'
                   : `Branch will be release-${value || '<version>'}`}
               </span>
             </label>
+            {runnerPresets.length === 1 && (
+              <p className="rr-static">
+                Preset: <strong>{presetLabel(runnerPresets[0])}</strong>
+              </p>
+            )}
+            {runnerPresets.length > 1 && (
+              <PresetPicker
+                label="Preset"
+                value={preset}
+                onChange={setPreset}
+                presetIds={runnerPresets}
+                presetMeta={presetMeta}
+              />
+            )}
+            {channels.length > 1 && (
+              <Segmented
+                label="Prerelease channel"
+                value={prereleaseChannel}
+                onChange={setPrereleaseChannel}
+                options={channels.map((c) => [c, c])}
+              />
+            )}
             <Segmented
               label="Urgency"
               value={urgency}
@@ -412,19 +497,6 @@ export function StartReleaseDialog({ open, onOpenChange, edition, busy, onStart 
                 ['security', 'Security'],
               ]}
             />
-            <Segmented
-              label="First package channel"
-              value={channel}
-              onChange={setChannel}
-              options={[
-                ['beta', 'beta'],
-                ['rc', 'rc'],
-                ['none', 'none'],
-              ]}
-            />
-            <p className="rr-static">
-              Edition: <strong>{edition}</strong> · read from composer.json
-            </p>
             <div className="rr-dialog__foot">
               <Dialog.Close asChild>
                 <Button variant="ghost">Cancel</Button>

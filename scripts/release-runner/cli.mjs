@@ -13,8 +13,13 @@ import {
   cascadeReopen,
   runEngine,
 } from './engine/engine.mjs';
-import { getPreset } from './presets/index.mjs';
-import { detectEdition } from './detect-edition.mjs';
+import {
+  getPreset,
+  getPresetMeta,
+  validateVersionForPreset,
+} from './presets/index.mjs';
+import { resolveStartPreset } from './detect-edition.mjs';
+import { maxPrereleaseNumber } from './state/store.mjs';
 
 /**
  * @param {string[]} argv
@@ -44,15 +49,6 @@ function output(payload, json) {
     process.stdout.write(`${JSON.stringify(payload)}\n`);
   } else if (payload.message) {
     process.stderr.write(`${payload.message}\n`);
-  }
-}
-
-/**
- * @param {string} version
- */
-function validateVersion(version) {
-  if (!/^\d+\.\d+\.\d+(-[a-zA-Z0-9.]+)?$/.test(version)) {
-    throw new Error('Invalid version format. Use x.y.z or x.y.z-beta.n');
   }
 }
 
@@ -97,33 +93,47 @@ async function cmdStart(rest, cwd, flags) {
   const version = rest[0];
   if (!version) {
     throw new Error(
-      'Usage: start <version> [--edition free|pro] [--urgency standard|security] [--channel beta|rc]'
+      'Usage: start <version> [--preset <id>] [--edition <id>] [--urgency standard|security] [--prerelease-channel beta|rc]'
     );
   }
-  validateVersion(version);
-  let editionExplicit = false;
-  let edition = 'free';
+  let presetExplicit = false;
+  /** @type {string | null} */
+  let presetArg = null;
   let urgency = 'standard';
-  /** @type {{ channel: 'beta'|'rc' } | null} */
-  let prerelease = null;
+  /** @type {'beta'|'rc'|null} */
+  let prereleaseChannel = null;
   for (let i = 1; i < rest.length; i += 1) {
-    if (rest[i] === '--edition' && rest[i + 1]) {
-      edition = rest[i + 1];
-      editionExplicit = true;
+    if ((rest[i] === '--preset' || rest[i] === '--edition') && rest[i + 1]) {
+      presetArg = rest[i + 1];
+      presetExplicit = true;
       i += 1;
     } else if (rest[i] === '--urgency' && rest[i + 1]) {
       urgency = rest[i + 1];
       i += 1;
-    } else if (rest[i] === '--channel' && rest[i + 1]) {
-      prerelease = { channel: rest[i + 1] };
+    } else if (rest[i] === '--prerelease-channel' && rest[i + 1]) {
+      prereleaseChannel = rest[i + 1];
       i += 1;
+    } else if (rest[i] === '--channel' && rest[i + 1]) {
+      throw new Error('Use --prerelease-channel instead of --channel');
     }
   }
-  if (edition !== 'free' && edition !== 'pro') {
-    throw new Error('--edition must be free or pro');
-  }
-  if (!editionExplicit) {
-    edition = detectEdition(cwd);
+  const edition = resolveStartPreset(cwd, presetExplicit ? presetArg : null);
+  validateVersionForPreset(version, edition);
+  const meta = getPresetMeta(edition);
+  /** @type {{ channel: 'beta'|'rc', n: number } | null} */
+  let prerelease = null;
+  if (meta.versionRule === 'prerelease') {
+    const channels = meta.channels || ['beta'];
+    const channel = prereleaseChannel || channels[0];
+    if (!channels.includes(channel)) {
+      throw new Error(
+        `Invalid --prerelease-channel "${channel}". Allowed for ${edition}: ${channels.join(', ')}`
+      );
+    }
+    const n = maxPrereleaseNumber(cwd, version, channel) + 1;
+    prerelease = { channel, n };
+  } else if (prereleaseChannel) {
+    throw new Error(`--prerelease-channel is not used with stable preset ${edition}`);
   }
   const existing = loadCurrentRelease(cwd);
   if (existing?.status === 'in_progress') {
@@ -137,7 +147,7 @@ async function cmdStart(rest, cwd, flags) {
     {
       started: true,
       ...formatRunPayload(result),
-      ...(!editionExplicit ? { editionDetected: true } : {}),
+      ...(presetExplicit ? {} : { presetResolved: edition }),
     },
     flags.json
   );
