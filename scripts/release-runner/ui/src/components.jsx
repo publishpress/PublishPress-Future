@@ -20,6 +20,8 @@ const PATHS = {
   alert: 'M8 2.5l6 11H2zM8 7v3M8 12h.01',
   shield: 'M8 2l5 2v4c0 3-2.2 5.2-5 6-2.8-.8-5-3-5-6V4z',
   reopen: 'M3 8a5 5 0 1 0 1.5-3.5M3 2.5V5h2.5',
+  sun: 'M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1',
+  moon: 'M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7z',
 };
 
 export function Icon({ name, className }) {
@@ -226,11 +228,18 @@ export function StepRow({
               <span className="rr-step__meta">
                 <StepTypeTag type={type} />
                 {showBadge ? <StatusBadge status={key} /> : <span className="rr-sr">{STATUS[key].label}</span>}
-                {canExpand && <Icon name="chevron" className="rr-step__chev" />}
               </span>
             </button>
           </Collapsible.Trigger>
           {current && actions && <div className="rr-step__actions">{actions}</div>}
+          {canExpand && (
+            // Pointer shortcut for the same toggle; the labelled trigger above is the accessible control.
+            <Collapsible.Trigger asChild>
+              <button type="button" className="rr-step__toggle" tabIndex={-1} aria-hidden="true">
+                <Icon name="chevron" className="rr-step__chev" />
+              </button>
+            </Collapsible.Trigger>
+          )}
         </div>
         <Collapsible.Content className="rr-step__body">
           {guide && <p className="rr-step__guide">{guide}</p>}
@@ -323,41 +332,6 @@ export function LogPanel({ lines, live, maxHeight = 280, placeholder = 'Waiting 
         )}
       </pre>
     </div>
-  );
-}
-
-export function CurrentStepPanel({ step, actions, log, onReopen, cli, busy }) {
-  if (!step) {
-    return (
-      <aside className="rr-panel">
-        <p className="rr-panel__text">All steps complete.</p>
-      </aside>
-    );
-  }
-  const text = step.instructions || (step.status !== 'failed' ? step.message : null);
-  return (
-    <aside className="rr-panel" aria-label="Current step">
-      <div className="rr-panel__head">
-        <div className="rr-panel__eyebrow">
-          <span className="rr-eyebrow">{step.phase ? `${step.phase} · ` : ''}Current step</span>
-          <StatusBadge status={step.status} />
-        </div>
-        <h2 className="rr-panel__title">{step.label}</h2>
-        <StepTypeTag type={step.type} />
-      </div>
-      {text && <p className="rr-panel__text">{text}</p>}
-      {step.command && <code className="rr-panel__cmd">{step.command}</code>}
-      {actions && <div className="rr-panel__actions">{actions}</div>}
-      {log}
-      {onReopen && (
-        <div className="rr-panel__foot">
-          <Button variant="link" disabled={busy} onClick={onReopen}>
-            Reopen from here
-          </Button>
-          {cli && <span className="rr-step__time">{cli}</span>}
-        </div>
-      )}
-    </aside>
   );
 }
 
@@ -526,5 +500,30 @@ export function EmptyState({ action, hint, children }) {
       {action}
       {hint && <p className="rr-empty__hint">{hint}</p>}
     </section>
+  );
+}
+
+/**
+ * Header button that switches between the light and dark themes.
+ * `onChange(theme)` persists the choice (the app saves it in dev-workspace-cache).
+ */
+export function ThemeToggle({ onChange }) {
+  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || 'light');
+  const next = theme === 'dark' ? 'light' : 'dark';
+  const toggle = () => {
+    document.documentElement.dataset.theme = next;
+    setTheme(next);
+    onChange?.(next);
+  };
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      icon={theme === 'dark' ? 'sun' : 'moon'}
+      className="rr-theme-toggle"
+      aria-label={`Switch to ${next} theme`}
+      title={`Switch to ${next} theme`}
+      onClick={toggle}
+    />
   );
 }

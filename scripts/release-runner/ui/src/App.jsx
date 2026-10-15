@@ -12,6 +12,7 @@ import {
   StartReleaseDialog,
   StatusBadge,
   StepRow,
+  ThemeToggle,
 } from './components.jsx';
 
 async function apiGet(path) {
@@ -208,18 +209,21 @@ export default function App() {
             <h1 className="rr-header__title">Release Runner</h1>
             <p className="rr-header__sub">Local release checklist for this plugin clone</p>
           </div>
-          {release && (
-            <div className="rr-header__pills">
-              <MetaPill label="Version" value={version} tone="accent" mono />
-              <MetaPill label="Edition" value={release.edition} />
-              {release.urgency === 'security' && <MetaPill label="Urgency" value="security" tone="alert" />}
-              <MetaPill label="Branch" value={release.branchName} mono />
-              {release.prerelease?.channel && (
-                <MetaPill label="Package" value={`${release.prerelease.channel}.${release.prerelease.n}`} mono />
-              )}
-              {status.ghAccount && <MetaPill label="GitHub" value={status.ghAccount} />}
-            </div>
-          )}
+          <div className="rr-header__end">
+            {release && (
+              <div className="rr-header__pills">
+                <MetaPill label="Version" value={version} tone="accent" mono />
+                <MetaPill label="Edition" value={release.edition} />
+                {release.urgency === 'security' && <MetaPill label="Urgency" value="security" tone="alert" />}
+                <MetaPill label="Branch" value={release.branchName} mono />
+                {release.prerelease?.channel && (
+                  <MetaPill label="Package" value={`${release.prerelease.channel}.${release.prerelease.n}`} mono />
+                )}
+                {status.ghAccount && <MetaPill label="GitHub" value={status.ghAccount} />}
+              </div>
+            )}
+            <ThemeToggle onChange={(theme) => apiPost('/api/ui-prefs', { theme })} />
+          </div>
         </div>
 
         {release && steps.length > 0 && <PhaseProgress phases={groups} />}

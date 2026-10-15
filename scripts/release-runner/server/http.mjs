@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { runCli, commands } from '../cli.mjs';
 import { buildStatusPayload } from '../engine/engine.mjs';
 import { loadCurrentRelease } from '../state/store.mjs';
+import { loadUiPrefs, saveUiPrefs } from '../state/ui-prefs.mjs';
 import { Context } from '../engine/context.mjs';
 import { publishLog, subscribe } from './events.mjs';
 import { detectEdition } from '../detect-edition.mjs';
@@ -149,6 +150,15 @@ async function handleApi(req, res, cwd) {
     return;
   }
 
+  if (req.method === 'POST' && path === '/api/ui-prefs') {
+    try {
+      json(res, 200, { ok: true, prefs: saveUiPrefs(await readBody(req), cwd) });
+    } catch (err) {
+      json(res, 400, { ok: false, error: err.message });
+    }
+    return;
+  }
+
   if (req.method !== 'POST' || !path.startsWith('/api/')) {
     json(res, 404, { ok: false, error: 'Not found' });
     return;
@@ -189,20 +199,35 @@ async function handleApi(req, res, cwd) {
 }
 
 /**
+ * index.html with the saved theme stamped on <html>, so the page paints in it from the start.
+ *
+ * @param {import('http').ServerResponse} res
+ * @param {string} cwd
+ */
+function serveIndex(res, cwd) {
+  const { theme } = loadUiPrefs(cwd);
+  let html = readFileSync(join(UI_DIST, 'index.html'), 'utf8');
+  if (theme) {
+    html = html.replace(/<html\b/, `<html data-theme="${theme}"`);
+  }
+  res.writeHead(200, { 'Content-Type': 'text/html', 'Cache-Control': 'no-store' });
+  res.end(html);
+}
+
+/**
  * @param {import('http').IncomingMessage} req
  * @param {import('http').ServerResponse} res
+ * @param {string} cwd
  */
-function serveStatic(req, res) {
+function serveStatic(req, res, cwd) {
   let reqPath = new URL(req.url || '/', `http://${HOST}`).pathname;
   if (reqPath === '/') {
     reqPath = '/index.html';
   }
   const filePath = join(UI_DIST, reqPath);
-  if (!filePath.startsWith(UI_DIST) || !existsSync(filePath) || statSync(filePath).isDirectory()) {
+  if (reqPath === '/index.html' || !filePath.startsWith(UI_DIST) || !existsSync(filePath) || statSync(filePath).isDirectory()) {
     if (existsSync(join(UI_DIST, 'index.html'))) {
-      const html = readFileSync(join(UI_DIST, 'index.html'));
-      res.writeHead(200, { 'Content-Type': 'text/html' });
-      res.end(html);
+      serveIndex(res, cwd);
       return;
     }
     res.writeHead(404);
@@ -224,7 +249,7 @@ export function startServer(options = {}) {
       if (req.url?.startsWith('/api/')) {
         await handleApi(req, res, cwd);
       } else {
-        serveStatic(req, res);
+        serveStatic(req, res, cwd);
       }
     } catch (err) {
       json(res, 500, { ok: false, error: err.message });

@@ -4,8 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PublishPress Release Runner</title>
-    <script type="module" crossorigin src="/assets/index-DZj5Vok7.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BlugkIJ7.css">
+    <script>
+      // The server stamps data-theme from dev-workspace-cache/release-runner-ui.json; until a theme is saved, follow the OS.
+      if (!document.documentElement.dataset.theme) {
+        document.documentElement.dataset.theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+    </script>
+    <script type="module" crossorigin src="/assets/index-C_XJVFBI.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-ynJI8a7k.css">
   </head>
   <body>
     <div id="root"></div>
