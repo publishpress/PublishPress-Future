@@ -89,7 +89,7 @@ class OnCartOrderRefundedRunner implements TriggerRunnerInterface
         $this->workflowId = $workflowId;
 
         $this->hooks->addAction(
-            HooksAbstract::ACTION_SC_BEFORE_ORDER_REFUND,
+            HooksAbstract::ACTION_PPCART_BEFORE_ORDER_REFUND,
             [$this, 'onOrderRefundCallback'],
             20,
             1
@@ -97,7 +97,7 @@ class OnCartOrderRefundedRunner implements TriggerRunnerInterface
     }
 
     /**
-     * Fires on `before_sc_order_refund`. $data['id'] is the order post ID.
+     * Fires on `ppcart_before_order_refund`. $data['id'] is the order post ID.
      *
      * @param array $data
      */

@@ -89,7 +89,7 @@ class OnCartOrderCreatedRunner implements TriggerRunnerInterface
         $this->workflowId = $workflowId;
 
         $this->hooks->addAction(
-            HooksAbstract::ACTION_SC_AFTER_ORDER_CREATED,
+            HooksAbstract::ACTION_PPCART_AFTER_ORDER_CREATED,
             [$this, 'onOrderCreatedCallback'],
             20,
             3
@@ -100,8 +100,8 @@ class OnCartOrderCreatedRunner implements TriggerRunnerInterface
     {
         $postId = (int) $postId;
 
-        // studiocart_after_order_created fires for both sc_order and sc_subscription posts.
-        if (get_post_type($postId) !== 'sc_order') {
+        // ppcart_fter_order_created fires for both ppcart_order and ppcart_subscription posts.
+        if (get_post_type($postId) !== 'ppcart_order') {
             return;
         }
 

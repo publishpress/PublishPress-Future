@@ -56,7 +56,7 @@ class NcsCartChangeOrderStatusRunner implements StepRunnerInterface
             function ($step) {
                 $nodeSlug = $this->stepProcessor->getSlugFromStep($step);
 
-                if (! function_exists('sc_setup_order')) {
+                if (! function_exists('ppcart_setup_order')) {
                     $this->logger->debugWithArgs('PublishPress Cart not active, skipping | Slug: %1$s', $nodeSlug);
                     return;
                 }
@@ -72,7 +72,7 @@ class NcsCartChangeOrderStatusRunner implements StepRunnerInterface
                 }
                 $orderId = (int) $orderId;
 
-                if (get_post_type($orderId) !== 'sc_order') {
+                if (get_post_type($orderId) !== 'ppcart_order') {
                     $this->logger->debugWithArgs(
                         'Post %1$s is not a Cart order, skipping | Slug: %2$s',
                         $orderId,
@@ -92,7 +92,7 @@ class NcsCartChangeOrderStatusRunner implements StepRunnerInterface
                     return;
                 }
 
-                update_post_meta($orderId, '_sc_status', $status);
+                update_post_meta($orderId, '_ppcart_status', $status);
 
                 $this->logger->debugWithArgs(
                     'Cart order %1$s status set to %2$s | Slug: %3$s',

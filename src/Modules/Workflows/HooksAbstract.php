@@ -59,12 +59,12 @@ abstract class HooksAbstract
     /**
      * Fired by PublishPress Cart (Studio Cart) after an order or subscription is created/saved.
      */
-    public const ACTION_SC_AFTER_ORDER_CREATED = 'studiocart_after_order_created';
+    public const ACTION_PPCART_AFTER_ORDER_CREATED = 'ppcart_fter_order_created';
 
     /**
      * Fired by PublishPress Cart (Studio Cart) before an order refund is processed.
      */
-    public const ACTION_SC_BEFORE_ORDER_REFUND = 'before_sc_order_refund';
+    public const ACTION_PPCART_BEFORE_ORDER_REFUND = 'ppcart_before_order_refund';
 
     /**
      * @deprecated 4.3.2 Use ACTION_EXECUTE_STEP instead.

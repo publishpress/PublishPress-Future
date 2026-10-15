@@ -89,7 +89,7 @@ class OnCartSubscriptionStatusChangedRunner implements TriggerRunnerInterface
         $this->workflowId = $workflowId;
 
         $this->hooks->addAction(
-            HooksAbstract::ACTION_SC_AFTER_ORDER_CREATED,
+            HooksAbstract::ACTION_PPCART_AFTER_ORDER_CREATED,
             [$this, 'onSubscriptionSavedCallback'],
             20,
             3
@@ -100,8 +100,8 @@ class OnCartSubscriptionStatusChangedRunner implements TriggerRunnerInterface
     {
         $postId = (int) $postId;
 
-        // studiocart_after_order_created fires for both sc_order and sc_subscription posts.
-        if (get_post_type($postId) !== 'sc_subscription') {
+        // ppcart_fter_order_created fires for both ppcart_order and ppcart_subscription posts.
+        if (get_post_type($postId) !== 'ppcart_subscription') {
             return;
         }
 
@@ -111,7 +111,7 @@ class OnCartSubscriptionStatusChangedRunner implements TriggerRunnerInterface
         }
 
         if ($status === '' || $status === null) {
-            $status = (string) get_post_meta($postId, '_sc_status', true);
+            $status = (string) get_post_meta($postId, '_ppcart_status', true);
         }
 
         $this->executionContext->setVariable($this->stepSlug, [
