@@ -282,7 +282,9 @@ export default function App() {
             <PhaseGroup key={group.key} name={group.name} done={group.done} total={group.total}>
               {group.steps.map((step) => {
                 const isCurrent = step.id === currentStepId;
-                const hasLogOutput = isCurrent && log.length > 0;
+                const stepUsesLog = step.type === 'auto';
+                const hasLogOutput = isCurrent && stepUsesLog && log.length > 0;
+                const showLogPanel = isCurrent && stepUsesLog;
                 return (
                   <React.Fragment key={step.id}>
                     {step.id === firstPublishId && <PublishBoundary />}
@@ -291,7 +293,7 @@ export default function App() {
                       type={step.type}
                       status={step.status}
                       guide={step.instructions || step.message}
-                      note={hasLogOutput ? null : distinctStepNote(step.note, log, isCurrent)}
+                      note={hasLogOutput ? null : distinctStepNote(step.note, log, isCurrent && stepUsesLog)}
                       hasLogOutput={hasLogOutput}
                       current={isCurrent}
                       open={expandedStepId === step.id}
@@ -300,7 +302,9 @@ export default function App() {
                       busy={busy}
                       cli={isCurrent ? cliHint(step) : null}
                       onReopen={isCurrent ? () => runAction('reopen', [step.id]) : null}
-                      log={isCurrent ? <LogPanel lines={log} live={isRunning} /> : null}
+                      log={
+                        showLogPanel ? <LogPanel lines={log} live={isRunning} /> : null
+                      }
                     />
                   </React.Fragment>
                 );
