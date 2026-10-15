@@ -57,6 +57,16 @@ abstract class HooksAbstract
     public const ACTION_TRIGGER_FIRED = 'publishpressfuture_workflow_trigger_fired_';
 
     /**
+     * Fired by PublishPress Cart (Studio Cart) after an order or subscription is created/saved.
+     */
+    public const ACTION_SC_AFTER_ORDER_CREATED = 'studiocart_after_order_created';
+
+    /**
+     * Fired by PublishPress Cart (Studio Cart) before an order refund is processed.
+     */
+    public const ACTION_SC_BEFORE_ORDER_REFUND = 'before_sc_order_refund';
+
+    /**
      * @deprecated 4.3.2 Use ACTION_EXECUTE_STEP instead.
      */
     public const ACTION_EXECUTE_NODE = 'publishpressfuture_workflow_execute_node';

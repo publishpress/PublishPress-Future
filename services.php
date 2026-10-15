@@ -118,6 +118,9 @@ use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostUp
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnPostWorkflowEnableRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnScheduleRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnUserRoleChangeRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnCartOrderCreatedRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnCartOrderRefundedRunner;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnCartSubscriptionStatusChangedRunner;
 use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Runners\OnTermsAddedRunner;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\Future\Modules\Workflows\Logger\WorkflowLogger;
@@ -1118,6 +1121,39 @@ return [
                     $stepRunner = new OnUserRoleChangeRunner(
                         $generalStepProcessor,
                         $workflowLogger
+                    );
+                    break;
+
+                case OnCartOrderCreatedRunner::getNodeTypeName():
+                    $stepRunner = new OnCartOrderCreatedRunner(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $generalStepProcessor,
+                        $workflowLogger,
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD),
+                        $executionContext
+                    );
+                    break;
+
+                case OnCartOrderRefundedRunner::getNodeTypeName():
+                    $stepRunner = new OnCartOrderRefundedRunner(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $generalStepProcessor,
+                        $workflowLogger,
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD),
+                        $executionContext
+                    );
+                    break;
+
+                case OnCartSubscriptionStatusChangedRunner::getNodeTypeName():
+                    $stepRunner = new OnCartSubscriptionStatusChangedRunner(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $generalStepProcessor,
+                        $workflowLogger,
+                        $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(ServicesAbstract::WORKFLOW_EXECUTION_SAFEGUARD),
+                        $executionContext
                     );
                     break;
 
