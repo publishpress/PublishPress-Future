@@ -11,8 +11,8 @@ Modeled on PublishPress Cart:
 - Playwright tests in `tests/playwright/<suite>/`, one `*.spec.ts` per case.
 - `playwright.config.ts` at the repo root, aimed at the test site URL from `.env`.
 - Composer scripts call `npm run test:e2e`. Codeception stays on unit and integration.
-- Move `tests/Unit` and `tests/Integration` to `tests/codeception/` and point `codeception.yml` there.
-- Leave `tests/Acceptance` and `tests/EndToEnd` in place until the Playwright cases cover them.
+- Codeception suites live in `tests/codeception/`; `codeception.yml` points there.
+- Keep `tests/codeception/Acceptance` and `tests/codeception/EndToEnd` until the Playwright cases cover them.
 
 Do not copy Cart's Scribe catalog tooling in that pass unless we decide to.
 
@@ -31,7 +31,7 @@ Do not copy Cart's Scribe catalog tooling in that pass unless we decide to.
 
 ## Not in this catalog
 
-- Instance protection (`tests/Acceptance/features/instance-protection.feature`). It needs a second plugin copy on disk and stays on Codeception.
+- Instance protection (`tests/codeception/Acceptance/features/instance-protection.feature`). It needs a second plugin copy on disk and stays on Codeception.
 - Metadata scheduling, imports, and the debug log viewer beyond the Diagnostics screen in AD-019.
 
 ## Admin (`AD`)

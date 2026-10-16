@@ -53,7 +53,7 @@ Layered Core/Framework/Modules/Views | feature modules in `Modules/` | cohesion 
 Core/ | Framework/ | Modules/{Name}/ | Views/
 Module: Module.php, HooksAbstract.php, Controllers/, Models/, DBTableSchemas/, Migrations/
 Framework: WordPress/Facade/, Database/, Logger/, …
-tests/: Unit/, Integration/, Acceptance/features/, EndToEnd/, Support/
+tests/codeception/: Unit/, Integration/, Acceptance/features/, EndToEnd/, Support/
 
 ### Module Structure Pattern
 Each feature module follows a consistent structure:
@@ -116,7 +116,7 @@ Behavior not implementation | `test_should_*` names | AAA | mock WP/DB | 80%+ do
 Component + WP integration | real test DB | REST + controller/model flows | `WPTestCase` / `NoTransactionWPTestCase` | critical workflows
 
 ### Acceptance Testing (BDD)
-Gherkin Given/When/Then | browser tests | `tests/Acceptance/features/` | steps in `tests/Support/GherkinSteps/` | admin/classic/Gutenberg/bulk/quick edit
+Gherkin Given/When/Then | browser tests | `tests/codeception/Acceptance/features/` | steps in `tests/codeception/Support/GherkinSteps/` | admin/classic/Gutenberg/bulk/quick edit
 
 ### EndToEnd Testing
 Lifecycle (activate/deactivate) | WP core interaction | real-world scenarios
@@ -149,7 +149,7 @@ Grouped one-liners — see `composer.json` for full definitions.
 `DBTableSchemas/` + `DBTableSchemaInterface` → `Migrations/` `V{version}{description}.php` → register in `Module.php`.
 
 ### Adding REST API Endpoints
-`Controllers/` → routes in `initialize()` → `/publishpress-future/v1/endpoint` → permissions → Integration tests in `tests/Integration/Modules/{Module}/Rest/`.
+`Controllers/` → routes in `initialize()` → `/publishpress-future/v1/endpoint` → permissions → Integration tests in `tests/codeception/Integration/Modules/{Module}/Rest/`.
 
 ### Adding Expiration Actions
 `ExpirationActions/` + `ExpirationActionInterface` → `ExpirationActionsAbstract` → `ExpirationActionsModel` → tests + i18n labels.

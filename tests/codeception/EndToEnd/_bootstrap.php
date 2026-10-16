@@ -14,8 +14,8 @@
  * Note that WP-CLI will not natively handle SQLite databases, so you will need to use the `wp:db:import` and
  * `wp:db:export` commands to import and export the database.
  * E.g.:
- * `vendor/bin/codecept wp:db:import tests/_wordpress tests/Support/Data/dump.sql` to load dump file.
- * `wp --path=tests/_wordpress plugin activate woocommerce` to activate the WooCommerce plugin.
- * `wp --path=tests/_wordpress user create alice alice@example.com --role=administrator` to create a new user.
- * `vendor/bin/codecept wp:db:export tests/_wordpress tests/Support/Data/dump.sql` to update the dump file.
+ * `vendor/bin/codecept wp:db:import tests/codeception/_wordpress tests/codeception/Support/Data/dump.sql` to load dump file.
+ * `wp --path=tests/codeception/_wordpress plugin activate woocommerce` to activate the WooCommerce plugin.
+ * `wp --path=tests/codeception/_wordpress user create alice alice@example.com --role=administrator` to create a new user.
+ * `vendor/bin/codecept wp:db:export tests/codeception/_wordpress tests/codeception/Support/Data/dump.sql` to update the dump file.
  */

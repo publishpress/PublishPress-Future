@@ -14,10 +14,10 @@
  * Note that WP-CLI will not natively handle SQLite databases, so you will need to use the `wp:db:import` and
  * `wp:db:export` commands to import and export the database.
  * E.g.:
- * `vendor/bin/codecept wp:db:import tests/_wordpress tests/Support/Data/dump.sql` to load dump file.
- * `wp --path=tests/_wordpress plugin activate woocommerce` to activate the WooCommerce plugin.
- * `wp --path=tests/_wordpress user create alice alice@example.com --role=administrator` to create a new user.
- * `vendor/bin/codecept wp:db:export tests/_wordpress tests/Support/Data/dump.sql` to update the dump file.
+ * `vendor/bin/codecept wp:db:import tests/codeception/_wordpress tests/codeception/Support/Data/dump.sql` to load dump file.
+ * `wp --path=tests/codeception/_wordpress plugin activate woocommerce` to activate the WooCommerce plugin.
+ * `wp --path=tests/codeception/_wordpress user create alice alice@example.com --role=administrator` to create a new user.
+ * `vendor/bin/codecept wp:db:export tests/codeception/_wordpress tests/codeception/Support/Data/dump.sql` to update the dump file.
  */
 
 define('ABSPATH', __DIR__);
@@ -25,7 +25,7 @@ define('ABSPATH', __DIR__);
 
 use PublishPress\Future\Core\Autoloader;
 
-$autoloadFilePath = __DIR__ . '/../../../lib/vendor/autoload.php';
+$autoloadFilePath = __DIR__ . '/../../../../lib/vendor/autoload.php';
 if (! class_exists('ComposerAutoloaderInitPublishPressFuture')
     && is_file($autoloadFilePath)
     && is_readable($autoloadFilePath)
@@ -33,9 +33,9 @@ if (! class_exists('ComposerAutoloaderInitPublishPressFuture')
     require_once $autoloadFilePath;
 }
 
-require_once __DIR__ . '/../../../lib/vendor/woocommerce/action-scheduler/action-scheduler.php';
+require_once __DIR__ . '/../../../../lib/vendor/woocommerce/action-scheduler/action-scheduler.php';
 
 if (! class_exists('PublishPress\Future\Core\Autoloader')) {
-    require_once __DIR__ . '/../../../src/Core/Autoloader.php';
+    require_once __DIR__ . '/../../../../src/Core/Autoloader.php';
 }
 Autoloader::register();

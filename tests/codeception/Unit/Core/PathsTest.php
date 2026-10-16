@@ -51,7 +51,7 @@ class PathsTest extends Unit
 
     public function baseDirVendorProvider()
     {
-        $libVendorPath = realpath(__DIR__ . '/../../../lib/vendor');
+        $libVendorPath = realpath(__DIR__ . '/../../../../lib/vendor');
 
         return [
             ['/tmp', $libVendorPath],

@@ -93,13 +93,13 @@ composer test Integration
 You also can run specific test file:
 
 ```bash
-composer test tests/Unit/Framework/HooksTest.php
+composer test tests/codeception/Unit/Framework/HooksTest.php
 ```
 
 And for running only a specific test:
 
 ```bash
-composer test tests/Unit/Framework/HooksTest.php:testAddAction
+composer test tests/codeception/Unit/Framework/HooksTest.php:testAddAction
 ```
 
 You can run any codeception command by executing:

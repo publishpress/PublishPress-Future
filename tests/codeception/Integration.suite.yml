@@ -15,7 +15,7 @@ modules:
             tablePrefix: '%WP_TESTS_TEST_TABLE_PREFIX%'
             domain: '%WP_TESTS_DOMAIN%'
             adminEmail: 'admin@%WP_TESTS_DOMAIN%'
-            dump: 'tests/Support/Data/dump.sql'
+            dump: 'tests/codeception/Support/Data/dump.sql'
             title: 'Integration Tests'
             theme: 'twentytwentyfive'
             plugins:
