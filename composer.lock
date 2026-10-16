@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "899471265fe0f7f57fbe99b03dce158d",
+    "content-hash": "d8b3e43fc23178e1bea0a239f112d6f7",
     "packages": [],
     "packages-dev": [
         {
@@ -2291,42 +2291,42 @@
         },
         {
             "name": "ergebnis/agent-detector",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/agent-detector.git",
-                "reference": "e211f17928c8b95a51e06040792d57f5462fb271"
+                "reference": "0cd815cec1207873c37624d33f0f2853523152f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/agent-detector/zipball/e211f17928c8b95a51e06040792d57f5462fb271",
-                "reference": "e211f17928c8b95a51e06040792d57f5462fb271",
+                "url": "https://api.github.com/repos/ergebnis/agent-detector/zipball/0cd815cec1207873c37624d33f0f2853523152f3",
+                "reference": "0cd815cec1207873c37624d33f0f2853523152f3",
                 "shasum": ""
             },
             "require": {
                 "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0"
             },
             "require-dev": {
-                "ergebnis/composer-normalize": "^2.51.0",
-                "ergebnis/license": "^2.7.0",
+                "ergebnis/composer-normalize": "^2.54.0",
+                "ergebnis/license": "^2.8.0",
                 "ergebnis/php-cs-fixer-config": "^6.60.2",
-                "ergebnis/phpstan-rules": "^2.13.1",
-                "ergebnis/phpunit-slow-test-detector": "^2.24.0",
-                "ergebnis/rector-rules": "^1.18.1",
+                "ergebnis/phpstan-rules": "^2.14.0",
+                "ergebnis/phpunit-slow-test-detector": "^2.26.0",
+                "ergebnis/rector-rules": "^1.18.5",
                 "fakerphp/faker": "^1.24.1",
                 "infection/infection": "^0.26.6",
                 "phpstan/extension-installer": "^1.4.3",
-                "phpstan/phpstan": "^2.1.54",
-                "phpstan/phpstan-deprecation-rules": "^2.0.4",
-                "phpstan/phpstan-phpunit": "^2.0.16",
-                "phpstan/phpstan-strict-rules": "^2.0.10",
+                "phpstan/phpstan": "^2.2.14",
+                "phpstan/phpstan-deprecation-rules": "^2.0.5",
+                "phpstan/phpstan-phpunit": "^2.1.1",
+                "phpstan/phpstan-strict-rules": "^2.1.0",
                 "phpunit/phpunit": "^9.6.34",
-                "rector/rector": "^2.4.2"
+                "rector/rector": "^2.7.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.2-dev"
+                    "dev-main": "1.3-dev"
                 },
                 "composer-normalize": {
                     "indent-size": 2,
@@ -2356,7 +2356,7 @@
                 "security": "https://github.com/ergebnis/agent-detector/blob/main/.github/SECURITY.md",
                 "source": "https://github.com/ergebnis/agent-detector"
             },
-            "time": "2026-05-07T08:19:07+00:00"
+            "time": "2026-10-15T11:13:32+00:00"
         },
         {
             "name": "evenement/evenement",
@@ -6056,16 +6056,16 @@
         },
         {
             "name": "publishpress/dev-workspace",
-            "version": "1.8.18",
+            "version": "dev-cursor/release-runner",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/library-dev-workspace.git",
-                "reference": "8feb2d312176a013c4bcd626d405cbd68357f1fb"
+                "reference": "6f016161b52becabf4e91a1af865896bc0b70cf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/library-dev-workspace/zipball/8feb2d312176a013c4bcd626d405cbd68357f1fb",
-                "reference": "8feb2d312176a013c4bcd626d405cbd68357f1fb",
+                "url": "https://api.github.com/repos/publishpress/library-dev-workspace/zipball/6f016161b52becabf4e91a1af865896bc0b70cf0",
+                "reference": "6f016161b52becabf4e91a1af865896bc0b70cf0",
                 "shasum": ""
             },
             "require": {
@@ -6095,7 +6095,7 @@
                 "phpstan/extension-installer": "^1.3",
                 "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^10",
-                "publishpress/publishpress-phpcs-standards": "^1.1",
+                "publishpress/publishpress-phpcs-standards": "dev-development",
                 "publishpress/translations": "^1.4",
                 "spatie/ray": "^1.41",
                 "squizlabs/php_codesniffer": "^3.8",
@@ -6122,22 +6122,22 @@
             "description": "Shared Composer scripts for PublishPress plugins",
             "support": {
                 "issues": "https://github.com/publishpress/library-dev-workspace/issues",
-                "source": "https://github.com/publishpress/library-dev-workspace/tree/1.8.18"
+                "source": "https://github.com/publishpress/library-dev-workspace/tree/cursor/release-runner"
             },
-            "time": "2026-10-09T15:56:24+00:00"
+            "time": "2026-10-15T20:18:09+00:00"
         },
         {
             "name": "publishpress/publishpress-phpcs-standards",
-            "version": "1.1.0",
+            "version": "dev-development",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/publishpress-phpcs-standards.git",
-                "reference": "95a6ebe1508071735a0a3daf590b493d6253d7f6"
+                "reference": "ef38ce080bb8cee3eb90072370212ac129bb7e1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/publishpress-phpcs-standards/zipball/95a6ebe1508071735a0a3daf590b493d6253d7f6",
-                "reference": "95a6ebe1508071735a0a3daf590b493d6253d7f6",
+                "url": "https://api.github.com/repos/publishpress/publishpress-phpcs-standards/zipball/ef38ce080bb8cee3eb90072370212ac129bb7e1b",
+                "reference": "ef38ce080bb8cee3eb90072370212ac129bb7e1b",
                 "shasum": ""
             },
             "require": {
@@ -6149,10 +6149,12 @@
                 "overtrue/phplint": "^2.1",
                 "phpcompatibility/php-compatibility": "*",
                 "phpmd/phpmd": "^2.8",
+                "phpunit/phpunit": "^9.6",
                 "sebastian/phpcpd": "^6.0",
                 "squizlabs/php_codesniffer": "^3.5",
                 "vimeo/psalm": "^4.17"
             },
+            "default-branch": true,
             "type": "phpcodesniffer-standard",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -6169,9 +6171,9 @@
             "description": "PublishPress PHPCS standards, including vendored WordPress.org Plugin Check rules",
             "support": {
                 "issues": "https://github.com/publishpress/publishpress-phpcs-standards/issues",
-                "source": "https://github.com/publishpress/publishpress-phpcs-standards/tree/1.1.0"
+                "source": "https://github.com/publishpress/publishpress-phpcs-standards/tree/development"
             },
-            "time": "2026-07-31T15:48:12+00:00"
+            "time": "2026-10-08T16:18:22+00:00"
         },
         {
             "name": "publishpress/translations",
@@ -13715,14 +13717,16 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": {},
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "publishpress/dev-workspace": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.4",
         "ext-json": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
 }

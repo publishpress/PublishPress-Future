@@ -36,7 +36,7 @@
         "ext-json": "*"
     },
     "require-dev": {
-        "publishpress/dev-workspace": "dev-anderson/custom-phpcs-standards"
+        "publishpress/dev-workspace": "dev-cursor/release-runner"
     },
     "extra": {
         "plugin-slug": "post-expirator",
