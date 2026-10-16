@@ -81,25 +81,35 @@ composer test:all
 ### Running Unit tests
 
 ```bash
-composer test Unit
+composer test:unit
 ```
+
+Unit tests run serially by default. To split them across parallel workers (Codeception `--shard`), set `UNIT_WORKERS` in `.env` or inline:
+
+```bash
+UNIT_WORKERS=4 composer test:unit
+```
+
+Passing a test path, `--filter`, `--group`, or coverage flags forces a serial run. You can also run the suite directly with `composer test Unit`.
 
 ### Running Integration tests
 
 ```bash
-composer test Integration
+composer test:integration
 ```
+
+On Linux this first fixes ownership on the test Docker volumes, then runs the suite. Parallel workers use `INTEGRATION_WORKERS`, but all shards share one WordPress and database, so keep it at 1 unless you are experimenting. You can also run the suite directly with `composer test Integration`.
 
 You also can run specific test file:
 
 ```bash
-composer test tests/codeception/Unit/Framework/HooksTest.php
+composer test:unit tests/codeception/Unit/Core/PathsTest.php
 ```
 
 And for running only a specific test:
 
 ```bash
-composer test tests/codeception/Unit/Framework/HooksTest.php:testAddAction
+composer test:unit tests/codeception/Unit/Core/PathsTest.php:testGetBaseDirPathReturnsNoTrailingSlash
 ```
 
 You can run any codeception command by executing:
