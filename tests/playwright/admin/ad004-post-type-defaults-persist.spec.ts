@@ -5,7 +5,8 @@ import { setPostTypeDefaults } from '../support/wp-cli';
 
 interface SavedRow {
   postType: string;
-  howToExpire: string;
+  expireType: string;
+  newStatus: string;
   autoEnable: 'Enable' | 'Disable';
   taxonomy: string;
   whoToNotify: string;
@@ -16,18 +17,18 @@ interface SavedRow {
  * The feature step always sets Active to inactive. The example `active` column is unused.
  */
 const rows: SavedRow[] = [
-  { postType: 'post', howToExpire: 'delete', autoEnable: 'Enable', taxonomy: 'tax2', whoToNotify: 'dev1@example.com', defaultDate: 'Publish Time' },
-  { postType: 'post', howToExpire: 'trash', autoEnable: 'Disable', taxonomy: 'tax3', whoToNotify: 'dev2@example.com', defaultDate: 'Custom:+1 month' },
-  { postType: 'post', howToExpire: 'delete', autoEnable: 'Enable', taxonomy: 'tax2', whoToNotify: 'dev3@example.com', defaultDate: 'Publish Time' },
-  { postType: 'post', howToExpire: 'trash', autoEnable: 'Disable', taxonomy: 'tax2', whoToNotify: 'dev4@example.com', defaultDate: 'Custom:+3 month' },
-  { postType: 'page', howToExpire: 'delete', autoEnable: 'Enable', taxonomy: 'tax2', whoToNotify: 'dev1@example.com', defaultDate: 'Publish Time' },
-  { postType: 'page', howToExpire: 'trash', autoEnable: 'Disable', taxonomy: 'tax3', whoToNotify: 'dev2@example.com', defaultDate: 'Custom:+1 month' },
-  { postType: 'page', howToExpire: 'delete', autoEnable: 'Enable', taxonomy: 'tax2', whoToNotify: 'dev3@example.com', defaultDate: 'Publish Time' },
-  { postType: 'page', howToExpire: 'trash', autoEnable: 'Disable', taxonomy: 'tax2', whoToNotify: 'dev4@example.com', defaultDate: 'Custom:+3 month' },
-  { postType: 'music', howToExpire: 'delete', autoEnable: 'Enable', taxonomy: 'tax2', whoToNotify: 'dev1@example.com', defaultDate: 'Publish Time' },
-  { postType: 'music', howToExpire: 'trash', autoEnable: 'Disable', taxonomy: 'tax3', whoToNotify: 'dev2@example.com', defaultDate: 'Custom:+1 month' },
-  { postType: 'music', howToExpire: 'delete', autoEnable: 'Enable', taxonomy: 'tax2', whoToNotify: 'dev3@example.com', defaultDate: 'Publish Time' },
-  { postType: 'music', howToExpire: 'trash', autoEnable: 'Disable', taxonomy: 'tax2', whoToNotify: 'dev4@example.com', defaultDate: 'Custom:+3 month' },
+  { postType: 'post', expireType: 'delete', newStatus: '', autoEnable: 'Enable', taxonomy: 'tax2', whoToNotify: 'dev1@example.com', defaultDate: 'Publish Time' },
+  { postType: 'post', expireType: 'change-status', newStatus: 'trash', autoEnable: 'Disable', taxonomy: 'tax3', whoToNotify: 'dev2@example.com', defaultDate: 'Custom:+1 month' },
+  { postType: 'post', expireType: 'delete', newStatus: '', autoEnable: 'Enable', taxonomy: 'tax2', whoToNotify: 'dev3@example.com', defaultDate: 'Publish Time' },
+  { postType: 'post', expireType: 'change-status', newStatus: 'trash', autoEnable: 'Disable', taxonomy: 'tax2', whoToNotify: 'dev4@example.com', defaultDate: 'Custom:+3 month' },
+  { postType: 'page', expireType: 'delete', newStatus: '', autoEnable: 'Enable', taxonomy: 'tax2', whoToNotify: 'dev1@example.com', defaultDate: 'Publish Time' },
+  { postType: 'page', expireType: 'change-status', newStatus: 'trash', autoEnable: 'Disable', taxonomy: 'tax3', whoToNotify: 'dev2@example.com', defaultDate: 'Custom:+1 month' },
+  { postType: 'page', expireType: 'delete', newStatus: '', autoEnable: 'Enable', taxonomy: 'tax2', whoToNotify: 'dev3@example.com', defaultDate: 'Publish Time' },
+  { postType: 'page', expireType: 'change-status', newStatus: 'trash', autoEnable: 'Disable', taxonomy: 'tax2', whoToNotify: 'dev4@example.com', defaultDate: 'Custom:+3 month' },
+  { postType: 'music', expireType: 'delete', newStatus: '', autoEnable: 'Enable', taxonomy: 'tax2', whoToNotify: 'dev1@example.com', defaultDate: 'Publish Time' },
+  { postType: 'music', expireType: 'change-status', newStatus: 'trash', autoEnable: 'Disable', taxonomy: 'tax3', whoToNotify: 'dev2@example.com', defaultDate: 'Custom:+1 month' },
+  { postType: 'music', expireType: 'delete', newStatus: '', autoEnable: 'Enable', taxonomy: 'tax2', whoToNotify: 'dev3@example.com', defaultDate: 'Publish Time' },
+  { postType: 'music', expireType: 'change-status', newStatus: 'trash', autoEnable: 'Disable', taxonomy: 'tax2', whoToNotify: 'dev4@example.com', defaultDate: 'Custom:+3 month' },
 ];
 
 function offsetFromDefaultDate(value: string): string {
@@ -39,14 +40,17 @@ async function saveInactiveWithValues(page: Page, row: SavedRow): Promise<void> 
   const auto = page.locator(`#expirationdate_autoenable-${row.postType}`);
 
   if (!await active.isChecked()) {
-    await active.check();
+    await active.check({ force: true });
   }
 
   if (row.autoEnable === 'Enable') {
     if (!await auto.isChecked()) {
-      await auto.check();
+      await auto.check({ force: true });
     }
-    await page.locator(`#expirationdate_expiretype-${row.postType}`).selectOption(row.howToExpire);
+    await page.locator(`#expirationdate_expiretype-${row.postType}`).selectOption(row.expireType);
+    if (row.newStatus !== '') {
+      await page.locator(`#expirationdate_newstatus-${row.postType}`).selectOption(row.newStatus);
+    }
     await page.locator(`#expirationdate_taxonomy-${row.postType}`).selectOption(row.taxonomy);
     await page.locator(`#expirationdate_emailnotification-${row.postType}`).fill(row.whoToNotify);
     const offset = page.locator(`#expired-custom-date-${row.postType}`);
@@ -54,10 +58,10 @@ async function saveInactiveWithValues(page: Page, row: SavedRow): Promise<void> 
     await offset.blur();
     await expect(page.locator('input[name="expirationdateSaveDefaults"]')).toBeEnabled();
   } else if (await auto.isChecked()) {
-    await auto.uncheck();
+    await auto.uncheck({ force: true });
   }
 
-  await active.uncheck();
+  await active.uncheck({ force: true });
   await page.evaluate((payload) => {
     const form = document.querySelector('form');
     if (!form) {
@@ -73,7 +77,10 @@ async function saveInactiveWithValues(page: Page, row: SavedRow): Promise<void> 
     if (payload.autoEnable === 'Enable') {
       add(`expirationdate_autoenable-${payload.postType}`, '1');
     }
-    add(`expirationdate_expiretype-${payload.postType}`, payload.howToExpire);
+    add(`expirationdate_expiretype-${payload.postType}`, payload.expireType);
+    if (payload.newStatus !== '') {
+      add(`expirationdate_newstatus-${payload.postType}`, payload.newStatus);
+    }
     add(`expirationdate_taxonomy-${payload.postType}`, payload.taxonomy);
     add(`expirationdate_emailnotification-${payload.postType}`, payload.whoToNotify);
     add(`expired-custom-date-${payload.postType}`, payload.offset);
@@ -92,7 +99,7 @@ test.beforeAll(() => {
 
 for (const row of rows) {
   test(
-    `saves ${row.postType} defaults inactive ${row.howToExpire} ${row.autoEnable} ${row.taxonomy} ${row.whoToNotify} ${row.defaultDate}`,
+    `saves ${row.postType} defaults inactive ${row.expireType} ${row.newStatus || 'none'} ${row.autoEnable} ${row.taxonomy} ${row.whoToNotify} ${row.defaultDate}`,
     { tag: adminTags },
     async ({ page }) => {
       setPostTypeDefaults(row.postType, { activeMetaBox: 'active', autoEnable: '1', taxonomy: 'tax1' });
@@ -102,17 +109,20 @@ for (const row of rows) {
 
       const active = page.locator(`#expirationdate_activemeta-${row.postType}`);
       await expect(active).not.toBeChecked();
-      await active.check();
+      await active.check({ force: true });
 
       const auto = page.locator(`#expirationdate_autoenable-${row.postType}`);
       if (row.autoEnable === 'Enable') {
         await expect(auto).toBeChecked();
       } else {
         await expect(auto).not.toBeChecked();
-        await auto.check();
+        await auto.check({ force: true });
       }
 
-      await expect(page.locator(`#expirationdate_expiretype-${row.postType}`)).toHaveValue(row.howToExpire);
+      await expect(page.locator(`#expirationdate_expiretype-${row.postType}`)).toHaveValue(row.expireType);
+      if (row.newStatus !== '') {
+        await expect(page.locator(`#expirationdate_newstatus-${row.postType}`)).toHaveValue(row.newStatus);
+      }
       await expect(page.locator(`#expirationdate_taxonomy-${row.postType}`)).toHaveValue(row.taxonomy);
       await expect(page.locator(`#expirationdate_emailnotification-${row.postType}`)).toHaveValue(row.whoToNotify);
       await expect(page.locator(`#expired-custom-date-${row.postType}`)).toHaveValue(offsetFromDefaultDate(row.defaultDate));

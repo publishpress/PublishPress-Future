@@ -37,6 +37,30 @@ export function uniqueKey(prefix: string): string {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
+let cachedDockerUser: string | undefined;
+
+/**
+ * wp-content is owned by the host user after the Linux volume permission fix.
+ * The container default user is www-data, which cannot create upgrade/ or mu-plugins.
+ */
+function dockerUserArgs(container: string): string[] {
+  if (cachedDockerUser === undefined) {
+    try {
+      const owner = execFileSync(
+        'docker',
+        ['exec', container, 'stat', '-c', '%u:%g', '/var/www/html/wp-content'],
+        { encoding: 'utf8' },
+      ).trim();
+
+      cachedDockerUser = /^\d+:\d+$/.test(owner) ? owner : '';
+    } catch {
+      cachedDockerUser = '';
+    }
+  }
+
+  return cachedDockerUser === '' ? [] : ['-u', cachedDockerUser];
+}
+
 function containerName(): string {
   const base = process.env.CONTAINER_NAME || 'publishpress-future';
   const expected = `${base}_env_wp_test_cli`;
@@ -77,10 +101,12 @@ function phpString(value: string): string {
  * Runs WP-CLI inside the test container.
  */
 export function wp(args: string[]): string {
+  const container = containerName();
+
   try {
     return execFileSync(
       'docker',
-      ['exec', containerName(), 'wp', '--path=/var/www/html', ...args],
+      ['exec', ...dockerUserArgs(container), container, 'wp', '--path=/var/www/html', ...args],
       {
         encoding: 'utf8',
         stdio: ['ignore', 'pipe', 'pipe'],
@@ -234,10 +260,17 @@ add_action('init', static function () {
     if (! is_dir($dir)) {
         mkdir($dir, 0755, true);
     }
-    file_put_contents($dir . '/pp-future-playwright-fixtures.php', base64_decode(${phpString(encoded)}));
+    $path = $dir . '/pp-future-playwright-fixtures.php';
+    if (@file_put_contents($path, base64_decode(${phpString(encoded)})) === false) {
+        echo 'WRITE_FAILED';
+    }
   `;
 
-  wp(['eval', php]);
+  const result = wp(['eval', php]);
+
+  if (result.includes('WRITE_FAILED')) {
+    throw new Error('Could not write wp-content/mu-plugins/pp-future-playwright-fixtures.php');
+  }
 }
 
 export function scheduleDraftExpiration(postId: number, daysFromNow: number): { unix: number; formatted: string } {

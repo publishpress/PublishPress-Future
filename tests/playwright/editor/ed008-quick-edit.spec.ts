@@ -14,7 +14,7 @@ test('quick edit shows Enable Future Action', { tag: editorTags }, async ({ page
   const row = page.locator(`#post-${post.id}`);
   await row.hover();
   await row.locator('button.editinline').click();
-  const quickEdit = page.locator('fieldset.post-expirator-quickedit');
+  const quickEdit = page.locator(`#edit-${post.id} fieldset.post-expirator-quickedit`);
   await expect(quickEdit).toBeVisible();
   await expect(quickEdit).toContainText('Enable Future Action');
 });

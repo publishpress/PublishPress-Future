@@ -30,11 +30,11 @@ async function openBulkEdit(page: Page, batch: string, posts: CreatedPost[]): Pr
   }
   await page.locator('#bulk-action-selector-top').selectOption('edit');
   await page.locator('#doaction').click();
-  await expect(page.locator('fieldset.post-expirator-quickedit')).toBeVisible();
+  await expect(page.locator('#bulk-edit fieldset.post-expirator-quickedit')).toBeVisible();
 }
 
 async function chooseStrategy(page: Page, value: string): Promise<void> {
-  await page.locator('select[name="future_action_bulk_change_action"]').selectOption(value);
+  await page.locator('#bulk-edit select[name="future_action_bulk_change_action"]').selectOption(value);
 }
 
 async function updateBulk(page: Page): Promise<void> {
@@ -49,14 +49,14 @@ async function expectNotScheduled(page: Page, postId: number): Promise<void> {
 test('bulk edit shows future action fields', { tag: editorTags }, async ({ page }) => {
   const { batch, posts } = makePosts('pw-bulk-see', 3);
   await openBulkEdit(page, batch, posts);
-  await expect(page.locator('.post-expirator-quickedit select[name="future_action_bulk_change_action"]')).toBeVisible();
+  await expect(page.locator('#bulk-edit select[name="future_action_bulk_change_action"]')).toBeVisible();
 });
 
 test('change on posts does not add expiration to posts without one', { tag: editorTags }, async ({ page }) => {
   const { batch, posts } = makePosts('pw-bulk-empty', 3);
   await openBulkEdit(page, batch, posts);
   await chooseStrategy(page, 'change-only');
-  await setNoonDaysFromNow(page, '#publishpress-future-bulk-edit', 1);
+  await setNoonDaysFromNow(page, '#bulk-edit', 1);
   await updateBulk(page);
   for (const post of posts) {
     await expectNotScheduled(page, post.id);
@@ -69,7 +69,7 @@ test('change on posts updates posts that already expire', { tag: editorTags }, a
   scheduleDraftExpiration(posts[1].id, 7);
   await openBulkEdit(page, batch, posts);
   await chooseStrategy(page, 'change-only');
-  const tomorrow = await setNoonDaysFromNow(page, '#publishpress-future-bulk-edit', 1);
+  const tomorrow = await setNoonDaysFromNow(page, '#bulk-edit', 1);
   await updateBulk(page);
   await expect(page.locator(`#post-${posts[0].id} .post-expire-col`)).toContainText(tomorrow.formatted);
   await expect(page.locator(`#post-${posts[1].id} .post-expire-col`)).toContainText(tomorrow.formatted);
@@ -82,7 +82,7 @@ test('add to posts only expires posts that had no expiration', { tag: editorTags
   const second = scheduleDraftExpiration(posts[1].id, 7);
   await openBulkEdit(page, batch, posts);
   await chooseStrategy(page, 'add-only');
-  const tomorrow = await setNoonDaysFromNow(page, '#publishpress-future-bulk-edit', 1);
+  const tomorrow = await setNoonDaysFromNow(page, '#bulk-edit', 1);
   await updateBulk(page);
   await expect(page.locator(`#post-${posts[0].id} .post-expire-col`)).toContainText(first.formatted);
   await expect(page.locator(`#post-${posts[1].id} .post-expire-col`)).toContainText(second.formatted);
@@ -95,7 +95,7 @@ test('change and add updates every selected post', { tag: editorTags }, async ({
   scheduleDraftExpiration(posts[1].id, 7);
   await openBulkEdit(page, batch, posts);
   await chooseStrategy(page, 'change-add');
-  const tomorrow = await setNoonDaysFromNow(page, '#publishpress-future-bulk-edit', 1);
+  const tomorrow = await setNoonDaysFromNow(page, '#bulk-edit', 1);
   await updateBulk(page);
   for (const post of posts) {
     await expect(page.locator(`#post-${post.id} .post-expire-col`)).toContainText(tomorrow.formatted);

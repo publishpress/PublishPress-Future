@@ -167,9 +167,11 @@ export async function enableFutureAction(page: Page, root: string): Promise<void
     await checkbox.check();
   }
   const action = page.locator(`${root} .future-action-select-action select`);
-  if (await action.count()) {
-    await action.selectOption('draft');
-  }
+  await expect(action).toBeVisible();
+  await action.selectOption('change-status');
+  const newStatus = page.locator(`${root} .future-action-select-new-status select`);
+  await expect(newStatus).toBeVisible();
+  await newStatus.selectOption('draft');
   await setNoonDaysFromNow(page, root, 1);
 }
 
