@@ -56,6 +56,11 @@
         "lint:phpmd": "vendor/publishpress/dev-workspace/scripts/run.sh phpmd src,legacy,post-expirator.php,services.php ansi phpmd.ruleset.xml",
         "lint:phpmd:ci": "vendor/publishpress/dev-workspace/scripts/run.sh phpmd src,legacy,post-expirator.php,services.php github phpmd.ruleset.xml",
         "lint:phpmd:text": "vendor/publishpress/dev-workspace/scripts/run.sh phpmd src,legacy,post-expirator.php,services.php text phpmd.ruleset.xml",
+        "test": [
+            "@test:unit",
+            "@test:integration",
+            "@test:e2e"
+        ],
         "test:unit": "bash tests/bin/run-codecept-suite.sh Unit UNIT_WORKERS",
         "test:integration": "bash tests/bin/run-integration-tests.sh",
         "test:e2e": "npm run test:e2e",

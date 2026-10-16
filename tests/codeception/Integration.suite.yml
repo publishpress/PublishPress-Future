@@ -10,7 +10,7 @@ modules:
     config:
         lucatume\WPBrowser\Module\WPLoader:
             wpRootFolder: "%WP_TESTS_ROOT_DIR%"
-            dbUrl: "%WP_TESTS_DB_URL%"
+            dbUrl: "%WP_TESTS_INTEGRATION_DB_URL%"
             wpDebug: true
             tablePrefix: '%WP_TESTS_TEST_TABLE_PREFIX%'
             domain: '%WP_TESTS_DOMAIN%'
