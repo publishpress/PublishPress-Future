@@ -1,24 +1,20 @@
 # Playwright e2e case catalog
 
-Case files under `docs/testing/cases/` are the source of truth for the browser suite. This pass is specs only. The next pass adds Playwright and implements one spec file per case.
+Case files under `docs/testing/cases/` are the source of truth for browser behavior. Former Codeception acceptance features now live in `tests/playwright/`. Catalog cases without a spec are still unimplemented. This does not automate all 71 cases.
 
-`automation.implementations` stays empty until that spec file exists.
+`automation.implementations` lists a spec only when that case has one.
 
-## Next pass layout
+## Layout
 
-Modeled on PublishPress Cart:
-
-- Playwright tests in `tests/playwright/<suite>/`, one `*.spec.ts` per case.
-- `playwright.config.ts` at the repo root, aimed at the test site URL from `.env`.
-- Composer scripts call `npm run test:e2e`. Codeception stays on unit and integration.
-- Codeception suites live in `tests/codeception/`; `codeception.yml` points there.
-- Keep `tests/codeception/Acceptance` and `tests/codeception/EndToEnd` until the Playwright cases cover them.
-
-Do not copy Cart's Scribe catalog tooling in that pass unless we decide to.
+- Playwright tests in `tests/playwright/<suite>/`.
+- `playwright.config.ts` at the repo root uses `WP_TESTS_URL` from `.env`.
+- `composer test:e2e` calls `npm run test:e2e`.
+- Codeception stays on unit, integration, EndToEnd, and instance protection.
+- Instance protection (`tests/codeception/Acceptance/features/instance-protection.feature`) stays on Codeception. It needs a second plugin copy on disk.
 
 ## Suites
 
-| Suite | Prefix | Cases | Later test path |
+| Suite | Prefix | Cases | Test path |
 | --- | --- | ---: | --- |
 | admin | AD | 20 | `tests/playwright/admin/` |
 | editor | ED | 13 | `tests/playwright/editor/` |
@@ -27,7 +23,7 @@ Do not copy Cart's Scribe catalog tooling in that pass unless we decide to.
 | workflows | WF | 2 | `tests/playwright/workflows/` |
 | workflow-editor | WE | 19 | `tests/playwright/workflow-editor/` |
 
-71 cases. Edition is free. Pro step coverage is the lock shown in WE-016, not a Pro step matrix.
+71 cases in the catalog. Only cases with `automation.implementations` set have a Playwright spec. Edition is free. Pro step coverage is the lock shown in WE-016, not a Pro step matrix.
 
 ## Not in this catalog
 

@@ -27,13 +27,5 @@ class AcceptanceTester extends \Codeception\Actor
      * Define custom actions here
      */
     use GherkinSteps\Users;
-    use GherkinSteps\Menu;
     use GherkinSteps\Plugins;
-    use GherkinSteps\Post;
-    use GherkinSteps\PostGutenberg;
-    use GherkinSteps\PostClassicEditor;
-    use GherkinSteps\Settings;
-    use GherkinSteps\Options;
-    use GherkinSteps\Debug;
-    use GherkinSteps\Cli;
 }

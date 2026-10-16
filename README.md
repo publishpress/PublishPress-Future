@@ -100,6 +100,19 @@ composer test:integration
 
 On Linux this first fixes ownership on the test Docker volumes, then runs the suite. Parallel workers use `INTEGRATION_WORKERS`, but all shards share one WordPress and database, so keep it at 1 unless you are experimenting. You can also run the suite directly with `composer test Integration`.
 
+### Browser acceptance (Playwright)
+
+After `composer test:up`, install the browser once:
+
+```bash
+node ./node_modules/@playwright/test/cli.js install chromium
+composer test:e2e
+```
+
+Headless by default. Set `PW_HEADED=1` in `.env` to show the browser, or run `composer test:e2e:headed`. These tests share one WordPress database, so `PW_WORKERS` defaults to 1.
+
+Instance protection stays on Codeception Acceptance (`tests/codeception/Acceptance/features/instance-protection.feature`). EndToEnd stays on Codeception (`tests/codeception/EndToEnd/`).
+
 You also can run specific test file:
 
 ```bash

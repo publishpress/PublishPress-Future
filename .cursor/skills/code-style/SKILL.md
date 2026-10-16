@@ -25,7 +25,7 @@ PHP ≥7.4 | WP ≥6.7 | JSX admin UI (`assets/`) | CSS | MySQL/MariaDB
 - **WP Reviews**: `lib/vendor/publishpress/wordpress-reviews/`
 
 ### Development Tools
-Composer | npm/Yarn | Webpack | Codeception (Unit/Integration/Acceptance) | WP-Browser | Docker | PHPCS | PHPStan | PHP-CS-Fixer
+Composer | npm/Yarn | Webpack | Codeception (Unit/Integration/EndToEnd) | Playwright (browser acceptance) | WP-Browser | Docker | PHPCS | PHPStan | PHP-CS-Fixer
 
 ### Build Tools
 `dev-workspace/scripts/` | `dev-workspace/docker/compose.yaml` | Webpack | `composer.json` scripts
@@ -107,7 +107,7 @@ React/JSX (`*.jsx`, `*.tsx`): follow `.cursor/rules/react.mdc` — functional co
 
 ## Testing Guidelines
 
-**Codeception** — Unit, Integration, Acceptance, EndToEnd.
+**Codeception** — Unit, Integration, EndToEnd. **Playwright** — browser acceptance (`composer test:e2e`). Instance protection stays on Codeception.
 
 ### Unit Testing
 Behavior not implementation | `test_should_*` names | AAA | mock WP/DB | 80%+ domain coverage | `WPTestCase` or PHPUnit `TestCase`
@@ -115,8 +115,8 @@ Behavior not implementation | `test_should_*` names | AAA | mock WP/DB | 80%+ do
 ### Integration Testing
 Component + WP integration | real test DB | REST + controller/model flows | `WPTestCase` / `NoTransactionWPTestCase` | critical workflows
 
-### Acceptance Testing (BDD)
-Gherkin Given/When/Then | browser tests | `tests/codeception/Acceptance/features/` | steps in `tests/codeception/Support/GherkinSteps/` | admin/classic/Gutenberg/bulk/quick edit
+### Acceptance Testing (browser)
+Playwright | `tests/playwright/` | `composer test:e2e` | tags `@acceptance` plus `@admin`, `@editor`, or `@public` | instance protection stays Codeception (`tests/codeception/Acceptance/features/instance-protection.feature`)
 
 ### EndToEnd Testing
 Lifecycle (activate/deactivate) | WP core interaction | real-world scenarios
