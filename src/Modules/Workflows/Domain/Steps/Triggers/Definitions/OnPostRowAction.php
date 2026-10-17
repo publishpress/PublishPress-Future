@@ -2,10 +2,10 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions;
 
-use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\AbstractStepType;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class OnPostRowAction implements StepTypeInterface
+class OnPostRowAction extends AbstractStepType
 {
     public static function getNodeTypeName(): string
     {
@@ -15,11 +15,6 @@ class OnPostRowAction implements StepTypeInterface
     public function getElementaryType(): string
     {
         return StepTypesModel::STEP_TYPE_TRIGGER;
-    }
-
-    public function getReactFlowNodeType(): string
-    {
-        return "trigger";
     }
 
     public function getBaseSlug(): string
@@ -38,16 +33,6 @@ class OnPostRowAction implements StepTypeInterface
             "This trigger creates a custom post row action and activates when the row action is clicked in the Posts list screen.", // phpcs:ignore Generic.Files.LineLength.TooLong
             "post-expirator"
         );
-    }
-
-    public function getIcon(): string
-    {
-        return "media-document";
-    }
-
-    public function getFrecency(): int
-    {
-        return 1;
     }
 
     public function getVersion(): int
@@ -158,11 +143,6 @@ class OnPostRowAction implements StepTypeInterface
     public function getOutputSchema(): array
     {
         return $this->getStepScopedVariablesSchema();
-    }
-
-    public function getCSSClass(): string
-    {
-        return "react-flow__node-genericTrigger";
     }
 
     public function getHandleSchema(): array

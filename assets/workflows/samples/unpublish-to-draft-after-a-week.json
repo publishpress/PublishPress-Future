@@ -1,0 +1,210 @@
+{
+    "nodes": [
+        {
+            "id": "n1717531530334",
+            "type": "generic",
+            "position": {
+                "x": 12,
+                "y": 252
+            },
+            "data": {
+                "name": "action/core.post-change-status",
+                "elementaryType": "action",
+                "version": 1,
+                "slug": "changePostStatus1",
+                "settings": {
+                    "newStatus": {
+                        "newStatus": "publish",
+                        "status": "draft"
+                    },
+                    "post": {
+                        "variable": "{{onPostPublish1.postAfter}}"
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "selected": true,
+            "positionAbsolute": {
+                "x": 12,
+                "y": 252
+            },
+            "dragging": false,
+            "targetPosition": "top",
+            "sourcePosition": "bottom",
+            "$H": 333,
+            "x": 12,
+            "y": 252
+        },
+        {
+            "id": "n1717531533130",
+            "type": "generic",
+            "position": {
+                "x": 12,
+                "y": 132
+            },
+            "data": {
+                "name": "advanced/core.schedule",
+                "elementaryType": "advanced",
+                "version": 1,
+                "slug": "schedule1",
+                "settings": {
+                    "schedule": {
+                        "whenToRun": "offset",
+                        "dateSource": "event",
+                        "recurrence": "single",
+                        "repeatUntil": "forever",
+                        "repeatInterval": "3600",
+                        "repeatIntervalUnit": "seconds",
+                        "repeatTimes": "5",
+                        "repeatUntilDate": "2024-06-11T20:06:02.100Z",
+                        "unique": true,
+                        "priority": "10",
+                        "specificDate": "2024-06-07T20:06:02.100Z",
+                        "dateOffset": "+7 days",
+                        "customDateSource": "onSavePost1.post.post_date"
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 12,
+                "y": 132
+            },
+            "dragging": false,
+            "targetPosition": "top",
+            "sourcePosition": "bottom",
+            "$H": 335,
+            "x": 12,
+            "y": 132
+        },
+        {
+            "id": "n1717531536270",
+            "type": "generic",
+            "position": {
+                "x": 12,
+                "y": 372
+            },
+            "data": {
+                "name": "action/core.send-email",
+                "elementaryType": "action",
+                "version": 1,
+                "slug": "sendEmail1",
+                "settings": {
+                    "recipient": {
+                        "recipient": "global.site.admin_email",
+                        "custom": "",
+                        "expression": "{{global.site.admin_email}}"
+                    },
+                    "subject": {
+                        "expression": "PublishPress Workflow: {{global.workflow.title}}"
+                    },
+                    "message": {
+                        "expression": "This is a message sent by PublishPress Workflow: {{global.workflow.title}}."
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "targetPosition": "top",
+            "sourcePosition": "bottom",
+            "$H": 337,
+            "x": 12,
+            "y": 372,
+            "selected": false,
+            "dragging": false,
+            "positionAbsolute": {
+                "x": 12,
+                "y": 372
+            }
+        },
+        {
+            "id": "onPostPublish_1jvo77om",
+            "type": "trigger",
+            "position": {
+                "x": 10,
+                "y": 20
+            },
+            "data": {
+                "name": "trigger/core.post-published",
+                "elementaryType": "trigger",
+                "version": 1,
+                "slug": "onPostPublish1",
+                "settings": {
+                    "postQuery": {
+                        "postSource": "custom",
+                        "postType": [
+                            "post"
+                        ],
+                        "postId": [],
+                        "postStatus": [],
+                        "json": {
+                            "or": [
+                                {
+                                    "==": [
+                                        {
+                                            "var": "{{onPostPublish1.postBefore.type}}"
+                                        },
+                                        "post"
+                                    ]
+                                }
+                            ]
+                        },
+                        "natural": "{{onPostPublish1.postBefore.type}} is 'post'"
+                    }
+                }
+            },
+            "width": 140,
+            "height": 67,
+            "positionAbsolute": {
+                "x": 10,
+                "y": 20
+            },
+            "selected": false,
+            "dragging": false
+        }
+    ],
+    "edges": [
+        {
+            "source": "n1717531533130",
+            "sourceHandle": "output",
+            "target": "n1717531530334",
+            "targetHandle": "input",
+            "type": "genericEdge",
+            "id": "n1717531533130-output-n1717531530334-input",
+            "markerEnd": {
+                "type": "arrowclosed"
+            }
+        },
+        {
+            "source": "n1717531530334",
+            "sourceHandle": "output",
+            "target": "n1717531536270",
+            "targetHandle": "input",
+            "type": "genericEdge",
+            "id": "n1717531530334-output-n1717531536270-input",
+            "markerEnd": {
+                "type": "arrowclosed"
+            }
+        },
+        {
+            "source": "onPostPublish_1jvo77om",
+            "sourceHandle": "output",
+            "target": "n1717531533130",
+            "targetHandle": "input",
+            "type": "genericEdge",
+            "id": "onPostPublish_1jvo77om-output-n1717531533130-input",
+            "markerEnd": {
+                "type": "arrowclosed"
+            }
+        }
+    ],
+    "viewport": {
+        "x": 394.6618521665251,
+        "y": 13.324129141886175,
+        "zoom": 0.9919286321155479
+    },
+    "editorVersion": "4.9.0"
+}

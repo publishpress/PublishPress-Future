@@ -2,10 +2,10 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions;
 
-use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\AbstractStepType;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class DeletePost implements StepTypeInterface
+class DeletePost extends AbstractStepType
 {
     public static function getNodeTypeName(): string
     {
@@ -15,11 +15,6 @@ class DeletePost implements StepTypeInterface
     public function getElementaryType(): string
     {
         return StepTypesModel::STEP_TYPE_ACTION;
-    }
-
-    public function getReactFlowNodeType(): string
-    {
-        return "generic";
     }
 
     public function getBaseSlug(): string
@@ -35,21 +30,6 @@ class DeletePost implements StepTypeInterface
     public function getDescription(): string
     {
         return __("This step deletes a post.", "post-expirator");
-    }
-
-    public function getIcon(): string
-    {
-        return "media-document";
-    }
-
-    public function getFrecency(): int
-    {
-        return 1;
-    }
-
-    public function getVersion(): int
-    {
-        return 1;
     }
 
     public function getCategory(): string
@@ -111,11 +91,6 @@ class DeletePost implements StepTypeInterface
         ];
     }
 
-    public function getStepScopedVariablesSchema(): array
-    {
-        return [];
-    }
-
     public function getOutputSchema(): array
     {
         return [
@@ -126,11 +101,6 @@ class DeletePost implements StepTypeInterface
                 "description" => __("The input data for this step.", "post-expirator"),
             ]
         ];
-    }
-
-    public function getCSSClass(): string
-    {
-        return "react-flow__node-genericAction";
     }
 
     public function getHandleSchema(): array
@@ -150,8 +120,4 @@ class DeletePost implements StepTypeInterface
         ];
     }
 
-    public function isProFeature(): bool
-    {
-        return false;
-    }
 }

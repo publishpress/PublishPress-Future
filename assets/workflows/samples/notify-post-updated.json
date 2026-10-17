@@ -1,0 +1,96 @@
+{
+    "nodes": [
+        {
+            "id": "n1717543440185",
+            "type": "trigger",
+            "position": {
+                "x": 0,
+                "y": -140
+            },
+            "data": {
+                "name": "trigger/core.post-updated",
+                "elementaryType": "trigger",
+                "version": 1,
+                "slug": "onPostUpdated1",
+                "settings": {
+                    "postQuery": {
+                        "postSource": "custom",
+                        "postType": [],
+                        "postId": [],
+                        "postStatus": [],
+                        "json": {
+                            "and": [
+                                {
+                                    "==": [
+                                        {
+                                            "var": "{{onPostUpdated1.postAfter.type}}"
+                                        },
+                                        "post"
+                                    ]
+                                }
+                            ]
+                        },
+                        "natural": "{{onPostUpdated1.postAfter.type}} is 'post'"
+                    }
+                }
+            },
+            "width": 140,
+            "height": 68,
+            "selected": true,
+            "positionAbsolute": {
+                "x": 0,
+                "y": -140
+            },
+            "dragging": false
+        },
+        {
+            "id": "n1717543448599",
+            "type": "generic",
+            "position": {
+                "x": 0,
+                "y": -20
+            },
+            "data": {
+                "name": "action/core.send-email",
+                "elementaryType": "action",
+                "version": 1,
+                "slug": "sendEmail1",
+                "settings": {
+                    "recipient": {
+                        "recipient": "global.site.admin_email",
+                        "custom": ""
+                    },
+                    "subject": "Post updated: {{onPostUpdated1.postBefore.title}}",
+                    "message": "The post \"{{onPostUpdated1.postBefore.title}} was updated.\n\nThe new title is \"{{onPostUpdated1.postAfter.title}}\"."
+                }
+            },
+            "width": 140,
+            "height": 68,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 0,
+                "y": -20
+            },
+            "dragging": false
+        }
+    ],
+    "edges": [
+        {
+            "source": "n1717543440185",
+            "sourceHandle": "output",
+            "target": "n1717543448599",
+            "targetHandle": "input",
+            "type": "genericEdge",
+            "id": "n1717543440185-output-n1717543448599-input",
+            "markerEnd": {
+                "type": "arrowclosed"
+            }
+        }
+    ],
+    "viewport": {
+        "x": 360,
+        "y": 1079.5,
+        "zoom": 2
+    },
+    "editorVersion": "4.5.0"
+}

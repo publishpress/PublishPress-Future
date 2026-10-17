@@ -2,10 +2,10 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions;
 
-use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\AbstractStepType;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class AppendDebugLog implements StepTypeInterface
+class AppendDebugLog extends AbstractStepType
 {
     public static function getNodeTypeName(): string
     {
@@ -15,11 +15,6 @@ class AppendDebugLog implements StepTypeInterface
     public function getElementaryType(): string
     {
         return StepTypesModel::STEP_TYPE_ADVANCED;
-    }
-
-    public function getReactFlowNodeType(): string
-    {
-        return "generic";
     }
 
     public function getBaseSlug(): string
@@ -40,16 +35,6 @@ class AppendDebugLog implements StepTypeInterface
     public function getIcon(): string
     {
         return "debug";
-    }
-
-    public function getFrecency(): int
-    {
-        return 1;
-    }
-
-    public function getVersion(): int
-    {
-        return 1;
     }
 
     public function getCategory(): string
@@ -102,11 +87,6 @@ class AppendDebugLog implements StepTypeInterface
         ];
     }
 
-    public function getStepScopedVariablesSchema(): array
-    {
-        return [];
-    }
-
     public function getOutputSchema(): array
     {
         return [
@@ -141,8 +121,4 @@ class AppendDebugLog implements StepTypeInterface
         ];
     }
 
-    public function isProFeature(): bool
-    {
-        return false;
-    }
 }

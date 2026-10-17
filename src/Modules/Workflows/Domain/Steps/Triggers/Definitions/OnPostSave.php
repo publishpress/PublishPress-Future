@@ -2,10 +2,10 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions;
 
-use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\AbstractStepType;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class OnPostSave implements StepTypeInterface
+class OnPostSave extends AbstractStepType
 {
     public static function getNodeTypeName(): string
     {
@@ -15,11 +15,6 @@ class OnPostSave implements StepTypeInterface
     public function getElementaryType(): string
     {
         return StepTypesModel::STEP_TYPE_TRIGGER;
-    }
-
-    public function getReactFlowNodeType(): string
-    {
-        return "trigger";
     }
 
     public function getBaseSlug(): string
@@ -38,16 +33,6 @@ class OnPostSave implements StepTypeInterface
             "This trigger activates whenever a post is saved, regardless of whether it's newly created, imported, or updated.", // phpcs:ignore Generic.Files.LineLength.TooLong
             "post-expirator"
         );
-    }
-
-    public function getIcon(): string
-    {
-        return "media-document";
-    }
-
-    public function getFrecency(): int
-    {
-        return 1;
     }
 
     public function getVersion(): int
@@ -134,11 +119,6 @@ class OnPostSave implements StepTypeInterface
         return $this->getStepScopedVariablesSchema();
     }
 
-    public function getCSSClass(): string
-    {
-        return "react-flow__node-genericTrigger";
-    }
-
     public function getHandleSchema(): array
     {
         return [
@@ -152,8 +132,4 @@ class OnPostSave implements StepTypeInterface
         ];
     }
 
-    public function isProFeature(): bool
-    {
-        return false;
-    }
 }

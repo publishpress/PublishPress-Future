@@ -2,10 +2,10 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions;
 
-use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\AbstractStepType;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class OnPostAuthorChange implements StepTypeInterface
+class OnPostAuthorChange extends AbstractStepType
 {
     public static function getNodeTypeName(): string
     {
@@ -15,11 +15,6 @@ class OnPostAuthorChange implements StepTypeInterface
     public function getElementaryType(): string
     {
         return StepTypesModel::STEP_TYPE_TRIGGER;
-    }
-
-    public function getReactFlowNodeType(): string
-    {
-        return "trigger";
     }
 
     public function getBaseSlug(): string
@@ -35,21 +30,6 @@ class OnPostAuthorChange implements StepTypeInterface
     public function getDescription(): string
     {
         return __("This trigger activates when an existing post author is changed.", "post-expirator");
-    }
-
-    public function getIcon(): string
-    {
-        return "media-document";
-    }
-
-    public function getFrecency(): int
-    {
-        return 1;
-    }
-
-    public function getVersion(): int
-    {
-        return 1;
     }
 
     public function getCategory(): string
@@ -127,11 +107,6 @@ class OnPostAuthorChange implements StepTypeInterface
                 "description" => __("The ID of the post that was updated.", "post-expirator"),
             ]
         ];
-    }
-
-    public function getCSSClass(): string
-    {
-        return "react-flow__node-genericTrigger";
     }
 
     public function getHandleSchema(): array

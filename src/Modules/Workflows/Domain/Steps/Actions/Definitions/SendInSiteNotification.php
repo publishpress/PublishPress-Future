@@ -2,10 +2,10 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions;
 
-use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
+use PublishPress\Future\Modules\Workflows\Domain\Steps\AbstractStepType;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
-class SendInSiteNotification implements StepTypeInterface
+class SendInSiteNotification extends AbstractStepType
 {
     public static function getNodeTypeName(): string
     {
@@ -30,11 +30,6 @@ class SendInSiteNotification implements StepTypeInterface
         return StepTypesModel::STEP_TYPE_ACTION;
     }
 
-    public function getReactFlowNodeType(): string
-    {
-        return "generic";
-    }
-
     public function getBaseSlug(): string
     {
         return "sendInSiteNotification";
@@ -53,16 +48,6 @@ class SendInSiteNotification implements StepTypeInterface
     public function getIcon(): string
     {
         return "bell";
-    }
-
-    public function getFrecency(): int
-    {
-        return 1;
-    }
-
-    public function getVersion(): int
-    {
-        return 1;
     }
 
     public function getCategory(): string
@@ -188,11 +173,6 @@ class SendInSiteNotification implements StepTypeInterface
         ];
     }
 
-    public function getStepScopedVariablesSchema(): array
-    {
-        return [];
-    }
-
     public function getOutputSchema(): array
     {
         return [
@@ -215,11 +195,6 @@ class SendInSiteNotification implements StepTypeInterface
                 "description" => __("The user who read the admin notification.", "post-expirator"),
             ],
         ];
-    }
-
-    public function getCSSClass(): string
-    {
-        return "react-flow__node-genericAction";
     }
 
     public function getHandleSchema(): array

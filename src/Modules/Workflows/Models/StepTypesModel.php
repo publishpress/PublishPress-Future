@@ -5,45 +5,7 @@ namespace PublishPress\Future\Modules\Workflows\Models;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypesModelInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AddPostMeta;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AddPostTerm;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\AppendDebugLog;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\ChangePostStatus;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\Conditional;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeactivatePostWorkflow;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeletePost;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DeletePostMeta;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DoAction;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UserInteraction;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\QueryPosts;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\RemovePostTerm;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\ScheduleDelay;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendInSiteNotification;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendEmail;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SendRay;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\SetPostTerm;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\StickPost;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UnstickPost;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePost;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\UpdatePostMeta;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions\DuplicatePost;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnAdminInit;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnCustomAction;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnTermsAdded;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnInit;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnLegacyActionTrigger;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostAuthorChange;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostMetaChange;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostPublish;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostRowAction;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSave;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostSchedule;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostStatusChange;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostUpdate;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostCreate;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnPostWorkflowEnable;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnSchedule;
-use PublishPress\Future\Modules\Workflows\Domain\Steps\Triggers\Definitions\OnUserRoleChange;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\CoreStepRegistry;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 
@@ -76,10 +38,16 @@ class StepTypesModel implements StepTypesModelInterface
      */
     private $settingsFacade;
 
+    /**
+     * @var CoreStepRegistry
+     */
+    private $coreStepRegistry;
+
     public function __construct(HooksFacade $hooks, SettingsFacade $settingsFacade)
     {
         $this->hooks = $hooks;
         $this->settingsFacade = $settingsFacade;
+        $this->coreStepRegistry = new CoreStepRegistry();
     }
 
     private function getDefaultCategories()
@@ -213,71 +181,31 @@ class StepTypesModel implements StepTypesModelInterface
 
     private function getDefaultTriggerSteps()
     {
-        $nodesInstances = [
-            OnPostSave::getNodeTypeName() => new OnPostSave(),
-            OnPostUpdate::getNodeTypeName() => new OnPostUpdate(),
-            OnPostCreate::getNodeTypeName() => new OnPostCreate(),
-            OnPostPublish::getNodeTypeName() => new OnPostPublish(),
-            OnPostSchedule::getNodeTypeName() => new OnPostSchedule(),
-            OnPostStatusChange::getNodeTypeName() => new OnPostStatusChange(),
-            OnPostWorkflowEnable::getNodeTypeName() => new OnPostWorkflowEnable(),
-            OnLegacyActionTrigger::getNodeTypeName() => new OnLegacyActionTrigger($this->hooks),
-            OnSchedule::getNodeTypeName() => new OnSchedule(),
-            OnPostMetaChange::getNodeTypeName() => new OnPostMetaChange(),
-            OnPostAuthorChange::getNodeTypeName() => new OnPostAuthorChange(),
-            OnPostRowAction::getNodeTypeName() => new OnPostRowAction(),
-            OnUserRoleChange::getNodeTypeName() => new OnUserRoleChange(),
-            OnTermsAdded::getNodeTypeName() => new OnTermsAdded(),
-            OnCustomAction::getNodeTypeName() => new OnCustomAction(),
-        ];
-
-        if ($this->settingsFacade->getExperimentalFeaturesStatus()) {
-            $nodesInstances[OnInit::getNodeTypeName()] = new OnInit();
-            $nodesInstances[OnAdminInit::getNodeTypeName()] = new OnAdminInit();
-        }
-
-        return $nodesInstances;
+        return $this->getRegistryDefinitions(CoreStepRegistry::BUCKET_TRIGGER);
     }
 
     private function getDefaultActionSteps()
     {
-        $nodesInstances = [
-            DeletePost::getNodeTypeName() => new DeletePost(),
-            StickPost::getNodeTypeName() => new StickPost(),
-            UnstickPost::getNodeTypeName() => new UnstickPost(),
-            AddPostTerm::getNodeTypeName() => new AddPostTerm(),
-            SetPostTerm::getNodeTypeName() => new SetPostTerm(),
-            RemovePostTerm::getNodeTypeName() => new RemovePostTerm(),
-            ChangePostStatus::getNodeTypeName() => new ChangePostStatus(),
-            SendEmail::getNodeTypeName() => new SendEmail(),
-            DeactivatePostWorkflow::getNodeTypeName() => new DeactivatePostWorkflow(),
-            AddPostMeta::getNodeTypeName() => new AddPostMeta(),
-            DeletePostMeta::getNodeTypeName() => new DeletePostMeta(),
-            UpdatePostMeta::getNodeTypeName() => new UpdatePostMeta(),
-            UpdatePost::getNodeTypeName() => new UpdatePost(),
-            SendInSiteNotification::getNodeTypeName() => new SendInSiteNotification(),
-            DuplicatePost::getNodeTypeName() => new DuplicatePost(),
-        ];
-
-        return $nodesInstances;
+        return $this->getRegistryDefinitions(CoreStepRegistry::BUCKET_ACTION);
     }
 
     private function getDefaultAdvancedSteps()
     {
-        $nodesInstances = [
-            ScheduleDelay::getNodeTypeName() => new ScheduleDelay(),
-            QueryPosts::getNodeTypeName() => new QueryPosts(),
-            Conditional::getNodeTypeName() => new Conditional(),
-            AppendDebugLog::getNodeTypeName() => new AppendDebugLog(),
-            DoAction::getNodeTypeName() => new DoAction(),
-            UserInteraction::getNodeTypeName() => new UserInteraction(),
-        ];
+        return $this->getRegistryDefinitions(CoreStepRegistry::BUCKET_ADVANCED);
+    }
 
-        if (function_exists('ray')) {
-            $nodesInstances[SendRay::getNodeTypeName()] = new SendRay();
-        }
-
-        return $nodesInstances;
+    /**
+     * @param string $bucket
+     * @return array
+     * @since 4.3.1
+     */
+    private function getRegistryDefinitions(string $bucket): array
+    {
+        return $this->coreStepRegistry->getDefinitions(
+            $bucket,
+            $this->hooks,
+            $this->settingsFacade->getExperimentalFeaturesStatus()
+        );
     }
 
     private function applyDefaultParams(array $step, string $type): array
