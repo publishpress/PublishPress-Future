@@ -10,7 +10,7 @@ import {
 	FEATURE_ADVANCED_SETTINGS,
 	FEATURE_MINI_MAP,
 	FEATURE_CONTROLS,
-} from '../../constants';
+} from '../../../../constants';
 
 export const MoreMenuItemsView = () => {
 	const isLargeViewport = useViewportMatch('medium');

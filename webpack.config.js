@@ -67,6 +67,8 @@ module.exports = {
         "@wordpress/hooks": "wp.hooks",
         "@wordpress/url": "wp.url",
         "@wordpress/i18n": "wp.i18n",
+        "@wordpress/interface": "wp.interface",
+        "@wordpress/preferences": "wp.preferences",
         'wp': 'wp'
     },
 };

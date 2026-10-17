@@ -122,12 +122,6 @@
     overflow-y: auto;
 }
 
-.interface-interface-skeleton__footer {
-    min-height: 25px;
-    padding: 3px 20px;
-    box-sizing: border-box;
-}
-
 .interface-interface-skeleton__secondary-sidebar {
     box-shadow: 1px 1px 0 0 rgba(0, 0, 0, .133);
     outline: 1px solid #0000;

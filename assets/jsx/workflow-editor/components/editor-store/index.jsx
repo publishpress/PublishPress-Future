@@ -7,12 +7,6 @@ import { createReduxStore, dispatch, register } from "@wordpress/data";
  * Internal dependencies
  */
 import {
-    FEATURE_DEVELOPER_MODE,
-    FEATURE_FULLSCREEN_MODE,
-    FEATURE_WELCOME_GUIDE,
-    FEATURE_ADVANCED_SETTINGS,
-    FEATURE_MINI_MAP,
-    FEATURE_CONTROLS,
     INSERTER_TAB_TRIGGERS,
     SLOT_SCOPE_WORKFLOW_EDITOR,
     FEATURE_INSERTER,
@@ -32,7 +26,6 @@ export const storeConfig = {
     advancedNodes: [],
     activeSidebarName: null,
     hoveredItem: null,
-    panelBodyStates: {},
     isPro: isPro,
     currentConditionalQuery: null,
 };
@@ -43,13 +36,6 @@ export const store = createReduxStore(STORE_NAME, {
 
         switch (action.type) {
             case "SET_ACTIVE_FEATURES":
-                // Update local storage for persisted features
-                action.payload.forEach((feature) => {
-                    if (persistentFeatures.includes(feature)) {
-                        setPersistedFeatureValue(feature, true);
-                    }
-                });
-
                 // Close the sidebar when the inserter is enabled
                 newActiveSidebarName = action.payload.includes(FEATURE_INSERTER) ? null : state.activeSidebarName;
                 if (newActiveSidebarName === null) {
@@ -77,15 +63,6 @@ export const store = createReduxStore(STORE_NAME, {
                     activeFeatures.push(feature);
                 }
 
-                // Update local storage for persisted features
-                persistentFeatures.forEach((feature) => {
-                    if (activeFeatures.includes(feature)) {
-                        setPersistedFeatureValue(feature, true);
-                    } else {
-                        setPersistedFeatureValue(feature, false);
-                    }
-                });
-
                 // Close the sidebar when the inserter is enabled
                 newActiveSidebarName = activeFeatures.includes(FEATURE_INSERTER) ? null : state.activeSidebarName;
                 if (newActiveSidebarName === null) {
@@ -101,11 +78,6 @@ export const store = createReduxStore(STORE_NAME, {
                 };
             case "ENABLE_FEATURE":
                 const featureToEnable = action.payload;
-
-                // Update local storage for persisted features
-                if (persistentFeatures.includes(featureToEnable)) {
-                    setPersistedFeatureValue(featureToEnable, true);
-                }
 
                 const newActiveFeatures = [...state.activeFeatures, featureToEnable];
 
@@ -125,11 +97,6 @@ export const store = createReduxStore(STORE_NAME, {
 
             case "DISABLE_FEATURE":
                 const featureToDisable = action.payload;
-
-                // Update local storage for persisted features
-                if (persistentFeatures.includes(featureToDisable)) {
-                    setPersistedFeatureValue(featureToDisable, false);
-                }
 
                 return {
                     ...state,
@@ -201,19 +168,6 @@ export const store = createReduxStore(STORE_NAME, {
                     ...state,
                     hoveredItem: action.payload,
                 };
-
-            case "SET_PANEL_BODY_STATE":
-                const newState = {
-                    ...state,
-                    panelBodyStates: {
-                        ...state.panelBodyStates,
-                        [action.payload.panel]: action.payload.state,
-                    },
-                };
-
-                setPersistedPanelBodyState(action.payload.panel, action.payload.state)
-
-                return newState;
 
             case "SET_CURRENT_CONDITIONAL_QUERY":
                 return {
@@ -330,12 +284,6 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: item,
             };
         },
-        setPanelBodyState(panel, state) {
-            return {
-                type: "SET_PANEL_BODY_STATE",
-                payload: { panel, state },
-            };
-        },
         setCurrentConditionalQuery(query) {
             return {
                 type: "SET_CURRENT_CONDITIONAL_QUERY",
@@ -374,9 +322,6 @@ export const store = createReduxStore(STORE_NAME, {
         getHoveredItem(state) {
             return state.hoveredItem;
         },
-        getPanelBodyState(state, panel) {
-            return state.panelBodyStates[panel];
-        },
         getAllNodes(state) {
             return state.triggerNodes.concat(state.actionNodes, state.advancedNodes);
         },
@@ -397,116 +342,5 @@ export const store = createReduxStore(STORE_NAME, {
 });
 
 register(store);
-
-// Persisted editor features
-const LOCAL_SETTINGS_KEY =
-    "FUTURE_PRO_WORKFLOW_PREFERENCES_" + futureWorkflowEditor.currentUserId;
-
-const persistentFeatures = [
-    FEATURE_FULLSCREEN_MODE,
-    FEATURE_DEVELOPER_MODE,
-    FEATURE_WELCOME_GUIDE,
-    FEATURE_ADVANCED_SETTINGS,
-    FEATURE_MINI_MAP,
-    FEATURE_CONTROLS,
-];
-
-const initLocalPreferences = () => {
-    const localSettings = localStorage.getItem(LOCAL_SETTINGS_KEY);
-
-    if (localSettings === null) {
-        localStorage.setItem(
-            LOCAL_SETTINGS_KEY,
-            JSON.stringify({
-                persistentFeatures: {},
-                panelBodyStates: {}
-            }),
-        );
-    }
-};
-
-initLocalPreferences();
-
-const getLocalPreferences = () => {
-    return JSON.parse(localStorage.getItem(LOCAL_SETTINGS_KEY));
-};
-
-const setLocalPreferences = (settings) => {
-    localStorage.setItem(LOCAL_SETTINGS_KEY, JSON.stringify(settings));
-};
-
-
-const getPersistedFeatureValue = (feature) => {
-    const localSettings = getLocalPreferences();
-
-    return localSettings.persistentFeatures?.[feature];
-};
-
-const setPersistedFeatureValue = (feature, value) => {
-    const localSettings = getLocalPreferences();
-
-    if (! localSettings.persistentFeatures) {
-        localSettings.persistentFeatures = {};
-    }
-
-    localSettings.persistentFeatures[feature] = value;
-
-    setLocalPreferences(localSettings);
-};
-
-
-const getPersistedPanelBodyState = () => {
-    const localSettings = getLocalPreferences();
-
-    return localSettings.panelBodyStates || {};
-};
-
-const setPersistedPanelBodyState = (panel, state) => {
-    const localSettings = getLocalPreferences();
-
-    if (! localSettings.panelBodyStates) {
-        localSettings.panelBodyStates = {};
-    }
-
-    localSettings.panelBodyStates[panel] = state;
-
-    setLocalPreferences(localSettings);
-}
-
-
-// Enable fullscreen mode by default
-const isFullscreenModeEnabled = getPersistedFeatureValue(FEATURE_FULLSCREEN_MODE);
-if (isFullscreenModeEnabled === null || isFullscreenModeEnabled === undefined) {
-    setPersistedFeatureValue(FEATURE_FULLSCREEN_MODE, true);
-}
-
-// Enable the welcome guide by default
-const isWelcomeGuideEnabled = getPersistedFeatureValue(FEATURE_WELCOME_GUIDE);
-if (isWelcomeGuideEnabled === null || isWelcomeGuideEnabled === undefined) {
-    setPersistedFeatureValue(FEATURE_WELCOME_GUIDE, true);
-}
-
-// Enable controls by default
-const isControlsFeatureEnabled = getPersistedFeatureValue(FEATURE_CONTROLS);
-if (isControlsFeatureEnabled === null || isControlsFeatureEnabled === undefined) {
-    setPersistedFeatureValue(FEATURE_CONTROLS, true);
-}
-
-// Update the store with the persisted features
-persistentFeatures.forEach((feature) => {
-    if (getPersistedFeatureValue(feature)) {
-        dispatch(store).enableFeature(feature);
-    } else {
-        dispatch(store).disableFeature(feature);
-    }
-});
-
-// Update the store with the persisted panel body states
-const panelBodyStates = getPersistedPanelBodyState();
-if (panelBodyStates) {
-    Object.keys(panelBodyStates).forEach((panel) => {
-        dispatch(store).setPanelBodyState(panel, panelBodyStates[panel]);
-    });
-}
 
 export default store;

@@ -14,6 +14,7 @@ import { SIDEBAR_WORKFLOW, SIDEBAR_NODE_EDGE } from './constants';
 import { WorkflowSummary } from '../workflow-summary';
 import { NodeInspector } from '../node-inspector';
 import { store as editorStore } from '../editor-store';
+import { useFeature } from '../preferences/use-feature';
 import WorkflowDebugRayPanel from '../workflow-debug-ray-panel';
 
 
@@ -33,12 +34,12 @@ export const SettingsSidebar = () => {
         };
     });
 
+    const isDeveloperModeEnabled = useFeature(FEATURE_DEVELOPER_MODE);
+
     const {
-        isDeveloperModeEnabled,
         isRayDebugInstalled,
     } = useSelect((select) => {
         return {
-            isDeveloperModeEnabled: select(editorStore).isFeatureActive(FEATURE_DEVELOPER_MODE),
             isRayDebugInstalled: select(editorStore).isRayDebugInstalled(),
         };
     });

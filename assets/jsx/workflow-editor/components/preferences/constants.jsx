@@ -1,0 +1,36 @@
+/*
+ * Internal dependencies
+ */
+import {
+    FEATURE_FULLSCREEN_MODE,
+    FEATURE_WELCOME_GUIDE,
+    FEATURE_CONTROLS,
+    FEATURE_DEVELOPER_MODE,
+    FEATURE_ADVANCED_SETTINGS,
+    FEATURE_MINI_MAP,
+} from "../../constants";
+
+export const PREFERENCES_SCOPE = 'publishpress-future/workflow-editor';
+
+export const LEGACY_STORAGE_PREFIX = 'FUTURE_PRO_WORKFLOW_PREFERENCES_';
+
+export const PANEL_BODY_STATES_KEY = 'panelBodyStates';
+
+export const PERSISTENT_FEATURES = [
+    FEATURE_FULLSCREEN_MODE,
+    FEATURE_WELCOME_GUIDE,
+    FEATURE_CONTROLS,
+    FEATURE_DEVELOPER_MODE,
+    FEATURE_ADVANCED_SETTINGS,
+    FEATURE_MINI_MAP,
+];
+
+export const PREFERENCE_DEFAULTS = {
+    [FEATURE_FULLSCREEN_MODE]: true,
+    [FEATURE_WELCOME_GUIDE]: true,
+    [FEATURE_CONTROLS]: true,
+    [FEATURE_DEVELOPER_MODE]: false,
+    [FEATURE_ADVANCED_SETTINGS]: false,
+    [FEATURE_MINI_MAP]: false,
+    [PANEL_BODY_STATES_KEY]: {},
+};

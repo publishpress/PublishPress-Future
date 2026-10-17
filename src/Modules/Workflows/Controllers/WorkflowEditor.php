@@ -153,6 +153,9 @@ class WorkflowEditor implements InitializableInterface
         wp_enqueue_script("wp-plugins");
         wp_enqueue_script("wp-notices");
         wp_enqueue_script("wp-compose");
+        wp_enqueue_script("wp-interface");
+        wp_enqueue_script("wp-preferences");
+        wp_enqueue_script("wp-preferences-persistence");
         wp_enqueue_script(
             "future_workflow_editor_script",
             Plugin::getScriptUrl('workflowEditor'),
@@ -166,6 +169,9 @@ class WorkflowEditor implements InitializableInterface
                 "wp-plugins",
                 "wp-i18n",
                 "wp-notices",
+                "wp-interface",
+                "wp-preferences",
+                "wp-preferences-persistence",
             ],
             PUBLISHPRESS_FUTURE_VERSION,
             true
@@ -204,11 +210,6 @@ class WorkflowEditor implements InitializableInterface
             "future_workflow_editor_script",
             "futureWorkflowEditor",
             [
-                "isWP65OrLater" => version_compare(
-                    get_bloginfo("version"),
-                    "6.5",
-                    ">="
-                ),
                 "apiUrl" => rest_url("publishpress-future/v1"),
                 "pluginVersion" => PUBLISHPRESS_FUTURE_VERSION,
                 "assetsUrl" => PUBLISHPRESS_FUTURE_ASSETS_URL,

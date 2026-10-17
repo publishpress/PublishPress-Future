@@ -7,8 +7,7 @@ import {
     __experimentalNumberControl as NumberControl,
 } from "@wordpress/components";
 import { useMemo } from "@wordpress/element";
-import { useSelect } from "@wordpress/data";
-import { store as editorStore } from "../editor-store";
+import { useFeature } from "../preferences/use-feature";
 import { FEATURE_ADVANCED_SETTINGS } from "../../constants";
 import Recurrence from "./recurrence";
 import ProFeatureField from "../pro-feature-field";
@@ -63,13 +62,7 @@ export function Schedule({ name, label, defaultValue, onChange, variables = [], 
         ...defaultValue
     };
 
-    const {
-        isAdvancedSettingsEnabled,
-    } = useSelect((select) => {
-        return {
-            isAdvancedSettingsEnabled: select(editorStore).isFeatureActive(FEATURE_ADVANCED_SETTINGS),
-        };
-    });
+    const isAdvancedSettingsEnabled = useFeature(FEATURE_ADVANCED_SETTINGS);
 
 
     const validDateSources = ['calendar', 'event', 'step', 'custom'];
