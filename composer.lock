@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8b3e43fc23178e1bea0a239f112d6f7",
+    "content-hash": "ba431a3836f69444af66bd6f7741eb42",
     "packages": [],
     "packages-dev": [
         {
@@ -6060,12 +6060,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/library-dev-workspace.git",
-                "reference": "b72177f4b8d80849a5eed2ad1d34e411d86a984d"
+                "reference": "7d5d1e68b43434d6c197c9b0d80626375d6c8f40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/library-dev-workspace/zipball/b72177f4b8d80849a5eed2ad1d34e411d86a984d",
-                "reference": "b72177f4b8d80849a5eed2ad1d34e411d86a984d",
+                "url": "https://api.github.com/repos/publishpress/library-dev-workspace/zipball/7d5d1e68b43434d6c197c9b0d80626375d6c8f40",
+                "reference": "7d5d1e68b43434d6c197c9b0d80626375d6c8f40",
                 "shasum": ""
             },
             "require": {
@@ -6124,7 +6124,7 @@
                 "issues": "https://github.com/publishpress/library-dev-workspace/issues",
                 "source": "https://github.com/publishpress/library-dev-workspace/tree/cursor/release-runner"
             },
-            "time": "2026-10-19T19:31:51+00:00"
+            "time": "2026-10-19T20:48:07+00:00"
         },
         {
             "name": "publishpress/publishpress-phpcs-standards",

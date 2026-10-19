@@ -45,7 +45,8 @@
         "version-constant": "PUBLISHPRESS_FUTURE_VERSION",
         "plugin-lang-domain": "post-expirator",
         "plugin-github-repo": "publishpress/publishpress-future",
-        "plugin-composer-package": "publishpress/publishpress-future"
+        "plugin-composer-package": "publishpress/publishpress-future",
+        "test-suites": ["unit", "integration", "e2e"]
     },
     "scripts": {
         "check:all": [
