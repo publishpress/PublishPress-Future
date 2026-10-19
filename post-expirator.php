@@ -96,6 +96,9 @@ try {
     }
     Autoloader::register();
 
+    /**
+     * Ensure Action Scheduler is initialized.
+     */
     add_action(
         'plugins_loaded',
         [ActionSchedulerFallbackInitializer::class, 'ensureInitialized'],
