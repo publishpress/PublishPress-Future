@@ -21,6 +21,7 @@
 
 namespace PublishPress\Future;
 
+use PublishPress\Future\Core\ActionSchedulerFallbackInitializer;
 use PublishPress\Future\Core\Autoloader;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
@@ -94,6 +95,16 @@ try {
         require_once PUBLISHPRESS_FUTURE_SRC_PATH . '/Core/Autoloader.php';
     }
     Autoloader::register();
+
+    add_action(
+        'plugins_loaded',
+        [ActionSchedulerFallbackInitializer::class, 'ensureInitialized'],
+        2
+    );
+
+    if (did_action('plugins_loaded')) {
+        ActionSchedulerFallbackInitializer::ensureInitialized();
+    }
 
     /**
      * Bootstrap the DI container and legacy autoload. Safe to call multiple times.

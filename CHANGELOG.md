@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Fixed: Expression builder no longer shows the insert-at-cursor hint on metadata form fields.
 - Fixed: Workflow execution safeguard no longer treats different triggers as an infinite loop (Issue #1680).
 - Fixed: Translation strings now include translator comments and ordered placeholders.
+- Fixed: Initialize Action Scheduler when another plugin autoloads its classes before the procedural API is loaded, preventing a fatal error on admin requests.
 
 [4.10.7] - 07 Oct, 2026
 
