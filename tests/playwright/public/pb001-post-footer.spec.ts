@@ -1,11 +1,7 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../support/fixtures';
 
-import { contentLocator, openDisplaySettings, preparePublicSite, publicTags, saveDisplaySettings } from '../support/admin';
+import { contentLocator, openDisplaySettings, publicTags, saveDisplaySettings } from '../support/admin';
 import { createPost, formatSiteDate, scheduleDraftExpiration, uniqueKey, wp } from '../support/wp-cli';
-
-test.beforeAll(() => {
-  preparePublicSite();
-});
 
 function seedExpiringPost(): { slug: string; unix: number } {
   const post = createPost(uniqueKey('pw-footer'));

@@ -1,6 +1,6 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/fixtures';
 
-import { adminTags, openPostTypeSettings, prepareSite, savePostTypeSettings } from '../support/admin';
+import { adminTags, openPostTypeSettings, savePostTypeSettings } from '../support/admin';
 import { setPostTypeDefaults } from '../support/wp-cli';
 
 const rows = [
@@ -8,10 +8,6 @@ const rows = [
   { postType: 'page', taxonomy: 'tax2' },
   { postType: 'music', taxonomy: 'tax3' },
 ];
-
-test.beforeAll(() => {
-  prepareSite();
-});
 
 for (const row of rows) {
   test(`default taxonomy ${row.taxonomy} persists for ${row.postType}`, { tag: adminTags }, async ({ page }) => {

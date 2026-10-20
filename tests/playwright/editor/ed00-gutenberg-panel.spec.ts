@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/fixtures';
 
 import {
   blockCheckbox,
@@ -6,15 +6,10 @@ import {
   enableFutureAction,
   openBlockEditor,
   openFuturePanel,
-  prepareSite,
   saveBlockPost,
   setBlockTitle,
 } from '../support/admin';
 import { createPost, setPostTypeDefaults, uniqueKey } from '../support/wp-cli';
-
-test.beforeAll(() => {
-  prepareSite();
-});
 
 test('panel is visible when the post type is active', { tag: editorTags }, async ({ page }) => {
   setPostTypeDefaults('post', { activeMetaBox: 'active', autoEnable: '0' });

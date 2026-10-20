@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/fixtures';
 
 import {
   adminTags,
@@ -6,16 +6,11 @@ import {
   openBlockEditor,
   openFuturePanel,
   openPostTypeSettings,
-  prepareSite,
   savePostTypeSettings,
 } from '../support/admin';
 import { createPost, setPostTypeDefaults, uniqueKey } from '../support/wp-cli';
 
 const postTypes = ['post', 'page', 'music'];
-
-test.beforeAll(() => {
-  prepareSite();
-});
 
 function editorPath(postType: string): string {
   return postType === 'post'

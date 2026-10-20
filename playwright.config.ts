@@ -1,9 +1,9 @@
 import { existsSync } from 'fs';
+import { availableParallelism } from 'os';
 
 import { defineConfig, devices } from '@playwright/test';
 
 import { loadDotEnv } from './tests/playwright/support/load-dotenv';
-import { ADMIN_AUTH_STATE } from './tests/playwright/support/paths';
 
 loadDotEnv();
 
@@ -32,8 +32,8 @@ function resolveWorkers(): number {
     }
   }
 
-  // Settings and posts share one WordPress database.
-  return 1;
+  // Each test gets its own database from the site pool, so parallelism is bound by CPU only.
+  return Math.min(10, Math.max(1, Math.floor(availableParallelism() / 2)));
 }
 
 /**
@@ -41,7 +41,8 @@ function resolveWorkers(): number {
  */
 export default defineConfig({
   testDir: './tests/playwright',
-  fullyParallel: false,
+  globalSetup: './tests/playwright/global-setup.ts',
+  fullyParallel: true,
   workers: resolveWorkers(),
   reporter: process.env.CI
     ? [['list'], ['html', { open: 'never' }]]
@@ -59,18 +60,9 @@ export default defineConfig({
   },
   projects: [
     {
-      name: 'admin-setup',
-      testMatch: /setup\/admin-auth\.setup\.ts/,
-      use: chromiumUse,
-    },
-    {
       name: 'acceptance',
       testMatch: /.*\.spec\.ts/,
-      dependencies: ['admin-setup'],
-      use: {
-        ...chromiumUse,
-        storageState: ADMIN_AUTH_STATE,
-      },
+      use: chromiumUse,
     },
   ],
 });

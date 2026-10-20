@@ -1,12 +1,9 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
 import {
-  ensureAcceptanceFixtures,
   ensureBlockEditorPreferred,
   ensureClassicEditor,
-  ensurePublishPressFuture,
   noonPartsDaysFromNow,
-  setPermalinkStructure,
   type NoonParts,
 } from './wp-cli';
 
@@ -15,16 +12,6 @@ const acceptanceTags = ['@acceptance'] as const;
 export const adminTags = [...acceptanceTags, '@admin'];
 export const editorTags = [...acceptanceTags, '@editor'];
 export const publicTags = [...acceptanceTags, '@public'];
-
-export async function prepareSite(): Promise<void> {
-  ensurePublishPressFuture();
-  ensureAcceptanceFixtures();
-}
-
-export async function preparePublicSite(): Promise<void> {
-  await prepareSite();
-  setPermalinkStructure('/%postname%/');
-}
 
 export async function openPostTypeSettings(page: Page, postType: string): Promise<void> {
   await page.goto(`/wp-admin/admin.php?page=publishpress-future&tab=defaults&post_type=${encodeURIComponent(postType)}`);

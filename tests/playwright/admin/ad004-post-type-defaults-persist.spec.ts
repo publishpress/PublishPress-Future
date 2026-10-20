@@ -1,6 +1,6 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../support/fixtures';
 
-import { adminTags, openPostTypeSettings, prepareSite } from '../support/admin';
+import { adminTags, openPostTypeSettings } from '../support/admin';
 import { setPostTypeDefaults } from '../support/wp-cli';
 
 interface SavedRow {
@@ -92,10 +92,6 @@ async function saveInactiveWithValues(page: Page, row: SavedRow): Promise<void> 
   await page.locator('input[name="expirationdateSaveDefaults"]').click();
   await page.waitForLoadState('domcontentloaded');
 }
-
-test.beforeAll(() => {
-  prepareSite();
-});
 
 for (const row of rows) {
   test(

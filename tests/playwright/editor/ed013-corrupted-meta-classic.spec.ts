@@ -1,10 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/fixtures';
 
-import { classicCheckbox, editorTags, openClassicEditor, prepareSite } from '../support/admin';
+import { classicCheckbox, editorTags, openClassicEditor } from '../support/admin';
 import { createPost, setPostTypeDefaults, uniqueKey, updatePostMeta } from '../support/wp-cli';
 
-test.beforeAll(() => {
-  prepareSite();
+test.beforeEach(() => {
   setPostTypeDefaults('post', { activeMetaBox: 'active', autoEnable: '0' });
 });
 

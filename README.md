@@ -109,7 +109,9 @@ node ./node_modules/@playwright/test/cli.js install chromium
 composer test:e2e
 ```
 
-Headless by default. Set `PW_HEADED=1` in `.env` to show the browser, or run `composer test:e2e:headed`. These tests share one WordPress database, so `PW_WORKERS` defaults to 1.
+Headless by default. Set `PW_HEADED=1` in `.env` to show the browser, or run `composer test:e2e:headed`.
+
+Every test runs on its own WordPress database, so tests run in parallel. `PW_WORKERS` defaults to half the CPU cores (at most 10). See [Site pool](docs/dev/testing/e2e-specs.md#site-pool).
 
 Instance protection stays on Codeception Acceptance (`tests/codeception/Acceptance/features/instance-protection.feature`). EndToEnd stays on Codeception (`tests/codeception/EndToEnd/`).
 

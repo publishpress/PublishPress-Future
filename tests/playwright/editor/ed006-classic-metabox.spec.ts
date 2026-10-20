@@ -1,19 +1,14 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/fixtures';
 
 import {
   classicCheckbox,
   editorTags,
   enableFutureAction,
   openClassicEditor,
-  prepareSite,
   saveClassicPost,
   setNoonDaysFromNow,
 } from '../support/admin';
 import { createPost, setPostTypeDefaults, uniqueKey } from '../support/wp-cli';
-
-test.beforeAll(() => {
-  prepareSite();
-});
 
 test('Enable Future Action is unchecked when auto-enable is off', { tag: editorTags }, async ({ page }) => {
   setPostTypeDefaults('post', { activeMetaBox: 'active', autoEnable: '0' });

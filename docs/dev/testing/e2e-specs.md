@@ -12,6 +12,17 @@ Case files under `docs/testing/cases/` are the source of truth for browser behav
 - Codeception stays on unit, integration, EndToEnd, and instance protection.
 - Instance protection (`tests/codeception/Acceptance/features/instance-protection.feature`) stays on Codeception. It needs a second plugin copy on disk.
 
+## Site pool
+
+Every test gets its own clean WordPress database, so specs run with `fullyParallel` and never share state.
+
+- `tests/playwright/global-setup.ts` builds `pw_template` on every run: a fresh install with Future and Classic Editor active, the `music` post type and `tax1`–`tax4` fixtures, `/%postname%/` permalinks, and an admin session.
+- `tests/playwright/support/pool.ts` clones the template into `pw_site01`, `pw_site02`, … (about 0.45 s each) and keeps one site per worker plus `PW_SPARE_SITES` (default 4) ready.
+- `tests/playwright/pool/site-router.php` is required from the test site's `wp-config.php` (added once by the global setup). It maps `http://siteNN.localhost:<port>` to `pw_siteNN`. Plain `localhost:<port>` keeps the `wordpress` database.
+- Specs import `test` and `expect` from `tests/playwright/support/fixtures.ts`. The `site` fixture leases a site per test and points `baseURL`, the admin cookies and the WP-CLI helpers at it. Do not use `beforeAll` for site setup: it runs before a site is leased. Use `beforeEach` or the test itself.
+- A site is never reused. After a passing test its database is dropped. After a failing test it is kept until the next run, and its URL is printed at the end of the run and attached to the test as the `site` annotation.
+- `tests/bin/bench-db-clone.sh` benchmarks clone methods.
+
 ## Suites
 
 | Suite | Prefix | Cases | Test path |

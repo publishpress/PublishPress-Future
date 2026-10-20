@@ -61,9 +61,27 @@ function dockerUserArgs(container: string): string[] {
   return cachedDockerUser === '' ? [] : ['-u', cachedDockerUser];
 }
 
-function containerName(): string {
+const containerNames = new Map<string, string>();
+
+/**
+ * Resolves a dev-workspace test container, for example wp_test_cli or db_test.
+ */
+export function dockerContainer(service: string): string {
+  const cached = containerNames.get(service);
+
+  if (cached !== undefined) {
+    return cached;
+  }
+
+  const name = lookupContainer(service);
+  containerNames.set(service, name);
+
+  return name;
+}
+
+function lookupContainer(service: string): string {
   const base = process.env.CONTAINER_NAME || 'publishpress-future';
-  const expected = `${base}_env_wp_test_cli`;
+  const expected = `${base}_env_${service}`;
 
   try {
     const names = execFileSync(
@@ -97,16 +115,27 @@ function phpString(value: string): string {
   return `'${value.replace(/\\/g, '\\\\').replace(/'/g, '\\\'')}'`;
 }
 
+let siteUrl: string | undefined;
+
 /**
- * Runs WP-CLI inside the test container.
+ * Points WP-CLI at a pool site, for example http://site03.localhost:8011.
+ * The site router in wp-config.php picks that site's database from the host.
+ */
+export function setSiteUrl(url: string | undefined): void {
+  siteUrl = url;
+}
+
+/**
+ * Runs WP-CLI inside the test container, against the current pool site when one is set.
  */
 export function wp(args: string[]): string {
-  const container = containerName();
+  const container = dockerContainer('wp_test_cli');
+  const urlArgs = siteUrl === undefined ? [] : [`--url=${siteUrl}`];
 
   try {
     return execFileSync(
       'docker',
-      ['exec', ...dockerUserArgs(container), container, 'wp', '--path=/var/www/html', ...args],
+      ['exec', ...dockerUserArgs(container), container, 'wp', '--path=/var/www/html', ...urlArgs, ...args],
       {
         encoding: 'utf8',
         stdio: ['ignore', 'pipe', 'pipe'],

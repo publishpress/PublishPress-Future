@@ -1,13 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/fixtures';
 
-import { adminTags, openBlockEditor, openPostTypeSettings, prepareSite, savePostTypeSettings } from '../support/admin';
+import { adminTags, openBlockEditor, openPostTypeSettings, savePostTypeSettings } from '../support/admin';
 import { setPostTypeDefaults } from '../support/wp-cli';
 
 const postTypes = ['post', 'page', 'music'];
-
-test.beforeAll(() => {
-  prepareSite();
-});
 
 for (const postType of postTypes) {
   test(`deactivate metabox for ${postType}`, { tag: adminTags }, async ({ page }) => {

@@ -1,11 +1,7 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/fixtures';
 
-import { adminTags, prepareSite } from '../support/admin';
+import { adminTags } from '../support/admin';
 import { ensureUser, uniqueKey } from '../support/wp-cli';
-
-test.beforeAll(() => {
-  prepareSite();
-});
 
 test('administrator sees the Future admin menu', { tag: adminTags }, async ({ page }) => {
   await page.goto('/wp-admin/');

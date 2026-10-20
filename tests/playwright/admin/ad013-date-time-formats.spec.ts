@@ -1,20 +1,15 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../support/fixtures';
 
 import {
   adminTags,
   contentLocator,
   openDisplaySettings,
-  preparePublicSite,
   saveDisplaySettings,
 } from '../support/admin';
 import { createPost, formatSiteDate, scheduleDraftExpiration, uniqueKey, updateOption } from '../support/wp-cli';
 
 const dateFormats = ['l F jS, Y', 'Y-m-d', 'l \\d. j F Y'];
 const timeFormats = ['g:ia', 'g:i a', 'H:i', 'H:i:s'];
-
-test.beforeAll(() => {
-  preparePublicSite();
-});
 
 function seedFooterPost(): { slug: string; unix: number } {
   const post = createPost(uniqueKey('pw-format'));

@@ -1,6 +1,6 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../support/fixtures';
 
-import { editorTags, prepareSite, setNoonDaysFromNow } from '../support/admin';
+import { editorTags, setNoonDaysFromNow } from '../support/admin';
 import {
   createPost,
   scheduleDraftExpiration,
@@ -9,8 +9,7 @@ import {
   type CreatedPost,
 } from '../support/wp-cli';
 
-test.beforeAll(() => {
-  prepareSite();
+test.beforeEach(() => {
   setPostTypeDefaults('post', { activeMetaBox: 'active', autoEnable: '0' });
 });
 
