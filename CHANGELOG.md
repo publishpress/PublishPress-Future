@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Changed: Raise the minimum WordPress version from 6.7 to 6.8, required by Action Scheduler 4.0+.
 - Changed: With Action Scheduler 4.0+, unique actions include their arguments when checking uniqueness, and failed actions are purged after 3 months by default.
 - Changed: Tested up to WordPress 7.1.
+- Changed: Upgrade bundled translations library to 1.0.4.
 - Fixed: Mark diagnostics and scheduled-action log table headers with scope.
 - Fixed: Settings form no longer intercepts other plugins' submissions that use `?tab=license` (Issue #1708).
 - Fixed: Workflows no longer stay "Scheduled" instead of "Active" on sites with a positive UTC offset (Issue #1698).
