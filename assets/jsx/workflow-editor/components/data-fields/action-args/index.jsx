@@ -68,7 +68,11 @@ export function ActionArgs({
                         <ArgumentItem
                             name={`args[${index}].name`}
                             label={`#${index + 1}`}
-                            popoverLabel={sprintf(__('Argument #%s', 'post-expirator'), index + 1)}
+                            popoverLabel={sprintf(
+                                /* translators: %s is the argument number. */
+                                __('Argument #%s', 'post-expirator'),
+                                index + 1
+                            )}
                             defaultValue={arg}
                             onChange={(value) => onChangeArg(index, value)}
                             autoOpen={autoOpenItem === index}

@@ -166,10 +166,12 @@ export function NodeValidator({})
         return {
             isValid: false,
             error: sprintf(
+                /* translators: %s is the field label. */
                 __('The field "%s" contains an invalid variable.', 'post-expirator'),
                 ruleData?.fieldLabel
             ),
             details: sprintf(
+                /* translators: %s is the variable name. */
                 __('The variable "%s" is not available in the current context. Please, check if it is spelled correctly.', 'post-expirator'),
                 invalidVariable
             ),
@@ -440,6 +442,7 @@ export function NodeValidator({})
                                         node.id,
                                         `${fieldName}-required-if`,
                                         sprintf(
+                                            /* translators: %s is the field label. */
                                             __('The field %s is required.', 'post-expirator'),
                                             fieldLabel
                                         )
@@ -450,6 +453,7 @@ export function NodeValidator({})
                                     node.id,
                                     `${fieldName}-required`,
                                     sprintf(
+                                        /* translators: %s is the field label. */
                                         __('The field %s is required.', 'post-expirator'),
                                         fieldLabel
                                     )
@@ -470,6 +474,7 @@ export function NodeValidator({})
                                         node.id,
                                         `${fieldName}-email`,
                                         sprintf(
+                                            /* translators: %s is the field label. */
                                             __('The field %s must be a valid email address.', 'post-expirator'),
                                             fieldLabel
                                         )
@@ -486,6 +491,7 @@ export function NodeValidator({})
                                             node.id,
                                             `${fieldName}-emailList`,
                                             sprintf(
+                                                /* translators: %s is the field label. */
                                                 __('The field %s must be a valid email address list separated by commas.', 'post-expirator'),
                                                 fieldLabel
                                             )
@@ -500,6 +506,7 @@ export function NodeValidator({})
                                         node.id,
                                         `${fieldName}-integer`,
                                         sprintf(
+                                            /* translators: %s is the field label. */
                                             __('The field %s must be an integer.', 'post-expirator'),
                                             fieldLabel
                                         )
@@ -515,6 +522,7 @@ export function NodeValidator({})
                                             node.id,
                                             `${fieldName}-integerList`,
                                             sprintf(
+                                                /* translators: %s is the field label. */
                                                 __('The field %s must be an integer list separated by commas.', 'post-expirator'),
                                                 fieldLabel
                                             )
@@ -538,7 +546,11 @@ export function NodeValidator({})
                                     addNodeError(
                                         node.id,
                                         `${fieldName}-nameValuePairList`,
-                                        sprintf(__('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel)
+                                        sprintf(
+                                            /* translators: %s is the field label. */
+                                            __('The field %s must be a list of name-value pairs.', 'post-expirator'),
+                                            fieldLabel
+                                        )
                                     );
                                 }
 
@@ -547,8 +559,16 @@ export function NodeValidator({})
                                         addNodeError(
                                             node.id,
                                             `${fieldName}-nameValuePairList`,
-                                            sprintf(__('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel),
-                                            sprintf(__('The name of the pair is required on item %d.', 'post-expirator'), i + 1)
+                                            sprintf(
+                                                /* translators: %s is the field label. */
+                                                __('The field %s must be a list of name-value pairs.', 'post-expirator'),
+                                                fieldLabel
+                                            ),
+                                            sprintf(
+                                                /* translators: %d is the item index. */
+                                                __('The name of the pair is required on item %d.', 'post-expirator'),
+                                                i + 1
+                                            )
                                         );
                                     }
 
@@ -556,8 +576,16 @@ export function NodeValidator({})
                                         addNodeError(
                                             node.id,
                                             `${fieldName}-nameValuePairList`,
-                                            sprintf(__('The field %s must be a list of name-value pairs.', 'post-expirator'), fieldLabel),
-                                            sprintf(__('The value of the pair is required on item %d.', 'post-expirator'), i + 1)
+                                            sprintf(
+                                                /* translators: %s is the field label. */
+                                                __('The field %s must be a list of name-value pairs.', 'post-expirator'),
+                                                fieldLabel
+                                            ),
+                                            sprintf(
+                                                /* translators: %d is the item index. */
+                                                __('The value of the pair is required on item %d.', 'post-expirator'),
+                                                i + 1
+                                            )
                                         );
                                     }
                                 });
