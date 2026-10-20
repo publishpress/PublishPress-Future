@@ -302,6 +302,48 @@ add_action('init', static function () {
   }
 }
 
+export function pluginSlug(): string {
+  return process.env.PLUGIN_SLUG || 'post-expirator';
+}
+
+/**
+ * Writes a second copy of the plugin, for example post-expirator-2/post-expirator.php,
+ * holding only the real plugin header. Instance protection compares plugin headers,
+ * so this is enough, and nothing loads twice. Pass a version to make the copy outdated.
+ * wp-content/plugins is shared by every pool site, so only serial specs may use it.
+ */
+export function installPluginCopy(folder: string, version = ''): void {
+  const php = `
+    $source = WP_PLUGIN_DIR . '/' . ${phpString(pluginSlug())} . '/' . ${phpString(pluginSlug())} . '.php';
+    $contents = file_get_contents($source);
+    $header = substr($contents, 0, strpos($contents, '*/') + 2);
+    if (${phpString(version)} !== '') {
+        $header = preg_replace('/^( \\* Version: ).*$/m', '\${1}' . ${phpString(version)}, $header);
+    }
+    $dir = WP_PLUGIN_DIR . '/' . ${phpString(folder)};
+    if (! is_dir($dir)) {
+        mkdir($dir, 0755, true);
+    }
+    file_put_contents($dir . '/' . ${phpString(pluginSlug())} . '.php', $header . "\\n\\n// Header-only copy written by the Playwright instance protection spec.\\n");
+  `;
+
+  wp(['eval', php]);
+}
+
+export function removePluginCopy(folder: string): void {
+  const php = `
+    $dir = WP_PLUGIN_DIR . '/' . ${phpString(folder)};
+    foreach (glob($dir . '/*') ?: array() as $file) {
+        unlink($file);
+    }
+    if (is_dir($dir)) {
+        rmdir($dir);
+    }
+  `;
+
+  wp(['eval', php]);
+}
+
 export function scheduleDraftExpiration(postId: number, daysFromNow: number): { unix: number; formatted: string } {
   const php = `
     $date = new DateTime('now', wp_timezone());

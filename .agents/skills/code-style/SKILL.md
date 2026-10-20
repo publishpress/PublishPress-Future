@@ -25,7 +25,7 @@ PHP ≥7.4 | WP ≥6.7 | JSX admin UI (`assets/`) | CSS | MySQL/MariaDB
 - **WP Reviews**: `lib/vendor/publishpress/wordpress-reviews/`
 
 ### Development Tools
-Composer | npm/Yarn | Webpack | Codeception (Unit/Integration/EndToEnd) | Playwright (browser acceptance) | WP-Browser | Docker | PHPCS | PHPStan | PHP-CS-Fixer
+Composer | npm/Yarn | Webpack | Codeception (Unit/Integration) | Playwright (browser acceptance) | WP-Browser | Docker | PHPCS | PHPStan | PHP-CS-Fixer
 
 ### Build Tools
 `dev-workspace/scripts/` | `dev-workspace/docker/compose.yaml` | Webpack | `composer.json` scripts
@@ -53,7 +53,7 @@ Layered Core/Framework/Modules/Views | feature modules in `Modules/` | cohesion 
 Core/ | Framework/ | Modules/{Name}/ | Views/
 Module: Module.php, HooksAbstract.php, Controllers/, Models/, DBTableSchemas/, Migrations/
 Framework: WordPress/Facade/, Database/, Logger/, …
-tests/codeception/: Unit/, Integration/, Acceptance/features/, EndToEnd/, Support/
+tests/codeception/: Unit/, Integration/, Support/ | tests/playwright/: admin/, editor/, public/, plugins/, support/
 
 ### Module Structure Pattern
 Each feature module follows a consistent structure:
@@ -107,7 +107,7 @@ React/JSX (`*.jsx`, `*.tsx`): follow `.cursor/rules/react.mdc` — functional co
 
 ## Testing Guidelines
 
-**Codeception** — Unit, Integration, EndToEnd. **Playwright** — browser acceptance (`composer test:e2e`). Instance protection stays on Codeception.
+**Codeception** — Unit, Integration. **Playwright** — all browser tests (`composer test:e2e`), including plugin activation and instance protection.
 
 ### Unit Testing
 Behavior not implementation | `test_should_*` names | AAA | mock WP/DB | 80%+ domain coverage | `WPTestCase` or PHPUnit `TestCase`
@@ -116,16 +116,16 @@ Behavior not implementation | `test_should_*` names | AAA | mock WP/DB | 80%+ do
 Component + WP integration | real test DB | REST + controller/model flows | `WPTestCase` / `NoTransactionWPTestCase` | critical workflows
 
 ### Acceptance Testing (browser)
-Playwright | `tests/playwright/` | `composer test:e2e` | tags `@acceptance` plus `@admin`, `@editor`, or `@public` | instance protection stays Codeception (`tests/codeception/Acceptance/features/instance-protection.feature`)
+Playwright | `tests/playwright/` | `composer test:e2e` | tags `@acceptance` plus `@admin`, `@editor`, or `@public` | every test runs on its own database from the site pool
 
-### EndToEnd Testing
-Lifecycle (activate/deactivate) | WP core interaction | real-world scenarios
+### Plugin lifecycle (browser)
+Playwright `tests/playwright/plugins/` | activate/deactivate | instance protection (serial: shares `wp-content/plugins`)
 
 ### Test Environment
 Docker `dev-workspace/docker/compose.yaml` — `db_test`, `test-wp`, `test-wpcli` | `composer test:up` / `test:clean` | `test:db-export` / `test:db-import`
 
 ### Test Naming Conventions
-Classes: `{ClassName}Test.php` / `{ClassName}Cest.php` | PHPUnit: `test_should_do_something_when_condition()` | Codeception: `testShouldDoSomethingWhenCondition()` | features: `kebab-case.feature`
+Classes: `{ClassName}Test.php` | PHPUnit: `test_should_do_something_when_condition()` | Codeception: `testShouldDoSomethingWhenCondition()` | Playwright: `kebab-case.spec.ts`
 
 ## Composer Commands
 
@@ -136,7 +136,7 @@ Grouped one-liners — see `composer.json` for full definitions.
 | env | `composer up`, `dev:up`, `test:up`, `down`, `dev:clean`, `test:clean` |
 | build | `composer build`, `build:js`, `build:lang`, `build:all`, `watch:js` |
 | check | `composer check`, `check:cs`, `fix:cs`, `fix:php`, `check:stan`, `check:longpath` |
-| test | `composer test`, `test:all`, `test Unit\|Integration\|Acceptance\|EndToEnd`, `test Unit:Core/DI/ContainerTest`, `test Integration:Modules/…`, `test:debug`, `test:steps`, `test:snippets` |
+| test | `composer test`, `test:all`, `test Unit\|Integration`, `test Unit:Core/DI/ContainerTest`, `test Integration:Modules/…`, `test:debug`, `test:steps`, `test:snippets` |
 | wp/db | `composer wp:dev -- …`, `wp:tests -- …`, `test:db-export`, `test:db-import`, `test:db-logs` |
 | version | `composer get:version`, `set:version`, `pre-release` |
 

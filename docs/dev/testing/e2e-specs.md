@@ -9,8 +9,8 @@ Case files under `docs/testing/cases/` are the source of truth for browser behav
 - Playwright tests in `tests/playwright/<suite>/`.
 - `playwright.config.ts` at the repo root uses `WP_TESTS_URL` from `.env`.
 - `composer test:e2e` calls `npm run test:e2e`.
-- Codeception stays on unit, integration, EndToEnd, and instance protection.
-- Instance protection (`tests/codeception/Acceptance/features/instance-protection.feature`) stays on Codeception. It needs a second plugin copy on disk.
+- Codeception runs only the Unit and Integration suites.
+- `tests/playwright/plugins/` covers plugin activation and instance protection. The instance protection spec runs serially: it writes a header-only plugin copy into `wp-content/plugins`, which every pool site shares.
 
 ## Site pool
 
@@ -38,7 +38,7 @@ Every test gets its own clean WordPress database, so specs run with `fullyParall
 
 ## Not in this catalog
 
-- Instance protection (`tests/codeception/Acceptance/features/instance-protection.feature`). It needs a second plugin copy on disk and stays on Codeception.
+- Plugin activation and instance protection (`tests/playwright/plugins/`).
 - Metadata scheduling, imports, and the debug log viewer beyond the Diagnostics screen in AD-019.
 
 ## Admin (`AD`)

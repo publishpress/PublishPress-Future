@@ -113,7 +113,7 @@ Headless by default. Set `PW_HEADED=1` in `.env` to show the browser, or run `co
 
 Every test runs on its own WordPress database, so tests run in parallel. `PW_WORKERS` defaults to half the CPU cores (at most 10). See [Site pool](docs/dev/testing/e2e-specs.md#site-pool).
 
-Instance protection stays on Codeception Acceptance (`tests/codeception/Acceptance/features/instance-protection.feature`). EndToEnd stays on Codeception (`tests/codeception/EndToEnd/`).
+Plugin activation and instance protection are Playwright specs too (`tests/playwright/plugins/`). Codeception runs only the Unit and Integration suites.
 
 You also can run specific test file:
 
