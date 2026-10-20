@@ -1,5 +1,9 @@
+- .php-cs-fixer.dist.php
+- .php-cs-fixer.php
 - .phpcs-plugin-review.xml
+- /.agents
 - /.babelrc
+- /.codex
 - /.cursor
 - /.ddev
 - /.deploy-state.json
@@ -15,7 +19,6 @@
 - /.phpcs.xml
 - /.phplint-cache
 - /.phplint.yml
-- /phpmd.ruleset.xml
 - /.rsync-filters-dev-sync
 - /.rsync-filters-post-build
 - /.rsync-filters-pre-build
@@ -33,9 +36,15 @@
 - /node_modules
 - /package-lock.json
 - /package.json
+- /patches
+- /phpmd.ruleset.xml
 - /phpstan.neon
+- /playwright-report
+- /playwright.config.js
+- /playwright.config.ts
 - /psalm.xml
 - /README.md
+- /test-results
 - /tests
 - /vendor
 - /version.txt

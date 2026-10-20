@@ -1,4 +1,6 @@
 name: Deploy plugin to WordPress.org
+permissions:
+  contents: read
 on:
   release:
     types: [ released ]
@@ -20,3 +22,5 @@ jobs:
     uses: publishpress/github-workflows/.github/workflows/deploy-free.yml@v3
     needs: [code-check, run-unit-tests]
     secrets: inherit
+    with:
+      stable_branch: master

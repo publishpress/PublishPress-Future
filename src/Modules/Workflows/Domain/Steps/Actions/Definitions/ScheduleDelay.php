@@ -5,6 +5,8 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Steps\Actions\Definitions
 use PublishPress\Future\Modules\Workflows\Interfaces\StepTypeInterface;
 use PublishPress\Future\Modules\Workflows\Models\StepTypesModel;
 
+\defined('ABSPATH') || exit;
+
 class ScheduleDelay implements StepTypeInterface
 {
     public static function getNodeTypeName(): string
@@ -102,9 +104,16 @@ class ScheduleDelay implements StepTypeInterface
                         "rule" => "required",
                         "field" => "schedule.customDateSource.expression",
                         "label" => __("Custom date source", "post-expirator"),
-                        "condition" => [
-                            "field" => "schedule.dateSource",
-                            "value" => "custom",
+                        "conditions" => [
+                            [
+                                "field" => "schedule.dateSource",
+                                "value" => "custom",
+                            ],
+                            [
+                                "field" => "schedule.whenToRun",
+                                "operator" => "in",
+                                "value" => ["date", "offset"],
+                            ],
                         ],
                     ],
                     [
@@ -112,6 +121,17 @@ class ScheduleDelay implements StepTypeInterface
                         "field" => "schedule.customDateSource.expression",
                         "label" => __("Custom date source", "post-expirator"),
                         "fieldLabel" => __("Schedule > Custom date source", "post-expirator"),
+                        "conditions" => [
+                            [
+                                "field" => "schedule.dateSource",
+                                "value" => "custom",
+                            ],
+                            [
+                                "field" => "schedule.whenToRun",
+                                "operator" => "in",
+                                "value" => ["date", "offset"],
+                            ],
+                        ],
                     ],
                 ],
             ],
@@ -156,7 +176,7 @@ class ScheduleDelay implements StepTypeInterface
                 "type" => "input",
                 "label" => __("Step input", "post-expirator"),
                 "description" => __("The input data for this step.", "post-expirator"),
-            ]
+            ],
         ];
 
         $schema = array_merge($schema, $this->getStepScopedVariablesSchema());
@@ -190,31 +210,31 @@ class ScheduleDelay implements StepTypeInterface
                             [
                                 "!=" => [
                                     ["var" => "schedule.recurrence"],
-                                    "single"
-                                ]
+                                    "single",
+                                ],
                             ],
                             [
                                 "!=" => [
                                     ["var" => "schedule.repeatUntil"],
-                                    "forever"
-                                ]
+                                    "forever",
+                                ],
                             ],
                             [
                                 "!=" => [
                                     ["var" => "schedule"],
-                                    null
-                                ]
+                                    null,
+                                ],
                             ],
                             [
                                 "!=" => [
                                     ["var" => "schedule"],
-                                    []
-                                ]
+                                    [],
+                                ],
                             ],
-                        ]
+                        ],
                     ],
                 ],
-            ]
+            ],
         ];
     }
 

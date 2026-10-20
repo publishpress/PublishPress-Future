@@ -14,6 +14,8 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 use PublishPress\Future\Modules\Workflows\CapabilitiesAbstract;
 use PublishPress\Future\Framework\WordPress\Utils\WorkflowSanitizationUtil;
 
+\defined('ABSPATH') || exit;
+
 // TODO: Move this to a controller on the workflows module.
 class RestApiV1 implements RestApiManagerInterface
 {
@@ -65,8 +67,8 @@ class RestApiV1 implements RestApiManagerInterface
                     'id' => [
                         'description' => __('The ID of the workflow', 'post-expirator'),
                         'type' => 'integer',
-                        'required' => true
-                    ]
+                        'required' => true,
+                    ],
                 ],
                 'show_in_index' => false,
                 'show_in_rest' => true,
@@ -89,8 +91,8 @@ class RestApiV1 implements RestApiManagerInterface
                     'postType' => [
                         'description' => __('The post type', 'post-expirator'),
                         'type' => 'string',
-                        'required' => true
-                    ]
+                        'required' => true,
+                    ],
                 ],
                 'show_in_index' => false,
                 'show_in_rest' => true,
@@ -128,8 +130,8 @@ class RestApiV1 implements RestApiManagerInterface
                     'id' => [
                         'description' => __('The ID of the workflow', 'post-expirator'),
                         'type' => 'integer',
-                        'required' => true
-                    ]
+                        'required' => true,
+                    ],
                 ],
                 'show_in_index' => false,
                 'show_in_rest' => true,
@@ -151,8 +153,8 @@ class RestApiV1 implements RestApiManagerInterface
                     'id' => [
                         'description' => __('The ID of the workflow', 'post-expirator'),
                         'type' => 'integer',
-                        'required' => true
-                    ]
+                        'required' => true,
+                    ],
                 ],
                 'show_in_index' => false,
                 'show_in_rest' => true,
@@ -174,8 +176,8 @@ class RestApiV1 implements RestApiManagerInterface
                     'taxonomy' => [
                         'description' => __('The taxonomy name', 'post-expirator'),
                         'type' => 'string',
-                        'required' => true
-                    ]
+                        'required' => true,
+                    ],
                 ],
                 'show_in_index' => false,
                 'show_in_rest' => true,
@@ -197,8 +199,8 @@ class RestApiV1 implements RestApiManagerInterface
                     'post' => [
                         'description' => __('The post ID', 'post-expirator'),
                         'type' => 'integer',
-                        'required' => true
-                    ]
+                        'required' => true,
+                    ],
                 ],
                 'show_in_index' => false,
                 'show_in_rest' => true,
@@ -368,8 +370,8 @@ class RestApiV1 implements RestApiManagerInterface
         if (is_array($terms) && ! empty($terms)) {
             $terms = array_map(function ($term) {
                 return [
-                'id' => $term->term_id,
-                'name' => $term->name,
+                    'id' => $term->term_id,
+                    'name' => $term->name,
                     'slug' => $term->slug,
                 ];
             }, $terms);
@@ -447,7 +449,7 @@ class RestApiV1 implements RestApiManagerInterface
             return [
                 'id' => $user->ID,
                 'userLogin' => $user->user_login,
-                'name' => $user->display_name
+                'name' => $user->display_name,
             ];
         }, $authors);
 

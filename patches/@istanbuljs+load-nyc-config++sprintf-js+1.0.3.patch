@@ -1,0 +1,12 @@
+diff --git a/node_modules/@istanbuljs/load-nyc-config/node_modules/sprintf-js/src/sprintf.js b/node_modules/@istanbuljs/load-nyc-config/node_modules/sprintf-js/src/sprintf.js
+index c0fc7c0..d967898 100644
+--- a/node_modules/@istanbuljs/load-nyc-config/node_modules/sprintf-js/src/sprintf.js
++++ b/node_modules/@istanbuljs/load-nyc-config/node_modules/sprintf-js/src/sprintf.js
+@@ -58,6 +58,7 @@
+                     is_positive = arg >= 0
+                 }
+ 
++                if ((match[8] === "e" || match[8] === "f" || match[8] === "g") && match[7] > 100) throw new RangeError("[sprintf] precision must be between 0 and 100")
+                 switch (match[8]) {
+                     case "b":
+                         arg = arg.toString(2)

@@ -9,6 +9,8 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Module;
 use PublishPress\Future\Modules\Workflows\CapabilitiesAbstract as WorkflowCapabilities;
 
+\defined('ABSPATH') || exit;
+
 class PostType implements InitializableInterface
 {
     public const MENU_CAPABILITY = 'manage_options';
@@ -53,6 +55,7 @@ class PostType implements InitializableInterface
                 "edit_item" => __("Edit Workflow", "post-expirator"),
                 "new_item" => __("New Workflow", "post-expirator"),
                 "view_item" => __("View Workflow", "post-expirator"),
+                "view_items" => __("View Workflows", "post-expirator"),
                 "search_items" => __("Search Workflows", "post-expirator"),
                 "not_found" => __("No Workflows found", "post-expirator"),
                 "not_found_in_trash" => __("No Workflows found in Trash", "post-expirator"),

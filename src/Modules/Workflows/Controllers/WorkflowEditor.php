@@ -19,6 +19,8 @@ use PublishPress\Future\Modules\Workflows\Models\TaxonomiesModel;
 use PublishPress\Future\Modules\Workflows\Models\UserRolesModel;
 use PublishPress\Future\Modules\Workflows\Module;
 
+\defined('ABSPATH') || exit;
+
 class WorkflowEditor implements InitializableInterface
 {
     /**
@@ -79,7 +81,7 @@ class WorkflowEditor implements InitializableInterface
     public function renderEditorPage()
     {
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-        $workflowId = (int)($_GET["workflow"] ?? 0);
+        $workflowId = (int) ($_GET["workflow"] ?? 0);
 
         require_once __DIR__ . "/../Views/editor.html.php";
     }
@@ -187,7 +189,7 @@ class WorkflowEditor implements InitializableInterface
         $taxonomies = $taxonomiesModel->getTaxonomiesAsOptions();
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-        $workflowId = (int)($_GET["workflow"] ?? 0);
+        $workflowId = (int) ($_GET["workflow"] ?? 0);
 
         $isPro = $this->hooks->applyFilters(HooksAbstract::FILTER_IS_PRO, false);
 
@@ -200,6 +202,11 @@ class WorkflowEditor implements InitializableInterface
         $postTermsModel = new PostTermModel();
         $postTerms = $postTermsModel->getAllTermsAsOptions();
 
+        $workflowPostTypeObject = get_post_type_object(Module::POST_TYPE_WORKFLOW);
+        $backButtonLabel = ($workflowPostTypeObject && ! empty($workflowPostTypeObject->labels->view_items))
+            ? $workflowPostTypeObject->labels->view_items
+            : __("Back", "post-expirator");
+
         wp_localize_script(
             "future_workflow_editor_script",
             "futureWorkflowEditor",
@@ -209,6 +216,12 @@ class WorkflowEditor implements InitializableInterface
                     "6.5",
                     ">="
                 ),
+                "isWP71OrLater" => version_compare(
+                    get_bloginfo("version"),
+                    "7.1-alpha",
+                    ">="
+                ),
+                "backButtonLabel" => $backButtonLabel,
                 "apiUrl" => rest_url("publishpress-future/v1"),
                 "pluginVersion" => PUBLISHPRESS_FUTURE_VERSION,
                 "assetsUrl" => PUBLISHPRESS_FUTURE_ASSETS_URL,
