@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Fixed: Workflow execution safeguard no longer treats different triggers as an infinite loop (Issue #1680).
 - Fixed: Translation strings now include translator comments and ordered placeholders.
 - Fixed: Initialize Action Scheduler when another plugin autoloads its classes before the procedural API is loaded, preventing a fatal error on admin requests.
+- Fixed: Instance protection warns again about duplicated, outdated, or multiple active copies of the plugin. It stopped matching the plugin after the rename to "PublishPress Future Free" in 4.10.0.
 
 [4.10.7] - 07 Oct, 2026
 

@@ -24,24 +24,24 @@ test('no warning when the plugin is not duplicated', { tag: adminTags }, async (
 test('warning when a copy is installed in a non-standard folder', { tag: adminTags }, async ({ page }) => {
   installPluginCopy(copyFolder);
   await page.goto('/wp-admin/plugins.php');
-  await expect(page.locator('.multiple-instances-warning')).toContainText(
-    `This plugin is not installed in the standard folder. The current path is ${copyFile} but it is expected to be ${pluginFile}`,
-  );
+  await expect(page.locator('.multiple-instances-warning', {
+    hasText: `This plugin is not installed in the standard folder. The current path is ${copyFile} but it is expected to be ${pluginFile}`,
+  })).toBeVisible();
 });
 
 test('notice when the copy is activated too', { tag: adminTags }, async ({ page }) => {
   installPluginCopy(copyFolder);
   wp(['plugin', 'activate', copyFile]);
   await page.goto('/wp-admin/plugins.php');
-  await expect(page.locator('.notice')).toContainText(
-    'You have activated multiple instances of PublishPress Future. Please keep only one activated and remove the others.',
-  );
+  await expect(page.locator('.notice', {
+    hasText: 'You have activated multiple instances of PublishPress Future Free. Please keep only one activated and remove the others.',
+  })).toBeVisible();
 });
 
 test('warning when the copy is outdated', { tag: adminTags }, async ({ page }) => {
   installPluginCopy(copyFolder, '0.0.1');
   await page.goto('/wp-admin/plugins.php');
-  await expect(page.locator('.multiple-instances-warning')).toContainText(
-    'This plugin is outdated. You already have a more recent version installed. Please remove this version.',
-  );
+  await expect(page.locator('.multiple-instances-warning', {
+    hasText: 'This plugin is outdated. You already have a more recent version installed. Please remove this version.',
+  })).toBeVisible();
 });

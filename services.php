@@ -145,7 +145,8 @@ return [
 
     ServicesAbstract::PLUGIN_SLUG => 'post-expirator',
 
-    ServicesAbstract::PLUGIN_NAME => "PublishPress Future",
+    // Must match "Plugin Name" in post-expirator.php: instance protection finds copies by that header.
+    ServicesAbstract::PLUGIN_NAME => "PublishPress Future Free",
 
     ServicesAbstract::DEFAULT_DATA => [
         ServicesAbstract::DEFAULT_DATE_FORMAT => __(
