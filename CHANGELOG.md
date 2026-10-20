@@ -2,6 +2,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 [4.11.0]
 
+- Fixed: Schedule capability check runs after expiration options are filtered, so rewritten action types such as legacy custom statuses are authorized correctly.
 - Security: Require the matching WordPress capability before a Future Action is scheduled. Publish and make private require `publish_posts`, stick and unstick require `edit_others_posts`, and delete requires `delete_post`. The editor only lists actions the current user can schedule.
 - Security: Require the taxonomy `edit_terms` capability before a Future Action creates terms, and only allow taxonomies registered for that post type. Users without that capability can still select existing terms.
 - Security: Restrict the `publishpress_future_action` REST field to the edit context and to users who can edit the post. Public wp/v2 responses no longer include Future Action schedule metadata.

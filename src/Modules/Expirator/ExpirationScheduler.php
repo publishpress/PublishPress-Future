@@ -111,39 +111,6 @@ class ExpirationScheduler implements SchedulerInterface
      */
     public function schedule($postId, $timestamp, $opts)
     {
-        if (! $this->currentRequestSkipsScheduleAuthorization()) {
-            $expireType = '';
-            $newStatus = '';
-
-            if (is_array($opts)) {
-                if (isset($opts['expireType']) && is_string($opts['expireType'])) {
-                    $expireType = $opts['expireType'];
-                }
-                if (isset($opts['newStatus']) && is_string($opts['newStatus'])) {
-                    $newStatus = $opts['newStatus'];
-                }
-            }
-
-            $currentUserModelFactory = $this->currentUserModelFactory;
-            $currentUserModel = $currentUserModelFactory();
-
-            if (
-                ! $currentUserModel instanceof CurrentUserModel
-                || ! $currentUserModel->userCanScheduleAction((int) $postId, $expireType, $newStatus)
-            ) {
-                $this->logger->debug(
-                    sprintf(
-                        '%1$d  -> ACTION NOT SCHEDULED: user cannot schedule %2$s (status %3$s)',
-                        (int) $postId,
-                        $expireType,
-                        $newStatus
-                    )
-                );
-
-                return;
-            }
-        }
-
         $factory = $this->actionArgsModelFactory;
 
         $postModelFactory = $this->postModelFactory;
@@ -163,7 +130,13 @@ class ExpirationScheduler implements SchedulerInterface
             $opts['extraData'] = $opts['extraData']['extraData'];
         }
 
+        // Listeners may rewrite expireType (legacy custom statuses). Authorize the rewritten action.
         $opts = $this->hooks->applyFilters(HooksAbstract::FILTER_PREPARE_POST_EXPIRATION_OPTS, $opts, $postId);
+
+        if (! $this->currentRequestSkipsScheduleAuthorization() && ! $this->userCanScheduleOpts((int) $postId, $opts)) {
+            return;
+        }
+
         $timestamp = $this->convertLocalTimeToUtc($opts['date']);
 
         $this->hooks->doAction(HooksAbstract::ACTION_LEGACY_SCHEDULE, $postId, $timestamp, $opts);
@@ -224,6 +197,50 @@ class ExpirationScheduler implements SchedulerInterface
         );
 
         $this->updateLegacyPostMetaUsedBy3rdPartySoftware($postId, $timestamp, $opts);
+    }
+
+    /**
+     * Authorize the action after expiration options have been filtered.
+     *
+     * @since 4.11.0
+     *
+     * @param int $postId
+     * @param array<string, mixed> $opts
+     * @return bool
+     */
+    private function userCanScheduleOpts(int $postId, array $opts): bool
+    {
+        $expireType = '';
+        $newStatus = '';
+
+        if (isset($opts['expireType']) && is_string($opts['expireType'])) {
+            $expireType = $opts['expireType'];
+        }
+
+        if (isset($opts['newStatus']) && is_string($opts['newStatus'])) {
+            $newStatus = $opts['newStatus'];
+        }
+
+        $currentUserModelFactory = $this->currentUserModelFactory;
+        $currentUserModel = $currentUserModelFactory();
+
+        if (
+            ! $currentUserModel instanceof CurrentUserModel
+            || ! $currentUserModel->userCanScheduleAction($postId, $expireType, $newStatus)
+        ) {
+            $this->logger->debug(
+                sprintf(
+                    '%1$d  -> ACTION NOT SCHEDULED: user cannot schedule %2$s (status %3$s)',
+                    $postId,
+                    $expireType,
+                    $newStatus
+                )
+            );
+
+            return false;
+        }
+
+        return true;
     }
 
     /**
