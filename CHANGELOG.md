@@ -1,5 +1,9 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+[4.11.1]
+
+- Fixed: Workflow editor no longer crashes when a workflow post body is empty, because the flow always includes `nodes` and `edges` arrays (Issue #1757).
+
 [4.11.0]
 
 - Fixed: Schedule capability check runs after expiration options are filtered, so rewritten action types such as legacy custom statuses are authorized correctly.
