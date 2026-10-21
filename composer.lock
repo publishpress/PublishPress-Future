@@ -6060,12 +6060,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/library-dev-workspace.git",
-                "reference": "7d5d1e68b43434d6c197c9b0d80626375d6c8f40"
+                "reference": "a58e831552c9df8c524bf9715ed054fcba377248"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/library-dev-workspace/zipball/7d5d1e68b43434d6c197c9b0d80626375d6c8f40",
-                "reference": "7d5d1e68b43434d6c197c9b0d80626375d6c8f40",
+                "url": "https://api.github.com/repos/publishpress/library-dev-workspace/zipball/a58e831552c9df8c524bf9715ed054fcba377248",
+                "reference": "a58e831552c9df8c524bf9715ed054fcba377248",
                 "shasum": ""
             },
             "require": {
@@ -6124,7 +6124,7 @@
                 "issues": "https://github.com/publishpress/library-dev-workspace/issues",
                 "source": "https://github.com/publishpress/library-dev-workspace/tree/cursor/release-runner"
             },
-            "time": "2026-10-19T20:48:07+00:00"
+            "time": "2026-10-21T19:27:43+00:00"
         },
         {
             "name": "publishpress/publishpress-phpcs-standards",
@@ -13727,6 +13727,6 @@
         "php": ">=7.4",
         "ext-json": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
 }
