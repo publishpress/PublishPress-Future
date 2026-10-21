@@ -337,6 +337,15 @@ class WorkflowModel implements WorkflowModelInterface
                 $this->flow = [];
             }
 
+            // An empty post body decodes to a list. The editor reads flow.edges.length.
+            if (! isset($this->flow['nodes']) || ! is_array($this->flow['nodes'])) {
+                $this->flow['nodes'] = [];
+            }
+
+            if (! isset($this->flow['edges']) || ! is_array($this->flow['edges'])) {
+                $this->flow['edges'] = [];
+            }
+
             if ($updateSteps) {
                 if (empty($this->flow)) {
                     return $this->flow;

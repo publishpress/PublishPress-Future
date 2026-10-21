@@ -113,6 +113,35 @@ class WorkflowModelTest extends WPTestCase
     }
 
     /**
+     * Empty and list-shaped post bodies must still expose nodes and edges.
+     *
+     * @since 4.11.1
+     */
+    public function testGetFlowNormalizesEmptyPostBodyToNodesAndEdges(): void
+    {
+        foreach (['', '[]'] as $postContent) {
+            $workflowId = wp_insert_post([
+                'post_title' => 'Empty flow regression',
+                'post_content' => $postContent,
+                'post_status' => WorkflowModel::STATUS_DISABLED,
+                'post_type' => Module::POST_TYPE_WORKFLOW,
+            ]);
+
+            $this->assertGreaterThan(0, $workflowId);
+
+            $workflow = new WorkflowModel();
+            $this->assertTrue($workflow->load($workflowId));
+
+            $flow = $workflow->getFlow();
+
+            $this->assertIsArray($flow['nodes']);
+            $this->assertIsArray($flow['edges']);
+            $this->assertSame([], $flow['nodes']);
+            $this->assertSame([], $flow['edges']);
+        }
+    }
+
+    /**
      * Restore an option or remove it when it did not previously exist.
      *
      * @since 4.10.5
