@@ -3,6 +3,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 [4.11.2]
 
 - Fixed: Prevent the PublishPress Hub notice from appearing on admin pages outside the plugins screen by updating the translation library.
+- Fixed: Update the POT file.
 
 [4.11.1]
 
