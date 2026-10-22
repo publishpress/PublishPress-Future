@@ -182,7 +182,7 @@ class HubTranslationNotice
     {
         return (bool) apply_filters(
             'publishpress_bundled_translations_hub_notice_enabled',
-            true,
+            false,
             $this->domain
         );
     }
