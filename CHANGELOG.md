@@ -1,4 +1,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
+[UNRELEASED]
+
+- Changed: Raise the minimum PHP version from 7.4 to 8.2.
 
 [4.11.2]
 
