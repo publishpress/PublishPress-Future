@@ -3,6 +3,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 [UNRELEASED]
 
 - Changed: Raise the minimum PHP version from 7.4 to 8.2.
+- Fixed: Future Action column no longer fatals when the posts or pages list has no current post (Issue #1705).
 
 [4.11.2]
 
